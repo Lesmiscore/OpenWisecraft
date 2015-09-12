@@ -143,6 +143,37 @@ public class MCQuery
 		QueryResponsePE res = new QueryResponsePE(result, true);
 		return res;
 	}
+	
+	/**
+	 * Use this to get more information, including players, from the server.
+	 * @return a <code>QueryResponse</code> object
+	 */
+	public QueryResponseUniverse fullStatUni()
+	{
+//		basicStat() calls handshake()
+//		QueryResponse basicResp = this.basicStat();
+//		int numPlayers = basicResp.onlinePlayers; //TODO use to determine max length of full stat
+
+		handshake();
+
+		QueryRequest req = new QueryRequest();
+		req.type = STAT;
+		req.sessionID = generateSessionID();
+		req.setPayload(token);
+		req.payload = ByteUtils.padArrayEnd(req.payload, 4); //for full stat, pad the payload with 4 null bytes
+
+		byte[] send = req.toBytes();
+
+		byte[] result = sendUDP(send);
+
+		/*
+		 * note: buffer size = base + #players(online) * 16(max username length)
+		 */
+
+		QueryResponseUniverse res = new QueryResponseUniverse(result);
+		return res;
+	}
+	
 	private byte[] sendUDP(byte[] input)
 	{
 		try
