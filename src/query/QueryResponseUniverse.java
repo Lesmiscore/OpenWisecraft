@@ -17,8 +17,8 @@ public class QueryResponseUniverse {
 		byte[][] temp = ByteUtils.split(data);
 		byte[] d;
 		int dataEnds=0;
-		for(int i=2;i<temp.length;i+=2){
-			if((d = temp[i]).length == 0 ?false: d[0] != 1){
+		for(int i=2;i<temp.length;i+=1){
+			if((d = temp[i]).length == 0 ?false: d[0] == 1){
 				dataEnds=i;
 				break;
 			}
@@ -36,7 +36,7 @@ public class QueryResponseUniverse {
 		}
 		
 		playerList = new ArrayList<String>();//
-		for (int i=dataEnds+1; i < temp.length; i++) {
+		for (int i=dataEnds+2; i < temp.length; i++) {
 			playerList.add(new String(temp[i]));
 		}
 	}

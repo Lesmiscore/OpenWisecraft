@@ -52,7 +52,10 @@ public class MainActivity extends Activity
 			data.setAdapter(adap2=new ArrayAdapter<Map.Entry<String,String>>(this,0,new ArrayList<Map.Entry<String,String>>()){
 				public View getView(int pos,View v,ViewGroup ignore){
 					if(v==null)
-						v=getLayoutInflater().inflate(R.layout.);
+						v=getLayoutInflater().inflate(R.layout.data,null);
+					((TextView)v.findViewById(R.id.k)).setText(getItem(pos).getKey());
+					((TextView)v.findViewById(R.id.v)).setText(getItem(pos).getValue());
+					return v;
 				}
 			});
 			findViewById(R.id.stop).setOnClickListener(new View.OnClickListener(){
