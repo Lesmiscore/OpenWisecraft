@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="hello">Hello World, MainActivity!</string>
+    <string name="hello">@string/app_name</string>
     <string name="app_name">McServerDDoS</string>
-
+	<string name="ip">IP or host:</string>
+	<string name="port">Port:</string>
+	<string name="start">Start</string>
+	<string name="ex.ip">e.g.) localhost or 127.0.0.1</string>
+	<string name="ex.port">e.g.) 25565</string>
+	<string name="stop"></string>
 </resources>
