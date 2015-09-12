@@ -94,7 +94,55 @@ public class MCQuery
 		QueryResponse res = new QueryResponse(result, true);
 		return res;
 	}
-	
+	/**
+	 * Use this to get basic status information from the server.
+	 * @return a <code>QueryResponse</code> object
+	 */
+	public QueryResponsePE basicStatPE()
+	{
+		handshake(); //get the session token first
+
+		QueryRequest req = new QueryRequest(); //create a request
+		req.type = STAT;
+		req.sessionID = generateSessionID();
+		req.setPayload(token);
+		byte[] send = req.toBytes();
+
+		byte[] result = sendUDP(send);
+
+		QueryResponsePE res = new QueryResponsePE(result, false);
+		return res;
+	}
+
+	/**
+	 * Use this to get more information, including players, from the server.
+	 * @return a <code>QueryResponse</code> object
+	 */
+	public QueryResponsePE fullStatPE()
+	{
+//		basicStat() calls handshake()
+//		QueryResponse basicResp = this.basicStat();
+//		int numPlayers = basicResp.onlinePlayers; //TODO use to determine max length of full stat
+
+		handshake();
+
+		QueryRequest req = new QueryRequest();
+		req.type = STAT;
+		req.sessionID = generateSessionID();
+		req.setPayload(token);
+		req.payload = ByteUtils.padArrayEnd(req.payload, 4); //for full stat, pad the payload with 4 null bytes
+
+		byte[] send = req.toBytes();
+
+		byte[] result = sendUDP(send);
+
+		/*
+		 * note: buffer size = base + #players(online) * 16(max username length)
+		 */
+
+		QueryResponsePE res = new QueryResponsePE(result, true);
+		return res;
+	}
 	private byte[] sendUDP(byte[] input)
 	{
 		try
@@ -116,7 +164,7 @@ public class MCQuery
 			//receive a response in a new packet
 			byte[] out = new byte[1024]; //TODO guess at max size
 			DatagramPacket packet = new DatagramPacket(out, out.length);
-			socket.setSoTimeout(500); //one half second timeout
+			socket.setSoTimeout(5000); //one half second timeout
 			socket.receive(packet);
 			
 			return packet.getData();
@@ -128,8 +176,8 @@ public class MCQuery
 		catch (SocketTimeoutException e)
 		{
 			System.err.println("Socket Timeout! Is the server offline?");
-			//System.exit(1);
-			// throw exception
+			e.printStackTrace();
+			
 		}
 		catch (UnknownHostException e)
 		{
@@ -181,7 +229,7 @@ public class MCQuery
 		return out;
 	}
 	
-	//Testing
+	/*//Testing
 	public static void main(String args[])
 	{
 		MCQuery mc = new MCQuery();
@@ -191,5 +239,5 @@ public class MCQuery
 		System.out.println("=====================");
 		System.out.println(mc.fullStat().toString());
 		System.out.println(mc.fullStat().asJSON());
-	}
+	}*/
 }

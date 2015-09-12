@@ -7,5 +7,5 @@
 	<string name="start">Start</string>
 	<string name="ex.ip">e.g.) localhost or 127.0.0.1</string>
 	<string name="ex.port">e.g.) 25565</string>
-	<string name="stop"></string>
+	<string name="stop">Stop</string>
 </resources>
