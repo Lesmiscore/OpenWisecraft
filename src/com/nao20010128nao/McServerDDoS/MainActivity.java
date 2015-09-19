@@ -63,7 +63,7 @@ public class MainActivity extends Activity
 					finish();
 				}
 			});
-			for (int i=0;i < 120;i++){
+			for (int i=0;i < 150;i++){
 				t.add(new Thread(){
 						public void run() {
 							String ip=getIntent().getStringExtra("ip");
