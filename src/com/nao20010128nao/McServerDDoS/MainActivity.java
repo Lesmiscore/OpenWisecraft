@@ -47,11 +47,11 @@ public class MainActivity extends Activity
 		static WeakReference<TabsDDoS> instance=new WeakReference(null);
 		
 		List<Thread> t=new ArrayList<>();
-		ListView players,data;
+		ListView players,sortedPlayers,data;
 		FragmentTabHost fth;
-		TabHost.TabSpec playersF,dataF;
+		TabHost.TabSpec playersF,dataF,sortedPlayersF;
 		
-		ArrayAdapter<String> adap;
+		ArrayAdapter<String> adap,adap3;
 		ArrayAdapter<Map.Entry<String,String>> adap2;
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +67,10 @@ public class MainActivity extends Activity
 			playersF.setIndicator(getResources().getString(R.string.players));
 			fth.addTab(playersF,PlayersFragment.class,null);
 			
+			sortedPlayersF=fth.newTabSpec("sortedPlayersList");
+			sortedPlayersF.setIndicator(getResources().getString(R.string.players));
+			fth.addTab(sortedPlayersF,SortedPlayersFragment.class,null);
+
 			dataF=fth.newTabSpec("dataList");
 			dataF.setIndicator(getResources().getString(R.string.data));
 			fth.addTab(dataF,DataFragment.class,null);
@@ -81,6 +85,7 @@ public class MainActivity extends Activity
 									return v;
 								}
 							};
+			adap3=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,new ArrayList<String>());
 			/*findViewById(R.id.stop).setOnClickListener(new View.OnClickListener(){
 					public void onClick(View w){
 						finish();
@@ -101,6 +106,7 @@ public class MainActivity extends Activity
 									e.printStackTrace();
 								}
 							}
+							q.finalize();
 						}
 					});
 				t.get(t.size()-1).start();
@@ -114,6 +120,10 @@ public class MainActivity extends Activity
 						adap.addAll(resp.getPlayerList());
 						adap2.clear();
 						adap2.addAll(resp.getData().entrySet());
+						adap3.clear();
+						ArrayList<String> sort=new ArrayList<>(resp.getPlayerList());
+						Collections.sort(sort);
+						adap3.addAll(sort);
 					}
 				});
 		}
@@ -122,6 +132,9 @@ public class MainActivity extends Activity
 		}
 		static void setDataView(ListView lv){
 			instance.get().setDataView_(lv);
+		}
+		static void setSortedPlayersView(ListView lv){
+			instance.get().setSortedPlayersView_(lv);
 		}
 		
 		void setPlayersView_(ListView lv){
@@ -132,6 +145,11 @@ public class MainActivity extends Activity
 			data=lv;
 			lv.setAdapter(adap2);
 		}
+		void setSortedPlayersView_(ListView lv){
+			sortedPlayers=lv;
+			lv.setAdapter(adap3);
+		}
+		
 		@Override
 		protected void onDestroy() {
 			// TODO: Implement this method
@@ -145,6 +163,15 @@ public class MainActivity extends Activity
 				// TODO: Implement this method
 				ListView lv=(ListView) inflater.inflate(R.layout.ddos_players_tab,null,false);
 				setPlayersView(lv);
+				return lv;
+			}
+		}
+		public static class SortedPlayersFragment extends android.support.v4.app.Fragment {
+			@Override
+			public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+				// TODO: Implement this method
+				ListView lv=(ListView) inflater.inflate(R.layout.ddos_players_tab,null,false);
+				setSortedPlayersView(lv);
 				return lv;
 			}
 		}
