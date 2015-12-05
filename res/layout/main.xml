@@ -50,6 +50,28 @@
 
 	</LinearLayout>
 
+	<LinearLayout
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:orientation="horizontal">
+
+		<TextView
+			android:layout_height="match_parent"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:layout_width="wrap_content"
+			android:text="@string/threads"
+			android:gravity="center"/>
+
+		<EditText
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:ems="10"
+			android:id="@+id/threads"
+			android:text="100"
+			android:inputType="number|numberDecimal"/>
+
+	</LinearLayout>
+
 	<Button
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"

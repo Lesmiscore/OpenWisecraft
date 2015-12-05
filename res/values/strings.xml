@@ -10,4 +10,5 @@
 	<string name="stop">Stop</string>
 	<string name="players">Players</string>
 	<string name="data">Data</string>
+	<string name="threads">Threads:</string>
 </resources>
