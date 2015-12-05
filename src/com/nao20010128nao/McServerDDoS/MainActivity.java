@@ -233,7 +233,7 @@ public class MainActivity extends Activity
 			public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 				// TODO: Implement this method
 				ListView lv=(ListView) inflater.inflate(R.layout.ddos_data_tab,null,false);
-				setPlayersView(lv);
+				setDataView(lv);
 				return lv;
 			}
 		}
