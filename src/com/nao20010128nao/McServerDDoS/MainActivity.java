@@ -39,7 +39,7 @@ public class MainActivity extends Activity
 					.putString("ip",ip)
 					.putInt("port",port)
 					.commit();
-				startActivity(new Intent(MainActivity.this,DDoS.class).putExtra("ip",ip).putExtra("port",port));
+				startActivity(new Intent(MainActivity.this,TabsDDoS.class).putExtra("ip",ip).putExtra("port",port));
 			}
 		});
 		findViewById(R.id.start2).setOnClickListener(new View.OnClickListener(){
