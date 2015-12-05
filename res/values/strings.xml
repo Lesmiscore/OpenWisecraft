@@ -8,4 +8,6 @@
 	<string name="ex.ip">e.g.) localhost or 127.0.0.1</string>
 	<string name="ex.port">e.g.) 25565</string>
 	<string name="stop">Stop</string>
+	<string name="players">Players</string>
+	<string name="data">Data</string>
 </resources>

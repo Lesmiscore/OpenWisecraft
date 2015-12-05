@@ -56,5 +56,12 @@
 		android:text="@string/start"
 		android:id="@+id/start"/>
 
+	<Button
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:text="@string/start"
+		android:id="@+id/start2"
+		android:visibility="gone"/>
+
 </LinearLayout>
 
