@@ -13,6 +13,7 @@ import java.io.*;
 import java.security.*;
 import java.net.*;
 import android.support.v4.app.*;
+import java.lang.ref.*;
 
 public class MainActivity extends Activity
 {
@@ -123,6 +124,8 @@ public class MainActivity extends Activity
 		}
 	}
 	public static class TabsDDoS extends FragmentActivity {
+		static WeakReference<TabsDDoS> instance=new WeakReference(null);
+		
 		List<Thread> t=new ArrayList<>();
 		ListView players,data;
 		FragmentTabHost fth;
@@ -134,6 +137,8 @@ public class MainActivity extends Activity
 		protected void onCreate(Bundle savedInstanceState) {
 			// TODO: Implement this method
 			super.onCreate(savedInstanceState);
+			instance=new WeakReference(this);
+			
 			setContentView(R.layout.tabs);
 			fth=(FragmentTabHost)findViewById(android.R.id.tabhost);
 			fth.setup(this,getSupportFragmentManager(),R.id.container);
@@ -146,10 +151,8 @@ public class MainActivity extends Activity
 			dataF.setIndicator(getResources().getString(R.string.data));
 			fth.addTab(dataF,DataFragment.class,null);
 			
-			data=(ListView)findViewById(R.id.data);
-			players=(ListView)findViewById(R.id.players);
-			players.setAdapter(adap=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,new ArrayList<String>()));
-			data.setAdapter(adap2=new ArrayAdapter<Map.Entry<String,String>>(this,0,new ArrayList<Map.Entry<String,String>>()){
+			adap=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,new ArrayList<String>());
+			adap2=new ArrayAdapter<Map.Entry<String,String>>(this,0,new ArrayList<Map.Entry<String,String>>()){
 								public View getView(int pos,View v,ViewGroup ignore){
 									if(v==null)
 										v=getLayoutInflater().inflate(R.layout.data,null);
@@ -157,12 +160,12 @@ public class MainActivity extends Activity
 									((TextView)v.findViewById(R.id.v)).setText(getItem(pos).getValue());
 									return v;
 								}
-							});
-			findViewById(R.id.stop).setOnClickListener(new View.OnClickListener(){
+							};
+			/*findViewById(R.id.stop).setOnClickListener(new View.OnClickListener(){
 					public void onClick(View w){
 						finish();
 					}
-				});
+				});*/
 			for (int i=0;i < 150;i++){
 				t.add(new Thread(){
 						public void run() {
@@ -194,7 +197,21 @@ public class MainActivity extends Activity
 					}
 				});
 		}
-
+		static void setPlayersView(ListView lv){
+			instance.get().setPlayersView_(lv);
+		}
+		static void setDataView(ListView lv){
+			instance.get().setDataView_(lv);
+		}
+		
+		void setPlayersView_(ListView lv){
+			players=lv;
+			lv.setAdapter(adap);
+		}
+		void setDataView_(ListView lv){
+			data=lv;
+			lv.setAdapter(adap2);
+		}
 		@Override
 		protected void onDestroy() {
 			// TODO: Implement this method
@@ -202,18 +219,22 @@ public class MainActivity extends Activity
 			for(Thread th:t)
 				th.interrupt();
 		}
-		static class PlayersFragment extends android.support.v4.app.Fragment {
+		public static class PlayersFragment extends android.support.v4.app.Fragment {
 			@Override
 			public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 				// TODO: Implement this method
-				return inflater.inflate(R.layout.ddos_players_tab,null,false);
+				ListView lv=(ListView) inflater.inflate(R.layout.ddos_players_tab,null,false);
+				setPlayersView(lv);
+				return lv;
 			}
 		}
-		static class DataFragment extends android.support.v4.app.Fragment {
+		public static class DataFragment extends android.support.v4.app.Fragment {
 			@Override
 			public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 				// TODO: Implement this method
-				return inflater.inflate(R.layout.ddos_data_tab,null,false);
+				ListView lv=(ListView) inflater.inflate(R.layout.ddos_data_tab,null,false);
+				setPlayersView(lv);
+				return lv;
 			}
 		}
 	}
