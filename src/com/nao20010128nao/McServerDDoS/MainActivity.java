@@ -48,6 +48,7 @@ public class MainActivity extends Activity
 		static WeakReference<TabsDDoS> instance=new WeakReference(null);
 		
 		volatile BigInteger triedN,successN,failedN;
+		Thread status;
 		
 		List<Thread> t=new ArrayList<>();
 		ListView players,sortedPlayers,data;
@@ -113,7 +114,6 @@ public class MainActivity extends Activity
 					});
 				t.get(t.size()-1).start();
 			}
-			Thread status;
 			(status=new Thread(){
 				public void run(){
 					while(!isInterrupted()){
@@ -132,7 +132,6 @@ public class MainActivity extends Activity
 					}
 				}
 			}).start();
-			t.add(status);
 		}
 		public synchronized void update(final QueryResponseUniverse resp){
 			runOnUiThread(new Runnable(){
@@ -177,6 +176,7 @@ public class MainActivity extends Activity
 			super.onDestroy();
 			for(Thread th:t)
 				th.interrupt();
+			status.interrupt();
 		}
 		public static class PlayersFragment extends android.support.v4.app.Fragment {
 			@Override
