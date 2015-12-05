@@ -68,7 +68,7 @@ public class MainActivity extends Activity
 			fth.addTab(playersF,PlayersFragment.class,null);
 			
 			sortedPlayersF=fth.newTabSpec("sortedPlayersList");
-			sortedPlayersF.setIndicator(getResources().getString(R.string.players));
+			sortedPlayersF.setIndicator(getResources().getString(R.string.sortedPlayers));
 			fth.addTab(sortedPlayersF,SortedPlayersFragment.class,null);
 
 			dataF=fth.newTabSpec("dataList");
