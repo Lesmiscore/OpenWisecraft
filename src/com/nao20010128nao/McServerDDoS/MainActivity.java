@@ -53,7 +53,7 @@ public class MainActivity extends Activity
 		List<Thread> t=new ArrayList<>();
 		ListView players,sortedPlayers,data;
 		FragmentTabHost fth;
-		TabHost.TabSpec playersF,dataF,sortedPlayersF,statusF;
+		TabHost.TabSpec playersF,dataF,statusF;
 		TextView tried,success,failed;
 		
 		ArrayAdapter<String> adap,adap3;
