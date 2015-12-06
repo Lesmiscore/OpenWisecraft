@@ -51,6 +51,7 @@ public class MainActivity extends Activity
 		Thread status;
 		String ip;
 		int port;
+		long latestUpdate;
 		
 		List<Thread> t=new ArrayList<>();
 		ListView players,sortedPlayers,data;
@@ -137,6 +138,10 @@ public class MainActivity extends Activity
 			}).start();
 		}
 		public synchronized void update(final QueryResponseUniverse resp){
+			if((latestUpdate+100)>System.currentTimeMillis()){
+				return;
+			}
+			latestUpdate=System.currentTimeMillis();
 			final ArrayList<String> sort=new ArrayList<>(resp.getPlayerList());
 			Collections.sort(sort);
 			final String title;
