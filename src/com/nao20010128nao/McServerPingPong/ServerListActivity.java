@@ -13,8 +13,9 @@ public class ServerListActivity extends ListActivity{
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		setListAdapter(new ServerList());
+		getListView().setOnItemClickListener((ServerList)getListAdapter());
 	}
-	class ServerList extends ArrayAdapter<ServerStatus>{
+	class ServerList extends ArrayAdapter<ServerStatus> implements AdapterView.OnItemClickListener{
 		public ServerList(){
 			super(ServerListActivity.this,0,new ArrayList<ServerStatus>());
 		}
@@ -25,6 +26,11 @@ public class ServerListActivity extends ListActivity{
 			View layout=getLayoutInflater().inflate(R.layout.quickstatus,null,false);
 			layout.setTag(getItem(position));
 			return layout;
+		}
+
+		@Override
+		public void onItemClick(AdapterView<?> p1, View p2, int p3, long p4) {
+			// TODO: Implement this method
 		}
 	}
 	public static class Server{
