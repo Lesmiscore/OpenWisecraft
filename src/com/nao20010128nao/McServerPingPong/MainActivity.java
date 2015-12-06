@@ -1,4 +1,4 @@
-package com.nao20010128nao.McServerDDoS;
+package com.nao20010128nao.McServerPingPong;
 
 import android.app.*;
 import android.os.*;
