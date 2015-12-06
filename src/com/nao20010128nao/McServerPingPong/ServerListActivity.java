@@ -12,7 +12,7 @@ public class ServerListActivity extends ListActivity{
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
-		
+		setListAdapter(new ServerList());
 	}
 	class ServerList extends ArrayAdapter<ServerStatus>{
 		public ServerList(){
@@ -22,7 +22,9 @@ public class ServerListActivity extends ListActivity{
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			// TODO: Implement this method
-			return null;
+			View layout=getLayoutInflater().inflate(R.layout.quickstatus,null,false);
+			layout.setTag(getItem(position));
+			return layout;
 		}
 	}
 	public static class Server{
