@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hello">@string/app_name</string>
-    <string name="app_name">Twilight Bomb</string>
+    <string name="app_name">McServerPingPong (Working for Name)</string>
 	<string name="ip">IP or host:</string>
 	<string name="port">Port:</string>
 	<string name="start">Start</string>
