@@ -182,7 +182,7 @@ public class TabsDDoS extends FragmentActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
-			ListView lv=(ListView) inflater.inflate(R.layout.ddos_players_tab, null, false);
+			ListView lv=(ListView) inflater.inflate(R.layout.players_tab, null, false);
 			setPlayersView(lv);
 			return lv;
 		}
@@ -191,7 +191,7 @@ public class TabsDDoS extends FragmentActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
-			ListView lv=(ListView) inflater.inflate(R.layout.ddos_data_tab, null, false);
+			ListView lv=(ListView) inflater.inflate(R.layout.data_tab, null, false);
 			setDataView(lv);
 			return lv;
 		}
