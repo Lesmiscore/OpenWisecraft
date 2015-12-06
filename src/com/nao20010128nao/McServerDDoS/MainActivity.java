@@ -91,6 +91,9 @@ public class MainActivity extends Activity
 									return v;
 								}
 							};
+			String ip=getIntent().getStringExtra("ip");
+			int port=getIntent().getIntExtra("port", 25565);
+			setTitle(ip + ":" + port);
 			for (int i=0;i < getIntent().getIntExtra("threads",150);i++){
 				t.add(new Thread(){
 						public void run() {
@@ -143,6 +146,14 @@ public class MainActivity extends Activity
 						adap.addAll(sort);
 						adap2.clear();
 						adap2.addAll(resp.getData().entrySet());
+						
+						Map<String,String> m=resp.getData();
+						if(m.containsKey("hostname")){
+							setTitle(deleteDecorations(m.get("hostname")));
+						}
+						else if(m.containsKey("motd")){
+							setTitle(deleteDecorations(m.get("motd")));
+						}
 					}
 				});
 		}
@@ -177,6 +188,22 @@ public class MainActivity extends Activity
 			for(Thread th:t)
 				th.interrupt();
 			status.interrupt();
+		}
+		
+		static String deleteDecorations(String decorated){
+			StringBuilder sb=new StringBuilder();
+			char[] chars=decorated.toCharArray();
+			int offset=0;
+			while(chars.length>offset){
+				if(chars[offset]=='§'){
+					offset+=2;
+					continue;
+				}
+				sb.append(chars[offset]);
+				offset++;
+			}
+			Log.d("esc",sb.toString());
+			return sb.toString();
 		}
 		public static class PlayersFragment extends android.support.v4.app.Fragment {
 			@Override
