@@ -20,6 +20,8 @@ public class MCQuery
 	private DatagramSocket socket = null; //prevent socket already bound exception
 	private int token;
 	
+	private long latestPingElapsed;
+	
 	public MCQuery(){} // for testing, defaults to "localhost:25565"
 	public MCQuery(String address)
 	{
@@ -59,7 +61,9 @@ public class MCQuery
 		req.setPayload(token);
 		byte[] send = req.toBytes();
 		
+		long a=System.currentTimeMillis();
 		byte[] result = sendUDP(send);
+		latestPingElapsed=System.currentTimeMillis()-a;
 		
 		QueryResponse res = new QueryResponse(result, false);
 		return res;
@@ -85,7 +89,9 @@ public class MCQuery
 		
 		byte[] send = req.toBytes();
 		
+		long a=System.currentTimeMillis();
 		byte[] result = sendUDP(send);
+		latestPingElapsed=System.currentTimeMillis()-a;
 		
 		/*
 		 * note: buffer size = base + #players(online) * 16(max username length)
@@ -108,7 +114,9 @@ public class MCQuery
 		req.setPayload(token);
 		byte[] send = req.toBytes();
 
+		long a=System.currentTimeMillis();
 		byte[] result = sendUDP(send);
+		latestPingElapsed=System.currentTimeMillis()-a;
 
 		QueryResponsePE res = new QueryResponsePE(result, false);
 		return res;
@@ -134,7 +142,9 @@ public class MCQuery
 
 		byte[] send = req.toBytes();
 
+		long a=System.currentTimeMillis();
 		byte[] result = sendUDP(send);
+		latestPingElapsed=System.currentTimeMillis()-a;
 
 		/*
 		 * note: buffer size = base + #players(online) * 16(max username length)
@@ -164,7 +174,9 @@ public class MCQuery
 
 		byte[] send = req.toBytes();
 
+		long a=System.currentTimeMillis();
 		byte[] result = sendUDP(send);
+		latestPingElapsed=System.currentTimeMillis()-a;
 
 		/*
 		 * note: buffer size = base + #players(online) * 16(max username length)
