@@ -32,6 +32,10 @@ public class MCQuery
 		serverAddress = address;
 		queryPort = port;
 	}
+
+	public long getLatestPingElapsed() {
+		return latestPingElapsed;
+	}
 	
 	// used to get a session token
 	private void handshake()
