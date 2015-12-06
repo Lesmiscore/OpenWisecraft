@@ -49,6 +49,8 @@ public class MainActivity extends Activity
 		
 		volatile BigInteger triedN,successN,failedN;
 		Thread status;
+		String ip;
+		int port;
 		
 		List<Thread> t=new ArrayList<>();
 		ListView players,sortedPlayers,data;
@@ -91,14 +93,12 @@ public class MainActivity extends Activity
 									return v;
 								}
 							};
-			String ip=getIntent().getStringExtra("ip");
-			int port=getIntent().getIntExtra("port", 25565);
+			ip=getIntent().getStringExtra("ip");
+			port=getIntent().getIntExtra("port", 25565);
 			setTitle(ip + ":" + port);
 			for (int i=0;i < getIntent().getIntExtra("threads",150);i++){
 				t.add(new Thread(){
 						public void run() {
-							String ip=getIntent().getStringExtra("ip");
-							int port=getIntent().getIntExtra("port", 25565);
 							Log.d("data", ip + ":" + port);
 							MCQuery q=new MCQuery(ip, port);
 							while (!Thread.interrupted()) {
@@ -137,23 +137,25 @@ public class MainActivity extends Activity
 			}).start();
 		}
 		public synchronized void update(final QueryResponseUniverse resp){
+			final ArrayList<String> sort=new ArrayList<>(resp.getPlayerList());
+			Collections.sort(sort);
+			final String title;
+			Map<String,String> m=resp.getData();
+			if(m.containsKey("hostname")){
+				title=deleteDecorations(m.get("hostname"));
+			}else if(m.containsKey("motd")){
+				title=deleteDecorations(m.get("motd"));
+			}else{
+				title=ip + ":" + port;
+			}
 			runOnUiThread(new Runnable(){
 					public void run(){
 						Log.d("data","updating..");
 						adap.clear();
-						ArrayList<String> sort=new ArrayList<>(resp.getPlayerList());
-						Collections.sort(sort);
 						adap.addAll(sort);
 						adap2.clear();
 						adap2.addAll(resp.getData().entrySet());
-						
-						Map<String,String> m=resp.getData();
-						if(m.containsKey("hostname")){
-							setTitle(deleteDecorations(m.get("hostname")));
-						}
-						else if(m.containsKey("motd")){
-							setTitle(deleteDecorations(m.get("motd")));
-						}
+						setTitle(title);
 					}
 				});
 		}
