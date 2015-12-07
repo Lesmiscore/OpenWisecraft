@@ -70,7 +70,7 @@ public class ServerListActivity extends ListActivity{
 			final View layout=getLayoutInflater().inflate(R.layout.quickstatus,null,false);
 			Server s=getItem(position);
 			layout.setTag(s);
-			spp.putInQueue(getItem(position),new ServerPingProvider.PingHandler(){
+			spp.putInQueue(s,new ServerPingProvider.PingHandler(){
 				public void onPingFailed(Server s){
 					runOnUiThread(new Runnable(){
 							public void run(){
