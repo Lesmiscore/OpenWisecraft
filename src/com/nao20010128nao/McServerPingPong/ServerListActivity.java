@@ -25,10 +25,10 @@ public class ServerListActivity extends ListActivity{
 		getListView().setOnItemClickListener(sl);
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
 		loadServers();
-		/*Server s=new Server();
+		Server s=new Server();
 		s.ip="setsuna.info";
 		s.port=19132;
-		sl.add(s);*/
+		sl.add(s);
 	}
 	@Override
 	protected void onDestroy() {
@@ -107,6 +107,24 @@ public class ServerListActivity extends ListActivity{
 		@Override
 		public void onItemClick(AdapterView<?> p1, View p2, int p3, long p4) {
 			// TODO: Implement this method
+		}
+
+		@Override
+		public void add(ServerListActivity.Server object) {
+			// TODO: Implement this method
+			if(!list.contains(object))super.add(object);
+		}
+
+		@Override
+		public void addAll(ServerListActivity.Server[] items) {
+			// TODO: Implement this method
+			for(Server s:items)add(s);
+		}
+
+		@Override
+		public void addAll(Collection<? extends ServerListActivity.Server> collection) {
+			// TODO: Implement this method
+			for(Server s:collection)add(s);
 		}
 	}
 	public static class Server{
