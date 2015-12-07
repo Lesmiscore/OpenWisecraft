@@ -8,6 +8,8 @@ import android.view.*;
 import com.google.gson.*;
 import android.content.*;
 import android.preference.*;
+import android.graphics.drawable.*;
+import android.util.*;
 
 public class ServerListActivity extends ListActivity{
 	ServerPingProvider spp=new ServerPingProvider();
@@ -23,6 +25,16 @@ public class ServerListActivity extends ListActivity{
 		getListView().setOnItemClickListener(sl);
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
 		loadServers();
+		/*Server s=new Server();
+		s.ip="setsuna.info";
+		s.port=19132;
+		sl.add(s);*/
+	}
+	@Override
+	protected void onDestroy() {
+		// TODO: Implement this method
+		super.onDestroy();
+		saveServers();
 	}
 	public void loadServers(){
 		Server[] sa=gson.fromJson(pref.getString("servers","[]"),Server[].class);
@@ -32,6 +44,21 @@ public class ServerListActivity extends ListActivity{
 	public void saveServers(){
 		pref.edit().putString("servers",gson.toJson(list.toArray(new Server[list.size()]),Server[].class)).commit();
 	}
+	static String deleteDecorations(String decorated) {
+		StringBuilder sb=new StringBuilder();
+		char[] chars=decorated.toCharArray();
+		int offset=0;
+		while (chars.length > offset) {
+			if (chars[offset] == '§') {
+				offset += 2;
+				continue;
+			}
+			sb.append(chars[offset]);
+			offset++;
+		}
+		Log.d("esc", sb.toString());
+		return sb.toString();
+	}
 	class ServerList extends ArrayAdapter<Server> implements AdapterView.OnItemClickListener{
 		public ServerList(){
 			super(ServerListActivity.this,0,list=new ArrayList<Server>());
@@ -40,8 +67,40 @@ public class ServerListActivity extends ListActivity{
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			// TODO: Implement this method
-			View layout=getLayoutInflater().inflate(R.layout.quickstatus,null,false);
-			layout.setTag(getItem(position));
+			final View layout=getLayoutInflater().inflate(R.layout.quickstatus,null,false);
+			Server s=getItem(position);
+			layout.setTag(s);
+			spp.putInQueue(getItem(position),new ServerPingProvider.PingHandler(){
+				public void onPingFailed(Server s){
+					runOnUiThread(new Runnable(){
+							public void run(){
+								layout.findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_error)));
+								}
+							});
+				}
+				public void onPingArrives(final ServerStatus s){
+					runOnUiThread(new Runnable(){
+						public void run(){
+							layout.findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
+							final String title;
+							Map<String,String> m=s.response.getData();
+							if (m.containsKey("hostname")) {
+								title = deleteDecorations(m.get("hostname"));
+							} else if (m.containsKey("motd")) {
+								title = deleteDecorations(m.get("motd"));
+							} else {
+								title = s.ip + ":" + s.port;
+							}
+							((TextView)layout.findViewById(R.id.serverName)).setText(deleteDecorations(title));
+							((TextView)layout.findViewById(R.id.pingMillis)).setText(s.ping+" ms");
+						}
+					});
+				}
+			});
+			((TextView)layout.findViewById(R.id.serverName)).setText(R.string.working);
+			((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.working);
+			((TextView)layout.findViewById(R.id.serverAddress)).setText(s.ip+":"+s.port);
+			layout.findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
 			return layout;
 		}
 
@@ -58,6 +117,16 @@ public class ServerListActivity extends ListActivity{
 		public int hashCode() {
 			// TODO: Implement this method
 			return ip.hashCode()^port;
+		}
+
+		@Override
+		public boolean equals(Object o) {
+			// TODO: Implement this method
+			if(!(o instanceof Server)){
+				return false;
+			}
+			Server os=(Server)o;
+			return os.ip.equals(ip)&os.port==port;
 		}
 	}
 	public static class ServerStatus extends Server{

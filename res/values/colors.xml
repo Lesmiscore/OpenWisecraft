@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="stat_none">#000</color>
+	<color name="stat_pending">#ff0</color>
+	<color name="stat_error">#f00</color>
+	<color name="stat_ok">#0f0</color>
+</resources>
