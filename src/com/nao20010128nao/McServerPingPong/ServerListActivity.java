@@ -46,7 +46,9 @@ public class ServerListActivity extends ListActivity{
 		sl.addAll(sa);
 	}
 	public void saveServers(){
-		pref.edit().putString("servers",gson.toJson(list.toArray(new Server[list.size()]),Server[].class)).commit();
+		String json;
+		pref.edit().putString("servers",json=gson.toJson(list.toArray(new Server[list.size()]),Server[].class)).commit();
+		Log.d("json",json);
 	}
 	static String deleteDecorations(String decorated) {
 		StringBuilder sb=new StringBuilder();
