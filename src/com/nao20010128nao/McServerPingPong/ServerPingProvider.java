@@ -39,6 +39,11 @@ public class ServerPingProvider
 				stat.port=now.getKey().port;
 				stat.response=resp;
 				stat.ping=q.getLatestPingElapsed();
+				try {
+					now.getValue().onPingArrives(stat);
+				} catch (Throwable f) {
+
+				}
 			}
 		}
 	}
