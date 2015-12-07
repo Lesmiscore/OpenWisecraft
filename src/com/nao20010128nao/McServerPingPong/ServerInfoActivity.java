@@ -10,8 +10,8 @@ import java.math.*;
 import java.util.*;
 import query.*;
 
-public class TabsDDoS extends FragmentActivity {
-	static WeakReference<TabsDDoS> instance=new WeakReference(null);
+public class ServerInfoActivity extends FragmentActivity {
+	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
 
 	volatile BigInteger triedN,successN,failedN;
 	Thread status;

@@ -31,7 +31,7 @@ public class MainActivity extends Activity
 					.putInt("port",port)
 					.putInt("threads",threads)
 					.commit();
-				startActivity(new Intent(MainActivity.this,TabsDDoS.class).putExtra("ip",ip).putExtra("threads",threads).putExtra("port",port));
+				startActivity(new Intent(MainActivity.this,ServerInfoActivity.class).putExtra("ip",ip).putExtra("threads",threads).putExtra("port",port));
 			}
 		});
     }
