@@ -29,6 +29,10 @@ public class ServerListActivity extends ListActivity{
 		s.ip="setsuna.info";
 		s.port=19132;
 		sl.add(s);
+		s=new Server();
+		s.ip="sg.lbsg.net";
+		s.port=19132;
+		sl.add(s);
 	}
 	@Override
 	protected void onDestroy() {
