@@ -10,10 +10,7 @@
 	<string name="stop">Stop</string>
 	<string name="players">Players</string>
 	<string name="data">Data</string>
-	<string name="threads">Threads:</string>
-	<string name="tried">Tried:</string>
-	<string name="success">Success:</string>
-	<string name="failure">Failure:</string>
+	<string name="plugins">Plugins</string>
 	<string name="status">Status</string>
 	<string name="notResponding">Not Responding</string>
 	<string name="working">Pinging...</string>

@@ -17,9 +17,9 @@ public class ServerInfoActivity extends FragmentActivity {
 	int port;
 
 	List<Thread> t=new ArrayList<>();
-	ListView players,data;
+	ListView players,data,plugins;
 	FragmentTabHost fth;
-	TabHost.TabSpec playersF,dataF;
+	TabHost.TabSpec playersF,dataF,pluginsF;
 
 	ArrayAdapter<String> adap,adap3;
 	ArrayAdapter<Map.Entry<String,String>> adap2;
@@ -41,6 +41,10 @@ public class ServerInfoActivity extends FragmentActivity {
 		dataF.setIndicator(getResources().getString(R.string.data));
 		fth.addTab(dataF, DataFragment.class, null);
 
+		pluginsF = fth.newTabSpec("pluginsList");
+		pluginsF.setIndicator(getResources().getString(R.string.plugins));
+		fth.addTab(pluginsF, PluginsFragment.class, null);
+		
 		adap = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
 		adap2 = new ArrayAdapter<Map.Entry<String,String>>(this, 0, new ArrayList<Map.Entry<String,String>>()){
 			public View getView(int pos, View v, ViewGroup ignore) {
@@ -117,6 +121,15 @@ public class ServerInfoActivity extends FragmentActivity {
 			// TODO: Implement this method
 			ListView lv=(ListView) inflater.inflate(R.layout.data_tab, null, false);
 			setDataView(lv);
+			return lv;
+		}
+	}
+	public static class PluginsFragment extends android.support.v4.app.Fragment {
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+			// TODO: Implement this method
+			ListView lv=(ListView) inflater.inflate(R.layout.players_tab, null, false);
+			setPlayersView(lv);
 			return lv;
 		}
 	}
