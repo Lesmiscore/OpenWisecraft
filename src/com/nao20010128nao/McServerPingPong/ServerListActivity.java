@@ -34,10 +34,11 @@ public class ServerListActivity extends ListActivity{
 		}
 	}
 	public static class Server{
-		String ip;
-		int port;
+		public String ip;
+		public int port;
 	}
 	public static class ServerStatus extends Server{
-		QueryResponseUniverse response;
+		public QueryResponseUniverse response;
+		public long ping;
 	}
 }
