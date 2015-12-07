@@ -5,10 +5,15 @@ import query.*;
 public class ServerPingProvider
 {
 	Queue<Map.Entry<ServerListActivity.Server,PingHandler>> queue=new LinkedList<>();
-	Thread pingThread;
+	Thread pingThread=new PingThread();
 
 	public void putInQueue(ServerListActivity.Server server,PingHandler handler){
-		
+		Objects.requireNonNull(server);
+		Objects.requireNonNull(handler);
+		queue.add(new KVP(server,handler));
+		if(!pingThread.isAlive()){
+			pingThread.start();
+		}
 	}
 	
 	public static interface PingHandler{
@@ -45,6 +50,31 @@ public class ServerPingProvider
 
 				}
 			}
+		}
+	}
+	private class KVP implements Map.Entry<ServerListActivity.Server,PingHandler> {
+		ServerListActivity.Server server;
+		PingHandler handler;
+		public KVP(ServerListActivity.Server server,PingHandler handler){
+			this.server=server;
+			this.handler=handler;
+		}
+		@Override
+		public ServerPingProvider.PingHandler setValue(ServerPingProvider.PingHandler p1) {
+			// TODO: Implement this method
+			PingHandler old=handler;
+			handler=p1;
+			return old;
+		}
+		@Override
+		public ServerListActivity.Server getKey() {
+			// TODO: Implement this method
+			return server;
+		}
+		@Override
+		public ServerPingProvider.PingHandler getValue() {
+			// TODO: Implement this method
+			return handler;
 		}
 	}
 }
