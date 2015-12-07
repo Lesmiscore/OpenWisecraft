@@ -5,19 +5,36 @@ import android.widget.*;
 import java.util.*;
 import query.*;
 import android.view.*;
+import com.google.gson.*;
+import android.content.*;
+import android.preference.*;
 
 public class ServerListActivity extends ListActivity{
-
+	ServerPingProvider spp=new ServerPingProvider();
+	Gson gson=new Gson();
+	SharedPreferences pref;
+	ServerList sl;
+	List<Server> list;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
-		setListAdapter(new ServerList());
-		getListView().setOnItemClickListener((ServerList)getListAdapter());
+		setListAdapter(sl=new ServerList());
+		getListView().setOnItemClickListener(sl);
+		pref=PreferenceManager.getDefaultSharedPreferences(this);
+		loadServers();
 	}
-	class ServerList extends ArrayAdapter<ServerStatus> implements AdapterView.OnItemClickListener{
+	public void loadServers(){
+		Server[] sa=gson.fromJson(pref.getString("servers","[]"),Server[].class);
+		sl.clear();
+		sl.addAll(sa);
+	}
+	public void saveServers(){
+		pref.edit().putString("servers",gson.toJson(list.toArray(new Server[list.size()]),Server[].class)).commit();
+	}
+	class ServerList extends ArrayAdapter<Server> implements AdapterView.OnItemClickListener{
 		public ServerList(){
-			super(ServerListActivity.this,0,new ArrayList<ServerStatus>());
+			super(ServerListActivity.this,0,list=new ArrayList<Server>());
 		}
 
 		@Override
@@ -36,9 +53,21 @@ public class ServerListActivity extends ListActivity{
 	public static class Server{
 		public String ip;
 		public int port;
+
+		@Override
+		public int hashCode() {
+			// TODO: Implement this method
+			return ip.hashCode()^port;
+		}
 	}
 	public static class ServerStatus extends Server{
 		public QueryResponseUniverse response;
 		public long ping;
+
+		@Override
+		public int hashCode() {
+			// TODO: Implement this method
+			return super.hashCode()^((Long)ping).hashCode()^response.hashCode();
+		}
 	}
 }
