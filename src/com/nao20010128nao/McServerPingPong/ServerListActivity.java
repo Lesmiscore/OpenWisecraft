@@ -18,6 +18,7 @@ public class ServerListActivity extends ListActivity{
 	ServerList sl;
 	List<Server> list;
 	int clicked=-1;
+	ProgressDialog waitDialog;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
@@ -60,6 +61,7 @@ public class ServerListActivity extends ListActivity{
 												sn.ip=s.ip;
 												sn.port=s.port;
 												list.set(clicked,sn);
+												hideWorkingDialog();
 											}
 										});
 								}
@@ -80,12 +82,14 @@ public class ServerListActivity extends ListActivity{
 												((TextView)sl.getCachedView(clicked).findViewById(R.id.pingMillis)).setText(s.ping+" ms");
 												ServerInfoActivity.stat=s;
 												startActivityForResult(new Intent(ServerListActivity.this,ServerInfoActivity.class),0);
+												hideWorkingDialog();
 											}
 										});
 								}
 							});
 						((TextView)sl.getCachedView(clicked).findViewById(R.id.pingMillis)).setText(R.string.working);
 						sl.getCachedView(clicked).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
+						showWorkingDialog();
 						break;
 				}
 				break;
@@ -115,6 +119,21 @@ public class ServerListActivity extends ListActivity{
 		}
 		Log.d("esc", sb.toString());
 		return sb.toString();
+	}
+	public void showWorkingDialog(){
+		if(waitDialog!=null){
+			hideWorkingDialog();
+		}
+		waitDialog= new ProgressDialog(this);
+		waitDialog.setIndeterminate(true);
+		waitDialog.setMessage(getResources().getString(R.string.working));
+	}
+	public void hideWorkingDialog(){
+		if(waitDialog==null){
+			return;
+		}
+		waitDialog.cancel();
+		waitDialog=null;
 	}
 	class ServerList extends ArrayAdapter<Server> implements AdapterView.OnItemClickListener{
 		List<View> cached=new ArrayList();
@@ -181,7 +200,7 @@ public class ServerListActivity extends ListActivity{
 				ServerInfoActivity.stat=(ServerStatus)s;
 				startActivityForResult(new Intent(ServerListActivity.this,ServerInfoActivity.class),0);
 			}else{
-				spp.putInQueue(ServerInfoActivity.stat,new ServerPingProvider.PingHandler(){
+				spp.putInQueue(s,new ServerPingProvider.PingHandler(){
 						public void onPingFailed(final Server s){
 							runOnUiThread(new Runnable(){
 									public void run(){
@@ -192,6 +211,7 @@ public class ServerListActivity extends ListActivity{
 										sn.ip=s.ip;
 										sn.port=s.port;
 										list.set(clicked,sn);
+										hideWorkingDialog();
 									}
 								});
 						}
@@ -210,14 +230,17 @@ public class ServerListActivity extends ListActivity{
 										}
 										((TextView)sl.getCachedView(clicked).findViewById(R.id.serverName)).setText(deleteDecorations(title));
 										((TextView)sl.getCachedView(clicked).findViewById(R.id.pingMillis)).setText(s.ping+" ms");
+										list.set(clicked,s);
 										ServerInfoActivity.stat=s;
 										startActivityForResult(new Intent(ServerListActivity.this,ServerInfoActivity.class),0);
+										hideWorkingDialog();
 									}
 								});
 						}
 					});
 				((TextView)sl.getCachedView(clicked).findViewById(R.id.pingMillis)).setText(R.string.working);
 				sl.getCachedView(clicked).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
+				showWorkingDialog();
 			}
 		}
 
