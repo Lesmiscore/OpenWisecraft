@@ -55,7 +55,7 @@ public class ServerInfoActivity extends FragmentActivity {
 				return v;
 			}
 		};
-		
+		adap3 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
 	}
 	public synchronized void update(final QueryResponseUniverse resp) {
 		final ArrayList<String> sort=new ArrayList<>(resp.getPlayerList());
@@ -81,6 +81,9 @@ public class ServerInfoActivity extends FragmentActivity {
 	static void setDataView(ListView lv) {
 		instance.get().setDataView_(lv);
 	}
+	static void setPluginsView(ListView lv) {
+		instance.get().setPluginsView_(lv);
+	}
 	
 	void setPlayersView_(ListView lv) {
 		players = lv;
@@ -89,6 +92,10 @@ public class ServerInfoActivity extends FragmentActivity {
 	void setDataView_(ListView lv) {
 		data = lv;
 		lv.setAdapter(adap2);
+	}
+	void setPluginsView_(ListView lv) {
+		plugins = lv;
+		lv.setAdapter(adap3);
 	}
 
 	static String deleteDecorations(String decorated) {
@@ -129,7 +136,7 @@ public class ServerInfoActivity extends FragmentActivity {
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
 			ListView lv=(ListView) inflater.inflate(R.layout.players_tab, null, false);
-			setPlayersView(lv);
+			setPluginsView(lv);
 			return lv;
 		}
 	}
