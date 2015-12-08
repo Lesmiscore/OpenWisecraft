@@ -246,6 +246,8 @@ public class ServerListActivity extends ListActivity{
 										((TextView)sl.getCachedView(clicked).findViewById(R.id.serverName)).setText(deleteDecorations(title));
 										((TextView)sl.getCachedView(clicked).findViewById(R.id.pingMillis)).setText(s.ping+" ms");
 										list.set(clicked,s);
+										ServerInfoActivity.stat=s;
+										startActivityForResult(new Intent(ServerListActivity.this,ServerInfoActivity.class),0);
 										hideWorkingDialog();
 									}
 								});
@@ -311,8 +313,6 @@ public class ServerListActivity extends ListActivity{
 														((TextView)sl.getCachedView(clicked).findViewById(R.id.serverName)).setText(deleteDecorations(title));
 														((TextView)sl.getCachedView(clicked).findViewById(R.id.pingMillis)).setText(s.ping+" ms");
 														list.set(clicked,s);
-														ServerInfoActivity.stat=s;
-														startActivityForResult(new Intent(ServerListActivity.this,ServerInfoActivity.class),0);
 														hideWorkingDialog();
 													}
 												});
