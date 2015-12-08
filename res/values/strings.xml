@@ -25,5 +25,6 @@
 	<string-array name="serverSubMenu">
 		<item>Remove</item>
 		<item>@string/update</item>
+		<item>Edit</item>
 	</string-array>
 </resources>
