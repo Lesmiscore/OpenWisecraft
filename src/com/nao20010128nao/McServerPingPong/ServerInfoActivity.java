@@ -81,6 +81,28 @@ public class ServerInfoActivity extends FragmentActivity {
 		}
 		setTitle(title);
 	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// TODO: Implement this method
+		menu.add(Menu.NONE, 0, 0, R.string.update);
+		//menu.add(Menu.NONE, 0, 1, "メニュー2");
+		
+		return true;
+	}
+
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		// TODO: Implement this method
+		switch(featureId){
+			case 0://Update
+				setResult(Consistant.ACTIVITY_RESULT_UPDATE);
+				finish();//ServerListActivity updates the stat
+				return true;
+		}
+		return super.onMenuItemSelected(featureId, item);
+	}
+
 	static void setPlayersView(ListView lv) {
 		instance.get().setPlayersView_(lv);
 	}

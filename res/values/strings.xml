@@ -14,4 +14,6 @@
 	<string name="status">Status</string>
 	<string name="notResponding">Not Responding</string>
 	<string name="working">Pinging...</string>
+	<string name="update">Update</string>
+	<string name="update.all">Update All</string>
 </resources>
