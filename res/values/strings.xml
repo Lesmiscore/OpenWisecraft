@@ -16,4 +16,6 @@
 	<string name="working">Pinging...</string>
 	<string name="update">Update</string>
 	<string name="update.all">Update All</string>
+	<string name="add">Add Server</string>
+	<string name="addFromMCPE">Add All From MCPE Server List</string>
 </resources>

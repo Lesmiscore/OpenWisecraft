@@ -81,6 +81,7 @@ public class ServerListActivity extends ListActivity{
 												((TextView)sl.getCachedView(clicked).findViewById(R.id.serverName)).setText(deleteDecorations(title));
 												((TextView)sl.getCachedView(clicked).findViewById(R.id.pingMillis)).setText(s.ping+" ms");
 												ServerInfoActivity.stat=s;
+												list.set(clicked,s);
 												startActivityForResult(new Intent(ServerListActivity.this,ServerInfoActivity.class),0);
 												hideWorkingDialog();
 											}
@@ -95,6 +96,16 @@ public class ServerListActivity extends ListActivity{
 				break;
 		}
 	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// TODO: Implement this method
+		menu.add(Menu.NONE, 0, 0, R.string.add);
+		menu.add(Menu.NONE, 0, 1, R.string.addFromMCPE);
+		menu.add(Menu.NONE, 0, 1, R.string.update_all);
+		return true;
+	}
+	
 	public void loadServers(){
 		Server[] sa=gson.fromJson(pref.getString("servers","[]"),Server[].class);
 		sl.clear();
