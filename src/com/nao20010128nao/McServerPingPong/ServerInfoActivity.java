@@ -12,7 +12,7 @@ import query.*;
 
 public class ServerInfoActivity extends FragmentActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
-
+	public static ServerListActivity.ServerStatus stat;
 	String ip;
 	int port;
 
@@ -73,6 +73,10 @@ public class ServerInfoActivity extends FragmentActivity {
 		adap.addAll(sort);
 		adap2.clear();
 		adap2.addAll(resp.getData().entrySet());
+		adap3.clear();
+		if(resp.getData().containsKey("plugins")){
+			adap3.addAll(resp.getData().get("plugins").split("\\: ")[1].split("\\; "));
+		}
 		setTitle(title);
 	}
 	static void setPlayersView(ListView lv) {
