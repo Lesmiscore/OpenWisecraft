@@ -17,6 +17,7 @@ public class ServerListActivity extends ListActivity{
 	SharedPreferences pref;
 	ServerList sl;
 	List<Server> list;
+	int clicked=-1;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
@@ -39,6 +40,48 @@ public class ServerListActivity extends ListActivity{
 		// TODO: Implement this method
 		super.onDestroy();
 		saveServers();
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO: Implement this method
+		switch(requestCode){
+			case 0:
+				switch(resultCode){
+					case RESULT_OK:
+						break;
+					case Consistant.ACTIVITY_RESULT_UPDATE:
+						spp.putInQueue(ServerInfoActivity.stat,new ServerPingProvider.PingHandler(){
+								public void onPingFailed(Server s){
+									runOnUiThread(new Runnable(){
+											public void run(){
+												sl.getCachedView(clicked).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_error)));
+											}
+										});
+								}
+								public void onPingArrives(final ServerStatus s){
+									runOnUiThread(new Runnable(){
+											public void run(){
+												sl.getCachedView(clicked).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
+												final String title;
+												Map<String,String> m=s.response.getData();
+												if (m.containsKey("hostname")) {
+													title = deleteDecorations(m.get("hostname"));
+												} else if (m.containsKey("motd")) {
+													title = deleteDecorations(m.get("motd"));
+												} else {
+													title = s.ip + ":" + s.port;
+												}
+												((TextView)sl.getCachedView(clicked).findViewById(R.id.serverName)).setText(deleteDecorations(title));
+												((TextView)sl.getCachedView(clicked).findViewById(R.id.pingMillis)).setText(s.ping+" ms");
+											}
+										});
+								}
+							});
+						break;
+				}
+				break;
+		}
 	}
 	public void loadServers(){
 		Server[] sa=gson.fromJson(pref.getString("servers","[]"),Server[].class);
@@ -125,6 +168,8 @@ public class ServerListActivity extends ListActivity{
 			Server s=getItem(p3);
 			if(s instanceof ServerStatus){
 				ServerInfoActivity.stat=(ServerStatus)s;
+				clicked=p3;
+				startActivityForResult(new Intent(ServerListActivity.this,ServerInfoActivity.class),0);
 			}
 		}
 
