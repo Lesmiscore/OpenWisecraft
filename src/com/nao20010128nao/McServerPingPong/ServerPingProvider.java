@@ -12,6 +12,7 @@ public class ServerPingProvider
 		Objects.requireNonNull(handler);
 		queue.add(new KVP(server,handler));
 		if(!pingThread.isAlive()){
+			pingThread=new PingThread();
 			pingThread.start();
 		}
 	}
