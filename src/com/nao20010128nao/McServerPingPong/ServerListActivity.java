@@ -11,6 +11,7 @@ import android.preference.*;
 import android.graphics.drawable.*;
 import android.util.*;
 import android.text.*;
+import java.io.*;
 
 public class ServerListActivity extends ListActivity{
 	ServerPingProvider spp=new ServerPingProvider();
@@ -145,7 +146,39 @@ public class ServerListActivity extends ListActivity{
 					show();
 				break;
 			case 1:
+				Toast.makeText(ServerListActivity.this,R.string.importing,Toast.LENGTH_LONG).show();
+				new Thread(){
+					public void run(){
+						ArrayList<String[]> al=new ArrayList<String[]>();
+						BufferedReader br=null;
+						try{
+							br=new BufferedReader(new InputStreamReader(new FileInputStream(new File(Environment.getExternalStorageDirectory(),"/games/com.mojang/minecraftpe/external_servers.txt"))));
+							while(true){
+								String s=br.readLine();
+								if(s==null)break;
+								Log.d("readLine",s);
+								al.add(s.split("\\:"));
+							}
+						}catch(Throwable ex){
+							ex.printStackTrace();
+						}finally{
+							try{
+								if (br != null)
+									br.close();
+							}catch (IOException e){
 
+							}
+						}
+						ArrayList<Server> sv=new ArrayList<>();
+						for(String[] s:al){
+							Server svr=new Server();
+							svr.ip=s[1];
+							svr.port=new Integer(s[2]);
+							sv.add(svr);
+						}
+						sl.addAll(sv);
+					}
+				}.start();
 				break;
 			case 2:
 

@@ -21,6 +21,7 @@
 	<string name="auSure">Are you sure?</string>
 	<string name="numError">An error occured while parsing the number. Cancelled.</string>
 	<string name="alreadyExists">Server already added.</string>
+	<string name="importing">Importing...</string>
 	
 	<string-array name="serverSubMenu">
 		<item>Remove</item>
