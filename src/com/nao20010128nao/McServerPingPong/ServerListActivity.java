@@ -152,7 +152,7 @@ public class ServerListActivity extends ListActivity{
 			((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.working);
 			((TextView)layout.findViewById(R.id.serverAddress)).setText(s.ip+":"+s.port);
 			layout.findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
-			if(cached.size()<position){
+			if(cached.size()<=position){
 				cached.add(layout);
 			}else{
 				cached.set(position,layout);
