@@ -18,4 +18,10 @@
 	<string name="update.all">Update All</string>
 	<string name="add">Add Server</string>
 	<string name="addFromMCPE">Add All From MCPE Server List</string>
+	<string name="auSure">Are you sure?</string>
+	
+	<string-array name="serverSubMenu">
+		<item>Remove</item>
+		<item>@string/update</item>
+	</string-array>
 </resources>

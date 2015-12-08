@@ -148,7 +148,7 @@ public class ServerListActivity extends ListActivity{
 		waitDialog.cancel();
 		waitDialog=null;
 	}
-	class ServerList extends ArrayAdapter<Server> implements AdapterView.OnItemClickListener{
+	class ServerList extends ArrayAdapter<Server> implements AdapterView.OnItemClickListener,AdapterView.OnItemLongClickListener{
 		List<View> cached=new ArrayList();
 		public ServerList(){
 			super(ServerListActivity.this,0,list=new ArrayList<Server>());
@@ -255,6 +255,79 @@ public class ServerListActivity extends ListActivity{
 				sl.getCachedView(clicked).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
 				showWorkingDialog();
 			}
+		}
+
+		@Override
+		public boolean onItemLongClick(AdapterView<?> p1, View p2, final int p3, long p4) {
+			// TODO: Implement this method
+			clicked=p3;
+			Dialog d=new AlertDialog.Builder(ServerListActivity.this)
+				.setItems(R.array.serverSubMenu,new DialogInterface.OnClickListener(){
+					public void onClick(DialogInterface di,int which){
+						switch(which){
+							case 0:
+								new AlertDialog.Builder(ServerListActivity.this)
+									.setMessage(R.string.auSure)
+									.setNegativeButton(android.R.string.yes,new DialogInterface.OnClickListener(){
+										public void onClick(DialogInterface di,int i){
+											sl.remove(list.get(clicked));
+										}
+									})
+									.setPositiveButton(android.R.string.no,new DialogInterface.OnClickListener(){
+										public void onClick(DialogInterface di,int i){
+										}
+									})
+									.show();
+								break;
+							case 1:
+								spp.putInQueue(getItem(p3),new ServerPingProvider.PingHandler(){
+										public void onPingFailed(final Server s){
+											runOnUiThread(new Runnable(){
+													public void run(){
+														sl.getCachedView(clicked).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_error)));
+														((TextView)sl.getCachedView(clicked).findViewById(R.id.serverName)).setText(s.ip+":"+s.port);
+														((TextView)sl.getCachedView(clicked).findViewById(R.id.pingMillis)).setText(R.string.notResponding);
+														Server sn=new Server();
+														sn.ip=s.ip;
+														sn.port=s.port;
+														list.set(clicked,sn);
+														hideWorkingDialog();
+													}
+												});
+										}
+										public void onPingArrives(final ServerStatus s){
+											runOnUiThread(new Runnable(){
+													public void run(){
+														sl.getCachedView(clicked).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
+														final String title;
+														Map<String,String> m=s.response.getData();
+														if (m.containsKey("hostname")) {
+															title = deleteDecorations(m.get("hostname"));
+														} else if (m.containsKey("motd")) {
+															title = deleteDecorations(m.get("motd"));
+														} else {
+															title = s.ip + ":" + s.port;
+														}
+														((TextView)sl.getCachedView(clicked).findViewById(R.id.serverName)).setText(deleteDecorations(title));
+														((TextView)sl.getCachedView(clicked).findViewById(R.id.pingMillis)).setText(s.ping+" ms");
+														list.set(clicked,s);
+														ServerInfoActivity.stat=s;
+														startActivityForResult(new Intent(ServerListActivity.this,ServerInfoActivity.class),0);
+														hideWorkingDialog();
+													}
+												});
+										}
+									});
+								((TextView)sl.getCachedView(clicked).findViewById(R.id.pingMillis)).setText(R.string.working);
+								sl.getCachedView(clicked).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
+								showWorkingDialog();
+								break;
+						}
+					}
+				})
+				.setCancelable(true)
+				.show();
+			return true;
 		}
 
 		@Override
