@@ -56,6 +56,8 @@ public class ServerInfoActivity extends FragmentActivity {
 			}
 		};
 		adap3 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
+		
+		update(stat.response);
 	}
 	public synchronized void update(final QueryResponseUniverse resp) {
 		final ArrayList<String> sort=new ArrayList<>(resp.getPlayerList());
