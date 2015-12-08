@@ -172,8 +172,8 @@ public class ServerListActivity extends ListActivity{
 						ArrayList<Server> sv=new ArrayList<>();
 						for(String[] s:al){
 							Server svr=new Server();
-							svr.ip=s[1];
-							svr.port=new Integer(s[2]);
+							svr.ip=s[2];
+							svr.port=new Integer(s[3]);
 							sv.add(svr);
 						}
 						sl.addAll(sv);
