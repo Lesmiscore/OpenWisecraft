@@ -104,8 +104,8 @@ public class ServerListActivity extends ListActivity{
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO: Implement this method
 		menu.add(Menu.NONE, 0, 0, R.string.add);
-		menu.add(Menu.NONE, 0, 1, R.string.addFromMCPE);
-		menu.add(Menu.NONE, 0, 2, R.string.update_all);
+		menu.add(Menu.NONE, 1, 1, R.string.addFromMCPE);
+		menu.add(Menu.NONE, 2, 2, R.string.update_all);
 		return true;
 	}
 
