@@ -10,6 +10,7 @@ import android.content.*;
 import android.preference.*;
 import android.graphics.drawable.*;
 import android.util.*;
+import android.text.*;
 
 public class ServerListActivity extends ListActivity{
 	ServerPingProvider spp=new ServerPingProvider();
@@ -104,7 +105,52 @@ public class ServerListActivity extends ListActivity{
 		// TODO: Implement this method
 		menu.add(Menu.NONE, 0, 0, R.string.add);
 		menu.add(Menu.NONE, 0, 1, R.string.addFromMCPE);
-		menu.add(Menu.NONE, 0, 1, R.string.update_all);
+		menu.add(Menu.NONE, 0, 2, R.string.update_all);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO: Implement this method
+		switch(item.getItemId()){
+			case 0:
+				final Server data=new Server();
+				data.ip="localhost";
+				data.port=19132;
+				View dialog=getLayoutInflater().inflate(R.layout.serveradddialog,null);
+				final EditText ip=(EditText)dialog.findViewById(R.id.serverIp);
+				final EditText port=(EditText)dialog.findViewById(R.id.serverPort);
+
+				ip.setText(data.ip);
+				port.setText(data.port+"");
+
+				new AlertDialog.Builder(this).
+					setView(dialog).
+					setPositiveButton(android.R.string.yes,new DialogInterface.OnClickListener(){
+						public void onClick(DialogInterface d,int sel){
+							data.ip=ip.getText().toString();
+							data.port=new Integer(port.getText().toString());
+							if(list.contains(data)){
+								Toast.makeText(ServerListActivity.this,R.string.alreadyExists,Toast.LENGTH_LONG).show();
+							}else{
+								sl.add(data);
+							}
+						}
+					}).
+					setNegativeButton(android.R.string.no,new DialogInterface.OnClickListener(){
+						public void onClick(DialogInterface d,int sel){
+
+						}
+					}).
+					show();
+				break;
+			case 1:
+
+				break;
+			case 2:
+
+				break;
+		}
 		return true;
 	}
 	
