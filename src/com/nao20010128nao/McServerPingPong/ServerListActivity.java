@@ -205,6 +205,8 @@ public class ServerListActivity extends ListActivity{
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {
 			// TODO: Implement this method
+			if(cached.size()<position)return cached.get(position);
+			if(convertView!=null)return convertView;
 			final View layout=getLayoutInflater().inflate(R.layout.quickstatus,null,false);
 			Server s=getItem(position);
 			layout.setTag(s);
