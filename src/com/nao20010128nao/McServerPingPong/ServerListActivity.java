@@ -169,14 +169,18 @@ public class ServerListActivity extends ListActivity{
 
 							}
 						}
-						ArrayList<Server> sv=new ArrayList<>();
+						final ArrayList<Server> sv=new ArrayList<>();
 						for(String[] s:al){
 							Server svr=new Server();
 							svr.ip=s[2];
 							svr.port=new Integer(s[3]);
 							sv.add(svr);
 						}
-						sl.addAll(sv);
+						runOnUiThread(new Runnable(){
+							public void run(){
+								sl.addAll(sv);
+							}
+						});
 					}
 				}.start();
 				break;
