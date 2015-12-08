@@ -25,6 +25,8 @@ public class ServerListActivity extends ListActivity{
 		super.onCreate(savedInstanceState);
 		setListAdapter(sl=new ServerList());
 		getListView().setOnItemClickListener(sl);
+		getListView().setOnItemLongClickListener(sl);
+		getListView().setLongClickable(true);
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
 		loadServers();
 		/*Server s=new Server();
@@ -244,8 +246,6 @@ public class ServerListActivity extends ListActivity{
 										((TextView)sl.getCachedView(clicked).findViewById(R.id.serverName)).setText(deleteDecorations(title));
 										((TextView)sl.getCachedView(clicked).findViewById(R.id.pingMillis)).setText(s.ping+" ms");
 										list.set(clicked,s);
-										ServerInfoActivity.stat=s;
-										startActivityForResult(new Intent(ServerListActivity.this,ServerInfoActivity.class),0);
 										hideWorkingDialog();
 									}
 								});
