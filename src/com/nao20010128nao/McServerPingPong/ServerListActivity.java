@@ -52,10 +52,12 @@ public class ServerListActivity extends ListActivity{
 						break;
 					case Consistant.ACTIVITY_RESULT_UPDATE:
 						spp.putInQueue(ServerInfoActivity.stat,new ServerPingProvider.PingHandler(){
-								public void onPingFailed(Server s){
+								public void onPingFailed(final Server s){
 									runOnUiThread(new Runnable(){
 											public void run(){
 												sl.getCachedView(clicked).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_error)));
+												((TextView)sl.getCachedView(clicked).findViewById(R.id.serverName)).setText(s.ip+":"+s.port);
+												((TextView)sl.getCachedView(clicked).findViewById(R.id.pingMillis)).setText(R.string.notResponding);
 											}
 										});
 								}
@@ -74,10 +76,14 @@ public class ServerListActivity extends ListActivity{
 												}
 												((TextView)sl.getCachedView(clicked).findViewById(R.id.serverName)).setText(deleteDecorations(title));
 												((TextView)sl.getCachedView(clicked).findViewById(R.id.pingMillis)).setText(s.ping+" ms");
+												ServerInfoActivity.stat=s;
+												startActivityForResult(new Intent(ServerListActivity.this,ServerInfoActivity.class),0);
 											}
 										});
 								}
 							});
+						((TextView)sl.getCachedView(clicked).findViewById(R.id.pingMillis)).setText(R.string.working);
+						sl.getCachedView(clicked).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
 						break;
 				}
 				break;
@@ -121,12 +127,14 @@ public class ServerListActivity extends ListActivity{
 			Server s=getItem(position);
 			layout.setTag(s);
 			spp.putInQueue(s,new ServerPingProvider.PingHandler(){
-				public void onPingFailed(Server s){
+				public void onPingFailed(final Server s){
 					runOnUiThread(new Runnable(){
 							public void run(){
 								layout.findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_error)));
-								}
-							});
+								((TextView)layout.findViewById(R.id.serverName)).setText(s.ip+":"+s.port);
+								((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.notResponding);
+							}
+						});
 				}
 				public void onPingArrives(final ServerStatus s){
 					runOnUiThread(new Runnable(){
