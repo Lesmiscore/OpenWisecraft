@@ -135,10 +135,6 @@ public class ServerListActivity extends ListActivity{
 								layout.findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_error)));
 								((TextView)layout.findViewById(R.id.serverName)).setText(s.ip+":"+s.port);
 								((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.notResponding);
-								Server sn=new Server();
-								sn.ip=s.ip;
-								sn.port=s.port;
-								list.set(clicked,sn);
 							}
 						});
 				}
