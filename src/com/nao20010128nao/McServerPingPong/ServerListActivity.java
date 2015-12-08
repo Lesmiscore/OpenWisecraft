@@ -48,8 +48,6 @@ public class ServerListActivity extends ListActivity{
 		switch(requestCode){
 			case 0:
 				switch(resultCode){
-					case RESULT_OK:
-						break;
 					case Consistant.ACTIVITY_RESULT_UPDATE:
 						spp.putInQueue(ServerInfoActivity.stat,new ServerPingProvider.PingHandler(){
 								public void onPingFailed(final Server s){
