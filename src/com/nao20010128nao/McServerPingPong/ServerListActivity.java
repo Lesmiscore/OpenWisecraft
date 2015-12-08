@@ -72,7 +72,7 @@ public class ServerListActivity extends ListActivity{
 		}
 
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
+		public View getView(final int position, View convertView, ViewGroup parent) {
 			// TODO: Implement this method
 			final View layout=getLayoutInflater().inflate(R.layout.quickstatus,null,false);
 			Server s=getItem(position);
@@ -100,6 +100,7 @@ public class ServerListActivity extends ListActivity{
 							}
 							((TextView)layout.findViewById(R.id.serverName)).setText(deleteDecorations(title));
 							((TextView)layout.findViewById(R.id.pingMillis)).setText(s.ping+" ms");
+							list.set(position,s);
 						}
 					});
 				}
@@ -121,6 +122,10 @@ public class ServerListActivity extends ListActivity{
 		@Override
 		public void onItemClick(AdapterView<?> p1, View p2, int p3, long p4) {
 			// TODO: Implement this method
+			Server s=getItem(p3);
+			if(s instanceof ServerStatus){
+				ServerInfoActivity.stat=(ServerStatus)s;
+			}
 		}
 
 		@Override
