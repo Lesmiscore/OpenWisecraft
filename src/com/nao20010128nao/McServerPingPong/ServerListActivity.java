@@ -56,6 +56,10 @@ public class ServerListActivity extends ListActivity{
 												sl.getCachedView(clicked).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_error)));
 												((TextView)sl.getCachedView(clicked).findViewById(R.id.serverName)).setText(s.ip+":"+s.port);
 												((TextView)sl.getCachedView(clicked).findViewById(R.id.pingMillis)).setText(R.string.notResponding);
+												Server sn=new Server();
+												sn.ip=s.ip;
+												sn.port=s.port;
+												list.set(clicked,sn);
 											}
 										});
 								}
@@ -131,6 +135,10 @@ public class ServerListActivity extends ListActivity{
 								layout.findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_error)));
 								((TextView)layout.findViewById(R.id.serverName)).setText(s.ip+":"+s.port);
 								((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.notResponding);
+								Server sn=new Server();
+								sn.ip=s.ip;
+								sn.port=s.port;
+								list.set(clicked,sn);
 							}
 						});
 				}
@@ -172,10 +180,48 @@ public class ServerListActivity extends ListActivity{
 		public void onItemClick(AdapterView<?> p1, View p2, int p3, long p4) {
 			// TODO: Implement this method
 			Server s=getItem(p3);
+			clicked=p3;
 			if(s instanceof ServerStatus){
 				ServerInfoActivity.stat=(ServerStatus)s;
-				clicked=p3;
 				startActivityForResult(new Intent(ServerListActivity.this,ServerInfoActivity.class),0);
+			}else{
+				spp.putInQueue(ServerInfoActivity.stat,new ServerPingProvider.PingHandler(){
+						public void onPingFailed(final Server s){
+							runOnUiThread(new Runnable(){
+									public void run(){
+										sl.getCachedView(clicked).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_error)));
+										((TextView)sl.getCachedView(clicked).findViewById(R.id.serverName)).setText(s.ip+":"+s.port);
+										((TextView)sl.getCachedView(clicked).findViewById(R.id.pingMillis)).setText(R.string.notResponding);
+										Server sn=new Server();
+										sn.ip=s.ip;
+										sn.port=s.port;
+										list.set(clicked,sn);
+									}
+								});
+						}
+						public void onPingArrives(final ServerStatus s){
+							runOnUiThread(new Runnable(){
+									public void run(){
+										sl.getCachedView(clicked).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
+										final String title;
+										Map<String,String> m=s.response.getData();
+										if (m.containsKey("hostname")) {
+											title = deleteDecorations(m.get("hostname"));
+										} else if (m.containsKey("motd")) {
+											title = deleteDecorations(m.get("motd"));
+										} else {
+											title = s.ip + ":" + s.port;
+										}
+										((TextView)sl.getCachedView(clicked).findViewById(R.id.serverName)).setText(deleteDecorations(title));
+										((TextView)sl.getCachedView(clicked).findViewById(R.id.pingMillis)).setText(s.ping+" ms");
+										ServerInfoActivity.stat=s;
+										startActivityForResult(new Intent(ServerListActivity.this,ServerInfoActivity.class),0);
+									}
+								});
+						}
+					});
+				((TextView)sl.getCachedView(clicked).findViewById(R.id.pingMillis)).setText(R.string.working);
+				sl.getCachedView(clicked).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
 			}
 		}
 
