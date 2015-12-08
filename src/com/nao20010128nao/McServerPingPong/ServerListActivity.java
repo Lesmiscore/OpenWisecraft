@@ -127,6 +127,8 @@ public class ServerListActivity extends ListActivity{
 		waitDialog= new ProgressDialog(this);
 		waitDialog.setIndeterminate(true);
 		waitDialog.setMessage(getResources().getString(R.string.working));
+		waitDialog.setCancelable(false);
+		waitDialog.show();
 	}
 	public void hideWorkingDialog(){
 		if(waitDialog==null){
