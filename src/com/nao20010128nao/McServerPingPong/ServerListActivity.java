@@ -66,6 +66,7 @@ public class ServerListActivity extends ListActivity{
 		return sb.toString();
 	}
 	class ServerList extends ArrayAdapter<Server> implements AdapterView.OnItemClickListener{
+		List<View> cached=new ArrayList();
 		public ServerList(){
 			super(ServerListActivity.this,0,list=new ArrayList<Server>());
 		}
@@ -107,9 +108,16 @@ public class ServerListActivity extends ListActivity{
 			((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.working);
 			((TextView)layout.findViewById(R.id.serverAddress)).setText(s.ip+":"+s.port);
 			layout.findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
+			if(cached.size()<position){
+				cached.add(layout);
+			}else{
+				cached.set(position,layout);
+			}
 			return layout;
 		}
-
+		public View getCachedView(int position){
+			return cached.get(position);
+		}
 		@Override
 		public void onItemClick(AdapterView<?> p1, View p2, int p3, long p4) {
 			// TODO: Implement this method
