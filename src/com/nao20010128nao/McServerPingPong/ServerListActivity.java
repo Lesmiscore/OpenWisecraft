@@ -136,6 +136,7 @@ public class ServerListActivity extends ListActivity{
 							}else{
 								sl.add(data);
 							}
+							saveServers();
 						}
 					}).
 					setNegativeButton(android.R.string.no,new DialogInterface.OnClickListener(){
@@ -179,6 +180,7 @@ public class ServerListActivity extends ListActivity{
 						runOnUiThread(new Runnable(){
 							public void run(){
 								sl.addAll(sv);
+								saveServers();
 							}
 						});
 					}
