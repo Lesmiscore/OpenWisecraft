@@ -370,6 +370,7 @@ public class ServerListActivity extends ListActivity{
 				ServerInfoActivity.stat=(ServerStatus)s;
 				startActivityForResult(new Intent(ServerListActivity.this,ServerInfoActivity.class),0);
 			}else{
+				if(pinging.get(s))return;
 				spp.putInQueue(s,new ServerPingProvider.PingHandler(){
 						public void onPingFailed(final Server s){
 							runOnUiThread(new Runnable(){
