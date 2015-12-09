@@ -432,6 +432,13 @@ public class ServerListActivity extends ListActivity{
 			// TODO: Implement this method
 			for(Server s:collection)add(s);
 		}
+
+		@Override
+		public void remove(ServerListActivity.Server object) {
+			// TODO: Implement this method
+			cached.remove(list.indexOf(object));
+			super.remove(object);
+		}
 	}
 	public static class Server{
 		public String ip;
