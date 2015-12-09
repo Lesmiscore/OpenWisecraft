@@ -21,6 +21,7 @@ public class ServerListActivity extends ListActivity{
 	List<Server> list;
 	int clicked=-1;
 	ProgressDialog waitDialog;
+	Map<Server,Boolean> pinging=new HashMap();;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
@@ -66,6 +67,7 @@ public class ServerListActivity extends ListActivity{
 												sn.port=s.port;
 												list.set(clicked,sn);
 												hideWorkingDialog();
+												pinging.put(list.get(clicked),false);
 											}
 										});
 								}
@@ -88,6 +90,7 @@ public class ServerListActivity extends ListActivity{
 												list.set(clicked,s);
 												startActivityForResult(new Intent(ServerListActivity.this,ServerInfoActivity.class),0);
 												hideWorkingDialog();
+												pinging.put(list.get(clicked),false);
 											}
 										});
 								}
@@ -95,6 +98,7 @@ public class ServerListActivity extends ListActivity{
 						((TextView)sl.getCachedView(clicked).findViewById(R.id.pingMillis)).setText(R.string.working);
 						sl.getCachedView(clicked).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
 						showWorkingDialog();
+						pinging.put(list.get(clicked),true);
 						break;
 				}
 				break;
@@ -187,7 +191,55 @@ public class ServerListActivity extends ListActivity{
 				}.start();
 				break;
 			case 2:
-
+				for(int i=0;i<list.size();i++){
+					if(pinging.get(list.get(i))){
+						continue;
+					}
+					final int i_=i;
+					spp.putInQueue(list.get(i),new ServerPingProvider.PingHandler(){
+							public void onPingFailed(final Server s){
+								runOnUiThread(new Runnable(){
+										public void run(){
+											sl.getCachedView(i_).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_error)));
+											((TextView)sl.getCachedView(i_).findViewById(R.id.serverName)).setText(s.ip+":"+s.port);
+											((TextView)sl.getCachedView(i_).findViewById(R.id.pingMillis)).setText(R.string.notResponding);
+											Server sn=new Server();
+											sn.ip=s.ip;
+											sn.port=s.port;
+											list.set(i_,sn);
+											hideWorkingDialog();
+											pinging.put(list.get(i_),false);
+										}
+									});
+							}
+							public void onPingArrives(final ServerStatus s){
+								runOnUiThread(new Runnable(){
+										public void run(){
+											sl.getCachedView(i_).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
+											final String title;
+											Map<String,String> m=s.response.getData();
+											if (m.containsKey("hostname")) {
+												title = deleteDecorations(m.get("hostname"));
+											} else if (m.containsKey("motd")) {
+												title = deleteDecorations(m.get("motd"));
+											} else {
+												title = s.ip + ":" + s.port;
+											}
+											((TextView)sl.getCachedView(i_).findViewById(R.id.serverName)).setText(deleteDecorations(title));
+											((TextView)sl.getCachedView(i_).findViewById(R.id.pingMillis)).setText(s.ping+" ms");
+											list.set(i_,s);
+											ServerInfoActivity.stat=s;
+											startActivityForResult(new Intent(ServerListActivity.this,ServerInfoActivity.class),0);
+											pinging.put(list.get(i_),false);
+											hideWorkingDialog();
+										}
+									});
+							}
+						});
+					((TextView)sl.getCachedView(i).findViewById(R.id.pingMillis)).setText(R.string.working);
+					sl.getCachedView(i).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
+					pinging.put(list.get(i),true);
+				}
 				break;
 		}
 		return true;
@@ -256,6 +308,7 @@ public class ServerListActivity extends ListActivity{
 								layout.findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_error)));
 								((TextView)layout.findViewById(R.id.serverName)).setText(s.ip+":"+s.port);
 								((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.notResponding);
+								pinging.put(s,false);
 							}
 						});
 				}
@@ -275,6 +328,7 @@ public class ServerListActivity extends ListActivity{
 							((TextView)layout.findViewById(R.id.serverName)).setText(deleteDecorations(title));
 							((TextView)layout.findViewById(R.id.pingMillis)).setText(s.ping+" ms");
 							list.set(position,s);
+							pinging.put(s,false);
 						}
 					});
 				}
@@ -288,6 +342,7 @@ public class ServerListActivity extends ListActivity{
 			}else{
 				cached.set(position,layout);
 			}
+			pinging.put(s,true);
 			return layout;
 		}
 		public View getCachedView(int position){
@@ -314,6 +369,7 @@ public class ServerListActivity extends ListActivity{
 										sn.port=s.port;
 										list.set(clicked,sn);
 										hideWorkingDialog();
+										pinging.put(list.get(clicked),false);
 									}
 								});
 						}
@@ -336,6 +392,7 @@ public class ServerListActivity extends ListActivity{
 										ServerInfoActivity.stat=s;
 										startActivityForResult(new Intent(ServerListActivity.this,ServerInfoActivity.class),0);
 										hideWorkingDialog();
+										pinging.put(list.get(clicked),false);
 									}
 								});
 						}
@@ -343,6 +400,7 @@ public class ServerListActivity extends ListActivity{
 				((TextView)sl.getCachedView(clicked).findViewById(R.id.pingMillis)).setText(R.string.working);
 				sl.getCachedView(clicked).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
 				showWorkingDialog();
+				pinging.put(list.get(clicked),true);
 			}
 		}
 
@@ -381,6 +439,7 @@ public class ServerListActivity extends ListActivity{
 														sn.port=s.port;
 														list.set(clicked,sn);
 														hideWorkingDialog();
+														pinging.put(list.get(clicked),false);
 													}
 												});
 										}
@@ -401,6 +460,7 @@ public class ServerListActivity extends ListActivity{
 														((TextView)sl.getCachedView(clicked).findViewById(R.id.pingMillis)).setText(s.ping+" ms");
 														list.set(clicked,s);
 														hideWorkingDialog();
+														pinging.put(list.get(clicked),false);
 													}
 												});
 										}
@@ -408,6 +468,7 @@ public class ServerListActivity extends ListActivity{
 								((TextView)sl.getCachedView(clicked).findViewById(R.id.pingMillis)).setText(R.string.working);
 								sl.getCachedView(clicked).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
 								showWorkingDialog();
+								pinging.put(list.get(clicked),true);
 								break;
 						}
 					}
@@ -465,11 +526,5 @@ public class ServerListActivity extends ListActivity{
 	public static class ServerStatus extends Server{
 		public QueryResponseUniverse response;
 		public long ping;
-
-		@Override
-		public int hashCode() {
-			// TODO: Implement this method
-			return super.hashCode()^((Long)ping).hashCode()^response.hashCode();
-		}
 	}
 }
