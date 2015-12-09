@@ -432,6 +432,7 @@ public class ServerListActivity extends ListActivity{
 									.setNegativeButton(android.R.string.yes,new DialogInterface.OnClickListener(){
 										public void onClick(DialogInterface di,int i){
 											sl.remove(list.get(clicked));
+											saveServers();
 										}
 									})
 									.setPositiveButton(android.R.string.no,new DialogInterface.OnClickListener(){
