@@ -1,17 +1,16 @@
 package com.nao20010128nao.McServerPingPong;
 import android.app.*;
+import android.content.*;
+import android.graphics.drawable.*;
 import android.os.*;
+import android.preference.*;
+import android.util.*;
+import android.view.*;
 import android.widget.*;
+import com.google.gson.*;
+import java.io.*;
 import java.util.*;
 import query.*;
-import android.view.*;
-import com.google.gson.*;
-import android.content.*;
-import android.preference.*;
-import android.graphics.drawable.*;
-import android.util.*;
-import android.text.*;
-import java.io.*;
 
 public class ServerListActivity extends ListActivity{
 	ServerPingProvider spp=new ServerPingProvider();

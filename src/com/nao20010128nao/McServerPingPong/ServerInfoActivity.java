@@ -6,7 +6,6 @@ import android.util.*;
 import android.view.*;
 import android.widget.*;
 import java.lang.ref.*;
-import java.math.*;
 import java.util.*;
 import query.*;
 
