@@ -441,6 +441,7 @@ public class ServerListActivity extends ListActivity{
 									.show();
 								break;
 							case 1:
+								if(pinging.get(getItem(p3)))break;
 								spp.putInQueue(getItem(p3),new ServerPingProvider.PingHandler(){
 										public void onPingFailed(final Server s){
 											runOnUiThread(new Runnable(){
@@ -483,6 +484,8 @@ public class ServerListActivity extends ListActivity{
 								sl.getViewQuick(clicked).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
 								showWorkingDialog();
 								pinging.put(list.get(clicked),true);
+								break;
+							case 2:
 								break;
 						}
 					}
