@@ -315,6 +315,7 @@ public class ServerListActivity extends ListActivity{
 				public void onPingFailed(final Server s){
 					runOnUiThread(new Runnable(){
 							public void run(){
+								if(!s.equals(getItem(position)))return;
 								layout.findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_error)));
 								((TextView)layout.findViewById(R.id.serverName)).setText(s.ip+":"+s.port);
 								((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.notResponding);
@@ -322,23 +323,24 @@ public class ServerListActivity extends ListActivity{
 							}
 						});
 				}
-				public void onPingArrives(final ServerStatus s){
+				public void onPingArrives(final ServerStatus sv){
 					runOnUiThread(new Runnable(){
 						public void run(){
+							if(!sv.equals(getItem(position)))return;
 							layout.findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
 							final String title;
-							Map<String,String> m=s.response.getData();
+							Map<String,String> m=sv.response.getData();
 							if (m.containsKey("hostname")) {
 								title = deleteDecorations(m.get("hostname"));
 							} else if (m.containsKey("motd")) {
 								title = deleteDecorations(m.get("motd"));
 							} else {
-								title = s.ip + ":" + s.port;
+								title = sv.ip + ":" + sv.port;
 							}
 							((TextView)layout.findViewById(R.id.serverName)).setText(deleteDecorations(title));
-							((TextView)layout.findViewById(R.id.pingMillis)).setText(s.ping+" ms");
-							list.set(position,s);
-							pinging.put(s,false);
+							((TextView)layout.findViewById(R.id.pingMillis)).setText(sv.ping+" ms");
+							list.set(position,sv);
+							pinging.put(sv,false);
 						}
 					});
 				}
