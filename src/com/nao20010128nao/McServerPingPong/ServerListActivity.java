@@ -21,7 +21,17 @@ public class ServerListActivity extends ListActivity{
 	List<Server> list;
 	int clicked=-1;
 	ProgressDialog waitDialog;
-	Map<Server,Boolean> pinging=new HashMap();;
+	Map<Server,Boolean> pinging=new HashMap<Server,Boolean>(){
+		@Override
+		public Boolean get(Object key) {
+			// TODO: Implement this method
+			Boolean b= super.get(key);
+			if(b==null){
+				return false;
+			}
+			return b;
+		}
+	};
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
