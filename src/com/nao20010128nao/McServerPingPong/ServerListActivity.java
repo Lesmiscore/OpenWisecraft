@@ -42,14 +42,6 @@ public class ServerListActivity extends ListActivity{
 		getListView().setLongClickable(true);
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
 		loadServers();
-		/*Server s=new Server();
-		s.ip="setsuna.info";
-		s.port=19132;
-		sl.add(s);
-		s=new Server();
-		s.ip="sg.lbsg.net";
-		s.port=19132;
-		sl.add(s);*/
 	}
 	@Override
 	protected void onDestroy() {
