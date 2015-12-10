@@ -306,7 +306,6 @@ public class ServerListActivity extends ListActivity{
 				public void onPingFailed(final Server s){
 					runOnUiThread(new Runnable(){
 							public void run(){
-								if(!s.equals(getItem(position)))return;
 								layout.findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_error)));
 								((TextView)layout.findViewById(R.id.serverName)).setText(s.ip+":"+s.port);
 								((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.notResponding);
@@ -317,7 +316,10 @@ public class ServerListActivity extends ListActivity{
 				public void onPingArrives(final ServerStatus sv){
 					runOnUiThread(new Runnable(){
 						public void run(){
-							if(!sv.equals(getItem(position)))return;
+							int position=list.indexOf(sv);
+							if(position==-1){
+								return;
+							}
 							layout.findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
 							final String title;
 							Map<String,String> m=sv.response.getData();
