@@ -229,8 +229,6 @@ public class ServerListActivity extends ListActivity{
 											((TextView)sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(deleteDecorations(title));
 											((TextView)sl.getViewQuick(i_).findViewById(R.id.pingMillis)).setText(s.ping+" ms");
 											list.set(i_,s);
-											ServerInfoActivity.stat=s;
-											startActivityForResult(new Intent(ServerListActivity.this,ServerInfoActivity.class),0);
 											pinging.put(list.get(i_),false);
 											hideWorkingDialog();
 										}
