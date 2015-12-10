@@ -13,7 +13,7 @@ import java.util.*;
 import query.*;
 
 public class ServerListActivity extends ListActivity{
-	ServerPingProvider spp=new NormalServerPingProvider();
+	ServerPingProvider spp=new MultiServerPingProvider(3);
 	Gson gson=new Gson();
 	SharedPreferences pref;
 	ServerList sl;
