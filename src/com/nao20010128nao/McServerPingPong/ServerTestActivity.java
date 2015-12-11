@@ -63,6 +63,7 @@ public class ServerTestActivity extends ListActivity{
 					finish();
 				}
 			})
+			.setCancelable(false)
 			.show();
 	}
 	
@@ -126,10 +127,6 @@ public class ServerTestActivity extends ListActivity{
 					public void onPingArrives(final ServerStatus sv){
 						runOnUiThread(new Runnable(){
 								public void run(){
-									int position=list.indexOf(sv);
-									if(position==-1){
-										return;
-									}
 									layout.findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
 									final String title;
 									Map<String,String> m=sv.response.getData();
@@ -175,24 +172,6 @@ public class ServerTestActivity extends ListActivity{
 				ServerInfoActivity.stat=(ServerStatus)s;
 				startActivityForResult(new Intent(ServerTestActivity.this,ServerInfoActivity.class).putExtra("nonUpd",true),0);
 			}
-		}
-
-		@Override
-		public void add(ServerListActivity.Server object) {
-			// TODO: Implement this method
-			if(!list.contains(object))super.add(object);
-		}
-
-		@Override
-		public void addAll(ServerListActivity.Server[] items) {
-			// TODO: Implement this method
-			for(Server s:items)add(s);
-		}
-
-		@Override
-		public void addAll(Collection<? extends ServerListActivity.Server> collection) {
-			// TODO: Implement this method
-			for(Server s:collection)add(s);
 		}
 
 		@Override
