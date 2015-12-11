@@ -24,11 +24,13 @@
         </activity>
 		<activity
             android:label="@string/app_name"
-            android:name=".ServerInfoActivity" >
+            android:name=".ServerInfoActivity"
+			android:exported="false">
         </activity>
 		<activity
             android:label="@string/app_name"
-            android:name=".ServerTestActivity" >
+            android:name=".ServerTestActivity"
+			android:exported="false">
         </activity>
     </application>
 </manifest>
