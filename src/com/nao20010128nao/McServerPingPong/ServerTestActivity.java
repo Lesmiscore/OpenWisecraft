@@ -156,7 +156,7 @@ public class ServerTestActivity extends ListActivity{
 			clicked=p3;
 			if(s instanceof ServerStatus){
 				ServerInfoActivity.stat=(ServerStatus)s;
-				startActivityForResult(new Intent(ServerTestActivity.this,ServerInfoActivity.class),0);
+				startActivityForResult(new Intent(ServerTestActivity.this,ServerInfoActivity.class).putExtra("nonUpd",true),0);
 			}
 		}
 
