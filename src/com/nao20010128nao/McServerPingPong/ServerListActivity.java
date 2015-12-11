@@ -538,7 +538,7 @@ public class ServerListActivity extends ListActivity{
 																});
 														}
 													});
-												((TextView)sl.getViewQuick(p3).findViewById(R.id.serverIp)).setText(data.ip + ":" + data.port);
+												((TextView)sl.getViewQuick(p3).findViewById(R.id.serverAddress)).setText(data.ip + ":" + data.port);
 											}
 											saveServers();
 										}
