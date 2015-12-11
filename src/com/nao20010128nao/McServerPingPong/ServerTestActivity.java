@@ -62,7 +62,8 @@ public class ServerTestActivity extends ListActivity{
 					di.dismiss();
 					finish();
 				}
-			});
+			})
+			.show();
 	}
 	
 	static String deleteDecorations(String decorated) {
