@@ -19,6 +19,8 @@ public class ServerTestActivity extends ListActivity{
 	List<Server> list;
 	int clicked=-1;
 	ProgressDialog waitDialog;
+	int times,port;
+	String ip;
 	Map<Server,Boolean> pinging=new HashMap<Server,Boolean>(){
 		@Override
 		public Boolean get(Object key) {
@@ -36,6 +38,15 @@ public class ServerTestActivity extends ListActivity{
 		super.onCreate(savedInstanceState);
 		setListAdapter(sl=new ServerList());
 		getListView().setOnItemClickListener(sl);
+		ip=getIntent().getStringExtra("ip");
+		port=getIntent().getIntExtra("port",-1);
+		times=getIntent().getIntExtra("times",-1);
+		for(int i=0;i<times;i++){
+			Server s=new Server();
+			s.ip=ip;
+			s.port=port;
+			sl.add(s);
+		}
 	}
 	
 	static String deleteDecorations(String decorated) {
