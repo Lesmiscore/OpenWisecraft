@@ -27,5 +27,6 @@
 		<item>Remove</item>
 		<item>@string/update</item>
 		<item>Edit</item>
+		<item>Test this server</item>
 	</string-array>
 </resources>
