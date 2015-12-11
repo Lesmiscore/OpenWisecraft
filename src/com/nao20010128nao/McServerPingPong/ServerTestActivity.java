@@ -15,8 +15,6 @@ import com.nao20010128nao.McServerPingPong.ServerListActivity.*;
 
 public class ServerTestActivity extends ListActivity{
 	ServerPingProvider spp=new NormalServerPingProvider();
-	Gson gson=new Gson();
-	SharedPreferences pref;
 	ServerList sl;
 	List<Server> list;
 	int clicked=-1;
@@ -38,7 +36,6 @@ public class ServerTestActivity extends ListActivity{
 		super.onCreate(savedInstanceState);
 		setListAdapter(sl=new ServerList());
 		getListView().setOnItemClickListener(sl);
-		pref=PreferenceManager.getDefaultSharedPreferences(this);
 	}
 	
 	static String deleteDecorations(String decorated) {
