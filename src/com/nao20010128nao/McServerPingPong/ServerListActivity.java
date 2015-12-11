@@ -550,6 +550,9 @@ public class ServerListActivity extends ListActivity{
 									}).
 									show();
 								break;
+							case 3:
+								startActivity(new Intent(ServerListActivity.this,ServerTestActivity.class).putExtra("ip",getItem(p3).ip).putExtra("port",getItem(p3).port));
+								break;
 						}
 					}
 				})
