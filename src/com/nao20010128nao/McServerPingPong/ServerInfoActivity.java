@@ -14,6 +14,8 @@ public class ServerInfoActivity extends FragmentActivity {
 	public static ServerListActivity.ServerStatus stat;
 	String ip;
 	int port;
+	
+	boolean nonUpd;
 
 	List<Thread> t=new ArrayList<>();
 	ListView players,data,plugins;
@@ -56,6 +58,8 @@ public class ServerInfoActivity extends FragmentActivity {
 		};
 		adap3 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
 		
+		nonUpd=getIntent().getBooleanExtra("nonUpd",false);
+		
 		update(stat.response);
 	}
 	public synchronized void update(final QueryResponseUniverse resp) {
@@ -84,7 +88,8 @@ public class ServerInfoActivity extends FragmentActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO: Implement this method
-		menu.add(Menu.NONE, 0, 0, R.string.update);
+		if(!nonUpd)
+			menu.add(Menu.NONE, 0, 0, R.string.update);
 		//menu.add(Menu.NONE, 0, 1, "メニュー2");
 		
 		return true;
