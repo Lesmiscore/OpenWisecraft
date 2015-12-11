@@ -40,12 +40,7 @@ public class ServerTestActivity extends ListActivity{
 		getListView().setOnItemClickListener(sl);
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
 	}
-	@Override
-	protected void onDestroy() {
-		// TODO: Implement this method
-		super.onDestroy();
-	}
-
+	
 	static String deleteDecorations(String decorated) {
 		StringBuilder sb=new StringBuilder();
 		char[] chars=decorated.toCharArray();
