@@ -14,7 +14,7 @@ import query.*;
 import com.nao20010128nao.McServerPingPong.ServerListActivity.*;
 
 public class ServerTestActivity extends ListActivity{
-	ServerPingProvider spp=new MultiServerPingProvider(3);
+	ServerPingProvider spp=new NormalServerPingProvider();
 	Gson gson=new Gson();
 	SharedPreferences pref;
 	ServerList sl;
