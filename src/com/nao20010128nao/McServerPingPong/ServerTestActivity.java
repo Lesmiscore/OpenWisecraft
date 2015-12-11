@@ -21,6 +21,7 @@ public class ServerTestActivity extends ListActivity{
 	ProgressDialog waitDialog;
 	int times,port;
 	String ip;
+	View dialog;
 	Map<Server,Boolean> pinging=new HashMap<Server,Boolean>(){
 		@Override
 		public Boolean get(Object key) {
@@ -40,13 +41,28 @@ public class ServerTestActivity extends ListActivity{
 		getListView().setOnItemClickListener(sl);
 		ip=getIntent().getStringExtra("ip");
 		port=getIntent().getIntExtra("port",-1);
-		times=getIntent().getIntExtra("times",-1);
-		for(int i=0;i<times;i++){
-			Server s=new Server();
-			s.ip=ip;
-			s.port=port;
-			sl.add(s);
-		}
+		new AlertDialog.Builder(this)
+			.setTitle(R.string.testServer)
+			.setView(dialog=getLayoutInflater().inflate(R.layout.test_server_dialog,null,false))
+			.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+				public void onClick(DialogInterface di,int w){
+					di.dismiss();
+					String nu=((EditText)dialog.findViewById(R.id.pingTimes)).getText().toString();
+					times=new Integer(nu);
+					for(int i=0;i<times;i++){
+						Server s=new Server();
+						s.ip=ip;
+						s.port=port;
+						sl.add(s);
+					}
+				}
+			})
+			.setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
+				public void onClick(DialogInterface di,int w){
+					di.dismiss();
+					finish();
+				}
+			});
 	}
 	
 	static String deleteDecorations(String decorated) {
