@@ -480,6 +480,75 @@ public class ServerListActivity extends ListActivity{
 								pinging.put(list.get(clicked),true);
 								break;
 							case 2:
+								final Server data=new Server();
+								data.ip=getItem(p3).ip;
+								data.port=getItem(p3).port;
+								View dialog=getLayoutInflater().inflate(R.layout.serveradddialog,null);
+								final EditText ip=(EditText)dialog.findViewById(R.id.serverIp);
+								final EditText port=(EditText)dialog.findViewById(R.id.serverPort);
+
+								ip.setText(data.ip);
+								port.setText(data.port+"");
+
+								new AlertDialog.Builder(getContext()).
+									setView(dialog).
+									setPositiveButton(android.R.string.yes,new DialogInterface.OnClickListener(){
+										public void onClick(DialogInterface d,int sel){
+											data.ip=ip.getText().toString();
+											data.port=new Integer(port.getText().toString());
+											if(list.contains(data)){
+												Toast.makeText(ServerListActivity.this,R.string.alreadyExists,Toast.LENGTH_LONG).show();
+											}else{
+												list.set(p3,data);
+												spp.putInQueue(getItem(p3),new ServerPingProvider.PingHandler(){
+														public void onPingFailed(final Server s){
+															runOnUiThread(new Runnable(){
+																	public void run(){
+																		sl.getViewQuick(p3).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_error)));
+																		((TextView)sl.getViewQuick(p3).findViewById(R.id.serverName)).setText(s.ip+":"+s.port);
+																		((TextView)sl.getViewQuick(p3).findViewById(R.id.pingMillis)).setText(R.string.notResponding);
+																		Server sn=new Server();
+																		sn.ip=s.ip;
+																		sn.port=s.port;
+																		list.set(p3,sn);
+																		hideWorkingDialog();
+																		pinging.put(list.get(p3),false);
+																	}
+																});
+														}
+														public void onPingArrives(final ServerStatus s){
+															runOnUiThread(new Runnable(){
+																	public void run(){
+																		sl.getViewQuick(clicked).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
+																		final String title;
+																		Map<String,String> m=s.response.getData();
+																		if (m.containsKey("hostname")) {
+																			title = deleteDecorations(m.get("hostname"));
+																		} else if (m.containsKey("motd")) {
+																			title = deleteDecorations(m.get("motd"));
+																		} else {
+																			title = s.ip + ":" + s.port;
+																		}
+																		((TextView)sl.getViewQuick(p3).findViewById(R.id.serverName)).setText(deleteDecorations(title));
+																		((TextView)sl.getViewQuick(p3).findViewById(R.id.pingMillis)).setText(s.ping+" ms");
+																		list.set(p3,s);
+																		hideWorkingDialog();
+																		pinging.put(list.get(p3),false);
+																	}
+																});
+														}
+													});
+												((TextView)sl.getViewQuick(p3).findViewById(R.id.serverIp)).setText(data.ip + ":" + data.port);
+											}
+											saveServers();
+										}
+									}).
+									setNegativeButton(android.R.string.no,new DialogInterface.OnClickListener(){
+										public void onClick(DialogInterface d,int sel){
+
+										}
+									}).
+									show();
 								break;
 						}
 					}
