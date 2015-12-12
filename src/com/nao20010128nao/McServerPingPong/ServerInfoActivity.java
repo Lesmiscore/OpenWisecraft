@@ -84,7 +84,7 @@ public class ServerInfoActivity extends FragmentActivity {
 		adap3.clear();
 		if(resp.getData().containsKey("plugins")){
 			String[] data=resp.getData().get("plugins").split("\\: ");
-			if(data.length<=2)
+			if(data.length>=2)
 				adap3.addAll(data[1].split("\\; "));
 		}
 		setTitle(title);
