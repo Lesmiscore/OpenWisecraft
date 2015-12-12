@@ -281,7 +281,12 @@ public class ServerListActivity extends ListActivity{
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {
 			// TODO: Implement this method
-			if(cached.size()>position)return cached.get(position);
+			if(cached.size()>position){
+				View v=cached.get(position);
+				if(v!=null){
+					return v;
+				}
+			}
 			//if(convertView!=null)return convertView;
 			final View layout=getLayoutInflater().inflate(R.layout.quickstatus,null,false);
 			Server s=getItem(position);
@@ -327,10 +332,9 @@ public class ServerListActivity extends ListActivity{
 			((TextView)layout.findViewById(R.id.serverAddress)).setText(s.ip+":"+s.port);
 			layout.findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
 			if(cached.size()<=position){
-				cached.add(layout);
-			}else{
-				cached.set(position,layout);
+				cached.addAll(Consistant.TEN_LENGTH_NULL_LIST);
 			}
+			cached.set(position,layout);
 			pinging.put(s,true);
 			return layout;
 		}
