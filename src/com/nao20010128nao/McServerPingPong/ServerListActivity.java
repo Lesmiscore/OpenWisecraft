@@ -11,6 +11,7 @@ import com.google.gson.*;
 import java.io.*;
 import java.util.*;
 import query.*;
+import static com.nao20010128nao.McServerPingPong.Utils.*;
 
 public class ServerListActivity extends ListActivity{
 	ServerPingProvider spp=new MultiServerPingProvider(3);
@@ -253,21 +254,6 @@ public class ServerListActivity extends ListActivity{
 		String json;
 		pref.edit().putString("servers",json=gson.toJson(list.toArray(new Server[list.size()]),Server[].class)).commit();
 		Log.d("json",json);
-	}
-	static String deleteDecorations(String decorated) {
-		StringBuilder sb=new StringBuilder();
-		char[] chars=decorated.toCharArray();
-		int offset=0;
-		while (chars.length > offset) {
-			if (chars[offset] == '§') {
-				offset += 2;
-				continue;
-			}
-			sb.append(chars[offset]);
-			offset++;
-		}
-		Log.d("esc", sb.toString());
-		return sb.toString();
 	}
 	public void showWorkingDialog(){
 		if(waitDialog!=null){

@@ -12,6 +12,7 @@ import java.io.*;
 import java.util.*;
 import query.*;
 import com.nao20010128nao.McServerPingPong.ServerListActivity.*;
+import static com.nao20010128nao.McServerPingPong.Utils.*;
 
 public class ServerTestActivity extends ListActivity{
 	ServerPingProvider spp=new NormalServerPingProvider();
@@ -65,22 +66,6 @@ public class ServerTestActivity extends ListActivity{
 			})
 			.setCancelable(false)
 			.show();
-	}
-	
-	static String deleteDecorations(String decorated) {
-		StringBuilder sb=new StringBuilder();
-		char[] chars=decorated.toCharArray();
-		int offset=0;
-		while (chars.length > offset) {
-			if (chars[offset] == '§') {
-				offset += 2;
-				continue;
-			}
-			sb.append(chars[offset]);
-			offset++;
-		}
-		Log.d("esc", sb.toString());
-		return sb.toString();
 	}
 	public void showWorkingDialog(){
 		if(waitDialog!=null){
