@@ -10,6 +10,7 @@ import java.util.*;
 import query.*;
 import uk.co.chrisjenx.calligraphy.*;
 import android.content.*;
+import static com.nao20010128nao.McServerPingPong.Utils.*;
 
 public class ServerInfoActivity extends FragmentActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
@@ -132,21 +133,6 @@ public class ServerInfoActivity extends FragmentActivity {
 		lv.setAdapter(adap3);
 	}
 
-	static String deleteDecorations(String decorated) {
-		StringBuilder sb=new StringBuilder();
-		char[] chars=decorated.toCharArray();
-		int offset=0;
-		while (chars.length > offset) {
-			if (chars[offset] == '§') {
-				offset += 2;
-				continue;
-			}
-			sb.append(chars[offset]);
-			offset++;
-		}
-		Log.d("esc", sb.toString());
-		return sb.toString();
-	}
 	@Override
 	protected void attachBaseContext(Context newBase) {
 		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
