@@ -1,6 +1,7 @@
 package com.nao20010128nao.McServerPingPong;
 import android.app.*;
 import android.graphics.*;
+import uk.co.chrisjenx.calligraphy.*;
 
 public class TheApplication extends Application
 {
@@ -13,5 +14,10 @@ public class TheApplication extends Application
 		instance=this;
 		cinzelDecorative=Typeface.createFromAsset(getAssets(),"cinzeldecorative.ttf");
 		latoLight=Typeface.createFromAsset(getAssets(),"lato-light.ttf");
+		CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+									  .setDefaultFontPath("cinzeldecorative.ttf")
+									  .setFontAttrId(R.attr.fontPath)
+									  .build()
+									  );
 	}
 }

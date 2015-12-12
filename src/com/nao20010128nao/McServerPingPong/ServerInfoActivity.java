@@ -8,6 +8,8 @@ import android.widget.*;
 import java.lang.ref.*;
 import java.util.*;
 import query.*;
+import uk.co.chrisjenx.calligraphy.*;
+import android.content.*;
 
 public class ServerInfoActivity extends FragmentActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
@@ -144,6 +146,10 @@ public class ServerInfoActivity extends FragmentActivity {
 		}
 		Log.d("esc", sb.toString());
 		return sb.toString();
+	}
+	@Override
+	protected void attachBaseContext(Context newBase) {
+		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
 	}
 	public static class PlayersFragment extends android.support.v4.app.Fragment {
 		@Override
