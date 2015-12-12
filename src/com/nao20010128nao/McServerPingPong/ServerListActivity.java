@@ -13,7 +13,7 @@ import java.util.*;
 import query.*;
 import static com.nao20010128nao.McServerPingPong.Utils.*;
 import com.nao20010128nao.McServerPingPong.provider.*;
-import uk.co.chrisjenx.calligraphy.*;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ServerListActivity extends ListActivity{
 	ServerPingProvider spp=new MultiServerPingProvider(3);

@@ -14,7 +14,7 @@ import query.*;
 import com.nao20010128nao.McServerPingPong.ServerListActivity.*;
 import static com.nao20010128nao.McServerPingPong.Utils.*;
 import com.nao20010128nao.McServerPingPong.provider.*;
-import uk.co.chrisjenx.calligraphy.*;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ServerTestActivity extends ListActivity{
 	ServerPingProvider spp=new NormalServerPingProvider();
