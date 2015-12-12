@@ -13,6 +13,7 @@ import java.util.*;
 import query.*;
 import static com.nao20010128nao.McServerPingPong.Utils.*;
 import com.nao20010128nao.McServerPingPong.provider.*;
+import uk.co.chrisjenx.calligraphy.*;
 
 public class ServerListActivity extends ListActivity{
 	ServerPingProvider spp=new MultiServerPingProvider(3);
@@ -43,6 +44,10 @@ public class ServerListActivity extends ListActivity{
 		getListView().setLongClickable(true);
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
 		loadServers();
+	}
+	@Override
+	protected void attachBaseContext(Context newBase) {
+		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
 	}
 	@Override
 	protected void onDestroy() {

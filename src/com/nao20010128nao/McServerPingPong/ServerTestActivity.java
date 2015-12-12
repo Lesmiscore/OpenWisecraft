@@ -14,6 +14,7 @@ import query.*;
 import com.nao20010128nao.McServerPingPong.ServerListActivity.*;
 import static com.nao20010128nao.McServerPingPong.Utils.*;
 import com.nao20010128nao.McServerPingPong.provider.*;
+import uk.co.chrisjenx.calligraphy.*;
 
 public class ServerTestActivity extends ListActivity{
 	ServerPingProvider spp=new NormalServerPingProvider();
@@ -67,6 +68,10 @@ public class ServerTestActivity extends ListActivity{
 			})
 			.setCancelable(false)
 			.show();
+	}
+	@Override
+	protected void attachBaseContext(Context newBase) {
+		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
 	}
 	public void showWorkingDialog(){
 		if(waitDialog!=null){
