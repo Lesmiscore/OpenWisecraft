@@ -13,6 +13,7 @@ import java.util.*;
 import query.*;
 import com.nao20010128nao.McServerPingPong.ServerListActivity.*;
 import static com.nao20010128nao.McServerPingPong.Utils.*;
+import com.nao20010128nao.McServerPingPong.provider.*;
 
 public class ServerTestActivity extends ListActivity{
 	ServerPingProvider spp=new NormalServerPingProvider();

@@ -1,4 +1,5 @@
-package com.nao20010128nao.McServerPingPong;
+package com.nao20010128nao.McServerPingPong.provider;
+import com.nao20010128nao.McServerPingPong.*;
 
 public interface ServerPingProvider
 {

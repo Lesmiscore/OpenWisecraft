@@ -1,6 +1,7 @@
-package com.nao20010128nao.McServerPingPong;
+package com.nao20010128nao.McServerPingPong.provider;
 import java.util.*;
 import query.*;
+import com.nao20010128nao.McServerPingPong.*;
 
 public class NormalServerPingProvider implements ServerPingProvider
 {

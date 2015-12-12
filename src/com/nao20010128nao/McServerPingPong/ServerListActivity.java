@@ -12,6 +12,7 @@ import java.io.*;
 import java.util.*;
 import query.*;
 import static com.nao20010128nao.McServerPingPong.Utils.*;
+import com.nao20010128nao.McServerPingPong.provider.*;
 
 public class ServerListActivity extends ListActivity{
 	ServerPingProvider spp=new MultiServerPingProvider(3);
