@@ -147,10 +147,6 @@ public class ServerInfoActivity extends FragmentActivity {
 		Log.d("esc", sb.toString());
 		return sb.toString();
 	}
-	@Override
-	protected void attachBaseContext(Context newBase) {
-		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-	}
 	public static class PlayersFragment extends android.support.v4.app.Fragment {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
