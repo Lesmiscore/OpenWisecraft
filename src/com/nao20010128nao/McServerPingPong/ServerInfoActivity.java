@@ -83,7 +83,9 @@ public class ServerInfoActivity extends FragmentActivity {
 		adap2.addAll(resp.getData().entrySet());
 		adap3.clear();
 		if(resp.getData().containsKey("plugins")){
-			adap3.addAll(resp.getData().get("plugins").split("\\: ")[1].split("\\; "));
+			String[] data=resp.getData().get("plugins").split("\\: ");
+			if(data.length<=2)
+				adap3.addAll(data[1].split("\\; "));
 		}
 		setTitle(title);
 	}
