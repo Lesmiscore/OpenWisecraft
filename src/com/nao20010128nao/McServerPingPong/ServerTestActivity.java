@@ -140,7 +140,7 @@ public class ServerTestActivity extends ListActivity{
 			((TextView)layout.findViewById(R.id.serverAddress)).setText(s.ip+":"+s.port);
 			layout.findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
 			if(cached.size()<=position){
-				cached.addAll(Consistant.TEN_LENGTH_NULL_LIST);
+				cached.addAll(Consistant.ONE_HUNDRED_LENGTH_NULL_LIST);
 			}
 			cached.set(position,layout);
 			pinging.put(s,true);
