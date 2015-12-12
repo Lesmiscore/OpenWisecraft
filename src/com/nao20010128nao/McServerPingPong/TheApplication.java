@@ -15,7 +15,7 @@ public class TheApplication extends Application
 		cinzelDecorative=Typeface.createFromAsset(getAssets(),"cinzeldecorative.ttf");
 		latoLight=Typeface.createFromAsset(getAssets(),"lato-light.ttf");
 		CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-									  .setDefaultFontPath("cinzeldecorative.ttf")
+									  .setDefaultFontPath("lato-light.ttf")
 									  .setFontAttrId(R.attr.fontPath)
 									  .build()
 									  );
