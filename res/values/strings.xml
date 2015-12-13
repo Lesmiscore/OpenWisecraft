@@ -24,6 +24,7 @@
 	<string name="testServer">Test this server</string>
 	<string name="testTimes">How many times do you want to ping? :</string>
 	<string name="rcon">RCON</string>
+	<string name="console">Console</string>
 	<string-array name="serverSubMenu">
 		<item>Remove</item>
 		<item>@string/update</item>
