@@ -14,6 +14,7 @@ import query.*;
 import static com.nao20010128nao.McServerPingPong.Utils.*;
 import com.nao20010128nao.McServerPingPong.provider.*;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import com.nao20010128nao.McServerPingPong.rcon.*;
 
 public class ServerListActivity extends ListActivity{
 	ServerPingProvider spp=new MultiServerPingProvider(3);
@@ -548,6 +549,9 @@ public class ServerListActivity extends ListActivity{
 								break;
 							case 3:
 								startActivity(new Intent(ServerListActivity.this,ServerTestActivity.class).putExtra("ip",getItem(p3).ip).putExtra("port",getItem(p3).port));
+								break;
+							case 4:
+								startActivity(new Intent(ServerListActivity.this,RCONActivity.class).putExtra("ip",getItem(p3).ip).putExtra("port",getItem(p3).port));
 								break;
 						}
 					}

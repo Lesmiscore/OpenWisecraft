@@ -23,11 +23,12 @@
 	<string name="importing">Importing...</string>
 	<string name="testServer">Test this server</string>
 	<string name="testTimes">How many times do you want to ping? :</string>
-	
+	<string name="rcon">RCON</string>
 	<string-array name="serverSubMenu">
 		<item>Remove</item>
 		<item>@string/update</item>
 		<item>Edit</item>
 		<item>@string/testServer</item>
+		<item>@string/rcon</item>
 	</string-array>
 </resources>
