@@ -9,6 +9,8 @@ import java.lang.ref.*;
 import android.graphics.*;
 import org.minecraft.rconclient.rcon.*;
 import android.app.*;
+import android.content.*;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class RCONActivity extends FragmentActivity
 {
@@ -16,7 +18,7 @@ public class RCONActivity extends FragmentActivity
 	static List<String> consoleLogs=new ArrayList<>();
 	static RCon rcon;
 	
-	
+	PasswordAsking pa=new PasswordAsking();
 	FragmentTabHost fth;
 	TabHost.TabSpec consoleF;
 	LinearLayout console;
@@ -30,7 +32,7 @@ public class RCONActivity extends FragmentActivity
 		ip=getIntent().getStringExtra("ip");
 		port=getIntent().getIntExtra("port",-1);
 		if(rcon!=null){
-			
+			pa.askPassword();
 		}
 		setContentView(R.layout.rconmain);
 		fth = (FragmentTabHost)findViewById(android.R.id.tabhost);
@@ -39,6 +41,10 @@ public class RCONActivity extends FragmentActivity
 		consoleF=fth.newTabSpec("console");
 		consoleF.setIndicator(getResources().getString(R.string.console));
 		fth.addTab(consoleF,ConsoleFragment.class,null);
+	}
+	@Override
+	protected void attachBaseContext(Context newBase) {
+		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
 	}
 	
 	public void setConsoleLayout(LinearLayout lv){
@@ -53,10 +59,21 @@ public class RCONActivity extends FragmentActivity
 		tv.setText(s);
 		return tv;
 	}
-	
-	void askPassword(){
-		new AlertDialog.Builder(this)
-			.show();
+	class PasswordAsking extends ContextWrapper {
+		EditText password;
+		public PasswordAsking(){
+			super(RCONActivity.this);
+		}
+		public void askPassword() {
+			new AlertDialog.Builder(this)
+				.setView(inflateDialogView())
+				.show();
+		}
+		View inflateDialogView(){
+			View v=getLayoutInflater().inflate(R.layout.askpassword,null,false);
+			password=(EditText)v.findViewById(R.id.password);
+			return v;
+		}
 	}
 	public static class ConsoleFragment extends android.support.v4.app.Fragment {
 		@Override
