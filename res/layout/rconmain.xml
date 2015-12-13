@@ -6,7 +6,7 @@
 	android:id="@+id/mainDrawer">
 
 	<include
-		layout="@layout/mainview"/>
+		layout="@layout/tabs"/>
 
 	<include
 		layout="@layout/drawerview"/>
