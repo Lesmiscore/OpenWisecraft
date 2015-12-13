@@ -5,7 +5,8 @@
 	android:layout_height="match_parent"
 	android:orientation="vertical"
 	android:gravity="top|center"
-	android:id="@+id/commandButtons">
+	android:id="@+id/commandButtons"
+	android:background="#FFFFFF">
 
 	<TextView
 		android:layout_height="wrap_content"
@@ -177,9 +178,9 @@
 		android:id="@+id/weather"/>
 
 	<TextView
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			android:text="@string/nocategory"/>
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:text="@string/nocategory"/>
 
 	<Button
 		style="?android:attr/buttonBarButtonStyle"
