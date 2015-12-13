@@ -31,7 +31,7 @@ public class RCONActivity extends FragmentActivity
 		instance=new WeakReference(this);
 		ip=getIntent().getStringExtra("ip");
 		port=getIntent().getIntExtra("port",-1);
-		if(rcon!=null){
+		if(rcon==null){
 			pa.askPassword();
 		}
 		setContentView(R.layout.rconmain);
