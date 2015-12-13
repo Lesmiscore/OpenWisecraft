@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="send">送信</string>
+
+	<string name="serversystem">サーバーシステム</string>
+	<string name="stop">サーバーを停止</string>
+	<string name="op">OP権限を与える</string>
+	<string name="deop">OP権限を剥奪する</string>
+	<string name="ban">プレイヤーを追放する</string>
+	<string name="ban_ip">プレイヤーを、IPごと追放する</string>
+	<string name="kick">プレイヤーを強制退出させる</string>
+	<string name="pardon">追放したプレイヤーを恩赦する (pardon)</string>
+	<string name="pardon_ip">追放したプレイヤーIPごとを恩赦する (pardon-ip)</string>
+	<string name="gametime">ゲーム内の時間を変更</string>
+	<string name="changepgm">プレイヤーのゲームモードを変更する</string>
+	<string name="saveall">全て強制的に保存</string>
+	<string name="saveon">自動保存を有効化</string>
+	<string name="saveoff">自動保存を無効化</string>
+
+	<string name="playertools">プレイヤーツール</string>
+	<string name="give">アイテムをあげる</string>
+	<string name="clear">アイテムを剥奪</string>
+	<string name="kill">プレイヤーを強制殺害</string>
+	<string name="tell">プレイヤーにプライベートメッセージを送信</string>
+	<string name="tp">プレイヤーを移動</string>
+	<string name="xp">経験値を付与または剥奪</string>
+
+	<string name="gamesystem">ゲームシステム</string>
+	<string name="placeblock">ブロックを設置</string>
+	<string name="defaultgm">デフォルトのゲームモードを設定</string>
+	<string name="changeweather">天気を変更</string>
+
+	<string name="nocategory">その他のコマンド</string>
+	<string name="me">meコマンド</string>
+	<string name="banlist">追放されたプレイヤーの一覧</string>
+</resources>

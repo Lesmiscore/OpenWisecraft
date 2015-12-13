@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="send">OK</string>
+	
+	<string name="serversystem">Server System</string>
+	<string name="stop">Stop server</string>
+	<string name="op">Grant Operator permission</string>
+	<string name="deop">Deprivation Operator permission</string>
+	<string name="ban">Ban player</string>
+	<string name="ban_ip">Ban IP</string>
+	<string name="kick">Kick out player</string>
+	<string name="pardon">Forgive banned player (pardon)</string>
+	<string name="pardon_ip">Forgive banned IP (pardon-ip)</string>
+	<string name="gametime">Change the game time</string>
+	<string name="changepgm">Change player game mode</string>
+	<string name="saveall">Save all</string>
+	<string name="saveon">Turn on auto save</string>
+	<string name="saveoff">Turn off auto save</string>
+
+	<string name="playertools">Player tools</string>
+	<string name="give">Give item</string>
+	<string name="clear">Take item</string>
+	<string name="kill">Kill player</string>
+	<string name="tell">Tell to player</string>
+	<string name="tp">Teleport player</string>
+	<string name="xp">Give or take experimental to player</string>
+
+	<string name="gamesystem">Game system</string>
+	<string name="placeblock">Place a block</string>
+	<string name="defaultgm">Set default game mode</string>
+	<string name="changeweather">Change weather</string>
+
+	<string name="nocategory">Other commands</string>
+	<string name="me">me</string>
+	<string name="banlist">Show banned player list</string>
+</resources>
