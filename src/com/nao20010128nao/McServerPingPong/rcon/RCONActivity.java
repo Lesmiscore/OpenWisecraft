@@ -62,6 +62,10 @@ public class RCONActivity extends FragmentActivity
 		}
 	}
 	
+	public void appendIntoConsole(String s){
+		consoleLogs.add(s);
+		console.addView(newTextViewForConsole(s));
+	}
 	public void setConsoleLayout(LinearLayout lv){
 		console=lv;
 		lv.removeAllViews();
@@ -85,14 +89,18 @@ public class RCONActivity extends FragmentActivity
 				.setCancelable(false)
 				.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
 					public void onClick(DialogInterface di,int whi){
+						appendIntoConsole(getResources().getString(R.string.connecting));
 						new AsyncTask<Void,Void,Boolean>(){
 							public Boolean doInBackground(Void[] o){
 								return tryConnect(password.getText()+"");
 							}
 							public void onPostExecute(Boolean result){
 								if(!result){
+									appendIntoConsole(getResources().getString(R.string.incorrectPassword));
 									Toast.makeText(PasswordAsking.this,R.string.incorrectPassword,Toast.LENGTH_SHORT);
 									askPassword();
+								}else{
+									appendIntoConsole(getResources().getString(R.string.connected));
 								}
 							}
 						}.execute();
