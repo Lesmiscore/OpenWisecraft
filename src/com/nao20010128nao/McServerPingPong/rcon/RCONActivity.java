@@ -85,10 +85,17 @@ public class RCONActivity extends FragmentActivity
 				.setCancelable(false)
 				.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
 					public void onClick(DialogInterface di,int whi){
-						if(!tryConnect(password.getText()+"")){
-							Toast.makeText(PasswordAsking.this,R.string.incorrectPassword,Toast.LENGTH_SHORT);
-							askPassword();
-						}
+						new AsyncTask<Void,Void,Boolean>(){
+							public Boolean doInBackground(Void[] o){
+								return tryConnect(password.getText()+"");
+							}
+							public void onPostExecute(Boolean result){
+								if(!result){
+									Toast.makeText(PasswordAsking.this,R.string.incorrectPassword,Toast.LENGTH_SHORT);
+									askPassword();
+								}
+							}
+						}.execute();
 					}
 				})
 				.show();
