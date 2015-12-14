@@ -97,7 +97,7 @@ public class RCONActivity extends FragmentActivity
 							public void onPostExecute(Boolean result){
 								if(!result){
 									appendIntoConsole(getResources().getString(R.string.incorrectPassword));
-									Toast.makeText(PasswordAsking.this,R.string.incorrectPassword,Toast.LENGTH_SHORT);
+									Toast.makeText(PasswordAsking.this,R.string.incorrectPassword,Toast.LENGTH_SHORT).show();
 									askPassword();
 								}else{
 									appendIntoConsole(getResources().getString(R.string.connected));
