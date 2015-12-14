@@ -7,10 +7,11 @@ import android.view.*;
 import java.util.*;
 import java.lang.ref.*;
 import android.graphics.*;
-import org.minecraft.rconclient.rcon.*;
+import com.google.rconclient.rcon.*;
 import android.app.*;
 import android.content.*;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import java.io.*;
 
 public class RCONActivity extends FragmentActivity
 {
@@ -47,6 +48,20 @@ public class RCONActivity extends FragmentActivity
 		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
 	}
 	
+	public boolean tryConnect(String pass){
+		char[] passChars=pass.toCharArray();
+		try {
+			rcon = new RCon(ip, port, passChars);
+			return true;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		} catch (AuthenticationException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	public void setConsoleLayout(LinearLayout lv){
 		console=lv;
 		lv.removeAllViews();
@@ -67,6 +82,15 @@ public class RCONActivity extends FragmentActivity
 		public void askPassword() {
 			new AlertDialog.Builder(this)
 				.setView(inflateDialogView())
+				.setCancelable(false)
+				.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+					public void onClick(DialogInterface di,int whi){
+						if(!tryConnect(password.getText()+"")){
+							Toast.makeText(PasswordAsking.this,R.string.incorrectPassword,Toast.LENGTH_SHORT);
+							askPassword();
+						}
+					}
+				})
 				.show();
 		}
 		View inflateDialogView(){

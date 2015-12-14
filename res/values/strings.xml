@@ -26,6 +26,7 @@
 	<string name="rcon">RCON</string>
 	<string name="console">Console</string>
 	<string name="typePassword">Type the password to connect:</string>
+	<string name="incorrectPassword">Incorrect Password.\nTry again!</string>
 	
 	<string-array name="serverSubMenu">
 		<item>Remove</item>
