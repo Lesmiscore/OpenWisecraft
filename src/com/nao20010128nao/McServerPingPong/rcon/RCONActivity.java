@@ -23,6 +23,8 @@ public class RCONActivity extends FragmentActivity
 	FragmentTabHost fth;
 	TabHost.TabSpec consoleF;
 	LinearLayout console;
+	EditText command;
+	Button ok;
 	int port;
 	String ip;
 	@Override
@@ -71,6 +73,12 @@ public class RCONActivity extends FragmentActivity
 		lv.removeAllViews();
 		for(String s:consoleLogs)
 			lv.addView(newTextViewForConsole(s));
+	}
+	public void setCommandTextBox(EditText et){
+		command=et;
+	}
+	public void setCommandOk(Button bt){
+		ok=bt;
 	}
 	TextView newTextViewForConsole(String s){
 		TextView tv=new TextView(this);
