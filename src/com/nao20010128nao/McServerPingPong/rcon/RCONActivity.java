@@ -95,7 +95,11 @@ public class RCONActivity extends FragmentActivity
 										s=getResources().getString(R.string.emptyResponse);
 									}
 									appendIntoConsole(s);
-									command.setText("");
+									runOnUiThread(new Runnable(){
+											public void run(){
+												command.setText("");
+											}
+										});
 								} catch (IOException e) {
 									e.printStackTrace();
 								} catch (IncorrectRequestIdException e) {
