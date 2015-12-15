@@ -27,6 +27,7 @@ public class RCONActivity extends FragmentActivity
 	Button ok;
 	int port;
 	String ip;
+	boolean living=true;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
@@ -112,6 +113,7 @@ public class RCONActivity extends FragmentActivity
 			rcon.close();
 		} catch (IOException e) {}
 		rcon=null;
+		living=false;
 	}
 	class PasswordAsking extends ContextWrapper {
 		EditText password;
@@ -130,6 +132,7 @@ public class RCONActivity extends FragmentActivity
 								return tryConnect(password.getText()+"");
 							}
 							public void onPostExecute(Boolean result){
+								if(!living)return;
 								if(!result){
 									appendIntoConsole(getResources().getString(R.string.incorrectPassword));
 									Toast.makeText(PasswordAsking.this,R.string.incorrectPassword,Toast.LENGTH_SHORT).show();
