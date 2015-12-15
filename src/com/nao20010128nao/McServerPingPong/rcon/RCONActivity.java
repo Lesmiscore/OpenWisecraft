@@ -99,6 +99,20 @@ public class RCONActivity extends FragmentActivity
 		tv.setText(s);
 		return tv;
 	}
+
+	@Override
+	public void onBackPressed() {
+		// TODO: Implement this method
+		exitActivity();
+	}
+	public void exitActivity(){
+		finish();
+		consoleLogs.clear();
+		try {
+			rcon.close();
+		} catch (IOException e) {}
+		rcon=null;
+	}
 	class PasswordAsking extends ContextWrapper {
 		EditText password;
 		public PasswordAsking(){
