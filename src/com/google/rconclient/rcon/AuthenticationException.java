@@ -63,7 +63,7 @@ public class AuthenticationException extends Exception {
 	 */
 	public AuthenticationException(final String message, final Throwable cause, final boolean enableSuppression,
 			final boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
+		super(message, cause);
 	}
 
 	/**
