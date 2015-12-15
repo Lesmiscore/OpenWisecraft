@@ -162,6 +162,8 @@ public class RCONActivity extends FragmentActivity
 			// TODO: Implement this method
 			View v=inflater.inflate(R.layout.console,null,false);
 			instance.get().setConsoleLayout((LinearLayout)v.findViewById(R.id.consoleText));
+			instance.get().setCommandOk((Button)v.findViewById(R.id.send));
+			instance.get().setCommandTextBox((EditText)v.findViewById(R.id.command));
 			return v;
 		}
 	}
