@@ -65,9 +65,13 @@ public class RCONActivity extends FragmentActivity
 		}
 	}
 	
-	public void appendIntoConsole(String s){
-		consoleLogs.add(s);
-		console.addView(newTextViewForConsole(s));
+	public void appendIntoConsole(final String s){
+		runOnUiThread(new Runnable(){
+			public void run(){
+				consoleLogs.add(s);
+				console.addView(newTextViewForConsole(s));
+			}
+		});
 	}
 	public void setConsoleLayout(LinearLayout lv){
 		console=lv;
@@ -84,11 +88,11 @@ public class RCONActivity extends FragmentActivity
 				public void onClick(View v){
 					if(rcon!=null){
 						try {
-							rcon.send(command.getText().toString());
+							appendIntoConsole(rcon.send(command.getText().toString()));
 						} catch (IOException e) {
-							
+							e.printStackTrace();
 						} catch (IncorrectRequestIdException e) {
-							
+							e.printStackTrace();
 						}
 					}
 				}
