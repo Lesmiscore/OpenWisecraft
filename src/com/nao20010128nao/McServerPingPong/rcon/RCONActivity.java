@@ -82,7 +82,13 @@ public class RCONActivity extends FragmentActivity
 		ok.setOnClickListener(new View.OnClickListener(){
 				public void onClick(View v){
 					if(rcon!=null){
-						;
+						try {
+							rcon.send(command.getText().toString());
+						} catch (IOException e) {
+							
+						} catch (IncorrectRequestIdException e) {
+							
+						}
 					}
 				}
 			});
