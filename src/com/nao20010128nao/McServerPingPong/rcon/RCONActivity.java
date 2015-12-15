@@ -90,7 +90,12 @@ public class RCONActivity extends FragmentActivity
 						new Thread(){
 							public void run(){
 								try {
-									appendIntoConsole(rcon.send(command.getText().toString()));
+									String s=rcon.send(command.getText().toString());
+									if(s.equals("")){
+										s=getResources().getString(R.string.emptyResponse);
+									}
+									appendIntoConsole(s);
+									command.setText("");
 								} catch (IOException e) {
 									e.printStackTrace();
 								} catch (IncorrectRequestIdException e) {

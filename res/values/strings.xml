@@ -29,6 +29,7 @@
 	<string name="incorrectPassword">Incorrect Password.\nTry again!</string>
 	<string name="connecting">Connecting...</string>
 	<string name="connected">Connected!</string>
+	<string name="emptyResponse">(No Response Text)</string>
 	
 	<string-array name="serverSubMenu">
 		<item>Remove</item>
