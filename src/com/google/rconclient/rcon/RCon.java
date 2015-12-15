@@ -776,8 +776,8 @@ public class RCon {
 	 *             The request id was not as expected.
 	 */
 	private String send(final int type, final String payload) throws IOException, IncorrectRequestIdException {
-		final String responsePayload = new String(send(type, payload.getBytes(StandardCharsets.US_ASCII)),
-				StandardCharsets.US_ASCII);
+		final String responsePayload = new String(send(type, payload.getBytes(StandardCharsets.UTF_8)),
+				StandardCharsets.UTF_8);
 		return responsePayload;
 	}
 
