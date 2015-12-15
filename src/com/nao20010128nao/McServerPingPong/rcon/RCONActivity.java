@@ -79,6 +79,13 @@ public class RCONActivity extends FragmentActivity
 	}
 	public void setCommandOk(Button bt){
 		ok=bt;
+		ok.setOnClickListener(new View.OnClickListener(){
+				public void onClick(View v){
+					if(rcon!=null){
+						;
+					}
+				}
+			});
 	}
 	TextView newTextViewForConsole(String s){
 		TextView tv=new TextView(this);

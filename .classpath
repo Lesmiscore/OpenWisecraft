@@ -4,4 +4,7 @@
 <classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 <classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 <classpathentry kind="output" path="bin/classes"/>
+<classpathentry kind="lib" path="/storage/emulated/0/AppProjects/McServerDDoS/libs/android-support-v4.jar"/>
+<classpathentry kind="lib" path="/storage/emulated/0/AppProjects/McServerDDoS/libs/calligraphy-2.1.0.jar"/>
+<classpathentry kind="lib" path="/storage/emulated/0/AppProjects/McServerDDoS/libs/gson-2.5.jar"/>
 </classpath>
