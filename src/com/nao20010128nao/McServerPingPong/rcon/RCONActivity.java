@@ -161,6 +161,11 @@ public class RCONActivity extends FragmentActivity
 						}.execute();
 					}
 				})
+				.setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
+					public void onClick(DialogInterface di,int whi){
+						exitActivity();
+					}
+				})
 				.show();
 		}
 		View inflateDialogView(){
