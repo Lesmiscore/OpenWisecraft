@@ -12,6 +12,7 @@ import android.app.*;
 import android.content.*;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import java.io.*;
+import android.support.v4.widget.*;
 
 public class RCONActivity extends FragmentActivity
 {
@@ -25,9 +26,12 @@ public class RCONActivity extends FragmentActivity
 	LinearLayout console;
 	EditText command;
 	Button ok;
+	DrawerLayout drawer;
+	
 	int port;
 	String ip;
 	boolean living=true;
+	boolean drawerOpening=false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
@@ -41,6 +45,22 @@ public class RCONActivity extends FragmentActivity
 		setContentView(R.layout.rconmain);
 		fth = (FragmentTabHost)findViewById(android.R.id.tabhost);
 		fth.setup(this, getSupportFragmentManager(), R.id.container);
+		
+		drawer=(DrawerLayout)findViewById(R.id.mainDrawer);
+		drawer.setDrawerListener(new DrawerLayout.DrawerListener(){
+			public void onDrawerClosed(View v){
+				drawerOpening=false;
+			}
+			public void onDrawerOpened(View v){
+				drawerOpening=true;
+			}
+			public void onDrawerStateChanged(int v){
+
+			}
+			public void onDrawerSlide(View v,float f){
+
+			}
+		});
 		
 		consoleF=fth.newTabSpec("console");
 		consoleF.setIndicator(getResources().getString(R.string.console));
@@ -121,7 +141,12 @@ public class RCONActivity extends FragmentActivity
 	@Override
 	public void onBackPressed() {
 		// TODO: Implement this method
-		exitActivity();
+		if(drawerOpening){
+			drawer.closeDrawers();
+			drawerOpening=false;
+		}else{
+			exitActivity();
+		}
 	}
 	public void exitActivity(){
 		finish();
