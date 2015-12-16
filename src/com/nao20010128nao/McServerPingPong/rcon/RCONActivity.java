@@ -152,7 +152,8 @@ public class RCONActivity extends FragmentActivity
 		finish();
 		consoleLogs.clear();
 		try {
-			rcon.close();
+			if(rcon!=null)
+				rcon.close();
 		} catch (IOException e) {}
 		rcon=null;
 		living=false;
