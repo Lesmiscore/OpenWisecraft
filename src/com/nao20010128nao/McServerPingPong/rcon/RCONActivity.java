@@ -42,6 +42,8 @@ public class RCONActivity extends FragmentActivity
 		port=getIntent().getIntExtra("port",-1);
 		if(rcon==null){
 			pa.askPassword();
+		}else{
+			applyHandlers();
 		}
 		setContentView(R.layout.rconmain);
 		fth = (FragmentTabHost)findViewById(android.R.id.tabhost);
