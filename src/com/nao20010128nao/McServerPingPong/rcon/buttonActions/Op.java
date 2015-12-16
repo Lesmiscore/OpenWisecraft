@@ -4,25 +4,18 @@ import android.view.*;
 import com.nao20010128nao.McServerPingPong.*;
 import java.io.*;
 import com.google.rconclient.rcon.*;
+import android.app.*;
 
-public class Op extends BaseAction
+public class Op extends NameSelectAction
 {
 	public Op(RCONActivity a){
 		super(a);
 	}
 
 	@Override
-	public void onClick(View p1) {
+	public void onSelected(final String s) {
 		// TODO: Implement this method
-		String[] player;
-		try {
-			player = getActivity().getRCon().list();
-		} catch (IOException e) {
-			return;
-		} catch (AuthenticationException e) {
-			return;
-		}
-		
+		new AlertDialog.Builder(this);
 	}
 
 	@Override
