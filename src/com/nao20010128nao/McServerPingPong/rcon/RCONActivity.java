@@ -13,6 +13,7 @@ import android.content.*;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import java.io.*;
 import android.support.v4.widget.*;
+import com.nao20010128nao.McServerPingPong.rcon.buttonActions.*;
 
 public class RCONActivity extends FragmentActivity
 {
@@ -65,6 +66,8 @@ public class RCONActivity extends FragmentActivity
 		consoleF=fth.newTabSpec("console");
 		consoleF.setIndicator(getResources().getString(R.string.console));
 		fth.addTab(consoleF,ConsoleFragment.class,null);
+		
+		new Stop(this);
 	}
 	@Override
 	protected void attachBaseContext(Context newBase) {
@@ -157,6 +160,23 @@ public class RCONActivity extends FragmentActivity
 		} catch (IOException e) {}
 		rcon=null;
 		living=false;
+	}
+	public void performSend(final String cmd){
+		new Thread(){
+			public void run(){
+				try {
+					String s=rcon.send(cmd);
+					if(s.equals("")){
+						s=getResources().getString(R.string.emptyResponse);
+					}
+					appendIntoConsole(s);
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (IncorrectRequestIdException e) {
+					e.printStackTrace();
+				}
+			}
+		}.start();
 	}
 	class PasswordAsking extends ContextWrapper {
 		EditText password;
