@@ -180,6 +180,10 @@ public class RCONActivity extends FragmentActivity
 			}.start();
 		}
 	}
+	public RCon getRCon(){
+		return rcon;
+	}
+	
 	private void applyHandlers(){
 		new Stop(this);
 	}
