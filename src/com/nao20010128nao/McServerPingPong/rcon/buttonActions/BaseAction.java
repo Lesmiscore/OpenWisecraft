@@ -20,4 +20,7 @@ public abstract class BaseAction extends ContextWrapper implements OnClickListen
 	public void setCommandText(CharSequence cs){
 		((EditText)ra.findViewById(R.id.command)).setText(cs);
 	}
+	public String getResString(int id){
+		return getResources().getString(id);
+	}
 }

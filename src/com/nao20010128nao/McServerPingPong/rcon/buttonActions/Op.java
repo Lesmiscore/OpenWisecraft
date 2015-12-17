@@ -17,7 +17,7 @@ public class Op extends NameSelectAction
 	public void onSelected(final String s) {
 		// TODO: Implement this method
 		new AlertDialog.Builder(this)
-			.setMessage(R.string.auSure)
+			.setMessage(getResString(R.string.giveOpAsk).replace("[PLAYER]",s))
 			.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
 				public void onClick(DialogInterface di,int w){
 					getActivity().performSend("op "+s);
