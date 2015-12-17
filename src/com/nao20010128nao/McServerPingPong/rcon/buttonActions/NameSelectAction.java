@@ -55,9 +55,9 @@ public abstract class NameSelectAction extends BaseAction
 				try {
 					return onPlayersList();
 				} catch (IOException e) {
-					
+					e.printStackTrace();
 				} catch (AuthenticationException e) {
-					
+					e.printStackTrace();
 				}
 				return null;
 			}

@@ -28,7 +28,13 @@ public class Pardon extends NameSelectAction
 			})
 			.show();
 	}
-
+	
+	@Override
+	public String[] onPlayersList() throws IOException, AuthenticationException {
+		// TODO: Implement this method
+		return getActivity().getRCon().banList();
+	}
+	
 	@Override
 	public int getViewId() {
 		// TODO: Implement this method

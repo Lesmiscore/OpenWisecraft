@@ -36,6 +36,12 @@ public class PardonIp extends NameSelectAction
 	}
 
 	@Override
+	public String[] onPlayersList() throws IOException, AuthenticationException {
+		// TODO: Implement this method
+		return getActivity().getRCon().banIPList();
+	}
+
+	@Override
 	public int getViewId() {
 		// TODO: Implement this method
 		return R.id.pardonip;
