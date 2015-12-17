@@ -20,7 +20,7 @@ public class Deop extends NameSelectAction
 			.setMessage(getResString(R.string.deprivateOpAsk).replace("[PLAYER]",s))
 			.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
 				public void onClick(DialogInterface di,int w){
-					getActivity().performSend("op "+s);
+					getActivity().performSend("deop "+s);
 				}
 			})
 			.setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
