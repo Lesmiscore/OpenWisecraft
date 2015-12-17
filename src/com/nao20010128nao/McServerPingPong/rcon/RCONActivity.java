@@ -188,6 +188,8 @@ public class RCONActivity extends FragmentActivity
 		new Stop(this);
 		new Op(this);
 		new Deop(this);
+		new Kick(this);
+		new Ban(this);
 	}
 	class PasswordAsking extends ContextWrapper {
 		EditText password;

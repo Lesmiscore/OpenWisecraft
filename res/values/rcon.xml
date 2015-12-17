@@ -43,4 +43,6 @@
 	<string name="emptyResponse">(No Response Text)</string>
 	<string name="giveOpAsk">Are you sure to give op to \"[PLAYER]\"?</string>
 	<string name="deprivateOpAsk">Are you sure to deprivate op from \"[PLAYER]\"?</string>
+	<string name="kickAsk">Are you sure to kick \"[PLAYER]\" from the game?</string>
+	<string name="banAsk">Are you sure to ban \"[PLAYER]\"?</string>
 </resources>
