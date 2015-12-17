@@ -45,4 +45,9 @@
 	<string name="deprivateOpAsk">Are you sure to deprivate op from \"[PLAYER]\"?</string>
 	<string name="kickAsk">Are you sure to kick \"[PLAYER]\" from the game?</string>
 	<string name="banAsk">Are you sure to ban \"[PLAYER]\"?</string>
+	<string name="banIpAsk">Are you sure to ban-ip \"[PLAYER]\"?</string>
+	<string name="banIpHint">Name or IP address</string>
+	<string name="pardonAsk">Are you sure to pardon \"[PLAYER]\"?</string>
+	<string name="pardonIpAsk">Are you sure to pardon-ip \"[PLAYER]\"?</string>
+	<string name="pardonIpHint">IP address only</string>
 </resources>
