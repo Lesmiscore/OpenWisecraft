@@ -33,4 +33,13 @@
 	<string name="nocategory">Other commands</string>
 	<string name="me">me</string>
 	<string name="banlist">Show banned player list</string>
+	
+	<string name="rcon">RCON</string>
+	<string name="console">Console</string>
+	<string name="typePassword">Type the password to connect:</string>
+	<string name="incorrectPassword">Incorrect Password.\nTry again!</string>
+	<string name="connecting">Connecting...</string>
+	<string name="connected">Connected!</string>
+	<string name="emptyResponse">(No Response Text)</string>
+	<string name="giveOpAsk">Are you sure to give op to \"[PLAYER]\?"</string>
 </resources>

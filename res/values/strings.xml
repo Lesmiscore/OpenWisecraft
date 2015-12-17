@@ -23,13 +23,6 @@
 	<string name="importing">Importing...</string>
 	<string name="testServer">Test this server</string>
 	<string name="testTimes">How many times do you want to ping? :</string>
-	<string name="rcon">RCON</string>
-	<string name="console">Console</string>
-	<string name="typePassword">Type the password to connect:</string>
-	<string name="incorrectPassword">Incorrect Password.\nTry again!</string>
-	<string name="connecting">Connecting...</string>
-	<string name="connected">Connected!</string>
-	<string name="emptyResponse">(No Response Text)</string>
 	
 	<string-array name="serverSubMenu">
 		<item>Remove</item>
