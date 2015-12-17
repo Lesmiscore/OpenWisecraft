@@ -46,10 +46,14 @@ public abstract class NameSelectAction extends BaseAction
 				dialog.cancel();
 			}
 		});
+		String hint=onPlayerNameHint();
+		if(hint!=null){
+			name.setHint(hint);
+		}
 		new AsyncTask<Void,Void,String[]>(){
 			public String[] doInBackground(Void[] a){
 				try {
-					return getActivity().getRCon().list();
+					return onPlayersList();
 				} catch (IOException e) {
 					
 				} catch (AuthenticationException e) {
@@ -62,6 +66,12 @@ public abstract class NameSelectAction extends BaseAction
 			}
 		};
 		return v;
+	}
+	public String[] onPlayersList()throws IOException,AuthenticationException{
+		return getActivity().getRCon().list();
+	}
+	public String onPlayerNameHint(){
+		return null;
 	}
 	public abstract void onSelected(String name);
 }
