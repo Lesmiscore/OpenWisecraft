@@ -35,7 +35,7 @@ public abstract class NameSelectAction extends BaseAction
 		online.setAdapter(aa);
 		online.setOnItemClickListener(new ListView.OnItemClickListener(){
 			public void onItemClick(AdapterView a,View v,int o,long i){
-				name.setText(aa.getItem(o));
+				name.setText(aa.getItem(o).toString());
 			}
 		});
 		submit.setOnClickListener(new View.OnClickListener(){

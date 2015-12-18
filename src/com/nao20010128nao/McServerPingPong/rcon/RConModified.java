@@ -16,7 +16,7 @@ public class RConModified extends RCon
 		// TODO: Implement this method
 		String[] data=lines(send("list"));
 		dump(data);
-		if(data.length<=2){
+		if(data.length>=2){
 			return data[1].split("\\, ");
 		}
 		return Consistant.EMPTY_STRING_ARRAY;
@@ -27,7 +27,7 @@ public class RConModified extends RCon
 		// TODO: Implement this method
 		String[] data=lines(send("banlist"));
 		dump(data);
-		if(data.length<=2){
+		if(data.length>=2){
 			return data[1].split("\\, ");
 		}
 		return Consistant.EMPTY_STRING_ARRAY;
@@ -38,7 +38,7 @@ public class RConModified extends RCon
 		// TODO: Implement this method
 		String[] data=lines(send("banlist ips"));
 		dump(data);
-		if(data.length<=2){
+		if(data.length>=2){
 			return data[1].split("\\, ");
 		}
 		return Consistant.EMPTY_STRING_ARRAY;
