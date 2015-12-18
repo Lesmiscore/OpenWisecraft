@@ -23,9 +23,7 @@ public class Ban extends NameSelectAction
 					getActivity().performSend("ban "+s);
 				}
 			})
-			.setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
-				public void onClick(DialogInterface di,int w){}
-			})
+			.setNegativeButton(android.R.string.cancel,Consistant.BLANK_DIALOG_CLICK_LISTENER)
 			.show();
 	}
 

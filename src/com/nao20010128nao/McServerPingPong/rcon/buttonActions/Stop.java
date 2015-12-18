@@ -22,9 +22,7 @@ public class Stop extends BaseAction
 					getActivity().performSend("stop");
 				}
 			})
-			.setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
-				public void onClick(DialogInterface di,int w){}
-			})
+			.setNegativeButton(android.R.string.cancel,Consistant.BLANK_DIALOG_CLICK_LISTENER)
 			.show();
 	}
 

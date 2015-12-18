@@ -23,9 +23,7 @@ public class BanIp extends NameSelectAction
 					getActivity().performSend("ban-ip "+s);
 				}
 			})
-			.setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
-				public void onClick(DialogInterface di,int w){}
-			})
+			.setNegativeButton(android.R.string.cancel,Consistant.BLANK_DIALOG_CLICK_LISTENER)
 			.show();
 	}
 
