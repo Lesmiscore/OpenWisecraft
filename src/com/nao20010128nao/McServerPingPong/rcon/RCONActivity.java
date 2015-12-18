@@ -77,7 +77,7 @@ public class RCONActivity extends FragmentActivity
 	public boolean tryConnect(String pass){
 		char[] passChars=pass.toCharArray();
 		try {
-			rcon = new RCon(ip, port, passChars);
+			rcon = new RConModified(ip, port, passChars);
 			return true;
 		} catch (IOException e) {
 			e.printStackTrace();
