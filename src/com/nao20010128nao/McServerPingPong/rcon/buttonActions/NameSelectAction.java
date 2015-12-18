@@ -64,7 +64,7 @@ public abstract class NameSelectAction extends BaseAction
 			public void onPostExecute(String[] s){
 				aa.addAll(s);
 			}
-		};
+		}.execute();
 		return v;
 	}
 	public String[] onPlayersList()throws IOException,AuthenticationException{
