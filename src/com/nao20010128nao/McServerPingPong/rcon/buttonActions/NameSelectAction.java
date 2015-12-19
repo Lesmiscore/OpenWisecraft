@@ -42,8 +42,14 @@ public abstract class NameSelectAction extends BaseAction
 			@Override
 			public void onClick(View p1) {
 				// TODO: Implement this method
-				onSelected(name.getText().toString());
-				dialog.cancel();
+				try{
+					dialog.cancel();
+					dialog.dismiss();
+					dialog.hide();
+					dialog=null;
+				}finally{
+					onSelected(name.getText().toString());
+				}
 			}
 		});
 		String hint=onPlayerNameHint();

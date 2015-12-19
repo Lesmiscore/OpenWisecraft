@@ -193,6 +193,8 @@ public class RCONActivity extends FragmentActivity
 		new BanIp(this);
 		new Pardon(this);
 		new PardonIp(this);
+		new Time_Set(this);
+		new Gamemode(this);
 	}
 	class PasswordAsking extends ContextWrapper {
 		EditText password;

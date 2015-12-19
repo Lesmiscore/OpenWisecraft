@@ -50,4 +50,19 @@
 	<string name="pardonAsk">Are you sure to pardon \"[PLAYER]\"?</string>
 	<string name="pardonIpAsk">Are you sure to pardon-ip \"[PLAYER]\"?</string>
 	<string name="pardonIpHint">IP address only</string>
+	<string name="setTimeAsk">Are you sure to set the time to \"[TIME]\"?</string>
+	<string name="setTimeHint">Number or string</string>
+	<string name="gamemodeAsk">Are you sure to set [PLAYER]\'s gamemode to [MODE]?</string>
+	<string name="gamemodeHint">Number or string</string>
+	
+	<string-array name="setTimeConst">
+		<item>night</item>
+		<item>day</item>
+	</string-array>
+	<string-array name="gamemodeConst">
+		<item>survival</item>
+		<item>creative</item>
+		<item>adventure</item>
+		<item>spectator</item>
+	</string-array>
 </resources>
