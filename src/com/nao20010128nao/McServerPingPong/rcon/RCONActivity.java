@@ -206,6 +206,7 @@ public class RCONActivity extends FragmentActivity
 		new Xp(this);
 		new DefaultGamemode(this);
 		new Weather(this);
+		new Me(this);
 	}
 	class PasswordAsking extends ContextWrapper {
 		EditText password;
