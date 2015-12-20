@@ -161,7 +161,8 @@
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:text="@string/placeblock"
-		android:id="@+id/setblock"/>
+		android:id="@+id/setblock"
+		android:visibility="gone"/>
 
 	<Button
 		style="?android:attr/buttonBarButtonStyle"
