@@ -54,6 +54,17 @@
 	<string name="setTimeHint">Number or string</string>
 	<string name="gamemodeAsk">Are you sure to set [PLAYER]\'s gamemode to [MODE]?</string>
 	<string name="gamemodeHint">Number or string</string>
+	<string name="player">Player:</string>
+	<string name="change">Change</string>
+	<string name="item">Item:</string>
+	<string name="amount">Amount:</string>
+	<string name="execute">Execute</string>
+	<string name="giveAmountHint">Number only</string>
+	<string name="givePlayerHint">@null</string>
+	<string name="giveItemHint">Item ID (PC ~1.7.10,PE) or Item Code (PC 1.8~)</string>
+	<string name="giveSelectAmount">Please set the amount</string>
+	<string name="giveSelectPlayer">Please set the player</string>
+	<string name="giveSelectItem">Please set the item</string>
 	
 	<string-array name="setTimeConst">
 		<item>night</item>

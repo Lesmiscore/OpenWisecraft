@@ -16,4 +16,13 @@ public class Utils
 		}
 		return sb.toString();
 	}
+	public static boolean isNullString(String s){
+		if(s==null){
+			return true;
+		}
+		if("".equals(s)){
+			return true;
+		}
+		return false;
+	}
 }
