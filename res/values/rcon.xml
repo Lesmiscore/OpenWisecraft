@@ -69,6 +69,7 @@
 	<string name="tellSetMessage">Please set the message</string>
 	<string name="message">Message:</string>
 	<string name="tellMessageHint">Anything here</string>
+	<string name="defaultgamemodeAsk">Are you sure to set [PLAYER]\'s gamemode to [MODE]?</string>
 	
 	<string-array name="setTimeConst">
 		<item>night</item>
@@ -79,5 +80,10 @@
 		<item>creative</item>
 		<item>adventure</item>
 		<item>spectator</item>
+	</string-array>
+	<string-array name="defaultgamemodeConst">
+		<item>survival</item>
+		<item>creative</item>
+		<item>adventure</item>
 	</string-array>
 </resources>
