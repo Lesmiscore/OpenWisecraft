@@ -200,6 +200,8 @@ public class RCONActivity extends FragmentActivity
 		new Save_Off(this);
 		new Give(this);
 		new Clear(this);
+		new Kill(this);
+		new Tell(this);
 	}
 	class PasswordAsking extends ContextWrapper {
 		EditText password;

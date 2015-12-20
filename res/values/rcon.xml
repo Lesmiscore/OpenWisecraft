@@ -65,6 +65,10 @@
 	<string name="giveSelectAmount">Please set the amount</string>
 	<string name="giveSelectPlayer">Please set the player</string>
 	<string name="giveSelectItem">Please set the item</string>
+	<string name="killAsk">Are you sure to kill \"[PLAYER]\"?</string>
+	<string name="tellSetMessage">Please set the message</string>
+	<string name="message">Message:</string>
+	<string name="tellMessageHint">Anything here</string>
 	
 	<string-array name="setTimeConst">
 		<item>night</item>
