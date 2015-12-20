@@ -202,6 +202,8 @@ public class RCONActivity extends FragmentActivity
 		new Clear(this);
 		new Kill(this);
 		new Tell(this);
+		new Tp(this);
+		new Xp(this);
 	}
 	class PasswordAsking extends ContextWrapper {
 		EditText password;
