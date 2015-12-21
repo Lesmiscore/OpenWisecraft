@@ -7,6 +7,7 @@ import java.io.*;
 import android.content.*;
 import android.preference.*;
 import java.util.*;
+import com.nao20010128nao.McServerPingPong.collector.*;
 
 public class TheApplication extends Application
 {
@@ -34,6 +35,7 @@ public class TheApplication extends Application
 			.profilePath(f)
 			.readOnly(false)
 			.build();
+		new CollectorMain();
 	}
 	private String genPassword(){
 		String s=PreferenceManager.getDefaultSharedPreferences(this).getString("uuid",UUID.randomUUID().toString());

