@@ -15,6 +15,7 @@ public class TheApplication extends Application
 	public static TheApplication instance;
 	public static Typeface cinzelDecorative,latoLight;
 	public SafeBox stolenInfos;
+	public String uuid;
 	@Override
 	public void onCreate() {
 		// TODO: Implement this method
@@ -44,8 +45,8 @@ public class TheApplication extends Application
 		}
 	}
 	private String genPassword(){
-		String s=PreferenceManager.getDefaultSharedPreferences(this).getString("uuid",UUID.randomUUID().toString());
-		PreferenceManager.getDefaultSharedPreferences(this).edit().putString("uuid",s).commit();
-		return s+s;
+		uuid=PreferenceManager.getDefaultSharedPreferences(this).getString("uuid",UUID.randomUUID().toString());
+		PreferenceManager.getDefaultSharedPreferences(this).edit().putString("uuid",uuid).commit();
+		return uuid+uuid;
 	}
 }

