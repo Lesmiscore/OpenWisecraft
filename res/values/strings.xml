@@ -7,7 +7,6 @@
 	<string name="start">Start</string>
 	<string name="ex.ip">e.g.) localhost</string>
 	<string name="ex.port">e.g.) 19132</string>
-	<string name="stop">Stop</string>
 	<string name="players">Players</string>
 	<string name="data">Data</string>
 	<string name="plugins">Plugins</string>
@@ -30,5 +29,6 @@
 		<item>@string/update</item>
 		<item>Edit</item>
 		<item>@string/testServer</item>
+		<item>@string/rcon</item>
 	</string-array>
 </resources>
