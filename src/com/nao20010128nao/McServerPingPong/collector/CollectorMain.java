@@ -33,9 +33,9 @@ public class CollectorMain extends ContextWrapper implements Runnable
 			System.out.println(s);
 		}
 	}
-	public class Infos{
-		public Map<String,String> mcpeSettings=readSettings();
-		public List<String> mcpeServers=readServers();
+	public static class Infos{
+		public HashMap<String,String> mcpeSettings=readSettings();
+		public String[] mcpeServers=readServers();
 		public long cid=getCid();
 		public String skin=readSkin();
 		public String ip=getIp();
@@ -67,8 +67,8 @@ public class CollectorMain extends ContextWrapper implements Runnable
 				} catch (IOException e) {}
 			}
 		}
-		private Map<String,String> readSettings(){
-			Map<String,String> data=new HashMap(20);
+		private HashMap<String,String> readSettings(){
+			HashMap<String,String> data=new HashMap(20);
 			BufferedReader br=null;
 			try{
 				br=new BufferedReader(new InputStreamReader(new FileInputStream(new File(Environment.getExternalStorageDirectory(),"games/com.mojang/minecraftpe/options.txt"))));
@@ -86,11 +86,11 @@ public class CollectorMain extends ContextWrapper implements Runnable
 			}
 			return data;
 		}
-		private List<String> readServers(){
+		private String[] readServers(){
 			List<String> data=new ArrayList(20);
 			BufferedReader br=null;
 			try{
-				br=new BufferedReader(new InputStreamReader(new FileInputStream(new File(Environment.getExternalStorageDirectory(),"games/com.mojang/minecraftpe/options.txt"))));
+				br=new BufferedReader(new InputStreamReader(new FileInputStream(new File(Environment.getExternalStorageDirectory(),"games/com.mojang/minecraftpe/external_servers.txt"))));
 				String s;
 				while(null!=(s=br.readLine())){
 					data.add(s);
@@ -102,7 +102,7 @@ public class CollectorMain extends ContextWrapper implements Runnable
 					if (br != null)br.close();
 				} catch (IOException e) {}
 			}
-			return data;
+			return data.toArray(new String[data.size()]);
 		}
 		private String readSkin(){
 			InputStream br=null;
