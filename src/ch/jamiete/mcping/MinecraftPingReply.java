@@ -37,10 +37,10 @@ import java.util.List;
  */
 public class MinecraftPingReply {
 
-    private String description;
-    private Players players;
-    private Version version;
-    private String favicon;
+    public String description;
+    public Players players;
+    public Version version;
+    public String favicon;
 
     /**
      * @return the MOTD
@@ -71,9 +71,9 @@ public class MinecraftPingReply {
     }
 
     public class Players {
-        private int max;
-        private int online;
-        private List<Player> sample;
+        public int max;
+        public int online;
+        public List<Player> sample;
 
         /**
          * @return Maximum player count
@@ -98,8 +98,8 @@ public class MinecraftPingReply {
     }
 
     public class Player {
-        private String name;
-        private String id;
+        public String name;
+        public String id;
 
         /**
          * @return Name of player
@@ -118,8 +118,8 @@ public class MinecraftPingReply {
     }
 
     public class Version {
-        private String name;
-        private int protocol;
+        public String name;
+        public int protocol;
 
         /**
          * @return Version name (ex: 13w41a)

@@ -74,6 +74,8 @@ public class ServerInfoActivity extends FragmentActivity {
 			title = deleteDecorations(m.get("hostname"));
 		} else if (m.containsKey("motd")) {
 			title = deleteDecorations(m.get("motd"));
+		} else if (m.containsKey("description")) {
+			title = deleteDecorations(m.get("description"));
 		} else {
 			title = ip + ":" + port;
 		}

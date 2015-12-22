@@ -48,8 +48,9 @@ public class QueryResponseUniverse {
 		datas.put("protocol",reply.getVersion().getProtocol()+"");
 		datas.put("maxplayers",reply.getPlayers().getMax()+"");
 		datas.put("numplayers",reply.getPlayers().getOnline()+"");
-		for(MinecraftPingReply.Player p:reply.getPlayers().getSample())
-			playerList.add(p.getName());
+		if(reply.getPlayers().getSample()!=null)
+			for(MinecraftPingReply.Player p:reply.getPlayers().getSample())
+				playerList.add(p.getName());
 	}
 
 	public Map<String,String> getData() {
