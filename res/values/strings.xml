@@ -23,6 +23,7 @@
 	<string name="importing">Importing...</string>
 	<string name="testServer">Test this server</string>
 	<string name="testTimes">How many times do you want to ping? :</string>
+	<string name="isPC">Is the server PC version?</string>
 	
 	<string-array name="serverSubMenu">
 		<item>Remove</item>
