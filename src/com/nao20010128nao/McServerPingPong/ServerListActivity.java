@@ -589,6 +589,7 @@ public class ServerListActivity extends ListActivity{
 	public static class Server{
 		public String ip;
 		public int port;
+		public boolean isPC;
 
 		@Override
 		public int hashCode() {
