@@ -34,7 +34,6 @@
 	<string name="me">meコマンド</string>
 	<string name="banlist">追放されたプレイヤーの一覧</string>
 	
-
 	<string name="rcon">RCON</string>
 	<string name="console">Console</string>
 	<string name="typePassword">Type the password to connect:</string>
