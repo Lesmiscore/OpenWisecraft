@@ -50,6 +50,7 @@ public class NormalServerPingProvider implements ServerPingProvider
 					stat.port = now.getKey().port;
 					stat.response = new QueryResponseUniverse(mcp);
 					stat.ping = ping.getLatestPingElapsed();
+					stat.isPC=true;
 					try {
 						now.getValue().onPingArrives(stat);
 					} catch (Throwable f) {
@@ -73,6 +74,7 @@ public class NormalServerPingProvider implements ServerPingProvider
 					stat.port = now.getKey().port;
 					stat.response = resp;
 					stat.ping = q.getLatestPingElapsed();
+					stat.isPC=false;
 					try {
 						now.getValue().onPingArrives(stat);
 					} catch (Throwable f) {
