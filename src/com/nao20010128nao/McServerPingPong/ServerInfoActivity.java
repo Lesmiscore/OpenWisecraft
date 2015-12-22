@@ -63,6 +63,9 @@ public class ServerInfoActivity extends FragmentActivity {
 		
 		nonUpd=getIntent().getBooleanExtra("nonUpd",false);
 		
+		ip=stat.ip;
+		port=stat.port;
+		
 		update(stat.response);
 	}
 	public synchronized void update(final QueryResponseUniverse resp) {
