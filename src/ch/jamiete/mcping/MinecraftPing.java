@@ -38,6 +38,11 @@ import com.google.gson.Gson;
 
 public class MinecraftPing {
 
+	long latestPingElapsed;
+	
+	public long getLatestPingElapsed(){
+		return latestPingElapsed;
+	}
     /**
      * Fetches a {@link MinecraftPingReply} for the supplied hostname.
      * <b>Assumed timeout of 2s and port of 25565.</b>
@@ -110,12 +115,14 @@ public class MinecraftPing {
         out.writeLong(System.currentTimeMillis());
 
         //< Ping
-
+		
+		long e=System.currentTimeMillis();
         MinecraftPingUtil.readVarInt(in); // Size
         id = MinecraftPingUtil.readVarInt(in);
         MinecraftPingUtil.io(id == -1, "Server prematurely ended stream.");
         MinecraftPingUtil.io(id != MinecraftPingUtil.PACKET_PING, "Server returned invalid packet.");
-
+		latestPingElapsed=System.currentTimeMillis()-e;
+		
         // Close
 
         handshake.close();

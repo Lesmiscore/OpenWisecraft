@@ -2,6 +2,7 @@ package query;
 
 import java.util.ArrayList;
 import java.util.*;
+import ch.jamiete.mcping.*;
 
 public class QueryResponseUniverse {
 	static byte NULL = 00;
@@ -40,7 +41,16 @@ public class QueryResponseUniverse {
 			playerList.add(new String(temp[i]));
 		}
 	}
-
+	public QueryResponseUniverse(MinecraftPingReply reply){
+		datas.put("description",reply.getDescription());
+		datas.put("icon",reply.getFavicon());
+		datas.put("version",reply.getVersion().getName());
+		datas.put("protocol",reply.getVersion().getProtocol()+"");
+		datas.put("maxplayers",reply.getPlayers().getMax()+"");
+		datas.put("numplayers",reply.getPlayers().getOnline()+"");
+		for(MinecraftPingReply.Player p:reply.getPlayers().getSample())
+			playerList.add(p.getName());
+	}
 
 	public Map<String,String> getData() {
 		return Collections.unmodifiableMap(datas);

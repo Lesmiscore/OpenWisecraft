@@ -2,6 +2,8 @@ package com.nao20010128nao.McServerPingPong.provider;
 import java.util.*;
 import query.*;
 import com.nao20010128nao.McServerPingPong.*;
+import ch.jamiete.mcping.*;
+import java.io.*;
 
 public class NormalServerPingProvider implements ServerPingProvider
 {
@@ -26,27 +28,56 @@ public class NormalServerPingProvider implements ServerPingProvider
 			Map.Entry<ServerListActivity.Server,PingHandler> now=null;
 			while(!queue.isEmpty()){
 				now=queue.poll();
-				MCQuery q=new MCQuery(now.getKey().ip,now.getKey().port);
-				QueryResponseUniverse resp;
-				try {
-					resp=q.fullStatUni();
-				} catch (Throwable e) {
+				if(now.getKey().isPC){
+					MinecraftPing ping=new MinecraftPing();
+					MinecraftPingReply mcp;
 					try {
-						now.getValue().onPingFailed(now.getKey());
-					} catch (Throwable f) {
-						
-					}
-					continue;
-				}
-				ServerListActivity.ServerStatus stat=new ServerListActivity.ServerStatus();
-				stat.ip=now.getKey().ip;
-				stat.port=now.getKey().port;
-				stat.response=resp;
-				stat.ping=q.getLatestPingElapsed();
-				try {
-					now.getValue().onPingArrives(stat);
-				} catch (Throwable f) {
+						mcp=ping.getPing(new MinecraftPingOptions()
+																	 .setCharset("UTF-8")
+																	 .setHostname(now.getKey().ip)
+																	 .setPort(now.getKey().port)
+																	 .setTimeout(1000));
+					} catch (IOException e) {
+						try {
+							now.getValue().onPingFailed(now.getKey());
+						} catch (Throwable f) {
 
+						}
+						continue;
+					}
+					ServerListActivity.ServerStatus stat=new ServerListActivity.ServerStatus();
+					stat.ip = now.getKey().ip;
+					stat.port = now.getKey().port;
+					stat.response = new QueryResponseUniverse(mcp);
+					stat.ping = ping.getLatestPingElapsed();
+					try {
+						now.getValue().onPingArrives(stat);
+					} catch (Throwable f) {
+
+					}
+				}else{
+					MCQuery q=new MCQuery(now.getKey().ip, now.getKey().port);
+					QueryResponseUniverse resp;
+					try {
+						resp = q.fullStatUni();
+					} catch (Throwable e) {
+						try {
+							now.getValue().onPingFailed(now.getKey());
+						} catch (Throwable f) {
+
+						}
+						continue;
+					}
+					ServerListActivity.ServerStatus stat=new ServerListActivity.ServerStatus();
+					stat.ip = now.getKey().ip;
+					stat.port = now.getKey().port;
+					stat.response = resp;
+					stat.ping = q.getLatestPingElapsed();
+					try {
+						now.getValue().onPingArrives(stat);
+					} catch (Throwable f) {
+
+					}
 				}
 			}
 		}
