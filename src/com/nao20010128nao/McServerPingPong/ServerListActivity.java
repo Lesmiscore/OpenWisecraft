@@ -74,6 +74,7 @@ public class ServerListActivity extends ListActivity{
 												Server sn=new Server();
 												sn.ip=s.ip;
 												sn.port=s.port;
+												sn.isPC=s.isPC;
 												list.set(clicked,sn);
 												hideWorkingDialog();
 												pinging.put(list.get(clicked),false);
@@ -90,6 +91,8 @@ public class ServerListActivity extends ListActivity{
 													title = deleteDecorations(m.get("hostname"));
 												} else if (m.containsKey("motd")) {
 													title = deleteDecorations(m.get("motd"));
+												} else if (m.containsKey("description")) {
+													title = deleteDecorations(m.get("description"));
 												} else {
 													title = s.ip + ":" + s.port;
 												}
@@ -131,10 +134,12 @@ public class ServerListActivity extends ListActivity{
 				final Server data=new Server();
 				data.ip="localhost";
 				data.port=19132;
+				data.isPC=false;
 				View dialog=getLayoutInflater().inflate(R.layout.serveradddialog,null);
 				final EditText ip=(EditText)dialog.findViewById(R.id.serverIp);
 				final EditText port=(EditText)dialog.findViewById(R.id.serverPort);
-
+				final CheckBox isPc=(CheckBox)dialog.findViewById(R.id.pc);
+				
 				ip.setText(data.ip);
 				port.setText(data.port+"");
 
@@ -144,6 +149,7 @@ public class ServerListActivity extends ListActivity{
 						public void onClick(DialogInterface d,int sel){
 							data.ip=ip.getText().toString();
 							data.port=new Integer(port.getText().toString());
+							data.isPC=isPc.isChecked();
 							if(list.contains(data)){
 								Toast.makeText(ServerListActivity.this,R.string.alreadyExists,Toast.LENGTH_LONG).show();
 							}else{
@@ -188,6 +194,7 @@ public class ServerListActivity extends ListActivity{
 							Server svr=new Server();
 							svr.ip=s[2];
 							svr.port=new Integer(s[3]);
+							svr.isPC=false;
 							sv.add(svr);
 						}
 						runOnUiThread(new Runnable(){
@@ -215,6 +222,7 @@ public class ServerListActivity extends ListActivity{
 											Server sn=new Server();
 											sn.ip=s.ip;
 											sn.port=s.port;
+											sn.isPC=s.isPC;
 											list.set(i_,sn);
 											hideWorkingDialog();
 											pinging.put(list.get(i_),false);
@@ -231,6 +239,8 @@ public class ServerListActivity extends ListActivity{
 												title = deleteDecorations(m.get("hostname"));
 											} else if (m.containsKey("motd")) {
 												title = deleteDecorations(m.get("motd"));
+											} else if (m.containsKey("description")) {
+												title = deleteDecorations(m.get("description"));
 											} else {
 												title = s.ip + ":" + s.port;
 											}
@@ -323,6 +333,8 @@ public class ServerListActivity extends ListActivity{
 								title = deleteDecorations(m.get("hostname"));
 							} else if (m.containsKey("motd")) {
 								title = deleteDecorations(m.get("motd"));
+							} else if (m.containsKey("description")) {
+								title = deleteDecorations(m.get("description"));
 							} else {
 								title = sv.ip + ":" + sv.port;
 							}
@@ -371,6 +383,7 @@ public class ServerListActivity extends ListActivity{
 										Server sn=new Server();
 										sn.ip=s.ip;
 										sn.port=s.port;
+										sn.isPC=s.isPC;
 										list.set(clicked,sn);
 										hideWorkingDialog();
 										pinging.put(list.get(clicked),false);
@@ -387,6 +400,8 @@ public class ServerListActivity extends ListActivity{
 											title = deleteDecorations(m.get("hostname"));
 										} else if (m.containsKey("motd")) {
 											title = deleteDecorations(m.get("motd"));
+										} else if (m.containsKey("description")) {
+											title = deleteDecorations(m.get("description"));
 										} else {
 											title = s.ip + ":" + s.port;
 										}
@@ -443,6 +458,7 @@ public class ServerListActivity extends ListActivity{
 														Server sn=new Server();
 														sn.ip=s.ip;
 														sn.port=s.port;
+														sn.isPC=s.isPC;
 														list.set(clicked,sn);
 														hideWorkingDialog();
 														pinging.put(list.get(clicked),false);
@@ -459,6 +475,8 @@ public class ServerListActivity extends ListActivity{
 															title = deleteDecorations(m.get("hostname"));
 														} else if (m.containsKey("motd")) {
 															title = deleteDecorations(m.get("motd"));
+														} else if (m.containsKey("description")) {
+															title = deleteDecorations(m.get("description"));
 														} else {
 															title = s.ip + ":" + s.port;
 														}
@@ -480,12 +498,15 @@ public class ServerListActivity extends ListActivity{
 								final Server data=new Server();
 								data.ip=getItem(p3).ip;
 								data.port=getItem(p3).port;
+								data.isPC=getItem(p3).isPC;
 								View dialog=getLayoutInflater().inflate(R.layout.serveradddialog,null);
 								final EditText ip=(EditText)dialog.findViewById(R.id.serverIp);
 								final EditText port=(EditText)dialog.findViewById(R.id.serverPort);
-
+								final CheckBox isPc=(CheckBox)dialog.findViewById(R.id.pc);
+								
 								ip.setText(data.ip);
 								port.setText(data.port+"");
+								isPc.setChecked(data.isPC);
 
 								new AlertDialog.Builder(getContext()).
 									setView(dialog).
@@ -493,6 +514,7 @@ public class ServerListActivity extends ListActivity{
 										public void onClick(DialogInterface d,int sel){
 											data.ip=ip.getText().toString();
 											data.port=new Integer(port.getText().toString());
+											data.isPC=isPc.isChecked();
 											if(list.contains(data)){
 												Toast.makeText(ServerListActivity.this,R.string.alreadyExists,Toast.LENGTH_LONG).show();
 											}else{
@@ -507,6 +529,7 @@ public class ServerListActivity extends ListActivity{
 																		Server sn=new Server();
 																		sn.ip=s.ip;
 																		sn.port=s.port;
+																		sn.isPC=s.isPC;
 																		list.set(p3,sn);
 																		hideWorkingDialog();
 																		pinging.put(list.get(p3),false);
@@ -523,6 +546,8 @@ public class ServerListActivity extends ListActivity{
 																			title = deleteDecorations(m.get("hostname"));
 																		} else if (m.containsKey("motd")) {
 																			title = deleteDecorations(m.get("motd"));
+																		} else if (m.containsKey("description")) {
+																			title = deleteDecorations(m.get("description"));
 																		} else {
 																			title = s.ip + ":" + s.port;
 																		}
@@ -548,7 +573,7 @@ public class ServerListActivity extends ListActivity{
 									show();
 								break;
 							case 3:
-								startActivity(new Intent(ServerListActivity.this,ServerTestActivity.class).putExtra("ip",getItem(p3).ip).putExtra("port",getItem(p3).port));
+								startActivity(new Intent(ServerListActivity.this,ServerTestActivity.class).putExtra("ip",getItem(p3).ip).putExtra("port",getItem(p3).port).putExtra("ispc",getItem(p3).isPC));
 								break;
 							case 4:
 								startActivity(new Intent(ServerListActivity.this,RCONActivity.class).putExtra("ip",getItem(p3).ip).putExtra("port",getItem(p3).port));
