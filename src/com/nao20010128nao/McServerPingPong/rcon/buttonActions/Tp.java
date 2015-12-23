@@ -24,7 +24,7 @@ public class Tp extends BaseAction
 	@Override
 	public int getViewId() {
 		// TODO: Implement this method
-		return R.string.tp;
+		return R.id.tp;
 	}
 	public View inflateDialogView(){
 		View v=((LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.command_continue,null,false);
