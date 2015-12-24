@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">@string/app_name</string>
+    <string name="app_name">McServerPingPong (名前未定)</string>
+	<string name="ip">IPもしくはホスト名:</string>
+	<string name="port">ポート:</string>
+	<string name="start">開始</string>
+	<string name="ex.ip">例) localhost</string>
+	<string name="ex.port">例) 19132</string>
+	<string name="players">プレイヤー</string>
+	<string name="data">詳細</string>
+	<string name="plugins">プラグイン</string>
+	<string name="status">状態</string>
+	<string name="notResponding">応答なし</string>
+	<string name="working">問い合わせ中...</string>
+	<string name="update">更新</string>
+	<string name="update.all">全て更新</string>
+	<string name="add">サーバーを追加</string>
+	<string name="addFromMCPE">MCPEのサーバーリストからインポート</string>
+	<string name="auSure">よろしいですか?</string>
+	<string name="numError">数値の確認中に問題が発生しました。</string>
+	<string name="alreadyExists">サーバーはすでに追加済みです。</string>
+	<string name="importing">インポートしています...</string>
+	<string name="testServer">このサーバーをテスト</string>
+	<string name="testTimes">何回、pingを送信しますか? :</string>
+	<string name="isPC">PC版のサーバー</string>
+	
+	<string-array name="serverSubMenu">
+		<item>削除</item>
+		<item>@string/update</item>
+		<item>編集</item>
+		<item>@string/testServer</item>
+		<item>@string/rcon</item>
+	</string-array>
+</resources>
