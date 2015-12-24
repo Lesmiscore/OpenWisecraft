@@ -23,7 +23,7 @@ public class RCONActivity extends FragmentActivity
 	
 	PasswordAsking pa=new PasswordAsking();
 	FragmentTabHost fth;
-	TabHost.TabSpec consoleF;
+	TabHost.TabSpec consoleF,playersF;
 	LinearLayout console;
 	EditText command;
 	Button ok;
@@ -68,6 +68,10 @@ public class RCONActivity extends FragmentActivity
 		consoleF=fth.newTabSpec("console");
 		consoleF.setIndicator(getResources().getString(R.string.console));
 		fth.addTab(consoleF,ConsoleFragment.class,null);
+
+		playersF=fth.newTabSpec("players");
+		playersF.setIndicator(getResources().getString(R.string.players));
+		fth.addTab(playersF,PlayersFragment.class,null);
 	}
 	@Override
 	protected void attachBaseContext(Context newBase) {
@@ -260,6 +264,15 @@ public class RCONActivity extends FragmentActivity
 			instance.get().setConsoleLayout((LinearLayout)v.findViewById(R.id.consoleText));
 			instance.get().setCommandOk((Button)v.findViewById(R.id.send));
 			instance.get().setCommandTextBox((EditText)v.findViewById(R.id.command));
+			return v;
+		}
+	}
+	public static class PlayersFragment extends android.support.v4.app.Fragment {
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+			// TODO: Implement this method
+			View v=inflater.inflate(R.layout.rcon_players_tab,null,false);
+			
 			return v;
 		}
 	}
