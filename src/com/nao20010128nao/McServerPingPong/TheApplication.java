@@ -13,7 +13,7 @@ import android.os.*;
 public class TheApplication extends Application
 {
 	public static TheApplication instance;
-	public static Typeface cinzelDecorative,latoLight;
+	public static Typeface cinzelDecorative,latoLight,migmix;
 	public SafeBox stolenInfos;
 	public String uuid;
 	@Override
@@ -23,8 +23,9 @@ public class TheApplication extends Application
 		instance=this;
 		cinzelDecorative=Typeface.createFromAsset(getAssets(),"cinzeldecorative.ttf");
 		latoLight=Typeface.createFromAsset(getAssets(),"lato-light.ttf");
+		migmix=Typeface.createFromAsset(getAssets(),"migmix.ttf");
 		CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-									  .setDefaultFontPath("lato-light.ttf")
+									  .setDefaultFontPath(getResources().getString(R.string.font))
 									  .setFontAttrId(R.attr.fontPath)
 									  .build()
 									  );
