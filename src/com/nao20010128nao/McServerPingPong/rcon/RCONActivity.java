@@ -26,8 +26,13 @@ public class RCONActivity extends FragmentActivity
 	TabHost.TabSpec consoleF,playersF;
 	LinearLayout console;
 	EditText command;
-	Button ok;
+	Button ok,updatePlayers;
 	DrawerLayout drawer;
+	ListView players;
+	TextView playersCount;
+	
+	ArrayAdapter<String> playersList;
+	ArrayList<String> playersListInternal;
 	
 	int port;
 	String ip;
@@ -64,6 +69,8 @@ public class RCONActivity extends FragmentActivity
 
 			}
 		});
+		
+		playersList=new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,playersListInternal=new ArrayList<>(10));
 		
 		consoleF=fth.newTabSpec("console");
 		consoleF.setIndicator(getResources().getString(R.string.console));
@@ -137,6 +144,15 @@ public class RCONActivity extends FragmentActivity
 					}
 				}
 			});
+	}
+	public void setPlayersListView(ListView lv){
+		(players=lv).setAdapter(playersList);
+	}
+	public void setPlayersCountTextView(TextView tv){
+		playersCount=tv;
+	}
+	public void setUpdatePlayersButton(Button tv){
+		updatePlayers=tv;
 	}
 	TextView newTextViewForConsole(String s){
 		TextView tv=new TextView(this);
@@ -272,7 +288,9 @@ public class RCONActivity extends FragmentActivity
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
 			View v=inflater.inflate(R.layout.rcon_players_tab,null,false);
-			
+			instance.get().setPlayersListView((ListView)v.findViewById(R.id.players));
+			instance.get().setPlayersCountTextView((TextView)v.findViewById(R.id.playersCount));
+			instance.get().setUpdatePlayersButton((Button)v.findViewById(R.id.updatePlayers));
 			return v;
 		}
 	}
