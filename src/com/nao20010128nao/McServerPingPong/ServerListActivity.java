@@ -451,9 +451,9 @@ public class ServerListActivity extends ListActivity{
 										public void onPingFailed(final Server s){
 											runOnUiThread(new Runnable(){
 													public void run(){
-														sl.getViewQuick(clicked).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_error)));
-														((TextView)sl.getViewQuick(clicked).findViewById(R.id.serverName)).setText(s.ip+":"+s.port);
-														((TextView)sl.getViewQuick(clicked).findViewById(R.id.pingMillis)).setText(R.string.notResponding);
+														sl.getViewQuick(p3).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_error)));
+														((TextView)sl.getViewQuick(p3).findViewById(R.id.serverName)).setText(s.ip+":"+s.port);
+														((TextView)sl.getViewQuick(p3).findViewById(R.id.pingMillis)).setText(R.string.notResponding);
 														Server sn=new Server();
 														sn.ip=s.ip;
 														sn.port=s.port;
@@ -467,7 +467,7 @@ public class ServerListActivity extends ListActivity{
 										public void onPingArrives(final ServerStatus s){
 											runOnUiThread(new Runnable(){
 													public void run(){
-														sl.getViewQuick(clicked).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
+														sl.getViewQuick(p3).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
 														final String title;
 														Map<String,String> m=s.response.getData();
 														if (m.containsKey("hostname")) {
@@ -479,19 +479,19 @@ public class ServerListActivity extends ListActivity{
 														} else {
 															title = s.ip + ":" + s.port;
 														}
-														((TextView)sl.getViewQuick(clicked).findViewById(R.id.serverName)).setText(deleteDecorations(title));
-														((TextView)sl.getViewQuick(clicked).findViewById(R.id.pingMillis)).setText(s.ping+" ms");
-														list.set(clicked,s);
+														((TextView)sl.getViewQuick(p3).findViewById(R.id.serverName)).setText(deleteDecorations(title));
+														((TextView)sl.getViewQuick(p3).findViewById(R.id.pingMillis)).setText(s.ping+" ms");
+														list.set(p3,s);
 														hideWorkingDialog();
-														pinging.put(list.get(clicked),false);
+														pinging.put(list.get(p3),false);
 													}
 												});
 										}
 									});
-								((TextView)sl.getViewQuick(clicked).findViewById(R.id.pingMillis)).setText(R.string.working);
-								sl.getViewQuick(clicked).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
+								((TextView)sl.getViewQuick(p3).findViewById(R.id.pingMillis)).setText(R.string.working);
+								sl.getViewQuick(p3).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
 								showWorkingDialog();
-								pinging.put(list.get(clicked),true);
+								pinging.put(list.get(p3),true);
 								break;
 							case 2:
 								final Server data=new Server();
