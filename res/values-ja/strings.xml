@@ -25,7 +25,7 @@
 	<string name="testTimes">何回、pingを送信しますか? :</string>
 	<string name="isPC">PC版のサーバー</string>
 	
-	<string name="font">lato-light.ttf</string>
+	<string name="font">msgothic.ttf</string>
 	
 	<string-array name="serverSubMenu">
 		<item>削除</item>
