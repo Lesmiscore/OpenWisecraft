@@ -72,6 +72,8 @@
 	<string name="defaultgamemodeAsk">Are you sure to set defaultgamemode to [MODE]?</string>
 	<string name="weatherAsk">Are you sure to set the weather to [MODE]?</string>
 	
+	<string name="indicatePlayers">Online Players: [PLAYERS]</string>
+	
 	<string-array name="setTimeConst">
 		<item>night</item>
 		<item>day</item>

@@ -26,10 +26,11 @@ public class RCONActivity extends FragmentActivity
 	TabHost.TabSpec consoleF,playersF;
 	LinearLayout console;
 	EditText command;
-	Button ok,updatePlayers;
+	Button ok;
 	DrawerLayout drawer;
 	ListView players;
 	TextView playersCount;
+	ImageButton updatePlayers;
 	
 	ArrayAdapter<String> playersList;
 	ArrayList<String> playersListInternal;
@@ -151,8 +152,15 @@ public class RCONActivity extends FragmentActivity
 	public void setPlayersCountTextView(TextView tv){
 		playersCount=tv;
 	}
-	public void setUpdatePlayersButton(Button tv){
-		updatePlayers=tv;
+	public void setUpdatePlayersButton(ImageButton tv){
+		(updatePlayers=tv).setOnClickListener(new View.OnClickListener(){
+			public void onClick(View v){
+				
+			}
+		});
+	}
+	public void refreshPlayers(){
+		
 	}
 	TextView newTextViewForConsole(String s){
 		TextView tv=new TextView(this);
@@ -290,7 +298,7 @@ public class RCONActivity extends FragmentActivity
 			View v=inflater.inflate(R.layout.rcon_players_tab,null,false);
 			instance.get().setPlayersListView((ListView)v.findViewById(R.id.players));
 			instance.get().setPlayersCountTextView((TextView)v.findViewById(R.id.playersCount));
-			instance.get().setUpdatePlayersButton((Button)v.findViewById(R.id.updatePlayers));
+			instance.get().setUpdatePlayersButton((ImageButton)v.findViewById(R.id.updatePlayers));
 			return v;
 		}
 	}
