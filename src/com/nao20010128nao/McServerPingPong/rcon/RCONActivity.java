@@ -316,6 +316,7 @@ public class RCONActivity extends FragmentActivity
 			instance.get().setPlayersListView((ListView)v.findViewById(R.id.players));
 			instance.get().setPlayersCountTextView((TextView)v.findViewById(R.id.playersCount));
 			instance.get().setUpdatePlayersButton((ImageButton)v.findViewById(R.id.updatePlayers));
+			instance.get().refreshPlayers();
 			return v;
 		}
 	}
