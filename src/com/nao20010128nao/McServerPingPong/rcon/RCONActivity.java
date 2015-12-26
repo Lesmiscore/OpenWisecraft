@@ -155,12 +155,29 @@ public class RCONActivity extends FragmentActivity
 	public void setUpdatePlayersButton(ImageButton tv){
 		(updatePlayers=tv).setOnClickListener(new View.OnClickListener(){
 			public void onClick(View v){
-				
+				refreshPlayers();
 			}
 		});
 	}
 	public void refreshPlayers(){
-		
+		new AsyncTask<Void,Void,String[]>(){
+			public String[] doInBackground(Void[] a){
+				try {
+					return rcon.list();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (AuthenticationException e) {
+					e.printStackTrace();
+				}
+				return null;
+			}
+			public void onPostExecute(String[] s){
+				playersListInternal.clear();
+				playersListInternal.addAll(Arrays.asList(s));
+				playersList.notifyDataSetChanged();
+				playersCount.setText(getResources().getString(R.string.indicatePlayers).replace("[PLAYERS]",s.length+""));
+			}
+		}.execute();
 	}
 	TextView newTextViewForConsole(String s){
 		TextView tv=new TextView(this);
