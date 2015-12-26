@@ -17,7 +17,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import com.nao20010128nao.McServerPingPong.rcon.*;
 
 public class ServerListActivity extends ListActivity{
-	ServerPingProvider spp=new MultiServerPingProvider(3);
+	ServerPingProvider spp=new MultiServerPingProvider(6);
 	Gson gson=new Gson();
 	SharedPreferences pref;
 	ServerList sl;
