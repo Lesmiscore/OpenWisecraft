@@ -8,13 +8,14 @@ import android.util.*;
 import android.view.*;
 import android.widget.*;
 import com.google.gson.*;
+import com.nao20010128nao.McServerPingPong.provider.*;
+import com.nao20010128nao.McServerPingPong.rcon.*;
 import java.io.*;
 import java.util.*;
 import query.*;
+import uk.co.chrisjenx.calligraphy.*;
+
 import static com.nao20010128nao.McServerPingPong.Utils.*;
-import com.nao20010128nao.McServerPingPong.provider.*;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-import com.nao20010128nao.McServerPingPong.rcon.*;
 
 public class ServerListActivity extends ListActivity{
 	ServerPingProvider spp=new MultiServerPingProvider(6);

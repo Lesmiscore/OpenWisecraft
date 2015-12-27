@@ -1,19 +1,21 @@
 package com.nao20010128nao.McServerPingPong.rcon;
-import android.support.v4.app.*;
-import android.os.*;
-import com.nao20010128nao.McServerPingPong.*;
-import android.widget.*;
-import android.view.*;
-import java.util.*;
-import java.lang.ref.*;
-import android.graphics.*;
-import com.google.rconclient.rcon.*;
 import android.app.*;
 import android.content.*;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-import java.io.*;
+import android.graphics.*;
+import android.os.*;
+import android.support.v4.app.*;
 import android.support.v4.widget.*;
+import android.view.*;
+import android.widget.*;
+import com.google.rconclient.rcon.*;
+import com.nao20010128nao.McServerPingPong.*;
 import com.nao20010128nao.McServerPingPong.rcon.buttonActions.*;
+import java.io.*;
+import java.lang.ref.*;
+import java.util.*;
+import uk.co.chrisjenx.calligraphy.*;
+
+import com.nao20010128nao.McServerPingPong.R;
 
 public class RCONActivity extends FragmentActivity
 {

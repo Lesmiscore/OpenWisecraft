@@ -1,9 +1,8 @@
 package com.nao20010128nao.McServerPingPong.rcon;
 import com.google.rconclient.rcon.*;
+import com.nao20010128nao.McServerPingPong.*;
 import java.io.*;
 import java.util.*;
-import com.nao20010128nao.McServerPingPong.*;
-import android.util.*;
 
 public class RConModified extends RCon
 {

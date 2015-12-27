@@ -1,14 +1,12 @@
 package com.nao20010128nao.McServerPingPong;
 import android.app.*;
 import android.graphics.*;
-import uk.co.chrisjenx.calligraphy.*;
-import com.nao20010128nao.FileSafeBox.*;
-import java.io.*;
-import android.content.*;
 import android.preference.*;
-import java.util.*;
+import com.nao20010128nao.FileSafeBox.*;
 import com.nao20010128nao.McServerPingPong.collector.*;
-import android.os.*;
+import java.io.*;
+import java.util.*;
+import uk.co.chrisjenx.calligraphy.*;
 
 public class TheApplication extends Application
 {

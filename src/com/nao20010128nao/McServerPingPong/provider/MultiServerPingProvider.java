@@ -1,7 +1,6 @@
 package com.nao20010128nao.McServerPingPong.provider;
-import com.nao20010128nao.McServerPingPong.ServerListActivity.*;
-import java.util.*;
 import com.nao20010128nao.McServerPingPong.*;
+import java.util.*;
 
 public class MultiServerPingProvider implements ServerPingProvider
 {

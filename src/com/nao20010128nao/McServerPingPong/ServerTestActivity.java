@@ -3,18 +3,14 @@ import android.app.*;
 import android.content.*;
 import android.graphics.drawable.*;
 import android.os.*;
-import android.preference.*;
-import android.util.*;
 import android.view.*;
 import android.widget.*;
-import com.google.gson.*;
-import java.io.*;
-import java.util.*;
-import query.*;
 import com.nao20010128nao.McServerPingPong.ServerListActivity.*;
-import static com.nao20010128nao.McServerPingPong.Utils.*;
 import com.nao20010128nao.McServerPingPong.provider.*;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import java.util.*;
+import uk.co.chrisjenx.calligraphy.*;
+
+import static com.nao20010128nao.McServerPingPong.Utils.*;
 
 public class ServerTestActivity extends ListActivity{
 	ServerPingProvider spp=new NormalServerPingProvider();

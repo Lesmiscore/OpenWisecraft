@@ -1,6 +1,6 @@
 package com.nao20010128nao.McServerPingPong;
-import java.util.*;
 import android.content.*;
+import java.util.*;
 
 public class Consistant
 {

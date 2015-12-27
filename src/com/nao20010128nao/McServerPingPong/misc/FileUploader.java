@@ -1,6 +1,6 @@
 package com.nao20010128nao.McServerPingPong.misc;
-import java.net.*;
 import java.io.*;
+import java.net.*;
 import java.util.*;
 
 public class FileUploader

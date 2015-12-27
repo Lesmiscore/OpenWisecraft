@@ -1,9 +1,9 @@
 package com.nao20010128nao.McServerPingPong.provider;
+import ch.jamiete.mcping.*;
+import com.nao20010128nao.McServerPingPong.*;
+import java.io.*;
 import java.util.*;
 import query.*;
-import com.nao20010128nao.McServerPingPong.*;
-import ch.jamiete.mcping.*;
-import java.io.*;
 
 public class NormalServerPingProvider implements ServerPingProvider
 {

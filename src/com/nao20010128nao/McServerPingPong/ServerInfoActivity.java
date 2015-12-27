@@ -1,15 +1,15 @@
 package com.nao20010128nao.McServerPingPong;
 
+import android.content.*;
 import android.os.*;
 import android.support.v4.app.*;
-import android.util.*;
 import android.view.*;
 import android.widget.*;
 import java.lang.ref.*;
 import java.util.*;
 import query.*;
 import uk.co.chrisjenx.calligraphy.*;
-import android.content.*;
+
 import static com.nao20010128nao.McServerPingPong.Utils.*;
 
 public class ServerInfoActivity extends FragmentActivity {
