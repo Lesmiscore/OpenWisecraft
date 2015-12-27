@@ -4,6 +4,8 @@ import com.nao20010128nao.McServerPingPong.*;
 import java.io.*;
 import java.util.*;
 
+import static com.nao20010128nao.McServerPingPong.Utils.*;
+
 public class RConModified extends RCon
 {
 	public RConModified(String ip,int port,char[] password)throws IOException,AuthenticationException{
@@ -43,13 +45,6 @@ public class RConModified extends RCon
 		return Consistant.EMPTY_STRING_ARRAY;
 	}
 	
-	private String[] lines(String s)throws IOException{
-		BufferedReader br=new BufferedReader(new StringReader(s));
-		List<String> tmp=new ArrayList(2);
-		String line=null;
-		while(null!=(line=br.readLine()))tmp.add(line);
-		return tmp.toArray(new String[tmp.size()]);
-	}
 	private void dump(String[] s){
 		System.out.println(s.length);
 		for(String as:s)System.out.println(as);

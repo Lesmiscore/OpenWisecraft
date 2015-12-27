@@ -1,4 +1,6 @@
 package com.nao20010128nao.McServerPingPong;
+import java.io.*;
+import java.util.*;
 
 public class Utils
 {
@@ -24,5 +26,12 @@ public class Utils
 			return true;
 		}
 		return false;
+	}
+	public static String[] lines(String s)throws IOException{
+		BufferedReader br=new BufferedReader(new StringReader(s));
+		List<String> tmp=new ArrayList<>(4);
+		String line=null;
+		while(null!=(line=br.readLine()))tmp.add(line);
+		return tmp.toArray(new String[tmp.size()]);
 	}
 }
