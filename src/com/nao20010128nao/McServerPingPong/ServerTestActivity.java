@@ -20,6 +20,7 @@ public class ServerTestActivity extends ListActivity{
 	ProgressDialog waitDialog;
 	int times,port;
 	String ip;
+	boolean isPC;
 	View dialog;
 	Map<Server,Boolean> pinging=new HashMap<Server,Boolean>(){
 		@Override
@@ -40,6 +41,7 @@ public class ServerTestActivity extends ListActivity{
 		getListView().setOnItemClickListener(sl);
 		ip=getIntent().getStringExtra("ip");
 		port=getIntent().getIntExtra("port",-1);
+		isPC=getIntent().getBooleanExtra("ispc",false);
 		new AlertDialog.Builder(this)
 			.setTitle(R.string.testServer)
 			.setView(dialog=getLayoutInflater().inflate(R.layout.test_server_dialog,null,false))
@@ -52,6 +54,7 @@ public class ServerTestActivity extends ListActivity{
 						Server s=new Server();
 						s.ip=ip;
 						s.port=port;
+						s.isPC=isPC;
 						sl.add(s);
 					}
 				}
