@@ -7,6 +7,7 @@ import com.nao20010128nao.McServerPingPong.collector.*;
 import java.io.*;
 import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
+import android.content.res.Resources.*;
 
 public class TheApplication extends Application
 {
@@ -43,6 +44,18 @@ public class TheApplication extends Application
 		}catch(Throwable r){
 			r.printStackTrace(System.out);
 		}
+	}
+	public Typeface getLocalizedFont(){
+		try {
+			return (Typeface)TheApplication.class.getField(getResources().getString(R.string.fontField)).get(null);
+		} catch (NoSuchFieldException e) {
+			
+		} catch (IllegalAccessException e) {
+			
+		} catch (IllegalArgumentException e) {
+			
+		}
+		return latoLight;
 	}
 	private String genPassword(){
 		uuid=PreferenceManager.getDefaultSharedPreferences(this).getString("uuid",UUID.randomUUID().toString());

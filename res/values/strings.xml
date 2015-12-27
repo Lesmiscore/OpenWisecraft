@@ -25,8 +25,14 @@
 	<string name="testTimes">How many times do you want to ping? :</string>
 	<string name="isPC">Is the server PC version?</string>
 	<string name="serverInfoPCMessage">PC version of Minecraft does not send all the information to show here.\nThis is a speficication of Minecraft server.</string>
+	<string name="export">Export the list</string>
+	<string name="imporT">Import from the list</string>
+	<string name="import_typepath">Type the path to the json file to import</string>
+	<string name="export_complete">Export Complete: [PATH]</string>
+	<string name="export_failed">Export failed</string>
 	
 	<string name="font">lato-light.ttf</string>
+	<string name="fontField">latoLight</string>
 	
 	<string-array name="serverSubMenu">
 		<item>Remove</item>

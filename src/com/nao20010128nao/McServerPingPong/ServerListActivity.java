@@ -124,6 +124,8 @@ public class ServerListActivity extends ListActivity{
 		menu.add(Menu.NONE, 0, 0, R.string.add);
 		menu.add(Menu.NONE, 1, 1, R.string.addFromMCPE);
 		menu.add(Menu.NONE, 2, 2, R.string.update_all);
+		menu.add(Menu.NONE, 3, 3, R.string.export);
+		menu.add(Menu.NONE, 4, 4, R.string.imporT);
 		return true;
 	}
 
@@ -258,6 +260,51 @@ public class ServerListActivity extends ListActivity{
 					sl.getViewQuick(i).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
 					pinging.put(list.get(i),true);
 				}
+				break;
+			case 3:
+				new AsyncTask<Void,Void,File>(){
+					public File doInBackground(Void... a){
+						Server[] servs=new Server[list.size()];
+						for(int i=0;i<servs.length;i++){
+							servs[i]=list.get(i).cloneAsServer();
+						}
+						File f=new File(Environment.getExternalStorageDirectory(),"/Wisecraft");
+						f.mkdirs();
+						if(writeToFile(f=new File(f,"servers.json"),gson.toJson(servs,Server[].class)))
+							return f;
+						else return null;
+					}
+					public void onPostExecute(File f){
+						if(f!=null){
+							Toast.makeText(ServerListActivity.this,getResources().getString(R.string.export_complete).replace("[PATH]",f+""),Toast.LENGTH_LONG).show();
+						}else{
+							Toast.makeText(ServerListActivity.this,getResources().getString(R.string.export_failed),Toast.LENGTH_LONG).show();
+						}
+					}
+				}.execute();
+				break;
+			case 4:
+				final EditText et=new EditText(this);
+				et.setTypeface(TheApplication.instance.getLocalizedFont());
+				new AlertDialog.Builder(this)
+					.setTitle(R.string.import_typepath)
+					.setView(et)
+					.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+						public void onClick(DialogInterface di,int w){
+							Toast.makeText(ServerListActivity.this,R.string.importing,Toast.LENGTH_LONG).show();
+							new Thread(){
+								public void run(){
+									final Server[] sv=gson.fromJson(readWholeFile(new File(et.getText().toString())),Server[].class);
+									runOnUiThread(new Runnable(){
+											public void run(){
+												sl.addAll(sv);
+												saveServers();
+											}
+										});
+								}
+							}.start();
+						}
+					});
 				break;
 		}
 		return true;
@@ -628,6 +675,13 @@ public class ServerListActivity extends ListActivity{
 			}
 			Server os=(Server)o;
 			return os.ip.equals(ip)&os.port==port;
+		}
+		public Server cloneAsServer(){
+			Server s=new Server();
+			s.ip=ip;
+			s.port=port;
+			s.isPC=isPC;
+			return s;
 		}
 	}
 	public static class ServerStatus extends Server{
