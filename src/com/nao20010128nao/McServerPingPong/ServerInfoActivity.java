@@ -65,10 +65,10 @@ public class ServerInfoActivity extends FragmentActivity {
 		
 		nonUpd=getIntent().getBooleanExtra("nonUpd",false);
 		
-		tc=new TipController(this);
+		/*tc=new TipController(this);
 		if(stat.isPC){
 			tc.visible(true).text(R.string.serverInfoPCMessage);
-		}
+		}*/
 		
 		ip=stat.ip;
 		port=stat.port;
