@@ -286,6 +286,7 @@ public class ServerListActivity extends ListActivity{
 			case 4:
 				final EditText et=new EditText(this);
 				et.setTypeface(TheApplication.instance.getLocalizedFont());
+				et.setText(new File(Environment.getExternalStorageDirectory(),"/Wisecraft/servers.json").toString());
 				new AlertDialog.Builder(this)
 					.setTitle(R.string.import_typepath)
 					.setView(et)
@@ -304,7 +305,8 @@ public class ServerListActivity extends ListActivity{
 								}
 							}.start();
 						}
-					});
+					})
+					.show();
 				break;
 		}
 		return true;
