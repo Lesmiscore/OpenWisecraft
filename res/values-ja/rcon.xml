@@ -70,4 +70,6 @@
 	<string name="tellMessageHint">なんでもどうぞ</string>
 	<string name="defaultgamemodeAsk">デフォルトのゲームモードを[MODE]に指定してもよろしいですか?</string>
 	<string name="weatherAsk">ゲーム内の天候を[MODE]に設定してもよろしいですか?</string>
+
+	<string name="indicatePlayers">オンラインのプレイヤー: [PLAYERS]</string>
 </resources>
