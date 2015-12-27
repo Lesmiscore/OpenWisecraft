@@ -23,6 +23,11 @@
 	<string name="testTimes">何回、pingを送信しますか? :</string>
 	<string name="isPC">PC版のサーバー</string>
 	<string name="serverInfoPCMessage">PC版のサーバーは、ここに表示できる全ての情報を送信している訳ではありません。\nこれはPC版サーバーの仕様です。</string>
+	<string name="export">リストをエクスポート</string>
+	<string name="imporT">リストをインポート</string>
+	<string name="import_typepath">インポートするJSONファイルのパスを入力してください</string>
+	<string name="export_complete">エクスポート完了: [PATH]</string>
+	<string name="export_failed">エクスポート失敗</string>
 	
 	<string name="font">msgothic.ttc</string>
 	<string name="fontField">msgothic</string>
