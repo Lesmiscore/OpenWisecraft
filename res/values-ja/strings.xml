@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">@string/app_name</string>
-    <string name="app_name">McServerPingPong (名前未定)</string>
 	<string name="ip">IPもしくはホスト名:</string>
 	<string name="port">ポート:</string>
 	<string name="start">開始</string>
