@@ -11,14 +11,16 @@ import query.*;
 import uk.co.chrisjenx.calligraphy.*;
 
 import static com.nao20010128nao.McServerPingPong.Utils.*;
+import com.nao20010128nao.McServerPingPong.misc.*;
 
 public class ServerInfoActivity extends FragmentActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
 	public static ServerListActivity.ServerStatus stat;
 	String ip;
 	int port;
-	
 	boolean nonUpd;
+	
+	TipController tc;
 
 	List<Thread> t=new ArrayList<>();
 	ListView players,data,plugins;
@@ -62,6 +64,11 @@ public class ServerInfoActivity extends FragmentActivity {
 		adap3 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
 		
 		nonUpd=getIntent().getBooleanExtra("nonUpd",false);
+		
+		tc=new TipController(this);
+		if(stat.isPC){
+			tc.visible(true).text(R.string.serverInfoPCMessage);
+		}
 		
 		ip=stat.ip;
 		port=stat.port;

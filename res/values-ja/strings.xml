@@ -24,6 +24,7 @@
 	<string name="testServer">このサーバーをテスト</string>
 	<string name="testTimes">何回、pingを送信しますか? :</string>
 	<string name="isPC">PC版のサーバー</string>
+	<string name="serverInfoPCMessage">PC版のサーバーは、ここに表示できる全ての情報を送信している訳ではありません。\nこれはPC版サーバーの仕様です。</string>
 	
 	<string name="font">msgothic.ttc</string>
 	

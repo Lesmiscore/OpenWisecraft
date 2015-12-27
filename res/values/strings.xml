@@ -24,6 +24,7 @@
 	<string name="testServer">Test this server</string>
 	<string name="testTimes">How many times do you want to ping? :</string>
 	<string name="isPC">Is the server PC version?</string>
+	<string name="serverInfoPCMessage">PC version of Minecraft does not send all the information to show here.\nThis is a speficication of Minecraft server.</string>
 	
 	<string name="font">lato-light.ttf</string>
 	
