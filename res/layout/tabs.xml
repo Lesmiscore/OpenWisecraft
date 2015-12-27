@@ -9,7 +9,7 @@
 		android:id="@android:id/tabhost"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:layout_weight="1.0">
+		android:layout_weight="2">
 
 		<LinearLayout
 			android:layout_width="match_parent"
@@ -40,12 +40,13 @@
 	</android.support.v4.app.FragmentTabHost>
 
 	<TextView
-		android:layout_height="20dp"
+		android:layout_height="match_parent"
 		android:textAppearance="?android:attr/textAppearanceLarge"
 		android:layout_width="match_parent"
 		android:layout_gravity="center_horizontal"
 		android:id="@+id/tip"
-		android:visibility="gone"/>
+		android:visibility="gone"
+		android:layout_weight="8"/>
 
 </LinearLayout>
 
