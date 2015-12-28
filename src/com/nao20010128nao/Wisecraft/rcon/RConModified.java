@@ -63,6 +63,10 @@ public class RConModified extends RCon
 		return Constant.EMPTY_STRING_ARRAY;
 	}
 	
+	public WCH_ServerInfo getServerInfo() {
+		return servi;
+	}
+	
 	private void dump(String[] s){
 		System.out.println(s.length);
 		for(String as:s)System.out.println(as);

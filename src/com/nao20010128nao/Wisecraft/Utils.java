@@ -1,6 +1,10 @@
 package com.nao20010128nao.Wisecraft;
 import java.io.*;
 import java.util.*;
+import com.nao20010128nao.Wisecraft.struct.*;
+import com.google.rconclient.rcon.*;
+import com.nao20010128nao.Wisecraft.rcon.*;
+import com.google.gson.*;
 
 public class Utils
 {
@@ -79,5 +83,16 @@ public class Utils
 		}
 		is.close();
 		os.close();
+	}
+	public static WCH_ServerInfo getServerInfo(RCon rcon){
+		if(rcon instanceof RConModified){
+			return ((RConModified)rcon).getServerInfo();
+		}else{
+			try {
+				return new Gson().fromJson(rcon.send("wisecraft wisecraft info"), WCH_ServerInfo.class);
+			} catch (Throwable e) {
+				return null;
+			}
+		}
 	}
 }
