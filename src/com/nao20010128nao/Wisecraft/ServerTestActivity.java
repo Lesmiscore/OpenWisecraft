@@ -129,6 +129,8 @@ public class ServerTestActivity extends ListActivity{
 										title = deleteDecorations(m.get("hostname"));
 									} else if (m.containsKey("motd")) {
 										title = deleteDecorations(m.get("motd"));
+									} else if (m.containsKey("description")) {
+										title = deleteDecorations(m.get("description"));
 									} else {
 										title = sv.ip + ":" + sv.port;
 									}
