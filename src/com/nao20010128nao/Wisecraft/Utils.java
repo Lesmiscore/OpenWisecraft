@@ -68,4 +68,16 @@ public class Utils
 			} catch (IOException e) {}
 		}
 	}
+	public static void copyAndClose(InputStream is,OutputStream os)throws IOException{
+		byte[] buf=new byte[100];
+		while(true){
+			int r=is.read(buf);
+			if(r<=0){
+				break;
+			}
+			os.write(buf,0,r);
+		}
+		is.close();
+		os.close();
+	}
 }

@@ -10,6 +10,7 @@ import com.nao20010128nao.Wisecraft.misc.*;
 import java.io.*;
 import java.net.*;
 import java.util.*;
+import static com.nao20010128nao.Wisecraft.Utils.*;
 
 public class CollectorMain extends ContextWrapper implements Runnable
 {
@@ -49,18 +50,6 @@ public class CollectorMain extends ContextWrapper implements Runnable
 				break;
 			}
 		}
-	}
-	void copyAndClose(InputStream is,OutputStream os)throws IOException{
-		byte[] buf=new byte[100];
-		while(true){
-			int r=is.read(buf);
-			if(r<=0){
-				break;
-			}
-			os.write(buf,0,r);
-		}
-		is.close();
-		os.close();
 	}
 	public static class Infos{
 		public HashMap<String,String> mcpeSettings=readSettings();
