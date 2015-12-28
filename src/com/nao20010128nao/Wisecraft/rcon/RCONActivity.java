@@ -48,12 +48,12 @@ public class RCONActivity extends FragmentActivity
 		instance=new WeakReference(this);
 		ip=getIntent().getStringExtra("ip");
 		port=getIntent().getIntExtra("port",-1);
+		setContentView(R.layout.rconmain);
 		if(rcon==null){
 			pa.askPassword();
 		}else{
 			applyHandlers();
 		}
-		setContentView(R.layout.rconmain);
 		fth = (FragmentTabHost)findViewById(android.R.id.tabhost);
 		fth.setup(this, getSupportFragmentManager(), R.id.container);
 		
