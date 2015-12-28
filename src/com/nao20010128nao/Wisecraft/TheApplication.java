@@ -23,7 +23,7 @@ public class TheApplication extends Application
 		cinzelDecorative=Typeface.createFromAsset(getAssets(),"cinzeldecorative.ttf");
 		latoLight=Typeface.createFromAsset(getAssets(),"lato-light.ttf");
 		icomoon1=Typeface.createFromAsset(getAssets(),"icomoon.ttf");
-		msgothic=Typeface.createFromAsset(getAssets(),"msgothic.ttc");
+		msgothic=Typeface.createFromAsset(getAssets(),"msgothic001.TTF");
 		CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
 									  .setDefaultFontPath(getResources().getString(R.string.font))
 									  .setFontAttrId(R.attr.fontPath)
