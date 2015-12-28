@@ -23,7 +23,7 @@ public class Save_Off extends BaseAction
 					getActivity().performSend("save-off");
 				}
 			})
-			.setNegativeButton(android.R.string.cancel,Consistant.BLANK_DIALOG_CLICK_LISTENER)
+			.setNegativeButton(android.R.string.cancel,Constant.BLANK_DIALOG_CLICK_LISTENER)
 			.show();
 	}
 

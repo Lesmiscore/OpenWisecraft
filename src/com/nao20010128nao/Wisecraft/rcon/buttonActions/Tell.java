@@ -78,7 +78,7 @@ public class Tell extends NameSelectAction
 		changeItem.setOnClickListener(new View.OnClickListener(){
 				public void onClick(View v){
 					hint=getResString(R.string.tellMessageHint);
-					list=Consistant.EMPTY_STRING_ARRAY;
+					list=Constant.EMPTY_STRING_ARRAY;
 					selecting=2;
 					Tell.super.onClick(v);
 				}
@@ -95,7 +95,7 @@ public class Tell extends NameSelectAction
 							mes+=getResString(R.string.tellSetMessage)+"\n";
 						}
 						b.setMessage(mes);
-						b.setPositiveButton(android.R.string.ok,Consistant.BLANK_DIALOG_CLICK_LISTENER);
+						b.setPositiveButton(android.R.string.ok,Constant.BLANK_DIALOG_CLICK_LISTENER);
 						b.show();
 					}else{
 						getActivity().performSend("tell "+player+" "+item);

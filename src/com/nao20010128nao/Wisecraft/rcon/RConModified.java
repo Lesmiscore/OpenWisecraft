@@ -20,7 +20,7 @@ public class RConModified extends RCon
 		if(data.length>=2){
 			return data[1].split("\\, ");
 		}
-		return Consistant.EMPTY_STRING_ARRAY;
+		return Constant.EMPTY_STRING_ARRAY;
 	}
 
 	@Override
@@ -31,7 +31,7 @@ public class RConModified extends RCon
 		if(data.length>=2){
 			return data[1].split("\\, ");
 		}
-		return Consistant.EMPTY_STRING_ARRAY;
+		return Constant.EMPTY_STRING_ARRAY;
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class RConModified extends RCon
 		if(data.length>=2){
 			return data[1].split("\\, ");
 		}
-		return Consistant.EMPTY_STRING_ARRAY;
+		return Constant.EMPTY_STRING_ARRAY;
 	}
 	
 	private void dump(String[] s){

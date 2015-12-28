@@ -22,7 +22,7 @@ public class Time_Set extends NameSelectAction
 					getActivity().performSend("time set "+s);
 				}
 			})
-			.setNegativeButton(android.R.string.cancel,Consistant.BLANK_DIALOG_CLICK_LISTENER)
+			.setNegativeButton(android.R.string.cancel,Constant.BLANK_DIALOG_CLICK_LISTENER)
 			.show();
 	}
 

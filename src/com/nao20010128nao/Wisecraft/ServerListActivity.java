@@ -64,7 +64,7 @@ public class ServerListActivity extends ListActivity{
 		switch(requestCode){
 			case 0:
 				switch(resultCode){
-					case Consistant.ACTIVITY_RESULT_UPDATE:
+					case Constant.ACTIVITY_RESULT_UPDATE:
 						spp.putInQueue(ServerInfoActivity.stat,new ServerPingProvider.PingHandler(){
 								public void onPingFailed(final Server s){
 									runOnUiThread(new Runnable(){
@@ -401,7 +401,7 @@ public class ServerListActivity extends ListActivity{
 			((TextView)layout.findViewById(R.id.serverAddress)).setText(s.ip+":"+s.port);
 			layout.findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
 			while(cached.size()<=position)
-				cached.addAll(Consistant.TEN_LENGTH_NULL_LIST);
+				cached.addAll(Constant.TEN_LENGTH_NULL_LIST);
 			cached.set(position,layout);
 			pinging.put(s,true);
 			return layout;

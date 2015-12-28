@@ -117,7 +117,7 @@ public class ServerInfoActivity extends FragmentActivity {
 		// TODO: Implement this method
 		switch(featureId){
 			case 0://Update
-				setResult(Consistant.ACTIVITY_RESULT_UPDATE);
+				setResult(Constant.ACTIVITY_RESULT_UPDATE);
 				finish();//ServerListActivity updates the stat
 				return true;
 		}

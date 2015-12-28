@@ -2,7 +2,7 @@ package com.nao20010128nao.Wisecraft;
 import android.content.*;
 import java.util.*;
 
-public class Consistant
+public class Constant
 {
 	public static final int ACTIVITY_RESULT_UPDATE=5;
 	public static final int ACTIVITY_RESULT_DELETE=6;

@@ -95,7 +95,7 @@ public class Clear extends NameSelectAction
 							mes+=getResString(R.string.giveSelectItem)+"\n";
 						}
 						b.setMessage(mes);
-						b.setPositiveButton(android.R.string.ok,Consistant.BLANK_DIALOG_CLICK_LISTENER);
+						b.setPositiveButton(android.R.string.ok,Constant.BLANK_DIALOG_CLICK_LISTENER);
 						b.show();
 					}else{
 						getActivity().performSend("clear "+player+" "+item);

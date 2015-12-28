@@ -23,7 +23,7 @@ public class Save_All extends BaseAction
 					getActivity().performSend("save-all");
 				}
 			})
-			.setNegativeButton(android.R.string.cancel,Consistant.BLANK_DIALOG_CLICK_LISTENER)
+			.setNegativeButton(android.R.string.cancel,Constant.BLANK_DIALOG_CLICK_LISTENER)
 			.show();
 	}
 
