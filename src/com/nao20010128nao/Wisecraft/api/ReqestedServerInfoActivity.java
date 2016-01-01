@@ -11,13 +11,17 @@ public class ReqestedServerInfoActivity extends ApiBaseActivity
 	ServerPingProvider spp=new NormalServerPingProvider();
 	ServerListActivity.Server reqested;
 	WorkingDialog wd;
+	Intent si=new Intent();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
-		final Intent si=new Intent();
-		si.setClass(this,ServerInfoActivity.class);
 		wd=new WorkingDialog(this);
+		si.setClass(this,ServerInfoActivity.class);
+		si.putExtra("nonDetails",getIntent().getBooleanExtra(ApiActions.SERVER_INFO_HIDE_DETAILS,false));
+		si.putExtra("nonPlayers",getIntent().getBooleanExtra(ApiActions.SERVER_INFO_HIDE_PLAYERS,false));
+		si.putExtra("nonPlugins",getIntent().getBooleanExtra(ApiActions.SERVER_INFO_HIDE_PLUGINS,false));
+		si.putExtra("nonUpd"    ,getIntent().getBooleanExtra(ApiActions.SERVER_INFO_DISABLE_UPDATE,false));
 		
 		ServerListActivity.Server s=new ServerListActivity.Server();
 		s.ip=getIntent().getStringExtra(ApiActions.SERVER_INFO_IP);
@@ -55,8 +59,6 @@ public class ReqestedServerInfoActivity extends ApiBaseActivity
 						wd.showWorkingDialog();
 						spp.putInQueue(reqested,new ServerPingProvider.PingHandler(){
 								public void onPingArrives(ServerListActivity.ServerStatus s){
-									final Intent si=new Intent();
-									si.setClass(wd,ServerInfoActivity.class);
 									ServerInfoActivity.stat=s;
 									startActivityForResult(si,0);
 									wd.hideWorkingDialog();
