@@ -18,7 +18,7 @@ public class ServerInfoActivity extends FragmentActivity {
 	public static ServerListActivity.ServerStatus stat;
 	String ip;
 	int port;
-	boolean nonUpd;
+	boolean nonUpd,hidePlayer,hideData,hidePlugins;
 	
 	TipController tc;
 
@@ -39,17 +39,27 @@ public class ServerInfoActivity extends FragmentActivity {
 		fth = (FragmentTabHost)findViewById(android.R.id.tabhost);
 		fth.setup(this, getSupportFragmentManager(), R.id.container);
 
-		playersF = fth.newTabSpec("playersList");
-		playersF.setIndicator(getResources().getString(R.string.players));
-		fth.addTab(playersF, PlayersFragment.class, null);
+		hideData   =getIntent().getBooleanExtra("nonDetails",false);
+		hidePlayer =getIntent().getBooleanExtra("nonPlayers",false);
+		hidePlugins=getIntent().getBooleanExtra("nonPlugins",false);
+		
+		if(!hidePlayer){
+			playersF = fth.newTabSpec("playersList");
+			playersF.setIndicator(getResources().getString(R.string.players));
+			fth.addTab(playersF, PlayersFragment.class, null);
+		}
 
-		dataF = fth.newTabSpec("dataList");
-		dataF.setIndicator(getResources().getString(R.string.data));
-		fth.addTab(dataF, DataFragment.class, null);
+		if(!hideData){
+			dataF = fth.newTabSpec("dataList");
+			dataF.setIndicator(getResources().getString(R.string.data));
+			fth.addTab(dataF, DataFragment.class, null);
+		}
 
-		pluginsF = fth.newTabSpec("pluginsList");
-		pluginsF.setIndicator(getResources().getString(R.string.plugins));
-		fth.addTab(pluginsF, PluginsFragment.class, null);
+		if(!hidePlugins){
+			pluginsF = fth.newTabSpec("pluginsList");
+			pluginsF.setIndicator(getResources().getString(R.string.plugins));
+			fth.addTab(pluginsF, PluginsFragment.class, null);
+		}
 		
 		adap = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
 		adap2 = new ArrayAdapter<Map.Entry<String,String>>(this, 0, new ArrayList<Map.Entry<String,String>>()){
