@@ -16,6 +16,7 @@ import query.*;
 import uk.co.chrisjenx.calligraphy.*;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import com.nao20010128nao.Wisecraft.misc.*;
 
 public class ServerListActivity extends ListActivity{
 	ServerPingProvider spp=new MultiServerPingProvider(6);
@@ -24,7 +25,7 @@ public class ServerListActivity extends ListActivity{
 	ServerList sl;
 	List<Server> list;
 	int clicked=-1;
-	ProgressDialog waitDialog;
+	WorkingDialog wd;
 	Map<Server,Boolean> pinging=new HashMap<Server,Boolean>(){
 		@Override
 		public Boolean get(Object key) {
@@ -77,7 +78,7 @@ public class ServerListActivity extends ListActivity{
 												sn.port=s.port;
 												sn.isPC=s.isPC;
 												list.set(clicked,sn);
-												hideWorkingDialog();
+												wd.hideWorkingDialog();
 												pinging.put(list.get(clicked),false);
 											}
 										});
@@ -102,7 +103,7 @@ public class ServerListActivity extends ListActivity{
 												ServerInfoActivity.stat=s;
 												list.set(clicked,s);
 												startActivityForResult(new Intent(ServerListActivity.this,ServerInfoActivity.class),0);
-												hideWorkingDialog();
+												wd.hideWorkingDialog();
 												pinging.put(list.get(clicked),false);
 											}
 										});
@@ -110,7 +111,7 @@ public class ServerListActivity extends ListActivity{
 							});
 						((TextView)sl.getViewQuick(clicked).findViewById(R.id.pingMillis)).setText(R.string.working);
 						sl.getViewQuick(clicked).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
-						showWorkingDialog();
+						wd.showWorkingDialog();
 						pinging.put(list.get(clicked),true);
 						break;
 				}
@@ -227,7 +228,7 @@ public class ServerListActivity extends ListActivity{
 											sn.port=s.port;
 											sn.isPC=s.isPC;
 											list.set(i_,sn);
-											hideWorkingDialog();
+											wd.hideWorkingDialog();
 											pinging.put(list.get(i_),false);
 										}
 									});
@@ -251,7 +252,7 @@ public class ServerListActivity extends ListActivity{
 											((TextView)sl.getViewQuick(i_).findViewById(R.id.pingMillis)).setText(s.ping+" ms");
 											list.set(i_,s);
 											pinging.put(list.get(i_),false);
-											hideWorkingDialog();
+											wd.hideWorkingDialog();
 										}
 									});
 							}
@@ -321,23 +322,6 @@ public class ServerListActivity extends ListActivity{
 		String json;
 		pref.edit().putString("servers",json=gson.toJson(list.toArray(new Server[list.size()]),Server[].class)).commit();
 		Log.d("json",json);
-	}
-	public void showWorkingDialog(){
-		if(waitDialog!=null){
-			hideWorkingDialog();
-		}
-		waitDialog= new ProgressDialog(this);
-		waitDialog.setIndeterminate(true);
-		waitDialog.setMessage(getResources().getString(R.string.working));
-		waitDialog.setCancelable(false);
-		waitDialog.show();
-	}
-	public void hideWorkingDialog(){
-		if(waitDialog==null){
-			return;
-		}
-		waitDialog.cancel();
-		waitDialog=null;
 	}
 	class ServerList extends ArrayAdapter<Server> implements AdapterView.OnItemClickListener,AdapterView.OnItemLongClickListener{
 		List<View> cached=new ArrayList();
@@ -434,7 +418,7 @@ public class ServerListActivity extends ListActivity{
 										sn.port=s.port;
 										sn.isPC=s.isPC;
 										list.set(clicked,sn);
-										hideWorkingDialog();
+										wd.hideWorkingDialog();
 										pinging.put(list.get(clicked),false);
 									}
 								});
@@ -459,7 +443,7 @@ public class ServerListActivity extends ListActivity{
 										list.set(clicked,s);
 										ServerInfoActivity.stat=s;
 										startActivityForResult(new Intent(ServerListActivity.this,ServerInfoActivity.class),0);
-										hideWorkingDialog();
+										wd.hideWorkingDialog();
 										pinging.put(list.get(clicked),false);
 									}
 								});
@@ -467,7 +451,7 @@ public class ServerListActivity extends ListActivity{
 					});
 				((TextView)sl.getViewQuick(clicked).findViewById(R.id.pingMillis)).setText(R.string.working);
 				sl.getViewQuick(clicked).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
-				showWorkingDialog();
+				wd.showWorkingDialog();
 				pinging.put(list.get(clicked),true);
 			}
 		}
@@ -509,7 +493,7 @@ public class ServerListActivity extends ListActivity{
 														sn.port=s.port;
 														sn.isPC=s.isPC;
 														list.set(clicked,sn);
-														hideWorkingDialog();
+														wd.hideWorkingDialog();
 														pinging.put(list.get(clicked),false);
 													}
 												});
@@ -532,7 +516,7 @@ public class ServerListActivity extends ListActivity{
 														((TextView)sl.getViewQuick(p3).findViewById(R.id.serverName)).setText(deleteDecorations(title));
 														((TextView)sl.getViewQuick(p3).findViewById(R.id.pingMillis)).setText(s.ping+" ms");
 														list.set(p3,s);
-														hideWorkingDialog();
+														wd.hideWorkingDialog();
 														pinging.put(list.get(p3),false);
 													}
 												});
@@ -540,7 +524,7 @@ public class ServerListActivity extends ListActivity{
 									});
 								((TextView)sl.getViewQuick(p3).findViewById(R.id.pingMillis)).setText(R.string.working);
 								sl.getViewQuick(p3).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
-								showWorkingDialog();
+								wd.showWorkingDialog();
 								pinging.put(list.get(p3),true);
 								break;
 							case 2:
@@ -578,7 +562,7 @@ public class ServerListActivity extends ListActivity{
 																	sn.port = s.port;
 																	sn.isPC = s.isPC;
 																	list.set(p3, sn);
-																	hideWorkingDialog();
+																	wd.hideWorkingDialog();
 																	pinging.put(list.get(p3), false);
 																}
 															});
@@ -601,7 +585,7 @@ public class ServerListActivity extends ListActivity{
 																	((TextView)sl.getViewQuick(p3).findViewById(R.id.serverName)).setText(deleteDecorations(title));
 																	((TextView)sl.getViewQuick(p3).findViewById(R.id.pingMillis)).setText(s.ping + " ms");
 																	list.set(p3, s);
-																	hideWorkingDialog();
+																	wd.hideWorkingDialog();
 																	pinging.put(list.get(p3), false);
 																}
 															});
