@@ -30,7 +30,7 @@
 	<string name="import_typepath">Type the path to the json file to import</string>
 	<string name="export_complete">Export Complete: [PATH]</string>
 	<string name="export_failed">Export failed</string>
-	<string name="serverOffline"></string>
+	<string name="serverOffline">Server is Offline.</string>
 
 	<string name="font">lato-light.ttf</string>
 	<string name="fontField">latoLight</string>
