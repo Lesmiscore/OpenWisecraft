@@ -46,6 +46,7 @@ public class ServerListActivity extends ListActivity{
 		getListView().setOnItemLongClickListener(sl);
 		getListView().setLongClickable(true);
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
+		wd=new WorkingDialog(this);
 		loadServers();
 	}
 	@Override
