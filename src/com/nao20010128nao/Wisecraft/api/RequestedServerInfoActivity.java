@@ -6,7 +6,7 @@ import com.nao20010128nao.Wisecraft.provider.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import android.app.*;
 
-public class ReqestedServerInfoActivity extends ApiBaseActivity
+public class RequestedServerInfoActivity extends ApiBaseActivity
 {
 	ServerPingProvider spp=new NormalServerPingProvider();
 	ServerListActivity.Server reqested;
