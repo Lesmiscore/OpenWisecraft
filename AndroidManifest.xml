@@ -38,5 +38,14 @@
             android:name=".rcon.RCONActivity"
 			android:exported="false">
         </activity>
+		<activity
+            android:label="@string/app_name"
+            android:name=".api.RequestedServerInfoActivity" >
+            <intent-filter >
+                <action android:name="com.nao20010128nao.Wisecraft.SERVER_INFO" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 </manifest>
