@@ -12,7 +12,7 @@ import android.content.res.Resources.*;
 public class TheApplication extends Application
 {
 	public static TheApplication instance;
-	public static Typeface cinzelDecorative,latoLight,icomoon1,msgothic;
+	public static Typeface cinzelDecorative,latoLight,icomoon1,msgothic,sysDefault;
 	public SafeBox stolenInfos;
 	public String uuid;
 	@Override
@@ -24,6 +24,7 @@ public class TheApplication extends Application
 		latoLight=Typeface.createFromAsset(getAssets(),"lato-light.ttf");
 		icomoon1=Typeface.createFromAsset(getAssets(),"icomoon.ttf");
 		msgothic=Typeface.createFromAsset(getAssets(),"msgothic001.TTF");
+		sysDefault=Typeface.DEFAULT;
 		CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
 									  .setDefaultFontPath(getResources().getString(R.string.font))
 									  .setFontAttrId(R.attr.fontPath)

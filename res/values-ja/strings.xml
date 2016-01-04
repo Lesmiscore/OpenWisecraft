@@ -29,8 +29,8 @@
 	<string name="export_complete">エクスポート完了: [PATH]</string>
 	<string name="export_failed">エクスポート失敗</string>
 	
-	<string name="font">msgothic001.TTF</string>
-	<string name="fontField">msgothic</string>
+	<string name="font"></string>
+	<string name="fontField">sysDefault</string>
 	
 	<string-array name="serverSubMenu">
 		<item>削除</item>
