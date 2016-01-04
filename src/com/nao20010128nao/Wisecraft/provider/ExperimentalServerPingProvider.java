@@ -17,4 +17,13 @@ public class ExperimentalServerPingProvider implements ServerPingProvider
 			
 		}
 	}
+	@Override
+	public int getQueueRemain() {
+		// TODO: Implement this method
+		int i=0;
+		for(ServerPingProvider spp:objects){
+			i+=spp.getQueueRemain();
+		}
+		return i;
+	}
 }

@@ -19,6 +19,11 @@ public class NormalServerPingProvider implements ServerPingProvider
 			pingThread.start();
 		}
 	}
+	@Override
+	public int getQueueRemain() {
+		// TODO: Implement this method
+		return queue.size();
+	}
 	
 	
 	private class PingThread extends Thread implements Runnable {
