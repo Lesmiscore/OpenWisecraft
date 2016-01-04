@@ -13,9 +13,15 @@ public class ExperimentalServerPingProvider implements ServerPingProvider
 	@Override
 	public void putInQueue(ServerListActivity.Server server, ServerPingProvider.PingHandler handler) {
 		// TODO: Implement this method
+		int delta=Integer.MAX_VALUE;
+		ServerPingProvider obj=null;
 		for(ServerPingProvider spp:objects){
-			
+			if(delta>spp.getQueueRemain()){
+				delta=spp.getQueueRemain();
+				obj=spp;
+			}
 		}
+		obj.putInQueue(server,handler);
 	}
 	@Override
 	public int getQueueRemain() {
