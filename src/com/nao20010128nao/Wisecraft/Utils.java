@@ -74,15 +74,18 @@ public class Utils
 	}
 	public static void copyAndClose(InputStream is,OutputStream os)throws IOException{
 		byte[] buf=new byte[100];
-		while(true){
-			int r=is.read(buf);
-			if(r<=0){
-				break;
+		try {
+			while (true) {
+				int r=is.read(buf);
+				if (r <= 0) {
+					break;
+				}
+				os.write(buf, 0, r);
 			}
-			os.write(buf,0,r);
+		} finally {
+			is.close();
+			os.close();
 		}
-		is.close();
-		os.close();
 	}
 	public static WCH_ServerInfo getServerInfo(RCon rcon){
 		if(rcon instanceof RConModified){
