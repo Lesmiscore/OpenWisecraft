@@ -11,8 +11,8 @@ public class NormalServerPingProvider implements ServerPingProvider
 	Thread pingThread=new PingThread();
 
 	public void putInQueue(ServerListActivity.Server server,PingHandler handler){
-		Objects.requireNonNull(server);
-		Objects.requireNonNull(handler);
+		Utils.requireNonNull(server);
+		Utils.requireNonNull(handler);
 		queue.add(new KVP(server,handler));
 		if(!pingThread.isAlive()){
 			pingThread=new PingThread();
