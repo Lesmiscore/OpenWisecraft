@@ -281,7 +281,7 @@ public class RCONActivity extends FragmentActivity
 								}else{
 									appendIntoConsole(getResources().getString(R.string.connected));
 									applyHandlers();
-									//refreshPlayers();
+									refreshPlayers();
 								}
 							}
 						}.execute();
