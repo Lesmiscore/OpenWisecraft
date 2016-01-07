@@ -11,5 +11,11 @@
 		android:text="@string/selectFont"
 		android:id="@+id/selectFont"/>
 
+	<Button
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:text="System.exit(0);"
+		android:id="@+id/die"/>
+
 </LinearLayout>
 

@@ -29,6 +29,11 @@ public class TrickSheet extends Activity
 					.show();
 			}
 		});
+		findViewById(R.id.die).setOnClickListener(new View.OnClickListener(){
+			public void onClick(View v){
+				System.exit(0);		
+			}
+		});
 	}
 	String[] getFontChoices(){
 		List<String> l=new ArrayList();
