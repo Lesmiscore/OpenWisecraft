@@ -73,7 +73,7 @@ public class TheApplication extends Application
 		return PreferenceManager.getDefaultSharedPreferences(this).getString("fontField",getResources().getString(R.string.fontField));
 	}
 	public void setFontFieldName(String value){
-		PreferenceManager.getDefaultSharedPreferences(this).edit().putString("fontField",value);
+		PreferenceManager.getDefaultSharedPreferences(this).edit().putString("fontField",value).commit();
 	}
 	public String getFontFilename(){
 		return fontFilenames.get(getLocalizedFont());
