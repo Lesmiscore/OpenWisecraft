@@ -34,7 +34,12 @@ public class ServerInfoActivity extends FragmentActivity {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		instance = new WeakReference(this);
-
+		
+		if(stat==null){
+			finish();
+			return;
+		}
+		
 		setContentView(R.layout.tabs);
 		fth = (FragmentTabHost)findViewById(android.R.id.tabhost);
 		fth.setup(this, getSupportFragmentManager(), R.id.container);
