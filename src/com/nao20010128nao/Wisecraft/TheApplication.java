@@ -18,6 +18,7 @@ public class TheApplication extends Application
 	public static Map<Typeface,String> fontFilenames;
 	public SafeBox stolenInfos;
 	public String uuid;
+	public Set<Activity> activities=new HashSet<>(5);
 	@Override
 	public void onCreate() {
 		// TODO: Implement this method
