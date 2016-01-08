@@ -10,4 +10,7 @@ public class Factories
 	public static String[] strArray(Collection<String> col){
 		return col.toArray(strArray(col.size()));
 	}
+	public static byte[] byteArray(int size){
+		return new byte[size];
+	}
 }
