@@ -177,7 +177,8 @@ public class RCONActivity extends FragmentActivity
 				playersListInternal.clear();
 				playersListInternal.addAll(Arrays.asList(s));
 				playersList.notifyDataSetChanged();
-				playersCount.setText(getResources().getString(R.string.indicatePlayers).replace("[PLAYERS]",s.length+""));
+				if(playersCount!=null)
+					playersCount.setText(getResources().getString(R.string.indicatePlayers).replace("[PLAYERS]",s.length+""));
 			}
 		}.execute();
 	}
