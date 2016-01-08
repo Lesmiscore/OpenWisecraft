@@ -1,6 +1,6 @@
 package com.nao20010128nao.Wisecraft.misc;
-import android.content.*;
 import android.app.*;
+import android.content.*;
 import com.nao20010128nao.Wisecraft.*;
 
 public class WorkingDialog extends ContextWrapper

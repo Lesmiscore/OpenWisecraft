@@ -1,13 +1,12 @@
 package com.nao20010128nao.Wisecraft.rcon.buttonActions;
-import com.nao20010128nao.Wisecraft.rcon.*;
-import android.view.*;
 import android.app.*;
-import android.content.*;
-import com.nao20010128nao.Wisecraft.*;
-import android.widget.*;
 import android.os.*;
-import java.io.*;
+import android.view.*;
+import android.widget.*;
 import com.google.rconclient.rcon.*;
+import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.rcon.*;
+import java.io.*;
 
 public abstract class NameSelectAction extends BaseAction
 {

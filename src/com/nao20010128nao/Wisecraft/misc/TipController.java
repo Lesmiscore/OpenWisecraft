@@ -1,9 +1,9 @@
 package com.nao20010128nao.Wisecraft.misc;
-import android.content.*;
-import android.widget.*;
 import android.app.*;
-import com.nao20010128nao.Wisecraft.*;
+import android.content.*;
 import android.view.*;
+import android.widget.*;
+import com.nao20010128nao.Wisecraft.*;
 
 public class TipController
 {

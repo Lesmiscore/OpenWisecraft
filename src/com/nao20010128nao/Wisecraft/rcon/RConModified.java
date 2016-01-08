@@ -1,12 +1,11 @@
 package com.nao20010128nao.Wisecraft.rcon;
+import com.google.gson.*;
 import com.google.rconclient.rcon.*;
 import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.struct.*;
 import java.io.*;
-import java.util.*;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
-import com.google.gson.*;
-import com.nao20010128nao.Wisecraft.struct.*;
 
 public class RConModified extends RCon
 {

@@ -1,7 +1,7 @@
 package com.nao20010128nao.Wisecraft.api;
-import android.support.v4.app.*;
-import android.os.*;
 import android.content.*;
+import android.os.*;
+import android.support.v4.app.*;
 import uk.co.chrisjenx.calligraphy.*;
 
 public abstract class ApiBaseActivity extends FragmentActivity

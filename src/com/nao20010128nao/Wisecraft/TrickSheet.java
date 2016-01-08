@@ -1,10 +1,10 @@
 package com.nao20010128nao.Wisecraft;
 import android.app.*;
+import android.content.*;
 import android.os.*;
 import android.view.*;
-import java.util.*;
 import java.lang.reflect.*;
-import android.content.*;
+import java.util.*;
 
 public class TrickSheet extends Activity
 {

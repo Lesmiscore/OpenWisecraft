@@ -5,10 +5,9 @@ import android.preference.*;
 import com.nao20010128nao.FileSafeBox.*;
 import com.nao20010128nao.Wisecraft.collector.*;
 import java.io.*;
+import java.lang.reflect.*;
 import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
-import android.content.res.Resources.*;
-import java.lang.reflect.*;
 
 public class TheApplication extends Application
 {

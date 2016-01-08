@@ -8,6 +8,7 @@ import android.util.*;
 import android.view.*;
 import android.widget.*;
 import com.google.gson.*;
+import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.provider.*;
 import com.nao20010128nao.Wisecraft.rcon.*;
 import java.io.*;
@@ -16,7 +17,6 @@ import query.*;
 import uk.co.chrisjenx.calligraphy.*;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
-import com.nao20010128nao.Wisecraft.misc.*;
 
 public class ServerListActivity extends ListActivity{
 	ServerPingProvider spp=new MultiServerPingProvider(6);

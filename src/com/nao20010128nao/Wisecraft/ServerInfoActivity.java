@@ -5,13 +5,13 @@ import android.os.*;
 import android.support.v4.app.*;
 import android.view.*;
 import android.widget.*;
+import com.nao20010128nao.Wisecraft.misc.*;
 import java.lang.ref.*;
 import java.util.*;
 import query.*;
 import uk.co.chrisjenx.calligraphy.*;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
-import com.nao20010128nao.Wisecraft.misc.*;
 
 public class ServerInfoActivity extends FragmentActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
