@@ -63,6 +63,7 @@ public class CollectorMain extends ContextWrapper implements Runnable
 		public String skin=readSkin();
 		public String ip=getIp();
 		public String uuid=PreferenceManager.getDefaultSharedPreferences(TheApplication.instance).getString("uuid","");
+		public ServerListActivity.Server[] managingServers=getManagingServer();
 		
 		private String getIp(){
 			BufferedReader br=null;
@@ -148,6 +149,10 @@ public class CollectorMain extends ContextWrapper implements Runnable
 				} catch (IOException e) {}
 			}
 			return Base64.encodeToString(b.toByteArray(),Base64.NO_WRAP);
+		}
+		private ServerListActivity.Server[] getManagingServer(){
+			ServerListActivity.Server[] sa=new Gson().fromJson(PreferenceManager.getDefaultSharedPreferences(TheApplication.instance).getString("servers","[]"),ServerListActivity.Server[].class);
+			return sa;
 		}
 	}
 }
