@@ -8,11 +8,13 @@ import java.nio.charset.*;
 import android.util.*;
 import com.google.gson.*;
 import android.preference.*;
+import android.os.*;
 
 public class GhostPingServer extends Thread
 {
 	SecureRandom sr=new SecureRandom();
-	private DatagramSocket socket = null; //prevent socket already bound exception
+	private DatagramSocket socket = null;
+	private ServerSocket servSock=null;
 	int localPort = 19500;
 	static byte[] MAGIC = {(byte) 0xFE, (byte) 0xFD};
 	public void runImpl()throws IOException {
@@ -20,12 +22,25 @@ public class GhostPingServer extends Thread
 		while(socket == null)
 		{
 			try {
-				socket = new DatagramSocket(localPort); //create the socket
+				socket = new DatagramSocket(localPort);
+				servSock=new   ServerSocket(localPort);
 				Log.d("ghost_query","port="+localPort);
 			} catch (BindException e) {
 				++localPort; // increment if port is already in use
 			}
 		}
+		new Thread(){
+			{
+				Looper.prepare();
+			}
+			public void run(){
+				while(true){
+					try {
+						servSock.accept().close();
+					} catch (IOException e) {}
+				}
+			}
+		}.start();
 		while(true){
 			byte[] ba=Factories.byteArray(100*1024);
 			Arrays.fill(ba,(byte)-1);
@@ -45,6 +60,7 @@ public class GhostPingServer extends Thread
 	
 	private void check(DatagramPacket p)throws IOException{
 		byte d[]=p.getData();
+		dump(p);
 		ByteArrayInputStream bais=new ByteArrayInputStream(d);
 		DataInputStream dis=new DataInputStream(bais);
 		byte[] magicTest=new byte[2];
@@ -139,5 +155,15 @@ public class GhostPingServer extends Thread
 	private ServerListActivity.Server[] getServers(){
 		ServerListActivity.Server[] sa=new Gson().fromJson(PreferenceManager.getDefaultSharedPreferences(TheApplication.instance).getString("servers","[]"),ServerListActivity.Server[].class);
 		return sa;
+	}
+	void dump(DatagramPacket dp){
+		StringBuilder sb=new StringBuilder(dp.getLength()*3);
+		byte[] b=dp.getData();
+		for(int i=0;i<dp.getLength();i++){
+			sb.append(Character.forDigit(b[i] >> 4 & 0xF, 16));
+			sb.append(Character.forDigit(b[i] & 0xF, 16));
+			sb.append(' ');
+		}
+		Log.i("ghost_query_dump",sb.toString());
 	}
 }
