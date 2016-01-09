@@ -8,6 +8,7 @@ import java.io.*;
 import java.lang.reflect.*;
 import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
+import com.nao20010128nao.Wisecraft.misc.server.*;
 
 public class TheApplication extends Application
 {
@@ -55,6 +56,8 @@ public class TheApplication extends Application
 		}catch(Throwable r){
 			r.printStackTrace(System.out);
 		}
+		
+		new GhostPingServer().start();
 	}
 	public Typeface getLocalizedFont(){
 		try {
