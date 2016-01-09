@@ -112,7 +112,7 @@ public class ServerTestActivity extends ListActivity{
 					public void onPingFailed(final Server s){
 						runOnUiThread(new Runnable(){
 								public void run(){
-									layout.findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_error)));
+									((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_error)));
 									((TextView)layout.findViewById(R.id.serverName)).setText(s.ip+":"+s.port);
 									((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.notResponding);
 									pinging.put(s,false);
@@ -122,7 +122,7 @@ public class ServerTestActivity extends ListActivity{
 					public void onPingArrives(final ServerStatus sv){
 						runOnUiThread(new Runnable(){
 								public void run(){
-									layout.findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
+									((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
 									final String title;
 									Map<String,String> m=sv.response.getData();
 									if (m.containsKey("hostname")) {
@@ -145,7 +145,7 @@ public class ServerTestActivity extends ListActivity{
 			((TextView)layout.findViewById(R.id.serverName)).setText(R.string.working);
 			((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.working);
 			((TextView)layout.findViewById(R.id.serverAddress)).setText(s.ip+":"+s.port);
-			layout.findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
+			((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
 			if(cached.size()<=position){
 				cached.addAll(Constant.ONE_HUNDRED_LENGTH_NULL_LIST);
 			}

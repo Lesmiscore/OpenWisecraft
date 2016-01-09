@@ -71,7 +71,7 @@ public class ServerListActivity extends ListActivity{
 								public void onPingFailed(final Server s){
 									runOnUiThread(new Runnable(){
 											public void run(){
-												sl.getViewQuick(clicked).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_error)));
+												((ImageView)sl.getViewQuick(clicked).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_error)));
 												((TextView)sl.getViewQuick(clicked).findViewById(R.id.serverName)).setText(s.ip+":"+s.port);
 												((TextView)sl.getViewQuick(clicked).findViewById(R.id.pingMillis)).setText(R.string.notResponding);
 												Server sn=new Server();
@@ -87,7 +87,7 @@ public class ServerListActivity extends ListActivity{
 								public void onPingArrives(final ServerStatus s){
 									runOnUiThread(new Runnable(){
 											public void run(){
-												sl.getViewQuick(clicked).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
+												((ImageView)sl.getViewQuick(clicked).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
 												final String title;
 												Map<String,String> m=s.response.getData();
 												if (m.containsKey("hostname")) {
@@ -111,7 +111,7 @@ public class ServerListActivity extends ListActivity{
 								}
 							});
 						((TextView)sl.getViewQuick(clicked).findViewById(R.id.pingMillis)).setText(R.string.working);
-						sl.getViewQuick(clicked).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
+						((ImageView)sl.getViewQuick(clicked).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
 						wd.showWorkingDialog();
 						pinging.put(list.get(clicked),true);
 						break;
@@ -221,7 +221,7 @@ public class ServerListActivity extends ListActivity{
 							public void onPingFailed(final Server s){
 								runOnUiThread(new Runnable(){
 										public void run(){
-											sl.getViewQuick(i_).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_error)));
+											((ImageView)sl.getViewQuick(i_).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_error)));
 											((TextView)sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(s.ip+":"+s.port);
 											((TextView)sl.getViewQuick(i_).findViewById(R.id.pingMillis)).setText(R.string.notResponding);
 											Server sn=new Server();
@@ -237,7 +237,7 @@ public class ServerListActivity extends ListActivity{
 							public void onPingArrives(final ServerStatus s){
 								runOnUiThread(new Runnable(){
 										public void run(){
-											sl.getViewQuick(i_).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
+											((ImageView)sl.getViewQuick(i_).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
 											final String title;
 											Map<String,String> m=s.response.getData();
 											if (m.containsKey("hostname")) {
@@ -259,7 +259,7 @@ public class ServerListActivity extends ListActivity{
 							}
 						});
 					((TextView)sl.getViewQuick(i).findViewById(R.id.pingMillis)).setText(R.string.working);
-					sl.getViewQuick(i).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
+					((ImageView)sl.getViewQuick(i_).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
 					pinging.put(list.get(i),true);
 				}
 				break;
@@ -411,7 +411,7 @@ public class ServerListActivity extends ListActivity{
 						public void onPingFailed(final Server s){
 							runOnUiThread(new Runnable(){
 									public void run(){
-										sl.getViewQuick(clicked).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_error)));
+										((ImageView)sl.getViewQuick(clicked).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_error)));
 										((TextView)sl.getViewQuick(clicked).findViewById(R.id.serverName)).setText(s.ip+":"+s.port);
 										((TextView)sl.getViewQuick(clicked).findViewById(R.id.pingMillis)).setText(R.string.notResponding);
 										Server sn=new Server();
@@ -427,7 +427,7 @@ public class ServerListActivity extends ListActivity{
 						public void onPingArrives(final ServerStatus s){
 							runOnUiThread(new Runnable(){
 									public void run(){
-										sl.getViewQuick(clicked).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
+										((ImageView)sl.getViewQuick(clicked).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
 										final String title;
 										Map<String,String> m=s.response.getData();
 										if (m.containsKey("hostname")) {
@@ -451,7 +451,7 @@ public class ServerListActivity extends ListActivity{
 						}
 					});
 				((TextView)sl.getViewQuick(clicked).findViewById(R.id.pingMillis)).setText(R.string.working);
-				sl.getViewQuick(clicked).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
+				((ImageView)sl.getViewQuick(clicked).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
 				wd.showWorkingDialog();
 				pinging.put(list.get(clicked),true);
 			}
@@ -486,7 +486,7 @@ public class ServerListActivity extends ListActivity{
 										public void onPingFailed(final Server s){
 											runOnUiThread(new Runnable(){
 													public void run(){
-														sl.getViewQuick(p3).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_error)));
+														((ImageView)sl.getViewQuick(p3).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_error)));
 														((TextView)sl.getViewQuick(p3).findViewById(R.id.serverName)).setText(s.ip+":"+s.port);
 														((TextView)sl.getViewQuick(p3).findViewById(R.id.pingMillis)).setText(R.string.notResponding);
 														Server sn=new Server();
@@ -502,7 +502,7 @@ public class ServerListActivity extends ListActivity{
 										public void onPingArrives(final ServerStatus s){
 											runOnUiThread(new Runnable(){
 													public void run(){
-														sl.getViewQuick(p3).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
+														((ImageView)sl.getViewQuick(p3).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
 														final String title;
 														Map<String,String> m=s.response.getData();
 														if (m.containsKey("hostname")) {
@@ -524,7 +524,7 @@ public class ServerListActivity extends ListActivity{
 										}
 									});
 								((TextView)sl.getViewQuick(p3).findViewById(R.id.pingMillis)).setText(R.string.working);
-								sl.getViewQuick(p3).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
+								((ImageView)sl.getViewQuick(p3).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
 								wd.showWorkingDialog();
 								pinging.put(list.get(p3),true);
 								break;
@@ -555,7 +555,7 @@ public class ServerListActivity extends ListActivity{
 													public void onPingFailed(final Server s) {
 														runOnUiThread(new Runnable(){
 																public void run() {
-																	sl.getViewQuick(p3).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_error)));
+																	((ImageView)sl.getViewQuick(p3).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_error)));
 																	((TextView)sl.getViewQuick(p3).findViewById(R.id.serverName)).setText(s.ip + ":" + s.port);
 																	((TextView)sl.getViewQuick(p3).findViewById(R.id.pingMillis)).setText(R.string.notResponding);
 																	Server sn=new Server();
@@ -571,7 +571,7 @@ public class ServerListActivity extends ListActivity{
 													public void onPingArrives(final ServerStatus s) {
 														runOnUiThread(new Runnable(){
 																public void run() {
-																	sl.getViewQuick(clicked).findViewById(R.id.statColor).setBackground(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
+																	((ImageView)sl.getViewQuick(p3).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
 																	final String title;
 																	Map<String,String> m=s.response.getData();
 																	if (m.containsKey("hostname")) {
