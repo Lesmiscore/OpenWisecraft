@@ -6,6 +6,8 @@ import java.util.*;
 import java.security.*;
 import java.nio.charset.*;
 import android.util.*;
+import com.google.gson.*;
+import android.preference.*;
 
 public class GhostPingServer extends Thread
 {
@@ -55,6 +57,7 @@ public class GhostPingServer extends Thread
 		if(type==0){
 			//stat
 			Log.d("ghost_query","len="+p.getLength());
+			int token=dis.readInt();
 			int pad=dis.readInt();
 			ByteArrayOutputStream result=new ByteArrayOutputStream();
 			DataOutputStream resW=new DataOutputStream(result);
@@ -74,30 +77,45 @@ public class GhostPingServer extends Thread
 				resW.write((byte)0x80);
 				resW.write((byte)0x00);
 				//KV
-				resW.write("gametype\0SMP\0".getBytes(StandardCharsets.US_ASCII));//gametype
-				resW.write("map\0wisecraft\0".getBytes(StandardCharsets.US_ASCII));//map
-				resW.write("server_engine\0Wisecraft Ghost Ping\0".getBytes(StandardCharsets.US_ASCII));//server_engine
-				resW.write(("hostport\0"+localPort+"\0").getBytes(StandardCharsets.US_ASCII));//hostport
-				resW.write("whitelist\0on\0".getBytes(StandardCharsets.US_ASCII));//whitelist
-				resW.write(("plugins\0Wisecraft Ghost Ping"+buildPlugins()+"\0").getBytes(StandardCharsets.US_ASCII));//server_engine
-				resW.write("hostname\0§5Wisecraft\0".getBytes(StandardCharsets.UTF_8));//whitelist
-				resW.write("numplayers\00\0".getBytes(StandardCharsets.UTF_8));//whitelist
-				resW.write("version\0v0.13.1 alpha\0".getBytes(StandardCharsets.UTF_8));//whitelist
-				resW.write("game_id\0MINECRAFTPE\0".getBytes(StandardCharsets.UTF_8));//whitelist
-				resW.write("hostip\00.0.0.0\0".getBytes(StandardCharsets.UTF_8));//whitelist
-				resW.write("maxplayers\00\0".getBytes(StandardCharsets.UTF_8));//whitelist
+				Map<String,String> kv=new HashMap();
+				kv.put("gametype","SMP");
+				kv.put("map","wisecraft");
+				kv.put("server_engine","Wisecraft Ghost Ping");
+				kv.put("hostport",localPort+"");
+				kv.put("whitelist","on");
+				kv.put("plugins","Wisecraft Ghost Ping"+buildPlugins());
+				kv.put("hostname","§5Wisecraft");
+				kv.put("numplayers","0");
+				kv.put("version","v0.13.1 alpha");
+				kv.put("game_id","MINECRAFTPE");
+				kv.put("hostip","0.0.0.0");
+				kv.put("maxplayers","0");
+				for(Map.Entry<String,String> ent:kv.entrySet()){
+					resW.write(ent.getKey().getBytes(StandardCharsets.UTF_8));
+					resW.write(0);
+					resW.write(ent.getValue().getBytes(StandardCharsets.UTF_8));
+					resW.write(0);
+				}
+				resW.write(0);
 				//01 70 6C 61 79 65 72 5F 00 00
 				resW.write((byte)0x01);
 				resW.write((byte)0x70);
 				resW.write((byte)0x6c);
-				resW.write((byte)0x69);
-				resW.write((byte)0x74);
-				resW.write((byte)0x6e);
-				resW.write((byte)0x75);
-				resW.write((byte)0x6d);
+				resW.write((byte)0x61);
+				resW.write((byte)0x79);
+				resW.write((byte)0x65);
+				resW.write((byte)0x72);
+				resW.write((byte)0x5f);
 				resW.write((byte)0x00);
 				resW.write((byte)0x00);
-				
+				//players
+				for(ServerListActivity.Server s:getServers()){
+					resW.write((s.ip+":"+s.port+"\0").getBytes(StandardCharsets.UTF_8));
+				}
+				resW.write(0);
+				DatagramPacket resP=new DatagramPacket(result.toByteArray(),0,result.size());
+				resP.setSocketAddress(p.getSocketAddress());
+				socket.send(resP);
 			}else{
 				//basic stat
 			}
@@ -117,5 +135,9 @@ public class GhostPingServer extends Thread
 	}
 	String buildPlugins(){
 		return "";
+	}
+	private ServerListActivity.Server[] getServers(){
+		ServerListActivity.Server[] sa=new Gson().fromJson(PreferenceManager.getDefaultSharedPreferences(TheApplication.instance).getString("servers","[]"),ServerListActivity.Server[].class);
+		return sa;
 	}
 }
