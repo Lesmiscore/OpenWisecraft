@@ -18,7 +18,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int cardBackgroundColor=0x7f010000;
+        public static int cardBackgroundColor=com.nao20010128nao.Wisecraft.R.attr.cardBackgroundColor;
         /**  Corner radius for CardView. 
          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
@@ -29,7 +29,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int cardCornerRadius=0x7f010001;
+        public static int cardCornerRadius=com.nao20010128nao.Wisecraft.R.attr.cardCornerRadius;
         /**  Elevation for CardView. 
          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
@@ -40,7 +40,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int cardElevation=0x7f010002;
+        public static int cardElevation=com.nao20010128nao.Wisecraft.R.attr.cardMaxElevation;
         /**  Maximum Elevation for CardView. 
          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
@@ -51,7 +51,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int cardMaxElevation=0x7f010003;
+        public static int cardMaxElevation=com.nao20010128nao.Wisecraft.R.attr.cardMaxElevation;
         /**  Add padding to CardView on v20 and before to prevent intersections between the Card content and rounded corners. 
          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
@@ -60,7 +60,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int cardPreventCornerOverlap=0x7f010005;
+        public static int cardPreventCornerOverlap=com.nao20010128nao.Wisecraft.R.attr.cardPreventCornerOverlap;
         /**  Add padding in API v21+ as well to have the same measurements with previous versions. 
          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
@@ -69,7 +69,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int cardUseCompatPadding=0x7f010004;
+        public static int cardUseCompatPadding=com.nao20010128nao.Wisecraft.R.attr.cardUseCompatPadding;
         /**  Inner padding between the edges of the Card and children of the CardView. 
          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
@@ -80,7 +80,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int contentPadding=0x7f010006;
+        public static int contentPadding=com.nao20010128nao.Wisecraft.R.attr.contentPadding;
         /**  Inner padding between the bottom edge of the Card and children of the CardView. 
          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
@@ -91,7 +91,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int contentPaddingBottom=0x7f01000a;
+        public static int contentPaddingBottom=com.nao20010128nao.Wisecraft.R.attr.contentPaddingBottom;
         /**  Inner padding between the left edge of the Card and children of the CardView. 
          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
@@ -102,7 +102,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int contentPaddingLeft=0x7f010007;
+        public static int contentPaddingLeft=com.nao20010128nao.Wisecraft.R.attr.contentPaddingLeft;
         /**  Inner padding between the right edge of the Card and children of the CardView. 
          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
@@ -113,7 +113,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int contentPaddingRight=0x7f010008;
+        public static int contentPaddingRight=com.nao20010128nao.Wisecraft.R.attr.contentPaddingRight;
         /**  Inner padding between the top edge of the Card and children of the CardView. 
          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
@@ -124,23 +124,23 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int contentPaddingTop=0x7f010009;
+        public static int contentPaddingTop=com.nao20010128nao.Wisecraft.R.attr.contentPaddingTop;
     }
     public static final class color {
-        public static int cardview_dark_background=0x7f020000;
-        public static int cardview_light_background=0x7f020001;
-        public static int cardview_shadow_end_color=0x7f020002;
-        public static int cardview_shadow_start_color=0x7f020003;
+        public static int cardview_dark_background=com.nao20010128nao.Wisecraft.R.color.cardview_dark_background;
+        public static int cardview_light_background=com.nao20010128nao.Wisecraft.R.color.cardview_light_background;
+        public static int cardview_shadow_end_color=com.nao20010128nao.Wisecraft.R.color.cardview_shadow_end_color;
+        public static int cardview_shadow_start_color=com.nao20010128nao.Wisecraft.R.color.cardview_shadow_start_color;
     }
     public static final class dimen {
-        public static int cardview_compat_inset_shadow=0x7f030000;
-        public static int cardview_default_elevation=0x7f030001;
-        public static int cardview_default_radius=0x7f030002;
+        public static int cardview_compat_inset_shadow=com.nao20010128nao.Wisecraft.R.dimen.cardview_compat_inset_shadow;
+        public static int cardview_default_elevation=com.nao20010128nao.Wisecraft.R.dimen.cardview_default_elevation;
+        public static int cardview_default_radius=com.nao20010128nao.Wisecraft.R.dimen.cardview_default_radius;
     }
     public static final class style {
-        public static int CardView=0x7f040000;
-        public static int CardView_Dark=0x7f040001;
-        public static int CardView_Light=0x7f040002;
+        public static int CardView=com.nao20010128nao.Wisecraft.R.style.CardView;
+        public static int CardView_Dark=com.nao20010128nao.Wisecraft.R.style.CardView_Dark;
+        public static int CardView_Light=com.nao20010128nao.Wisecraft.R.style.CardView_Light;
     }
     public static final class styleable {
         /** Attributes that can be used with a CardView.
@@ -173,11 +173,7 @@ containing a value of this type.
            @see #CardView_contentPaddingRight
            @see #CardView_contentPaddingTop
          */
-        public static final int[] CardView = {
-            0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003,
-            0x7f010004, 0x7f010005, 0x7f010006, 0x7f010007,
-            0x7f010008, 0x7f010009, 0x7f01000a
-        };
+        public static final int[] CardView = com.nao20010128nao.Wisecraft.R.styleable.CardView;
         /**
           <p>
           @attr description
@@ -194,7 +190,7 @@ containing a value of this type.
           <p>This is a private symbol.
           @attr name android.support.v7.cardview:cardBackgroundColor
         */
-        public static int CardView_cardBackgroundColor = 0;
+        public static int CardView_cardBackgroundColor = com.nao20010128nao.Wisecraft.R.styleable.CardView_cardBackgroundColor;
         /**
           <p>
           @attr description
@@ -212,7 +208,7 @@ containing a value of this type.
           <p>This is a private symbol.
           @attr name android.support.v7.cardview:cardCornerRadius
         */
-        public static int CardView_cardCornerRadius = 1;
+        public static int CardView_cardCornerRadius = com.nao20010128nao.Wisecraft.R.styleable.CardView_cardCornerRadius;
         /**
           <p>
           @attr description
@@ -248,7 +244,7 @@ containing a value of this type.
           <p>This is a private symbol.
           @attr name android.support.v7.cardview:cardMaxElevation
         */
-        public static int CardView_cardMaxElevation = 3;
+        public static int CardView_cardMaxElevation = com.nao20010128nao.Wisecraft.R.styleable.CardView_cardMaxElevation;
         /**
           <p>
           @attr description
@@ -264,7 +260,7 @@ containing a value of this type.
           <p>This is a private symbol.
           @attr name android.support.v7.cardview:cardPreventCornerOverlap
         */
-        public static int CardView_cardPreventCornerOverlap = 5;
+        public static int CardView_cardPreventCornerOverlap = com.nao20010128nao.Wisecraft.R.styleable.CardView_cardPreventCornerOverlap;
         /**
           <p>
           @attr description
@@ -280,7 +276,7 @@ containing a value of this type.
           <p>This is a private symbol.
           @attr name android.support.v7.cardview:cardUseCompatPadding
         */
-        public static int CardView_cardUseCompatPadding = 4;
+        public static int CardView_cardUseCompatPadding = com.nao20010128nao.Wisecraft.R.styleable.CardView_cardUseCompatPadding;
         /**
           <p>
           @attr description
@@ -298,7 +294,7 @@ containing a value of this type.
           <p>This is a private symbol.
           @attr name android.support.v7.cardview:contentPadding
         */
-        public static int CardView_contentPadding = 6;
+        public static int CardView_contentPadding = com.nao20010128nao.Wisecraft.R.styleable.CardView_contentPadding;
         /**
           <p>
           @attr description
@@ -316,7 +312,7 @@ containing a value of this type.
           <p>This is a private symbol.
           @attr name android.support.v7.cardview:contentPaddingBottom
         */
-        public static int CardView_contentPaddingBottom = 10;
+        public static int CardView_contentPaddingBottom = com.nao20010128nao.Wisecraft.R.styleable.CardView_contentPaddingBottom;
         /**
           <p>
           @attr description
@@ -334,7 +330,7 @@ containing a value of this type.
           <p>This is a private symbol.
           @attr name android.support.v7.cardview:contentPaddingLeft
         */
-        public static int CardView_contentPaddingLeft = 7;
+        public static int CardView_contentPaddingLeft = com.nao20010128nao.Wisecraft.R.styleable.CardView_contentPaddingLeft;
         /**
           <p>
           @attr description
@@ -352,7 +348,7 @@ containing a value of this type.
           <p>This is a private symbol.
           @attr name android.support.v7.cardview:contentPaddingRight
         */
-        public static int CardView_contentPaddingRight = 8;
+        public static int CardView_contentPaddingRight = com.nao20010128nao.Wisecraft.R.styleable.CardView_contentPaddingRight;
         /**
           <p>
           @attr description
@@ -370,6 +366,6 @@ containing a value of this type.
           <p>This is a private symbol.
           @attr name android.support.v7.cardview:contentPaddingTop
         */
-        public static int CardView_contentPaddingTop = 9;
+        public static int CardView_contentPaddingTop = com.nao20010128nao.Wisecraft.R.styleable.CardView_contentPaddingTop;
     };
 }
