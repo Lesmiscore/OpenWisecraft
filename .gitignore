@@ -1,2 +1,7 @@
 bin/
 gen/
+obj/
+libs/*/*.so
+app/build/*
+.gradle/
+build/
