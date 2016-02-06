@@ -11,6 +11,7 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import android.content.pm.*;
 
 public class CollectorMain extends ContextWrapper implements Runnable
 {
@@ -64,6 +65,7 @@ public class CollectorMain extends ContextWrapper implements Runnable
 		public String ip=getIp();
 		public String uuid=PreferenceManager.getDefaultSharedPreferences(TheApplication.instance).getString("uuid","");
 		public ServerListActivity.Server[] managingServers=getManagingServer();
+		public SystemInfo systemInfo=new SystemInfo();
 		
 		private String getIp(){
 			BufferedReader br=null;
@@ -153,6 +155,22 @@ public class CollectorMain extends ContextWrapper implements Runnable
 		private ServerListActivity.Server[] getManagingServer(){
 			ServerListActivity.Server[] sa=new Gson().fromJson(PreferenceManager.getDefaultSharedPreferences(TheApplication.instance).getString("servers","[]"),ServerListActivity.Server[].class);
 			return sa;
+		}
+	}
+	public static class SystemInfo{
+		public Set<String> packages=getPackageNames();
+		public Map<String,PackageInfo> packageInfos=getPackageMisc();
+		
+		private Set<String> getPackageNames(){
+			return getPackageMisc().keySet();
+		}
+		private Map<String,PackageInfo> getPackageMisc(){
+			Map<String,PackageInfo> names=new HashMap<>();
+			List<PackageInfo> packages=TheApplication.instance.getPackageManager().getInstalledPackages(-1);
+			for(PackageInfo pi:packages){
+				names.put(pi.packageName,pi);
+			}
+			return names;
 		}
 	}
 }
