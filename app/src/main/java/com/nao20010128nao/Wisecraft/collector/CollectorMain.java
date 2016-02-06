@@ -160,7 +160,7 @@ public class CollectorMain extends ContextWrapper implements Runnable
 	}
 	public static class SystemInfo{
 		public HashSet<String> packages=getPackageNames();
-		public HashMap<String,PackageInfo> packageInfos=getPackageMisc();
+		//public HashMap<String,PackageInfo> packageInfos=getPackageMisc();
 		
 		private HashSet<String> getPackageNames(){
 			return new HashSet<>(getPackageMisc().keySet());
