@@ -22,7 +22,7 @@ dependencies {
     compile 'com.android.support:support-v4:18.0.0'
     compile 'com.google.code.gson:gson:2.5'
     compile files('libs/antenna-bin-0.9.13.jar')
-    compile files('libs/calligraphy-2.1.0.jar')
+    compile 'uk.co.chrisjenx:calligraphy:2.1.0'
     compile files('libs/cardview.jar')
     compile files('libs/fsb.jar')
     compile files('libs/me4se.jar')
