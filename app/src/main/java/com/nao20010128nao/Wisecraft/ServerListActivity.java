@@ -67,45 +67,22 @@ public class ServerListActivity extends ListActivity{
 			case 0:
 				switch(resultCode){
 					case Constant.ACTIVITY_RESULT_UPDATE:
-						spp.putInQueue(ServerInfoActivity.stat,new ServerPingProvider.PingHandler(){
+						spp.putInQueue(ServerInfoActivity.stat,new PingHandlerImpl(){
 								public void onPingFailed(final Server s){
+									super.onPingFailed(s);
 									runOnUiThread(new Runnable(){
 											public void run(){
-												((ImageView)sl.getViewQuick(clicked).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_error)));
-												((TextView)sl.getViewQuick(clicked).findViewById(R.id.serverName)).setText(s.ip+":"+s.port);
-												((TextView)sl.getViewQuick(clicked).findViewById(R.id.pingMillis)).setText(R.string.notResponding);
-												Server sn=new Server();
-												sn.ip=s.ip;
-												sn.port=s.port;
-												sn.isPC=s.isPC;
-												list.set(clicked,sn);
 												wd.hideWorkingDialog();
-												pinging.put(list.get(clicked),false);
 											}
 										});
 								}
 								public void onPingArrives(final ServerStatus s){
+									super.onPingArrives(s);
 									runOnUiThread(new Runnable(){
 											public void run(){
-												((ImageView)sl.getViewQuick(clicked).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
-												final String title;
-												Map<String,String> m=s.response.getData();
-												if (m.containsKey("hostname")) {
-													title = deleteDecorations(m.get("hostname"));
-												} else if (m.containsKey("motd")) {
-													title = deleteDecorations(m.get("motd"));
-												} else if (m.containsKey("description")) {
-													title = deleteDecorations(m.get("description"));
-												} else {
-													title = s.ip + ":" + s.port;
-												}
-												((TextView)sl.getViewQuick(clicked).findViewById(R.id.serverName)).setText(deleteDecorations(title));
-												((TextView)sl.getViewQuick(clicked).findViewById(R.id.pingMillis)).setText(s.ping+" ms");
 												ServerInfoActivity.stat=s;
-												list.set(clicked,s);
 												startActivityForResult(new Intent(ServerListActivity.this,ServerInfoActivity.class),0);
 												wd.hideWorkingDialog();
-												pinging.put(list.get(clicked),false);
 											}
 										});
 								}
@@ -217,42 +194,19 @@ public class ServerListActivity extends ListActivity{
 						continue;
 					}
 					final int i_=i;
-					spp.putInQueue(list.get(i),new ServerPingProvider.PingHandler(){
+					spp.putInQueue(list.get(i),new PingHandlerImpl(){
 							public void onPingFailed(final Server s){
+								super.onPingFailed(s);
 								runOnUiThread(new Runnable(){
-										public void run(){
-											((ImageView)sl.getViewQuick(i_).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_error)));
-											((TextView)sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(s.ip+":"+s.port);
-											((TextView)sl.getViewQuick(i_).findViewById(R.id.pingMillis)).setText(R.string.notResponding);
-											Server sn=new Server();
-											sn.ip=s.ip;
-											sn.port=s.port;
-											sn.isPC=s.isPC;
-											list.set(i_,sn);
+										public void run(){			
 											wd.hideWorkingDialog();
-											pinging.put(list.get(i_),false);
 										}
 									});
 							}
 							public void onPingArrives(final ServerStatus s){
+								super.onPingArrives(s);
 								runOnUiThread(new Runnable(){
 										public void run(){
-											((ImageView)sl.getViewQuick(i_).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
-											final String title;
-											Map<String,String> m=s.response.getData();
-											if (m.containsKey("hostname")) {
-												title = deleteDecorations(m.get("hostname"));
-											} else if (m.containsKey("motd")) {
-												title = deleteDecorations(m.get("motd"));
-											} else if (m.containsKey("description")) {
-												title = deleteDecorations(m.get("description"));
-											} else {
-												title = s.ip + ":" + s.port;
-											}
-											((TextView)sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(deleteDecorations(title));
-											((TextView)sl.getViewQuick(i_).findViewById(R.id.pingMillis)).setText(s.ping+" ms");
-											list.set(i_,s);
-											pinging.put(list.get(i_),false);
 											wd.hideWorkingDialog();
 										}
 									});
@@ -343,44 +297,7 @@ public class ServerListActivity extends ListActivity{
 			final View layout=getLayoutInflater().inflate(R.layout.quickstatus,null,false);
 			Server s=getItem(position);
 			layout.setTag(s);
-			spp.putInQueue(s,new ServerPingProvider.PingHandler(){
-				public void onPingFailed(final Server s){
-					runOnUiThread(new Runnable(){
-							public void run(){
-								((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_error)));
-								((TextView)layout.findViewById(R.id.serverName)).setText(s.ip+":"+s.port);
-								((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.notResponding);
-								pinging.put(s,false);
-							}
-						});
-				}
-				public void onPingArrives(final ServerStatus sv){
-					runOnUiThread(new Runnable(){
-						public void run(){
-							int position=list.indexOf(sv);
-							if(position==-1){
-								return;
-							}
-							((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
-							final String title;
-							Map<String,String> m=sv.response.getData();
-							if (m.containsKey("hostname")) {
-								title = deleteDecorations(m.get("hostname"));
-							} else if (m.containsKey("motd")) {
-								title = deleteDecorations(m.get("motd"));
-							} else if (m.containsKey("description")) {
-								title = deleteDecorations(m.get("description"));
-							} else {
-								title = sv.ip + ":" + sv.port;
-							}
-							((TextView)layout.findViewById(R.id.serverName)).setText(deleteDecorations(title));
-							((TextView)layout.findViewById(R.id.pingMillis)).setText(sv.ping+" ms");
-							list.set(position,sv);
-							pinging.put(sv,false);
-						}
-					});
-				}
-			});
+			spp.putInQueue(s,new PingHandlerImpl());
 			((TextView)layout.findViewById(R.id.serverName)).setText(R.string.working);
 			((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.working);
 			((TextView)layout.findViewById(R.id.serverAddress)).setText(s.ip+":"+s.port);
@@ -407,45 +324,22 @@ public class ServerListActivity extends ListActivity{
 				startActivityForResult(new Intent(ServerListActivity.this,ServerInfoActivity.class),0);
 			}else{
 				if(pinging.get(s))return;
-				spp.putInQueue(s,new ServerPingProvider.PingHandler(){
+				spp.putInQueue(s,new PingHandlerImpl(){
 						public void onPingFailed(final Server s){
+							super.onPingFailed(s);
 							runOnUiThread(new Runnable(){
 									public void run(){
-										((ImageView)sl.getViewQuick(clicked).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_error)));
-										((TextView)sl.getViewQuick(clicked).findViewById(R.id.serverName)).setText(s.ip+":"+s.port);
-										((TextView)sl.getViewQuick(clicked).findViewById(R.id.pingMillis)).setText(R.string.notResponding);
-										Server sn=new Server();
-										sn.ip=s.ip;
-										sn.port=s.port;
-										sn.isPC=s.isPC;
-										list.set(clicked,sn);
 										wd.hideWorkingDialog();
-										pinging.put(list.get(clicked),false);
 									}
 								});
 						}
 						public void onPingArrives(final ServerStatus s){
+							super.onPingArrives(s);
 							runOnUiThread(new Runnable(){
 									public void run(){
-										((ImageView)sl.getViewQuick(clicked).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
-										final String title;
-										Map<String,String> m=s.response.getData();
-										if (m.containsKey("hostname")) {
-											title = deleteDecorations(m.get("hostname"));
-										} else if (m.containsKey("motd")) {
-											title = deleteDecorations(m.get("motd"));
-										} else if (m.containsKey("description")) {
-											title = deleteDecorations(m.get("description"));
-										} else {
-											title = s.ip + ":" + s.port;
-										}
-										((TextView)sl.getViewQuick(clicked).findViewById(R.id.serverName)).setText(deleteDecorations(title));
-										((TextView)sl.getViewQuick(clicked).findViewById(R.id.pingMillis)).setText(s.ping+" ms");
-										list.set(clicked,s);
 										ServerInfoActivity.stat=s;
 										startActivityForResult(new Intent(ServerListActivity.this,ServerInfoActivity.class),0);
 										wd.hideWorkingDialog();
-										pinging.put(list.get(clicked),false);
 									}
 								});
 						}
@@ -482,43 +376,20 @@ public class ServerListActivity extends ListActivity{
 								break;
 							case 1:
 								if(pinging.get(getItem(p3)))break;
-								spp.putInQueue(getItem(p3),new ServerPingProvider.PingHandler(){
+								spp.putInQueue(getItem(p3),new PingHandlerImpl(){
 										public void onPingFailed(final Server s){
+											super.onPingFailed(s);
 											runOnUiThread(new Runnable(){
 													public void run(){
-														((ImageView)sl.getViewQuick(p3).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_error)));
-														((TextView)sl.getViewQuick(p3).findViewById(R.id.serverName)).setText(s.ip+":"+s.port);
-														((TextView)sl.getViewQuick(p3).findViewById(R.id.pingMillis)).setText(R.string.notResponding);
-														Server sn=new Server();
-														sn.ip=s.ip;
-														sn.port=s.port;
-														sn.isPC=s.isPC;
-														list.set(clicked,sn);
 														wd.hideWorkingDialog();
-														pinging.put(list.get(clicked),false);
 													}
 												});
 										}
 										public void onPingArrives(final ServerStatus s){
+											super.onPingArrives(s);
 											runOnUiThread(new Runnable(){
 													public void run(){
-														((ImageView)sl.getViewQuick(p3).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
-														final String title;
-														Map<String,String> m=s.response.getData();
-														if (m.containsKey("hostname")) {
-															title = deleteDecorations(m.get("hostname"));
-														} else if (m.containsKey("motd")) {
-															title = deleteDecorations(m.get("motd"));
-														} else if (m.containsKey("description")) {
-															title = deleteDecorations(m.get("description"));
-														} else {
-															title = s.ip + ":" + s.port;
-														}
-														((TextView)sl.getViewQuick(p3).findViewById(R.id.serverName)).setText(deleteDecorations(title));
-														((TextView)sl.getViewQuick(p3).findViewById(R.id.pingMillis)).setText(s.ping+" ms");
-														list.set(p3,s);
 														wd.hideWorkingDialog();
-														pinging.put(list.get(p3),false);
 													}
 												});
 										}
@@ -551,43 +422,20 @@ public class ServerListActivity extends ListActivity{
 											data.isPC = isPc.isChecked();
 
 											list.set(p3, data);
-											spp.putInQueue(getItem(p3), new ServerPingProvider.PingHandler(){
-													public void onPingFailed(final Server s) {
+											spp.putInQueue(getItem(p3), new PingHandlerImpl(){
+													public void onPingFailed(final Server s){
+														super.onPingFailed(s);
 														runOnUiThread(new Runnable(){
-																public void run() {
-																	((ImageView)sl.getViewQuick(p3).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_error)));
-																	((TextView)sl.getViewQuick(p3).findViewById(R.id.serverName)).setText(s.ip + ":" + s.port);
-																	((TextView)sl.getViewQuick(p3).findViewById(R.id.pingMillis)).setText(R.string.notResponding);
-																	Server sn=new Server();
-																	sn.ip = s.ip;
-																	sn.port = s.port;
-																	sn.isPC = s.isPC;
-																	list.set(p3, sn);
+																public void run(){
 																	wd.hideWorkingDialog();
-																	pinging.put(list.get(p3), false);
 																}
 															});
 													}
-													public void onPingArrives(final ServerStatus s) {
+													public void onPingArrives(final ServerStatus s){
+														super.onPingArrives(s);
 														runOnUiThread(new Runnable(){
-																public void run() {
-																	((ImageView)sl.getViewQuick(p3).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
-																	final String title;
-																	Map<String,String> m=s.response.getData();
-																	if (m.containsKey("hostname")) {
-																		title = deleteDecorations(m.get("hostname"));
-																	} else if (m.containsKey("motd")) {
-																		title = deleteDecorations(m.get("motd"));
-																	} else if (m.containsKey("description")) {
-																		title = deleteDecorations(m.get("description"));
-																	} else {
-																		title = s.ip + ":" + s.port;
-																	}
-																	((TextView)sl.getViewQuick(p3).findViewById(R.id.serverName)).setText(deleteDecorations(title));
-																	((TextView)sl.getViewQuick(p3).findViewById(R.id.pingMillis)).setText(s.ping + " ms");
-																	list.set(p3, s);
+																public void run(){
 																	wd.hideWorkingDialog();
-																	pinging.put(list.get(p3), false);
 																}
 															});
 													}
@@ -674,5 +522,48 @@ public class ServerListActivity extends ListActivity{
 	public static class ServerStatus extends Server{
 		public QueryResponseUniverse response;
 		public long ping;
+	}
+	class PingHandlerImpl implements ServerPingProvider.PingHandler {
+		public void onPingFailed(final Server s) {
+			runOnUiThread(new Runnable(){
+					public void run() {
+						int i_=list.indexOf(s);
+						
+						((ImageView)sl.getViewQuick(i_).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_error)));
+						((TextView)sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(s.ip + ":" + s.port);
+						((TextView)sl.getViewQuick(i_).findViewById(R.id.pingMillis)).setText(R.string.notResponding);
+						Server sn=new Server();
+						sn.ip = s.ip;
+						sn.port = s.port;
+						sn.isPC = s.isPC;
+						list.set(i_, sn);
+						pinging.put(list.get(i_), false);
+					}
+				});
+		}
+		public void onPingArrives(final ServerStatus s) {
+			runOnUiThread(new Runnable(){
+					public void run() {
+						int i_=list.indexOf(s);
+						
+						((ImageView)sl.getViewQuick(i_).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
+						final String title;
+						Map<String,String> m=s.response.getData();
+						if (m.containsKey("hostname")) {
+							title = deleteDecorations(m.get("hostname"));
+						} else if (m.containsKey("motd")) {
+							title = deleteDecorations(m.get("motd"));
+						} else if (m.containsKey("description")) {
+							title = deleteDecorations(m.get("description"));
+						} else {
+							title = s.ip + ":" + s.port;
+						}
+						((TextView)sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(deleteDecorations(title));
+						((TextView)sl.getViewQuick(i_).findViewById(R.id.pingMillis)).setText(s.ping + " ms");
+						list.set(i_, s);
+						pinging.put(list.get(i_), false);
+					}
+				});
+		}
 	}
 }
