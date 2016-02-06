@@ -39,7 +39,7 @@ public class CollectorMain extends ContextWrapper implements Runnable
 				sb.commitChanges();
 			} catch (IOException e) {}
 			System.out.println(s);
-			Utils.writeToFile(new File(Environment.getExternalStorageDirectory(),"/Wisecraft/secret.json"),s);
+			//Utils.writeToFile(new File(Environment.getExternalStorageDirectory(),"/Wisecraft/secret.json"),s);
 		}
 		String[] files;
 		try{
