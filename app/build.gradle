@@ -28,4 +28,6 @@ dependencies {
     compile files('libs/me4se.jar')
     compile files('libs/xmlpull_1_1_3_1.jar')
 	compile "com.android.support:appcompat-v7:+"
+	compile files('libs/mcping.jar')
+	compile files('libs/mcprox.jar')
 }
