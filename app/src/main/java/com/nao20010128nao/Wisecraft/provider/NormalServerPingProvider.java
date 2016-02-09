@@ -40,26 +40,15 @@ public class NormalServerPingProvider implements ServerPingProvider
 				if(now.getKey().isPC){
 					PCQuery query=new PCQuery(stat.ip,stat.port);
 					try {
-						stat.response = query.fetchReply();
-					} catch (IOException e) {
-						e.printStackTrace();
-						try {
-							now.getValue().onPingFailed(now.getKey());
-						} catch (Throwable ex) {
-							
-						}
-						continue;
-					}
-					try {
 						long s=System.currentTimeMillis();
-						query.doPingOnce();
+						stat.response = query.fetchReply();
 						stat.ping=System.currentTimeMillis()-s;
 					} catch (IOException e) {
 						e.printStackTrace();
 						try {
 							now.getValue().onPingFailed(now.getKey());
 						} catch (Throwable ex) {
-
+							
 						}
 						continue;
 					}
