@@ -562,7 +562,11 @@ public class ServerListActivity extends ListActivity{
 							}
 						}else if(s.response instanceof Reply){//PC
 							Reply rep=(Reply)s.response;
-							title=deleteDecorations(rep.description);
+							if(rep.description==null){
+								title = s.ip + ":" + s.port;
+							}else{
+								title=deleteDecorations(rep.description);
+							}
 						}else{//Unreachable
 							title = s.ip + ":" + s.port;
 						}

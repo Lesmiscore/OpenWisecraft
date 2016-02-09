@@ -11,6 +11,8 @@ import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import com.nao20010128nao.MCPing.pe.*;
+import com.nao20010128nao.MCPing.pc.*;
 
 public class ServerTestActivity extends ListActivity{
 	ServerPingProvider spp=new NormalServerPingProvider();
@@ -124,14 +126,24 @@ public class ServerTestActivity extends ListActivity{
 								public void run(){
 									((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
 									final String title;
-									Map<String,String> m=sv.response.getData();
-									if (m.containsKey("hostname")) {
-										title = deleteDecorations(m.get("hostname"));
-									} else if (m.containsKey("motd")) {
-										title = deleteDecorations(m.get("motd"));
-									} else if (m.containsKey("description")) {
-										title = deleteDecorations(m.get("description"));
-									} else {
+									if(sv.response instanceof FullStat){//PE
+										FullStat fs=(FullStat)sv.response;
+										Map<String,String> m=fs.getData();
+										if (m.containsKey("hostname")) {
+											title = deleteDecorations(m.get("hostname"));
+										} else if (m.containsKey("motd")) {
+											title = deleteDecorations(m.get("motd"));
+										} else {
+											title = sv.ip + ":" + sv.port;
+										}
+									}else if(sv.response instanceof Reply){//PC
+										Reply rep=(Reply)sv.response;
+										if(rep.description==null){
+											title = sv.ip + ":" + sv.port;
+										}else{
+											title=deleteDecorations(rep.description);
+										}
+									}else{//Unreachable
 										title = sv.ip + ":" + sv.port;
 									}
 									((TextView)layout.findViewById(R.id.serverName)).setText(deleteDecorations(title));
