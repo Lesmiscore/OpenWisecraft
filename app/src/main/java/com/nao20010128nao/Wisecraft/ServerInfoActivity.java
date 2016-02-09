@@ -8,11 +8,12 @@ import android.widget.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import java.lang.ref.*;
 import java.util.*;
-import query.*;
 import uk.co.chrisjenx.calligraphy.*;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
 import android.graphics.drawable.*;
+import com.nao20010128nao.MCPing.*;
+import com.nao20010128nao.MCPing.pe.*;
 
 public class ServerInfoActivity extends FragmentActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
@@ -96,31 +97,32 @@ public class ServerInfoActivity extends FragmentActivity {
 		
 		update(stat.response);
 	}
-	public synchronized void update(final QueryResponseUniverse resp) {
-		final ArrayList<String> sort=new ArrayList<>(resp.getPlayerList());
-		Collections.sort(sort);
-		final String title;
-		Map<String,String> m=resp.getData();
-		if (m.containsKey("hostname")) {
-			title = deleteDecorations(m.get("hostname"));
-		} else if (m.containsKey("motd")) {
-			title = deleteDecorations(m.get("motd"));
-		} else if (m.containsKey("description")) {
-			title = deleteDecorations(m.get("description"));
-		} else {
-			title = ip + ":" + port;
+	public synchronized void update(final ServerPingResult resp) {
+		if(resp instanceof FullStat){
+			FullStat fs=(FullStat)resp;
+			final ArrayList<String> sort=new ArrayList<>(fs.getPlayerList());
+			Collections.sort(sort);
+			final String title;
+			Map<String,String> m=fs.getData();
+			if (m.containsKey("hostname")) {
+				title = deleteDecorations(m.get("hostname"));
+			} else if (m.containsKey("motd")) {
+				title = deleteDecorations(m.get("motd"));
+			} else {
+				title = ip + ":" + port;
+			}
+			adap.clear();
+			adap.addAll(sort);
+			adap2.clear();
+			adap2.addAll(fs.getData().entrySet());
+			adap3.clear();
+			if(fs.getData().containsKey("plugins")){
+				String[] data=fs.getData().get("plugins").split("\\: ");
+				if(data.length>=2)
+					adap3.addAll(data[1].split("\\; "));
+			}
+			setTitle(title);
 		}
-		adap.clear();
-		adap.addAll(sort);
-		adap2.clear();
-		adap2.addAll(resp.getData().entrySet());
-		adap3.clear();
-		if(resp.getData().containsKey("plugins")){
-			String[] data=resp.getData().get("plugins").split("\\: ");
-			if(data.length>=2)
-				adap3.addAll(data[1].split("\\; "));
-		}
-		setTitle(title);
 	}
 
 	@Override

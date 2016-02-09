@@ -13,10 +13,12 @@ import com.nao20010128nao.Wisecraft.provider.*;
 import com.nao20010128nao.Wisecraft.rcon.*;
 import java.io.*;
 import java.util.*;
-import query.*;
 import uk.co.chrisjenx.calligraphy.*;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import com.nao20010128nao.MCPing.*;
+import com.nao20010128nao.MCPing.pe.*;
+import com.nao20010128nao.MCPing.pc.*;
 
 public class ServerListActivity extends ListActivity{
 	ServerPingProvider spp=new MultiServerPingProvider(6);
@@ -520,7 +522,7 @@ public class ServerListActivity extends ListActivity{
 		}
 	}
 	public static class ServerStatus extends Server{
-		public QueryResponseUniverse response;
+		public ServerPingResult response;
 		public long ping;
 	}
 	class PingHandlerImpl implements ServerPingProvider.PingHandler {
@@ -548,14 +550,20 @@ public class ServerListActivity extends ListActivity{
 						
 						((ImageView)sl.getViewQuick(i_).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
 						final String title;
-						Map<String,String> m=s.response.getData();
-						if (m.containsKey("hostname")) {
-							title = deleteDecorations(m.get("hostname"));
-						} else if (m.containsKey("motd")) {
-							title = deleteDecorations(m.get("motd"));
-						} else if (m.containsKey("description")) {
-							title = deleteDecorations(m.get("description"));
-						} else {
+						if(s.response instanceof FullStat){//PE
+							FullStat fs=(FullStat)s.response;
+							Map<String,String> m=fs.getData();
+							if (m.containsKey("hostname")) {
+								title = deleteDecorations(m.get("hostname"));
+							} else if (m.containsKey("motd")) {
+								title = deleteDecorations(m.get("motd"));
+							} else {
+								title = s.ip + ":" + s.port;
+							}
+						}else if(s.response instanceof Reply){//PC
+							Reply rep=(Reply)s.response;
+							title=deleteDecorations(rep.description);
+						}else{//Unreachable
 							title = s.ip + ":" + s.port;
 						}
 						((TextView)sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(deleteDecorations(title));

@@ -1,9 +1,9 @@
 package com.nao20010128nao.Wisecraft.provider;
-import ch.jamiete.mcping.*;
 import com.nao20010128nao.Wisecraft.*;
 import java.io.*;
 import java.util.*;
-import query.*;
+import com.nao20010128nao.MCPing.pc.*;
+import com.nao20010128nao.MCPing.pe.*;
 
 public class NormalServerPingProvider implements ServerPingProvider
 {
@@ -33,58 +33,63 @@ public class NormalServerPingProvider implements ServerPingProvider
 			Map.Entry<ServerListActivity.Server,PingHandler> now=null;
 			while(!queue.isEmpty()){
 				now=queue.poll();
+				ServerListActivity.ServerStatus stat=new ServerListActivity.ServerStatus();
+				stat.ip = now.getKey().ip;
+				stat.port = now.getKey().port;
+				stat.isPC=now.getKey().isPC;
 				if(now.getKey().isPC){
-					MinecraftPing ping=new MinecraftPing();
-					MinecraftPingReply mcp;
+					PCQuery query=new PCQuery(stat.ip,stat.port);
 					try {
-						mcp=ping.getPing(new MinecraftPingOptions()
-																	 .setCharset("UTF-8")
-																	 .setHostname(now.getKey().ip)
-																	 .setPort(now.getKey().port)
-																	 .setTimeout(1000));
+						stat.response = query.fetchReply();
 					} catch (IOException e) {
+						e.printStackTrace();
 						try {
 							now.getValue().onPingFailed(now.getKey());
-						} catch (Throwable f) {
+						} catch (Throwable ex) {
+							
+						}
+					}
+					try {
+						long s=System.currentTimeMillis();
+						query.doPingOnce();
+						stat.ping=System.currentTimeMillis()-s;
+					} catch (IOException e) {
+						e.printStackTrace();
+						try {
+							now.getValue().onPingFailed(now.getKey());
+						} catch (Throwable ex) {
 
 						}
-						continue;
 					}
-					ServerListActivity.ServerStatus stat=new ServerListActivity.ServerStatus();
-					stat.ip = now.getKey().ip;
-					stat.port = now.getKey().port;
-					stat.response = new QueryResponseUniverse(mcp);
-					stat.ping = ping.getLatestPingElapsed();
-					stat.isPC=true;
+				} else {
+					PEQuery query=new PEQuery(stat.ip,stat.port);
 					try {
-						now.getValue().onPingArrives(stat);
-					} catch (Throwable f) {
-
-					}
-				}else{
-					MCQuery q=new MCQuery(now.getKey().ip, now.getKey().port);
-					QueryResponseUniverse resp;
-					try {
-						resp = q.fullStatUni();
+						stat.response = query.fullStatUni();
 					} catch (Throwable e) {
+						e.printStackTrace();
 						try {
 							now.getValue().onPingFailed(now.getKey());
-						} catch (Throwable f) {
+						} catch (Throwable ex) {
 
 						}
-						continue;
 					}
-					ServerListActivity.ServerStatus stat=new ServerListActivity.ServerStatus();
-					stat.ip = now.getKey().ip;
-					stat.port = now.getKey().port;
-					stat.response = resp;
-					stat.ping = q.getLatestPingElapsed();
-					stat.isPC=false;
 					try {
-						now.getValue().onPingArrives(stat);
-					} catch (Throwable f) {
+						long s=System.currentTimeMillis();
+						query.basicStat();
+						stat.ping=System.currentTimeMillis()-s;
+					} catch (Throwable e) {
+						e.printStackTrace();
+						try {
+							now.getValue().onPingFailed(now.getKey());
+						} catch (Throwable ex) {
 
+						}
 					}
+				}
+				try {
+					now.getValue().onPingArrives(stat);
+				} catch (Throwable f) {
+
 				}
 			}
 		}
