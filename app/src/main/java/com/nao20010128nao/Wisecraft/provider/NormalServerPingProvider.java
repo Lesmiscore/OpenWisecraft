@@ -48,7 +48,7 @@ public class NormalServerPingProvider implements ServerPingProvider
 						} catch (Throwable ex) {
 							
 						}
-						return;
+						continue;
 					}
 					try {
 						long s=System.currentTimeMillis();
@@ -61,7 +61,7 @@ public class NormalServerPingProvider implements ServerPingProvider
 						} catch (Throwable ex) {
 
 						}
-						return;
+						continue;
 					}
 				} else {
 					PEQuery query=new PEQuery(stat.ip,stat.port);
@@ -74,7 +74,7 @@ public class NormalServerPingProvider implements ServerPingProvider
 						} catch (Throwable ex) {
 							
 						}
-						return;
+						continue;
 					}
 					try {
 						long s=System.currentTimeMillis();
@@ -87,7 +87,7 @@ public class NormalServerPingProvider implements ServerPingProvider
 						} catch (Throwable ex) {
 
 						}
-						return;
+						continue;
 					}
 				}
 				try {
