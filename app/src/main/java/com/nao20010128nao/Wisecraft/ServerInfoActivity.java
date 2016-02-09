@@ -12,6 +12,7 @@ import query.*;
 import uk.co.chrisjenx.calligraphy.*;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import android.graphics.drawable.*;
 
 public class ServerInfoActivity extends FragmentActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
@@ -29,6 +30,11 @@ public class ServerInfoActivity extends FragmentActivity {
 
 	ArrayAdapter<String> adap,adap3;
 	ArrayAdapter<Map.Entry<String,String>> adap2;
+	
+	/*Only for PC servers*/
+	ImageView serverIcon;
+	TextView serverName;
+	Drawable serverIconObj;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
@@ -142,7 +148,7 @@ public class ServerInfoActivity extends FragmentActivity {
 	static void setPlayersView(ListView lv) {
 		instance.get().setPlayersView_(lv);
 	}
-	static void setDataView(ListView lv) {
+	static void setDataView(View lv) {
 		instance.get().setDataView_(lv);
 	}
 	static void setPluginsView(ListView lv) {
@@ -153,9 +159,13 @@ public class ServerInfoActivity extends FragmentActivity {
 		players = lv;
 		lv.setAdapter(adap);
 	}
-	void setDataView_(ListView lv) {
-		data = lv;
-		lv.setAdapter(adap2);
+	void setDataView_(View lv) {
+		data = (ListView)lv.findViewById(R.id.data);
+		if(stat.isPC){
+			serverIcon=(ImageView)lv.findViewById(R.id.serverIcon);
+			serverName=(TextView)lv.findViewById(R.id.serverTitle);
+		}
+		data.setAdapter(adap2);
 	}
 	void setPluginsView_(ListView lv) {
 		plugins = lv;
@@ -179,7 +189,7 @@ public class ServerInfoActivity extends FragmentActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
-			ListView lv=(ListView) inflater.inflate(R.layout.data_tab, null, false);
+			View lv= inflater.inflate(stat.isPC?R.layout.data_tab_pc:R.layout.data_tab, null, false);
 			setDataView(lv);
 			return lv;
 		}

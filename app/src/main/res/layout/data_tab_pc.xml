@@ -14,7 +14,7 @@
 		<ImageView
 			android:layout_height="64dp"
 			android:layout_width="64dp"
-			android:src="@android:drawable/ic_delete"
+			android:src="@drawable/ic_launcher"
 			android:id="@+id/serverIcon"/>
 
 		<TextView
@@ -22,15 +22,15 @@
 			android:textAppearance="?android:attr/textAppearanceMedium"
 			android:layout_width="wrap_content"
 			android:text="Medium Text"
-			android:id="@+id/serverTitle"/>
+			android:id="@+id/serverTitle"
+			android:textColor="#000000"/>
 
 	</LinearLayout>
 
 	<ListView
-		xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_height="match_parent"
 		android:layout_width="match_parent"
 		android:id="@+id/data"/>
-	
+
 </LinearLayout>
 
