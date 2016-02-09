@@ -14,6 +14,7 @@ import static com.nao20010128nao.Wisecraft.Utils.*;
 import android.graphics.drawable.*;
 import com.nao20010128nao.MCPing.*;
 import com.nao20010128nao.MCPing.pe.*;
+import com.nao20010128nao.MCPing.pc.*;
 
 public class ServerInfoActivity extends FragmentActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
@@ -122,6 +123,20 @@ public class ServerInfoActivity extends FragmentActivity {
 					adap3.addAll(data[1].split("\\; "));
 			}
 			setTitle(title);
+		}else if(resp instanceof Reply){
+			Reply rep=(Reply)resp;
+			if(rep.description==null){
+				setTitle(stat.ip + ":" + stat.port);
+			}else{
+				setTitle(deleteDecorations(rep.description));
+			}
+			final ArrayList<String> sort=new ArrayList<>();
+			for(Reply.Player o:rep.players.getSample()){
+				sort.add(o.getName());
+			}
+			Collections.sort(sort);
+			adap.clear();
+			adap.addAll(sort);
 		}
 	}
 
