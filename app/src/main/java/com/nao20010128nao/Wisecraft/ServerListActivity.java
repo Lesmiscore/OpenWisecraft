@@ -321,11 +321,11 @@ public class ServerListActivity extends ListActivity{
 			// TODO: Implement this method
 			Server s=getItem(p3);
 			clicked=p3;
+			if(pinging.get(s))return;
 			if(s instanceof ServerStatus){
 				ServerInfoActivity.stat=(ServerStatus)s;
 				startActivityForResult(new Intent(ServerListActivity.this,ServerInfoActivity.class),0);
 			}else{
-				if(pinging.get(s))return;
 				spp.putInQueue(s,new PingHandlerImpl(){
 						public void onPingFailed(final Server s){
 							super.onPingFailed(s);
