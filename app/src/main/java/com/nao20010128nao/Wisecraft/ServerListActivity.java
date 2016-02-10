@@ -511,7 +511,7 @@ public class ServerListActivity extends ListActivity{
 				return false;
 			}
 			Server os=(Server)o;
-			return os.ip.equals(ip)&os.port==port;
+			return os.ip.equals(ip)&os.port==port&(os.isPC^isPC)==false;
 		}
 		public Server cloneAsServer(){
 			Server s=new Server();
