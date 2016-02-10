@@ -280,7 +280,7 @@ public class ServerListActivity extends ListActivity{
 		pref.edit().putString("servers",json=gson.toJson(list.toArray(new Server[list.size()]),Server[].class)).commit();
 		Log.d("json",json);
 	}
-	class ServerList extends ArrayAdapter<Server> implements AdapterView.OnItemClickListener,AdapterView.OnItemLongClickListener{
+	class ServerList extends AppBaseArrayAdapter<Server> implements AdapterView.OnItemClickListener,AdapterView.OnItemLongClickListener{
 		List<View> cached=new ArrayList();
 		public ServerList(){
 			super(ServerListActivity.this,0,list=new ArrayList<Server>());

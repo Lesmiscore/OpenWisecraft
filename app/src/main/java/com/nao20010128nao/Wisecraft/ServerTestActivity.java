@@ -13,6 +13,7 @@ import uk.co.chrisjenx.calligraphy.*;
 import static com.nao20010128nao.Wisecraft.Utils.*;
 import com.nao20010128nao.MCPing.pe.*;
 import com.nao20010128nao.MCPing.pc.*;
+import com.nao20010128nao.Wisecraft.misc.*;
 
 public class ServerTestActivity extends ListActivity{
 	ServerPingProvider spp=new NormalServerPingProvider();
@@ -91,7 +92,7 @@ public class ServerTestActivity extends ListActivity{
 		waitDialog.cancel();
 		waitDialog=null;
 	}
-	class ServerList extends ArrayAdapter<Server> implements AdapterView.OnItemClickListener{
+	class ServerList extends AppBaseArrayAdapter<Server> implements AdapterView.OnItemClickListener{
 		List<View> cached=new ArrayList();
 		public ServerList(){
 			super(ServerTestActivity.this,0,list=new ArrayList<Server>());

@@ -5,7 +5,7 @@ import com.nao20010128nao.Wisecraft.*;
 import java.util.*;
 import android.content.*;
 
-public class KVListAdapter<K,V> extends ArrayAdapter<Map.Entry<K,V>> {
+public class KVListAdapter<K,V> extends AppBaseArrayAdapter<Map.Entry<K,V>> {
 	public KVListAdapter(Context ctx) {
 		super(ctx, 0, new HackedArrayList<K,V>());
 	}
@@ -19,6 +19,7 @@ public class KVListAdapter<K,V> extends ArrayAdapter<Map.Entry<K,V>> {
 	LayoutInflater getLayoutInflater() {
 		return (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
+	
 	static private class HackedArrayList<K,V> extends ArrayList<Map.Entry<K,V>>{
 		public HackedArrayList(){
 			

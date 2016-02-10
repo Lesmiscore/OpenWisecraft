@@ -77,9 +77,9 @@ public class ServerInfoActivity extends FragmentActivity {
 			fth.addTab(pluginsF, PluginsFragment.class, null);
 		}
 		
-		adap = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
+		adap = new AppBaseArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
 		adap2 = new KVListAdapter<>(this);
-		adap3 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
+		adap3 = new AppBaseArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
 		
 		nonUpd=getIntent().getBooleanExtra("nonUpd",false);
 		
