@@ -78,15 +78,7 @@ public class ServerInfoActivity extends FragmentActivity {
 		}
 		
 		adap = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
-		adap2 = new ArrayAdapter<Map.Entry<String,String>>(this, 0, new ArrayList<Map.Entry<String,String>>()){
-			public View getView(int pos, View v, ViewGroup ignore) {
-				if (v == null)
-					v = getLayoutInflater().inflate(R.layout.data, null);
-				((TextView)v.findViewById(R.id.k)).setText(getItem(pos).getKey());
-				((TextView)v.findViewById(R.id.v)).setText(getItem(pos).getValue());
-				return v;
-			}
-		};
+		adap2 = new KVListAdapter<>(this);
 		adap3 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
 		
 		nonUpd=getIntent().getBooleanExtra("nonUpd",false);
