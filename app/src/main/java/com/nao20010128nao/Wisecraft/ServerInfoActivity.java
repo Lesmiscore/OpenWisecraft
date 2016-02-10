@@ -193,7 +193,7 @@ public class ServerInfoActivity extends FragmentActivity {
 	protected void attachBaseContext(Context newBase) {
 		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
 	}
-	public static class PlayersFragment extends android.support.v4.app.Fragment {
+	public static class PlayersFragment extends BaseFragment {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
@@ -202,7 +202,7 @@ public class ServerInfoActivity extends FragmentActivity {
 			return lv;
 		}
 	}
-	public static class DataFragment extends android.support.v4.app.Fragment {
+	public static class DataFragment extends BaseFragment {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
@@ -211,7 +211,7 @@ public class ServerInfoActivity extends FragmentActivity {
 			return lv;
 		}
 	}
-	public static class PluginsFragment extends android.support.v4.app.Fragment {
+	public static class PluginsFragment extends BaseFragment {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method

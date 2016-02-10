@@ -16,6 +16,7 @@ import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
 
 import com.nao20010128nao.Wisecraft.R;
+import com.nao20010128nao.Wisecraft.misc.*;
 
 public class RCONActivity extends FragmentActivity
 {
@@ -301,7 +302,7 @@ public class RCONActivity extends FragmentActivity
 			return v;
 		}
 	}
-	public static class ConsoleFragment extends android.support.v4.app.Fragment {
+	public static class ConsoleFragment extends BaseFragment {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
@@ -312,7 +313,7 @@ public class RCONActivity extends FragmentActivity
 			return v;
 		}
 	}
-	public static class PlayersFragment extends android.support.v4.app.Fragment {
+	public static class PlayersFragment extends BaseFragment {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
