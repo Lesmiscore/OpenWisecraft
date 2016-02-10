@@ -15,6 +15,8 @@ import android.graphics.drawable.*;
 import com.nao20010128nao.MCPing.*;
 import com.nao20010128nao.MCPing.pe.*;
 import com.nao20010128nao.MCPing.pc.*;
+import android.graphics.*;
+import android.util.*;
 
 public class ServerInfoActivity extends FragmentActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
@@ -37,6 +39,7 @@ public class ServerInfoActivity extends FragmentActivity {
 	ImageView serverIcon;
 	TextView serverName;
 	Drawable serverIconObj;
+	String serverNameStr;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
@@ -137,6 +140,12 @@ public class ServerInfoActivity extends FragmentActivity {
 			Collections.sort(sort);
 			adap.clear();
 			adap.addAll(sort);
+			
+			serverNameStr=deleteDecorations(rep.description);
+			
+			byte[] image=Base64.decode(rep.favicon.split("\\,")[1],Base64.NO_WRAP);
+			Bitmap bmp=BitmapFactory.decodeByteArray(image,0,image.length);
+			serverIconObj=new BitmapDrawable(bmp);
 		}
 	}
 
@@ -181,6 +190,8 @@ public class ServerInfoActivity extends FragmentActivity {
 		if(stat.isPC){
 			serverIcon=(ImageView)lv.findViewById(R.id.serverIcon);
 			serverName=(TextView)lv.findViewById(R.id.serverTitle);
+			serverIcon.setImageDrawable(serverIconObj);
+			serverName.setText(serverNameStr);
 		}
 		data.setAdapter(adap2);
 	}
