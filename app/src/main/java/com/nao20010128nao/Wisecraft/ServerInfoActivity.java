@@ -125,13 +125,18 @@ public class ServerInfoActivity extends FragmentActivity {
 			}else{
 				setTitle(deleteDecorations(rep.description));
 			}
-			final ArrayList<String> sort=new ArrayList<>();
-			for(Reply.Player o:rep.players.getSample()){
-				sort.add(o.getName());
+			
+			if(rep.players.getSample()!=null){
+				final ArrayList<String> sort=new ArrayList<>();
+				for(Reply.Player o:rep.players.getSample()){
+					sort.add(o.getName());
+				}
+				Collections.sort(sort);
+				adap.clear();
+				adap.addAll(sort);
+			}else{
+				adap.clear();
 			}
-			Collections.sort(sort);
-			adap.clear();
-			adap.addAll(sort);
 			
 			serverNameStr=deleteDecorations(rep.description);
 			
