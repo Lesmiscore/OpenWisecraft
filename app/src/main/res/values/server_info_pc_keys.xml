@@ -2,4 +2,7 @@
 <resources>
 	<string name="pc_maxPlayers">Max Players:</string>
 	<string name="pc_nowPlayers">Joining Players:</string>
+	<string name="pc_protocolVersion">Protocol Version:</string>
+	<string name="pc_softwareVersion">Joining Players:</string>
+	
 </resources>

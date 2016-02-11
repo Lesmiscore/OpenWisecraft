@@ -138,6 +138,14 @@ public class ServerInfoActivity extends FragmentActivity {
 			byte[] image=Base64.decode(rep.favicon.split("\\,")[1],Base64.NO_WRAP);
 			Bitmap bmp=BitmapFactory.decodeByteArray(image,0,image.length);
 			serverIconObj=new BitmapDrawable(bmp);
+			
+			adap2.clear();
+			Map<String,String> data=new HashMap<>();
+			data.put(getResources().getString(R.string.pc_maxPlayers),rep.players.getMax()+"");
+			data.put(getResources().getString(R.string.pc_nowPlayers),rep.players.getOnline()+"");
+			data.put(getResources().getString(R.string.pc_softwareVersion),rep.version.getName());
+			data.put(getResources().getString(R.string.pc_protocolVersion),rep.version.getProtocol()+"");
+			adap2.addAll(data.entrySet());
 		}
 	}
 
