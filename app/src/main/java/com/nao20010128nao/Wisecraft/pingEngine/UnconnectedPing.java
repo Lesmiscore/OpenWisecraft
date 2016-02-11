@@ -37,12 +37,12 @@ public class UnconnectedPing
 			dis.readLong();//MAGIC
 			dis.readLong();//MAGIC
 			String s=dis.readUTF();
+			return new UnconnectedPingResult(s);
 		}catch(IOException e){
 			throw e;
 		}finally{
 			if(ds!=null)ds.close();
 		}
-		return null;
 	}
 	
 	public static class UnconnectedPingResult implements ServerPingResult{
