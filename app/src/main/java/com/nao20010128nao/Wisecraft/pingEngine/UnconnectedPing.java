@@ -52,7 +52,7 @@ public class UnconnectedPing
 			serverInfos=(raw=s).split("\\;");
 		}
 		public String getServerName(){
-			return serverInfos[0];
+			return serverInfos[1];
 		}
 		public String getRaw(){
 			return raw;

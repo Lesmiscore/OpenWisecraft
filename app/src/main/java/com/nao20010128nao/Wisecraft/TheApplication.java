@@ -63,7 +63,7 @@ public class TheApplication extends Application
 		new Thread(){
 			public void run(){
 				try {
-					System.out.println(UnconnectedPing.doPing("onsen.so", 50029).getServerName());
+					System.out.println(UnconnectedPing.doPing("onsen.so", 50029).getRaw());
 				} catch (IOException e) {
 					e.printStackTrace(System.out);
 				}
