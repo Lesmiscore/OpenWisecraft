@@ -59,16 +59,6 @@ public class TheApplication extends Application
 		}
 		
 		new GhostPingServer().start();
-		
-		new Thread(){
-			public void run(){
-				try {
-					System.out.println(UnconnectedPing.doPing("onsen.so", 50029).getServerName());
-				} catch (IOException e) {
-					e.printStackTrace(System.out);
-				}
-			}
-		}.start();
 	}
 	public Typeface getLocalizedFont(){
 		try {
