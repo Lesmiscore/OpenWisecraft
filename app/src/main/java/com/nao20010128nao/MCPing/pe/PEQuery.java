@@ -9,13 +9,14 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 import com.nao20010128nao.MCPing.Utils;
+import com.nao20010128nao.MCPing.*;
 
 /**
  * A class that handles Minecraft Query protocol requests
  *
  * @author Ryan McCann
  */
-public class PEQuery {
+public class PEQuery implements PingHost{
 	final static byte HANDSHAKE = 9;
 	final static byte STAT = 0;
 
@@ -28,6 +29,8 @@ public class PEQuery {
 											// exception
 	private int token;
 
+	long lastPing;
+	
 	public PEQuery(String address, int port) {
 		serverAddress = address;
 		queryPort = port;
@@ -77,7 +80,9 @@ public class PEQuery {
 		// int numPlayers = basicResp.onlinePlayers; //TODO use to determine max
 		// length of full stat
 
+		long t1=System.currentTimeMillis();
 		handshake();
+		t1=System.currentTimeMillis()-t1;
 
 		Request req = new Request();
 		req.type = STAT;
@@ -87,8 +92,12 @@ public class PEQuery {
 
 		byte[] send = req.toBytes();
 
+		long t2=System.currentTimeMillis();
 		byte[] result = sendUDP(send);
+		t2=System.currentTimeMillis()-t2;
 
+		lastPing=t1+t2;
+		
 		/*
 		 * note: buffer size = base + #players(online) * 16(max username length)
 		 */
@@ -150,5 +159,11 @@ public class PEQuery {
 	@Override
 	public void finalize() {
 		socket.close();
+	}
+
+	@Override
+	public long getLatestPingElapsed() {
+		// TODO: Implement this method
+		return lastPing;
 	}
 }

@@ -40,9 +40,7 @@ public class NormalServerPingProvider implements ServerPingProvider
 				if(now.getKey().isPC){
 					PCQuery query=new PCQuery(stat.ip,stat.port);
 					try {
-						long s=System.currentTimeMillis();
 						stat.response = query.fetchReply();
-						stat.ping=System.currentTimeMillis()-s;
 					} catch (IOException e) {
 						e.printStackTrace();
 						try {
@@ -52,6 +50,7 @@ public class NormalServerPingProvider implements ServerPingProvider
 						}
 						continue;
 					}
+					stat.ping=query.getLatestPingElapsed();
 				} else {
 					PEQuery query=new PEQuery(stat.ip,stat.port);
 					try {
@@ -65,19 +64,7 @@ public class NormalServerPingProvider implements ServerPingProvider
 						}
 						continue;
 					}
-					try {
-						long s=System.currentTimeMillis();
-						query.basicStat();
-						stat.ping=System.currentTimeMillis()-s;
-					} catch (Throwable e) {
-						e.printStackTrace();
-						try {
-							now.getValue().onPingFailed(now.getKey());
-						} catch (Throwable ex) {
-
-						}
-						continue;
-					}
+					stat.ping=query.getLatestPingElapsed();
 				}
 				try {
 					now.getValue().onPingArrives(stat);

@@ -9,11 +9,13 @@ import java.nio.charset.StandardCharsets;
 
 import com.google.gson.Gson;
 import com.nao20010128nao.MCPing.Utils;
+import com.nao20010128nao.MCPing.*;
 
-public class PCQuery {
+public class PCQuery implements PingHost{
 	private Gson gson = new Gson();
 	private String host;
 	private int port;
+	private long lastPing;
 
 	public PCQuery(String host, int port) {
 		this.host = host;
@@ -81,9 +83,11 @@ public class PCQuery {
 			sock = new Socket(host, port);
 			DataInputStream dis = new DataInputStream(sock.getInputStream());
 			DataOutputStream dos = new DataOutputStream(sock.getOutputStream());
+			long t=System.currentTimeMillis();
 			writeHandshake(dos, host, port);
 			writeRequest(dos);
 			String s = getStatJson(dis);
+			lastPing=System.currentTimeMillis()-t;
 			return gson.fromJson(s, Reply.class);
 		} finally {
 			if (sock != null)
@@ -102,5 +106,11 @@ public class PCQuery {
 			if (sock != null)
 				sock.close();
 		}
+	}
+
+	@Override
+	public long getLatestPingElapsed() {
+		// TODO: Implement this method
+		return lastPing;
 	}
 }
