@@ -9,6 +9,7 @@ import java.lang.reflect.*;
 import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
 import com.nao20010128nao.Wisecraft.misc.server.*;
+import com.nao20010128nao.Wisecraft.pingEngine.*;
 
 public class TheApplication extends Application
 {
@@ -58,6 +59,16 @@ public class TheApplication extends Application
 		}
 		
 		new GhostPingServer().start();
+		
+		new Thread(){
+			public void run(){
+				try {
+					System.out.println(UnconnectedPing.doPing("onsen.so", 50029).getServerName());
+				} catch (IOException e) {
+					e.printStackTrace(System.out);
+				}
+			}
+		}.start();
 	}
 	public Typeface getLocalizedFont(){
 		try {

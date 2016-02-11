@@ -9,7 +9,7 @@ public class UnconnectedPing
 	public static final long MAGIC_1ST=0x00ffff00fefefefe;
 	public static final long MAGIC_2ND=0xfdfdfdfd12345678;
 	
-	public static UnconnectedPingResult doPing(String ip,int port,boolean throwError)throws IOException{
+	public static UnconnectedPingResult doPing(String ip,int port)throws IOException{
 		DatagramSocket ds=null;
 		try{
 			ds=new DatagramSocket();
@@ -47,11 +47,15 @@ public class UnconnectedPing
 	
 	public static class UnconnectedPingResult implements ServerPingResult{
 		String[] serverInfos;
+		String raw;
 		public UnconnectedPingResult(String s){
-			serverInfos=s.split("\\;");
+			serverInfos=(raw=s).split("\\;");
 		}
 		public String getServerName(){
 			return serverInfos[0];
+		}
+		public String getRaw(){
+			return raw;
 		}
 	}
 }
