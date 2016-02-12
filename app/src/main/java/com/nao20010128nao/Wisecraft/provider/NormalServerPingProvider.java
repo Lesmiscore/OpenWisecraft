@@ -4,6 +4,8 @@ import java.io.*;
 import java.util.*;
 import com.nao20010128nao.MCPing.pc.*;
 import com.nao20010128nao.MCPing.pe.*;
+import com.nao20010128nao.Wisecraft.pingEngine.*;
+import com.nao20010128nao.Wisecraft.misc.*;
 
 public class NormalServerPingProvider implements ServerPingProvider
 {
@@ -55,12 +57,26 @@ public class NormalServerPingProvider implements ServerPingProvider
 					PEQuery query=new PEQuery(stat.ip,stat.port);
 					try {
 						stat.response = query.fullStatUni();
+						try{
+							UnconnectedPing.UnconnectedPingResult res=UnconnectedPing.doPing(stat.ip,stat.port);
+							SprPair pair=new SprPair();
+							pair.setA(stat.response);
+							pair.setB(res);
+							stat.response=pair;
+						}catch(IOException e){
+							
+						}
 					} catch (Throwable e) {
 						e.printStackTrace();
-						try {
-							now.getValue().onPingFailed(now.getKey());
-						} catch (Throwable ex) {
-							
+						try{
+							UnconnectedPing.UnconnectedPingResult res=UnconnectedPing.doPing(stat.ip,stat.port);
+							stat.response=res;
+						}catch(IOException ex){
+							try {
+								now.getValue().onPingFailed(now.getKey());
+							} catch (Throwable ex_) {
+
+							}
 						}
 						continue;
 					}
