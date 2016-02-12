@@ -60,8 +60,8 @@ public class NormalServerPingProvider implements ServerPingProvider
 						try{
 							UnconnectedPing.UnconnectedPingResult res=UnconnectedPing.doPing(stat.ip,stat.port);
 							SprPair pair=new SprPair();
-							pair.setA(stat.response);
-							pair.setB(res);
+							pair.setA(res);
+							pair.setB(stat.response);
 							stat.response=pair;
 						}catch(IOException e){
 							
