@@ -24,6 +24,18 @@
 			android:layout_width="wrap_content"
 			android:id="@+id/serverIp"/>
 
+		<TextView
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:layout_width="wrap_content"
+			android:text="@string/connect_to"/>
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="wrap_content"
+			android:id="@+id/serverCon"/>
+
 		<ImageView
 			android:layout_height="100dp"
 			android:layout_width="100dp"
@@ -36,7 +48,8 @@
 		style="?android:attr/buttonBarButtonStyle"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
-		android:text="@string/stop_prox"/>
+		android:text="@string/stop_prox"
+		android:id="@+id/stop"/>
 
 </LinearLayout>
 
