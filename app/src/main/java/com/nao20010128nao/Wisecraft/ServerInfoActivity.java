@@ -151,6 +151,10 @@ public class ServerInfoActivity extends FragmentActivity {
 			data.put(getResources().getString(R.string.pc_softwareVersion),rep.version.getName());
 			data.put(getResources().getString(R.string.pc_protocolVersion),rep.version.getProtocol()+"");
 			adap2.addAll(data.entrySet());
+		}else if(resp instanceof SprPair){
+			SprPair p=(SprPair)resp;
+			update(p.getA());
+			update(p.getB());
 		}
 	}
 

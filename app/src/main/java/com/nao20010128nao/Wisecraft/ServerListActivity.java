@@ -570,10 +570,10 @@ public class ServerListActivity extends ListActivity{
 							}
 						}else if(s.response instanceof SprPair){//PE?
 							SprPair sp=((SprPair)s.response);
-							if(sp.getA() instanceof UnconnectedPing.UnconnectedPingResult){
-								title=((UnconnectedPing.UnconnectedPingResult)sp.getA()).getServerName();
-							}else if(sp.getB() instanceof FullStat){
-								FullStat fs=(FullStat)sp.getB();
+							if(sp.getB() instanceof UnconnectedPing.UnconnectedPingResult){
+								title=((UnconnectedPing.UnconnectedPingResult)sp.getB()).getServerName();
+							}else if(sp.getA() instanceof FullStat){
+								FullStat fs=(FullStat)sp.getA();
 								Map<String,String> m=fs.getData();
 								if (m.containsKey("hostname")) {
 									title = deleteDecorations(m.get("hostname"));
