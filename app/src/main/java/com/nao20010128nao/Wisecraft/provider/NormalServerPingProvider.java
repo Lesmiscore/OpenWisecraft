@@ -77,8 +77,8 @@ public class NormalServerPingProvider implements ServerPingProvider
 							} catch (Throwable ex_) {
 
 							}
+							continue;
 						}
-						continue;
 					}
 					stat.ping=query.getLatestPingElapsed();
 				}
