@@ -162,7 +162,7 @@ public class ServerInfoActivity extends FragmentActivity {
 				Toast.makeText(this,R.string.ucpInfoError,0).show();
 				return;
 			}else{
-				setTitle(((UnconnectedPing.UnconnectedPingResult)resp).getServerName());
+				setTitle(deleteDecorations((((UnconnectedPing.UnconnectedPingResult)resp).getServerName())));
 			}
 		}
 	}
