@@ -14,6 +14,7 @@ import static com.nao20010128nao.Wisecraft.Utils.*;
 import com.nao20010128nao.MCPing.pe.*;
 import com.nao20010128nao.MCPing.pc.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+import com.nao20010128nao.Wisecraft.pingEngine.*;
 
 public class ServerTestActivity extends ListActivity{
 	ServerPingProvider spp=new NormalServerPingProvider();
@@ -144,6 +145,25 @@ public class ServerTestActivity extends ListActivity{
 										}else{
 											title=deleteDecorations(rep.description);
 										}
+									}else if(sv.response instanceof SprPair){//PE?
+										SprPair sp=((SprPair)sv.response);
+										if(sp.getB() instanceof UnconnectedPing.UnconnectedPingResult){
+											title=((UnconnectedPing.UnconnectedPingResult)sp.getB()).getServerName();
+										}else if(sp.getA() instanceof FullStat){
+											FullStat fs=(FullStat)sp.getA();
+											Map<String,String> m=fs.getData();
+											if (m.containsKey("hostname")) {
+												title = deleteDecorations(m.get("hostname"));
+											} else if (m.containsKey("motd")) {
+												title = deleteDecorations(m.get("motd"));
+											} else {
+												title = sv.ip + ":" + sv.port;
+											}
+										}else{
+											title = sv.ip + ":" + sv.port;
+										}
+									}else if(sv.response instanceof UnconnectedPing.UnconnectedPingResult){
+										title=((UnconnectedPing.UnconnectedPingResult)sv.response).getServerName();
 									}else{//Unreachable
 										title = sv.ip + ":" + sv.port;
 									}
