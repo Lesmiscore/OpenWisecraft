@@ -5,6 +5,7 @@ import com.nao20010128nao.Wisecraft.rcon.*;
 import com.nao20010128nao.Wisecraft.struct.*;
 import java.io.*;
 import java.util.*;
+import java.security.*;
 
 public class Utils
 {
@@ -103,5 +104,18 @@ public class Utils
 			throw new NullPointerException();
 		}
 		return obj;
+	}
+	public static String randomText(){
+		return randomText(16);
+	}
+	public static String randomText(int len){
+		StringBuilder sb=new StringBuilder();
+		byte[] buf=new byte[len];
+		new SecureRandom().nextBytes(buf);
+		for(byte b:buf){
+			sb.append(Character.forDigit(b >> 4 & 0xF, 16));
+			sb.append(Character.forDigit(b & 0xF, 16));
+		}
+		return sb.toString();
 	}
 }

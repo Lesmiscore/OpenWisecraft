@@ -22,6 +22,8 @@ import com.nao20010128nao.MCPing.pc.*;
 import com.nao20010128nao.Wisecraft.pingEngine.*;
 
 public class ServerListActivity extends ListActivity{
+	File file=new File(Environment.getExternalStorageDirectory(),"/games/com.mojang/minecraftpe/external_servers.txt");
+	
 	ServerPingProvider spp=new MultiServerPingProvider(6);
 	Gson gson=new Gson();
 	SharedPreferences pref;
@@ -281,6 +283,31 @@ public class ServerListActivity extends ListActivity{
 		pref.edit().putString("servers",json=gson.toJson(list.toArray(new Server[list.size()]),Server[].class)).commit();
 		Log.d("json",json);
 	}
+	
+	private boolean alreadyAddedInList(Server ser){
+		FileReader fr=null;
+		BufferedReader br=null;
+		try{
+			fr=new FileReader(file);
+			br=new BufferedReader(fr);
+			while(true){
+				String s=br.readLine();
+				if(br==null)break;
+				if(s.endsWith(":"+ser.ip+":"+ser.port+""))return true;
+			}
+			return false;
+		}catch(Throwable ex){
+			return false;
+		}finally{
+			try{
+				if(fr!=null)fr.close();
+				if(br!=null)br.close();
+			}catch (IOException e){
+
+			}
+		}
+	}
+	
 	class ServerList extends AppBaseArrayAdapter<Server> implements AdapterView.OnItemClickListener,AdapterView.OnItemLongClickListener{
 		List<View> cached=new ArrayList();
 		public ServerList(){
@@ -460,6 +487,23 @@ public class ServerListActivity extends ListActivity{
 								break;
 							case 4:
 								startActivity(new Intent(ServerListActivity.this,RCONActivity.class).putExtra("ip",getItem(p3).ip).putExtra("port",getItem(p3).port));
+								break;
+							case 5:
+								new Thread(){
+									public void run(){
+										Server s=getItem(p3);
+										if(alreadyAddedInList(s)){
+											return;
+										}
+										try{
+											FileWriter fw = new FileWriter(file, true);
+											fw.append("900:"+randomText()+":"+s.ip+":"+s.port+"\n");
+											fw.close();
+										}catch (IOException e){
+											e.printStackTrace();
+										}
+									}
+								}.start();
 								break;
 						}
 					}
