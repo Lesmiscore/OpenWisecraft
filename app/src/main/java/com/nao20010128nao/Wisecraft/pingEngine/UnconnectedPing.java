@@ -13,6 +13,7 @@ public class UnconnectedPing
 		DatagramSocket ds=null;
 		try{
 			ds=new DatagramSocket();
+			ds.setSoTimeout(5000);
 			ByteArrayOutputStream baos=new ByteArrayOutputStream(25);
 			DataOutputStream dos=new DataOutputStream(baos);
 			dos.write(UCP_PID);

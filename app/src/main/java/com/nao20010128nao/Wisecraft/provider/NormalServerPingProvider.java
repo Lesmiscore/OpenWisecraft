@@ -6,6 +6,7 @@ import com.nao20010128nao.MCPing.pc.*;
 import com.nao20010128nao.MCPing.pe.*;
 import com.nao20010128nao.Wisecraft.pingEngine.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+import android.util.*;
 
 public class NormalServerPingProvider implements ServerPingProvider
 {
@@ -34,17 +35,22 @@ public class NormalServerPingProvider implements ServerPingProvider
 			// TODO: Implement this method
 			Map.Entry<ServerListActivity.Server,PingHandler> now=null;
 			while(!queue.isEmpty()){
+				Log.d(getClass().getName(),"Starting ping");
 				now=queue.poll();
 				ServerListActivity.ServerStatus stat=new ServerListActivity.ServerStatus();
 				stat.ip = now.getKey().ip;
 				stat.port = now.getKey().port;
 				stat.isPC=now.getKey().isPC;
+				Log.d(getClass().getName(),stat.ip+":"+stat.port+" "+stat.isPC);
 				if(now.getKey().isPC){
+					Log.d(getClass().getName(),"PC");
 					PCQuery query=new PCQuery(stat.ip,stat.port);
 					try {
 						stat.response = query.fetchReply();
+						Log.d(getClass().getName(),"Success");
 					} catch (IOException e) {
 						e.printStackTrace();
+						Log.d(getClass().getName(),"Failed");
 						try {
 							now.getValue().onPingFailed(now.getKey());
 						} catch (Throwable ex) {
@@ -54,29 +60,34 @@ public class NormalServerPingProvider implements ServerPingProvider
 					}
 					stat.ping=query.getLatestPingElapsed();
 				} else {
+					Log.d(getClass().getName(),"PE");
 					PEQuery query=new PEQuery(stat.ip,stat.port);
 					try {
 						stat.response = query.fullStatUni();
+						Log.d(getClass().getName(),"Success: Full Stat");
 						try{
 							UnconnectedPing.UnconnectedPingResult res=UnconnectedPing.doPing(stat.ip,stat.port);
 							SprPair pair=new SprPair();
 							pair.setA(stat.response);
 							pair.setB(res);
 							stat.response=pair;
+							Log.d(getClass().getName(),"Success: Full Stat & Unconnected Ping");
 						}catch(IOException e){
-							
+							Log.d(getClass().getName(),"Success: Full Stat");
 						}
 					} catch (Throwable e) {
 						e.printStackTrace();
 						try{
 							UnconnectedPing.UnconnectedPingResult res=UnconnectedPing.doPing(stat.ip,stat.port);
 							stat.response=res;
+							Log.d(getClass().getName(),"Success: Unconnected Ping");
 						}catch(IOException ex){
 							try {
 								now.getValue().onPingFailed(now.getKey());
 							} catch (Throwable ex_) {
 
 							}
+							Log.d(getClass().getName(),"Failed");
 							continue;
 						}
 					}
@@ -87,6 +98,7 @@ public class NormalServerPingProvider implements ServerPingProvider
 				} catch (Throwable f) {
 
 				}
+				Log.d(getClass().getName(),"Next");
 			}
 		}
 	}
