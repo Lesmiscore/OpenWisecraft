@@ -75,11 +75,13 @@ public class NormalServerPingProvider implements ServerPingProvider
 						}catch(IOException e){
 							Log.d(getClass().getName(),"Success: Full Stat");
 						}
+						stat.ping=query.getLatestPingElapsed();
 					} catch (Throwable e) {
 						e.printStackTrace();
 						try{
 							UnconnectedPing.UnconnectedPingResult res=UnconnectedPing.doPing(stat.ip,stat.port);
 							stat.response=res;
+							stat.ping=res.getLatestPingElapsed();
 							Log.d(getClass().getName(),"Success: Unconnected Ping");
 						}catch(IOException ex){
 							try {
@@ -91,7 +93,6 @@ public class NormalServerPingProvider implements ServerPingProvider
 							continue;
 						}
 					}
-					stat.ping=query.getLatestPingElapsed();
 				}
 				try {
 					now.getValue().onPingArrives(stat);
