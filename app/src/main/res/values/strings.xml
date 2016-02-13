@@ -32,6 +32,7 @@
 	<string name="export_failed">Export failed</string>
 	<string name="serverOffline">Server is Offline.</string>
 	<string name="selectFont">Select Font</string>
+	<string name="ucpInfoError">No details for this server.</string>
 
 	<string name="font">lato-light.ttf</string>
 	<string name="fontField">latoLight</string>
