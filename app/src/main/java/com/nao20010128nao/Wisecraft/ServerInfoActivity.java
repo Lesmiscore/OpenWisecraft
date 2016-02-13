@@ -17,6 +17,7 @@ import com.nao20010128nao.MCPing.pe.*;
 import com.nao20010128nao.MCPing.pc.*;
 import android.graphics.*;
 import android.util.*;
+import com.nao20010128nao.Wisecraft.pingEngine.*;
 
 public class ServerInfoActivity extends FragmentActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
@@ -155,6 +156,14 @@ public class ServerInfoActivity extends FragmentActivity {
 			SprPair p=(SprPair)resp;
 			update(p.getA());
 			update(p.getB());
+		}else if(resp instanceof UnconnectedPing.UnconnectedPingResult){
+			if(resp==stat.response){
+				finish();
+				Toast.makeText(this,R.string.ucpInfoError,0).show();
+				return;
+			}else{
+				setTitle(deleteDecorations((((UnconnectedPing.UnconnectedPingResult)resp).getServerName())));
+			}
 		}
 	}
 

@@ -13,6 +13,7 @@ public class UnconnectedPing
 		DatagramSocket ds=null;
 		try{
 			ds=new DatagramSocket();
+			ds.setSoTimeout(2500);
 			ByteArrayOutputStream baos=new ByteArrayOutputStream(25);
 			DataOutputStream dos=new DataOutputStream(baos);
 			dos.write(UCP_PID);
@@ -20,6 +21,8 @@ public class UnconnectedPing
 			dos.writeLong(MAGIC_1ST);
 			dos.writeLong(MAGIC_2ND);
 			dos.flush();
+			
+			long t=System.currentTimeMillis();
 			DatagramPacket dp=new DatagramPacket(baos.toByteArray(),baos.size(),InetAddress.getByName(ip),port);
 			ds.send(dp);
 			
@@ -27,6 +30,7 @@ public class UnconnectedPing
 			ds.receive(recDp);
 			byte[] recvBuf=new byte[recDp.getLength()];
 			System.arraycopy(recDp.getData(),0,recvBuf,0,recvBuf.length);
+			t=System.currentTimeMillis()-t;
 			
 			DataInputStream dis=new DataInputStream(new ByteArrayInputStream(recvBuf));
 			if(dis.readByte()!=0x1c){
@@ -37,7 +41,7 @@ public class UnconnectedPing
 			dis.readLong();//MAGIC
 			dis.readLong();//MAGIC
 			String s=dis.readUTF();
-			return new UnconnectedPingResult(s);
+			return new UnconnectedPingResult(s,t);
 		}catch(IOException e){
 			throw e;
 		}finally{
@@ -45,17 +49,25 @@ public class UnconnectedPing
 		}
 	}
 	
-	public static class UnconnectedPingResult implements ServerPingResult{
+	public static class UnconnectedPingResult implements ServerPingResult, PingHost{
 		String[] serverInfos;
 		String raw;
-		public UnconnectedPingResult(String s){
+		long latestPing;
+		public UnconnectedPingResult(String s,long elapsed){
 			serverInfos=(raw=s).split("\\;");
+			latestPing=elapsed;
 		}
 		public String getServerName(){
 			return serverInfos[1];
 		}
 		public String getRaw(){
 			return raw;
+		}
+
+		@Override
+		public long getLatestPingElapsed() {
+			// TODO: Implement this method
+			return latestPing;
 		}
 	}
 }

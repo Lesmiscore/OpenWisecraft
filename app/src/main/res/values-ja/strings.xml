@@ -38,5 +38,6 @@
 		<item>編集</item>
 		<item>@string/testServer</item>
 		<item>@string/rcon</item>
+		<item>@string/addToMcpe</item>
 	</string-array>
 </resources>
