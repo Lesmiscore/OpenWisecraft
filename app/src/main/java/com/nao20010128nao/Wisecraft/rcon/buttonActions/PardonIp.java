@@ -1,14 +1,14 @@
 package com.nao20010128nao.Wisecraft.rcon.buttonActions;
-import android.app.*;
-import android.content.*;
-import com.google.rconclient.rcon.*;
-import com.nao20010128nao.Wisecraft.*;
-import com.nao20010128nao.Wisecraft.rcon.*;
-import java.io.*;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import com.google.rconclient.rcon.AuthenticationException;
+import com.nao20010128nao.Wisecraft.Constant;
+import com.nao20010128nao.Wisecraft.R;
+import com.nao20010128nao.Wisecraft.rcon.RCONActivity;
+import java.io.IOException;
 
-public class PardonIp extends NameSelectAction
-{
-	public PardonIp(RCONActivity a){
+public class PardonIp extends NameSelectAction {
+	public PardonIp(RCONActivity a) {
 		super(a);
 	}
 
@@ -16,13 +16,13 @@ public class PardonIp extends NameSelectAction
 	public void onSelected(final String s) {
 		// TODO: Implement this method
 		new AlertDialog.Builder(this)
-			.setMessage(getResString(R.string.pardonIpAsk).replace("[PLAYER]",s))
-			.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
-				public void onClick(DialogInterface di,int w){
-					getActivity().performSend("pardon-ip "+s);
+			.setMessage(getResString(R.string.pardonIpAsk).replace("[PLAYER]", s))
+			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
+				public void onClick(DialogInterface di, int w) {
+					getActivity().performSend("pardon-ip " + s);
 				}
 			})
-			.setNegativeButton(android.R.string.cancel,Constant.BLANK_DIALOG_CLICK_LISTENER)
+			.setNegativeButton(android.R.string.cancel, Constant.BLANK_DIALOG_CLICK_LISTENER)
 			.show();
 	}
 

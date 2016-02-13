@@ -1,12 +1,12 @@
 package com.nao20010128nao.Wisecraft.rcon.buttonActions;
-import android.app.*;
-import android.content.*;
-import com.nao20010128nao.Wisecraft.*;
-import com.nao20010128nao.Wisecraft.rcon.*;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import com.nao20010128nao.Wisecraft.Constant;
+import com.nao20010128nao.Wisecraft.R;
+import com.nao20010128nao.Wisecraft.rcon.RCONActivity;
 
-public class DefaultGamemode extends NameSelectAction
-{
-	public DefaultGamemode(RCONActivity a){
+public class DefaultGamemode extends NameSelectAction {
+	public DefaultGamemode(RCONActivity a) {
 		super(a);
 	}
 
@@ -14,13 +14,13 @@ public class DefaultGamemode extends NameSelectAction
 	public void onSelected(final String s) {
 		// TODO: Implement this method
 		new AlertDialog.Builder(this)
-			.setMessage(getResString(R.string.defaultgamemodeAsk).replace("[MODE]",s))
-			.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
-				public void onClick(DialogInterface di,int w){
-					getActivity().performSend("defaultgamemode "+s);
+			.setMessage(getResString(R.string.defaultgamemodeAsk).replace("[MODE]", s))
+			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
+				public void onClick(DialogInterface di, int w) {
+					getActivity().performSend("defaultgamemode " + s);
 				}
 			})
-			.setNegativeButton(android.R.string.cancel,Constant.BLANK_DIALOG_CLICK_LISTENER)
+			.setNegativeButton(android.R.string.cancel, Constant.BLANK_DIALOG_CLICK_LISTENER)
 			.show();
 	}
 

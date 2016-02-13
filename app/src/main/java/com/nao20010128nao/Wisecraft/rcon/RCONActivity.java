@@ -1,29 +1,30 @@
 package com.nao20010128nao.Wisecraft.rcon;
-import android.app.*;
 import android.content.*;
-import android.graphics.*;
-import android.os.*;
-import android.support.v4.app.*;
-import android.support.v4.widget.*;
 import android.view.*;
 import android.widget.*;
 import com.google.rconclient.rcon.*;
-import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.rcon.buttonActions.*;
-import java.io.*;
-import java.lang.ref.*;
 import java.util.*;
-import uk.co.chrisjenx.calligraphy.*;
 
+import android.app.AlertDialog;
+import android.graphics.Typeface;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTabHost;
+import android.support.v4.widget.DrawerLayout;
 import com.nao20010128nao.Wisecraft.R;
-import com.nao20010128nao.Wisecraft.misc.*;
+import com.nao20010128nao.Wisecraft.misc.AppBaseArrayAdapter;
+import com.nao20010128nao.Wisecraft.misc.BaseFragment;
+import java.io.IOException;
+import java.lang.ref.WeakReference;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class RCONActivity extends FragmentActivity
-{
+public class RCONActivity extends FragmentActivity {
 	public static WeakReference<RCONActivity> instance=new WeakReference(null);
 	static List<String> consoleLogs=new ArrayList<>();
 	static RCon rcon;
-	
+
 	PasswordAsking pa=new PasswordAsking();
 	FragmentTabHost fth;
 	TabHost.TabSpec consoleF,playersF;
@@ -34,10 +35,10 @@ public class RCONActivity extends FragmentActivity
 	ListView players;
 	TextView playersCount;
 	ImageButton updatePlayers;
-	
+
 	ArrayAdapter<String> playersList;
 	ArrayList<String> playersListInternal;
-	
+
 	int port;
 	String ip;
 	boolean living=true;
@@ -46,50 +47,50 @@ public class RCONActivity extends FragmentActivity
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
-		instance=new WeakReference(this);
-		ip=getIntent().getStringExtra("ip");
-		port=getIntent().getIntExtra("port",-1);
+		instance = new WeakReference(this);
+		ip = getIntent().getStringExtra("ip");
+		port = getIntent().getIntExtra("port", -1);
 		setContentView(R.layout.rconmain);
-		if(rcon==null){
+		if (rcon == null) {
 			pa.askPassword();
-		}else{
+		} else {
 			applyHandlers();
 		}
 		fth = (FragmentTabHost)findViewById(android.R.id.tabhost);
 		fth.setup(this, getSupportFragmentManager(), R.id.container);
-		
-		drawer=(DrawerLayout)findViewById(R.id.mainDrawer);
+
+		drawer = (DrawerLayout)findViewById(R.id.mainDrawer);
 		drawer.setDrawerListener(new DrawerLayout.DrawerListener(){
-			public void onDrawerClosed(View v){
-				drawerOpening=false;
-			}
-			public void onDrawerOpened(View v){
-				drawerOpening=true;
-			}
-			public void onDrawerStateChanged(int v){
+				public void onDrawerClosed(View v) {
+					drawerOpening = false;
+				}
+				public void onDrawerOpened(View v) {
+					drawerOpening = true;
+				}
+				public void onDrawerStateChanged(int v) {
 
-			}
-			public void onDrawerSlide(View v,float f){
+				}
+				public void onDrawerSlide(View v, float f) {
 
-			}
-		});
-		
-		playersList=new AppBaseArrayAdapter<>(this,android.R.layout.simple_list_item_1,playersListInternal=new ArrayList<>(10));
-		
-		consoleF=fth.newTabSpec("console");
+				}
+			});
+
+		playersList = new AppBaseArrayAdapter<>(this, android.R.layout.simple_list_item_1, playersListInternal = new ArrayList<>(10));
+
+		consoleF = fth.newTabSpec("console");
 		consoleF.setIndicator(getResources().getString(R.string.console));
-		fth.addTab(consoleF,ConsoleFragment.class,null);
+		fth.addTab(consoleF, ConsoleFragment.class, null);
 
-		playersF=fth.newTabSpec("players");
+		playersF = fth.newTabSpec("players");
 		playersF.setIndicator(getResources().getString(R.string.players));
-		fth.addTab(playersF,PlayersFragment.class,null);
+		fth.addTab(playersF, PlayersFragment.class, null);
 	}
 	@Override
 	protected void attachBaseContext(Context newBase) {
 		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
 	}
-	
-	public boolean tryConnect(String pass){
+
+	public boolean tryConnect(String pass) {
 		char[] passChars=pass.toCharArray();
 		try {
 			rcon = new RConModified(ip, port, passChars);
@@ -102,39 +103,39 @@ public class RCONActivity extends FragmentActivity
 			return false;
 		}
 	}
-	
-	public void appendIntoConsole(final String s){
+
+	public void appendIntoConsole(final String s) {
 		runOnUiThread(new Runnable(){
-			public void run(){
-				consoleLogs.add(s);
-				console.addView(newTextViewForConsole(s));
-			}
-		});
+				public void run() {
+					consoleLogs.add(s);
+					console.addView(newTextViewForConsole(s));
+				}
+			});
 	}
-	public void setConsoleLayout(LinearLayout lv){
-		console=lv;
+	public void setConsoleLayout(LinearLayout lv) {
+		console = lv;
 		lv.removeAllViews();
-		for(String s:consoleLogs)
+		for (String s:consoleLogs)
 			lv.addView(newTextViewForConsole(s));
 	}
-	public void setCommandTextBox(EditText et){
-		command=et;
+	public void setCommandTextBox(EditText et) {
+		command = et;
 	}
-	public void setCommandOk(Button bt){
-		ok=bt;
+	public void setCommandOk(Button bt) {
+		ok = bt;
 		ok.setOnClickListener(new View.OnClickListener(){
-				public void onClick(View v){
-					if(rcon!=null){
+				public void onClick(View v) {
+					if (rcon != null) {
 						new Thread(){
-							public void run(){
+							public void run() {
 								try {
 									String s=rcon.send(command.getText().toString());
-									if(s.equals("")){
-										s=getResources().getString(R.string.emptyResponse);
+									if (s.equals("")) {
+										s = getResources().getString(R.string.emptyResponse);
 									}
 									appendIntoConsole(s);
 									runOnUiThread(new Runnable(){
-											public void run(){
+											public void run() {
 												command.setText("");
 											}
 										});
@@ -149,22 +150,22 @@ public class RCONActivity extends FragmentActivity
 				}
 			});
 	}
-	public void setPlayersListView(ListView lv){
-		(players=lv).setAdapter(playersList);
+	public void setPlayersListView(ListView lv) {
+		(players = lv).setAdapter(playersList);
 	}
-	public void setPlayersCountTextView(TextView tv){
-		playersCount=tv;
+	public void setPlayersCountTextView(TextView tv) {
+		playersCount = tv;
 	}
-	public void setUpdatePlayersButton(ImageButton tv){
-		(updatePlayers=tv).setOnClickListener(new View.OnClickListener(){
-			public void onClick(View v){
-				refreshPlayers();
-			}
-		});
+	public void setUpdatePlayersButton(ImageButton tv) {
+		(updatePlayers = tv).setOnClickListener(new View.OnClickListener(){
+				public void onClick(View v) {
+					refreshPlayers();
+				}
+			});
 	}
-	public void refreshPlayers(){
+	public void refreshPlayers() {
 		new AsyncTask<Void,Void,String[]>(){
-			public String[] doInBackground(Void[] a){
+			public String[] doInBackground(Void[] a) {
 				try {
 					return rcon.list();
 				} catch (IOException e) {
@@ -174,16 +175,16 @@ public class RCONActivity extends FragmentActivity
 				}
 				return null;
 			}
-			public void onPostExecute(String[] s){
+			public void onPostExecute(String[] s) {
 				playersListInternal.clear();
 				playersListInternal.addAll(Arrays.asList(s));
 				playersList.notifyDataSetChanged();
-				if(playersCount!=null)
-					playersCount.setText(getResources().getString(R.string.indicatePlayers).replace("[PLAYERS]",s.length+""));
+				if (playersCount != null)
+					playersCount.setText(getResources().getString(R.string.indicatePlayers).replace("[PLAYERS]", s.length + ""));
 			}
 		}.execute();
 	}
-	TextView newTextViewForConsole(String s){
+	TextView newTextViewForConsole(String s) {
 		TextView tv=new TextView(this);
 		tv.setTypeface(Typeface.MONOSPACE);
 		tv.setText(s);
@@ -193,31 +194,31 @@ public class RCONActivity extends FragmentActivity
 	@Override
 	public void onBackPressed() {
 		// TODO: Implement this method
-		if(drawerOpening){
+		if (drawerOpening) {
 			drawer.closeDrawers();
-			drawerOpening=false;
-		}else{
+			drawerOpening = false;
+		} else {
 			exitActivity();
 		}
 	}
-	public void exitActivity(){
+	public void exitActivity() {
 		finish();
 		consoleLogs.clear();
 		try {
-			if(rcon!=null)
+			if (rcon != null)
 				rcon.close();
 		} catch (IOException e) {}
-		rcon=null;
-		living=false;
+		rcon = null;
+		living = false;
 	}
-	public void performSend(final String cmd){
-		if(rcon!=null){
+	public void performSend(final String cmd) {
+		if (rcon != null) {
 			new Thread(){
-				public void run(){
+				public void run() {
 					try {
 						String s=rcon.send(cmd);
-						if(s.equals("")){
-							s=getResources().getString(R.string.emptyResponse);
+						if (s.equals("")) {
+							s = getResources().getString(R.string.emptyResponse);
 						}
 						appendIntoConsole(s);
 					} catch (IOException e) {
@@ -229,11 +230,11 @@ public class RCONActivity extends FragmentActivity
 			}.start();
 		}
 	}
-	public RCon getRCon(){
+	public RCon getRCon() {
 		return rcon;
 	}
-	
-	private void applyHandlers(){
+
+	private void applyHandlers() {
 		new Stop(this);
 		new Op(this);
 		new Deop(this);
@@ -260,27 +261,27 @@ public class RCONActivity extends FragmentActivity
 	}
 	class PasswordAsking extends ContextWrapper {
 		EditText password;
-		public PasswordAsking(){
+		public PasswordAsking() {
 			super(RCONActivity.this);
 		}
 		public void askPassword() {
 			new AlertDialog.Builder(this)
 				.setView(inflateDialogView())
 				.setCancelable(false)
-				.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
-					public void onClick(DialogInterface di,int whi){
+				.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
+					public void onClick(DialogInterface di, int whi) {
 						appendIntoConsole(getResources().getString(R.string.connecting));
 						new AsyncTask<Void,Void,Boolean>(){
-							public Boolean doInBackground(Void[] o){
-								return tryConnect(password.getText()+"");
+							public Boolean doInBackground(Void[] o) {
+								return tryConnect(password.getText() + "");
 							}
-							public void onPostExecute(Boolean result){
-								if(!living)return;
-								if(!result){
+							public void onPostExecute(Boolean result) {
+								if (!living)return;
+								if (!result) {
 									appendIntoConsole(getResources().getString(R.string.incorrectPassword));
-									Toast.makeText(PasswordAsking.this,R.string.incorrectPassword,Toast.LENGTH_SHORT).show();
+									Toast.makeText(PasswordAsking.this, R.string.incorrectPassword, Toast.LENGTH_SHORT).show();
 									askPassword();
-								}else{
+								} else {
 									appendIntoConsole(getResources().getString(R.string.connected));
 									applyHandlers();
 									refreshPlayers();
@@ -289,16 +290,16 @@ public class RCONActivity extends FragmentActivity
 						}.execute();
 					}
 				})
-				.setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
-					public void onClick(DialogInterface di,int whi){
+				.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener(){
+					public void onClick(DialogInterface di, int whi) {
 						exitActivity();
 					}
 				})
 				.show();
 		}
-		View inflateDialogView(){
-			View v=getLayoutInflater().inflate(R.layout.askpassword,null,false);
-			password=(EditText)v.findViewById(R.id.password);
+		View inflateDialogView() {
+			View v=getLayoutInflater().inflate(R.layout.askpassword, null, false);
+			password = (EditText)v.findViewById(R.id.password);
 			return v;
 		}
 	}
@@ -306,7 +307,7 @@ public class RCONActivity extends FragmentActivity
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
-			View v=inflater.inflate(R.layout.console,null,false);
+			View v=inflater.inflate(R.layout.console, null, false);
 			instance.get().setConsoleLayout((LinearLayout)v.findViewById(R.id.consoleText));
 			instance.get().setCommandOk((Button)v.findViewById(R.id.send));
 			instance.get().setCommandTextBox((EditText)v.findViewById(R.id.command));
@@ -317,7 +318,7 @@ public class RCONActivity extends FragmentActivity
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
-			View v=inflater.inflate(R.layout.rcon_players_tab,null,false);
+			View v=inflater.inflate(R.layout.rcon_players_tab, null, false);
 			instance.get().setPlayersListView((ListView)v.findViewById(R.id.players));
 			instance.get().setPlayersCountTextView((TextView)v.findViewById(R.id.playersCount));
 			instance.get().setUpdatePlayersButton((ImageButton)v.findViewById(R.id.updatePlayers));

@@ -1,9 +1,11 @@
 package com.nao20010128nao.Wisecraft.misc;
 import android.view.*;
-import android.widget.*;
-import com.nao20010128nao.Wisecraft.*;
-import java.util.*;
-import android.content.*;
+
+import android.content.Context;
+import android.widget.TextView;
+import com.nao20010128nao.Wisecraft.R;
+import java.util.ArrayList;
+import java.util.Map;
 
 public class KVListAdapter<K,V> extends AppBaseArrayAdapter<Map.Entry<K,V>> {
 	public KVListAdapter(Context ctx) {
@@ -19,10 +21,10 @@ public class KVListAdapter<K,V> extends AppBaseArrayAdapter<Map.Entry<K,V>> {
 	LayoutInflater getLayoutInflater() {
 		return (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
-	
-	static private class HackedArrayList<K,V> extends ArrayList<Map.Entry<K,V>>{
-		public HackedArrayList(){
-			
+
+	static private class HackedArrayList<K,V> extends ArrayList<Map.Entry<K,V>> {
+		public HackedArrayList() {
+
 		}
 	}
 }
