@@ -125,7 +125,7 @@ public class PEQuery implements PingHost{
 			// receive a response in a new packet
 			byte[] out = new byte[1024 * 100]; // TODO guess at max size
 			DatagramPacket packet = new DatagramPacket(out, out.length);
-			socket.setSoTimeout(5000); // one half second timeout
+			socket.setSoTimeout(2500); // one half second timeout
 			socket.receive(packet);
 
 			return packet.getData();
