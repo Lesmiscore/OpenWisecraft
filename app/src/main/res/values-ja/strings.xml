@@ -30,6 +30,7 @@
 	<string name="export_failed">エクスポート失敗</string>
 	<string name="addToMcpe">MCPEのサーバーリストに追加</string>
 	<string name="launchProxy">プロキシを開始</string>
+	<string name="ucpInfoError">このサーバーの詳細情報はありません。</string>
 	
 	<string name="font"></string>
 	<string name="fontField">sysDefault</string>
