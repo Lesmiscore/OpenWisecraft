@@ -7,6 +7,8 @@ import com.nao20010128nao.Wisecraft.R;
 import android.widget.Button;
 import android.view.View.OnClickListener;
 import android.view.View;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 
 public class ProxyActivity extends Activity {
 	LoggerProxy prox;
@@ -26,8 +28,6 @@ public class ProxyActivity extends Activity {
 		ip = getIntent().getStringExtra("ip");
 		port = getIntent().getIntExtra("port", 19132);
 		
-		proxyThread=new Thread(prox=new LoggerProxy(ip,port,64321));
-		proxyThread.start();
 		serverIp.setText(ip+":"+port);
 		serverCon.setText("localhost:64321");
 		
@@ -36,12 +36,55 @@ public class ProxyActivity extends Activity {
 				finish();
 			}
 		});
+		
+		dialog1();
 	}
 
+	public void dialog1(){
+		new AlertDialog.Builder(this)
+			.setMessage(R.string.proxy_attention_1)
+			.setCancelable(false)
+			.setPositiveButton(R.string.next,new AlertDialog.OnClickListener(){
+				public void onClick(DialogInterface di,int w){
+					dialog2();
+				}
+			})
+			.setNegativeButton(R.string.close,new AlertDialog.OnClickListener(){
+				public void onClick(DialogInterface di,int w){
+					finish();
+				}
+			})
+			.setTitle("1/2")
+			.show();
+	}
+	
+	public void dialog2(){
+		new AlertDialog.Builder(this)
+			.setMessage(R.string.proxy_attention_1)
+			.setCancelable(false)
+			.setPositiveButton(R.string.next,new AlertDialog.OnClickListener(){
+				public void onClick(DialogInterface di,int w){
+					start();
+				}
+			})
+			.setNegativeButton(R.string.close,new AlertDialog.OnClickListener(){
+				public void onClick(DialogInterface di,int w){
+					finish();
+				}
+			})
+			.setTitle("2/2")
+			.show();
+	}
+	
+	public void start(){
+		proxyThread=new Thread(prox=new LoggerProxy(ip,port,64321));
+		proxyThread.start();
+	}
+	
 	@Override
 	public void finish() {
 		// TODO: Implement this method
 		super.finish();
-		proxyThread.interrupt();
+		if(proxyThread!=null)proxyThread.interrupt();
 	}
 }
