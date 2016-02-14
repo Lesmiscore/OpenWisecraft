@@ -22,6 +22,7 @@ import com.nao20010128nao.Wisecraft.rcon.RCONActivity;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import com.nao20010128nao.Wisecraft.proxy.ProxyActivity;
 
 public class ServerListActivity extends ListActivity {
 	File file=new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt");
@@ -509,6 +510,9 @@ public class ServerListActivity extends ListActivity {
 										}
 									}
 								}.start();
+								break;
+							case 6:
+								startActivity(new Intent(ServerListActivity.this, ProxyActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port));
 								break;
 						}
 					}

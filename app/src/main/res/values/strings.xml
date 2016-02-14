@@ -34,6 +34,7 @@
 	<string name="selectFont">Select Font</string>
 	<string name="ucpInfoError">No details for this server.</string>
 	<string name="addToMcpe">Add this server into MCPE Server List</string>
+	<string name="launchProxy">Start proxy</string>
 
 	<string name="font">lato-light.ttf</string>
 	<string name="fontField">latoLight</string>
@@ -45,5 +46,6 @@
 		<item>@string/testServer</item>
 		<item>@string/rcon</item>
 		<item>@string/addToMcpe</item>
+		<item>@string/launchProxy</item>
 	</string-array>
 </resources>
