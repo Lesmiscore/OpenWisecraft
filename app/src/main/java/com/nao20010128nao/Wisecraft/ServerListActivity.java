@@ -280,23 +280,18 @@ public class ServerListActivity extends ListActivity {
 				new Thread(){
 					public void run(){
 						final List<Server> sortingServer=Factories.arrayList();
-						final List<View> sortingViews=Factories.arrayList();
 						
 						List<Server> tmpServer=Factories.arrayList(list);
-						List<View> tmpView=Factories.arrayList(sl.cached);
 						
 						for(int i=0;i<list.size();i++){
 							if(list.get(i) instanceof ServerStatus){
 								//Online
 								sortingServer.add(list.get(i));
-								sortingViews.add(sl.cached.get(i));
 								
 								tmpServer.remove(i);
-								tmpView.remove(i);
 							}
 						}
 						sortingServer.addAll(tmpServer);
-						sortingViews.addAll(tmpView);
 						
 						list.clear();
 						list.addAll(sortingServer);
