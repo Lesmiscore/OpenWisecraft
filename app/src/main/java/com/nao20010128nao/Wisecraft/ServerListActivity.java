@@ -303,6 +303,7 @@ public class ServerListActivity extends ListActivity {
 						
 						runOnUiThread(new Runnable(){
 							public void run(){
+								saveServers();
 								finish();
 								new Handler().postDelayed(new Runnable(){
 										public void run(){
