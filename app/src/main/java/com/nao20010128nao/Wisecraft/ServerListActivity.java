@@ -288,17 +288,15 @@ public class ServerListActivity extends ListActivity {
 								//Online
 								sortingServer.add(list.get(i));
 								
-								tmpServer.remove(i);
+								tmpServer.remove(list.get(i));
 							}
 						}
 						sortingServer.addAll(tmpServer);
 						
-						list.clear();
-						list.addAll(sortingServer);
-						
 						runOnUiThread(new Runnable(){
 							public void run(){
-								saveServers();
+								pref.edit().putString("servers", gson.toJson(sortingServer.toArray(new Server[sortingServer.size()]), Server[].class)).commit();
+								
 								finish();
 								new Handler().postDelayed(new Runnable(){
 										public void run(){
