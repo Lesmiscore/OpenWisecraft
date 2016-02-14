@@ -28,6 +28,8 @@
 	<string name="import_typepath">インポートするJSONファイルのパスを入力してください</string>
 	<string name="export_complete">エクスポート完了: [PATH]</string>
 	<string name="export_failed">エクスポート失敗</string>
+	<string name="addToMcpe">MCPEのサーバーリストに追加</string>
+	<string name="launchProxy">プロキシを開始</string>
 	
 	<string name="font"></string>
 	<string name="fontField">sysDefault</string>

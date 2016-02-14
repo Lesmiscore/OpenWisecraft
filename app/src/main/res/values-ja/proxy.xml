@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="connecting_colon">接続中:</string>
+	<string name="stop_prox">停止</string>
+	<string name="connect_to">ここに接続:</string>
+</resources>
