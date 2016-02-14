@@ -116,6 +116,7 @@ public class ServerListActivity extends ListActivity {
 		menu.add(Menu.NONE, 2, 2, R.string.update_all);
 		menu.add(Menu.NONE, 3, 3, R.string.export);
 		menu.add(Menu.NONE, 4, 4, R.string.imporT);
+		menu.add(Menu.NONE, 5, 5, R.string.bringOnlinesToTop);
 		return true;
 	}
 
@@ -274,6 +275,38 @@ public class ServerListActivity extends ListActivity {
 						}
 					})
 					.show();
+				break;
+			case 5:
+				new Thread(){
+					public void run(){
+						final List<Server> sortingServer=Factories.arrayList();
+						
+						List<Server> tmpServer=Factories.arrayList(list);
+						
+						for(int i=0;i<list.size();i++){
+							if(list.get(i) instanceof ServerStatus){
+								//Online
+								sortingServer.add(list.get(i));
+								
+								tmpServer.remove(list.get(i));
+							}
+						}
+						sortingServer.addAll(tmpServer);
+						
+						runOnUiThread(new Runnable(){
+							public void run(){
+								pref.edit().putString("servers", gson.toJson(sortingServer.toArray(new Server[sortingServer.size()]), Server[].class)).commit();
+								
+								finish();
+								new Handler().postDelayed(new Runnable(){
+										public void run(){
+											startActivity(new Intent(ServerListActivity.this,ServerListActivity.class));
+										}
+									},10);
+							}
+						});
+					}
+				}.start();
 				break;
 		}
 		return true;

@@ -12,4 +12,10 @@ public class Factories {
 	public static byte[] byteArray(int size) {
 		return new byte[size];
 	}
+	public static <T> ArrayList<T> arrayList(){
+		return new ArrayList<T>();
+	}
+	public static <T> ArrayList<T> arrayList(List<T> list){
+		return new ArrayList<T>(list);
+	}
 }
