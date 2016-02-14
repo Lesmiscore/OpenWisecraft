@@ -35,6 +35,7 @@
 	<string name="ucpInfoError">No details for this server.</string>
 	<string name="addToMcpe">Add this server into MCPE Server List</string>
 	<string name="launchProxy">Start proxy</string>
+	<string name="bringOnlinesToTop">Bring online servers to the first</string>
 
 	<string name="font">lato-light.ttf</string>
 	<string name="fontField">latoLight</string>
