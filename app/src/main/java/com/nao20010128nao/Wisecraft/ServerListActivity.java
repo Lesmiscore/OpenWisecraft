@@ -55,6 +55,9 @@ public class ServerListActivity extends ListActivity {
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
 		wd = new WorkingDialog(this);
 		loadServers();
+		for(int i=0;i<list.size();i++){
+			sl.getViewQuick(i);
+		}
 	}
 	@Override
 	protected void attachBaseContext(Context newBase) {
