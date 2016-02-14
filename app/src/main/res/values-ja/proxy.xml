@@ -3,4 +3,8 @@
 	<string name="connecting_colon">接続中:</string>
 	<string name="stop_prox">停止</string>
 	<string name="connect_to">ここに接続:</string>
+	
+	<string name="proxy_attention_1">これはプロキシサーバーとの接続を行うものではありません。サーバーに直接接続されます。</string>
+	<string name="proxy_attention_2">この機能を反社会的な目的で使用しないで下さい。</string>
+	<string name="next">次へ</string>
 </resources>
