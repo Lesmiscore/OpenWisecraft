@@ -60,7 +60,7 @@ public class ProxyActivity extends Activity {
 	
 	public void dialog2(){
 		new AlertDialog.Builder(this)
-			.setMessage(R.string.proxy_attention_1)
+			.setMessage(R.string.proxy_attention_2)
 			.setCancelable(false)
 			.setPositiveButton(R.string.next,new AlertDialog.OnClickListener(){
 				public void onClick(DialogInterface di,int w){
