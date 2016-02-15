@@ -7,8 +7,10 @@ import com.nao20010128nao.MCPing.ServerPingResult;
 
 public class UnconnectedPing {
 	public static final byte UCP_PID=0x01;
-	public static final long MAGIC_1ST=(long)0x00ffff00fefefefe;
-	public static final long MAGIC_2ND=(long)0xfdfdfdfd12345678;
+	public static final int MAGIC_1ST=0x00ffff00;
+	public static final int MAGIC_2ND=0xfefefefe;
+	public static final int MAGIC_3RD=0xfdfdfdfd;
+	public static final int MAGIC_4TH=0x12345678;
 
 	public static UnconnectedPingResult doPing(String ip, int port)throws IOException {
 		DatagramSocket ds=null;
@@ -19,8 +21,10 @@ public class UnconnectedPing {
 			DataOutputStream dos=new DataOutputStream(baos);
 			dos.write(UCP_PID);
 			dos.writeLong(System.currentTimeMillis());
-			dos.writeLong(MAGIC_1ST);
-			dos.writeLong(MAGIC_2ND);
+			dos.writeInt(MAGIC_1ST);
+			dos.writeInt(MAGIC_2ND);
+			dos.writeInt(MAGIC_3RD);
+			dos.writeInt(MAGIC_4TH);
 			dos.flush();
 
 			long t=System.currentTimeMillis();
