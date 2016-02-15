@@ -28,6 +28,10 @@
 	<string name="import_typepath">インポートするJSONファイルのパスを入力してください</string>
 	<string name="export_complete">エクスポート完了: [PATH]</string>
 	<string name="export_failed">エクスポート失敗</string>
+	<string name="addToMcpe">MCPEのサーバーリストに追加</string>
+	<string name="launchProxy">プロキシを開始</string>
+	<string name="ucpInfoError">このサーバーの詳細情報はありません。</string>
+	<string name="bringOnlinesToTop">オンラインのサーバーをリストの上に移動</string>
 	
 	<string name="font"></string>
 	<string name="fontField">sysDefault</string>
@@ -38,5 +42,7 @@
 		<item>編集</item>
 		<item>@string/testServer</item>
 		<item>@string/rcon</item>
+		<item>@string/addToMcpe</item>
+		<item>@string/launchProxy</item>
 	</string-array>
 </resources>

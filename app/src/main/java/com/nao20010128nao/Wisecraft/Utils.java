@@ -1,13 +1,15 @@
 package com.nao20010128nao.Wisecraft;
-import com.google.gson.*;
-import com.google.rconclient.rcon.*;
-import com.nao20010128nao.Wisecraft.rcon.*;
-import com.nao20010128nao.Wisecraft.struct.*;
 import java.io.*;
-import java.util.*;
 
-public class Utils
-{
+import com.google.gson.Gson;
+import com.google.rconclient.rcon.RCon;
+import com.nao20010128nao.Wisecraft.rcon.RConModified;
+import com.nao20010128nao.Wisecraft.struct.WCH_ServerInfo;
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Utils {
 	public static String deleteDecorations(String decorated) {
 		StringBuilder sb=new StringBuilder();
 		char[] chars=decorated.toCharArray();
@@ -22,57 +24,57 @@ public class Utils
 		}
 		return sb.toString();
 	}
-	public static boolean isNullString(String s){
-		if(s==null){
+	public static boolean isNullString(String s) {
+		if (s == null) {
 			return true;
 		}
-		if("".equals(s)){
+		if ("".equals(s)) {
 			return true;
 		}
 		return false;
 	}
-	public static String[] lines(String s)throws IOException{
+	public static String[] lines(String s)throws IOException {
 		BufferedReader br=new BufferedReader(new StringReader(s));
 		List<String> tmp=new ArrayList<>(4);
 		String line=null;
-		while(null!=(line=br.readLine()))tmp.add(line);
+		while (null != (line = br.readLine()))tmp.add(line);
 		return tmp.toArray(new String[tmp.size()]);
 	}
-	public static boolean writeToFile(File f,String content){
+	public static boolean writeToFile(File f, String content) {
 		FileWriter fw=null;
-		try{
-			(fw=new FileWriter(f)).write(content);
+		try {
+			(fw = new FileWriter(f)).write(content);
 			return true;
-		}catch(Throwable e){
+		} catch (Throwable e) {
 			return false;
-		}finally{
+		} finally {
 			try {
 				if (fw != null)fw.close();
 			} catch (IOException e) {}
 		}
 	}
-	public static String readWholeFile(File f){
+	public static String readWholeFile(File f) {
 		FileReader fr=null;char[] buf=new char[8192];
 		StringBuilder sb=new StringBuilder(8192);
-		try{
-			fr=new FileReader(f);
-			while(true){
+		try {
+			fr = new FileReader(f);
+			while (true) {
 				int r=fr.read(buf);
-				if(r<=0){
+				if (r <= 0) {
 					break;
 				}
-				sb.append(buf,0,r);
+				sb.append(buf, 0, r);
 			}
 			return sb.toString();
-		}catch(Throwable e){
+		} catch (Throwable e) {
 			return null;
-		}finally{
+		} finally {
 			try {
 				if (fr != null)fr.close();
 			} catch (IOException e) {}
 		}
 	}
-	public static void copyAndClose(InputStream is,OutputStream os)throws IOException{
+	public static void copyAndClose(InputStream is, OutputStream os)throws IOException {
 		byte[] buf=new byte[100];
 		try {
 			while (true) {
@@ -87,10 +89,10 @@ public class Utils
 			os.close();
 		}
 	}
-	public static WCH_ServerInfo getServerInfo(RCon rcon){
-		if(rcon instanceof RConModified){
+	public static WCH_ServerInfo getServerInfo(RCon rcon) {
+		if (rcon instanceof RConModified) {
 			return ((RConModified)rcon).getServerInfo();
-		}else{
+		} else {
 			try {
 				return new Gson().fromJson(rcon.send("wisecraft wisecraft info"), WCH_ServerInfo.class);
 			} catch (Throwable e) {
@@ -98,10 +100,23 @@ public class Utils
 			}
 		}
 	}
-	public static <T> T requireNonNull(T obj){
-		if(obj==null){
+	public static <T> T requireNonNull(T obj) {
+		if (obj == null) {
 			throw new NullPointerException();
 		}
 		return obj;
+	}
+	public static String randomText() {
+		return randomText(16);
+	}
+	public static String randomText(int len) {
+		StringBuilder sb=new StringBuilder();
+		byte[] buf=new byte[len];
+		new SecureRandom().nextBytes(buf);
+		for (byte b:buf) {
+			sb.append(Character.forDigit(b >> 4 & 0xF, 16));
+			sb.append(Character.forDigit(b & 0xF, 16));
+		}
+		return sb.toString();
 	}
 }

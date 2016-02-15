@@ -1,9 +1,9 @@
 package com.nao20010128nao.Wisecraft;
-import android.content.*;
 import java.util.*;
 
-public class Constant
-{
+import android.content.DialogInterface;
+
+public class Constant {
 	public static final int ACTIVITY_RESULT_UPDATE=5;
 	public static final int ACTIVITY_RESULT_DELETE=6;
 	public static final List ONE_LENGTH_NULL_LIST=Collections.unmodifiableList(Arrays.asList(new Object[1]));

@@ -1,14 +1,14 @@
 package com.nao20010128nao.Wisecraft.rcon.buttonActions;
 
-import android.app.*;
-import android.content.*;
-import android.view.*;
-import com.nao20010128nao.Wisecraft.*;
-import com.nao20010128nao.Wisecraft.rcon.*;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.view.View;
+import com.nao20010128nao.Wisecraft.Constant;
+import com.nao20010128nao.Wisecraft.R;
+import com.nao20010128nao.Wisecraft.rcon.RCONActivity;
 
-public class Save_On extends BaseAction
-{
-	public Save_On(RCONActivity act){
+public class Save_On extends BaseAction {
+	public Save_On(RCONActivity act) {
 		super(act);
 	}
 
@@ -17,12 +17,12 @@ public class Save_On extends BaseAction
 		// TODO: Implement this method
 		new AlertDialog.Builder(this)
 			.setMessage(R.string.auSure)
-			.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
-				public void onClick(DialogInterface di,int w){
+			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
+				public void onClick(DialogInterface di, int w) {
 					getActivity().performSend("save-on");
 				}
 			})
-			.setNegativeButton(android.R.string.cancel,Constant.BLANK_DIALOG_CLICK_LISTENER)
+			.setNegativeButton(android.R.string.cancel, Constant.BLANK_DIALOG_CLICK_LISTENER)
 			.show();
 	}
 

