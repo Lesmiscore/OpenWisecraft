@@ -7,8 +7,8 @@ import com.nao20010128nao.MCPing.ServerPingResult;
 
 public class UnconnectedPing {
 	public static final byte UCP_PID=0x01;
-	public static final long MAGIC_1ST=0x00ffff00fefefefe;
-	public static final long MAGIC_2ND=0xfdfdfdfd12345678;
+	public static final long MAGIC_1ST=(long)0x00ffff00fefefefe;
+	public static final long MAGIC_2ND=(long)0xfdfdfdfd12345678;
 
 	public static UnconnectedPingResult doPing(String ip, int port)throws IOException {
 		DatagramSocket ds=null;

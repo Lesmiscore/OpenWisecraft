@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="cardview">
+  <library name="mcprox">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/app/libs/cardview.jar!/" />
+      <root url="jar://$PROJECT_DIR$/app/libs/mcprox.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
