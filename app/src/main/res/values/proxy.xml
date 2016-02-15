@@ -5,7 +5,7 @@
 	<string name="connect_to">Connect to:</string>
 	
 	<string name="proxy_attention_1">This doesn\'t provide any connection to proxy server. It connects to the server directly.</string>
-	<string name="proxy_attention_2">Don\'t use this feature for antisocial use.</string>
+	<string name="proxy_attention_2">Don\'t use this feature for antisocial purposes.</string>
 	<string name="next">Next</string>
 	<string name="close">@android:string/cancel</string>
 </resources>
