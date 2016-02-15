@@ -168,9 +168,7 @@ public class RCONActivity extends FragmentActivity {
 			public String[] doInBackground(Void[] a) {
 				try {
 					return rcon.list();
-				} catch (IOException e) {
-					e.printStackTrace();
-				} catch (AuthenticationException e) {
+				} catch (Throwable e) {
 					e.printStackTrace();
 				}
 				return null;
