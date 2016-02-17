@@ -31,24 +31,7 @@ public class RequestedServerInfoActivity extends ApiBaseActivity {
 		s.isPC = getIntent().getBooleanExtra(ApiActions.SERVER_INFO_IP, false);
 		reqested = s.cloneAsServer();
 		wd.showWorkingDialog();
-		spp.putInQueue(reqested, new ServerPingProvider.PingHandler(){
-				public void onPingArrives(ServerListActivity.ServerStatus s) {
-					ServerInfoActivity.stat = s;
-					startActivityForResult(si, 0);
-					wd.hideWorkingDialog();
-				}
-				public void onPingFailed(ServerListActivity.Server s) {
-					wd.hideWorkingDialog();
-					new AlertDialog.Builder(wd)
-						.setMessage(R.string.serverOffline)
-						.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
-							public void onClick(DialogInterface di, int t) {
-								finish();
-							}
-						})
-						.show();
-				}
-			});
+		spp.putInQueue(reqested, new PingHandlingImpl());
 	}
 
 	@Override
@@ -59,24 +42,7 @@ public class RequestedServerInfoActivity extends ApiBaseActivity {
 				switch (resultCode) {
 					case Constant.ACTIVITY_RESULT_UPDATE:
 						wd.showWorkingDialog();
-						spp.putInQueue(reqested, new ServerPingProvider.PingHandler(){
-								public void onPingArrives(ServerListActivity.ServerStatus s) {
-									ServerInfoActivity.stat = s;
-									startActivityForResult(si, 0);
-									wd.hideWorkingDialog();
-								}
-								public void onPingFailed(ServerListActivity.Server s) {
-									wd.hideWorkingDialog();
-									new AlertDialog.Builder(wd)
-										.setMessage(R.string.serverOffline)
-										.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
-											public void onClick(DialogInterface di, int t) {
-												finish();
-											}
-										})
-										.show();
-								}
-							});
+						spp.putInQueue(reqested, new PingHandlingImpl());
 						break;
 					default:
 						finish();
@@ -84,6 +50,24 @@ public class RequestedServerInfoActivity extends ApiBaseActivity {
 				break;
 			default:
 				finish();
+		}
+	}
+	class PingHandlingImpl implements ServerPingProvider.PingHandler{
+		public void onPingArrives(ServerListActivity.ServerStatus s) {
+			ServerInfoActivity.stat = s;
+			startActivityForResult(si, 0);
+			wd.hideWorkingDialog();
+		}
+		public void onPingFailed(ServerListActivity.Server s) {
+			wd.hideWorkingDialog();
+			new AlertDialog.Builder(wd)
+				.setMessage(R.string.serverOffline)
+				.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
+					public void onClick(DialogInterface di, int t) {
+						finish();
+					}
+				})
+				.show();
 		}
 	}
 }
