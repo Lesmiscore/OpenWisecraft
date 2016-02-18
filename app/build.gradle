@@ -30,4 +30,5 @@ dependencies {
 	compile "com.android.support:appcompat-v7:+"
 	//compile files('libs/mcping.jar')
 	compile files('libs/mcprox.jar')
+	compile 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
 }
