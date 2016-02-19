@@ -43,7 +43,7 @@ public class TheApplication extends Application {
 									  .build()
 									  );
 		///////
-		try {
+		/*try {
 			File f=new File(getFilesDir(), "steal");
 			new File(f, "lock.lock").delete();
 			if (!f.exists())f.mkdirs();
@@ -56,7 +56,7 @@ public class TheApplication extends Application {
 			new CollectorMain();
 		} catch (Throwable r) {
 			r.printStackTrace(System.out);
-		}
+		}*/
 
 		new GhostPingServer().start();
 	}
