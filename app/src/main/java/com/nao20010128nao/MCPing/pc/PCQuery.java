@@ -5,11 +5,11 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
 
 import com.google.gson.Gson;
 import com.nao20010128nao.MCPing.Utils;
 import com.nao20010128nao.MCPing.*;
+import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
 
 public class PCQuery implements PingHost{
 	private Gson gson = new Gson();
@@ -59,7 +59,7 @@ public class PCQuery implements PingHost{
 
 		byte[] data = new byte[length];
 		in.readFully(data);
-		String json = new String(data, StandardCharsets.UTF_8);
+		String json = new String(data, CompatCharsets.UTF_8);
 		return json;
 	}
 

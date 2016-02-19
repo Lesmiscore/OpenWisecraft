@@ -9,8 +9,8 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.nio.charset.StandardCharsets;
 import java.util.Random;
+import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
 
 /**
  * This class implements the communication with MineCraft using the RCon
@@ -776,8 +776,8 @@ public class RCon {
 	 *             The request id was not as expected.
 	 */
 	private String send(final int type, final String payload) throws IOException, IncorrectRequestIdException {
-		final String responsePayload = new String(send(type, payload.getBytes(StandardCharsets.UTF_8)),
-				StandardCharsets.UTF_8);
+		final String responsePayload = new String(send(type, payload.getBytes(CompatCharsets.UTF_8)),
+				CompatCharsets.UTF_8);
 		return responsePayload;
 	}
 

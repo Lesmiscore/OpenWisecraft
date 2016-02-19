@@ -29,7 +29,6 @@ public class AppBaseArrayAdapter<T> extends ArrayAdapter<T> {
 		super(context, resource, textViewResourceId, objects);
 	}
 
-	@Override
 	public void addAll(Collection<? extends T> collection) {
 		// TODO: Implement this method
 		for (T t:collection) {
@@ -37,7 +36,6 @@ public class AppBaseArrayAdapter<T> extends ArrayAdapter<T> {
 		}
 	}
 
-	@Override
 	public void addAll(T[] items) {
 		// TODO: Implement this method
 		for (T t:items) {

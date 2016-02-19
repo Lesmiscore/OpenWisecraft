@@ -9,6 +9,7 @@ import com.google.rconclient.rcon.AuthenticationException;
 import com.nao20010128nao.Wisecraft.R;
 import com.nao20010128nao.Wisecraft.rcon.RCONActivity;
 import java.io.IOException;
+import com.nao20010128nao.Wisecraft.misc.compat.CompatArrayAdapter;
 
 public abstract class NameSelectAction extends BaseAction {
 	EditText name;
@@ -68,7 +69,7 @@ public abstract class NameSelectAction extends BaseAction {
 				return null;
 			}
 			public void onPostExecute(String[] s) {
-				aa.addAll(s);
+				CompatArrayAdapter.addAll(aa,s);
 			}
 		}.execute();
 		return v;

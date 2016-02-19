@@ -9,6 +9,7 @@ import android.util.*;
 import com.google.gson.*;
 import android.preference.*;
 import android.os.*;
+import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
 
 public class GhostPingServer extends Thread
 {
@@ -107,9 +108,9 @@ public class GhostPingServer extends Thread
 				kv.put("hostip","0.0.0.0");
 				kv.put("maxplayers","0");
 				for(Map.Entry<String,String> ent:kv.entrySet()){
-					resW.write(ent.getKey().getBytes(StandardCharsets.UTF_8));
+					resW.write(ent.getKey().getBytes(CompatCharsets.UTF_8));
 					resW.write(0);
-					resW.write(ent.getValue().getBytes(StandardCharsets.UTF_8));
+					resW.write(ent.getValue().getBytes(CompatCharsets.UTF_8));
 					resW.write(0);
 				}
 				resW.write(0);
@@ -126,7 +127,7 @@ public class GhostPingServer extends Thread
 				resW.write((byte)0x00);
 				//players
 				for(ServerListActivity.Server s:getServers()){
-					resW.write((s.ip+":"+s.port+"\0").getBytes(StandardCharsets.UTF_8));
+					resW.write((s.ip+":"+s.port+"\0").getBytes(CompatCharsets.UTF_8));
 				}
 				resW.write(0);
 				DatagramPacket resP=new DatagramPacket(result.toByteArray(),0,result.size());
@@ -142,7 +143,7 @@ public class GhostPingServer extends Thread
 			resW.write(9);
 			resW.writeInt(sessionId);
 			int r=Math.abs(sr.nextInt());
-			resW.write((r+"").getBytes(StandardCharsets.US_ASCII));
+			resW.write((r+"").getBytes(CompatCharsets.US_ASCII));
 			resW.write(0);
 			DatagramPacket resP=new DatagramPacket(result.toByteArray(),0,result.size());
 			resP.setSocketAddress(p.getSocketAddress());
