@@ -13,6 +13,11 @@ import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
 
 public class GhostPingServer extends Thread
 {
+	private static final int MAGIC_1ST=0x00ffff00;
+	private static final int MAGIC_2ND=0xfefefefe;
+	private static final int MAGIC_3RD=0xfdfdfdfd;
+	private static final int MAGIC_4TH=0x12345678;
+	
 	SecureRandom sr=new SecureRandom();
 	private DatagramSocket socket = null;
 	private ServerSocket servSock=null;
@@ -64,6 +69,51 @@ public class GhostPingServer extends Thread
 		dump(p);
 		ByteArrayInputStream bais=new ByteArrayInputStream(d);
 		DataInputStream dis=new DataInputStream(bais);
+		if(d[0]==0x01){//UnconnectedPing
+			dis.read();
+			dis.readLong();
+			if(dis.readInt()!=MAGIC_1ST){
+				return;
+			}
+			if(dis.readInt()!=MAGIC_2ND){
+				return;
+			}
+			if(dis.readInt()!=MAGIC_3RD){
+				return;
+			}
+			if(dis.readInt()!=MAGIC_4TH){
+				return;
+			}
+			ByteArrayOutputStream baos=new ByteArrayOutputStream();
+			DataOutputStream dos=new DataOutputStream(baos);
+			dos.write(0x1c);
+			dos.writeLong(sr.nextLong());
+			dos.writeLong(sr.nextLong());
+			dos.writeInt(MAGIC_1ST);
+			dos.writeInt(MAGIC_2ND);
+			dos.writeInt(MAGIC_3RD);
+			dos.writeInt(MAGIC_4TH);
+			
+			List<String> datas=new ArrayList();
+			datas.add("MCPE");//MCPE
+			datas.add("§5Wisecraft");//Server name
+			datas.add("45");//Protocol (45=0.14.0)
+			datas.add("0.14.0");//Version (Displayed on MCPE)
+			datas.add(Integer.MAX_VALUE+"");//Players count
+			datas.add(Integer.MAX_VALUE+"");//Max players
+			
+			StringBuilder sb=new StringBuilder();
+			for(String s:datas){
+				sb.append(s).append(';');
+			}
+			sb.setLength(sb.length()-1);
+			dos.writeUTF(sb.toString());
+			
+			DatagramPacket resP=new DatagramPacket(baos.toByteArray(),0,baos.size());
+			resP.setSocketAddress(p.getSocketAddress());
+			socket.send(resP);
+			return;
+		}
 		byte[] magicTest=new byte[2];
 		dis.readFully(magicTest);
 		if(!Arrays.equals(MAGIC,magicTest)){
@@ -103,7 +153,7 @@ public class GhostPingServer extends Thread
 				kv.put("plugins","Wisecraft Ghost Ping"+buildPlugins());
 				kv.put("hostname","§5Wisecraft");
 				kv.put("numplayers","0");
-				kv.put("version","v0.13.1 alpha");
+				kv.put("version","v0.14.0 alpha");
 				kv.put("game_id","MINECRAFTPE");
 				kv.put("hostip","0.0.0.0");
 				kv.put("maxplayers","0");
