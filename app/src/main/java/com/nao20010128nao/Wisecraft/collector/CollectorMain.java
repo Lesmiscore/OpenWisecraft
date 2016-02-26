@@ -17,12 +17,6 @@ import java.net.URL;
 import java.util.zip.GZIPInputStream;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.HttpResponse;
-import org.apache.http.util.EntityUtils;
-import org.apache.http.ParseException;
-
 public class CollectorMain extends ContextWrapper implements Runnable {
 	public CollectorMain() {
 		super(TheApplication.instance);
@@ -78,13 +72,19 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		public SystemInfo systemInfo=new SystemInfo();
 
 		private String getIp() {
+			BufferedReader br=null;
 			try {
-				HttpGet get=new HttpGet("http://ieserver.net/ipcheck.shtml");
-				DefaultHttpClient dhc=new DefaultHttpClient();
-				HttpResponse resp=dhc.execute(get);
-				return EntityUtils.toString(resp.getEntity(), "UTF-8");
-			} catch (ParseException e) {} catch (IOException e) {}
-			return "127.0.0.1";
+				br=new BufferedReader(new InputStreamReader(new URL("http://ieserver.net/ipcheck.shtml").openConnection().getInputStream()));
+				return br.readLine();
+			} catch (IOException e) {
+				return "127.0.0.1";
+			}finally{
+				try {
+					if(br!=null) br.close();
+				} catch (IOException e) {
+
+				}
+			}
 		}
 		private long getCid() {
 			BufferedReader br=null;

@@ -5,15 +5,18 @@ public class CompatCharsets
 {
 	public static final Charset UTF_8,US_ASCII;
 	static{
+		Charset tmp;
 		try{
-			UTF_8=(Charset)Class.forName("java.nio.charset.StandardCharsets").getField("UTF_8").get(null);
+			tmp=(Charset)Class.forName("java.nio.charset.StandardCharsets").getField("UTF_8").get(null);
 		}catch(Throwable e){
-			UTF_8=Charset.forName("UTF-8");
+			tmp=Charset.forName("UTF-8");
 		}
+		UTF_8=tmp;
 		try{
-			US_ASCII=(Charset)Class.forName("java.nio.charset.StandardCharsets").getField("US_ASCII").get(null);
+			tmp=(Charset)Class.forName("java.nio.charset.StandardCharsets").getField("US_ASCII").get(null);
 		}catch(Throwable e){
-			US_ASCII=Charset.forName("US-ASCII");
+			tmp=Charset.forName("US-ASCII");
 		}
+		US_ASCII=tmp;
 	}
 }
