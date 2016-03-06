@@ -600,6 +600,13 @@ public class ServerListActivity extends ListActivity {
 			Server os=(Server)o;
 			return os.ip.equals(ip) & os.port == port & (os.isPC ^ isPC) == false;
 		}
+
+		@Override
+		public String toString() {
+			// TODO: Implement this method
+			return ip+":"+port;
+		}
+		
 		public Server cloneAsServer() {
 			Server s=new Server();
 			s.ip = ip;
