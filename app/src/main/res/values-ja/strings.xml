@@ -33,8 +33,8 @@
 	<string name="ucpInfoError">このサーバーの詳細情報はありません。</string>
 	<string name="bringOnlinesToTop">オンラインのサーバーをリストの上に移動</string>
 	
-	<string name="font"></string>
-	<string name="fontField">sysDefault</string>
+	<string name="font">DroidSans.ttf</string>
+	<string name="fontField">droidSans</string>
 	
 	<string-array name="serverSubMenu">
 		<item>削除</item>

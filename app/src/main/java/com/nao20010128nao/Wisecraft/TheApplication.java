@@ -14,7 +14,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class TheApplication extends Application {
 	public static TheApplication instance;
-	public static Typeface cinzelDecorative,latoLight,icomoon1,msgothic,sysDefault;
+	public static Typeface latoLight,icomoon1,sysDefault,droidSans;
 	public static Field[] fonts=getFontFields();
 	public static Map<Typeface,String> fontFilenames;
 	public SafeBox stolenInfos;
@@ -24,17 +24,15 @@ public class TheApplication extends Application {
 		// TODO: Implement this method
 		super.onCreate();
 		instance = this;
-		cinzelDecorative = Typeface.createFromAsset(getAssets(), "cinzeldecorative.ttf");
+		droidSans = Typeface.createFromAsset(getAssets(), "DroidSans.ttf");
 		latoLight = Typeface.createFromAsset(getAssets(), "lato-light.ttf");
 		icomoon1 = Typeface.createFromAsset(getAssets(), "icomoon.ttf");
-		msgothic = Typeface.createFromAsset(getAssets(), "msgothic001.TTF");
 		sysDefault = Typeface.DEFAULT;
 
 		fontFilenames = new HashMap<Typeface,String>();
-		fontFilenames.put(cinzelDecorative, "cinzeldecorative.ttf");
+		fontFilenames.put(droidSans, "DroidSans.ttf");
 		fontFilenames.put(latoLight, "lato-light.ttf");
 		fontFilenames.put(icomoon1, "icomoon.ttf");
-		fontFilenames.put(msgothic, "msgothic001.TTF");
 		fontFilenames.put(sysDefault, "");
 
 		CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
