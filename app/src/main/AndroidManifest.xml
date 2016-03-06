@@ -62,6 +62,7 @@
             </intent-filter>
         </activity>
 		
+		<!--
 		<receiver android:name=".widget.ServerInfoWidget" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -75,5 +76,6 @@
             android:label="@string/app_name"
             android:name=".widget.AskServerActivity" >
         </activity>
+		-->
     </application>
 </manifest>
