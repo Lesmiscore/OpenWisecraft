@@ -26,7 +26,7 @@ import com.nao20010128nao.Wisecraft.proxy.ProxyActivity;
 import com.nao20010128nao.Wisecraft.provider.NormalServerPingProvider;
 
 public class ServerListActivity extends ListActivity {
-	File file=new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt");
+	static File mcpeServerList=new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt");
 
 	ServerPingProvider spp,updater;
 	Gson gson=new Gson();
@@ -336,7 +336,7 @@ public class ServerListActivity extends ListActivity {
 		FileReader fr=null;
 		BufferedReader br=null;
 		try {
-			fr = new FileReader(file);
+			fr = new FileReader(mcpeServerList);
 			br = new BufferedReader(fr);
 			while (true) {
 				String s=br.readLine();
@@ -544,7 +544,7 @@ public class ServerListActivity extends ListActivity {
 											return;
 										}
 										try {
-											FileWriter fw = new FileWriter(file, true);
+											FileWriter fw = new FileWriter(mcpeServerList, true);
 											fw.append("900:" + randomText() + ":" + s.ip + ":" + s.port + "\n");
 											fw.close();
 										} catch (IOException e) {
