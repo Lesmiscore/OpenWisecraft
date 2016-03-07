@@ -62,6 +62,12 @@
             </intent-filter>
         </activity>
 		
+		<activity
+            android:label="@string/settings"
+            android:name=".SettingsActivity"
+			android:exported="false">
+        </activity>
+		
 		<!--
 		<receiver android:name=".widget.ServerInfoWidget" >
             <intent-filter>

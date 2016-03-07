@@ -117,6 +117,7 @@ public class ServerListActivity extends ListActivity {
 		menu.add(Menu.NONE, 3, 3, R.string.export);
 		menu.add(Menu.NONE, 4, 4, R.string.imporT);
 		menu.add(Menu.NONE, 5, 5, R.string.bringOnlinesToTop);
+		menu.add(Menu.NONE, 6, 6, R.string.settings);
 		return true;
 	}
 
@@ -307,6 +308,9 @@ public class ServerListActivity extends ListActivity {
 						});
 					}
 				}.start();
+				break;
+			case 6:
+				startActivity(new Intent(this,SettingsActivity.class));
 				break;
 		}
 		return true;
