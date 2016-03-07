@@ -22,6 +22,7 @@ public class SettingsActivity extends SHablePreferenceActivity
 				} catch (IOException e) {}
 			}
 		});
+		
 	}
 	@Override
 	protected void attachBaseContext(Context newBase) {

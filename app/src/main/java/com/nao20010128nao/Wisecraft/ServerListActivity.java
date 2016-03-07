@@ -23,11 +23,12 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
 import com.nao20010128nao.Wisecraft.proxy.ProxyActivity;
+import com.nao20010128nao.Wisecraft.provider.NormalServerPingProvider;
 
 public class ServerListActivity extends ListActivity {
 	File file=new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt");
 
-	ServerPingProvider spp=new MultiServerPingProvider(6);
+	ServerPingProvider spp,updater;
 	Gson gson=new Gson();
 	SharedPreferences pref;
 	ServerList sl;
@@ -49,11 +50,15 @@ public class ServerListActivity extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
+		pref = PreferenceManager.getDefaultSharedPreferences(this);
+		spp=updater=new MultiServerPingProvider(Integer.parseInt(pref.getString("parallels","6")));
+		if(pref.getBoolean("updAnotherThread",false)){
+			updater=new NormalServerPingProvider();
+		}
 		setListAdapter(sl = new ServerList());
 		getListView().setOnItemClickListener(sl);
 		getListView().setOnItemLongClickListener(sl);
 		getListView().setLongClickable(true);
-		pref = PreferenceManager.getDefaultSharedPreferences(this);
 		wd = new WorkingDialog(this);
 		loadServers();
 		for(int i=0;i<list.size();i++){
