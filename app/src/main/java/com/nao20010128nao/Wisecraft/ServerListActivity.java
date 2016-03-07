@@ -301,9 +301,8 @@ public class ServerListActivity extends ListActivity {
 						
 						runOnUiThread(new Runnable(){
 							public void run(){
-								pref.edit().putString("servers", gson.toJson(sortingServer.toArray(new Server[sortingServer.size()]), Server[].class)).commit();
-								
 								finish();
+								pref.edit().putString("servers", gson.toJson(sortingServer.toArray(new Server[sortingServer.size()]), Server[].class)).commit();
 								new Handler().postDelayed(new Runnable(){
 										public void run(){
 											startActivity(new Intent(ServerListActivity.this,ServerListActivity.class));
@@ -454,7 +453,7 @@ public class ServerListActivity extends ListActivity {
 								break;
 							case 1:
 								if (pinging.get(getItem(p3)))break;
-								spp.putInQueue(getItem(p3), new PingHandlerImpl(){
+								updater.putInQueue(getItem(p3), new PingHandlerImpl(){
 										public void onPingFailed(final Server s) {
 											super.onPingFailed(s);
 											runOnUiThread(new Runnable(){
