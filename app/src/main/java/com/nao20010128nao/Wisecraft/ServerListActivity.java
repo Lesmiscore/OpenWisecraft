@@ -633,7 +633,9 @@ public class ServerListActivity extends ListActivity {
 			runOnUiThread(new Runnable(){
 					public void run() {
 						int i_=list.indexOf(s);
-
+						if(i_==-1){
+							return;
+						}
 						((ImageView)sl.getViewQuick(i_).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_error)));
 						((TextView)sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(s.ip + ":" + s.port);
 						((TextView)sl.getViewQuick(i_).findViewById(R.id.pingMillis)).setText(R.string.notResponding);
@@ -650,7 +652,9 @@ public class ServerListActivity extends ListActivity {
 			runOnUiThread(new Runnable(){
 					public void run() {
 						int i_=list.indexOf(s);
-
+						if(i_==-1){
+							return;
+						}
 						((ImageView)sl.getViewQuick(i_).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
 						final String title;
 						if (s.response instanceof FullStat) {//PE
