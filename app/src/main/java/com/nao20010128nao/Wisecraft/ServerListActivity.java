@@ -83,7 +83,7 @@ public class ServerListActivity extends ListActivity {
 			case 0:
 				switch (resultCode) {
 					case Constant.ACTIVITY_RESULT_UPDATE:
-						spp.putInQueue(ServerInfoActivity.stat, new PingHandlerImpl(){
+						updater.putInQueue(ServerInfoActivity.stat, new PingHandlerImpl(){
 								public void onPingFailed(final Server s) {
 									super.onPingFailed(s);
 									runOnUiThread(new Runnable(){
