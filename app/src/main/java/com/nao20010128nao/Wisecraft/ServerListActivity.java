@@ -402,7 +402,7 @@ public class ServerListActivity extends ListActivity {
 				ServerInfoActivity.stat = (ServerStatus)s;
 				startActivityForResult(new Intent(ServerListActivity.this, ServerInfoActivity.class), 0);
 			} else {
-				spp.putInQueue(s, new PingHandlerImpl(){
+				updater.putInQueue(s, new PingHandlerImpl(){
 						public void onPingFailed(final Server s) {
 							super.onPingFailed(s);
 							runOnUiThread(new Runnable(){
