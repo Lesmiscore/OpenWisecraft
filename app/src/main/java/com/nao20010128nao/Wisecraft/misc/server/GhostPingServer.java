@@ -19,16 +19,16 @@ public class GhostPingServer extends Thread
 	private static final int MAGIC_4TH=0x12345678;
 	
 	SecureRandom sr=new SecureRandom();
-	private DatagramSocket socket = null;
+	private DatagramSocket serv = null;
 	private ServerSocket servSock=null;
 	int localPort = 19500;
 	static byte[] MAGIC = {(byte) 0xFE, (byte) 0xFD};
 	public void runImpl()throws IOException {
 		// TODO: Implement this method
-		while(socket == null)
+		while(serv == null)
 		{
 			try {
-				socket = new DatagramSocket(localPort);
+				serv   = new DatagramSocket(localPort);
 				servSock=new   ServerSocket(localPort);
 				Log.d("ghost_query","port="+localPort);
 			} catch (BindException e) {
@@ -51,7 +51,7 @@ public class GhostPingServer extends Thread
 			byte[] ba=Factories.byteArray(100*1024);
 			Arrays.fill(ba,(byte)-1);
 			DatagramPacket pak=new DatagramPacket(ba,0,1024*100);
-			socket.receive(pak);
+			serv.receive(pak);
 			check(pak);
 		}
 	}
@@ -111,7 +111,7 @@ public class GhostPingServer extends Thread
 			
 			DatagramPacket resP=new DatagramPacket(baos.toByteArray(),0,baos.size());
 			resP.setSocketAddress(p.getSocketAddress());
-			socket.send(resP);
+			serv.send(resP);
 			return;
 		}
 		byte[] magicTest=new byte[2];
@@ -152,11 +152,11 @@ public class GhostPingServer extends Thread
 				kv.put("whitelist","on");
 				kv.put("plugins","Wisecraft Ghost Ping"+buildPlugins());
 				kv.put("hostname","§5Wisecraft");
-				kv.put("numplayers","0");
+				kv.put("numplayers",Integer.MAX_VALUE+"");
 				kv.put("version","v0.14.0 alpha");
 				kv.put("game_id","MINECRAFTPE");
 				kv.put("hostip","0.0.0.0");
-				kv.put("maxplayers","0");
+				kv.put("maxplayers",Integer.MAX_VALUE+"");
 				for(Map.Entry<String,String> ent:kv.entrySet()){
 					resW.write(ent.getKey().getBytes(CompatCharsets.UTF_8));
 					resW.write(0);
@@ -182,7 +182,7 @@ public class GhostPingServer extends Thread
 				resW.write(0);
 				DatagramPacket resP=new DatagramPacket(result.toByteArray(),0,result.size());
 				resP.setSocketAddress(p.getSocketAddress());
-				socket.send(resP);
+				serv.send(resP);
 			}else{
 				//basic stat
 			}
@@ -197,7 +197,7 @@ public class GhostPingServer extends Thread
 			resW.write(0);
 			DatagramPacket resP=new DatagramPacket(result.toByteArray(),0,result.size());
 			resP.setSocketAddress(p.getSocketAddress());
-			socket.send(resP);
+			serv.send(resP);
 		}
 	}
 	String buildPlugins(){
