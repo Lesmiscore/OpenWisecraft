@@ -41,7 +41,11 @@
 	<string name="pingThreads">Threads for parallel pinging</string>
 	<string name="updAnotherThread">Update server statuses in another thread</string>
 	<string name="settingsAttention">Almost settings are applied after you restarted the app.</string>
-
+	<string name="features">Features</string>
+	<string name="proxy">Proxy</string>
+	<string name="serverFinder">Server Finder</string>
+	
+	
 	<string name="font">lato-light.ttf</string>
 	<string name="fontField">latoLight</string>
 	

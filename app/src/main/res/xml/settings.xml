@@ -17,6 +17,24 @@
 		android:title="@string/updAnotherThread"
 		android:key="updAnotherThread"
 		/>
+	<PreferenceScreen
+		android:title="@string/features">
+		<CheckBoxPreference
+			android:title="@string/proxy"
+			android:key="feature_proxy"
+			android:defaultValue="true"
+		/>
+		<CheckBoxPreference
+			android:title="@string/bringOnlinesToTop"
+			android:key="feature_bstt"
+			android:defaultValue="true"
+		/>
+		<CheckBoxPreference
+			android:title="@string/serverFinder"
+			android:key="feature_serverFinder"
+			android:defaultValue="false"
+		/>
+	</PreferenceScreen>
 	<pref.StartPref
 		android:title="@string/trickSheet"
 		android:key="trickSheet"
