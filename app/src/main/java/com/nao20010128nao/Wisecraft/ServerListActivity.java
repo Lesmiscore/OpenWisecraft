@@ -121,7 +121,8 @@ public class ServerListActivity extends ListActivity {
 		menu.add(Menu.NONE, 2, 2, R.string.update_all);
 		menu.add(Menu.NONE, 3, 3, R.string.export);
 		menu.add(Menu.NONE, 4, 4, R.string.imporT);
-		menu.add(Menu.NONE, 5, 5, R.string.bringOnlinesToTop);
+		if(pref.getBoolean("feature_bott",true))
+			menu.add(Menu.NONE, 5, 5, R.string.bringOnlinesToTop);
 		menu.add(Menu.NONE, 6, 6, R.string.settings);
 		return true;
 	}
@@ -433,10 +434,11 @@ public class ServerListActivity extends ListActivity {
 			// TODO: Implement this method
 			clicked = p3;
 			Dialog d=new AlertDialog.Builder(ServerListActivity.this)
-				.setItems(R.array.serverSubMenu, new DialogInterface.OnClickListener(){
+				.setItems(generateSubMenu(), new DialogInterface.OnClickListener(){
 					public void onClick(DialogInterface di, int which) {
-						switch (which) {
-							case 0:
+						List<Runnable> executes=new ArrayList<>();
+						executes.add(0,new Runnable(){
+							public void run(){
 								new AlertDialog.Builder(ServerListActivity.this)
 									.setMessage(R.string.auSure)
 									.setNegativeButton(android.R.string.yes, new DialogInterface.OnClickListener(){
@@ -450,112 +452,131 @@ public class ServerListActivity extends ListActivity {
 										}
 									})
 									.show();
-								break;
-							case 1:
-								if (pinging.get(getItem(p3)))break;
-								updater.putInQueue(getItem(p3), new PingHandlerImpl(){
-										public void onPingFailed(final Server s) {
-											super.onPingFailed(s);
-											runOnUiThread(new Runnable(){
-													public void run() {
-														wd.hideWorkingDialog();
-													}
-												});
-										}
-										public void onPingArrives(final ServerStatus s) {
-											super.onPingArrives(s);
-											runOnUiThread(new Runnable(){
-													public void run() {
-														wd.hideWorkingDialog();
-													}
-												});
-										}
-									});
-								((TextView)sl.getViewQuick(p3).findViewById(R.id.pingMillis)).setText(R.string.working);
-								((ImageView)sl.getViewQuick(p3).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
-								wd.showWorkingDialog();
-								pinging.put(list.get(p3), true);
-								break;
-							case 2:
-								final Server data=new Server();
-								data.ip = getItem(p3).ip;
-								data.port = getItem(p3).port;
-								data.isPC = getItem(p3).isPC;
-								View dialog=getLayoutInflater().inflate(R.layout.serveradddialog, null);
-								final EditText ip=(EditText)dialog.findViewById(R.id.serverIp);
-								final EditText port=(EditText)dialog.findViewById(R.id.serverPort);
-								final CheckBox isPc=(CheckBox)dialog.findViewById(R.id.pc);
+							}
+						});
+						executes.add(1,new Runnable(){
+								public void run(){
+									if (pinging.get(getItem(p3)))return;
+									updater.putInQueue(getItem(p3), new PingHandlerImpl(){
+											public void onPingFailed(final Server s) {
+												super.onPingFailed(s);
+												runOnUiThread(new Runnable(){
+														public void run() {
+															wd.hideWorkingDialog();
+														}
+													});
+											}
+											public void onPingArrives(final ServerStatus s) {
+												super.onPingArrives(s);
+												runOnUiThread(new Runnable(){
+														public void run() {
+															wd.hideWorkingDialog();
+														}
+													});
+											}
+										});
+									((TextView)sl.getViewQuick(p3).findViewById(R.id.pingMillis)).setText(R.string.working);
+									((ImageView)sl.getViewQuick(p3).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
+									wd.showWorkingDialog();
+									pinging.put(list.get(p3), true);
+								}
+							});
+						executes.add(2,new Runnable(){
+								public void run(){
+									final Server data=new Server();
+									data.ip = getItem(p3).ip;
+									data.port = getItem(p3).port;
+									data.isPC = getItem(p3).isPC;
+									View dialog=getLayoutInflater().inflate(R.layout.serveradddialog, null);
+									final EditText ip=(EditText)dialog.findViewById(R.id.serverIp);
+									final EditText port=(EditText)dialog.findViewById(R.id.serverPort);
+									final CheckBox isPc=(CheckBox)dialog.findViewById(R.id.pc);
 
-								ip.setText(data.ip);
-								port.setText(data.port + "");
-								isPc.setChecked(data.isPC);
+									ip.setText(data.ip);
+									port.setText(data.port + "");
+									isPc.setChecked(data.isPC);
 
-								new AlertDialog.Builder(getContext()).
-									setView(dialog).
-									setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener(){
-										public void onClick(DialogInterface d, int sel) {
-											data.ip = ip.getText().toString();
-											data.port = new Integer(port.getText().toString());
-											data.isPC = isPc.isChecked();
+									new AlertDialog.Builder(getContext()).
+										setView(dialog).
+										setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener(){
+											public void onClick(DialogInterface d, int sel) {
+												data.ip = ip.getText().toString();
+												data.port = new Integer(port.getText().toString());
+												data.isPC = isPc.isChecked();
 
-											list.set(p3, data);
-											spp.putInQueue(getItem(p3), new PingHandlerImpl(){
-													public void onPingFailed(final Server s) {
-														super.onPingFailed(s);
-														runOnUiThread(new Runnable(){
-																public void run() {
-																	wd.hideWorkingDialog();
-																}
-															});
-													}
-													public void onPingArrives(final ServerStatus s) {
-														super.onPingArrives(s);
-														runOnUiThread(new Runnable(){
-																public void run() {
-																	wd.hideWorkingDialog();
-																}
-															});
-													}
-												});
-											((TextView)sl.getViewQuick(p3).findViewById(R.id.serverAddress)).setText(data.ip + ":" + data.port);
+												list.set(p3, data);
+												spp.putInQueue(getItem(p3), new PingHandlerImpl(){
+														public void onPingFailed(final Server s) {
+															super.onPingFailed(s);
+															runOnUiThread(new Runnable(){
+																	public void run() {
+																		wd.hideWorkingDialog();
+																	}
+																});
+														}
+														public void onPingArrives(final ServerStatus s) {
+															super.onPingArrives(s);
+															runOnUiThread(new Runnable(){
+																	public void run() {
+																		wd.hideWorkingDialog();
+																	}
+																});
+														}
+													});
+												((TextView)sl.getViewQuick(p3).findViewById(R.id.serverAddress)).setText(data.ip + ":" + data.port);
 
-											saveServers();
-										}
-									}).
-									setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener(){
-										public void onClick(DialogInterface d, int sel) {
+												saveServers();
+											}
+										}).
+										setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener(){
+											public void onClick(DialogInterface d, int sel) {
 
+											}
+										}).
+										show();
+								}
+							});
+						executes.add(3,new Runnable(){
+								public void run(){
+									startActivity(new Intent(ServerListActivity.this, ServerTestActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port).putExtra("ispc", getItem(p3).isPC));
+								}
+							});
+						executes.add(4,new Runnable(){
+								public void run(){
+									startActivity(new Intent(ServerListActivity.this, RCONActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port));
+								}
+							});
+						executes.add(5,new Runnable(){
+								public void run(){
+									new Thread(){
+										public void run() {
+											Server s=getItem(p3);
+											if (alreadyAddedInList(s)) {
+												return;
+											}
+											try {
+												FileWriter fw = new FileWriter(mcpeServerList, true);
+												fw.append("900:" + randomText() + ":" + s.ip + ":" + s.port + "\n");
+												fw.close();
+											} catch (IOException e) {
+												e.printStackTrace();
+											}
 										}
-									}).
-									show();
-								break;
-							case 3:
-								startActivity(new Intent(ServerListActivity.this, ServerTestActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port).putExtra("ispc", getItem(p3).isPC));
-								break;
-							case 4:
-								startActivity(new Intent(ServerListActivity.this, RCONActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port));
-								break;
-							case 5:
-								new Thread(){
-									public void run() {
-										Server s=getItem(p3);
-										if (alreadyAddedInList(s)) {
-											return;
-										}
-										try {
-											FileWriter fw = new FileWriter(mcpeServerList, true);
-											fw.append("900:" + randomText() + ":" + s.ip + ":" + s.port + "\n");
-											fw.close();
-										} catch (IOException e) {
-											e.printStackTrace();
-										}
-									}
-								}.start();
-								break;
-							case 6:
-								startActivity(new Intent(ServerListActivity.this, ProxyActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port));
-								break;
+									}.start();
+								}
+							});
+						executes.add(6,new Runnable(){
+								public void run(){
+									startActivity(new Intent(ServerListActivity.this, ProxyActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port));
+								}
+							});
+						
+						List<Runnable> all=new ArrayList(executes);
+						if(!pref.getBoolean("feature_proxy",true)){
+							executes.remove(all.get(6));
 						}
+						
+						executes.get(which).run();
 					}
 				})
 				.setCancelable(true)
@@ -586,6 +607,15 @@ public class ServerListActivity extends ListActivity {
 			// TODO: Implement this method
 			cached.remove(list.indexOf(object));
 			super.remove(object);
+		}
+		
+		private String[] generateSubMenu(){
+			List<String> result=new ArrayList<String>(Arrays.<String>asList(getResources().getStringArray(R.array.serverSubMenu)));
+			List<String> all=new ArrayList<String>(result);
+			if(!pref.getBoolean("feature_proxy",true)){
+				result.remove(all.get(6));
+			}
+			return result.toArray(new String[result.size()]);
 		}
 	}
 	public static class Server {
