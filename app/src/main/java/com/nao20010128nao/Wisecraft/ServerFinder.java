@@ -56,16 +56,7 @@ public class ServerFinder extends ListActivity
 			.setView(dialog = getLayoutInflater().inflate(R.layout.test_server_dialog, null, false))
 			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 				public void onClick(DialogInterface di, int w) {
-					di.dismiss();
-					String nu=((EditText)dialog.findViewById(R.id.pingTimes)).getText().toString();
-					times = new Integer(nu);
-					for (int i=0;i < times;i++) {
-						Server s=new Server();
-						s.ip = ip;
-						s.port = port;
-						s.isPC = isPC;
-						sl.add(s);
-					}
+					
 				}
 			})
 			.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener(){
@@ -77,11 +68,14 @@ public class ServerFinder extends ListActivity
 			.setCancelable(false)
 			.show();
 	}
+	private void startFinding(String ip,int startPort,int endPort){
+		
+	}
 	@Override
 	protected void attachBaseContext(Context newBase) {
 		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
 	}
-	class ServerList extends AppBaseArrayAdapter<Server> implements AdapterView.OnItemClickListener {
+	class ServerList extends AppBaseArrayAdapter<ServerStatus> implements AdapterView.OnItemClickListener {
 		List<View> cached=new ArrayList();
 		public ServerList() {
 			super(ServerFinder.this, 0, list = new ArrayList<Server>());
@@ -98,80 +92,58 @@ public class ServerFinder extends ListActivity
 			}
 			//if(convertView!=null)return convertView;
 			final View layout=getLayoutInflater().inflate(R.layout.quickstatus, null, false);
-			Server s=getItem(position);
+			ServerStatus s=getItem(position);
 			layout.setTag(s);
-			spp.putInQueue(s, new ServerPingProvider.PingHandler(){
-					public void onPingFailed(final Server s) {
-						runOnUiThread(new Runnable(){
-								public void run() {
-									((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_error)));
-									((TextView)layout.findViewById(R.id.serverName)).setText(s.ip + ":" + s.port);
-									((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.notResponding);
-									pinging.put(s, false);
-								}
-							});
+			((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
+			
+			final String title;
+			if (s.response instanceof FullStat) {//PE
+				FullStat fs=(FullStat)s.response;
+				Map<String,String> m=fs.getData();
+				if (m.containsKey("hostname")) {
+					title = deleteDecorations(m.get("hostname"));
+				} else if (m.containsKey("motd")) {
+					title = deleteDecorations(m.get("motd"));
+				} else {
+					title = s.ip + ":" + s.port;
+				}
+			} else if (s.response instanceof Reply) {//PC
+				Reply rep=(Reply)s.response;
+				if (rep.description == null) {
+					title = s.ip + ":" + s.port;
+				} else {
+					title = deleteDecorations(rep.description);
+				}
+			} else if (s.response instanceof SprPair) {//PE?
+				SprPair sp=((SprPair)s.response);
+				if (sp.getB() instanceof UnconnectedPing.UnconnectedPingResult) {
+					title = ((UnconnectedPing.UnconnectedPingResult)sp.getB()).getServerName();
+				} else if (sp.getA() instanceof FullStat) {
+					FullStat fs=(FullStat)sp.getA();
+					Map<String,String> m=fs.getData();
+					if (m.containsKey("hostname")) {
+						title = deleteDecorations(m.get("hostname"));
+					} else if (m.containsKey("motd")) {
+						title = deleteDecorations(m.get("motd"));
+					} else {
+						title = s.ip + ":" + s.port;
 					}
-					public void onPingArrives(final ServerStatus sv) {
-						runOnUiThread(new Runnable(){
-								public void run() {
-									((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
-									final String title;
-									if (sv.response instanceof FullStat) {//PE
-										FullStat fs=(FullStat)sv.response;
-										Map<String,String> m=fs.getData();
-										if (m.containsKey("hostname")) {
-											title = deleteDecorations(m.get("hostname"));
-										} else if (m.containsKey("motd")) {
-											title = deleteDecorations(m.get("motd"));
-										} else {
-											title = sv.ip + ":" + sv.port;
-										}
-									} else if (sv.response instanceof Reply) {//PC
-										Reply rep=(Reply)sv.response;
-										if (rep.description == null) {
-											title = sv.ip + ":" + sv.port;
-										} else {
-											title = deleteDecorations(rep.description);
-										}
-									} else if (sv.response instanceof SprPair) {//PE?
-										SprPair sp=((SprPair)sv.response);
-										if (sp.getB() instanceof UnconnectedPing.UnconnectedPingResult) {
-											title = ((UnconnectedPing.UnconnectedPingResult)sp.getB()).getServerName();
-										} else if (sp.getA() instanceof FullStat) {
-											FullStat fs=(FullStat)sp.getA();
-											Map<String,String> m=fs.getData();
-											if (m.containsKey("hostname")) {
-												title = deleteDecorations(m.get("hostname"));
-											} else if (m.containsKey("motd")) {
-												title = deleteDecorations(m.get("motd"));
-											} else {
-												title = sv.ip + ":" + sv.port;
-											}
-										} else {
-											title = sv.ip + ":" + sv.port;
-										}
-									} else if (sv.response instanceof UnconnectedPing.UnconnectedPingResult) {
-										title = ((UnconnectedPing.UnconnectedPingResult)sv.response).getServerName();
-									} else {//Unreachable
-										title = sv.ip + ":" + sv.port;
-									}
-									((TextView)layout.findViewById(R.id.serverName)).setText(deleteDecorations(title));
-									((TextView)layout.findViewById(R.id.pingMillis)).setText(sv.ping + " ms");
-									list.set(position, sv);
-									pinging.put(sv, false);
-								}
-							});
-					}
-				});
-			((TextView)layout.findViewById(R.id.serverName)).setText(R.string.working);
-			((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.working);
-			((TextView)layout.findViewById(R.id.serverAddress)).setText(s.ip + ":" + s.port);
-			((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
+				} else {
+					title = s.ip + ":" + s.port;
+				}
+			} else if (s.response instanceof UnconnectedPing.UnconnectedPingResult) {
+				title = ((UnconnectedPing.UnconnectedPingResult)s.response).getServerName();
+			} else {//Unreachable
+				title = s.ip + ":" + s.port;
+			}
+			((TextView)layout.findViewById(R.id.serverName)).setText(deleteDecorations(title));
+			((TextView)layout.findViewById(R.id.pingMillis)).setText(s.ping + " ms");
+			list.set(position, s);
+									
 			if (cached.size() <= position) {
 				cached.addAll(Constant.ONE_HUNDRED_LENGTH_NULL_LIST);
 			}
 			cached.set(position, layout);
-			pinging.put(s, true);
 			return layout;
 		}
 		public View getCachedView(int position) {
@@ -186,13 +158,12 @@ public class ServerFinder extends ListActivity
 			Server s=getItem(p3);
 			clicked = p3;
 			if (s instanceof ServerStatus) {
-				ServerInfoActivity.stat = (ServerStatus)s;
-				startActivityForResult(new Intent(ServerFinder.this, ServerInfoActivity.class).putExtra("nonUpd", true), 0);
+				
 			}
 		}
 
 		@Override
-		public void remove(ServerListActivity.Server object) {
+		public void remove(ServerListActivity.ServerStatus object) {
 			// TODO: Implement this method
 			cached.remove(list.indexOf(object));
 			super.remove(object);
