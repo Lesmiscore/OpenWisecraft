@@ -58,7 +58,7 @@ public class UnconnectedServerPingProvider implements ServerPingProvider
 					} catch (IOException e) {
 						Log.d(getClass().getName().split("\\.")[1], "Failed");
 						now.getValue().onPingFailed(now.getKey());
-						break;
+						continue;
 					}
 				}
 				try {

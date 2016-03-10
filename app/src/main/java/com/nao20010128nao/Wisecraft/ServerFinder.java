@@ -20,13 +20,19 @@ import com.nao20010128nao.Wisecraft.provider.ServerPingProvider;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import com.nao20010128nao.Wisecraft.provider.PCServerPingProvider;
+import com.nao20010128nao.Wisecraft.provider.PCMultiServerPingProvider;
+import android.preference.PreferenceManager;
+import com.nao20010128nao.Wisecraft.provider.UnconnectedMultiServerPingProvider;
+import android.os.AsyncTask;
+import java.util.concurrent.atomic.AtomicInteger;
 public class ServerFinder extends ListActivity
 {
 	ServerList sl;
 	List<Server> list;
 	String ip;
 	boolean isPC;
-	View dialog;
+	View dialog,dialog2;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +43,7 @@ public class ServerFinder extends ListActivity
 		ip = getIntent().getStringExtra("ip");
 		isPC = getIntent().getBooleanExtra("ispc", false);
 		new AlertDialog.Builder(this)
-			.setTitle(R.string.testServer)
+			.setTitle(R.string.serverFinder)
 			.setView(dialog = getLayoutInflater().inflate(R.layout.server_finder_start, null, false))
 			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 				public void onClick(DialogInterface di, int w) {
@@ -57,9 +63,65 @@ public class ServerFinder extends ListActivity
 			.setCancelable(false)
 			.show();
 		if(ip!=null)((EditText)dialog.findViewById(R.id.ip)).setText(ip);
+		((CheckBox)dialog.findViewById(R.id.pc)).setChecked(isPC);
 	}
-	private void startFinding(String ip,int startPort,int endPort,boolean isPC){
-		
+	private void startFinding(final String ip,final int startPort,final int endPort,final boolean isPC){
+		final Dialog d=new AlertDialog.Builder(this)
+			.setTitle(R.string.finding)
+			.setView(dialog2 = getLayoutInflater().inflate(R.layout.server_finder_finding, null, false))
+			.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener(){
+				public void onClick(DialogInterface di, int w) {
+					di.dismiss();
+					finish();
+				}
+			})
+			.setCancelable(false)
+			.show();
+		new AsyncTask<Void,ServerStatus,Void>(){
+			public Void doInBackground(Void... l){
+				final int max=endPort-startPort;
+				
+				ServerPingProvider spp;
+				int threads=new Integer(PreferenceManager.getDefaultSharedPreferences(ServerFinder.this).getString("parallels","6"));
+				if(isPC){
+					spp=new PCMultiServerPingProvider(threads);
+				}else{
+					spp=new UnconnectedMultiServerPingProvider(threads);
+				}
+				
+				for(int p=startPort;p<endPort;p++){
+					Server s=new Server();
+					s.ip=ip;
+					s.port=p;
+					s.isPC=isPC;
+					spp.putInQueue(s,new ServerPingProvider.PingHandler(){
+						public void onPingArrives(ServerStatus s){
+							publishProgress(s);
+							update(max);
+						}
+						public void onPingFailed(Server s){
+							update(max);
+						}
+					});
+				}
+				return null;
+			}
+			public void onProgressUpdate(ServerStatus... s){
+				sl.addAll(s);
+			}
+			private void update(final int max){
+				runOnUiThread(new Runnable(){
+					public void run(){
+						((ProgressBar)dialog2.findViewById(R.id.perc)).setMax(max);
+						((ProgressBar)dialog2.findViewById(R.id.perc)).setProgress(((ProgressBar)dialog2.findViewById(R.id.perc)).getProgress()+1);
+						((TextView)dialog2.findViewById(R.id.status)).setText(((ProgressBar)dialog2.findViewById(R.id.perc)).getProgress()+"/"+max);
+						if(((ProgressBar)dialog2.findViewById(R.id.perc)).getProgress()==max){
+							d.dismiss();
+						}
+					}
+				});
+			}
+		}.execute();
 	}
 	@Override
 	protected void attachBaseContext(Context newBase) {

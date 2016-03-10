@@ -68,6 +68,12 @@
 			android:exported="false">
         </activity>
 		
+		<activity
+            android:label="@string/serverFinder"
+            android:name=".ServerFinder"
+			android:exported="false">
+        </activity>
+		
 		<!--
 		<receiver android:name=".widget.ServerInfoWidget" >
             <intent-filter>

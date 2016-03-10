@@ -49,6 +49,8 @@
 	<string name="donotChange_serverFinder">Do not change them if you can\'t understand what are they mean.</string>
 	<string name="startPort">Start Port</string>
 	<string name="endPort">End Port</string>
+	<string name="finding">Finding...</string><!--Reserved for future release-->
+	<string name="findingServers">Finding Servers...</string>
 	
 	
 	<string name="font">lato-light.ttf</string>
@@ -62,5 +64,6 @@
 		<item>@string/rcon</item>
 		<item>@string/addToMcpe</item>
 		<item>@string/launchProxy</item>
+		<item>@string/serverFinder</item>
 	</string-array>
 </resources>

@@ -44,5 +44,6 @@
 		<item>@string/rcon</item>
 		<item>@string/addToMcpe</item>
 		<item>@string/launchProxy</item>
+		<item>@string/serverFinder</item>
 	</string-array>
 </resources>

@@ -123,7 +123,8 @@ public class ServerListActivity extends ListActivity {
 		menu.add(Menu.NONE, 4, 4, R.string.imporT);
 		if(pref.getBoolean("feature_bott",true))
 			menu.add(Menu.NONE, 5, 5, R.string.bringOnlinesToTop);
-		menu.add(Menu.NONE, 6, 6, R.string.settings);
+		menu.add(Menu.NONE, 6, 6, R.string.serverFinder);
+		menu.add(Menu.NONE, 7, 7, R.string.settings);
 		return true;
 	}
 
@@ -315,6 +316,9 @@ public class ServerListActivity extends ListActivity {
 				}.start();
 				break;
 			case 6:
+				startActivity(new Intent(this,ServerFinder.class));
+				break;
+			case 7:
 				startActivity(new Intent(this,SettingsActivity.class));
 				break;
 		}
@@ -568,6 +572,11 @@ public class ServerListActivity extends ListActivity {
 						executes.add(6,new Runnable(){
 								public void run(){
 									startActivity(new Intent(ServerListActivity.this, ProxyActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port));
+								}
+							});
+						executes.add(7,new Runnable(){
+								public void run(){
+									startActivity(new Intent(ServerListActivity.this, ServerFinder.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port).putExtra("ispc", getItem(p3).isPC));
 								}
 							});
 						
