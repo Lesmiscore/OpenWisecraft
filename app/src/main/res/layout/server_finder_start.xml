@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
+	android:gravity="center_horizontal">
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:layout_width="wrap_content"
+		android:text="@string/ipWithoutPort"/>
+
+	<EditText
+		android:layout_height="wrap_content"
+		android:inputType="text"
+		android:layout_width="match_parent"
+		android:ems="10"
+		android:id="@+id/ip"/>
+
+	<CheckBox
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:id="@+id/pc"
+		android:text="@string/isPC"/>
+
+	<View
+		android:background="?android:attr/dividerVertical"
+		android:layout_height="1dp"
+		android:layout_width="match_parent"/>
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:layout_width="wrap_content"
+		android:text="@string/donotChange_serverFinder"
+		android:textColor="#FF0000"/>
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:layout_width="wrap_content"
+		android:text="@string/startPort"/>
+
+	<EditText
+		android:layout_height="wrap_content"
+		android:inputType="number"
+		android:layout_width="match_parent"
+		android:ems="10"
+		android:id="@+id/startPort"
+		android:text="1025"/>
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:layout_width="wrap_content"
+		android:text="@string/endPort"/>
+
+	<EditText
+		android:layout_height="wrap_content"
+		android:inputType="number"
+		android:layout_width="match_parent"
+		android:ems="10"
+		android:id="@+id/endPort"
+		android:text="65535"/>
+
+</LinearLayout>
+

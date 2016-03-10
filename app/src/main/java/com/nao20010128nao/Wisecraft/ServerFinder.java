@@ -49,14 +49,17 @@ public class ServerFinder extends ListActivity
 		setListAdapter(sl = new ServerList());
 		getListView().setOnItemClickListener(sl);
 		ip = getIntent().getStringExtra("ip");
-		port = getIntent().getIntExtra("port", -1);
 		isPC = getIntent().getBooleanExtra("ispc", false);
 		new AlertDialog.Builder(this)
 			.setTitle(R.string.testServer)
-			.setView(dialog = getLayoutInflater().inflate(R.layout.test_server_dialog, null, false))
+			.setView(dialog = getLayoutInflater().inflate(R.layout.server_finder_start, null, false))
 			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 				public void onClick(DialogInterface di, int w) {
-					
+					String ip=((EditText)dialog.findViewById(R.id.ip)).getText().toString();
+					int startPort=new Integer(((EditText)dialog.findViewById(R.id.startPort)).getText().toString());
+					int endPort=new Integer(((EditText)dialog.findViewById(R.id.endPort)).getText().toString());
+					boolean isPC=((CheckBox)dialog.findViewById(R.id.pc)).isChecked();
+					startFinding(ip,startPort,endPort,isPC);
 				}
 			})
 			.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener(){
@@ -67,8 +70,9 @@ public class ServerFinder extends ListActivity
 			})
 			.setCancelable(false)
 			.show();
+		if(ip!=null)((EditText)dialog.findViewById(R.id.ip)).setText(ip);
 	}
-	private void startFinding(String ip,int startPort,int endPort){
+	private void startFinding(String ip,int startPort,int endPort,boolean isPC){
 		
 	}
 	@Override

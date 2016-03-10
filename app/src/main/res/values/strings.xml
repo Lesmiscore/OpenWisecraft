@@ -45,6 +45,10 @@
 	<string name="proxy">Proxy</string>
 	<string name="serverFinder">Server Finder</string>
 	<string name="sendInfos">Send informations to improve this app</string>
+	<string name="ipWithoutPort">Type the IP address without port</string>
+	<string name="donotChange_serverFinder">Do not change them if you can\'t understand what are they mean.</string>
+	<string name="startPort">Start Port</string>
+	<string name="endPort">End Port</string>
 	
 	
 	<string name="font">lato-light.ttf</string>
