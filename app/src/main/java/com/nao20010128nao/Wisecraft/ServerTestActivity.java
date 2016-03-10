@@ -81,23 +81,6 @@ public class ServerTestActivity extends ListActivity {
 	protected void attachBaseContext(Context newBase) {
 		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
 	}
-	public void showWorkingDialog() {
-		if (waitDialog != null) {
-			hideWorkingDialog();
-		}
-		waitDialog = new ProgressDialog(this);
-		waitDialog.setIndeterminate(true);
-		waitDialog.setMessage(getResources().getString(R.string.working));
-		waitDialog.setCancelable(false);
-		waitDialog.show();
-	}
-	public void hideWorkingDialog() {
-		if (waitDialog == null) {
-			return;
-		}
-		waitDialog.cancel();
-		waitDialog = null;
-	}
 	class ServerList extends AppBaseArrayAdapter<Server> implements AdapterView.OnItemClickListener {
 		List<View> cached=new ArrayList();
 		public ServerList() {

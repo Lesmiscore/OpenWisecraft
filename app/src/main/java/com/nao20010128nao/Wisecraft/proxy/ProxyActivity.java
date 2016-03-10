@@ -1,17 +1,19 @@
 package com.nao20010128nao.Wisecraft.proxy;
 import android.app.Activity;
-import android.os.Bundle;
-import android.widget.TextView;
-import com.nao20010128nao.MCProxy.LoggerProxy;
-import com.nao20010128nao.Wisecraft.R;
-import android.widget.Button;
-import android.view.View.OnClickListener;
-import android.view.View;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.TextView;
+import com.nao20010128nao.MCProxy.MultipleUdpConnectionProxy;
+import com.nao20010128nao.Wisecraft.R;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ProxyActivity extends Activity {
-	LoggerProxy prox;
+	MultipleUdpConnectionProxy prox;
 	TextView serverIp,serverCon;
 	Button stop;
 	String ip;
@@ -77,7 +79,7 @@ public class ProxyActivity extends Activity {
 	}
 	
 	public void start(){
-		proxyThread=new Thread(prox=new LoggerProxy(ip,port,64321));
+		proxyThread=new Thread(prox=new MultipleUdpConnectionProxy(ip,port,64321));
 		proxyThread.start();
 	}
 	
@@ -86,5 +88,10 @@ public class ProxyActivity extends Activity {
 		// TODO: Implement this method
 		super.finish();
 		if(proxyThread!=null)proxyThread.interrupt();
+	}
+	
+	@Override
+	protected void attachBaseContext(Context newBase) {
+		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
 	}
 }
