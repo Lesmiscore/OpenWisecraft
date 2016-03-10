@@ -35,6 +35,11 @@
 			android:defaultValue="false"
 		/>
 	</PreferenceScreen>
+	<CheckBoxPreference
+		android:title="@string/sendInfos"
+		android:key="sendInfos"
+		android:defaultValue="true"
+	/>
 	<pref.StartPref
 		android:title="@string/trickSheet"
 		android:key="trickSheet"

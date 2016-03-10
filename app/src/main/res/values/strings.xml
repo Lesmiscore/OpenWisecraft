@@ -44,6 +44,7 @@
 	<string name="features">Features</string>
 	<string name="proxy">Proxy</string>
 	<string name="serverFinder">Server Finder</string>
+	<string name="sendInfos">Send informations to improve this app</string>
 	
 	
 	<string name="font">lato-light.ttf</string>
