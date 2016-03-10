@@ -97,39 +97,12 @@ public class ServerFinder extends ListActivity
 			((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
 			
 			final String title;
-			if (s.response instanceof FullStat) {//PE
-				FullStat fs=(FullStat)s.response;
-				Map<String,String> m=fs.getData();
-				if (m.containsKey("hostname")) {
-					title = deleteDecorations(m.get("hostname"));
-				} else if (m.containsKey("motd")) {
-					title = deleteDecorations(m.get("motd"));
-				} else {
-					title = s.ip + ":" + s.port;
-				}
-			} else if (s.response instanceof Reply) {//PC
+			if (s.response instanceof Reply) {//PC
 				Reply rep=(Reply)s.response;
 				if (rep.description == null) {
 					title = s.ip + ":" + s.port;
 				} else {
 					title = deleteDecorations(rep.description);
-				}
-			} else if (s.response instanceof SprPair) {//PE?
-				SprPair sp=((SprPair)s.response);
-				if (sp.getB() instanceof UnconnectedPing.UnconnectedPingResult) {
-					title = ((UnconnectedPing.UnconnectedPingResult)sp.getB()).getServerName();
-				} else if (sp.getA() instanceof FullStat) {
-					FullStat fs=(FullStat)sp.getA();
-					Map<String,String> m=fs.getData();
-					if (m.containsKey("hostname")) {
-						title = deleteDecorations(m.get("hostname"));
-					} else if (m.containsKey("motd")) {
-						title = deleteDecorations(m.get("motd"));
-					} else {
-						title = s.ip + ":" + s.port;
-					}
-				} else {
-					title = s.ip + ":" + s.port;
 				}
 			} else if (s.response instanceof UnconnectedPing.UnconnectedPingResult) {
 				title = ((UnconnectedPing.UnconnectedPingResult)s.response).getServerName();
