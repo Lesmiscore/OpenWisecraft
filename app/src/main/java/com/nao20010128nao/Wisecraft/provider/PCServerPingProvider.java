@@ -9,7 +9,7 @@ import com.nao20010128nao.Wisecraft.Utils;
 import com.nao20010128nao.Wisecraft.misc.SprPair;
 import com.nao20010128nao.Wisecraft.pingEngine.UnconnectedPing;
 import java.io.IOException;
-public class UnconnectedServerPingProvider implements ServerPingProvider
+public class PCServerPingProvider implements ServerPingProvider
 {
 	Queue<Map.Entry<ServerListActivity.Server,PingHandler>> queue=new LinkedList<>();
 	Thread pingThread=new PingThread();
@@ -44,22 +44,29 @@ public class UnconnectedServerPingProvider implements ServerPingProvider
 				stat.isPC = now.getKey().isPC;
 				Log.d(getClass().getName().split("\\.")[1], stat.ip + ":" + stat.port + " " + stat.isPC);
 				if (now.getKey().isPC) {
+					Log.d(getClass().getName().split("\\.")[1], "PC");
+					PCQuery query=new PCQuery(stat.ip, stat.port);
+					try {
+						stat.response = query.fetchReply();
+						Log.d(getClass().getName().split("\\.")[1], "Success");
+					} catch (IOException e) {
+						e.printStackTrace();
+						Log.d(getClass().getName().split("\\.")[1], "Failed");
+						try {
+							now.getValue().onPingFailed(now.getKey());
+						} catch (Throwable ex) {
+
+						}
+						continue;
+					}
+					stat.ping = query.getLatestPingElapsed();
+				} else {
 					try{
 						now.getValue().onPingFailed(now.getKey());
 					}catch(Throwable h){
-
+						
 					}
 					continue;
-				} else {
-					try {
-						UnconnectedPing.UnconnectedPingResult res=UnconnectedPing.doPing(stat.ip, stat.port);
-						stat.response = res;
-						Log.d(getClass().getName().split("\\.")[1], "Success: Unconnected Ping");
-					} catch (IOException e) {
-						Log.d(getClass().getName().split("\\.")[1], "Failed");
-						now.getValue().onPingFailed(now.getKey());
-						break;
-					}
 				}
 				try {
 					now.getValue().onPingArrives(stat);

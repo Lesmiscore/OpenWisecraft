@@ -22,26 +22,12 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import static com.nao20010128nao.Wisecraft.Utils.*;
 public class ServerFinder extends ListActivity
 {
-	ServerPingProvider spp=new NormalServerPingProvider();
 	ServerList sl;
 	List<Server> list;
-	int clicked=-1;
-	ProgressDialog waitDialog;
-	int times,port;
 	String ip;
 	boolean isPC;
 	View dialog;
-	Map<Server,Boolean> pinging=new HashMap<Server,Boolean>(){
-		@Override
-		public Boolean get(Object key) {
-			// TODO: Implement this method
-			Boolean b= super.get(key);
-			if (b == null) {
-				return false;
-			}
-			return b;
-		}
-	};
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
@@ -130,10 +116,9 @@ public class ServerFinder extends ListActivity
 			return getView(pos, null, null);
 		}
 		@Override
-		public void onItemClick(AdapterView<?> p1, View p2, int p3, long p4) {
+		public void onItemClick(AdapterView<?> p1, View p2, final int p3, long p4) {
 			// TODO: Implement this method
-			Server s=getItem(p3);
-			clicked = p3;
+			final Server s=getItem(p3);
 			if (s instanceof ServerStatus) {
 				
 			}
