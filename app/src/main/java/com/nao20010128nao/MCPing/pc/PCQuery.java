@@ -81,7 +81,7 @@ public class PCQuery implements PingHost{
 		Socket sock = null;
 		try {
 			sock = new Socket(host, port);
-			sock.setSoTimeout(100);
+			sock.setSoTimeout(5000);
 			DataInputStream dis = new DataInputStream(sock.getInputStream());
 			DataOutputStream dos = new DataOutputStream(sock.getOutputStream());
 			long t=System.currentTimeMillis();
@@ -100,7 +100,7 @@ public class PCQuery implements PingHost{
 		Socket sock = null;
 		try {
 			sock = new Socket(host, port);
-			sock.setSoTimeout(100);
+			sock.setSoTimeout(5000);
 			DataInputStream dis = new DataInputStream(sock.getInputStream());
 			DataOutputStream dos = new DataOutputStream(sock.getOutputStream());
 			doPing(dos, dis);
