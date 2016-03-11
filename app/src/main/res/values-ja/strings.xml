@@ -32,6 +32,20 @@
 	<string name="launchProxy">プロキシを開始</string>
 	<string name="ucpInfoError">このサーバーの詳細情報はありません。</string>
 	<string name="bringOnlinesToTop">オンラインのサーバーをリストの上に移動</string>
+	<string name="settings">設定</string>
+	<string name="pingThreads">pingの並列数</string>
+	<string name="updAnotherThread">別のスレッドでサーバーの状況を更新する</string>
+	<string name="settingsAttention">ほとんどの設定は、アプリの再起動後に適用されます。</string>
+	<string name="features">機能</string>
+	<string name="proxy">プロキシ</string>
+	<!--<string name="serverFinder">Server Finder (サーバーファインダー)</string>-->
+	<string name="sendInfos">アプリの品質向上のための情報を送信する</string>
+	<string name="ipWithoutPort">ポート無しのIPアドレスを入力してください</string>
+	<string name="donotChange_serverFinder">以下の内容を理解できない場合は、変更しないでください</string>
+	<string name="startPort">開始ポート</string>
+	<string name="endPort">終了ポート</string>
+	<string name="finding">探しています...</string><!--Reserved for future release-->
+	<string name="findingServers">サーバーを検索しています...</string>
 	
 	<string name="font">DroidSans.ttf</string>
 	<string name="fontField">droidSans</string>
