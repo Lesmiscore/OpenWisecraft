@@ -54,6 +54,7 @@ public class UnconnectedServerPingProvider implements ServerPingProvider
 					try {
 						UnconnectedPing.UnconnectedPingResult res=UnconnectedPing.doPing(stat.ip, stat.port);
 						stat.response = res;
+						stat.ping=res.getLatestPingElapsed();
 						Log.d(getClass().getName().split("\\.")[1], "Success: Unconnected Ping");
 					} catch (IOException e) {
 						Log.d(getClass().getName().split("\\.")[1], "Failed");

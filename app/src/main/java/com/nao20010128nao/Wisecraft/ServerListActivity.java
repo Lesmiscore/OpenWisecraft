@@ -123,7 +123,8 @@ public class ServerListActivity extends ListActivity {
 		menu.add(Menu.NONE, 4, 4, R.string.imporT);
 		if(pref.getBoolean("feature_bott",true))
 			menu.add(Menu.NONE, 5, 5, R.string.bringOnlinesToTop);
-		menu.add(Menu.NONE, 6, 6, R.string.serverFinder);
+		if(pref.getBoolean("feature_serverFinder",false))
+			menu.add(Menu.NONE, 6, 6, R.string.serverFinder);
 		menu.add(Menu.NONE, 7, 7, R.string.settings);
 		return true;
 	}
@@ -581,8 +582,12 @@ public class ServerListActivity extends ListActivity {
 							});
 						
 						List<Runnable> all=new ArrayList(executes);
+						
 						if(!pref.getBoolean("feature_proxy",true)){
 							executes.remove(all.get(6));
+						}
+						if(!pref.getBoolean("feature_serverFinder",false)){
+							executes.remove(all.get(7));
 						}
 						
 						executes.get(which).run();
@@ -623,6 +628,9 @@ public class ServerListActivity extends ListActivity {
 			List<String> all=new ArrayList<String>(result);
 			if(!pref.getBoolean("feature_proxy",true)){
 				result.remove(all.get(6));
+			}
+			if(!pref.getBoolean("feature_serverFinder",false)){
+				result.remove(all.get(7));
 			}
 			return result.toArray(new String[result.size()]);
 		}

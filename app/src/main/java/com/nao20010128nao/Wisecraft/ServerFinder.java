@@ -163,6 +163,8 @@ public class ServerFinder extends ListActivity
 			}
 			((TextView)layout.findViewById(R.id.serverName)).setText(deleteDecorations(title));
 			((TextView)layout.findViewById(R.id.pingMillis)).setText(s.ping + " ms");
+			((TextView)layout.findViewById(R.id.serverAddress)).setText(s.port+"");
+			
 			list.set(position, s);
 									
 			if (cached.size() <= position) {
