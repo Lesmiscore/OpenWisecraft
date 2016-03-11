@@ -1,0 +1,2070 @@
+--------- beginning of /dev/log/system
+I/ActivityManager( 1423): No longer want com.nttdocomo.android.phonebookcopy (pid 2159): hidden #16
+E/AndroidRuntime( 2612): FATAL EXCEPTION: main
+E/AndroidRuntime( 2612): android.view.InflateException: Binary XML file line #24: Error inflating class android.view.View
+E/AndroidRuntime( 2612): 	at android.view.LayoutInflater.createView(LayoutInflater.java:518)
+E/AndroidRuntime( 2612): 	at android.view.LayoutInflater.onCreateView(LayoutInflater.java:549)
+E/AndroidRuntime( 2612): 	at uk.co.chrisjenx.calligraphy.CalligraphyLayoutInflater.onCreateView(CalligraphyLayoutInflater.java:170)
+E/AndroidRuntime( 2612): 	at android.view.LayoutInflater.createViewFromTag(LayoutInflater.java:568)
+E/AndroidRuntime( 2612): 	at android.view.LayoutInflater.rInflate(LayoutInflater.java:623)
+E/AndroidRuntime( 2612): 	at android.view.LayoutInflater.inflate(LayoutInflater.java:408)
+E/AndroidRuntime( 2612): 	at uk.co.chrisjenx.calligraphy.CalligraphyLayoutInflater.inflate(CalligraphyLayoutInflater.java:60)
+E/AndroidRuntime( 2612): 	at android.view.LayoutInflater.inflate(LayoutInflater.java:320)
+E/AndroidRuntime( 2612): 	at android.view.LayoutInflater.inflate(LayoutInflater.java:276)
+E/AndroidRuntime( 2612): 	at com.nao20010128nao.Wisecraft.misc.KVListAdapter.getView(KVListAdapter.java:16)
+E/AndroidRuntime( 2612): 	at android.widget.AbsListView.obtainView(AbsListView.java:1430)
+E/AndroidRuntime( 2612): 	at android.widget.ListView.makeAndAddView(ListView.java:1745)
+E/AndroidRuntime( 2612): 	at android.widget.ListView.fillDown(ListView.java:670)
+E/AndroidRuntime( 2612): 	at android.widget.ListView.fillFromTop(ListView.java:727)
+E/AndroidRuntime( 2612): 	at android.widget.ListView.layoutChildren(ListView.java:1598)
+E/AndroidRuntime( 2612): 	at android.widget.AbsListView.onLayout(AbsListView.java:1260)
+E/AndroidRuntime( 2612): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 2612): 	at android.widget.FrameLayout.onLayout(FrameLayout.java:338)
+E/AndroidRuntime( 2612): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 2612): 	at android.widget.FrameLayout.onLayout(FrameLayout.java:338)
+E/AndroidRuntime( 2612): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 2612): 	at android.widget.LinearLayout.setChildFrame(LinearLayout.java:1254)
+E/AndroidRuntime( 2612): 	at android.widget.LinearLayout.layoutVertical(LinearLayout.java:1130)
+E/AndroidRuntime( 2612): 	at android.widget.LinearLayout.onLayout(LinearLayout.java:1047)
+E/AndroidRuntime( 2612): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 2612): 	at android.widget.FrameLayout.onLayout(FrameLayout.java:338)
+E/AndroidRuntime( 2612): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 2612): 	at android.widget.LinearLayout.setChildFrame(LinearLayout.java:1254)
+E/AndroidRuntime( 2612): 	at android.widget.LinearLayout.layoutVertical(LinearLayout.java:1130)
+E/AndroidRuntime( 2612): 	at android.widget.LinearLayout.onLayout(LinearLayout.java:1047)
+E/AndroidRuntime( 2612): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 2612): 	at android.widget.FrameLayout.onLayout(FrameLayout.java:338)
+E/AndroidRuntime( 2612): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 2612): 	at android.widget.LinearLayout.setChildFrame(LinearLayout.java:1254)
+E/AndroidRuntime( 2612): 	at android.widget.LinearLayout.layoutVertical(LinearLayout.java:1130)
+E/AndroidRuntime( 2612): 	at android.widget.LinearLayout.onLayout(LinearLayout.java:1047)
+E/AndroidRuntime( 2612): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 2612): 	at android.widget.FrameLayout.onLayout(FrameLayout.java:338)
+E/AndroidRuntime( 2612): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 2612): 	at android.view.ViewRoot.performTraversals(ViewRoot.java:1140)
+E/AndroidRuntime( 2612): 	at android.view.ViewRoot.handleMessage(ViewRoot.java:1859)
+E/AndroidRuntime( 2612): 	at android.os.Handler.dispatchMessage(Handler.java:99)
+E/AndroidRuntime( 2612): 	at android.os.Looper.loop(Looper.java:123)
+E/AndroidRuntime( 2612): 	at android.app.ActivityThread.main(ActivityThread.java:3717)
+E/AndroidRuntime( 2612): 	at java.lang.reflect.Method.invokeNative(Native Method)
+E/AndroidRuntime( 2612): 	at java.lang.reflect.Method.invoke(Method.java:507)
+E/AndroidRuntime( 2612): 	at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:839)
+E/AndroidRuntime( 2612): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:597)
+E/AndroidRuntime( 2612): 	at dalvik.system.NativeStart.main(Native Method)
+E/AndroidRuntime( 2612): Caused by: java.lang.reflect.InvocationTargetException
+E/AndroidRuntime( 2612): 	at java.lang.reflect.Constructor.constructNative(Native Method)
+E/AndroidRuntime( 2612): 	at java.lang.reflect.Constructor.newInstance(Constructor.java:415)
+E/AndroidRuntime( 2612): 	at android.view.LayoutInflater.createView(LayoutInflater.java:505)
+E/AndroidRuntime( 2612): 	... 48 more
+E/AndroidRuntime( 2612): Caused by: android.content.res.Resources$NotFoundException: Resource is not a Drawable (color or path): TypedValue{t=0x2/d=0x101032c a=-1}
+E/AndroidRuntime( 2612): 	at android.content.res.Resources.loadDrawable(Resources.java:1681)
+E/AndroidRuntime( 2612): 	at android.content.res.TypedArray.getDrawable(TypedArray.java:601)
+E/AndroidRuntime( 2612): 	at android.view.View.<init>(View.java:1951)
+E/AndroidRuntime( 2612): 	at android.view.View.<init>(View.java:1899)
+E/AndroidRuntime( 2612): 	... 51 more
+W/ActivityManager( 1423):   Force finishing activity com.nao20010128nao.Wisecraft/.ServerInfoActivity
+W/ActivityManager( 1423): Activity pause timeout for HistoryRecord{409e2678 com.nao20010128nao.Wisecraft/.ServerInfoActivity}
+I/ActivityManager( 1423): No longer want com.aide.premium.key:LicenseUpdateService (pid 2490): hidden #16
+I/ActivityManager( 1423): Start proc com.svox.pico for broadcast com.svox.pico/.VoiceDataInstallerReceiver: pid=2682 uid=10072 gids={}
+I/ActivityManager( 1423): Process com.nao20010128nao.Wisecraft (pid 2612) has died.
+I/WindowManager( 1423): WIN DEATH: Window{407cb518 com.nao20010128nao.Wisecraft/com.nao20010128nao.Wisecraft.ServerListActivity paused=false}
+I/WindowManager( 1423): WIN DEATH: Window{407f68c0 com.nao20010128nao.Wisecraft/com.nao20010128nao.Wisecraft.ServerInfoActivity paused=false}
+W/InputManagerService( 1423): Got RemoteException sending setActive(false) notification to pid 2612 uid 10003
+I/ActivityManager( 1423): Start proc com.panasonic.mobile.MakerSiteLink for broadcast com.panasonic.mobile.MakerSiteLink/.StartupReceiver: pid=2699 uid=10075 gids={3003}
+I/ActivityManager( 1423): Start proc com.google.android.apps.maps:FriendService for broadcast com.google.android.apps.maps/com.google.googlenav.friend.android.ServiceReceiver: pid=2706 uid=10015 gids={3003, 1015}
+I/ActivityManager( 1423): No longer want com.google.android.gms.unstable (pid 2126): hidden #16
+I/ActivityManager( 1423): No longer want com.google.android.voicesearch (pid 2539): hidden #16
+I/ActivityManager( 1423): No longer want com.android.defcontainer (pid 2479): hidden #16
+I/ActivityManager( 1423): Start proc com.google.android.googlequicksearchbox for broadcast com.google.android.googlequicksearchbox/.SourceUpdateReceiver: pid=2713 uid=10093 gids={3003}
+I/ActivityManager( 1423): Starting: Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.nao20010128nao.Wisecraft/.ServerListActivity } from pid 1551
+I/ActivityManager( 1423): Start proc com.nao20010128nao.Wisecraft for activity com.nao20010128nao.Wisecraft/.ServerListActivity: pid=2723 uid=10003 gids={3003, 1015}
+I/ActivityManager( 1423): No longer want com.google.android.gms.ui (pid 2660): hidden #16
+I/ActivityManager( 1423): No longer want com.android.voicedialer (pid 2576): hidden #16
+I/ActivityManager( 1423): Starting: Intent { cmp=com.nao20010128nao.Wisecraft/.ServerInfoActivity } from pid 2723
+E/AndroidRuntime( 2723): FATAL EXCEPTION: main
+E/AndroidRuntime( 2723): android.view.InflateException: Binary XML file line #24: Error inflating class android.view.View
+E/AndroidRuntime( 2723): 	at android.view.LayoutInflater.createView(LayoutInflater.java:518)
+E/AndroidRuntime( 2723): 	at android.view.LayoutInflater.onCreateView(LayoutInflater.java:549)
+E/AndroidRuntime( 2723): 	at uk.co.chrisjenx.calligraphy.CalligraphyLayoutInflater.onCreateView(CalligraphyLayoutInflater.java:170)
+E/AndroidRuntime( 2723): 	at android.view.LayoutInflater.createViewFromTag(LayoutInflater.java:568)
+E/AndroidRuntime( 2723): 	at android.view.LayoutInflater.rInflate(LayoutInflater.java:623)
+E/AndroidRuntime( 2723): 	at android.view.LayoutInflater.inflate(LayoutInflater.java:408)
+E/AndroidRuntime( 2723): 	at uk.co.chrisjenx.calligraphy.CalligraphyLayoutInflater.inflate(CalligraphyLayoutInflater.java:60)
+E/AndroidRuntime( 2723): 	at android.view.LayoutInflater.inflate(LayoutInflater.java:320)
+E/AndroidRuntime( 2723): 	at android.view.LayoutInflater.inflate(LayoutInflater.java:276)
+E/AndroidRuntime( 2723): 	at com.nao20010128nao.Wisecraft.misc.KVListAdapter.getView(KVListAdapter.java:16)
+E/AndroidRuntime( 2723): 	at android.widget.AbsListView.obtainView(AbsListView.java:1430)
+E/AndroidRuntime( 2723): 	at android.widget.ListView.makeAndAddView(ListView.java:1745)
+E/AndroidRuntime( 2723): 	at android.widget.ListView.fillDown(ListView.java:670)
+E/AndroidRuntime( 2723): 	at android.widget.ListView.fillFromTop(ListView.java:727)
+E/AndroidRuntime( 2723): 	at android.widget.ListView.layoutChildren(ListView.java:1598)
+E/AndroidRuntime( 2723): 	at android.widget.AbsListView.onLayout(AbsListView.java:1260)
+E/AndroidRuntime( 2723): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 2723): 	at android.widget.FrameLayout.onLayout(FrameLayout.java:338)
+E/AndroidRuntime( 2723): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 2723): 	at android.widget.FrameLayout.onLayout(FrameLayout.java:338)
+E/AndroidRuntime( 2723): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 2723): 	at android.widget.LinearLayout.setChildFrame(LinearLayout.java:1254)
+E/AndroidRuntime( 2723): 	at android.widget.LinearLayout.layoutVertical(LinearLayout.java:1130)
+E/AndroidRuntime( 2723): 	at android.widget.LinearLayout.onLayout(LinearLayout.java:1047)
+E/AndroidRuntime( 2723): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 2723): 	at android.widget.FrameLayout.onLayout(FrameLayout.java:338)
+E/AndroidRuntime( 2723): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 2723): 	at android.widget.LinearLayout.setChildFrame(LinearLayout.java:1254)
+E/AndroidRuntime( 2723): 	at android.widget.LinearLayout.layoutVertical(LinearLayout.java:1130)
+E/AndroidRuntime( 2723): 	at android.widget.LinearLayout.onLayout(LinearLayout.java:1047)
+E/AndroidRuntime( 2723): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 2723): 	at android.widget.FrameLayout.onLayout(FrameLayout.java:338)
+E/AndroidRuntime( 2723): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 2723): 	at android.widget.LinearLayout.setChildFrame(LinearLayout.java:1254)
+E/AndroidRuntime( 2723): 	at android.widget.LinearLayout.layoutVertical(LinearLayout.java:1130)
+E/AndroidRuntime( 2723): 	at android.widget.LinearLayout.onLayout(LinearLayout.java:1047)
+E/AndroidRuntime( 2723): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 2723): 	at android.widget.FrameLayout.onLayout(FrameLayout.java:338)
+E/AndroidRuntime( 2723): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 2723): 	at android.view.ViewRoot.performTraversals(ViewRoot.java:1140)
+E/AndroidRuntime( 2723): 	at android.view.ViewRoot.handleMessage(ViewRoot.java:1859)
+E/AndroidRuntime( 2723): 	at android.os.Handler.dispatchMessage(Handler.java:99)
+E/AndroidRuntime( 2723): 	at android.os.Looper.loop(Looper.java:123)
+E/AndroidRuntime( 2723): 	at android.app.ActivityThread.main(ActivityThread.java:3717)
+E/AndroidRuntime( 2723): 	at java.lang.reflect.Method.invokeNative(Native Method)
+E/AndroidRuntime( 2723): 	at java.lang.reflect.Method.invoke(Method.java:507)
+E/AndroidRuntime( 2723): 	at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:839)
+E/AndroidRuntime( 2723): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:597)
+E/AndroidRuntime( 2723): 	at dalvik.system.NativeStart.main(Native Method)
+E/AndroidRuntime( 2723): Caused by: java.lang.reflect.InvocationTargetException
+E/AndroidRuntime( 2723): 	at java.lang.reflect.Constructor.constructNative(Native Method)
+E/AndroidRuntime( 2723): 	at java.lang.reflect.Constructor.newInstance(Constructor.java:415)
+E/AndroidRuntime( 2723): 	at android.view.LayoutInflater.createView(LayoutInflater.java:505)
+E/AndroidRuntime( 2723): 	... 48 more
+E/AndroidRuntime( 2723): Caused by: android.content.res.Resources$NotFoundException: Resource is not a Drawable (color or path): TypedValue{t=0x2/d=0x101032c a=-1}
+E/AndroidRuntime( 2723): 	at android.content.res.Resources.loadDrawable(Resources.java:1681)
+E/AndroidRuntime( 2723): 	at android.content.res.TypedArray.getDrawable(TypedArray.java:601)
+E/AndroidRuntime( 2723): 	at android.view.View.<init>(View.java:1951)
+E/AndroidRuntime( 2723): 	at android.view.View.<init>(View.java:1899)
+E/AndroidRuntime( 2723): 	... 51 more
+W/ActivityManager( 1423):   Force finishing activity com.nao20010128nao.Wisecraft/.ServerInfoActivity
+W/ActivityManager( 1423): Activity pause timeout for HistoryRecord{40aad8d0 com.nao20010128nao.Wisecraft/.ServerInfoActivity}
+I/ActivityManager( 1423): Process com.nao20010128nao.Wisecraft (pid 2723) has died.
+I/WindowManager( 1423): WIN DEATH: Window{40986bf0 com.nao20010128nao.Wisecraft/com.nao20010128nao.Wisecraft.ServerListActivity paused=false}
+I/WindowManager( 1423): WIN DEATH: Window{408ae2e8 com.nao20010128nao.Wisecraft/com.nao20010128nao.Wisecraft.ServerInfoActivity paused=false}
+W/InputManagerService( 1423): Got RemoteException sending setActive(false) notification to pid 2723 uid 10003
+I/ActivityManager( 1423): Starting: Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.nao20010128nao.Wisecraft/.ServerListActivity } from pid 1551
+I/ActivityManager( 1423): Start proc com.nao20010128nao.Wisecraft for activity com.nao20010128nao.Wisecraft/.ServerListActivity: pid=2754 uid=10003 gids={3003, 1015}
+I/ActivityManager( 1423): Starting: Intent { cmp=com.nao20010128nao.Wisecraft/.ServerInfoActivity } from pid 2754
+I/ActivityManager( 1423): No longer want com.panasonic.mobile.dtv.app1 (pid 2586): hidden #16
+W/InputManagerService( 1423): Window already focused, ignoring focus gain of: com.android.internal.view.IInputMethodClient$Stub$Proxy@407f63b0
+I/ActivityManager( 1423): Starting: Intent { cmp=com.nao20010128nao.Wisecraft/.SettingsActivity } from pid 2754
+I/ActivityManager( 1423): No longer want com.tencent.tcuser (pid 2225): hidden #16
+I/ActivityManager( 1423): Start proc com.android.providers.calendar for content provider com.android.providers.calendar/.CalendarProvider2: pid=2792 uid=10050 gids={3003}
+I/ActivityManager( 1423): Starting: Intent { cmp=com.nao20010128nao.Wisecraft/.ServerInfoActivity } from pid 2754
+E/AndroidRuntime( 2754): FATAL EXCEPTION: main
+E/AndroidRuntime( 2754): android.view.InflateException: Binary XML file line #24: Error inflating class android.view.View
+E/AndroidRuntime( 2754): 	at android.view.LayoutInflater.createView(LayoutInflater.java:518)
+E/AndroidRuntime( 2754): 	at android.view.LayoutInflater.onCreateView(LayoutInflater.java:549)
+E/AndroidRuntime( 2754): 	at uk.co.chrisjenx.calligraphy.CalligraphyLayoutInflater.onCreateView(CalligraphyLayoutInflater.java:170)
+E/AndroidRuntime( 2754): 	at android.view.LayoutInflater.createViewFromTag(LayoutInflater.java:568)
+E/AndroidRuntime( 2754): 	at android.view.LayoutInflater.rInflate(LayoutInflater.java:623)
+E/AndroidRuntime( 2754): 	at android.view.LayoutInflater.inflate(LayoutInflater.java:408)
+E/AndroidRuntime( 2754): 	at uk.co.chrisjenx.calligraphy.CalligraphyLayoutInflater.inflate(CalligraphyLayoutInflater.java:60)
+E/AndroidRuntime( 2754): 	at android.view.LayoutInflater.inflate(LayoutInflater.java:320)
+E/AndroidRuntime( 2754): 	at android.view.LayoutInflater.inflate(LayoutInflater.java:276)
+E/AndroidRuntime( 2754): 	at com.nao20010128nao.Wisecraft.misc.KVListAdapter.getView(KVListAdapter.java:16)
+E/AndroidRuntime( 2754): 	at android.widget.AbsListView.obtainView(AbsListView.java:1430)
+E/AndroidRuntime( 2754): 	at android.widget.ListView.makeAndAddView(ListView.java:1745)
+E/AndroidRuntime( 2754): 	at android.widget.ListView.fillDown(ListView.java:670)
+E/AndroidRuntime( 2754): 	at android.widget.ListView.fillFromTop(ListView.java:727)
+E/AndroidRuntime( 2754): 	at android.widget.ListView.layoutChildren(ListView.java:1598)
+E/AndroidRuntime( 2754): 	at android.widget.AbsListView.onLayout(AbsListView.java:1260)
+E/AndroidRuntime( 2754): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 2754): 	at android.widget.FrameLayout.onLayout(FrameLayout.java:338)
+E/AndroidRuntime( 2754): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 2754): 	at android.widget.FrameLayout.onLayout(FrameLayout.java:338)
+E/AndroidRuntime( 2754): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 2754): 	at android.widget.LinearLayout.setChildFrame(LinearLayout.java:1254)
+E/AndroidRuntime( 2754): 	at android.widget.LinearLayout.layoutVertical(LinearLayout.java:1130)
+E/AndroidRuntime( 2754): 	at android.widget.LinearLayout.onLayout(LinearLayout.java:1047)
+E/AndroidRuntime( 2754): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 2754): 	at android.widget.FrameLayout.onLayout(FrameLayout.java:338)
+E/AndroidRuntime( 2754): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 2754): 	at android.widget.LinearLayout.setChildFrame(LinearLayout.java:1254)
+E/AndroidRuntime( 2754): 	at android.widget.LinearLayout.layoutVertical(LinearLayout.java:1130)
+E/AndroidRuntime( 2754): 	at android.widget.LinearLayout.onLayout(LinearLayout.java:1047)
+E/AndroidRuntime( 2754): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 2754): 	at android.widget.FrameLayout.onLayout(FrameLayout.java:338)
+E/AndroidRuntime( 2754): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 2754): 	at android.widget.LinearLayout.setChildFrame(LinearLayout.java:1254)
+E/AndroidRuntime( 2754): 	at android.widget.LinearLayout.layoutVertical(LinearLayout.java:1130)
+E/AndroidRuntime( 2754): 	at android.widget.LinearLayout.onLayout(LinearLayout.java:1047)
+E/AndroidRuntime( 2754): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 2754): 	at android.widget.FrameLayout.onLayout(FrameLayout.java:338)
+E/AndroidRuntime( 2754): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 2754): 	at android.view.ViewRoot.performTraversals(ViewRoot.java:1140)
+E/AndroidRuntime( 2754): 	at android.view.ViewRoot.handleMessage(ViewRoot.java:1859)
+E/AndroidRuntime( 2754): 	at android.os.Handler.dispatchMessage(Handler.java:99)
+E/AndroidRuntime( 2754): 	at android.os.Looper.loop(Looper.java:123)
+E/AndroidRuntime( 2754): 	at android.app.ActivityThread.main(ActivityThread.java:3717)
+E/AndroidRuntime( 2754): 	at java.lang.reflect.Method.invokeNative(Native Method)
+E/AndroidRuntime( 2754): 	at java.lang.reflect.Method.invoke(Method.java:507)
+E/AndroidRuntime( 2754): 	at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:839)
+E/AndroidRuntime( 2754): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:597)
+E/AndroidRuntime( 2754): 	at dalvik.system.NativeStart.main(Native Method)
+E/AndroidRuntime( 2754): Caused by: java.lang.reflect.InvocationTargetException
+E/AndroidRuntime( 2754): 	at java.lang.reflect.Constructor.constructNative(Native Method)
+E/AndroidRuntime( 2754): 	at java.lang.reflect.Constructor.newInstance(Constructor.java:415)
+E/AndroidRuntime( 2754): 	at android.view.LayoutInflater.createView(LayoutInflater.java:505)
+E/AndroidRuntime( 2754): 	... 48 more
+E/AndroidRuntime( 2754): Caused by: android.content.res.Resources$NotFoundException: Resource is not a Drawable (color or path): TypedValue{t=0x2/d=0x101032c a=-1}
+E/AndroidRuntime( 2754): 	at android.content.res.Resources.loadDrawable(Resources.java:1681)
+E/AndroidRuntime( 2754): 	at android.content.res.TypedArray.getDrawable(TypedArray.java:601)
+E/AndroidRuntime( 2754): 	at android.view.View.<init>(View.java:1951)
+E/AndroidRuntime( 2754): 	at android.view.View.<init>(View.java:1899)
+E/AndroidRuntime( 2754): 	... 51 more
+W/ActivityManager( 1423):   Force finishing activity com.nao20010128nao.Wisecraft/.ServerInfoActivity
+W/ActivityManager( 1423): Activity pause timeout for HistoryRecord{407a7038 com.nao20010128nao.Wisecraft/.ServerInfoActivity}
+I/WindowManager( 1423): WIN DEATH: Window{407c2068 com.nao20010128nao.Wisecraft/com.nao20010128nao.Wisecraft.ServerListActivity paused=false}
+I/ActivityManager( 1423): Process com.nao20010128nao.Wisecraft (pid 2754) has died.
+I/WindowManager( 1423): WIN DEATH: Window{407cb518 com.nao20010128nao.Wisecraft/com.nao20010128nao.Wisecraft.ServerInfoActivity paused=false}
+W/InputManagerService( 1423): Got RemoteException sending setActive(false) notification to pid 2754 uid 10003
+D/Vold    ( 1313): USB connected
+D/Vold    ( 1313): Share method ums now available
+W/Vold    ( 1313): Ignoring unknown switch 'usb_mass_storage'
+I/ActivityManager( 1423): Start proc com.android.settings for broadcast com.android.settings/.TetheringStateChangeBroadcastReciver: pid=2970 uid=1000 gids={3002, 3001, 3003}
+I/StorageNotification( 1527): UMS connection changed to true (media state mounted)
+I/ActivityManager( 1423): No longer want com.google.android.apps.maps:FriendService (pid 2706): hidden #16
+W/InputManagerService( 1423): Window already focused, ignoring focus gain of: com.android.internal.view.IInputMethodClient$Stub$Proxy@40ab8938
+I/ActivityManager( 1423): Starting: Intent { act=android.settings.APPLICATION_DEVELOPMENT_SETTINGS flg=0x10200000 cmp=com.android.settings/.DevelopmentSettings bnds=[0,143][480,239] } from pid -1
+I/ActivityManager( 1423): Starting: Intent { flg=0x10000000 cmp=com.android.systemui/.usb.UsbStorageActivity bnds=[0,241][480,337] } from pid -1
+D/VoldCmdListener( 1313): volume shared /mnt/sdcard ums
+W/InputManagerService( 1423): Starting input on non-focused client com.android.internal.view.IInputMethodClient$Stub$Proxy@406fac48 (uid=1000 pid=2970)
+D/VoldCmdListener( 1313): storage users /mnt/sdcard
+D/VoldCmdListener( 1313): asec list
+W/InputManagerService( 1423): Window already focused, ignoring focus gain of: com.android.internal.view.IInputMethodClient$Stub$Proxy@40525c68
+D/VoldCmdListener( 1313): storage users /mnt/sdcard
+W/ActivityManager( 1423): Killing processes unmount media at adjustment 7
+W/ActivityManager( 1423): Killing ProcessRecord{407903c8 1690:com.estrongs.android.pop/10118} (adj 9): unmount media
+D/VoldCmdListener( 1313): storage users /mnt/sdcard
+I/MountService( 1423): Retrying to kill storage users again
+I/WindowManager( 1423): WIN DEATH: Window{4082fc60 com.estrongs.android.pop/com.estrongs.android.pop.view.FileExplorerActivity paused=false}
+E/WifiService( 1423): Multicaster binderDied
+D/VoldCmdListener( 1313): storage users /mnt/sdcard
+W/ActivityManager( 1423): Killing processes unmount media at adjustment 0
+D/VoldCmdListener( 1313): storage users /mnt/sdcard
+I/MountService( 1423): Retrying to kill storage users again
+D/VoldCmdListener( 1313): storage users /mnt/sdcard
+W/ActivityManager( 1423): Killing processes unmount media at adjustment 0
+D/VoldCmdListener( 1313): storage users /mnt/sdcard
+I/MountService( 1423): Retrying to kill storage users again
+D/VoldCmdListener( 1313): storage users /mnt/sdcard
+W/ActivityManager( 1423): Killing processes unmount media at adjustment 0
+D/VoldCmdListener( 1313): storage users /mnt/sdcard
+I/MountService( 1423): Retrying to kill storage users again
+D/VoldCmdListener( 1313): storage users /mnt/sdcard
+W/ActivityManager( 1423): Killing processes unmount media at adjustment 0
+D/VoldCmdListener( 1313): storage users /mnt/sdcard
+I/MountService( 1423): Failed to unmount media inspite of 4 retries. Forcibly killing processes now
+D/VoldCmdListener( 1313): volume unmount /mnt/sdcard force
+D/Vold    ( 1313): Volume sdcard state changing 4 (Mounted) -> 5 (Unmounting)
+I/ActivityManager( 1423): Start proc com.nttdocomo.android.phonebookcopy for broadcast com.nttdocomo.android.phonebookcopy/.ui.activity.MainActivity$SdReceiver: pid=2982 uid=10051 gids={1015}
+I/ActivityManager( 1423): Start proc com.panasonic.mobile.dtv.app1 for broadcast com.panasonic.mobile.dtv.app1/.view.P_DTVA_BroadcastReceiver: pid=2991 uid=1001 gids={3002, 3001, 3003, 1015}
+I/ActivityManager( 1423): No longer want com.nttdocomo.app.livebookmark (pid 2240): hidden #16
+I/Vold    ( 1313): /mnt/secure/staging/.android_secure sucessfully unmounted
+I/Vold    ( 1313): /mnt/secure/asec sucessfully unmounted
+W/Vold    ( 1313): Failed to unmount /mnt/secure/staging (Device or resource busy, retries 9, action 0)
+E/ProcessKiller( 1313): Process /system/bin/mediaserver (1321) has open file /mnt/secure/staging/Notifications/hangout_ringtone.m4a
+W/Vold    ( 1313): Failed to unmount /mnt/secure/staging (Device or resource busy, retries 8, action 0)
+E/ProcessKiller( 1313): Process /system/bin/mediaserver (1321) has open file /mnt/secure/staging/Notifications/hangout_ringtone.m4a
+W/Vold    ( 1313): Failed to unmount /mnt/secure/staging (Device or resource busy, retries 7, action 0)
+E/ProcessKiller( 1313): Process /system/bin/mediaserver (1321) has open file /mnt/secure/staging/Notifications/hangout_ringtone.m4a
+W/Vold    ( 1313): Failed to unmount /mnt/secure/staging (Device or resource busy, retries 6, action 0)
+E/ProcessKiller( 1313): Process /system/bin/mediaserver (1321) has open file /mnt/secure/staging/Notifications/hangout_ringtone.m4a
+W/Vold    ( 1313): Failed to unmount /mnt/secure/staging (Device or resource busy, retries 5, action 0)
+E/ProcessKiller( 1313): Process /system/bin/mediaserver (1321) has open file /mnt/secure/staging/Notifications/hangout_ringtone.m4a
+W/Vold    ( 1313): Failed to unmount /mnt/secure/staging (Device or resource busy, retries 4, action 0)
+E/ProcessKiller( 1313): Process /system/bin/mediaserver (1321) has open file /mnt/secure/staging/Notifications/hangout_ringtone.m4a
+W/Vold    ( 1313): Failed to unmount /mnt/secure/staging (Device or resource busy, retries 3, action 0)
+E/ProcessKiller( 1313): Process /system/bin/mediaserver (1321) has open file /mnt/secure/staging/Notifications/hangout_ringtone.m4a
+W/Vold    ( 1313): Failed to unmount /mnt/secure/staging (Device or resource busy, retries 2, action 1)
+E/ProcessKiller( 1313): Process /system/bin/mediaserver (1321) has open file /mnt/secure/staging/Notifications/hangout_ringtone.m4a
+W/ProcessKiller( 1313): Sending SIGHUP to process 1321
+I/Vold    ( 1313): /mnt/secure/staging sucessfully unmounted
+I/Vold    ( 1313): /mnt/sdcard unmounted sucessfully
+D/Vold    ( 1313): Volume sdcard state changing 5 (Unmounting) -> 1 (Idle-Unmounted)
+I/ActivityManager( 1423): Start proc com.estrongs.android.pop for broadcast com.estrongs.android.pop/.EnableOEMConfig: pid=3014 uid=10118 gids={3003, 3002, 3001, 1015}
+I/StorageNotification( 1527): Media {/mnt/sdcard} state changed from {mounted} -> {unmounted}
+D/VoldCmdListener( 1313): volume share /mnt/sdcard ums
+D/Vold    ( 1313): Volume sdcard state changing 1 (Idle-Unmounted) -> 7 (Shared-Unmounted)
+W/MountService( 1423): Duplicate state transition (unmounted -> unmounted)
+D/VoldCmdListener( 1313): volume shared /mnt/sdcard ums
+I/StorageNotification( 1527): Media {/mnt/sdcard} state changed from {unmounted} -> {shared}
+I/ActivityManager( 1423): Starting: Intent { flg=0x10000000 cmp=com.android.systemui/.usb.UsbStorageActivity bnds=[0,241][480,337] } from pid -1
+D/VoldCmdListener( 1313): volume shared /mnt/sdcard ums
+W/InputManagerService( 1423): Starting input on non-focused client com.android.internal.view.IInputMethodClient$Stub$Proxy@406fac48 (uid=1000 pid=2970)
+D/VoldCmdListener( 1313): volume unshare /mnt/sdcard ums
+D/Vold    ( 1313): Volume sdcard state changing 7 (Shared-Unmounted) -> 1 (Idle-Unmounted)
+D/VoldCmdListener( 1313): volume mount /mnt/sdcard
+I/Vold    ( 1313): /dev/block/vold/179:1 being considered for volume sdcard
+D/Vold    ( 1313): Volume sdcard state changing 1 (Idle-Unmounted) -> 3 (Checking)
+I/StorageNotification( 1527): Media {/mnt/sdcard} state changed from {shared} -> {unmounted}
+E/Vold    ( 1313): Filesystem check failed (not an exFAT filesystem)
+I/ActivityManager( 1423): Starting: Intent { act=android.settings.APPLICATION_DEVELOPMENT_SETTINGS flg=0x10200000 cmp=com.android.settings/.DevelopmentSettings bnds=[0,143][480,239] } from pid -1
+I/Vold    ( 1313): Filesystem check completed OK
+I/Vold    ( 1313): Device /dev/block/vold/179:1, target /mnt/sdcard mounted @ /mnt/secure/staging
+D/Vold    ( 1313): Volume sdcard state changing 3 (Checking) -> 4 (Mounted)
+D/VoldCmdListener( 1313): volume shared /mnt/sdcard ums
+I/StorageNotification( 1527): Media {/mnt/sdcard} state changed from {unmounted} -> {checking}
+I/StorageNotification( 1527): Media {/mnt/sdcard} state changed from {checking} -> {mounted}
+I/ActivityManager( 1423): Start proc com.google.android.apps.uploader for broadcast com.google.android.apps.uploader/.ConnectivityBroadcastReceiver: pid=3030 uid=10025 gids={3003}
+D/VoldCmdListener( 1313): asec list
+W/PackageManager( 1423): Unknown permission com.nttdocomo.android.syncmlapp.RECEIVE_SYNCML_PUSH in package com.nttdocomo.android.syncmlapp
+W/PackageManager( 1423): Unknown permission com.nttdocomo.android.syncmlapp.SyncML_ViewLog.PICT_REFRESH in package com.nttdocomo.android.syncmlapp
+W/PackageManager( 1423): Unknown permission android.permission.ADD_SYSTEM_SERVICE in package com.android.phone
+W/PackageManager( 1423): Not granting permission android.permission.SEND_DOWNLOAD_COMPLETED_INTENTS to package com.android.browser (protectionLevel=2 flags=0x9be45)
+W/PackageManager( 1423): Unknown permission android.permission.ACCESS_SUPERUSER in package net.zhuoweizhang.mcpelauncher.pro
+W/PackageManager( 1423): Unknown permission com.felicanetworks.mfc.permission.MFC_ACCESS in package jp.co.mcdonalds.android
+W/Vold    ( 1313): Ignoring unknown switch 'usb_mass_storage'
+W/PackageManager( 1423): Unknown permission android.permission.READ_CALL_LOG in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission com.android.voicemail.permission.READ_VOICEMAIL in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission com.android.voicemail.permission.ADD_VOICEMAIL in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.BODY_SENSORS in package com.google.android.gms
+W/PackageManager( 1423): Not granting permission android.permission.FORCE_STOP_PACKAGES to package com.google.android.gms (protectionLevel=2 flags=0x83e44)
+W/PackageManager( 1423): Unknown permission android.permission.INTERACT_ACROSS_USERS in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.RECOVERY in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.READ_DREAM_STATE in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.RECEIVE_DATA_ACTIVITY_CHANGE in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.READ_EXTERNAL_STORAGE in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.PROVIDE_TRUST_AGENT in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission com.google.android.apps.enterprise.dmagent.permission.AutoSyncPermission in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.LOCATION_HARDWARE in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.GET_APP_OPS_STATS in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.UPDATE_APP_OPS_STATS in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.CAPTURE_AUDIO_HOTWORD in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission com.google.android.googlequicksearchbox.permission.PAUSE_HOTWORD in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.MANAGE_VOICE_KEYPHRASES in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.REAL_GET_TASKS in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.READ_PROFILE in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.WRITE_PROFILE in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.READ_SOCIAL_STREAM in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.WRITE_SOCIAL_STREAM in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission com.google.android.hangouts.START_HANGOUT in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.ACCESS_NETWORK_CONDITIONS in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.MANAGE_DEVICE_ADMINS in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.READ_WIFI_CREDENTIAL in package com.google.android.gms
+W/PackageManager( 1423): Not granting permission android.permission.MODIFY_PHONE_STATE to package com.google.android.gms (protectionLevel=3 flags=0x83e44)
+W/PackageManager( 1423): Unknown permission android.permission.CONTROL_INCALL_EXPERIENCE in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.MANAGE_USB in package com.google.android.gms
+W/PackageManager( 1423): Not granting permission android.permission.CALL_PRIVILEGED to package com.google.android.gms (protectionLevel=3 flags=0x83e44)
+W/PackageManager( 1423): Unknown permission android.permission.BLUETOOTH_PRIVILEGED in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.USER_ACTIVITY in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.CAPTURE_AUDIO_OUTPUT in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.CAPTURE_VIDEO_OUTPUT in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.CAPTURE_SECURE_VIDEO_OUTPUT in package com.google.android.gms
+W/PackageManager( 1423): Not granting permission android.permission.READ_FRAME_BUFFER to package com.google.android.gms (protectionLevel=2 flags=0x83e44)
+W/PackageManager( 1423): Unknown permission com.google.android.wearable.READ_SETTINGS in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.SCORE_NETWORKS in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.MODIFY_NETWORK_ACCOUNTING in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.MANAGE_DOCUMENTS in package com.nao20010128nao.MC_PE.SkinChanger
+W/PackageManager( 1423): Unknown permission android.permission.ACCESS_FOTA_DEVICE in package com.panasonic.mobile.pmcadl
+W/PackageManager( 1423): Unknown permission android.webkit.permission.PLUGIN in package com.adobe.flashplayer
+W/PackageManager( 1423): Unknown permission android.permission.READ_OWNER_DATA in package com.android.email
+W/PackageManager( 1423): Unknown permission com.android.providers.im.permission.READ_ONLY in package com.google.android.apps.maps
+W/PackageManager( 1423): Unknown permission android.Manifest.permission.BLUETOOTH in package com.panasonic.mobile.dtv.app1
+W/PackageManager( 1423): Not granting permission android.permission.SET_PREFERRED_APPLICATIONS to package com.nttdocomo.android.homeswitcher (protectionLevel=2 flags=0x8be45)
+W/PackageManager( 1423): Unknown permission android.permission.WRITE_SYNC_STATS in package com.google.android.apps.docs
+W/PackageManager( 1423): Not granting permission android.permission.ACCESS_SURFACE_FLINGER to package com.panasonic.mobile.gallery.garnet (protectionLevel=2 flags=0xbe45)
+W/PackageManager( 1423): Unknown permission com.android.vending.permission.UPDATE_MARKET_FAILURE in package com.android.vending.updater
+W/PackageManager( 1423): Unknown permission com.google.android.apps.googlevoice.permission.AUTO_SEND in package com.google.android.voicesearch
+W/PackageManager( 1423): Unknown permission com.panasonic.mobile.decoscreen.dsp.permission.READ_SETTINGS_ITEM in package com.panasonic.mobile.irda
+W/PackageManager( 1423): Unknown permission com.panasonic.mobile.decoscreen.dsp.permission.WRITE_SETTINGS_ITEM in package com.panasonic.mobile.irda
+W/PackageManager( 1423): Unknown permission com.panasonic.mobile.decoscreen.dsp.permission.READ_SETTINGS_BG in package com.panasonic.mobile.irda
+W/PackageManager( 1423): Unknown permission com.panasonic.mobile.decoscreen.dsp.permission.WRITE_SETTINGS_BG in package com.panasonic.mobile.irda
+W/PackageManager( 1423): Unknown permission com.panasonic.mobile.decoscreen.dsp.permission.READ_SETTINGS_HOME in package com.panasonic.mobile.irda
+W/PackageManager( 1423): Unknown permission com.panasonic.mobile.decoscreen.dsp.permission.WRITE_SETTINGS_HOME in package com.panasonic.mobile.irda
+W/PackageManager( 1423): Unknown permission android.permission.READ_OWNER_DATA in package com.android.setupwizard
+W/PackageManager( 1423): Unknown permission android.permission.WRITE_OWNER_DATA in package com.android.setupwizard
+W/PackageManager( 1423): Unknown permission android.permission.ACCESS_FOTA_DEVICE in package com.panasonic.mobile.settings.settingsupdate
+W/PackageManager( 1423): Not granting permission com.google.android.gm.permission.READ_GMAIL to package com.google.android.apps.uploader (protectionLevel=2 flags=0xbe45)
+W/PackageManager( 1423): Not granting permission android.permission.DEVICE_POWER to package com.panasonic.mobile.camera.aries (protectionLevel=2 flags=0xbe45)
+W/PackageManager( 1423): Not granting permission android.permission.BROADCAST_SMS to package com.panasonic.mobile.camera.aries (protectionLevel=2 flags=0xbe45)
+W/PackageManager( 1423): Unknown permission android.permission.READ_MMS in package com.panasonic.mobile.camera.aries
+W/PackageManager( 1423): Not granting permission android.permission.ACCESS_SURFACE_FLINGER to package com.panasonic.mobile.camera.aries (protectionLevel=2 flags=0xbe45)
+W/PackageManager( 1423): Unknown permission android.permission.READ_PROFILE in package com.google.android.apps.plus
+W/PackageManager( 1423): Unknown permission android.permission.WRITE_PROFILE in package com.google.android.apps.plus
+W/PackageManager( 1423): Unknown permission android.permission.READ_SOCIAL_STREAM in package com.google.android.apps.plus
+W/PackageManager( 1423): Unknown permission android.permission.WRITE_SOCIAL_STREAM in package com.google.android.apps.plus
+W/PackageManager( 1423): Unknown permission android.permission.REAL_GET_TASKS in package com.android.vending
+W/PackageManager( 1423): Unknown permission android.permission.READ_EXTERNAL_STORAGE in package com.android.vending
+W/PackageManager( 1423): Not granting permission android.permission.SEND_DOWNLOAD_COMPLETED_INTENTS to package com.android.vending (protectionLevel=2 flags=0xabec5)
+W/PackageManager( 1423): Unknown permission android.permission.SEND_SMS_NO_CONFIRMATION in package com.android.vending
+W/PackageManager( 1423): Unknown permission android.permission.GET_PACKAGE_IMPORTANCE in package com.android.vending
+W/PackageManager( 1423): Unknown permission android.permission.GET_ACCOUNTS_PRIVILEGED in package com.android.vending
+W/PackageManager( 1423): Unknown permission android.permission.INSTALL_GRANT_RUNTIME_PERMISSIONS in package com.android.vending
+W/PackageManager( 1423): Unknown permission android.permission.GRANT_RUNTIME_PERMISSIONS in package com.android.vending
+W/PackageManager( 1423): Unknown permission android.permission.REVOKE_RUNTIME_PERMISSIONS in package com.android.vending
+W/PackageManager( 1423): Unknown permission android.permission.PACKAGE_VERIFICATION_AGENT in package com.android.vending
+W/PackageManager( 1423): Unknown permission android.permission.MANAGE_USERS in package com.android.vending
+W/PackageManager( 1423): Unknown permission android.permission.INTERACT_ACROSS_USERS in package com.android.vending
+W/PackageManager( 1423): Not granting permission android.permission.WRITE_SECURE_SETTINGS to package com.android.vending (protectionLevel=3 flags=0xabec5)
+W/PackageManager( 1423): Not granting permission android.permission.FORCE_STOP_PACKAGES to package com.android.vending (protectionLevel=2 flags=0xabec5)
+W/PackageManager( 1423): Unknown permission com.google.android.gms.permission.AD_ID_NOTIFICATION in package com.android.vending
+W/PackageManager( 1423): Unknown permission android.permission.WRITE_MEDIA_STORAGE in package com.estrongs.android.pop
+W/PackageManager( 1423): Unknown permission android.permission.ACCESS_SUPERUSER in package com.estrongs.android.pop
+W/PackageManager( 1423): Unknown permission .PERMISSION in package com.estrongs.android.pop
+W/PackageManager( 1423): Not granting permission android.permission.DEVICE_POWER to package com.android.deskclock (protectionLevel=2 flags=0x8be45)
+W/Vold    ( 1313): Ignoring unknown switch 'usb_mass_storage'
+W/InputManagerService( 1423): Window already focused, ignoring focus gain of: com.android.internal.view.IInputMethodClient$Stub$Proxy@4083ba78
+W/Vold    ( 1313): Ignoring unknown switch 'usb_mass_storage'
+W/Vold    ( 1313): Ignoring unknown switch 'usb_mass_storage'
+I/ActivityManager( 1423): Start proc com.nttdocomo.app.calllog for broadcast com.nttdocomo.app.calllog/.PhoneCallWidget: pid=3061 uid=10049 gids={}
+I/ActivityManager( 1423): Start proc com.nttdocomo.app.livebookmark for broadcast com.nttdocomo.app.livebookmark/.BootReceiver: pid=3068 uid=10092 gids={1015, 3003}
+I/ActivityManager( 1423): No longer want jp.co.omronsoft.iwnnime.ml (pid 2629): hidden #16
+I/ActivityManager( 1423): No longer want com.google.android.partnersetup (pid 2530): hidden #16
+I/ActivityManager( 1423): No longer want com.svox.pico (pid 2682): hidden #16
+I/WindowManager( 1423): Setting rotation to 3, animFlags=0
+I/ActivityManager( 1423): Config changed: { scale=1.0 imsi=0/0 loc=ja_JP touch=3 keys=1/1/2 nav=1/1 orien=2 layout=34 uiMode=17 seq=5}
+W/Vold    ( 1313): Ignoring unknown switch 'usb_mass_storage'
+D/Vold    ( 1313): USB disconnected
+D/Vold    ( 1313): Share method ums now unavailable
+I/StorageNotification( 1527): UMS connection changed to false (media state mounted)
+I/WindowManager( 1423): Setting rotation to 0, animFlags=0
+I/ActivityManager( 1423): Config changed: { scale=1.0 imsi=0/0 loc=ja_JP touch=3 keys=1/1/2 nav=1/1 orien=1 layout=34 uiMode=17 seq=6}
+I/ActivityManager( 1423): Start proc com.tencent.tcuser for broadcast com.tencent.tcuser/.receiver.ScreenEventReceiver: pid=3124 uid=10120 gids={3003, 1015}
+W/InputManagerService( 1423): Window already focused, ignoring focus gain of: com.android.internal.view.IInputMethodClient$Stub$Proxy@40838988
+I/ActivityManager( 1423): No longer want com.noshufou.android.su (pid 2651): hidden #16
+I/ActivityManager( 1423): Starting: Intent { act=android.intent.action.MAIN cat=[android.intent.category.HOME] flg=0x10200000 cmp=com.android.launcher/com.android.launcher2.Launcher } from pid 1423
+I/ActivityManager( 1423): No longer want com.google.android.apps.docs (pid 2668): hidden #16
+I/ActivityManager( 1423): Starting: Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.aide.ui/.MainActivity } from pid 1551
+I/ActivityManager( 1423): Start proc com.aide.ui for activity com.aide.ui/.MainActivity: pid=3136 uid=10117 gids={1015, 3003, 1007}
+W/ActivityThread( 3136): ClassLoader.getResources: The class loader returned by Thread.getContextClassLoader() may fail for processes that host multiple applications. You should explicitly specify a context class loader. For example: Thread.setContextClassLoader(getClass().getClassLoader());
+I/ActivityManager( 1423): Start proc com.aide.premium.key:LicenseService for service com.aide.premium.key/com.aide.premium.LicenseService: pid=3146 uid=10117 gids={1015, 3003, 1007}
+I/ActivityManager( 1423): Start proc com.aide.ui:EngineService for service com.aide.ui/com.aide.engine.service.CodeAnalysisEngineService: pid=3160 uid=10117 gids={1015, 3003, 1007}
+W/InputManagerService( 1423): Window already focused, ignoring focus gain of: com.android.internal.view.IInputMethodClient$Stub$Proxy@407660e8
+I/ActivityManager( 1423): Starting: Intent { act=android.intent.action.MAIN cat=[android.intent.category.HOME] flg=0x10200000 cmp=com.android.launcher/com.android.launcher2.Launcher } from pid 1423
+I/ActivityManager( 1423): No longer want com.android.vending (pid 2028): hidden #16
+I/ActivityManager( 1423): No longer want com.google.android.googlequicksearchbox (pid 2713): hidden #17
+I/ActivityManager( 1423): No longer want com.panasonic.mobile.MakerSiteLink (pid 2699): hidden #18
+I/ActivityManager( 1423): Start proc com.google.android.apps.docs for service com.google.android.apps.docs/.sync.syncadapter.DocsSyncAdapterService: pid=3212 uid=10115 gids={1006, 3003, 1015}
+E/ActivityThread( 3212): Failed to find provider info for com.google.android.apps.docs.editors.kix.statesyncer
+E/ActivityThread( 3212): Failed to find provider info for com.google.android.apps.docs.editors.trix.statesyncer
+E/ActivityThread( 3212): Failed to find provider info for com.google.android.apps.docs.editors.punch.statesyncer
+E/ActivityThread( 3212): Failed to find provider info for com.google.android.apps.docs.editors.drawings.statesyncer
+W/InputManagerService( 1423): Window already focused, ignoring focus gain of: com.android.internal.view.IInputMethodClient$Stub$Proxy@40834508
+I/ActivityManager( 1423): No longer want com.google.android.apps.maps (pid 2642): hidden #16
+E/ActivityThread( 3212): Failed to find provider info for com.google.android.apps.docs.editors.kix.statesyncer
+E/ActivityThread( 3212): Failed to find provider info for com.google.android.apps.docs.editors.trix.statesyncer
+E/ActivityThread( 3212): Failed to find provider info for com.google.android.apps.docs.editors.punch.statesyncer
+E/ActivityThread( 3212): Failed to find provider info for com.google.android.apps.docs.editors.drawings.statesyncer
+I/ActivityManager( 1423): Starting: Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.android.vending/.AssetBrowserActivity } from pid 1551
+I/ActivityManager( 1423): Start proc com.android.vending for activity com.android.vending/.AssetBrowserActivity: pid=3246 uid=10014 gids={3003, 1015}
+E/ActivityThread( 3212): Failed to find provider info for com.google.android.apps.docs.editors.kix.statesyncer
+E/ActivityThread( 3212): Failed to find provider info for com.google.android.apps.docs.editors.trix.statesyncer
+E/ActivityThread( 3212): Failed to find provider info for com.google.android.apps.docs.editors.punch.statesyncer
+E/ActivityThread( 3212): Failed to find provider info for com.google.android.apps.docs.editors.drawings.statesyncer
+I/ActivityManager( 1423): Starting: Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10000000 cmp=com.android.vending/com.google.android.finsky.activities.MainActivity } from pid 3246
+I/ActivityManager( 1423): Starting: Intent { cmp=com.android.vending/com.google.android.finsky.billing.lightpurchase.LightPurchaseFlowActivity (has extras) } from pid 3246
+I/ActivityManager( 1423): Starting: Intent { cmp=com.android.vending/com.google.android.finsky.activities.AppsPermissionsActivity (has extras) } from pid 3246
+W/InputManagerService( 1423): Window already focused, ignoring focus gain of: com.android.internal.view.IInputMethodClient$Stub$Proxy@408b64c0
+I/ActivityManager( 1423): Start proc com.android.defcontainer for service com.android.defcontainer/.DefaultContainerService: pid=3344 uid=10077 gids={1015, 2001}
+W/ActivityManager( 1423): No content provider found for: 
+W/ActivityManager( 1423): No content provider found for: 
+I/ActivityManager( 1423): No longer want com.panasonic.mobile.dtv.app1 (pid 2991): hidden #16
+I/PackageManager( 1423): Unpacking native libraries for /data/app/jackpal.androidterm-1.apk
+I/ActivityManager( 1423): Force stopping package jackpal.androidterm uid=10007
+W/PackageManager( 1423): Unknown permission com.nttdocomo.android.syncmlapp.RECEIVE_SYNCML_PUSH in package com.nttdocomo.android.syncmlapp
+W/PackageManager( 1423): Unknown permission com.nttdocomo.android.syncmlapp.SyncML_ViewLog.PICT_REFRESH in package com.nttdocomo.android.syncmlapp
+W/PackageManager( 1423): Unknown permission android.permission.ADD_SYSTEM_SERVICE in package com.android.phone
+W/PackageManager( 1423): Not granting permission android.permission.SEND_DOWNLOAD_COMPLETED_INTENTS to package com.android.browser (protectionLevel=2 flags=0x9be45)
+W/PackageManager( 1423): Unknown permission android.permission.ACCESS_SUPERUSER in package net.zhuoweizhang.mcpelauncher.pro
+W/PackageManager( 1423): Unknown permission com.felicanetworks.mfc.permission.MFC_ACCESS in package jp.co.mcdonalds.android
+W/PackageManager( 1423): Unknown permission android.permission.READ_CALL_LOG in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission com.android.voicemail.permission.READ_VOICEMAIL in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission com.android.voicemail.permission.ADD_VOICEMAIL in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.BODY_SENSORS in package com.google.android.gms
+W/PackageManager( 1423): Not granting permission android.permission.FORCE_STOP_PACKAGES to package com.google.android.gms (protectionLevel=2 flags=0x83e44)
+W/PackageManager( 1423): Unknown permission android.permission.INTERACT_ACROSS_USERS in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.RECOVERY in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.READ_DREAM_STATE in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.RECEIVE_DATA_ACTIVITY_CHANGE in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.READ_EXTERNAL_STORAGE in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.PROVIDE_TRUST_AGENT in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission com.google.android.apps.enterprise.dmagent.permission.AutoSyncPermission in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.LOCATION_HARDWARE in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.GET_APP_OPS_STATS in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.UPDATE_APP_OPS_STATS in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.CAPTURE_AUDIO_HOTWORD in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission com.google.android.googlequicksearchbox.permission.PAUSE_HOTWORD in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.MANAGE_VOICE_KEYPHRASES in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.REAL_GET_TASKS in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.READ_PROFILE in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.WRITE_PROFILE in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.READ_SOCIAL_STREAM in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.WRITE_SOCIAL_STREAM in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission com.google.android.hangouts.START_HANGOUT in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.ACCESS_NETWORK_CONDITIONS in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.MANAGE_DEVICE_ADMINS in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.READ_WIFI_CREDENTIAL in package com.google.android.gms
+W/PackageManager( 1423): Not granting permission android.permission.MODIFY_PHONE_STATE to package com.google.android.gms (protectionLevel=3 flags=0x83e44)
+W/PackageManager( 1423): Unknown permission android.permission.CONTROL_INCALL_EXPERIENCE in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.MANAGE_USB in package com.google.android.gms
+W/PackageManager( 1423): Not granting permission android.permission.CALL_PRIVILEGED to package com.google.android.gms (protectionLevel=3 flags=0x83e44)
+W/PackageManager( 1423): Unknown permission android.permission.BLUETOOTH_PRIVILEGED in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.USER_ACTIVITY in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.CAPTURE_AUDIO_OUTPUT in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.CAPTURE_VIDEO_OUTPUT in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.CAPTURE_SECURE_VIDEO_OUTPUT in package com.google.android.gms
+W/PackageManager( 1423): Not granting permission android.permission.READ_FRAME_BUFFER to package com.google.android.gms (protectionLevel=2 flags=0x83e44)
+W/PackageManager( 1423): Unknown permission com.google.android.wearable.READ_SETTINGS in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.SCORE_NETWORKS in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.MODIFY_NETWORK_ACCOUNTING in package com.google.android.gms
+W/PackageManager( 1423): Unknown permission android.permission.MANAGE_DOCUMENTS in package com.nao20010128nao.MC_PE.SkinChanger
+W/PackageManager( 1423): Unknown permission android.permission.ACCESS_FOTA_DEVICE in package com.panasonic.mobile.pmcadl
+W/PackageManager( 1423): Unknown permission android.webkit.permission.PLUGIN in package com.adobe.flashplayer
+W/PackageManager( 1423): Unknown permission android.permission.READ_OWNER_DATA in package com.android.email
+W/PackageManager( 1423): Unknown permission com.android.providers.im.permission.READ_ONLY in package com.google.android.apps.maps
+W/PackageManager( 1423): Unknown permission android.Manifest.permission.BLUETOOTH in package com.panasonic.mobile.dtv.app1
+W/PackageManager( 1423): Not granting permission android.permission.SET_PREFERRED_APPLICATIONS to package com.nttdocomo.android.homeswitcher (protectionLevel=2 flags=0x8be45)
+W/PackageManager( 1423): Unknown permission android.permission.WRITE_SYNC_STATS in package com.google.android.apps.docs
+W/PackageManager( 1423): Not granting permission android.permission.ACCESS_SURFACE_FLINGER to package com.panasonic.mobile.gallery.garnet (protectionLevel=2 flags=0xbe45)
+W/PackageManager( 1423): Unknown permission com.android.vending.permission.UPDATE_MARKET_FAILURE in package com.android.vending.updater
+W/PackageManager( 1423): Unknown permission com.google.android.apps.googlevoice.permission.AUTO_SEND in package com.google.android.voicesearch
+W/PackageManager( 1423): Unknown permission com.panasonic.mobile.decoscreen.dsp.permission.READ_SETTINGS_ITEM in package com.panasonic.mobile.irda
+W/PackageManager( 1423): Unknown permission com.panasonic.mobile.decoscreen.dsp.permission.WRITE_SETTINGS_ITEM in package com.panasonic.mobile.irda
+W/PackageManager( 1423): Unknown permission com.panasonic.mobile.decoscreen.dsp.permission.READ_SETTINGS_BG in package com.panasonic.mobile.irda
+W/PackageManager( 1423): Unknown permission com.panasonic.mobile.decoscreen.dsp.permission.WRITE_SETTINGS_BG in package com.panasonic.mobile.irda
+W/PackageManager( 1423): Unknown permission com.panasonic.mobile.decoscreen.dsp.permission.READ_SETTINGS_HOME in package com.panasonic.mobile.irda
+W/PackageManager( 1423): Unknown permission com.panasonic.mobile.decoscreen.dsp.permission.WRITE_SETTINGS_HOME in package com.panasonic.mobile.irda
+W/PackageManager( 1423): Unknown permission android.permission.READ_OWNER_DATA in package com.android.setupwizard
+W/PackageManager( 1423): Unknown permission android.permission.WRITE_OWNER_DATA in package com.android.setupwizard
+W/PackageManager( 1423): Unknown permission android.permission.ACCESS_FOTA_DEVICE in package com.panasonic.mobile.settings.settingsupdate
+W/PackageManager( 1423): Not granting permission com.google.android.gm.permission.READ_GMAIL to package com.google.android.apps.uploader (protectionLevel=2 flags=0xbe45)
+W/PackageManager( 1423): Not granting permission android.permission.DEVICE_POWER to package com.panasonic.mobile.camera.aries (protectionLevel=2 flags=0xbe45)
+W/PackageManager( 1423): Not granting permission android.permission.BROADCAST_SMS to package com.panasonic.mobile.camera.aries (protectionLevel=2 flags=0xbe45)
+W/PackageManager( 1423): Unknown permission android.permission.READ_MMS in package com.panasonic.mobile.camera.aries
+W/PackageManager( 1423): Not granting permission android.permission.ACCESS_SURFACE_FLINGER to package com.panasonic.mobile.camera.aries (protectionLevel=2 flags=0xbe45)
+W/PackageManager( 1423): Unknown permission android.permission.READ_PROFILE in package com.google.android.apps.plus
+W/PackageManager( 1423): Unknown permission android.permission.WRITE_PROFILE in package com.google.android.apps.plus
+W/PackageManager( 1423): Unknown permission android.permission.READ_SOCIAL_STREAM in package com.google.android.apps.plus
+W/PackageManager( 1423): Unknown permission android.permission.WRITE_SOCIAL_STREAM in package com.google.android.apps.plus
+W/PackageManager( 1423): Unknown permission android.permission.REAL_GET_TASKS in package com.android.vending
+W/PackageManager( 1423): Unknown permission android.permission.READ_EXTERNAL_STORAGE in package com.android.vending
+W/PackageManager( 1423): Not granting permission android.permission.SEND_DOWNLOAD_COMPLETED_INTENTS to package com.android.vending (protectionLevel=2 flags=0xabec5)
+W/PackageManager( 1423): Unknown permission android.permission.SEND_SMS_NO_CONFIRMATION in package com.android.vending
+W/PackageManager( 1423): Unknown permission android.permission.GET_PACKAGE_IMPORTANCE in package com.android.vending
+W/PackageManager( 1423): Unknown permission android.permission.GET_ACCOUNTS_PRIVILEGED in package com.android.vending
+W/PackageManager( 1423): Unknown permission android.permission.INSTALL_GRANT_RUNTIME_PERMISSIONS in package com.android.vending
+W/PackageManager( 1423): Unknown permission android.permission.GRANT_RUNTIME_PERMISSIONS in package com.android.vending
+W/PackageManager( 1423): Unknown permission android.permission.REVOKE_RUNTIME_PERMISSIONS in package com.android.vending
+W/PackageManager( 1423): Unknown permission android.permission.PACKAGE_VERIFICATION_AGENT in package com.android.vending
+W/PackageManager( 1423): Unknown permission android.permission.MANAGE_USERS in package com.android.vending
+W/PackageManager( 1423): Unknown permission android.permission.INTERACT_ACROSS_USERS in package com.android.vending
+W/PackageManager( 1423): Not granting permission android.permission.WRITE_SECURE_SETTINGS to package com.android.vending (protectionLevel=3 flags=0xabec5)
+W/PackageManager( 1423): Not granting permission android.permission.FORCE_STOP_PACKAGES to package com.android.vending (protectionLevel=2 flags=0xabec5)
+W/PackageManager( 1423): Unknown permission com.google.android.gms.permission.AD_ID_NOTIFICATION in package com.android.vending
+W/PackageManager( 1423): Unknown permission android.permission.WRITE_MEDIA_STORAGE in package com.estrongs.android.pop
+W/PackageManager( 1423): Unknown permission android.permission.ACCESS_SUPERUSER in package com.estrongs.android.pop
+W/PackageManager( 1423): Unknown permission .PERMISSION in package com.estrongs.android.pop
+W/PackageManager( 1423): Not granting permission android.permission.DEVICE_POWER to package com.android.deskclock (protectionLevel=2 flags=0x8be45)
+W/PackageManager( 1423): Unknown permission android.permission.READ_EXTERNAL_STORAGE in package jackpal.androidterm
+W/PackageManager( 1423): Unknown permission android.permission.ACCESS_SUPERUSER in package jackpal.androidterm
+--------- beginning of /dev/log/main
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -67
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+D/dalvikvm( 1423): GC_EXPLICIT freed 902K, 39% free 7437K/12167K, external 4710K/5882K, paused 81ms
+D/Finsky  ( 3246): [7] 1.packageInstalled: Package install status for jackpal.androidterm is 1
+I/ActivityManager( 1423): Starting: Intent { flg=0x10800000 cmp=com.estrongs.android.pop/.app.InstallMonitorActivity (has extras) } from pid 3014
+D/Finsky  ( 3246): [1] 3.installSucceeded: Successful install of jackpal.androidterm
+I/Launcher( 1551): setLoadOnResume
+I/ActivityManager( 1423): Start proc com.google.android.partnersetup for broadcast com.google.android.partnersetup/.AppInstalledReceiver: pid=3360 uid=10060 gids={3003}
+I/ActivityManager( 1423): attachApplication process start(3360) com.google.android.partnersetup
+I/ActivityThread( 3360): Pub com.google.android.partnersetup.rlzprovider: com.google.android.partnersetup.RlzProvider
+I/ActivityThread( 3360): Pub com.google.android.partnersetup.rlzappprovider: com.google.android.partnersetup.RlzAppProvider
+I/ActivityManager( 1423): Start proc com.svox.pico for broadcast com.svox.pico/.VoiceDataInstallerReceiver: pid=3367 uid=10072 gids={}
+I/ActivityManager( 1423): No longer want com.nttdocomo.android.phonebookcopy (pid 2982): hidden #16
+W/ActivityManager( 1423): Activity pause timeout for HistoryRecord{40a2fd80 com.android.vending/com.google.android.finsky.activities.MainActivity}
+I/ActivityManager( 1423): attachApplication process start(3367) com.svox.pico
+I/ActivityThread( 3367): Pub com.svox.pico.providers.SettingsProvider: com.svox.pico.providers.SettingsProvider
+I/ActivityManager( 1423): Start proc com.android.voicedialer for broadcast com.android.voicedialer/.VoiceDialerReceiver: pid=3375 uid=10091 gids={3002}
+I/ActivityManager( 1423): attachApplication process start(3375) com.android.voicedialer
+D/VoiceDialerReceiver( 3375): onReceive Intent { act=android.intent.action.PACKAGE_ADDED dat=package:jackpal.androidterm flg=0x10000000 cmp=com.android.voicedialer/.VoiceDialerReceiver (has extras) }
+V/RecognizerEngine( 3375): deleteCachedGrammarFiles /data/data/com.android.voicedialer/files/openentries.txt
+I/ActivityManager( 1423): No longer want com.nttdocomo.app.calllog (pid 3061): hidden #16
+D/GTalkService( 1585): handlePackageInstalled: re-initialize providers
+D/GTalkService( 1585): [RawStanzaProvidersMgr] ##### searchProvidersFromIntent
+D/GTalkService( 1585): [RawStanzaProvidersMgr] no intent receivers found
+I/ActivityManager( 1423): Start proc com.google.android.apps.maps for broadcast com.google.android.apps.maps/com.google.android.location.internal.NlpPackageUpdateReceiver: pid=3384 uid=10015 gids={3003, 1015}
+W/InputManagerService( 1423): Window already focused, ignoring focus gain of: com.android.internal.view.IInputMethodClient$Stub$Proxy@406dee28
+I/ActivityManager( 1423): No longer want com.google.android.apps.uploader (pid 3030): hidden #16
+I/ActivityManager( 1423): attachApplication process start(3384) com.google.android.apps.maps
+I/ActivityThread( 3384): Pub com.google.android.maps.LayerInfoProvider: com.google.googlenav.layer.LayerInfoProvider
+I/ActivityThread( 3384): Pub com.google.android.maps.OfflineIndexProvider: com.google.googlenav.provider.OfflineIndexProvider
+I/dalvikvm( 3384): Could not find method android.content.ContentValues.keySet, referenced from method com.google.googlenav.provider.OfflineIndexProvider.b
+W/dalvikvm( 3384): VFY: unable to resolve virtual method 7842: Landroid/content/ContentValues;.keySet ()Ljava/util/Set;
+D/dalvikvm( 3384): VFY: replacing opcode 0x6e at 0x0029
+D/dalvikvm( 3384): VFY: dead code 0x002c-002d in Lcom/google/googlenav/provider/OfflineIndexProvider;.b (Landroid/content/ContentValues;)Ljava/util/Set;
+I/ActivityThread( 3384): Pub com.google.android.maps.TrafficAppWidgetProvider: com.google.googlenav.appwidget.traffic.TrafficAppWidgetProvider
+I/ActivityThread( 3384): Pub com.google.android.maps.LocalActivePlacesProvider: com.google.googlenav.provider.LocalActivePlacesProvider
+I/ActivityThread( 3384): Pub com.google.android.maps.StarredItemProvider: com.google.googlenav.provider.StarredItemProvider
+D/dalvikvm( 3384): GC_CONCURRENT freed 651K, 46% free 3667K/6727K, external 1625K/2137K, paused 2ms+3ms
+I/ActivityThread( 3384): Pub com.google.android.maps.LocalSuggestionProvider: com.google.googlenav.provider.LocalSuggestionProvider
+I/ActivityThread( 3384): Pub com.google.android.maps.SearchHistoryProvider: com.google.googlenav.provider.SearchHistoryProvider
+I/ActivityThread( 3384): Pub com.google.android.maps.NavigationAvailabilityProvider: com.google.googlenav.provider.NavigationAvailabilityProvider
+I/ActivityThread( 3384): Pub com.google.android.maps.SuggestionProvider: com.google.googlenav.suggest.android.SuggestContentProvider
+I/ActivityManager( 1423): Start proc com.noshufou.android.su for broadcast com.noshufou.android.su/.InstallReceiver: pid=3392 uid=10002 gids={3003, 1015}
+I/ActivityManager( 1423): No longer want com.nttdocomo.app.livebookmark (pid 3068): hidden #16
+D/dalvikvm( 1320): GC_EXPLICIT freed 11K, 50% free 2725K/5379K, external 1625K/2137K, paused 44ms
+I/ActivityManager( 1423): attachApplication process start(3392) com.noshufou.android.su
+D/dalvikvm( 1320): GC_EXPLICIT freed <1K, 50% free 2725K/5379K, external 1625K/2137K, paused 63ms
+D/dalvikvm( 1320): GC_EXPLICIT freed <1K, 50% free 2725K/5379K, external 1625K/2137K, paused 44ms
+I/ActivityThread( 3392): Pub com.noshufou.android.su.provider: com.noshufou.android.su.provider.PermissionsProvider
+I/ConfigFetchService( 1767): PackageReceiver: Intent { act=android.intent.action.PACKAGE_ADDED dat=package:jackpal.androidterm flg=0x10000000 cmp=com.google.android.gms/.config.ConfigFetchService$PackageReceiver (has extras) }
+I/ActivityManager( 1423): No longer want com.aide.premium.key:LicenseService (pid 3146): hidden #16
+I/ConfigService( 1585): onCreate
+I/ConfigFetchService( 1767): onStartCommand Intent { act=android.intent.action.PACKAGE_ADDED dat=package:jackpal.androidterm cmp=com.google.android.gms/.config.ConfigFetchService (has extras) }
+I/ConfigFetchService( 1767): launchTask
+I/ConfigService( 1585): onBind for Intent { act=com.google.android.gms.config.UPDATE pkg=com.google.android.gms } action com.google.android.gms.config.UPDATE
+I/ConfigService( 1585): onBind returning update interface
+I/ConfigService( 1585): onBind for Intent { act=com.google.android.gms.config.START pkg=com.google.android.gms } action com.google.android.gms.config.START
+I/ConfigService( 1585): onBind returning config service
+I/ConfigFetchService( 1767): service connected
+I/ConfigClient( 1767): service connected
+D/PackageBroadcastService( 1767): Received broadcast action=android.intent.action.PACKAGE_ADDED and uri=jackpal.androidterm
+W/aidelicensing( 3136): Licensing service unexpectedly disconnected.
+W/ActivityManager( 1423): Scheduling restart of crashed service com.aide.premium.key/com.aide.premium.LicenseService in 5000ms
+I/PeopleContactsSync( 1767): CP2 sync disabled
+I/ActivityManager( 1423): Start proc com.nttdocomo.app.livebookmark for broadcast com.nttdocomo.app.livebookmark/.widget.LiveBookmarkAppWidgetProvider: pid=3403 uid=10092 gids={1015, 3003}
+I/ActivityManager( 1423): attachApplication process start(3403) com.nttdocomo.app.livebookmark
+I/ActivityManager( 1423): Start proc com.google.android.googlequicksearchbox for broadcast com.google.android.googlequicksearchbox/.SourceUpdateReceiver: pid=3410 uid=10093 gids={3003}
+I/ActivityManager( 1423): No longer want com.aide.ui:EngineService (pid 3160): hidden #16
+I/ActivityManager( 1423): attachApplication process start(3410) com.google.android.googlequicksearchbox
+I/ActivityThread( 3410): Pub com.google.android.googlequicksearchbox.shortcuts: com.google.android.googlequicksearchbox.WebHistoryProvider
+I/ActivityThread( 3410): Pub com.google.android.googlequicksearchbox.google: com.google.android.googlequicksearchbox.google.GoogleSuggestionProvider
+I/AIDE    ( 3136): Engine service disconnected from UI
+I/AIDE    ( 3136): Trying to restart engine service
+W/ActivityManager( 1423): Scheduling restart of crashed service com.aide.ui/com.aide.engine.service.CodeAnalysisEngineService in 14643ms
+I/ActivityManager( 1423): Start proc com.aide.ui:EngineService for service com.aide.ui/com.aide.engine.service.CodeAnalysisEngineService: pid=3419 uid=10117 gids={1015, 3003, 1007}
+I/ActivityManager( 1423): attachApplication process start(3419) com.aide.ui:EngineService
+I/ActivityManager( 1423): No longer want com.android.settings (pid 2970): hidden #16
+I/WindowManager( 1423): WIN DEATH: Window{4076f3a8 com.android.settings/com.android.settings.DevelopmentSettings paused=false}
+I/global  ( 3246): Loaded time zone names for en_US in 3366ms.
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -66 beacon -68 success
+D/wpa_supplicant( 1524): rssi_data -66 rssi_beacon -68
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -68
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+I/dalvikvm( 3419): Could not find method android.app.Service.onTrimMemory, referenced from method com.aide.engine.service.CodeAnalysisEngineService.onTrimMemory
+W/dalvikvm( 3419): VFY: unable to resolve virtual method 3901: Landroid/app/Service;.onTrimMemory (I)V
+D/dalvikvm( 3419): VFY: replacing opcode 0x6f at 0x0000
+D/dalvikvm( 3419): VFY: dead code 0x0003-0015 in Lcom/aide/engine/service/CodeAnalysisEngineService;.onTrimMemory (I)V
+D/dalvikvm( 3419): Trying to load lib /data/data/com.aide.ui/lib/libAIDE.so 0x40512e50
+D/dalvikvm( 3419): Added shared lib /data/data/com.aide.ui/lib/libAIDE.so 0x40512e50
+D/dalvikvm( 3419): No JNI_OnLoad found in /data/data/com.aide.ui/lib/libAIDE.so 0x40512e50, skipping init
+I/AIDE    ( 3419): Engine service bound - pid 3419 id 1079187856
+I/ActivityManager( 1423): No longer want com.android.defcontainer (pid 3344): hidden #16
+I/AIDE    ( 3136): Engine service connected to UI
+I/System.out( 3419): java.io.IOException: No solution
+I/System.out( 3419): 	at com.aide.engine.d.tp(SourceFile:1945)
+I/System.out( 3419): 	at com.aide.engine.d.run(SourceFile:2132)
+I/System.out( 3419): 	at java.lang.Thread.run(Thread.java:1019)
+D/dalvikvm( 1604): GC_CONCURRENT freed 413K, 48% free 3192K/6087K, external 1625K/2137K, paused 2ms+4ms
+V/ConfigFetchTask( 1767): ConfigFetchTask getDeviceDataVersionInfo(): ABFEt1X9XVibxryZU2UyHYbmqtCIvCD-4AQj2ITPXCidnTyTGyZ6oywk83_K8D1w7u0NrtYH5XlvWp6aygNkp8z-9qMS0D_ZXOhLX3mF5V-3D2xNqm4ADMDPJKEFM1ByuEDsMNO3Suv_A4RgA2ZSdSE1AZoMPu1Zoxc9WHuHwqBKHuPrxhH6mQRVDteHa_onVW75E81GBqZLFdMKxb50DqJVEPbUYolHIa-xV9zxf8QDAFFGiziWz3l00KVCflI_TxVqoVFNZfZOx2c-nSPl7ffpWDQKfC_29TV-JWqjDJzs6apaUt6hRY1TfhfhHz9SRCpo7xwcHRPa41yxHfvMGkF3zilJZhPA00PWX5t8HR_5Kd9gEHW9pv8
+I/GoogleHttpClient( 1767): Falling back to old SSLCertificateSocketFactory
+D/Finsky  ( 3246): [1] DetailsDataBasedFragment.rebindViews: Page [class=DetailsFragment2] loaded in [17929 ms] (hasDetailsDataLoaded? false)
+D/dalvikvm( 3419): GC_FOR_MALLOC freed 172K, 39% free 4065K/6663K, external 1625K/2137K, paused 36ms
+D/dalvikvm( 1767): GC_CONCURRENT freed 1936K, 49% free 6313K/12295K, external 1625K/2137K, paused 4ms+86ms
+D/dalvikvm( 3246): GC_EXTERNAL_ALLOC freed 1122K, 32% free 8239K/12039K, external 6018K/6708K, paused 73ms
+D/dalvikvm( 3246): GC_EXTERNAL_ALLOC freed 8K, 32% free 8231K/12039K, external 7548K/7548K, paused 69ms
+D/dalvikvm( 3419): GC_FOR_MALLOC freed 89K, 35% free 4836K/7431K, external 1625K/2137K, paused 24ms
+I/ConfigFetchService( 1767): fetch service done; releasing wakelock
+I/ConfigFetchService( 1767): stopping self
+I/ConfigService( 1585): onDestroy
+I/dalvikvm( 3246): Could not find method android.widget.LinearLayout.<init>, referenced from method com.google.android.finsky.layout.ForegroundLinearLayout.<init>
+W/dalvikvm( 3246): VFY: unable to resolve direct method 10993: Landroid/widget/LinearLayout;.<init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
+D/dalvikvm( 3246): VFY: replacing opcode 0x70 at 0x0001
+D/dalvikvm( 3246): VFY: dead code 0x0004-001f in Lcom/google/android/finsky/layout/ForegroundLinearLayout;.<init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
+I/dalvikvm( 3246): Could not find method com.google.android.finsky.layout.ForegroundLinearLayout.getLayoutDirection, referenced from method com.google.android.finsky.layout.ForegroundLinearLayout.draw
+W/dalvikvm( 3246): VFY: unable to resolve virtual method 23565: Lcom/google/android/finsky/layout/ForegroundLinearLayout;.getLayoutDirection ()I
+D/dalvikvm( 3246): VFY: replacing opcode 0x6e at 0x002f
+D/dalvikvm( 3246): VFY: dead code 0x0032-003f in Lcom/google/android/finsky/layout/ForegroundLinearLayout;.draw (Landroid/graphics/Canvas;)V
+I/dalvikvm( 3246): Could not find method android.widget.LinearLayout.drawableHotspotChanged, referenced from method com.google.android.finsky.layout.ForegroundLinearLayout.drawableHotspotChanged
+W/dalvikvm( 3246): VFY: unable to resolve virtual method 10999: Landroid/widget/LinearLayout;.drawableHotspotChanged (FF)V
+D/dalvikvm( 3246): VFY: replacing opcode 0x6f at 0x0000
+D/dalvikvm( 3246): VFY: dead code 0x0003-000c in Lcom/google/android/finsky/layout/ForegroundLinearLayout;.drawableHotspotChanged (FF)V
+I/dalvikvm( 3246): Could not find method android.widget.LinearLayout.jumpDrawablesToCurrentState, referenced from method com.google.android.finsky.layout.ForegroundLinearLayout.jumpDrawablesToCurrentState
+W/dalvikvm( 3246): VFY: unable to resolve virtual method 11010: Landroid/widget/LinearLayout;.jumpDrawablesToCurrentState ()V
+D/dalvikvm( 3246): VFY: replacing opcode 0x6f at 0x0000
+D/dalvikvm( 3246): VFY: dead code 0x0003-0010 in Lcom/google/android/finsky/layout/ForegroundLinearLayout;.jumpDrawablesToCurrentState ()V
+D/dalvikvm( 3419): GC_FOR_MALLOC freed 3K, 31% free 5796K/8391K, external 1625K/2137K, paused 156ms
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -66 beacon -67 success
+D/wpa_supplicant( 1524): rssi_data -66 rssi_beacon -67
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -67
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+D/dalvikvm( 3246): GC_EXTERNAL_ALLOC freed 490K, 31% free 8372K/12039K, external 6973K/7809K, paused 72ms
+D/dalvikvm( 3419): null clazz in OP_INSTANCE_OF, single-stepping
+I/global  ( 3246): Loaded time zone names for en_US in 4075ms.
+D/dalvikvm( 3419): null clazz in OP_INSTANCE_OF, single-stepping
+I/ActivityManager( 1423): Start proc com.aide.premium.key:LicenseService for service com.aide.premium.key/com.aide.premium.LicenseService: pid=3430 uid=10117 gids={1015, 3003, 1007}
+I/ActivityManager( 1423): attachApplication process start(3430) com.aide.premium.key:LicenseService
+I/ActivityManager( 1423): Starting: Intent { act=android.intent.action.MAIN flg=0x10000000 cmp=jackpal.androidterm/.Term } from pid 3246
+I/ActivityManager( 1423): No longer want com.tencent.tcuser (pid 3124): hidden #16
+I/ActivityManager( 1423): Start proc jackpal.androidterm for activity jackpal.androidterm/.Term: pid=3437 uid=10007 gids={3003, 1015}
+W/InputManagerService( 1423): Window already focused, ignoring focus gain of: com.android.internal.view.IInputMethodClient$Stub$Proxy@4062fae0
+I/ActivityManager( 1423): attachApplication process start(3437) jackpal.androidterm
+I/ActivityManager( 1423): No longer want com.android.voicedialer (pid 3375): hidden #16
+V/Term    ( 3437): onCreate
+D/Term    ( 3437): TermService started
+I/TermService( 3437): Activity called onBind()
+V/ActivityThread( 3437): Canvas.freeCaches()
+D/skia    ( 3437): purging 6K from font cache [1 entries]
+V/ActivityThread( 3437): Fonts.reLoadFontsLocal()
+D/Fonts(JAVA)( 3437): <ReLoadFontsLocal>
+D/        ( 3437): <Fonts_ReLoadFontsLocal>
+I/Term    ( 3437): Bound to TermService
+I/TermService( 3437): Activity binding to service
+D/dalvikvm( 3437): Trying to load lib /data/data/jackpal.androidterm/lib/libjackpal-termexec2.so 0x40513850
+D/dalvikvm( 3437): Added shared lib /data/data/jackpal.androidterm/lib/libjackpal-termexec2.so 0x40513850
+D/dalvikvm( 3437): No JNI_OnLoad found in /data/data/jackpal.androidterm/lib/libjackpal-termexec2.so 0x40513850, skipping init
+D/dalvikvm( 3437): Trying to load lib /data/data/jackpal.androidterm/lib/libjackpal-androidterm5.so 0x40513850
+D/dalvikvm( 3437): Added shared lib /data/data/jackpal.androidterm/lib/libjackpal-androidterm5.so 0x40513850
+I/libjackpal-androidterm( 3437): JNI_OnLoad
+I/Term    ( 3437): waiting for: 3444
+D/dalvikvm( 1546): GC_EXTERNAL_ALLOC freed 365K, 47% free 3645K/6855K, external 2260K/2823K, paused 162ms
+I/ActivityManager( 1423): Displayed jackpal.androidterm/.Term: +892ms (total +7s981ms)
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -66 beacon -68 success
+D/wpa_supplicant( 1524): rssi_data -66 rssi_beacon -68
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -68
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+I/dalvikvm( 3136): Jit: resizing JitTable from 4096 to 8192
+W/GAV4    ( 1767): Thread[Thread-103,5,main]:  Using destination https://ssl.google-analytics.com
+W/GAV4    ( 1767): Thread[Thread-103,5,main]:  Using destination https://ssl.google-analytics.com
+D/dalvikvm( 3419): GC_CONCURRENT freed 1715K, 42% free 5666K/9735K, external 1625K/2137K, paused 332ms+3ms
+D/dalvikvm( 3136): GC_CONCURRENT freed 1813K, 44% free 5418K/9671K, external 3672K/4485K, paused 2ms+4ms
+D/wpa_supplicant( 1524): CMD: SCAN_RESULTS
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): CMD: SCAN_RESULTS
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): CMD: SCAN_RESULTS
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): CMD: SCAN_RESULTS
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): CMD: SCAN_RESULTS
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): CMD: SCAN_RESULTS
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): CMD: SCAN_RESULTS
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): CMD: SCAN_RESULTS
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): CMD: SCAN_RESULTS
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): CMD: SCAN_RESULTS
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): CMD: SCAN_RESULTS
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): CMD: SCAN_RESULTS
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): CMD: SCAN_RESULTS
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): CMD: SCAN_RESULTS
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): CMD: SCAN_RESULTS
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): CMD: SCAN_RESULTS
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): CMD: SCAN_RESULTS
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): CMD: SCAN_RESULTS
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): CMD: SCAN_RESULTS
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): CMD: SCAN_RESULTS
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): CMD: SCAN_RESULTS
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): CMD: SCAN_RESULTS
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): CMD: SCAN_RESULTS
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): CMD: SCAN_RESULTS
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): CMD: SCAN_RESULTS
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): CMD: STATUS
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -66 beacon -68 success
+D/wpa_supplicant( 1524): rssi_data -66 rssi_beacon -68
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -68
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+I/global  ( 3246): Loaded time zone names for en_US in 6332ms.
+I/global  ( 3246): Loaded time zone names for en_US in 4426ms.
+D/dalvikvm( 3419): GC_FOR_MALLOC freed 533K, 37% free 6180K/9735K, external 1625K/2137K, paused 30ms
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -66 beacon -68 success
+D/wpa_supplicant( 1524): rssi_data -66 rssi_beacon -68
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -68
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+I/global  ( 3246): Loaded time zone names for en_US in 1675ms.
+I/global  ( 3246): Loaded time zone names for en_US in 1324ms.
+D/skia    ( 3246): Loading ARM decoder...
+D/skia    ( 3246): Loading ARM decoder...
+D/skia    ( 3246): Loading ARM decoder...
+D/skia    ( 3246): Loading ARM decoder...
+I/global  ( 3246): Loaded time zone names for en_US in 527ms.
+D/skia    ( 3246): Loading ARM decoder...
+D/skia    ( 3246): Loading ARM decoder...
+D/PlayCommon( 3246): [1] BitmapLoader.onGetImageSuccess: https://lh5.ggpht.com/61J4OkEeyjUISu7BJNTmtdwVr8o0BKt5AfsmtH1D3zXE3-JRrxvtFtU6wUdjpCq0xwJO=h360 is not cached
+D/dalvikvm( 3419): GC_CONCURRENT freed 28K, 25% free 7778K/10247K, external 1625K/2137K, paused 2ms+3ms
+D/dalvikvm( 3419): GC_CONCURRENT freed 48K, 21% free 9715K/12231K, external 1625K/2137K, paused 2ms+3ms
+D/dalvikvm( 2040): GC_EXPLICIT freed 1160K, 43% free 5136K/8903K, external 1625K/2137K, paused 50ms
+I/System.out( 3419): Model loaded /mnt/sdcard/.aide/enginecache/.160d9bd7a2c83b2f.cgc
+D/dalvikvm( 3419): GC_CONCURRENT freed 177K, 19% free 11595K/14215K, external 1625K/2137K, paused 2ms+2ms
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -65 beacon -68 success
+D/wpa_supplicant( 1524): rssi_data -65 rssi_beacon -68
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -68
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+D/AndroidRuntime( 3457): 
+D/AndroidRuntime( 3457): >>>>>> AndroidRuntime START com.android.internal.os.RuntimeInit <<<<<<
+D/AndroidRuntime( 3457): CheckJNI is OFF
+D/dalvikvm( 3457): creating instr width table
+D/AndroidRuntime( 3457): Calling main entry com.android.commands.am.Am
+I/ActivityManager( 1423): Start proc com.tencent.tcuser for broadcast com.tencent.tcuser/.receiver.SuRequestReceiver: pid=3465 uid=10120 gids={3003, 1015}
+I/dalvikvm( 3419): Total arena pages for JIT: 11
+I/ActivityManager( 1423): attachApplication process start(3465) com.tencent.tcuser
+D/dalvikvm( 3465): Trying to load lib /data/data/com.tencent.tcuser/applib/libxy.so 0x40513c20
+D/dalvikvm( 3465): Added shared lib /data/data/com.tencent.tcuser/applib/libxy.so 0x40513c20
+D/dalvikvm( 3465): No JNI_OnLoad found in /data/data/com.tencent.tcuser/applib/libxy.so 0x40513c20, skipping init
+I/tcuser_jni( 3465): decLen = 4174
+I/tcuser_jni( 3465): decLen = 346
+I/ActivityManager( 1423): Starting: Intent { flg=0x10000000 cmp=com.tencent.tcuser/.activitys.SuRequestActivity (has extras) } from pid 3465
+D/PhoneWindow( 3437): couldn't save which view has focus because the focused view class jackpal.androidterm.TermView(ShellTermSession(1457610265540,null)) has no id.
+D/AndroidRuntime( 3457): Shutting down VM
+I/ActivityManager( 1423): No longer want com.nttdocomo.app.livebookmark (pid 3403): hidden #16
+D/dalvikvm( 3457): GC_CONCURRENT freed 102K, 69% free 324K/1024K, external 0K/0K, paused 0ms+0ms
+D/jdwp    ( 3457): adbd disconnected
+V/ActivityThread( 3465): Canvas.freeCaches()
+D/skia    ( 3465): purging 41K from font cache [6 entries]
+V/ActivityThread( 3465): Fonts.reLoadFontsLocal()
+D/Fonts(JAVA)( 3465): <ReLoadFontsLocal>
+D/        ( 3465): <Fonts_ReLoadFontsLocal>
+W/InputManagerService( 1423): Starting input on non-focused client com.android.internal.view.IInputMethodClient$Stub$Proxy@40858c50 (uid=10007 pid=3437)
+W/IInputConnectionWrapper( 3437): showStatusIcon on inactive InputConnection
+D/dalvikvm( 3419): GC_CONCURRENT freed 1347K, 24% free 12198K/16007K, external 1625K/2137K, paused 2ms+5ms
+I/ActivityManager( 1423): Displayed com.tencent.tcuser/.activitys.SuRequestActivity: +436ms
+D/dalvikvm( 1527): GC_CONCURRENT freed 717K, 50% free 3220K/6407K, external 3364K/3675K, paused 2ms+8ms
+I/tcuser_jni( 3465): decLen = 105
+D/dalvikvm( 3246): GC_CONCURRENT freed 1777K, 34% free 8420K/12679K, external 6245K/6315K, paused 3ms+6ms
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -65 beacon -68 success
+D/wpa_supplicant( 1524): rssi_data -65 rssi_beacon -68
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -68
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+D/dalvikvm( 3419): GC_CONCURRENT freed 1738K, 26% free 12438K/16647K, external 1625K/2137K, paused 2ms+3ms
+D/dalvikvm( 3419): GC_FOR_MALLOC freed 681K, 22% free 13272K/16967K, external 1625K/2137K, paused 57ms
+D/Finsky  ( 3246): [1] AppStatesReplicator.handleContentSyncResponse: Completed 1 account content syncs with 1 successful.
+D/Finsky  ( 3246): [1] 5.onFinished: Installation state replication succeeded.
+I/tcuser_jni( 3465): decLen = 113
+D/dalvikvm( 3419): GC_CONCURRENT freed 1340K, 22% free 13943K/17735K, external 1625K/2137K, paused 2ms+3ms
+I/tcuser_jni( 3465): decLen = 76
+D/dalvikvm( 3419): GC_FOR_MALLOC freed 212K, 21% free 14605K/18311K, external 1625K/2137K, paused 58ms
+I/dalvikvm( 3419): Jit: resizing JitTable from 4096 to 8192
+D/dalvikvm( 3419): GC_FOR_MALLOC freed 269K, 17% free 15814K/19015K, external 1625K/2137K, paused 58ms
+D/dalvikvm( 3419): GC_FOR_MALLOC freed 507K, 19% free 16309K/19975K, external 1625K/2137K, paused 58ms
+I/TcUser: ( 3465): 0
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -65 beacon -67 success
+D/wpa_supplicant( 1524): rssi_data -65 rssi_beacon -67
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -67
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+W/ActivityManager( 1423): Duplicate finish request for HistoryRecord{40929610 com.tencent.tcuser/.activitys.SuRequestActivity}
+D/dalvikvm( 3419): GC_CONCURRENT freed 241K, 14% free 18073K/20807K, external 1625K/2137K, paused 3ms+4ms
+I/tcuser_jni( 3465): decLen = 57
+D/dalvikvm( 3419): GC_CONCURRENT freed 378K, 13% free 19699K/22535K, external 1625K/2137K, paused 2ms+4ms
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -66 beacon -68 success
+D/wpa_supplicant( 1524): rssi_data -66 rssi_beacon -68
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -68
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+D/dalvikvm( 3014): GC_EXPLICIT freed 771K, 49% free 3375K/6599K, external 1750K/2137K, paused 50ms
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -66 beacon -67 success
+D/wpa_supplicant( 1524): rssi_data -66 rssi_beacon -67
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -67
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+D/dalvikvm( 3419): GC_CONCURRENT freed 1020K, 15% free 20745K/24199K, external 1625K/2137K, paused 2ms+4ms
+D/dalvikvm( 3419): GC_CONCURRENT freed 713K, 13% free 21966K/25159K, external 1625K/2137K, paused 66ms+3ms
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -65 beacon -67 success
+D/wpa_supplicant( 1524): rssi_data -65 rssi_beacon -67
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -67
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+D/dalvikvm( 3419): GC_FOR_MALLOC freed 864K, 13% free 22848K/26183K, external 1625K/2137K, paused 84ms
+D/dalvikvm( 1767): GC_EXPLICIT freed 1342K, 51% free 6061K/12295K, external 1625K/2137K, paused 60ms
+D/dalvikvm( 3419): GC_FOR_MALLOC freed 505K, 13% free 23256K/26631K, external 1625K/2137K, paused 249ms
+I/dalvikvm-heap( 3419): Grow heap (frag case) to 27.880MB for 1280140-byte allocation
+D/dalvikvm( 3419): GC_FOR_MALLOC freed 0K, 13% free 24506K/27911K, external 1625K/2137K, paused 272ms
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -65 beacon -66 success
+D/wpa_supplicant( 1524): rssi_data -65 rssi_beacon -66
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -66
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+D/AndroidRuntime( 3485): 
+D/AndroidRuntime( 3485): >>>>>> AndroidRuntime START com.android.internal.os.RuntimeInit <<<<<<
+D/AndroidRuntime( 3485): CheckJNI is OFF
+D/dalvikvm( 3485): creating instr width table
+D/AndroidRuntime( 3485): Calling main entry com.android.commands.am.Am
+D/AndroidRuntime( 3485): Shutting down VM
+D/dalvikvm( 3485): GC_CONCURRENT freed 102K, 69% free 324K/1024K, external 0K/0K, paused 1ms+1ms
+D/jdwp    ( 3485): adbd disconnected
+I/AndroidRuntime( 3485): NOTE: attach of thread 'Binder Thread #3' failed
+D/dalvikvm( 3437): GC_CONCURRENT freed 652K, 47% free 3631K/6727K, external 1625K/2137K, paused 2ms+9ms
+D/dalvikvm( 3419): GC_CONCURRENT freed 1519K, 14% free 24939K/28935K, external 1625K/2137K, paused 7ms+4ms
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -65 beacon -65 success
+D/wpa_supplicant( 1524): rssi_data -65 rssi_beacon -65
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -65
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+D/dalvikvm( 1712): GC_EXPLICIT freed 155K, 48% free 3168K/6087K, external 1625K/2137K, paused 36ms
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -64 beacon -64 success
+D/wpa_supplicant( 1524): rssi_data -64 rssi_beacon -64
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -64
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+I/dalvikvm( 3419): Jit: resizing JitTable from 8192 to 16384
+I/System.out( 3419): Shrink incremental: 2121900
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -64 beacon -64 success
+D/wpa_supplicant( 1524): rssi_data -64 rssi_beacon -64
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -64
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -64 beacon -64 success
+D/wpa_supplicant( 1524): rssi_data -64 rssi_beacon -64
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -64
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+D/dalvikvm( 2603): GC_EXPLICIT freed 235K, 52% free 3244K/6727K, external 1625K/2137K, paused 112ms
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -64 beacon -63 success
+D/wpa_supplicant( 1524): rssi_data -64 rssi_beacon -63
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -63
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -64 beacon -62 success
+D/wpa_supplicant( 1524): rssi_data -64 rssi_beacon -62
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -62
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+D/dalvikvm( 3212): GC_EXPLICIT freed 556K, 51% free 4707K/9415K, external 1625K/2137K, paused 100ms
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -64 beacon -63 success
+D/wpa_supplicant( 1524): rssi_data -64 rssi_beacon -63
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -63
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+D/dalvikvm( 1546): GC_CONCURRENT freed 784K, 46% free 3867K/7111K, external 2260K/2894K, paused 12ms+13ms
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -64 beacon -63 success
+D/wpa_supplicant( 1524): rssi_data -64 rssi_beacon -63
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -63
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+I/Sensors ( 1423): ACC: State is not changed.
+D/wpa_supplicant( 1524): CMD: AP_SCAN 2
+D/wpa_supplicant( 1524): ap_scan = 2
+D/wpa_supplicant( 1524): CMD: SCAN
+D/wpa_supplicant( 1524): Setting scan request: 0 sec 0 usec
+D/wpa_supplicant( 1524): wpa_supplicant_scan: scan_req = 2, ap_scan = 2
+D/wpa_supplicant( 1524): Starting AP scan (broadcast SSID)
+D/wpa_supplicant( 1524): wpa_driver_tista_scan
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 8021501  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_scan success
+D/wpa_supplicant( 1524): Scan requested (ret=0) - scan timeout 30 sec
+D/wpa_supplicant( 1524): RTM_NEWLINK: operstate=1 ifi_flags=0x11043 ([UP][RUNNING][LOWER_UP])
+D/wpa_supplicant( 1524): RTM_NEWLINK, IFLA_IFNAME: Interface 'tiwlan0' added
+D/wpa_supplicant( 1524): Wireless event: cmd=0x8b19 len=8
+D/wpa_supplicant( 1524): Received 5594 bytes of scan results (9 BSSes)
+D/wpa_supplicant( 1524): Actual APs number 9
+D/wpa_supplicant( 1524): After merge, APs number 13
+D/wpa_supplicant( 1524): New scan results available
+D/wpa_supplicant( 1524): CMD: AP_SCAN 1
+D/wpa_supplicant( 1524): ap_scan = 1
+D/wpa_supplicant( 1524): CMD: SCAN_RESULTS
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): CMD: SCAN_RESULTS
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): CMD: SCAN_RESULTS
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): CMD: SCAN_RESULTS
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): WPS: Unsupported attribute type 0x1049 len=6
+D/wpa_supplicant( 1524): CMD: STATUS
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -64 beacon -63 success
+D/wpa_supplicant( 1524): rssi_data -64 rssi_beacon -63
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -63
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+D/wpa_supplicant( 1524): CMD: LIST_NETWORKS
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 ssid
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='ssid'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 bssid
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='bssid'
+D/wpa_supplicant( 1524): CTRL_IFACE: Failed to get network variable 'bssid'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 priority
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='priority'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 scan_ssid
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='scan_ssid'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 wep_tx_keyidx
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='wep_tx_keyidx'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 wep_key0
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='wep_key0'
+D/wpa_supplicant( 1524): CTRL_IFACE: Failed to get network variable 'wep_key0'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 wep_key1
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='wep_key1'
+D/wpa_supplicant( 1524): CTRL_IFACE: Failed to get network variable 'wep_key1'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 wep_key2
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='wep_key2'
+D/wpa_supplicant( 1524): CTRL_IFACE: Failed to get network variable 'wep_key2'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 wep_key3
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='wep_key3'
+D/wpa_supplicant( 1524): CTRL_IFACE: Failed to get network variable 'wep_key3'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 psk
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='psk'
+D/wpa_supplicant( 1524): Do not allow key_data field to be exposed
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 proto
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='proto'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 key_mgmt
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='key_mgmt'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 auth_alg
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='auth_alg'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 pairwise
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='pairwise'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 group
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='group'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 eap
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='eap'
+D/wpa_supplicant( 1524): CTRL_IFACE: Failed to get network variable 'eap'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 phase2
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='phase2'
+D/wpa_supplicant( 1524): CTRL_IFACE: Failed to get network variable 'phase2'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 identity
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='identity'
+D/wpa_supplicant( 1524): CTRL_IFACE: Failed to get network variable 'identity'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 anonymous_identity
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='anonymous_identity'
+D/wpa_supplicant( 1524): CTRL_IFACE: Failed to get network variable 'anonymous_identity'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 password
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='password'
+D/wpa_supplicant( 1524): CTRL_IFACE: Failed to get network variable 'password'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 client_cert
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='client_cert'
+D/wpa_supplicant( 1524): CTRL_IFACE: Failed to get network variable 'client_cert'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 private_key
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='private_key'
+D/wpa_supplicant( 1524): CTRL_IFACE: Failed to get network variable 'private_key'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 ca_cert
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='ca_cert'
+D/wpa_supplicant( 1524): CTRL_IFACE: Failed to get network variable 'ca_cert'
+D/wpa_supplicant( 1524): CMD: LIST_NETWORKS
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 ssid
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='ssid'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 bssid
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='bssid'
+D/wpa_supplicant( 1524): CTRL_IFACE: Failed to get network variable 'bssid'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 priority
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='priority'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 scan_ssid
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='scan_ssid'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 wep_tx_keyidx
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='wep_tx_keyidx'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 wep_key0
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='wep_key0'
+D/wpa_supplicant( 1524): CTRL_IFACE: Failed to get network variable 'wep_key0'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 wep_key1
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='wep_key1'
+D/wpa_supplicant( 1524): CTRL_IFACE: Failed to get network variable 'wep_key1'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 wep_key2
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='wep_key2'
+D/wpa_supplicant( 1524): CTRL_IFACE: Failed to get network variable 'wep_key2'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 wep_key3
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='wep_key3'
+D/wpa_supplicant( 1524): CTRL_IFACE: Failed to get network variable 'wep_key3'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 psk
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='psk'
+D/wpa_supplicant( 1524): Do not allow key_data field to be exposed
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 proto
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='proto'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 key_mgmt
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='key_mgmt'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 auth_alg
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='auth_alg'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 pairwise
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='pairwise'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 group
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='group'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 eap
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='eap'
+D/wpa_supplicant( 1524): CTRL_IFACE: Failed to get network variable 'eap'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 phase2
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='phase2'
+D/wpa_supplicant( 1524): CTRL_IFACE: Failed to get network variable 'phase2'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 identity
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='identity'
+D/wpa_supplicant( 1524): CTRL_IFACE: Failed to get network variable 'identity'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 anonymous_identity
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='anonymous_identity'
+D/wpa_supplicant( 1524): CTRL_IFACE: Failed to get network variable 'anonymous_identity'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 password
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='password'
+D/wpa_supplicant( 1524): CTRL_IFACE: Failed to get network variable 'password'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 client_cert
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='client_cert'
+D/wpa_supplicant( 1524): CTRL_IFACE: Failed to get network variable 'client_cert'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 private_key
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='private_key'
+D/wpa_supplicant( 1524): CTRL_IFACE: Failed to get network variable 'private_key'
+D/wpa_supplicant( 1524): CMD: GET_NETWORK 0 ca_cert
+D/wpa_supplicant( 1524): CTRL_IFACE: GET_NETWORK id=0 name='ca_cert'
+D/wpa_supplicant( 1524): CTRL_IFACE: Failed to get network variable 'ca_cert'
+I/GCoreUlr( 2040): Successfully inserted location
+I/GCoreUlr( 2040): Not calling LocationReporter, hasMoved: false, elapsed millis: 359560, request: Stationary(3600000)
+D/dalvikvm( 3437): GC_CONCURRENT freed 763K, 48% free 3616K/6855K, external 1626K/2137K, paused 2ms+5ms
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -65 beacon -64 success
+D/wpa_supplicant( 1524): rssi_data -65 rssi_beacon -64
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -64
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -64 beacon -64 success
+D/wpa_supplicant( 1524): rssi_data -64 rssi_beacon -64
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -64
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+D/dalvikvm( 3246): GC_EXPLICIT freed 781K, 38% free 7953K/12679K, external 6187K/6315K, paused 80ms
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -64 beacon -63 success
+D/wpa_supplicant( 1524): rssi_data -64 rssi_beacon -63
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -63
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+I/Sensors ( 1423): ACC: State is not changed.
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -64 beacon -64 success
+D/wpa_supplicant( 1524): rssi_data -64 rssi_beacon -64
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -64
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+D/dalvikvm( 2040): GC_FOR_MALLOC freed 1151K, 43% free 5176K/8967K, external 1625K/2137K, paused 50ms
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -64 beacon -64 success
+D/wpa_supplicant( 1524): rssi_data -64 rssi_beacon -64
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -64
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -64 beacon -63 success
+D/wpa_supplicant( 1524): rssi_data -64 rssi_beacon -63
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -63
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+D/dalvikvm( 1423): GC_EXPLICIT freed 1367K, 39% free 7464K/12167K, external 4710K/5882K, paused 198ms
+I/Sensors ( 1423): ACC: State is not changed.
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -64 beacon -64 success
+D/wpa_supplicant( 1524): rssi_data -64 rssi_beacon -64
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -64
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -64 beacon -64 success
+D/wpa_supplicant( 1524): rssi_data -64 rssi_beacon -64
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -64
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+D/dalvikvm( 2040): GC_EXPLICIT freed 340K, 43% free 5143K/8967K, external 1625K/2137K, paused 309ms
+D/dalvikvm( 3437): GC_CONCURRENT freed 752K, 47% free 3635K/6855K, external 1626K/2137K, paused 3ms+4ms
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -64 beacon -64 success
+D/wpa_supplicant( 1524): rssi_data -64 rssi_beacon -64
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -64
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+I/Sensors ( 1423): ACC: State is not changed.
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -64 beacon -64 success
+D/wpa_supplicant( 1524): rssi_data -64 rssi_beacon -64
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -64
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+D/dalvikvm( 1546): GC_CONCURRENT freed 1022K, 48% free 3871K/7367K, external 2260K/2894K, paused 10ms+25ms
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -64 beacon -64 success
+D/wpa_supplicant( 1524): rssi_data -64 rssi_beacon -64
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -64
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -64 beacon -63 success
+D/wpa_supplicant( 1524): rssi_data -64 rssi_beacon -63
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -63
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -64 beacon -63 success
+D/wpa_supplicant( 1524): rssi_data -64 rssi_beacon -63
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -63
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+D/dalvikvm( 3437): GC_CONCURRENT freed 732K, 47% free 3646K/6855K, external 1626K/2137K, paused 6ms+13ms
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -64 beacon -65 success
+D/wpa_supplicant( 1524): rssi_data -64 rssi_beacon -65
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -65
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+I/PeopleSync( 1767): onPerformSync() [a844728a]
+I/PeopleSync( 1767): Setting subscription: result=true [a844728a]
+I/PeopleSync( 1767): Starting sync, feed=null [a844728a]
+I/PeopleSync( 1767): Sync start: cannotHavePeople=false isPageExistenceCheckOnly=false
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -64 beacon -63 success
+D/wpa_supplicant( 1524): rssi_data -64 rssi_beacon -63
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -63
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+D/dalvikvm( 1585): GC_EXPLICIT freed 711K, 43% free 5630K/9799K, external 1625K/2137K, paused 65ms
+I/ActivityManager( 1423): Starting: Intent { act=android.intent.action.MAIN cat=[android.intent.category.HOME] flg=0x10200000 cmp=com.android.launcher/com.android.launcher2.Launcher } from pid 1423
+D/PhoneWindow( 3437): couldn't save which view has focus because the focused view class jackpal.androidterm.TermView(ShellTermSession(1457610265540,null)) has no id.
+W/IInputConnectionWrapper( 3437): showStatusIcon on inactive InputConnection
+W/InputManagerService( 1423): Starting input on non-focused client com.android.internal.view.IInputMethodClient$Stub$Proxy@40858c50 (uid=10007 pid=3437)
+E/PeopleIS( 1767): Error retrieving image at URL https:https://lh3.googleusercontent.com/-3CEtvbwVObQ/AAAAAAAAAAI/AAAAAAAAAAA/7jNZAevJJK8/photo.jpg?sz=50 (Error executing network request for https:https://lh3.googleusercontent.com/-3CEtvbwVObQ/AAAAAAAAAAI/AAAAAAAAAAA/7jNZAevJJK8/s180-ns/ [none] [ac])
+E/PeopleIS( 1767): Error retrieving image at URL https:https://lh3.googleusercontent.com/-THl0R4wkdm4/AAAAAAAAAAI/AAAAAAAAAAA/1g4ID-rs5iQ/photo.jpg?sz=50 (Error executing network request for https:https://lh3.googleusercontent.com/-THl0R4wkdm4/AAAAAAAAAAI/AAAAAAAAAAA/1g4ID-rs5iQ/s180-ns/ [none] [ac])
+E/PeopleIS( 1767): Error retrieving image at URL https:https://lh3.googleusercontent.com/-btrk6AyPg3U/AAAAAAAAAAI/AAAAAAAAAAA/GveYpnwcV_c/photo.jpg?sz=50 (Error executing network request for https:https://lh3.googleusercontent.com/-btrk6AyPg3U/AAAAAAAAAAI/AAAAAAAAAAA/GveYpnwcV_c/s180-ns/ [none] [ac])
+E/PeopleIS( 1767): Error retrieving image at URL https:https://lh3.googleusercontent.com/-9TlNIGJpQUI/AAAAAAAAAAI/AAAAAAAAAAA/ze1pxmJSqkY/photo.jpg?sz=50 (Error executing network request for https:https://lh3.googleusercontent.com/-9TlNIGJpQUI/AAAAAAAAAAI/AAAAAAAAAAA/ze1pxmJSqkY/s180-ns/ [none] [ac])
+E/PeopleIS( 1767): Error retrieving image at URL https:https://lh3.googleusercontent.com/-mTUp0pEL9-c/AAAAAAAAAAI/AAAAAAAAAAA/vov2oO0laHE/photo.jpg?sz=50 (Error executing network request for https:https://lh3.googleusercontent.com/-mTUp0pEL9-c/AAAAAAAAAAI/AAAAAAAAAAA/vov2oO0laHE/s180-ns/ [none] [ac])
+E/PeopleIS( 1767): Error retrieving image at URL https:https://lh3.googleusercontent.com/-raI4NwnGVV0/AAAAAAAAAAI/AAAAAAAAAAA/zSAjY7Hc0QI/photo.jpg?sz=50 (Error executing network request for https:https://lh3.googleusercontent.com/-raI4NwnGVV0/AAAAAAAAAAI/AAAAAAAAAAA/zSAjY7Hc0QI/s180-ns/ [none] [ac])
+E/PeopleIS( 1767): Error retrieving image at URL https:https://lh3.googleusercontent.com/-7le3WH0nc5s/AAAAAAAAAAI/AAAAAAAAAAA/4qmhlxHmmUw/photo.jpg?sz=50 (Error executing network request for https:https://lh3.googleusercontent.com/-7le3WH0nc5s/AAAAAAAAAAI/AAAAAAAAAAA/4qmhlxHmmUw/s180-ns/ [none] [ac])
+E/PeopleIS( 1767): Error retrieving image at URL https:https://lh3.googleusercontent.com/-F985zveHaB8/AAAAAAAAAAI/AAAAAAAAAAA/G29Sk8kERok/photo.jpg?sz=50 (Error executing network request for https:https://lh3.googleusercontent.com/-F985zveHaB8/AAAAAAAAAAI/AAAAAAAAAAA/G29Sk8kERok/s180-ns/ [none] [ac])
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -64 beacon -65 success
+D/wpa_supplicant( 1524): rssi_data -64 rssi_beacon -65
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -65
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+D/dalvikvm( 1551): GC_EXPLICIT freed 502K, 47% free 3800K/7047K, external 8640K/9893K, paused 39ms
+I/ActivityManager( 1423): Starting: Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.nao20010128nao.Wisecraft/.ServerListActivity } from pid 1551
+I/ActivityManager( 1423): Start proc com.nao20010128nao.Wisecraft for activity com.nao20010128nao.Wisecraft/.ServerListActivity: pid=3508 uid=10003 gids={3003, 1015}
+I/ActivityManager( 1423): attachApplication process start(3508) com.nao20010128nao.Wisecraft
+D/szipinf ( 3508): Initializing inflate state
+D/ghost_query( 3508): port=19500
+E/dalvikvm( 3508): Could not find class 'android.view.LayoutInflater$Factory2', referenced from method uk.co.chrisjenx.calligraphy.CalligraphyLayoutInflater.setPrivateFactoryInternal
+W/dalvikvm( 3508): VFY: unable to resolve instanceof 1747 (Landroid/view/LayoutInflater$Factory2;) in Luk/co/chrisjenx/calligraphy/CalligraphyLayoutInflater;
+D/dalvikvm( 3508): VFY: replacing opcode 0x20 at 0x0014
+D/dalvikvm( 3508): VFY: dead code 0x0016-003c in Luk/co/chrisjenx/calligraphy/CalligraphyLayoutInflater;.setPrivateFactoryInternal ()V
+I/dalvikvm( 3508): Could not find method uk.co.chrisjenx.calligraphy.CalligraphyLayoutInflater.getFactory2, referenced from method uk.co.chrisjenx.calligraphy.CalligraphyLayoutInflater.setUpLayoutFactories
+W/dalvikvm( 3508): VFY: unable to resolve virtual method 22315: Luk/co/chrisjenx/calligraphy/CalligraphyLayoutInflater;.getFactory2 ()Landroid/view/LayoutInflater$Factory2;
+D/dalvikvm( 3508): VFY: replacing opcode 0x6e at 0x0009
+D/dalvikvm( 3508): VFY: dead code 0x000c-001d in Luk/co/chrisjenx/calligraphy/CalligraphyLayoutInflater;.setUpLayoutFactories (Z)V
+I/dalvikvm( 3508): Could not find method android.view.LayoutInflater.onCreateView, referenced from method uk.co.chrisjenx.calligraphy.CalligraphyLayoutInflater.onCreateView
+W/dalvikvm( 3508): VFY: unable to resolve virtual method 14128: Landroid/view/LayoutInflater;.onCreateView (Landroid/view/View;Ljava/lang/String;Landroid/util/AttributeSet;)Landroid/view/View;
+D/dalvikvm( 3508): VFY: replacing opcode 0x6f at 0x0002
+D/dalvikvm( 3508): VFY: dead code 0x0005-000e in Luk/co/chrisjenx/calligraphy/CalligraphyLayoutInflater;.onCreateView (Landroid/view/View;Ljava/lang/String;Landroid/util/AttributeSet;)Landroid/view/View;
+I/dalvikvm( 3508): Failed resolving Luk/co/chrisjenx/calligraphy/CalligraphyLayoutInflater$WrapperFactory2; interface 1747 'Landroid/view/LayoutInflater$Factory2;'
+W/dalvikvm( 3508): Link of class 'Luk/co/chrisjenx/calligraphy/CalligraphyLayoutInflater$WrapperFactory2;' failed
+E/dalvikvm( 3508): Could not find class 'uk.co.chrisjenx.calligraphy.CalligraphyLayoutInflater$WrapperFactory2', referenced from method uk.co.chrisjenx.calligraphy.CalligraphyLayoutInflater.setFactory2
+W/dalvikvm( 3508): VFY: unable to resolve instanceof 3061 (Luk/co/chrisjenx/calligraphy/CalligraphyLayoutInflater$WrapperFactory2;) in Luk/co/chrisjenx/calligraphy/CalligraphyLayoutInflater;
+D/dalvikvm( 3508): VFY: replacing opcode 0x20 at 0x0000
+D/dalvikvm( 3508): VFY: dead code 0x0002-0012 in Luk/co/chrisjenx/calligraphy/CalligraphyLayoutInflater;.setFactory2 (Landroid/view/LayoutInflater$Factory2;)V
+I/dalvikvm( 3508): Could not find method android.view.ViewGroup.onHoverEvent, referenced from method android.support.v7.widget.Toolbar.onHoverEvent
+W/dalvikvm( 3508): VFY: unable to resolve virtual method 14495: Landroid/view/ViewGroup;.onHoverEvent (Landroid/view/MotionEvent;)Z
+D/dalvikvm( 3508): VFY: replacing opcode 0x6f at 0x0010
+D/dalvikvm( 3508): VFY: dead code 0x0013-0019 in Landroid/support/v7/widget/Toolbar;.onHoverEvent (Landroid/view/MotionEvent;)Z
+I/dalvikvm( 3508): Could not find method android.view.ViewGroup.onRtlPropertiesChanged, referenced from method android.support.v7.widget.Toolbar.onRtlPropertiesChanged
+W/dalvikvm( 3508): VFY: unable to resolve virtual method 14504: Landroid/view/ViewGroup;.onRtlPropertiesChanged (I)V
+D/dalvikvm( 3508): VFY: replacing opcode 0x6f at 0x0007
+D/nao20010128nao( 3508): Starting ping
+D/nao20010128nao( 3508): sfb.noip.me:19132 false
+D/nao20010128nao( 3508): PE
+D/nao20010128nao( 3508): Starting ping
+D/nao20010128nao( 3508): onsen.so:50029 false
+D/nao20010128nao( 3508): PE
+D/nao20010128nao( 3508): Starting ping
+D/nao20010128nao( 3508): sg23.lbsg.net:19132 false
+D/nao20010128nao( 3508): PE
+D/nao20010128nao( 3508): Starting ping
+D/nao20010128nao( 3508): play.fsaba.cf:19132 false
+D/nao20010128nao( 3508): PE
+D/nao20010128nao( 3508): Starting ping
+D/nao20010128nao( 3508): localhost:19132 false
+D/nao20010128nao( 3508): PE
+D/nao20010128nao( 3508): Starting ping
+D/nao20010128nao( 3508): play.niwatori.xyz:19132 false
+D/nao20010128nao( 3508): PE
+D/SntpClient( 1423): request time failed: java.net.SocketTimeoutException: Try again
+D/dalvikvm( 3508): GC_FOR_MALLOC freed 611K, 47% free 3552K/6663K, external 2002K/2137K, paused 24ms
+D/dalvikvm( 3508): GC_CONCURRENT freed 391K, 41% free 4102K/6919K, external 2002K/2137K, paused 2ms+4ms
+D/dalvikvm( 3508): GC_FOR_MALLOC freed 191K, 42% free 4444K/7559K, external 2002K/2137K, paused 29ms
+V/ActivityThread( 3508): Canvas.freeCaches()
+D/skia    ( 3508): purging 13K from font cache [2 entries]
+V/ActivityThread( 3508): Fonts.reLoadFontsLocal()
+D/Fonts(JAVA)( 3508): <ReLoadFontsLocal>
+D/        ( 3508): <Fonts_ReLoadFontsLocal>
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -66 beacon -66 success
+D/wpa_supplicant( 1524): rssi_data -66 rssi_beacon -66
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -66
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+D/dalvikvm( 3508): GC_FOR_MALLOC freed 776K, 46% free 4451K/8135K, external 2002K/2137K, paused 28ms
+D/dalvikvm( 3508): GC_FOR_MALLOC freed 133K, 44% free 4584K/8135K, external 2002K/2137K, paused 24ms
+D/dalvikvm( 3508): GC_FOR_MALLOC freed 272K, 36% free 5369K/8327K, external 2002K/2137K, paused 25ms
+D/nao20010128nao( 3508): Success: Full Stat
+I/ActivityManager( 1423): Displayed com.nao20010128nao.Wisecraft/.ServerListActivity: +1s366ms
+D/nao20010128nao( 3508): Success: Full Stat & Unconnected Ping
+D/nao20010128nao( 3508): Next
+D/nao20010128nao( 3508): Starting ping
+D/nao20010128nao( 3508): kcraftpe.orz.hm:19132 false
+D/nao20010128nao( 3508): PE
+D/dalvikvm( 3508): GC_FOR_MALLOC freed 1833K, 48% free 4877K/9351K, external 2002K/2137K, paused 40ms
+D/nao20010128nao( 3508): Success: Full Stat
+D/dalvikvm( 1767): GC_CONCURRENT freed 1428K, 50% free 6262K/12295K, external 1625K/2137K, paused 8ms+8ms
+D/nao20010128nao( 3508): Success: Full Stat & Unconnected Ping
+D/nao20010128nao( 3508): Next
+D/nao20010128nao( 3508): Starting ping
+D/nao20010128nao( 3508): onigiriserver.pgw.jp:19133 false
+D/nao20010128nao( 3508): PE
+I/dalvikvm( 3508): Could not find method android.support.v4.app.BaseFragmentActivityDonut.onCreateView, referenced from method android.support.v4.app.BaseFragmentActivityHoneycomb.onCreateView
+W/dalvikvm( 3508): VFY: unable to resolve virtual method 1572: Landroid/support/v4/app/BaseFragmentActivityDonut;.onCreateView (Landroid/view/View;Ljava/lang/String;Landroid/content/Context;Landroid/util/AttributeSet;)Landroid/view/View;
+D/dalvikvm( 3508): VFY: replacing opcode 0x6f at 0x000c
+D/dalvikvm( 3508): VFY: dead code 0x000f-000f in Landroid/support/v4/app/BaseFragmentActivityHoneycomb;.onCreateView (Landroid/view/View;Ljava/lang/String;Landroid/content/Context;Landroid/util/AttributeSet;)Landroid/view/View;
+I/ActivityManager( 1423): Starting: Intent { cmp=com.nao20010128nao.Wisecraft/.ServerInfoActivity } from pid 3508
+I/dalvikvm( 3508): Could not find method java.lang.ReflectiveOperationException.printStackTrace, referenced from method uk.co.chrisjenx.calligraphy.ReflectionUtils.invokeMethod
+W/dalvikvm( 3508): VFY: unable to resolve virtual method 20415: Ljava/lang/ReflectiveOperationException;.printStackTrace ()V
+D/dalvikvm( 3508): VFY: replacing opcode 0x6e at 0x0008
+D/dalvikvm( 3508): VFY: dead code 0x000b-000b in Luk/co/chrisjenx/calligraphy/ReflectionUtils;.invokeMethod (Ljava/lang/Object;Ljava/lang/reflect/Method;[Ljava/lang/Object;)V
+D/dalvikvm( 3508): GC_EXTERNAL_ALLOC freed 1123K, 56% free 4156K/9351K, external 2049K/2137K, paused 45ms
+I/ActivityManager( 1423): Displayed com.nao20010128nao.Wisecraft/.ServerInfoActivity: +525ms
+W/System.err( 3508): Socket Timeout! Is the server offline?
+W/System.err( 3508): java.net.SocketTimeoutException: Try again
+W/System.err( 3508): 	at org.apache.harmony.luni.platform.OSNetworkSystem.recv(Native Method)
+W/System.err( 3508): 	at dalvik.system.BlockGuard$WrappedNetworkSystem.recv(BlockGuard.java:321)
+W/System.err( 3508): 	at org.apache.harmony.luni.net.PlainDatagramSocketImpl.doRecv(PlainDatagramSocketImpl.java:172)
+W/System.err( 3508): 	at org.apache.harmony.luni.net.PlainDatagramSocketImpl.receive(PlainDatagramSocketImpl.java:181)
+W/System.err( 3508): 	at java.net.DatagramSocket.receive(DatagramSocket.java:402)
+W/System.err( 3508): 	at com.nao20010128nao.MCPing.pe.PEQuery.sendUDP(PEQuery.java:129)
+W/System.err( 3508): 	at com.nao20010128nao.MCPing.pe.PEQuery.handshake(PEQuery.java:47)
+W/System.err( 3508): 	at com.nao20010128nao.MCPing.pe.PEQuery.fullStatUni(PEQuery.java:84)
+W/System.err( 3508): 	at com.nao20010128nao.Wisecraft.provider.NormalServerPingProvider$PingThread.run(NormalServerPingProvider.java:67)
+W/System.err( 3508): java.lang.NullPointerException
+W/System.err( 3508): 	at java.lang.String.<init>(String.java:141)
+W/System.err( 3508): 	at com.nao20010128nao.MCPing.pe.PEQuery.handshake(PEQuery.java:49)
+W/System.err( 3508): 	at com.nao20010128nao.MCPing.pe.PEQuery.fullStatUni(PEQuery.java:84)
+W/System.err( 3508): 	at com.nao20010128nao.Wisecraft.provider.NormalServerPingProvider$PingThread.run(NormalServerPingProvider.java:67)
+D/nao20010128nao( 3508): Success: Full Stat
+D/nao20010128nao( 3508): Success: Full Stat & Unconnected Ping
+D/nao20010128nao( 3508): Next
+D/nao20010128nao( 3508): Starting ping
+D/nao20010128nao( 3508): sotecraft.fam.cx:19132 false
+D/nao20010128nao( 3508): PE
+W/System.err( 3508): Socket Timeout! Is the server offline?
+W/System.err( 3508): java.net.SocketTimeoutException: Try again
+W/System.err( 3508): 	at org.apache.harmony.luni.platform.OSNetworkSystem.recv(Native Method)
+W/System.err( 3508): 	at dalvik.system.BlockGuard$WrappedNetworkSystem.recv(BlockGuard.java:321)
+W/System.err( 3508): 	at org.apache.harmony.luni.net.PlainDatagramSocketImpl.doRecv(PlainDatagramSocketImpl.java:172)
+W/System.err( 3508): 	at org.apache.harmony.luni.net.PlainDatagramSocketImpl.receive(PlainDatagramSocketImpl.java:181)
+W/System.err( 3508): 	at java.net.DatagramSocket.receive(DatagramSocket.java:402)
+W/System.err( 3508): 	at com.nao20010128nao.MCPing.pe.PEQuery.sendUDP(PEQuery.java:129)
+W/System.err( 3508): 	at com.nao20010128nao.MCPing.pe.PEQuery.handshake(PEQuery.java:47)
+W/System.err( 3508): 	at com.nao20010128nao.MCPing.pe.PEQuery.fullStatUni(PEQuery.java:84)
+W/System.err( 3508): 	at com.nao20010128nao.Wisecraft.provider.NormalServerPingProvider$PingThread.run(NormalServerPingProvider.java:67)
+W/System.err( 3508): java.lang.NullPointerException
+W/System.err( 3508): 	at java.lang.String.<init>(String.java:141)
+W/System.err( 3508): 	at com.nao20010128nao.MCPing.pe.PEQuery.handshake(PEQuery.java:49)
+W/System.err( 3508): 	at com.nao20010128nao.MCPing.pe.PEQuery.fullStatUni(PEQuery.java:84)
+W/System.err( 3508): 	at com.nao20010128nao.Wisecraft.provider.NormalServerPingProvider$PingThread.run(NormalServerPingProvider.java:67)
+D/AndroidRuntime( 3508): Shutting down VM
+W/dalvikvm( 3508): threadid=1: thread exiting with uncaught exception (group=0x40015560)
+E/AndroidRuntime( 3508): FATAL EXCEPTION: main
+E/AndroidRuntime( 3508): android.view.InflateException: Binary XML file line #24: Error inflating class android.view.View
+E/AndroidRuntime( 3508): 	at android.view.LayoutInflater.createView(LayoutInflater.java:518)
+E/AndroidRuntime( 3508): 	at android.view.LayoutInflater.onCreateView(LayoutInflater.java:549)
+E/AndroidRuntime( 3508): 	at uk.co.chrisjenx.calligraphy.CalligraphyLayoutInflater.onCreateView(CalligraphyLayoutInflater.java:170)
+E/AndroidRuntime( 3508): 	at android.view.LayoutInflater.createViewFromTag(LayoutInflater.java:568)
+E/AndroidRuntime( 3508): 	at android.view.LayoutInflater.rInflate(LayoutInflater.java:623)
+E/AndroidRuntime( 3508): 	at android.view.LayoutInflater.inflate(LayoutInflater.java:408)
+E/AndroidRuntime( 3508): 	at uk.co.chrisjenx.calligraphy.CalligraphyLayoutInflater.inflate(CalligraphyLayoutInflater.java:60)
+E/AndroidRuntime( 3508): 	at android.view.LayoutInflater.inflate(LayoutInflater.java:320)
+E/AndroidRuntime( 3508): 	at android.view.LayoutInflater.inflate(LayoutInflater.java:276)
+E/AndroidRuntime( 3508): 	at com.nao20010128nao.Wisecraft.misc.KVListAdapter.getView(KVListAdapter.java:16)
+E/AndroidRuntime( 3508): 	at android.widget.AbsListView.obtainView(AbsListView.java:1430)
+E/AndroidRuntime( 3508): 	at android.widget.ListView.makeAndAddView(ListView.java:1745)
+E/AndroidRuntime( 3508): 	at android.widget.ListView.fillDown(ListView.java:670)
+E/AndroidRuntime( 3508): 	at android.widget.ListView.fillFromTop(ListView.java:727)
+E/AndroidRuntime( 3508): 	at android.widget.ListView.layoutChildren(ListView.java:1598)
+E/AndroidRuntime( 3508): 	at android.widget.AbsListView.onLayout(AbsListView.java:1260)
+E/AndroidRuntime( 3508): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 3508): 	at android.widget.FrameLayout.onLayout(FrameLayout.java:338)
+E/AndroidRuntime( 3508): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 3508): 	at android.widget.FrameLayout.onLayout(FrameLayout.java:338)
+E/AndroidRuntime( 3508): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 3508): 	at android.widget.LinearLayout.setChildFrame(LinearLayout.java:1254)
+E/AndroidRuntime( 3508): 	at android.widget.LinearLayout.layoutVertical(LinearLayout.java:1130)
+E/AndroidRuntime( 3508): 	at android.widget.LinearLayout.onLayout(LinearLayout.java:1047)
+E/AndroidRuntime( 3508): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 3508): 	at android.widget.FrameLayout.onLayout(FrameLayout.java:338)
+E/AndroidRuntime( 3508): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 3508): 	at android.widget.LinearLayout.setChildFrame(LinearLayout.java:1254)
+E/AndroidRuntime( 3508): 	at android.widget.LinearLayout.layoutVertical(LinearLayout.java:1130)
+E/AndroidRuntime( 3508): 	at android.widget.LinearLayout.onLayout(LinearLayout.java:1047)
+E/AndroidRuntime( 3508): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 3508): 	at android.widget.FrameLayout.onLayout(FrameLayout.java:338)
+E/AndroidRuntime( 3508): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 3508): 	at android.widget.LinearLayout.setChildFrame(LinearLayout.java:1254)
+E/AndroidRuntime( 3508): 	at android.widget.LinearLayout.layoutVertical(LinearLayout.java:1130)
+E/AndroidRuntime( 3508): 	at android.widget.LinearLayout.onLayout(LinearLayout.java:1047)
+E/AndroidRuntime( 3508): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 3508): 	at android.widget.FrameLayout.onLayout(FrameLayout.java:338)
+E/AndroidRuntime( 3508): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 3508): 	at android.view.ViewRoot.performTraversals(ViewRoot.java:1140)
+E/AndroidRuntime( 3508): 	at android.view.ViewRoot.handleMessage(ViewRoot.java:1859)
+E/AndroidRuntime( 3508): 	at android.os.Handler.dispatchMessage(Handler.java:99)
+E/AndroidRuntime( 3508): 	at android.os.Looper.loop(Looper.java:123)
+E/AndroidRuntime( 3508): 	at android.app.ActivityThread.main(ActivityThread.java:3717)
+E/AndroidRuntime( 3508): 	at java.lang.reflect.Method.invokeNative(Native Method)
+E/AndroidRuntime( 3508): 	at java.lang.reflect.Method.invoke(Method.java:507)
+E/AndroidRuntime( 3508): 	at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:839)
+E/AndroidRuntime( 3508): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:597)
+E/AndroidRuntime( 3508): 	at dalvik.system.NativeStart.main(Native Method)
+E/AndroidRuntime( 3508): Caused by: java.lang.reflect.InvocationTargetException
+E/AndroidRuntime( 3508): 	at java.lang.reflect.Constructor.constructNative(Native Method)
+E/AndroidRuntime( 3508): 	at java.lang.reflect.Constructor.newInstance(Constructor.java:415)
+E/AndroidRuntime( 3508): 	at android.view.LayoutInflater.createView(LayoutInflater.java:505)
+E/AndroidRuntime( 3508): 	... 48 more
+E/AndroidRuntime( 3508): Caused by: android.content.res.Resources$NotFoundException: Resource is not a Drawable (color or path): TypedValue{t=0x2/d=0x101032c a=-1}
+E/AndroidRuntime( 3508): 	at android.content.res.Resources.loadDrawable(Resources.java:1681)
+E/AndroidRuntime( 3508): 	at android.content.res.TypedArray.getDrawable(TypedArray.java:601)
+E/AndroidRuntime( 3508): 	at android.view.View.<init>(View.java:1951)
+E/AndroidRuntime( 3508): 	at android.view.View.<init>(View.java:1899)
+E/AndroidRuntime( 3508): 	... 51 more
+W/ActivityManager( 1423):   Force finishing activity com.nao20010128nao.Wisecraft/.ServerInfoActivity
+D/dalvikvm( 3508): GC_CONCURRENT freed 2063K, 56% free 4139K/9351K, external 2396K/2992K, paused 3ms+16ms
+W/System.err( 3508): Socket Timeout! Is the server offline?
+W/System.err( 3508): java.net.SocketTimeoutException: Try again
+W/System.err( 3508): 	at org.apache.harmony.luni.platform.OSNetworkSystem.recv(Native Method)
+W/System.err( 3508): 	at dalvik.system.BlockGuard$WrappedNetworkSystem.recv(BlockGuard.java:321)
+W/System.err( 3508): 	at org.apache.harmony.luni.net.PlainDatagramSocketImpl.doRecv(PlainDatagramSocketImpl.java:172)
+W/System.err( 3508): 	at org.apache.harmony.luni.net.PlainDatagramSocketImpl.receive(PlainDatagramSocketImpl.java:181)
+W/System.err( 3508): 	at java.net.DatagramSocket.receive(DatagramSocket.java:402)
+W/System.err( 3508): 	at com.nao20010128nao.MCPing.pe.PEQuery.sendUDP(PEQuery.java:129)
+W/System.err( 3508): 	at com.nao20010128nao.MCPing.pe.PEQuery.fullStatUni(PEQuery.java:96)
+W/System.err( 3508): 	at com.nao20010128nao.Wisecraft.provider.NormalServerPingProvider$PingThread.run(NormalServerPingProvider.java:67)
+W/System.err( 3508): java.lang.NullPointerException
+W/System.err( 3508): 	at com.nao20010128nao.MCPing.Utils.trim(Utils.java:104)
+W/System.err( 3508): 	at com.nao20010128nao.MCPing.pe.FullStat.<init>(FullStat.java:20)
+W/System.err( 3508): 	at com.nao20010128nao.MCPing.pe.PEQuery.fullStatUni(PEQuery.java:105)
+W/System.err( 3508): 	at com.nao20010128nao.Wisecraft.provider.NormalServerPingProvider$PingThread.run(NormalServerPingProvider.java:67)
+W/System.err( 3508): Socket Timeout! Is the server offline?
+W/System.err( 3508): java.net.SocketTimeoutException: Try again
+W/System.err( 3508): 	at org.apache.harmony.luni.platform.OSNetworkSystem.recv(Native Method)
+W/System.err( 3508): 	at dalvik.system.BlockGuard$WrappedNetworkSystem.recv(BlockGuard.java:321)
+W/System.err( 3508): 	at org.apache.harmony.luni.net.PlainDatagramSocketImpl.doRecv(PlainDatagramSocketImpl.java:172)
+W/System.err( 3508): 	at org.apache.harmony.luni.net.PlainDatagramSocketImpl.receive(PlainDatagramSocketImpl.java:181)
+W/System.err( 3508): 	at java.net.DatagramSocket.receive(DatagramSocket.java:402)
+W/System.err( 3508): 	at com.nao20010128nao.MCPing.pe.PEQuery.sendUDP(PEQuery.java:129)
+W/System.err( 3508): 	at com.nao20010128nao.MCPing.pe.PEQuery.handshake(PEQuery.java:47)
+W/System.err( 3508): 	at com.nao20010128nao.MCPing.pe.PEQuery.fullStatUni(PEQuery.java:84)
+W/System.err( 3508): 	at com.nao20010128nao.Wisecraft.provider.NormalServerPingProvider$PingThread.run(NormalServerPingProvider.java:67)
+W/System.err( 3508): java.lang.NullPointerException
+W/System.err( 3508): 	at java.lang.String.<init>(String.java:141)
+W/System.err( 3508): 	at com.nao20010128nao.MCPing.pe.PEQuery.handshake(PEQuery.java:49)
+W/System.err( 3508): 	at com.nao20010128nao.MCPing.pe.PEQuery.fullStatUni(PEQuery.java:84)
+W/System.err( 3508): 	at com.nao20010128nao.Wisecraft.provider.NormalServerPingProvider$PingThread.run(NormalServerPingProvider.java:67)
+D/nao20010128nao( 3508): Success: Unconnected Ping
+D/nao20010128nao( 3508): Next
+D/nao20010128nao( 3508): Starting ping
+D/nao20010128nao( 3508): a44481.leet.cc:44481 false
+D/nao20010128nao( 3508): PE
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -67 beacon -70 success
+D/wpa_supplicant( 1524): rssi_data -67 rssi_beacon -70
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -70
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+W/ActivityManager( 1423): Activity pause timeout for HistoryRecord{40ab5390 com.nao20010128nao.Wisecraft/.ServerInfoActivity}
+D/dalvikvm( 1585): GC_CONCURRENT freed 1422K, 43% free 5598K/9799K, external 1625K/2137K, paused 4ms+5ms
+W/System.err( 3508): Socket Timeout! Is the server offline?
+W/System.err( 3508): java.net.SocketTimeoutException: Try again
+W/System.err( 3508): 	at org.apache.harmony.luni.platform.OSNetworkSystem.recv(Native Method)
+W/System.err( 3508): 	at dalvik.system.BlockGuard$WrappedNetworkSystem.recv(BlockGuard.java:321)
+W/System.err( 3508): 	at org.apache.harmony.luni.net.PlainDatagramSocketImpl.doRecv(PlainDatagramSocketImpl.java:172)
+W/System.err( 3508): 	at org.apache.harmony.luni.net.PlainDatagramSocketImpl.receive(PlainDatagramSocketImpl.java:181)
+W/System.err( 3508): 	at java.net.DatagramSocket.receive(DatagramSocket.java:402)
+W/System.err( 3508): 	at com.nao20010128nao.MCPing.pe.PEQuery.sendUDP(PEQuery.java:129)
+W/System.err( 3508): 	at com.nao20010128nao.MCPing.pe.PEQuery.handshake(PEQuery.java:47)
+W/System.err( 3508): 	at com.nao20010128nao.MCPing.pe.PEQuery.fullStatUni(PEQuery.java:84)
+W/System.err( 3508): 	at com.nao20010128nao.Wisecraft.provider.NormalServerPingProvider$PingThread.run(NormalServerPingProvider.java:67)
+W/System.err( 3508): java.lang.NullPointerException
+W/System.err( 3508): 	at java.lang.String.<init>(String.java:141)
+W/System.err( 3508): 	at com.nao20010128nao.MCPing.pe.PEQuery.handshake(PEQuery.java:49)
+W/System.err( 3508): 	at com.nao20010128nao.MCPing.pe.PEQuery.fullStatUni(PEQuery.java:84)
+W/System.err( 3508): 	at com.nao20010128nao.Wisecraft.provider.NormalServerPingProvider$PingThread.run(NormalServerPingProvider.java:67)
+I/Process ( 3508): Sending signal. PID: 3508 SIG: 9
+I/ActivityManager( 1423): Process com.nao20010128nao.Wisecraft (pid 3508) has died.
+I/WindowManager( 1423): WIN DEATH: Window{40a4c0e8 com.nao20010128nao.Wisecraft/com.nao20010128nao.Wisecraft.ServerInfoActivity paused=false}
+I/WindowManager( 1423): WIN DEATH: Window{40b83e08 com.nao20010128nao.Wisecraft/com.nao20010128nao.Wisecraft.ServerListActivity paused=false}
+W/InputManagerService( 1423): Got RemoteException sending setActive(false) notification to pid 3508 uid 10003
+I/PeopleSync( 1767): Sync finished, successful=true, took 10490ms
+I/PeopleSync( 1767): Sync start: cannotHavePeople=false isPageExistenceCheckOnly=false
+D/dalvikvm( 1423): GC_EXPLICIT freed 1750K, 38% free 7623K/12167K, external 4719K/5400K, paused 213ms
+I/ActivityManager( 1423): Starting: Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.nao20010128nao.Wisecraft/.ServerListActivity } from pid 1551
+I/ActivityManager( 1423): Start proc com.nao20010128nao.Wisecraft for activity com.nao20010128nao.Wisecraft/.ServerListActivity: pid=3527 uid=10003 gids={3003, 1015}
+I/ActivityManager( 1423): attachApplication process start(3527) com.nao20010128nao.Wisecraft
+D/szipinf ( 3527): Initializing inflate state
+D/ghost_query( 3527): port=19500
+E/dalvikvm( 3527): Could not find class 'android.view.LayoutInflater$Factory2', referenced from method uk.co.chrisjenx.calligraphy.CalligraphyLayoutInflater.setPrivateFactoryInternal
+W/dalvikvm( 3527): VFY: unable to resolve instanceof 1747 (Landroid/view/LayoutInflater$Factory2;) in Luk/co/chrisjenx/calligraphy/CalligraphyLayoutInflater;
+D/dalvikvm( 3527): VFY: replacing opcode 0x20 at 0x0014
+D/dalvikvm( 3527): VFY: dead code 0x0016-003c in Luk/co/chrisjenx/calligraphy/CalligraphyLayoutInflater;.setPrivateFactoryInternal ()V
+I/dalvikvm( 3527): Could not find method uk.co.chrisjenx.calligraphy.CalligraphyLayoutInflater.getFactory2, referenced from method uk.co.chrisjenx.calligraphy.CalligraphyLayoutInflater.setUpLayoutFactories
+W/dalvikvm( 3527): VFY: unable to resolve virtual method 22315: Luk/co/chrisjenx/calligraphy/CalligraphyLayoutInflater;.getFactory2 ()Landroid/view/LayoutInflater$Factory2;
+D/dalvikvm( 3527): VFY: replacing opcode 0x6e at 0x0009
+D/dalvikvm( 3527): VFY: dead code 0x000c-001d in Luk/co/chrisjenx/calligraphy/CalligraphyLayoutInflater;.setUpLayoutFactories (Z)V
+I/dalvikvm( 3527): Could not find method android.view.LayoutInflater.onCreateView, referenced from method uk.co.chrisjenx.calligraphy.CalligraphyLayoutInflater.onCreateView
+W/dalvikvm( 3527): VFY: unable to resolve virtual method 14128: Landroid/view/LayoutInflater;.onCreateView (Landroid/view/View;Ljava/lang/String;Landroid/util/AttributeSet;)Landroid/view/View;
+D/dalvikvm( 3527): VFY: replacing opcode 0x6f at 0x0002
+D/dalvikvm( 3527): VFY: dead code 0x0005-000e in Luk/co/chrisjenx/calligraphy/CalligraphyLayoutInflater;.onCreateView (Landroid/view/View;Ljava/lang/String;Landroid/util/AttributeSet;)Landroid/view/View;
+I/dalvikvm( 3527): Failed resolving Luk/co/chrisjenx/calligraphy/CalligraphyLayoutInflater$WrapperFactory2; interface 1747 'Landroid/view/LayoutInflater$Factory2;'
+W/dalvikvm( 3527): Link of class 'Luk/co/chrisjenx/calligraphy/CalligraphyLayoutInflater$WrapperFactory2;' failed
+E/dalvikvm( 3527): Could not find class 'uk.co.chrisjenx.calligraphy.CalligraphyLayoutInflater$WrapperFactory2', referenced from method uk.co.chrisjenx.calligraphy.CalligraphyLayoutInflater.setFactory2
+W/dalvikvm( 3527): VFY: unable to resolve instanceof 3061 (Luk/co/chrisjenx/calligraphy/CalligraphyLayoutInflater$WrapperFactory2;) in Luk/co/chrisjenx/calligraphy/CalligraphyLayoutInflater;
+D/dalvikvm( 3527): VFY: replacing opcode 0x20 at 0x0000
+D/dalvikvm( 3527): VFY: dead code 0x0002-0012 in Luk/co/chrisjenx/calligraphy/CalligraphyLayoutInflater;.setFactory2 (Landroid/view/LayoutInflater$Factory2;)V
+I/dalvikvm( 3527): Could not find method android.view.ViewGroup.onHoverEvent, referenced from method android.support.v7.widget.Toolbar.onHoverEvent
+W/dalvikvm( 3527): VFY: unable to resolve virtual method 14495: Landroid/view/ViewGroup;.onHoverEvent (Landroid/view/MotionEvent;)Z
+D/dalvikvm( 3527): VFY: replacing opcode 0x6f at 0x0010
+D/dalvikvm( 3527): VFY: dead code 0x0013-0019 in Landroid/support/v7/widget/Toolbar;.onHoverEvent (Landroid/view/MotionEvent;)Z
+I/dalvikvm( 3527): Could not find method android.view.ViewGroup.onRtlPropertiesChanged, referenced from method android.support.v7.widget.Toolbar.onRtlPropertiesChanged
+W/dalvikvm( 3527): VFY: unable to resolve virtual method 14504: Landroid/view/ViewGroup;.onRtlPropertiesChanged (I)V
+D/dalvikvm( 3527): VFY: replacing opcode 0x6f at 0x0007
+D/nao20010128nao( 3527): Starting ping
+D/nao20010128nao( 3527): sfb.noip.me:19132 false
+D/nao20010128nao( 3527): PE
+D/nao20010128nao( 3527): Starting ping
+D/nao20010128nao( 3527): onsen.so:50029 false
+D/nao20010128nao( 3527): PE
+D/nao20010128nao( 3527): Starting ping
+D/nao20010128nao( 3527): sg23.lbsg.net:19132 false
+D/nao20010128nao( 3527): PE
+D/nao20010128nao( 3527): Starting ping
+D/nao20010128nao( 3527): play.fsaba.cf:19132 false
+D/nao20010128nao( 3527): PE
+D/nao20010128nao( 3527): Starting ping
+D/nao20010128nao( 3527): localhost:19132 false
+D/nao20010128nao( 3527): PE
+D/nao20010128nao( 3527): Starting ping
+D/nao20010128nao( 3527): play.niwatori.xyz:19132 false
+D/nao20010128nao( 3527): PE
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -66 beacon -66 success
+D/wpa_supplicant( 1524): rssi_data -66 rssi_beacon -66
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -66
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+D/dalvikvm( 3527): GC_CONCURRENT freed 645K, 46% free 3673K/6727K, external 2002K/2137K, paused 2ms+3ms
+D/dalvikvm( 3527): GC_FOR_MALLOC freed 114K, 45% free 3887K/6983K, external 2002K/2137K, paused 24ms
+D/dalvikvm( 3527): GC_FOR_MALLOC freed 152K, 45% free 3958K/7175K, external 2002K/2137K, paused 20ms
+D/dalvikvm( 3527): GC_FOR_MALLOC freed 673K, 50% free 3758K/7495K, external 2002K/2137K, paused 20ms
+D/dalvikvm( 3527): GC_FOR_MALLOC freed 364K, 44% free 4201K/7495K, external 2002K/2137K, paused 24ms
+D/dalvikvm( 3527): GC_FOR_MALLOC freed 154K, 38% free 4851K/7815K, external 2002K/2137K, paused 23ms
+V/ActivityThread( 3527): Canvas.freeCaches()
+D/skia    ( 3527): purging 13K from font cache [2 entries]
+V/ActivityThread( 3527): Fonts.reLoadFontsLocal()
+D/Fonts(JAVA)( 3527): <ReLoadFontsLocal>
+D/        ( 3527): <Fonts_ReLoadFontsLocal>
+D/nao20010128nao( 3527): Success: Full Stat
+D/nao20010128nao( 3527): Success: Full Stat & Unconnected Ping
+D/nao20010128nao( 3527): Next
+D/nao20010128nao( 3527): Starting ping
+D/nao20010128nao( 3527): kcraftpe.orz.hm:19132 false
+D/nao20010128nao( 3527): PE
+I/ActivityManager( 1423): Displayed com.nao20010128nao.Wisecraft/.ServerListActivity: +1s130ms
+D/dalvikvm( 3527): GC_FOR_MALLOC freed 2103K, 55% free 3977K/8711K, external 2002K/2137K, paused 42ms
+D/dalvikvm( 3527): GC_CONCURRENT freed 10K, 42% free 5058K/8711K, external 2002K/2137K, paused 2ms+4ms
+D/dalvikvm( 3527): GC_FOR_MALLOC freed <1K, 30% free 6326K/8967K, external 2002K/2137K, paused 28ms
+D/nao20010128nao( 3527): Success: Full Stat
+D/nao20010128nao( 3527): Success: Full Stat
+D/nao20010128nao( 3527): Success: Full Stat & Unconnected Ping
+D/nao20010128nao( 3527): Next
+D/nao20010128nao( 3527): Starting ping
+D/nao20010128nao( 3527): onigiriserver.pgw.jp:19133 false
+D/nao20010128nao( 3527): PE
+D/nao20010128nao( 3527): Success: Full Stat & Unconnected Ping
+D/nao20010128nao( 3527): Next
+D/nao20010128nao( 3527): Starting ping
+D/nao20010128nao( 3527): a44481.leet.cc:44481 false
+D/nao20010128nao( 3527): PE
+D/dalvikvm( 3527): GC_FOR_MALLOC freed 3602K, 59% free 4349K/10503K, external 2002K/2137K, paused 42ms
+I/dalvikvm( 3527): Could not find method android.support.v4.app.BaseFragmentActivityDonut.onCreateView, referenced from method android.support.v4.app.BaseFragmentActivityHoneycomb.onCreateView
+W/dalvikvm( 3527): VFY: unable to resolve virtual method 1572: Landroid/support/v4/app/BaseFragmentActivityDonut;.onCreateView (Landroid/view/View;Ljava/lang/String;Landroid/content/Context;Landroid/util/AttributeSet;)Landroid/view/View;
+D/dalvikvm( 3527): VFY: replacing opcode 0x6f at 0x000c
+D/dalvikvm( 3527): VFY: dead code 0x000f-000f in Landroid/support/v4/app/BaseFragmentActivityHoneycomb;.onCreateView (Landroid/view/View;Ljava/lang/String;Landroid/content/Context;Landroid/util/AttributeSet;)Landroid/view/View;
+I/ActivityManager( 1423): Starting: Intent { cmp=com.nao20010128nao.Wisecraft/.ServerInfoActivity } from pid 3527
+I/dalvikvm( 3527): Could not find method java.lang.ReflectiveOperationException.printStackTrace, referenced from method uk.co.chrisjenx.calligraphy.ReflectionUtils.invokeMethod
+W/dalvikvm( 3527): VFY: unable to resolve virtual method 20415: Ljava/lang/ReflectiveOperationException;.printStackTrace ()V
+D/dalvikvm( 3527): VFY: replacing opcode 0x6e at 0x0008
+D/dalvikvm( 3527): VFY: dead code 0x000b-000b in Luk/co/chrisjenx/calligraphy/ReflectionUtils;.invokeMethod (Ljava/lang/Object;Ljava/lang/reflect/Method;[Ljava/lang/Object;)V
+D/dalvikvm( 3527): GC_CONCURRENT freed 687K, 54% free 4876K/10503K, external 2002K/2137K, paused 3ms+4ms
+D/nao20010128nao( 3527): Success: Full Stat
+D/dalvikvm( 3527): GC_EXTERNAL_ALLOC freed 904K, 61% free 4166K/10503K, external 2049K/2137K, paused 33ms
+D/nao20010128nao( 3527): Success: Full Stat & Unconnected Ping
+D/nao20010128nao( 3527): Next
+D/nao20010128nao( 3527): Starting ping
+D/nao20010128nao( 3527): sotecraft.fam.cx:19132 false
+D/nao20010128nao( 3527): PE
+I/PeopleSync( 1767): Sync finished, successful=true, took 3719ms
+I/ActivityManager( 1423): Displayed com.nao20010128nao.Wisecraft/.ServerInfoActivity: +555ms
+I/PeopleSync( 1767): Sync start: cannotHavePeople=false isPageExistenceCheckOnly=false
+W/System.err( 3527): Socket Timeout! Is the server offline?
+W/System.err( 3527): java.net.SocketTimeoutException: Try again
+W/System.err( 3527): 	at org.apache.harmony.luni.platform.OSNetworkSystem.recv(Native Method)
+W/System.err( 3527): 	at dalvik.system.BlockGuard$WrappedNetworkSystem.recv(BlockGuard.java:321)
+W/System.err( 3527): 	at org.apache.harmony.luni.net.PlainDatagramSocketImpl.doRecv(PlainDatagramSocketImpl.java:172)
+W/System.err( 3527): 	at org.apache.harmony.luni.net.PlainDatagramSocketImpl.receive(PlainDatagramSocketImpl.java:181)
+W/System.err( 3527): 	at java.net.DatagramSocket.receive(DatagramSocket.java:402)
+W/System.err( 3527): 	at com.nao20010128nao.MCPing.pe.PEQuery.sendUDP(PEQuery.java:129)
+W/System.err( 3527): 	at com.nao20010128nao.MCPing.pe.PEQuery.handshake(PEQuery.java:47)
+W/System.err( 3527): 	at com.nao20010128nao.MCPing.pe.PEQuery.fullStatUni(PEQuery.java:84)
+W/System.err( 3527): 	at com.nao20010128nao.Wisecraft.provider.NormalServerPingProvider$PingThread.run(NormalServerPingProvider.java:67)
+W/System.err( 3527): java.lang.NullPointerException
+W/System.err( 3527): 	at java.lang.String.<init>(String.java:141)
+W/System.err( 3527): 	at com.nao20010128nao.MCPing.pe.PEQuery.handshake(PEQuery.java:49)
+W/System.err( 3527): 	at com.nao20010128nao.MCPing.pe.PEQuery.fullStatUni(PEQuery.java:84)
+W/System.err( 3527): 	at com.nao20010128nao.Wisecraft.provider.NormalServerPingProvider$PingThread.run(NormalServerPingProvider.java:67)
+W/System.err( 3527): Socket Timeout! Is the server offline?
+W/System.err( 3527): java.net.SocketTimeoutException: Try again
+W/System.err( 3527): 	at org.apache.harmony.luni.platform.OSNetworkSystem.recv(Native Method)
+W/System.err( 3527): 	at dalvik.system.BlockGuard$WrappedNetworkSystem.recv(BlockGuard.java:321)
+W/System.err( 3527): 	at org.apache.harmony.luni.net.PlainDatagramSocketImpl.doRecv(PlainDatagramSocketImpl.java:172)
+W/System.err( 3527): 	at org.apache.harmony.luni.net.PlainDatagramSocketImpl.receive(PlainDatagramSocketImpl.java:181)
+W/System.err( 3527): 	at java.net.DatagramSocket.receive(DatagramSocket.java:402)
+W/System.err( 3527): 	at com.nao20010128nao.MCPing.pe.PEQuery.sendUDP(PEQuery.java:129)
+W/System.err( 3527): 	at com.nao20010128nao.MCPing.pe.PEQuery.handshake(PEQuery.java:47)
+W/System.err( 3527): 	at com.nao20010128nao.MCPing.pe.PEQuery.fullStatUni(PEQuery.java:84)
+W/System.err( 3527): 	at com.nao20010128nao.Wisecraft.provider.NormalServerPingProvider$PingThread.run(NormalServerPingProvider.java:67)
+W/System.err( 3527): java.lang.NullPointerException
+W/System.err( 3527): 	at java.lang.String.<init>(String.java:141)
+W/System.err( 3527): 	at com.nao20010128nao.MCPing.pe.PEQuery.handshake(PEQuery.java:49)
+W/System.err( 3527): 	at com.nao20010128nao.MCPing.pe.PEQuery.fullStatUni(PEQuery.java:84)
+W/System.err( 3527): 	at com.nao20010128nao.Wisecraft.provider.NormalServerPingProvider$PingThread.run(NormalServerPingProvider.java:67)
+D/AndroidRuntime( 3527): Shutting down VM
+W/dalvikvm( 3527): threadid=1: thread exiting with uncaught exception (group=0x40015560)
+E/AndroidRuntime( 3527): FATAL EXCEPTION: main
+E/AndroidRuntime( 3527): android.view.InflateException: Binary XML file line #24: Error inflating class android.view.View
+E/AndroidRuntime( 3527): 	at android.view.LayoutInflater.createView(LayoutInflater.java:518)
+E/AndroidRuntime( 3527): 	at android.view.LayoutInflater.onCreateView(LayoutInflater.java:549)
+E/AndroidRuntime( 3527): 	at uk.co.chrisjenx.calligraphy.CalligraphyLayoutInflater.onCreateView(CalligraphyLayoutInflater.java:170)
+E/AndroidRuntime( 3527): 	at android.view.LayoutInflater.createViewFromTag(LayoutInflater.java:568)
+E/AndroidRuntime( 3527): 	at android.view.LayoutInflater.rInflate(LayoutInflater.java:623)
+E/AndroidRuntime( 3527): 	at android.view.LayoutInflater.inflate(LayoutInflater.java:408)
+E/AndroidRuntime( 3527): 	at uk.co.chrisjenx.calligraphy.CalligraphyLayoutInflater.inflate(CalligraphyLayoutInflater.java:60)
+E/AndroidRuntime( 3527): 	at android.view.LayoutInflater.inflate(LayoutInflater.java:320)
+E/AndroidRuntime( 3527): 	at android.view.LayoutInflater.inflate(LayoutInflater.java:276)
+E/AndroidRuntime( 3527): 	at com.nao20010128nao.Wisecraft.misc.KVListAdapter.getView(KVListAdapter.java:16)
+E/AndroidRuntime( 3527): 	at android.widget.AbsListView.obtainView(AbsListView.java:1430)
+E/AndroidRuntime( 3527): 	at android.widget.ListView.makeAndAddView(ListView.java:1745)
+E/AndroidRuntime( 3527): 	at android.widget.ListView.fillDown(ListView.java:670)
+E/AndroidRuntime( 3527): 	at android.widget.ListView.fillFromTop(ListView.java:727)
+E/AndroidRuntime( 3527): 	at android.widget.ListView.layoutChildren(ListView.java:1598)
+E/AndroidRuntime( 3527): 	at android.widget.AbsListView.onLayout(AbsListView.java:1260)
+E/AndroidRuntime( 3527): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 3527): 	at android.widget.FrameLayout.onLayout(FrameLayout.java:338)
+E/AndroidRuntime( 3527): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 3527): 	at android.widget.FrameLayout.onLayout(FrameLayout.java:338)
+E/AndroidRuntime( 3527): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 3527): 	at android.widget.LinearLayout.setChildFrame(LinearLayout.java:1254)
+E/AndroidRuntime( 3527): 	at android.widget.LinearLayout.layoutVertical(LinearLayout.java:1130)
+E/AndroidRuntime( 3527): 	at android.widget.LinearLayout.onLayout(LinearLayout.java:1047)
+E/AndroidRuntime( 3527): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 3527): 	at android.widget.FrameLayout.onLayout(FrameLayout.java:338)
+E/AndroidRuntime( 3527): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 3527): 	at android.widget.LinearLayout.setChildFrame(LinearLayout.java:1254)
+E/AndroidRuntime( 3527): 	at android.widget.LinearLayout.layoutVertical(LinearLayout.java:1130)
+E/AndroidRuntime( 3527): 	at android.widget.LinearLayout.onLayout(LinearLayout.java:1047)
+E/AndroidRuntime( 3527): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 3527): 	at android.widget.FrameLayout.onLayout(FrameLayout.java:338)
+E/AndroidRuntime( 3527): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 3527): 	at android.widget.LinearLayout.setChildFrame(LinearLayout.java:1254)
+E/AndroidRuntime( 3527): 	at android.widget.LinearLayout.layoutVertical(LinearLayout.java:1130)
+E/AndroidRuntime( 3527): 	at android.widget.LinearLayout.onLayout(LinearLayout.java:1047)
+E/AndroidRuntime( 3527): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 3527): 	at android.widget.FrameLayout.onLayout(FrameLayout.java:338)
+E/AndroidRuntime( 3527): 	at android.view.View.layout(View.java:7186)
+E/AndroidRuntime( 3527): 	at android.view.ViewRoot.performTraversals(ViewRoot.java:1140)
+E/AndroidRuntime( 3527): 	at android.view.ViewRoot.handleMessage(ViewRoot.java:1859)
+E/AndroidRuntime( 3527): 	at android.os.Handler.dispatchMessage(Handler.java:99)
+E/AndroidRuntime( 3527): 	at android.os.Looper.loop(Looper.java:123)
+E/AndroidRuntime( 3527): 	at android.app.ActivityThread.main(ActivityThread.java:3717)
+E/AndroidRuntime( 3527): 	at java.lang.reflect.Method.invokeNative(Native Method)
+E/AndroidRuntime( 3527): 	at java.lang.reflect.Method.invoke(Method.java:507)
+E/AndroidRuntime( 3527): 	at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:839)
+E/AndroidRuntime( 3527): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:597)
+E/AndroidRuntime( 3527): 	at dalvik.system.NativeStart.main(Native Method)
+E/AndroidRuntime( 3527): Caused by: java.lang.reflect.InvocationTargetException
+E/AndroidRuntime( 3527): 	at java.lang.reflect.Constructor.constructNative(Native Method)
+E/AndroidRuntime( 3527): 	at java.lang.reflect.Constructor.newInstance(Constructor.java:415)
+E/AndroidRuntime( 3527): 	at android.view.LayoutInflater.createView(LayoutInflater.java:505)
+E/AndroidRuntime( 3527): 	... 48 more
+E/AndroidRuntime( 3527): Caused by: android.content.res.Resources$NotFoundException: Resource is not a Drawable (color or path): TypedValue{t=0x2/d=0x101032c a=-1}
+E/AndroidRuntime( 3527): 	at android.content.res.Resources.loadDrawable(Resources.java:1681)
+E/AndroidRuntime( 3527): 	at android.content.res.TypedArray.getDrawable(TypedArray.java:601)
+E/AndroidRuntime( 3527): 	at android.view.View.<init>(View.java:1951)
+E/AndroidRuntime( 3527): 	at android.view.View.<init>(View.java:1899)
+E/AndroidRuntime( 3527): 	... 51 more
+W/ActivityManager( 1423):   Force finishing activity com.nao20010128nao.Wisecraft/.ServerInfoActivity
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -67 beacon -67 success
+D/wpa_supplicant( 1524): rssi_data -67 rssi_beacon -67
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -67
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+W/ActivityManager( 1423): Activity pause timeout for HistoryRecord{407ac470 com.nao20010128nao.Wisecraft/.ServerInfoActivity}
+W/System.err( 3527): Socket Timeout! Is the server offline?
+W/System.err( 3527): java.net.SocketTimeoutException: Try again
+W/System.err( 3527): 	at org.apache.harmony.luni.platform.OSNetworkSystem.recv(Native Method)
+W/System.err( 3527): 	at dalvik.system.BlockGuard$WrappedNetworkSystem.recv(BlockGuard.java:321)
+W/System.err( 3527): 	at org.apache.harmony.luni.net.PlainDatagramSocketImpl.doRecv(PlainDatagramSocketImpl.java:172)
+W/System.err( 3527): 	at org.apache.harmony.luni.net.PlainDatagramSocketImpl.receive(PlainDatagramSocketImpl.java:181)
+W/System.err( 3527): 	at java.net.DatagramSocket.receive(DatagramSocket.java:402)
+W/System.err( 3527): 	at com.nao20010128nao.MCPing.pe.PEQuery.sendUDP(PEQuery.java:129)
+W/System.err( 3527): 	at com.nao20010128nao.MCPing.pe.PEQuery.handshake(PEQuery.java:47)
+W/System.err( 3527): 	at com.nao20010128nao.MCPing.pe.PEQuery.fullStatUni(PEQuery.java:84)
+W/System.err( 3527): 	at com.nao20010128nao.Wisecraft.provider.NormalServerPingProvider$PingThread.run(NormalServerPingProvider.java:67)
+W/System.err( 3527): java.lang.NullPointerException
+W/System.err( 3527): 	at java.lang.String.<init>(String.java:141)
+W/System.err( 3527): 	at com.nao20010128nao.MCPing.pe.PEQuery.handshake(PEQuery.java:49)
+W/System.err( 3527): 	at com.nao20010128nao.MCPing.pe.PEQuery.fullStatUni(PEQuery.java:84)
+W/System.err( 3527): 	at com.nao20010128nao.Wisecraft.provider.NormalServerPingProvider$PingThread.run(NormalServerPingProvider.java:67)
+W/System.err( 3527): Socket Timeout! Is the server offline?
+W/System.err( 3527): java.net.SocketTimeoutException: Try again
+W/System.err( 3527): 	at org.apache.harmony.luni.platform.OSNetworkSystem.recv(Native Method)
+W/System.err( 3527): 	at dalvik.system.BlockGuard$WrappedNetworkSystem.recv(BlockGuard.java:321)
+W/System.err( 3527): 	at org.apache.harmony.luni.net.PlainDatagramSocketImpl.doRecv(PlainDatagramSocketImpl.java:172)
+W/System.err( 3527): 	at org.apache.harmony.luni.net.PlainDatagramSocketImpl.receive(PlainDatagramSocketImpl.java:181)
+W/System.err( 3527): 	at java.net.DatagramSocket.receive(DatagramSocket.java:402)
+W/System.err( 3527): 	at com.nao20010128nao.MCPing.pe.PEQuery.sendUDP(PEQuery.java:129)
+W/System.err( 3527): 	at com.nao20010128nao.MCPing.pe.PEQuery.handshake(PEQuery.java:47)
+W/System.err( 3527): 	at com.nao20010128nao.MCPing.pe.PEQuery.fullStatUni(PEQuery.java:84)
+W/System.err( 3527): 	at com.nao20010128nao.Wisecraft.provider.NormalServerPingProvider$PingThread.run(NormalServerPingProvider.java:67)
+W/System.err( 3527): java.lang.NullPointerException
+W/System.err( 3527): 	at java.lang.String.<init>(String.java:141)
+W/System.err( 3527): 	at com.nao20010128nao.MCPing.pe.PEQuery.handshake(PEQuery.java:49)
+W/System.err( 3527): 	at com.nao20010128nao.MCPing.pe.PEQuery.fullStatUni(PEQuery.java:84)
+W/System.err( 3527): 	at com.nao20010128nao.Wisecraft.provider.NormalServerPingProvider$PingThread.run(NormalServerPingProvider.java:67)
+W/System.err( 3527): Socket Timeout! Is the server offline?
+W/System.err( 3527): java.net.SocketTimeoutException: Try again
+W/System.err( 3527): 	at org.apache.harmony.luni.platform.OSNetworkSystem.recv(Native Method)
+W/System.err( 3527): 	at dalvik.system.BlockGuard$WrappedNetworkSystem.recv(BlockGuard.java:321)
+W/System.err( 3527): 	at org.apache.harmony.luni.net.PlainDatagramSocketImpl.doRecv(PlainDatagramSocketImpl.java:172)
+W/System.err( 3527): 	at org.apache.harmony.luni.net.PlainDatagramSocketImpl.receive(PlainDatagramSocketImpl.java:181)
+W/System.err( 3527): 	at java.net.DatagramSocket.receive(DatagramSocket.java:402)
+W/System.err( 3527): 	at com.nao20010128nao.MCPing.pe.PEQuery.sendUDP(PEQuery.java:129)
+W/System.err( 3527): 	at com.nao20010128nao.MCPing.pe.PEQuery.handshake(PEQuery.java:47)
+W/System.err( 3527): 	at com.nao20010128nao.MCPing.pe.PEQuery.fullStatUni(PEQuery.java:84)
+W/System.err( 3527): 	at com.nao20010128nao.Wisecraft.provider.NormalServerPingProvider$PingThread.run(NormalServerPingProvider.java:67)
+W/System.err( 3527): java.lang.NullPointerException
+W/System.err( 3527): 	at java.lang.String.<init>(String.java:141)
+W/System.err( 3527): 	at com.nao20010128nao.MCPing.pe.PEQuery.handshake(PEQuery.java:49)
+W/System.err( 3527): 	at com.nao20010128nao.MCPing.pe.PEQuery.fullStatUni(PEQuery.java:84)
+W/System.err( 3527): 	at com.nao20010128nao.Wisecraft.provider.NormalServerPingProvider$PingThread.run(NormalServerPingProvider.java:67)
+I/Process ( 3527): Sending signal. PID: 3527 SIG: 9
+I/ActivityManager( 1423): Process com.nao20010128nao.Wisecraft (pid 3527) has died.
+I/WindowManager( 1423): WIN DEATH: Window{408a7290 com.nao20010128nao.Wisecraft/com.nao20010128nao.Wisecraft.ServerListActivity paused=false}
+I/WindowManager( 1423): WIN DEATH: Window{40910d78 com.nao20010128nao.Wisecraft/com.nao20010128nao.Wisecraft.ServerInfoActivity paused=false}
+W/InputManagerService( 1423): Got RemoteException sending setActive(false) notification to pid 3527 uid 10003
+E/Volley  ( 1767): [28] a.a: Unexpected response code 410 for https://www.googleapis.com/plus/v2whitelisted/people/me/people/all?prettyPrint=false&fields=items(etag,id,names,nicknames,images,urls,sortKeys,taglines,emails,phoneNumbers,addresses,metadata,memberships,legacyFields/mobileOwnerId),nextPageToken,nextSyncToken&includeAffinity=gplusAutocomplete&includeAffinity=chatAutocomplete&includeAffinity=emailAutocomplete&includeOthers=true&maxResults=100&onBehalfOf=107991037939857550363&orderBy=modified&syncToken=CKHsyZ6uKhIBMRjlEioECAEQAQ
+I/PeopleSync( 1767): Sync Token out of date, syncing all people/gaia-map
+D/dalvikvm( 1767): GC_CONCURRENT freed 1684K, 50% free 6198K/12295K, external 1625K/2137K, paused 10ms+32ms
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -67 beacon -66 success
+D/wpa_supplicant( 1524): rssi_data -67 rssi_beacon -66
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -66
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+I/ActivityManager( 1423): Starting: Intent { flg=0x10000000 cmp=jackpal.androidterm/.Term bnds=[0,143][480,239] } from pid -1
+I/Term    ( 3437): Bound to TermService
+I/TermService( 3437): Activity binding to service
+I/PeopleSync( 1767): Sync finished, successful=true, took 5069ms
+I/PeopleSync( 1767): Sync start: cannotHavePeople=false isPageExistenceCheckOnly=false
+D/wpa_supplicant( 1524): CMD: DRIVER RSSI
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd RSSI
+D/wpa_supplicant( 1524): rssi command
+D/wpa_supplicant( 1524): wpa_driver_tista_private_send ioctl_cmd = 810a22  res = 0
+D/wpa_supplicant( 1524): wpa_driver_tista_get_rssi data -66 beacon -65 success
+D/wpa_supplicant( 1524): rssi_data -66 rssi_beacon -65
+D/wpa_supplicant( 1524): buf BUFFALO-4B89E9 rssi -65
+D/wpa_supplicant( 1524): CMD: DRIVER LINKSPEED
+D/wpa_supplicant( 1524): wpa_driver_tista_driver_cmd LINKSPEED
+D/wpa_supplicant( 1524): Link Speed command
+D/wpa_supplicant( 1524): buf LinkSpeed 54
+E/Volley  ( 1767): [28] a.a: Unexpected response code 410 for https://www.googleapis.com/plus/v2whitelisted/people/me/people/all?prettyPrint=false&fields=items(etag,id,names,nicknames,images,urls,sortKeys,taglines,emails,phoneNumbers,addresses,metadata,memberships,legacyFields/mobileOwnerId),nextPageToken,nextSyncToken&includeAffinity=gplusAutocomplete&includeAffinity=chatAutocomplete&includeAffinity=emailAutocomplete&includeOthers=true&maxResults=100&onBehalfOf=105239469047057454001&orderBy=modified&syncToken=CPqMyp6uKhIBMRjmEioECAEQAQ
+I/PeopleSync( 1767): Sync Token out of date, syncing all people/gaia-map
