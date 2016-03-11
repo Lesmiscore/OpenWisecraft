@@ -67,7 +67,7 @@ public class ServerFinder extends ListActivity
 	}
 	private void startFinding(final String ip,final int startPort,final int endPort,final boolean isPC){
 		final Dialog d=new AlertDialog.Builder(this)
-			.setTitle(R.string.finding)
+			.setTitle(R.string.findingServers)
 			.setView(dialog2 = getLayoutInflater().inflate(R.layout.server_finder_finding, null, false))
 			.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener(){
 				public void onClick(DialogInterface di, int w) {
