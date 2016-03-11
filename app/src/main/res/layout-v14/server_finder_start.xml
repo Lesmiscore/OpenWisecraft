@@ -23,8 +23,12 @@
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:id="@+id/pc"
-		android:text="@string/isPC"
-		android:layout_marginBottom="1dp"/>
+		android:text="@string/isPC"/>
+
+	<View
+		android:background="?android:attr/dividerVertical"
+		android:layout_height="1dp"
+		android:layout_width="match_parent"/>
 
 	<TextView
 		android:layout_height="wrap_content"
