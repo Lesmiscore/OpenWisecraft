@@ -1,7 +1,8 @@
-package com.nao20010128nao.Wisecraft;
+package com.nao20010128nao.Wisecraft.misc;
 import android.app.Activity;
 import android.os.Bundle;
 import android.webkit.WebView;
+import com.nao20010128nao.Wisecraft.R;
 
 public abstract class WebViewActivity extends Activity
 {
