@@ -29,5 +29,6 @@ dependencies {
     compile files('libs/xmlpull_1_1_3_1.jar')
 	compile "com.android.support:appcompat-v7:23.0.0"
 	compile files('libs/mcprox.jar')
+	compile files('libs/mcservlst.jar')
 	//compile 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
 }
