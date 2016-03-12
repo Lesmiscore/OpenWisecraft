@@ -17,4 +17,10 @@ public abstract class WebViewActivity extends Activity
 	protected WebView getWebView() {
 		return webView;
 	}
+	public void loadUrl(String url){
+		webView.loadUrl(url);
+	}
+	public void reload(){
+		webView.reload();
+	}
 }
