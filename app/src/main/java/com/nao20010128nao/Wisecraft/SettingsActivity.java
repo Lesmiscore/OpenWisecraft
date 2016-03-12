@@ -6,6 +6,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import com.nao20010128nao.MCPE.SC.misc.SHablePreferenceActivity;
 import com.nao20010128nao.ToolBox.HandledPreference;
 import java.io.IOException;
+import android.content.Intent;
 
 public class SettingsActivity extends SHablePreferenceActivity
 {
@@ -17,9 +18,7 @@ public class SettingsActivity extends SHablePreferenceActivity
 		addPreferencesFromResource(R.xml.settings);
 		sH("trickSheet",new HandledPreference.OnClickListener(){
 			public void onClick(String a,String b,String c){
-				try {
-					new ProcessBuilder("am start -a com.nao20010128nao.TRICK_SHEET -c android.intent.category.DEFAULT --user 0 com.nao20010128nao.Wisecraft/.TrickSheet".split("\\ ")).start();
-				} catch (IOException e) {}
+				startActivity(new Intent(SettingsActivity.this,TrickSheet.class));
 			}
 		});
 		
