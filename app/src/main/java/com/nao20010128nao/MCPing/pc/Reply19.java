@@ -8,9 +8,9 @@ import com.nao20010128nao.MCPing.ServerPingResult;
  * References: http://wiki.vg/Server_List_Ping
  * https://gist.github.com/thinkofdeath/6927216
  */
-public class Reply implements ServerPingResult,PCQueryResult {
+public class Reply19 implements ServerPingResult,PCQueryResult {
 
-	public String description;
+	public Description description;
 	public Players players;
 	public Version version;
 	public String favicon;
@@ -18,7 +18,7 @@ public class Reply implements ServerPingResult,PCQueryResult {
 	/**
 	 * @return the MOTD
 	 */
-	public String getDescription() {
+	public Description getDescription() {
 		return this.description;
 	}
 
@@ -109,4 +109,7 @@ public class Reply implements ServerPingResult,PCQueryResult {
 		}
 	}
 
+	public class Description{
+		public String text;
+	}
 }

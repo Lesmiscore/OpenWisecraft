@@ -26,6 +26,7 @@ import android.preference.PreferenceManager;
 import com.nao20010128nao.Wisecraft.provider.UnconnectedMultiServerPingProvider;
 import android.os.AsyncTask;
 import java.util.concurrent.atomic.AtomicInteger;
+import com.nao20010128nao.MCPing.pc.Reply19;
 public class ServerFinder extends ListActivity
 {
 	ServerList sl;
@@ -149,7 +150,14 @@ public class ServerFinder extends ListActivity
 			((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
 			
 			final String title;
-			if (s.response instanceof Reply) {//PC
+			if (s.response instanceof Reply19) {//PC 1.9~
+				Reply19 rep=(Reply19)s.response;
+				if (rep.description == null) {
+					title = s.ip + ":" + s.port;
+				} else {
+					title = deleteDecorations(rep.description.text);
+				}
+			} else if (s.response instanceof Reply) {//PC
 				Reply rep=(Reply)s.response;
 				if (rep.description == null) {
 					title = s.ip + ":" + s.port;

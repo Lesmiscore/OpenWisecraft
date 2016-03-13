@@ -24,8 +24,12 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import static com.nao20010128nao.Wisecraft.Utils.*;
 import com.nao20010128nao.Wisecraft.proxy.ProxyActivity;
 import com.nao20010128nao.Wisecraft.provider.NormalServerPingProvider;
+import java.lang.ref.WeakReference;
+import com.nao20010128nao.MCPing.pc.Reply19;
 
 public class ServerListActivity extends ListActivity {
+	public static WeakReference<ServerListActivity> instance=new WeakReference(null);
+	
 	static File mcpeServerList=new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt");
 
 	ServerPingProvider spp,updater;
@@ -50,6 +54,7 @@ public class ServerListActivity extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
+		instance=new WeakReference(this);
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
 		spp=updater=new MultiServerPingProvider(Integer.parseInt(pref.getString("parallels","6")));
 		if(pref.getBoolean("updAnotherThread",false)){
@@ -716,6 +721,13 @@ public class ServerListActivity extends ListActivity {
 								title = deleteDecorations(m.get("motd"));
 							} else {
 								title = s.ip + ":" + s.port;
+							}
+						} else if (s.response instanceof Reply19) {//PC 1.9~
+							Reply19 rep=(Reply19)s.response;
+							if (rep.description == null) {
+								title = s.ip + ":" + s.port;
+							} else {
+								title = deleteDecorations(rep.description.text);
 							}
 						} else if (s.response instanceof Reply) {//PC
 							Reply rep=(Reply)s.response;

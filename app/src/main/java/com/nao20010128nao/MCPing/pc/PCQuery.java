@@ -10,6 +10,8 @@ import com.google.gson.Gson;
 import com.nao20010128nao.MCPing.Utils;
 import com.nao20010128nao.MCPing.*;
 import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
+import android.util.Log;
+import com.google.gson.JsonSyntaxException;
 
 public class PCQuery implements PingHost{
 	private Gson gson = new Gson();
@@ -77,7 +79,7 @@ public class PCQuery implements PingHost{
 	}
 
 	// ///////
-	public Reply fetchReply() throws IOException {
+	public PCQueryResult fetchReply() throws IOException {
 		Socket sock = null;
 		try {
 			sock = new Socket(host, port);
@@ -88,8 +90,13 @@ public class PCQuery implements PingHost{
 			writeHandshake(dos, host, port);
 			writeRequest(dos);
 			String s = getStatJson(dis);
+			Log.i("ping_pc",s);
 			lastPing=System.currentTimeMillis()-t;
-			return gson.fromJson(s, Reply.class);
+			try {
+				return gson.fromJson(s, Reply.class);
+			} catch (JsonSyntaxException e) {
+				return gson.fromJson(s, Reply19.class);
+			}
 		} finally {
 			if (sock != null)
 				sock.close();

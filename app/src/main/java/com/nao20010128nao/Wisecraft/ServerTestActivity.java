@@ -20,6 +20,7 @@ import com.nao20010128nao.Wisecraft.provider.ServerPingProvider;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import com.nao20010128nao.MCPing.pc.Reply19;
 
 public class ServerTestActivity extends ListActivity {
 	ServerPingProvider spp=new NormalServerPingProvider();
@@ -125,6 +126,13 @@ public class ServerTestActivity extends ListActivity {
 											title = deleteDecorations(m.get("motd"));
 										} else {
 											title = sv.ip + ":" + sv.port;
+										}
+									} else if (sv.response instanceof Reply19) {//PC 1.9~
+										Reply19 rep=(Reply19)sv.response;
+										if (rep.description == null) {
+											title = sv.ip + ":" + sv.port;
+										} else {
+											title = deleteDecorations(rep.description.text);
 										}
 									} else if (sv.response instanceof Reply) {//PC
 										Reply rep=(Reply)sv.response;
