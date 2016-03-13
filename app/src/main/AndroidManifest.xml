@@ -73,6 +73,11 @@
             android:name=".ServerFinder"
 			android:exported="false">
         </activity>
+		<activity
+            android:label="@string/addServerFromServerListSite"
+            android:name=".ServerGetActivity"
+			android:exported="false">
+        </activity>
 		
 		<!--
 		<receiver android:name=".widget.ServerInfoWidget" >

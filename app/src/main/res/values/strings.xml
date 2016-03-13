@@ -51,8 +51,9 @@
 	<string name="endPort">End Port</string>
 	<string name="finding">Finding...</string><!--Reserved for future release-->
 	<string name="findingServers">Finding Servers...</string>
-	<string name="selectWebSite">Select website:</string>
+	<string name="selectWebSite">Select a website:</string>
 	<string name="findServers">Find servers in this page</string>
+	<string name="addServerFromServerListSite">Add servers from server list site</string>
 	
 	
 	<string name="font">lato-light.ttf</string>

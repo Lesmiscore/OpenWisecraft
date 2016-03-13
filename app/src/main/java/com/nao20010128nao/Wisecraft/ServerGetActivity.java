@@ -15,7 +15,7 @@ public class ServerGetActivity extends WebViewActivity
 		new AlertDialog.Builder(this)
 			.setSingleChoiceItems(R.array.serverListSites,-1,new DialogInterface.OnClickListener(){
 				public void onClick(DialogInterface di,int w){
-					di.dismiss();
+					di.cancel();
 					loadUrl(getResources().getStringArray(R.array.serverListSites)[w]);
 				}
 			})
@@ -28,7 +28,7 @@ public class ServerGetActivity extends WebViewActivity
 			})
 			.setOnDismissListener(new DialogInterface.OnDismissListener(){
 				public void onDismiss(DialogInterface di){
-					finish();
+					//finish();
 					Log.d("SGA","dismiss");
 				}
 			})

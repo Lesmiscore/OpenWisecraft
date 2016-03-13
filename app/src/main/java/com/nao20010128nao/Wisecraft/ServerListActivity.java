@@ -125,7 +125,8 @@ public class ServerListActivity extends ListActivity {
 			menu.add(Menu.NONE, 5, 5, R.string.bringOnlinesToTop);
 		if(pref.getBoolean("feature_serverFinder",false))
 			menu.add(Menu.NONE, 6, 6, R.string.serverFinder);
-		menu.add(Menu.NONE, 7, 7, R.string.settings);
+		menu.add(Menu.NONE, 7, 7, R.string.addServerFromServerListSite);
+		menu.add(Menu.NONE, 8, 8, R.string.settings);
 		return true;
 	}
 
@@ -320,6 +321,9 @@ public class ServerListActivity extends ListActivity {
 				startActivity(new Intent(this,ServerFinder.class));
 				break;
 			case 7:
+				startActivity(new Intent(this,ServerGetActivity.class));
+				break;
+			case 8:
 				startActivity(new Intent(this,SettingsActivity.class));
 				break;
 		}
