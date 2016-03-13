@@ -24,6 +24,8 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import static com.nao20010128nao.Wisecraft.Utils.*;
 import com.nao20010128nao.Wisecraft.misc.compat.CompatArrayAdapter;
 import com.nao20010128nao.MCPing.pc.Reply19;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.Color;
 
 public class ServerInfoActivity extends FragmentActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
@@ -147,9 +149,13 @@ public class ServerInfoActivity extends FragmentActivity {
 
 			serverNameStr = deleteDecorations(rep.description);
 
-			byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
-			Bitmap bmp=BitmapFactory.decodeByteArray(image, 0, image.length);
-			serverIconObj = new BitmapDrawable(bmp);
+			if(rep.favicon!=null){
+				byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
+				Bitmap bmp=BitmapFactory.decodeByteArray(image, 0, image.length);
+				serverIconObj = new BitmapDrawable(bmp);
+			}else{
+				serverIconObj=new ColorDrawable(Color.TRANSPARENT);
+			}
 
 			adap2.clear();
 			Map<String,String> data=new HashMap<>();
@@ -180,9 +186,13 @@ public class ServerInfoActivity extends FragmentActivity {
 
 			serverNameStr = deleteDecorations(rep.description.text);
 
-			byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
-			Bitmap bmp=BitmapFactory.decodeByteArray(image, 0, image.length);
-			serverIconObj = new BitmapDrawable(bmp);
+			if(rep.favicon!=null){
+				byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
+				Bitmap bmp=BitmapFactory.decodeByteArray(image, 0, image.length);
+				serverIconObj = new BitmapDrawable(bmp);
+			}else{
+				serverIconObj=new ColorDrawable(Color.TRANSPARENT);
+			}
 
 			adap2.clear();
 			Map<String,String> data=new HashMap<>();
