@@ -73,7 +73,7 @@ public class ServerGetActivity extends WebViewActivity
 								dialogMsg=getResources().getString(R.string.msl_websiteNotSupported)+url;
 							}
 							if(msg.startsWith("Unsupported webpage")){
-								dialogMsg=getResources().getString(R.string.msl_websiteNotSupported)+url;
+								dialogMsg=getResources().getString(R.string.msl_unsupportedWebpage)+url;
 							}
 							
 							new AlertDialog.Builder(ServerGetActivity.this)
