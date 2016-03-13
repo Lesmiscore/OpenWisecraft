@@ -41,4 +41,14 @@ public class ServerGetActivity extends WebViewActivity
 		menu.add(Menu.NONE,0,0,R.string.findServers);
 		return true;
 	}
+
+	@Override
+	public void onBackPressed() {
+		// TODO: Implement this method
+		if(getWebView().canGoBack()){
+			getWebView().goBack();
+		}else{
+			finish();
+		}
+	}
 }
