@@ -30,5 +30,6 @@ dependencies {
 	compile "com.android.support:appcompat-v7:23.0.0"
 	compile files('libs/mcprox.jar')
 	compile files('libs/mcservlst.jar')
+	compile "org.nanohttpd:nanohttpd:2.2.0"
 	//compile 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
 }
