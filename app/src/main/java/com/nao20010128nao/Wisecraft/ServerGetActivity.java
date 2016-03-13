@@ -13,6 +13,7 @@ import com.nao20010128nao.McServerList.ServerAddressFetcher;
 
 public class ServerGetActivity extends WebViewActivity
 {
+	String domain;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
@@ -21,7 +22,7 @@ public class ServerGetActivity extends WebViewActivity
 			.setSingleChoiceItems(R.array.serverListSites,-1,new DialogInterface.OnClickListener(){
 				public void onClick(DialogInterface di,int w){
 					di.dismiss();
-					loadUrl(getResources().getStringArray(R.array.serverListSites)[w]);
+					loadUrl("http://"+(domain=getResources().getStringArray(R.array.serverListSites)[w])+"/");
 				}
 			})
 			.setTitle(R.string.selectWebSite)

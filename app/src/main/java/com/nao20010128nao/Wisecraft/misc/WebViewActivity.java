@@ -3,6 +3,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.webkit.WebView;
 import com.nao20010128nao.Wisecraft.R;
+import android.webkit.WebViewClient;
 
 public abstract class WebViewActivity extends Activity
 {
@@ -13,6 +14,7 @@ public abstract class WebViewActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.webview_activity);
 		webView=(WebView)findViewById(R.id.webview);
+		webView.setWebViewClient(new WebViewClient(){});
 	}
 	protected WebView getWebView() {
 		return webView;
