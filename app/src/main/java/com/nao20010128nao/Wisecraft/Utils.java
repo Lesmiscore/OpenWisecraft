@@ -119,4 +119,15 @@ public class Utils {
 		}
 		return sb.toString();
 	}
+	public static List<ServerListActivity.Server> convertServerObject(List<com.nao20010128nao.McServerList.Server> from){
+		ArrayList<ServerListActivity.Server> result=new ArrayList<>();
+		for(com.nao20010128nao.McServerList.Server obj:from){
+			ServerListActivity.Server wcs=new ServerListActivity.Server();
+			wcs.ip=obj.ip;
+			wcs.port=obj.port;
+			wcs.isPC=!obj.isPE;
+			result.add(wcs);
+		}
+		return result;
+	}
 }

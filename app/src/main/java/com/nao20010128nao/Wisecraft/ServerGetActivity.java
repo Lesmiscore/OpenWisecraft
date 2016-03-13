@@ -10,6 +10,8 @@ import android.os.AsyncTask;
 import java.util.List;
 import java.net.URL;
 import com.nao20010128nao.McServerList.ServerAddressFetcher;
+import java.util.ArrayList;
+import android.widget.ArrayAdapter;
 
 public class ServerGetActivity extends WebViewActivity
 {
@@ -56,6 +58,7 @@ public class ServerGetActivity extends WebViewActivity
 				//List<com.nao20010128nao.McServerList.Server>
 				new AsyncTask<String,Void,Object>(){
 					String url;
+					boolean[] selections;
 					public Object doInBackground(String... a){
 						try{
 							return ServerAddressFetcher.findServersInWebpage(new URL(url=a[0]));
@@ -66,6 +69,26 @@ public class ServerGetActivity extends WebViewActivity
 					public void onPostExecute(Object o){
 						if(o instanceof List){
 							//Server list
+							final List<com.nao20010128nao.McServerList.Server> serv=(List)o;
+							String[] servSel=new String[serv.size()];
+							for(int i=0;i<servSel.length;i++){
+								servSel[i]=serv.get(i).toString();
+							}
+							new AlertDialog.Builder(ServerGetActivity.this)
+								.setTitle(R.string.selectServers)
+								.setMultiChoiceItems(servSel,selections=new boolean[servSel.length],new DialogInterface.OnMultiChoiceClickListener(){
+									public void onClick(DialogInterface di,int w,boolean c){
+										selections[w]=c;
+									}
+								})
+								.setPositiveButton(R.string.add,new DialogInterface.OnClickListener(){
+									public void onClick(DialogInterface di,int w){
+										List<com.nao20010128nao.McServerList.Server> selected=getServers(serv,selections);
+										((ArrayAdapter)ServerListActivity.instance.get().getListAdapter()).addAll(Utils.convertServerObject(selected));
+										di.dismiss();
+									}
+								})
+								.show();
 						}else{
 							//Throwable
 							String msg=((Throwable)o).getMessage();
@@ -83,6 +106,15 @@ public class ServerGetActivity extends WebViewActivity
 								.setPositiveButton(android.R.string.ok,Constant.BLANK_DIALOG_CLICK_LISTENER)
 								.show();
 						}
+					}
+					public List<com.nao20010128nao.McServerList.Server> getServers(List<com.nao20010128nao.McServerList.Server> all,boolean[] balues){
+						List lst=new ArrayList();
+						for(int i=0;i<balues.length;i++){
+							if(balues[i]){
+								lst.add(all.get(i));
+							}
+						}
+						return lst;
 					}
 				}.execute(getWebView().getUrl());
 				break;

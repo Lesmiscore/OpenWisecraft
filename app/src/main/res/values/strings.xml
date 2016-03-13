@@ -55,6 +55,7 @@
 	<string name="findServers">Find servers in this page</string>
 	<string name="addServerFromServerListSite">Add servers from server list site</string>
 	<string name="error">Error</string>
+	<string name="selectServers">Select Servers</string>
 	
 	
 	<string name="font">lato-light.ttf</string>
