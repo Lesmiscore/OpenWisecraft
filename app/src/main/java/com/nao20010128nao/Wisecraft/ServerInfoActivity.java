@@ -23,6 +23,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
 import com.nao20010128nao.Wisecraft.misc.compat.CompatArrayAdapter;
+import com.nao20010128nao.MCPing.pc.Reply19;
 
 public class ServerInfoActivity extends FragmentActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
@@ -145,6 +146,39 @@ public class ServerInfoActivity extends FragmentActivity {
 			}
 
 			serverNameStr = deleteDecorations(rep.description);
+
+			byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
+			Bitmap bmp=BitmapFactory.decodeByteArray(image, 0, image.length);
+			serverIconObj = new BitmapDrawable(bmp);
+
+			adap2.clear();
+			Map<String,String> data=new HashMap<>();
+			data.put(getResources().getString(R.string.pc_maxPlayers), rep.players.getMax() + "");
+			data.put(getResources().getString(R.string.pc_nowPlayers), rep.players.getOnline() + "");
+			data.put(getResources().getString(R.string.pc_softwareVersion), rep.version.getName());
+			data.put(getResources().getString(R.string.pc_protocolVersion), rep.version.getProtocol() + "");
+			CompatArrayAdapter.addAll(adap2,data.entrySet());
+		} else if (resp instanceof Reply19) {
+			Reply19 rep=(Reply19)resp;
+			if (rep.description == null) {
+				setTitle(stat.ip + ":" + stat.port);
+			} else {
+				setTitle(deleteDecorations(rep.description.text));
+			}
+
+			if (rep.players.getSample() != null) {
+				final ArrayList<String> sort=new ArrayList<>();
+				for (Reply19.Player o:rep.players.getSample()) {
+					sort.add(o.getName());
+				}
+				Collections.sort(sort);
+				adap.clear();
+				CompatArrayAdapter.addAll(adap,sort);
+			} else {
+				adap.clear();
+			}
+
+			serverNameStr = deleteDecorations(rep.description.text);
 
 			byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
 			Bitmap bmp=BitmapFactory.decodeByteArray(image, 0, image.length);
