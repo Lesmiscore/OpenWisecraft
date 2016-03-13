@@ -1,17 +1,17 @@
 package com.nao20010128nao.Wisecraft;
-import com.nao20010128nao.Wisecraft.misc.WebViewActivity;
-import android.os.Bundle;
-import android.view.Menu;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.util.Log;
-import android.view.MenuItem;
 import android.os.AsyncTask;
-import java.util.List;
-import java.net.URL;
-import com.nao20010128nao.McServerList.ServerAddressFetcher;
-import java.util.ArrayList;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import com.nao20010128nao.McServerList.ServerAddressFetcher;
+import com.nao20010128nao.Wisecraft.misc.WebViewActivity;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ServerGetActivity extends WebViewActivity
 {

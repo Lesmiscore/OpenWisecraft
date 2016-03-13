@@ -1,32 +1,27 @@
 package com.nao20010128nao.Wisecraft;
 import android.app.*;
-import android.content.*;
 import android.widget.*;
-import java.util.*;
+import com.nao20010128nao.Wisecraft.provider.*;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.ViewGroup;
 import com.nao20010128nao.MCPing.pc.Reply;
-import com.nao20010128nao.MCPing.pe.FullStat;
+import com.nao20010128nao.MCPing.pc.Reply19;
 import com.nao20010128nao.Wisecraft.ServerListActivity.Server;
 import com.nao20010128nao.Wisecraft.ServerListActivity.ServerStatus;
 import com.nao20010128nao.Wisecraft.misc.AppBaseArrayAdapter;
-import com.nao20010128nao.Wisecraft.misc.SprPair;
 import com.nao20010128nao.Wisecraft.pingEngine.UnconnectedPing;
-import com.nao20010128nao.Wisecraft.provider.NormalServerPingProvider;
-import com.nao20010128nao.Wisecraft.provider.ServerPingProvider;
+import java.util.ArrayList;
+import java.util.List;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
-import com.nao20010128nao.Wisecraft.provider.PCServerPingProvider;
-import com.nao20010128nao.Wisecraft.provider.PCMultiServerPingProvider;
-import android.preference.PreferenceManager;
-import com.nao20010128nao.Wisecraft.provider.UnconnectedMultiServerPingProvider;
-import android.os.AsyncTask;
-import java.util.concurrent.atomic.AtomicInteger;
-import com.nao20010128nao.MCPing.pc.Reply19;
 public class ServerFinder extends ListActivity
 {
 	ServerList sl;

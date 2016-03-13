@@ -1,31 +1,27 @@
 package com.nao20010128nao.Wisecraft;
 
+import android.graphics.*;
+import android.graphics.drawable.*;
 import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import java.util.*;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.util.Base64;
 import com.nao20010128nao.MCPing.ServerPingResult;
 import com.nao20010128nao.MCPing.pc.Reply;
+import com.nao20010128nao.MCPing.pc.Reply19;
 import com.nao20010128nao.MCPing.pe.FullStat;
+import com.nao20010128nao.Wisecraft.misc.compat.CompatArrayAdapter;
 import com.nao20010128nao.Wisecraft.pingEngine.UnconnectedPing;
 import java.lang.ref.WeakReference;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
-import com.nao20010128nao.Wisecraft.misc.compat.CompatArrayAdapter;
-import com.nao20010128nao.MCPing.pc.Reply19;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.Color;
 
 public class ServerInfoActivity extends FragmentActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);

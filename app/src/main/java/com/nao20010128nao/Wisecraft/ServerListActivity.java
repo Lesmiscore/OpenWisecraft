@@ -5,6 +5,7 @@ import android.os.*;
 import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+import com.nao20010128nao.Wisecraft.provider.*;
 import java.io.*;
 import java.util.*;
 
@@ -14,18 +15,15 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.nao20010128nao.MCPing.ServerPingResult;
 import com.nao20010128nao.MCPing.pc.Reply;
+import com.nao20010128nao.MCPing.pc.Reply19;
 import com.nao20010128nao.MCPing.pe.FullStat;
 import com.nao20010128nao.Wisecraft.pingEngine.UnconnectedPing;
-import com.nao20010128nao.Wisecraft.provider.MultiServerPingProvider;
-import com.nao20010128nao.Wisecraft.provider.ServerPingProvider;
+import com.nao20010128nao.Wisecraft.proxy.ProxyActivity;
 import com.nao20010128nao.Wisecraft.rcon.RCONActivity;
+import java.lang.ref.WeakReference;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
-import com.nao20010128nao.Wisecraft.proxy.ProxyActivity;
-import com.nao20010128nao.Wisecraft.provider.NormalServerPingProvider;
-import java.lang.ref.WeakReference;
-import com.nao20010128nao.MCPing.pc.Reply19;
 
 public class ServerListActivity extends ListActivity {
 	public static WeakReference<ServerListActivity> instance=new WeakReference(null);
@@ -301,7 +299,7 @@ public class ServerListActivity extends ListActivity {
 						for(int i=0;i<list.size();i++){
 							if(list.get(i) instanceof ServerStatus){
 								//Online
-								sortingServer.add(list.get(i));
+								sortingServer.add(list.get(i).cloneAsServer());
 								
 								tmpServer.remove(list.get(i));
 							}
@@ -311,9 +309,9 @@ public class ServerListActivity extends ListActivity {
 						runOnUiThread(new Runnable(){
 							public void run(){
 								finish();
-								pref.edit().putString("servers", gson.toJson(sortingServer.toArray(new Server[sortingServer.size()]), Server[].class)).commit();
 								new Handler().postDelayed(new Runnable(){
 										public void run(){
+											pref.edit().putString("servers", gson.toJson(sortingServer.toArray(new Server[sortingServer.size()]), Server[].class)).commit();
 											startActivity(new Intent(ServerListActivity.this,ServerListActivity.class));
 										}
 									},10);

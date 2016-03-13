@@ -1,23 +1,22 @@
 package com.nao20010128nao.Wisecraft.misc.server;
-import java.net.*;
-import java.io.*;
 import com.nao20010128nao.Wisecraft.*;
+import java.io.*;
+import java.net.*;
 import java.util.*;
-import java.security.*;
-import java.nio.charset.*;
-import android.util.*;
-import com.google.gson.*;
-import android.preference.*;
-import android.os.*;
-import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
 
-public class GhostPingServer extends Thread
-{
+import android.os.Looper;
+import android.preference.PreferenceManager;
+import android.util.Log;
+import com.google.gson.Gson;
+import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
+import java.security.SecureRandom;
+
+public class GhostPingServer extends Thread {
 	private static final int MAGIC_1ST=0x00ffff00;
 	private static final int MAGIC_2ND=0xfefefefe;
 	private static final int MAGIC_3RD=0xfdfdfdfd;
 	private static final int MAGIC_4TH=0x12345678;
-	
+
 	SecureRandom sr=new SecureRandom();
 	private DatagramSocket serv = null;
 	private ServerSocket servSock=null;
@@ -25,12 +24,11 @@ public class GhostPingServer extends Thread
 	static byte[] MAGIC = {(byte) 0xFE, (byte) 0xFD};
 	public void runImpl()throws IOException {
 		// TODO: Implement this method
-		while(serv == null)
-		{
+		while (serv == null) {
 			try {
 				serv   = new DatagramSocket(localPort);
-				servSock=new   ServerSocket(localPort);
-				Log.d("ghost_query","port="+localPort);
+				servSock = new   ServerSocket(localPort);
+				Log.d("ghost_query", "port=" + localPort);
 			} catch (BindException e) {
 				++localPort; // increment if port is already in use
 			}
@@ -39,18 +37,18 @@ public class GhostPingServer extends Thread
 			{
 				Looper.prepare();
 			}
-			public void run(){
-				while(true){
+			public void run() {
+				while (true) {
 					try {
 						servSock.accept().close();
 					} catch (IOException e) {}
 				}
 			}
 		}.start();
-		while(true){
-			byte[] ba=Factories.byteArray(100*1024);
-			Arrays.fill(ba,(byte)-1);
-			DatagramPacket pak=new DatagramPacket(ba,0,1024*100);
+		while (true) {
+			byte[] ba=Factories.byteArray(100 * 1024);
+			Arrays.fill(ba, (byte)-1);
+			DatagramPacket pak=new DatagramPacket(ba, 0, 1024 * 100);
 			serv.receive(pak);
 			check(pak);
 		}
@@ -63,25 +61,25 @@ public class GhostPingServer extends Thread
 			runImpl();
 		} catch (IOException e) {}
 	}
-	
-	private void check(DatagramPacket p)throws IOException{
+
+	private void check(DatagramPacket p)throws IOException {
 		byte d[]=p.getData();
 		dump(p);
 		ByteArrayInputStream bais=new ByteArrayInputStream(d);
 		DataInputStream dis=new DataInputStream(bais);
-		if(d[0]==0x01){//UnconnectedPing
+		if (d[0] == 0x01) {//UnconnectedPing
 			dis.read();
 			dis.readLong();
-			if(dis.readInt()!=MAGIC_1ST){
+			if (dis.readInt() != MAGIC_1ST) {
 				return;
 			}
-			if(dis.readInt()!=MAGIC_2ND){
+			if (dis.readInt() != MAGIC_2ND) {
 				return;
 			}
-			if(dis.readInt()!=MAGIC_3RD){
+			if (dis.readInt() != MAGIC_3RD) {
 				return;
 			}
-			if(dis.readInt()!=MAGIC_4TH){
+			if (dis.readInt() != MAGIC_4TH) {
 				return;
 			}
 			ByteArrayOutputStream baos=new ByteArrayOutputStream();
@@ -93,42 +91,42 @@ public class GhostPingServer extends Thread
 			dos.writeInt(MAGIC_2ND);
 			dos.writeInt(MAGIC_3RD);
 			dos.writeInt(MAGIC_4TH);
-			
+
 			List<String> datas=new ArrayList();
 			datas.add("MCPE");//MCPE
 			datas.add("§5Wisecraft");//Server name
 			datas.add("45");//Protocol (45=0.14.0)
 			datas.add("0.14.0");//Version (Displayed on MCPE)
-			datas.add(Integer.MAX_VALUE+"");//Players count
-			datas.add(Integer.MAX_VALUE+"");//Max players
-			
+			datas.add(Integer.MAX_VALUE + "");//Players count
+			datas.add(Integer.MAX_VALUE + "");//Max players
+
 			StringBuilder sb=new StringBuilder();
-			for(String s:datas){
+			for (String s:datas) {
 				sb.append(s).append(';');
 			}
-			sb.setLength(sb.length()-1);
+			sb.setLength(sb.length() - 1);
 			dos.writeUTF(sb.toString());
-			
-			DatagramPacket resP=new DatagramPacket(baos.toByteArray(),0,baos.size());
+
+			DatagramPacket resP=new DatagramPacket(baos.toByteArray(), 0, baos.size());
 			resP.setSocketAddress(p.getSocketAddress());
 			serv.send(resP);
 			return;
 		}
 		byte[] magicTest=new byte[2];
 		dis.readFully(magicTest);
-		if(!Arrays.equals(MAGIC,magicTest)){
+		if (!Arrays.equals(MAGIC, magicTest)) {
 			return;
 		}
-		byte type=(byte)(dis.read()&0xff);
+		byte type=(byte)(dis.read() & 0xff);
 		int sessionId=dis.readInt();
-		if(type==0){
+		if (type == 0) {
 			//stat
-			Log.d("ghost_query","len="+p.getLength());
+			Log.d("ghost_query", "len=" + p.getLength());
 			int token=dis.readInt();
 			int pad=dis.readInt();
 			ByteArrayOutputStream result=new ByteArrayOutputStream();
 			DataOutputStream resW=new DataOutputStream(result);
-			if(pad==0){
+			if (pad == 0) {
 				//full stat
 				resW.write(0);resW.writeInt(sessionId);
 				//73 70 6C 69 74 6E 75 6D 00 80 00
@@ -145,19 +143,19 @@ public class GhostPingServer extends Thread
 				resW.write((byte)0x00);
 				//KV
 				Map<String,String> kv=new HashMap();
-				kv.put("gametype","SMP");
-				kv.put("map","wisecraft");
-				kv.put("server_engine","Wisecraft Ghost Ping");
-				kv.put("hostport",localPort+"");
-				kv.put("whitelist","on");
-				kv.put("plugins","Wisecraft Ghost Ping"+buildPlugins());
-				kv.put("hostname","§5Wisecraft");
-				kv.put("numplayers",Integer.MAX_VALUE+"");
-				kv.put("version","v0.14.0 alpha");
-				kv.put("game_id","MINECRAFTPE");
-				kv.put("hostip","0.0.0.0");
-				kv.put("maxplayers",Integer.MAX_VALUE+"");
-				for(Map.Entry<String,String> ent:kv.entrySet()){
+				kv.put("gametype", "SMP");
+				kv.put("map", "wisecraft");
+				kv.put("server_engine", "Wisecraft Ghost Ping");
+				kv.put("hostport", localPort + "");
+				kv.put("whitelist", "on");
+				kv.put("plugins", "Wisecraft Ghost Ping" + buildPlugins());
+				kv.put("hostname", "§5Wisecraft");
+				kv.put("numplayers", Integer.MAX_VALUE + "");
+				kv.put("version", "v0.14.0 alpha");
+				kv.put("game_id", "MINECRAFTPE");
+				kv.put("hostip", "0.0.0.0");
+				kv.put("maxplayers", Integer.MAX_VALUE + "");
+				for (Map.Entry<String,String> ent:kv.entrySet()) {
 					resW.write(ent.getKey().getBytes(CompatCharsets.UTF_8));
 					resW.write(0);
 					resW.write(ent.getValue().getBytes(CompatCharsets.UTF_8));
@@ -176,45 +174,45 @@ public class GhostPingServer extends Thread
 				resW.write((byte)0x00);
 				resW.write((byte)0x00);
 				//players
-				for(ServerListActivity.Server s:getServers()){
-					resW.write((s.ip+":"+s.port+"\0").getBytes(CompatCharsets.UTF_8));
+				for (ServerListActivity.Server s:getServers()) {
+					resW.write((s.ip + ":" + s.port + "\0").getBytes(CompatCharsets.UTF_8));
 				}
 				resW.write(0);
-				DatagramPacket resP=new DatagramPacket(result.toByteArray(),0,result.size());
+				DatagramPacket resP=new DatagramPacket(result.toByteArray(), 0, result.size());
 				resP.setSocketAddress(p.getSocketAddress());
 				serv.send(resP);
-			}else{
+			} else {
 				//basic stat
 			}
-		}else if(type==9){
+		} else if (type == 9) {
 			//handshake
 			ByteArrayOutputStream result=new ByteArrayOutputStream();
 			DataOutputStream resW=new DataOutputStream(result);
 			resW.write(9);
 			resW.writeInt(sessionId);
 			int r=Math.abs(sr.nextInt());
-			resW.write((r+"").getBytes(CompatCharsets.US_ASCII));
+			resW.write((r + "").getBytes(CompatCharsets.US_ASCII));
 			resW.write(0);
-			DatagramPacket resP=new DatagramPacket(result.toByteArray(),0,result.size());
+			DatagramPacket resP=new DatagramPacket(result.toByteArray(), 0, result.size());
 			resP.setSocketAddress(p.getSocketAddress());
 			serv.send(resP);
 		}
 	}
-	String buildPlugins(){
+	String buildPlugins() {
 		return "";
 	}
-	private ServerListActivity.Server[] getServers(){
-		ServerListActivity.Server[] sa=new Gson().fromJson(PreferenceManager.getDefaultSharedPreferences(TheApplication.instance).getString("servers","[]"),ServerListActivity.Server[].class);
+	private ServerListActivity.Server[] getServers() {
+		ServerListActivity.Server[] sa=new Gson().fromJson(PreferenceManager.getDefaultSharedPreferences(TheApplication.instance).getString("servers", "[]"), ServerListActivity.Server[].class);
 		return sa;
 	}
-	void dump(DatagramPacket dp){
-		StringBuilder sb=new StringBuilder(dp.getLength()*3);
+	void dump(DatagramPacket dp) {
+		StringBuilder sb=new StringBuilder(dp.getLength() * 3);
 		byte[] b=dp.getData();
-		for(int i=0;i<dp.getLength();i++){
+		for (int i=0;i < dp.getLength();i++) {
 			sb.append(Character.forDigit(b[i] >> 4 & 0xF, 16));
 			sb.append(Character.forDigit(b[i] & 0xF, 16));
 			sb.append(' ');
 		}
-		Log.i("ghost_query_dump",sb.toString());
+		Log.i("ghost_query_dump", sb.toString());
 	}
 }

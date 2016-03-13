@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import com.nao20010128nao.MCPing.pc.Reply;
+import com.nao20010128nao.MCPing.pc.Reply19;
 import com.nao20010128nao.MCPing.pe.FullStat;
 import com.nao20010128nao.Wisecraft.ServerListActivity.Server;
 import com.nao20010128nao.Wisecraft.ServerListActivity.ServerStatus;
@@ -20,7 +21,6 @@ import com.nao20010128nao.Wisecraft.provider.ServerPingProvider;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
-import com.nao20010128nao.MCPing.pc.Reply19;
 
 public class ServerTestActivity extends ListActivity {
 	ServerPingProvider spp=new NormalServerPingProvider();
