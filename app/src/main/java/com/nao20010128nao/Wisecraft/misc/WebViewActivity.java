@@ -15,6 +15,7 @@ public abstract class WebViewActivity extends Activity
 		setContentView(R.layout.webview_activity);
 		webView=(WebView)findViewById(R.id.webview);
 		webView.setWebViewClient(new WebViewClient(){});
+		webView.getSettings().setJavaScriptEnabled(true);
 	}
 	protected WebView getWebView() {
 		return webView;
