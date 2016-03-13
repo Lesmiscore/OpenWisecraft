@@ -5,6 +5,11 @@ import android.view.Menu;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.util.Log;
+import android.view.MenuItem;
+import android.os.AsyncTask;
+import java.util.List;
+import java.net.URL;
+import com.nao20010128nao.McServerList.ServerAddressFetcher;
 
 public class ServerGetActivity extends WebViewActivity
 {
@@ -15,7 +20,7 @@ public class ServerGetActivity extends WebViewActivity
 		new AlertDialog.Builder(this)
 			.setSingleChoiceItems(R.array.serverListSites,-1,new DialogInterface.OnClickListener(){
 				public void onClick(DialogInterface di,int w){
-					di.cancel();
+					di.dismiss();
 					loadUrl(getResources().getStringArray(R.array.serverListSites)[w]);
 				}
 			})
@@ -42,6 +47,48 @@ public class ServerGetActivity extends WebViewActivity
 		return true;
 	}
 
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		// TODO: Implement this method
+		switch(item.getItemId()){
+			case 0:
+				//List<com.nao20010128nao.McServerList.Server>
+				new AsyncTask<String,Void,Object>(){
+					String url;
+					public Object doInBackground(String... a){
+						try{
+							return ServerAddressFetcher.findServersInWebpage(new URL(url=a[0]));
+						}catch(Throwable e){
+							return e;
+						}
+					}
+					public void onPostExecute(Object o){
+						if(o instanceof List){
+							//Server list
+						}else{
+							//Throwable
+							String msg=((Throwable)o).getMessage();
+							String dialogMsg=msg;
+							if(msg.startsWith("This website is not supported")){
+								dialogMsg=getResources().getString(R.string.msl_websiteNotSupported)+url;
+							}
+							if(msg.startsWith("Unsupported webpage")){
+								dialogMsg=getResources().getString(R.string.msl_websiteNotSupported)+url;
+							}
+							
+							new AlertDialog.Builder(ServerGetActivity.this)
+								.setTitle(R.string.error)
+								.setMessage(dialogMsg)
+								.setPositiveButton(android.R.string.ok,Constant.BLANK_DIALOG_CLICK_LISTENER)
+								.show();
+						}
+					}
+				}.execute(getWebView().getUrl());
+				break;
+		}
+		return true;
+	}
+	
 	@Override
 	public void onBackPressed() {
 		// TODO: Implement this method
