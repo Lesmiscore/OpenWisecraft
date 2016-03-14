@@ -593,6 +593,7 @@ public class ServerListActivity extends ListActivity {
 						
 						if(getItem(p3).isPC){
 							executes.remove(all.get(5));
+							executes.remove(all.get(6));
 						}
 						if(!pref.getBoolean("feature_proxy",true)){
 							executes.remove(all.get(6));
@@ -639,6 +640,7 @@ public class ServerListActivity extends ListActivity {
 			List<String> all=new ArrayList<String>(result);
 			if(isPC){
 				result.remove(all.get(5));
+				result.remove(all.get(6));
 			}
 			if(!pref.getBoolean("feature_proxy",true)){
 				result.remove(all.get(6));
