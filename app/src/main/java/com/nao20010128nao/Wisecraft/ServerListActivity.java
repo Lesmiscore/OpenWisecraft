@@ -447,7 +447,7 @@ public class ServerListActivity extends ListActivity {
 			// TODO: Implement this method
 			clicked = p3;
 			Dialog d=new AlertDialog.Builder(ServerListActivity.this)
-				.setItems(generateSubMenu(), new DialogInterface.OnClickListener(){
+				.setItems(generateSubMenu(getItem(p3).isPC), new DialogInterface.OnClickListener(){
 					public void onClick(DialogInterface di, int which) {
 						List<Runnable> executes=new ArrayList<>();
 						executes.add(0,new Runnable(){
@@ -591,6 +591,9 @@ public class ServerListActivity extends ListActivity {
 						
 						List<Runnable> all=new ArrayList(executes);
 						
+						if(getItem(p3).isPC){
+							executes.remove(all.get(5));
+						}
 						if(!pref.getBoolean("feature_proxy",true)){
 							executes.remove(all.get(6));
 						}
@@ -631,9 +634,12 @@ public class ServerListActivity extends ListActivity {
 			super.remove(object);
 		}
 		
-		private String[] generateSubMenu(){
+		private String[] generateSubMenu(boolean isPC){
 			List<String> result=new ArrayList<String>(Arrays.<String>asList(getResources().getStringArray(R.array.serverSubMenu)));
 			List<String> all=new ArrayList<String>(result);
+			if(isPC){
+				result.remove(all.get(5));
+			}
 			if(!pref.getBoolean("feature_proxy",true)){
 				result.remove(all.get(6));
 			}
