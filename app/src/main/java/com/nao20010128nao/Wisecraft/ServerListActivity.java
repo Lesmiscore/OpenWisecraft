@@ -128,7 +128,8 @@ public class ServerListActivity extends ListActivity {
 			menu.add(Menu.NONE, 5, 5, R.string.bringOnlinesToTop);
 		if(pref.getBoolean("feature_serverFinder",false))
 			menu.add(Menu.NONE, 6, 6, R.string.serverFinder);
-		menu.add(Menu.NONE, 7, 7, R.string.addServerFromServerListSite);
+		if(pref.getBoolean("feature_asfsls",false))
+			menu.add(Menu.NONE, 7, 7, R.string.addServerFromServerListSite);
 		menu.add(Menu.NONE, 8, 8, R.string.settings);
 		return true;
 	}

@@ -34,6 +34,11 @@
 			android:key="feature_serverFinder"
 			android:defaultValue="false"
 		/>
+		<CheckBoxPreference
+			android:title="@string/addServerFromServerListSite"
+			android:key="feature_asfsls"
+			android:defaultValue="false"
+		/>
 	</PreferenceScreen>
 	<CheckBoxPreference
 		android:title="@string/sendInfos"
