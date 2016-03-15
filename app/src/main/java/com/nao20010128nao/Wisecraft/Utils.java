@@ -33,12 +33,16 @@ public class Utils {
 		}
 		return false;
 	}
-	public static String[] lines(String s)throws IOException {
-		BufferedReader br=new BufferedReader(new StringReader(s));
-		List<String> tmp=new ArrayList<>(4);
-		String line=null;
-		while (null != (line = br.readLine()))tmp.add(line);
-		return tmp.toArray(new String[tmp.size()]);
+	public static String[] lines(String s) {
+		try {
+			BufferedReader br=new BufferedReader(new StringReader(s));
+			List<String> tmp=new ArrayList<>(4);
+			String line=null;
+			while (null != (line = br.readLine()))tmp.add(line);
+			return tmp.toArray(new String[tmp.size()]);
+		} catch (IOException e) {
+			return Constant.EMPTY_STRING_ARRAY;
+		}
 	}
 	public static boolean writeToFile(File f, String content) {
 		FileWriter fw=null;

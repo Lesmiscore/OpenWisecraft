@@ -563,17 +563,15 @@ public class ServerListActivity extends ListActivity {
 								public void run(){
 									new Thread(){
 										public void run() {
+											File servLst=new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt");
 											Server s=getItem(p3);
-											if (alreadyAddedInList(s)) {
-												return;
-											}
-											try {
-												FileWriter fw = new FileWriter(mcpeServerList, true);
-												fw.append("900:" + randomText() + ":" + s.ip + ":" + s.port + "\n");
-												fw.close();
-											} catch (IOException e) {
-												e.printStackTrace();
-											}
+											String sls=Utils.readWholeFile(servLst);
+											if(sls==null)
+												sls="";
+											for(String l:Utils.lines(sls))
+												if(l.endsWith(s.toString()))return;
+											sls+="900:"+randomText()+":"+s+"\n";
+											Utils.writeToFile(servLst,sls);
 										}
 									}.start();
 								}
