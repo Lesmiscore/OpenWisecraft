@@ -7,6 +7,7 @@ import com.nao20010128nao.MCPE.SC.misc.SHablePreferenceActivity;
 import com.nao20010128nao.ToolBox.HandledPreference;
 import java.io.IOException;
 import android.content.Intent;
+import com.nao20010128nao.Wisecraft.extender.ContextWrappingExtender;
 
 public class SettingsActivity extends SHablePreferenceActivity
 {

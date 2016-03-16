@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.content.res.Configuration;
 import android.content.res.AssetManager;
 import android.util.DisplayMetrics;
+import android.graphics.drawable.Drawable;
 
 public class ContextWrappingExtender extends ContextWrapper
 {
@@ -19,8 +20,6 @@ public class ContextWrappingExtender extends ContextWrapper
 		cfg=ctx.getResources().getConfiguration();
 		assets=ctx.getResources().getAssets();
 		dm=ctx.getResources().getDisplayMetrics();
-		
-		dm.density=dm.density/2;
 		
 		modRes=new ExtRes(assets,dm,cfg);
 	}

@@ -25,6 +25,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
 import com.nao20010128nao.Wisecraft.extender.ContextWrappingExtender;
+import android.content.res.Resources;
 
 public class ServerListActivity extends ListActivity {
 	public static WeakReference<ServerListActivity> instance=new WeakReference(null);
