@@ -46,6 +46,11 @@
 	<string name="endPort">終了ポート</string>
 	<string name="finding">探しています...</string><!--Reserved for future release-->
 	<string name="findingServers">サーバーを検索しています...</string>
+	<string name="selectWebSite">ウェブサイトを選択してください:</string>
+	<string name="findServers">このページ内のサーバーを検索</string>
+	<string name="addServerFromServerListSite">サーバーリストサイトからサーバーを追加</string>
+	<string name="error">エラー</string>
+	<string name="selectServers">サーバーを選択してください</string>
 	
 	<string name="font">DroidSans.ttf</string>
 	<string name="fontField">droidSans</string>
