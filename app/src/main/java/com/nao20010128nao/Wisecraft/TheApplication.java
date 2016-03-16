@@ -11,6 +11,8 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import android.content.Context;
+import com.nao20010128nao.Wisecraft.extender.ContextWrappingExtender;
 
 public class TheApplication extends Application {
 	public static TheApplication instance;
@@ -90,5 +92,11 @@ public class TheApplication extends Application {
 		} catch (Throwable r) {
 			r.printStackTrace(System.out);
 		}
+	}
+
+	@Override
+	protected void attachBaseContext(Context base) {
+		// TODO: Implement this method
+		super.attachBaseContext(ContextWrappingExtender.wrap(base));
 	}
 }
