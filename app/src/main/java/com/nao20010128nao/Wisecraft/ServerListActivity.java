@@ -345,30 +345,6 @@ public class ServerListActivity extends ListActivity {
 		Log.d("json", json);
 	}
 
-	private boolean alreadyAddedInList(Server ser) {
-		FileReader fr=null;
-		BufferedReader br=null;
-		try {
-			fr = new FileReader(mcpeServerList);
-			br = new BufferedReader(fr);
-			while (true) {
-				String s=br.readLine();
-				if (br == null)break;
-				if (s.endsWith(":" + ser.ip + ":" + ser.port + ""))return true;
-			}
-			return false;
-		} catch (Throwable ex) {
-			return false;
-		} finally {
-			try {
-				if (fr != null)fr.close();
-				if (br != null)br.close();
-			} catch (IOException e) {
-
-			}
-		}
-	}
-
 	class ServerList extends AppBaseArrayAdapter<Server> implements AdapterView.OnItemClickListener,AdapterView.OnItemLongClickListener {
 		List<View> cached=new ArrayList();
 		public ServerList() {
