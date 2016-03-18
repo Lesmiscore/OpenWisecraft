@@ -37,11 +37,7 @@ public class TheApplication extends Application {
 		fontFilenames.put(icomoon1, "icomoon.ttf");
 		fontFilenames.put(sysDefault, "");
 
-		CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-									  .setDefaultFontPath(getFontFilename())
-									  .setFontAttrId(R.attr.fontPath)
-									  .build()
-									  );
+		CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath(getFontFilename()).setFontAttrId(R.attr.fontPath).build());
 		///////
 		collect();
 
@@ -92,11 +88,5 @@ public class TheApplication extends Application {
 		} catch (Throwable r) {
 			r.printStackTrace(System.out);
 		}
-	}
-
-	@Override
-	protected void attachBaseContext(Context base) {
-		// TODO: Implement this method
-		super.attachBaseContext(ContextWrappingExtender.wrap(base));
 	}
 }
