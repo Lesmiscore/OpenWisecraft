@@ -56,6 +56,7 @@
 	<string name="addServerFromServerListSite">Add servers from server list site</string>
 	<string name="error">Error</string>
 	<string name="selectServers">Select Servers</string>
+	<string name="exit">Exit</string>
 	
 	
 	<string name="font">lato-light.ttf</string>

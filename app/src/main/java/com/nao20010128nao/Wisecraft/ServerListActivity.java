@@ -130,6 +130,7 @@ public class ServerListActivity extends ListActivity {
 		if(pref.getBoolean("feature_asfsls",false))
 			menu.add(Menu.NONE, 7, 7, R.string.addServerFromServerListSite);
 		menu.add(Menu.NONE, 8, 8, R.string.settings);
+		menu.add(Menu.NONE, 9, 9, R.string.exit);
 		return true;
 	}
 
@@ -329,6 +330,16 @@ public class ServerListActivity extends ListActivity {
 				break;
 			case 8:
 				startActivity(new Intent(this,SettingsActivity.class));
+				break;
+			case 9:
+				finish();
+				saveServers();
+				instance=new WeakReference(null);
+				new Handler().postDelayed(new Runnable(){
+					public void run(){
+						System.exit(0);
+					}
+				},150);
 				break;
 		}
 		return true;
