@@ -68,16 +68,15 @@ public class ServerListActivity extends ListActivity {
 		}
 		instance=new WeakReference(this);
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
-		if(!usesOldInstance){
+		if(usesOldInstance){
+			setListAdapter(sl);
+		}else{
 			spp=updater=new MultiServerPingProvider(Integer.parseInt(pref.getString("parallels","6")));
 			if(pref.getBoolean("updAnotherThread",false)){
 				updater=new NormalServerPingProvider();
 			}
-		}
-		if(usesOldInstance)
-			setListAdapter(sl);
-		else
 			setListAdapter(sl = new ServerList(this));
+		}
 		getListView().setOnItemClickListener(sl);
 		getListView().setOnItemLongClickListener(sl);
 		getListView().setLongClickable(true);
