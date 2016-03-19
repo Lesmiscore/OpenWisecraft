@@ -310,6 +310,7 @@ public class ServerListActivity extends ListActivity {
 						runOnUiThread(new Runnable(){
 							public void run(){
 								finish();
+								instance=new WeakReference(null);
 								new Handler().postDelayed(new Runnable(){
 										public void run(){
 											pref.edit().putString("servers", gson.toJson(sortingServer.toArray(new Server[sortingServer.size()]), Server[].class)).commit();
