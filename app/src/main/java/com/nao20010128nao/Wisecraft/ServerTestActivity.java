@@ -70,6 +70,7 @@ public class ServerTestActivity extends ListActivity {
 						s.port = port;
 						s.isPC = isPC;
 						sl.add(s);
+						sl.getViewQuick(i);
 					}
 				}
 			})
