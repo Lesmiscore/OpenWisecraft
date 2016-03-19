@@ -58,6 +58,9 @@ public class ServerListActivity extends ListActivity {
 		if(instance.get()!=null){
 			list=instance.get().list;
 			sl=instance.get().sl;
+			pinging=instance.get().pinging;
+			spp=instance.get().spp;
+			updater=instance.get().updater;
 			usesOldInstance=true;
 		}
 		instance=new WeakReference(this);
