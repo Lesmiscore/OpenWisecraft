@@ -54,18 +54,27 @@ public class ServerListActivity extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
+		boolean usesOldInstance=false;
+		if(instance.get()!=null){
+			list=instance.get().list;
+			sl=instance.get().sl;
+			usesOldInstance=true;
+		}
 		instance=new WeakReference(this);
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
 		spp=updater=new MultiServerPingProvider(Integer.parseInt(pref.getString("parallels","6")));
 		if(pref.getBoolean("updAnotherThread",false)){
 			updater=new NormalServerPingProvider();
 		}
-		setListAdapter(sl = new ServerList());
+		if(usesOldInstance)
+			setListAdapter(sl);
+		else
+			setListAdapter(sl = new ServerList());
 		getListView().setOnItemClickListener(sl);
 		getListView().setOnItemLongClickListener(sl);
 		getListView().setLongClickable(true);
 		wd = new WorkingDialog(this);
-		loadServers();
+		if(!usesOldInstance)loadServers();
 		for(int i=0;i<list.size();i++){
 			sl.getViewQuick(i);
 		}
@@ -363,16 +372,20 @@ public class ServerListActivity extends ListActivity {
 				}
 			}
 			//if(convertView!=null)return convertView;
+			while (cached.size() <= position)
+				cached.addAll(Constant.TEN_LENGTH_NULL_LIST);
 			final View layout=getLayoutInflater().inflate(R.layout.quickstatus, null, false);
 			Server s=getItem(position);
 			layout.setTag(s);
-			spp.putInQueue(s, new PingHandlerImpl());
 			((TextView)layout.findViewById(R.id.serverName)).setText(R.string.working);
 			((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.working);
 			((TextView)layout.findViewById(R.id.serverAddress)).setText(s.ip + ":" + s.port);
 			((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
-			while (cached.size() <= position)
-				cached.addAll(Constant.TEN_LENGTH_NULL_LIST);
+			if(s instanceof ServerStatus){
+				new PingHandlerImpl().onPingArrives((ServerStatus)s);
+			}else{
+				spp.putInQueue(s, new PingHandlerImpl());
+			}
 			cached.set(position, layout);
 			pinging.put(s, true);
 			return layout;
