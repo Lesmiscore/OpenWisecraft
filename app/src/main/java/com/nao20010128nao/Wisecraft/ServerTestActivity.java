@@ -59,7 +59,11 @@ public class ServerTestActivity extends ListActivity {
 				public void onClick(DialogInterface di, int w) {
 					di.dismiss();
 					String nu=((EditText)dialog.findViewById(R.id.pingTimes)).getText().toString();
-					times = new Integer(nu);
+					try {
+						times = new Integer(nu);
+					} catch (NumberFormatException e) {
+						finish();
+					}
 					for (int i=0;i < times;i++) {
 						Server s=new Server();
 						s.ip = ip;
