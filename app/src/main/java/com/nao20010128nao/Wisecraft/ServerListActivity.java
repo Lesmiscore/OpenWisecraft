@@ -62,6 +62,8 @@ public class ServerListActivity extends ListActivity {
 			spp=instance.get().spp;
 			updater=instance.get().updater;
 			usesOldInstance=true;
+			
+			sl.attachNewActivity(this);
 		}
 		instance=new WeakReference(this);
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -74,7 +76,7 @@ public class ServerListActivity extends ListActivity {
 		if(usesOldInstance)
 			setListAdapter(sl);
 		else
-			setListAdapter(sl = new ServerList());
+			setListAdapter(sl = new ServerList(this));
 		getListView().setOnItemClickListener(sl);
 		getListView().setOnItemLongClickListener(sl);
 		getListView().setLongClickable(true);
@@ -361,10 +363,12 @@ public class ServerListActivity extends ListActivity {
 		Log.d("json", json);
 	}
 
-	class ServerList extends AppBaseArrayAdapter<Server> implements AdapterView.OnItemClickListener,AdapterView.OnItemLongClickListener {
+	static class ServerList extends AppBaseArrayAdapter<Server> implements AdapterView.OnItemClickListener,AdapterView.OnItemLongClickListener {
 		List<View> cached=new ArrayList();
-		public ServerList() {
-			super(ServerListActivity.this, 0, list = new ArrayList<Server>());
+		ServerListActivity sla;
+		public ServerList(ServerListActivity sla) {
+			super(sla, 0, sla.list = new ArrayList<Server>());
+			this.sla=sla;
 		}
 
 		@Override
@@ -379,20 +383,20 @@ public class ServerListActivity extends ListActivity {
 			//if(convertView!=null)return convertView;
 			while (cached.size() <= position)
 				cached.addAll(Constant.TEN_LENGTH_NULL_LIST);
-			final View layout=getLayoutInflater().inflate(R.layout.quickstatus, null, false);
+			final View layout=sla.getLayoutInflater().inflate(R.layout.quickstatus, null, false);
 			Server s=getItem(position);
 			layout.setTag(s);
 			((TextView)layout.findViewById(R.id.serverName)).setText(R.string.working);
 			((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.working);
 			((TextView)layout.findViewById(R.id.serverAddress)).setText(s.ip + ":" + s.port);
-			((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
+			((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(sla.getResources().getColor(R.color.stat_pending)));
 			if(s instanceof ServerStatus){
-				new PingHandlerImpl().onPingArrives((ServerStatus)s);
+				sla.new PingHandlerImpl().onPingArrives((ServerStatus)s);
 			}else{
-				spp.putInQueue(s, new PingHandlerImpl());
+				sla.spp.putInQueue(s, sla.new PingHandlerImpl());
 			}
 			cached.set(position, layout);
-			pinging.put(s, true);
+			sla.pinging.put(s, true);
 			return layout;
 		}
 		public View getCachedView(int position) {
@@ -405,55 +409,36 @@ public class ServerListActivity extends ListActivity {
 		public void onItemClick(AdapterView<?> p1, View p2, int p3, long p4) {
 			// TODO: Implement this method
 			Server s=getItem(p3);
-			clicked = p3;
-			if (pinging.get(s))return;
+			sla.clicked = p3;
+			if (sla.pinging.get(s))return;
 			if (s instanceof ServerStatus) {
 				ServerInfoActivity.stat = (ServerStatus)s;
-				startActivityForResult(new Intent(ServerListActivity.this, ServerInfoActivity.class), 0);
+				sla.startActivityForResult(new Intent(sla, ServerInfoActivity.class), 0);
 			} else {
-				updater.putInQueue(s, new PingHandlerImpl(){
-						public void onPingFailed(final Server s) {
-							super.onPingFailed(s);
-							runOnUiThread(new Runnable(){
-									public void run() {
-										wd.hideWorkingDialog();
-									}
-								});
-						}
-						public void onPingArrives(final ServerStatus s) {
-							super.onPingArrives(s);
-							runOnUiThread(new Runnable(){
-									public void run() {
-										ServerInfoActivity.stat = s;
-										startActivityForResult(new Intent(ServerListActivity.this, ServerInfoActivity.class), 0);
-										wd.hideWorkingDialog();
-									}
-								});
-						}
-					});
-				((TextView)sl.getViewQuick(clicked).findViewById(R.id.pingMillis)).setText(R.string.working);
-				((ImageView)sl.getViewQuick(clicked).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
-				wd.showWorkingDialog();
-				pinging.put(list.get(clicked), true);
+				sla.updater.putInQueue(s, sla.new PingHandlerImpl(true));
+				((TextView)getViewQuick(sla.clicked).findViewById(R.id.pingMillis)).setText(R.string.working);
+				((ImageView)getViewQuick(sla.clicked).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(sla.getResources().getColor(R.color.stat_pending)));
+				sla.wd.showWorkingDialog();
+				sla.pinging.put(sla.list.get(sla.clicked), true);
 			}
 		}
 
 		@Override
 		public boolean onItemLongClick(AdapterView<?> p1, View p2, final int p3, long p4) {
 			// TODO: Implement this method
-			clicked = p3;
-			Dialog d=new AlertDialog.Builder(ServerListActivity.this)
+			sla.clicked = p3;
+			Dialog d=new AlertDialog.Builder(sla)
 				.setItems(generateSubMenu(getItem(p3).isPC), new DialogInterface.OnClickListener(){
 					public void onClick(DialogInterface di, int which) {
 						List<Runnable> executes=new ArrayList<>();
 						executes.add(0,new Runnable(){
 							public void run(){
-								new AlertDialog.Builder(ServerListActivity.this)
+								new AlertDialog.Builder(sla)
 									.setMessage(R.string.auSure)
 									.setNegativeButton(android.R.string.yes, new DialogInterface.OnClickListener(){
 										public void onClick(DialogInterface di, int i) {
-											sl.remove(list.get(clicked));
-											saveServers();
+											sla.sl.remove(sla.list.get(sla.clicked));
+											sla.saveServers();
 										}
 									})
 									.setPositiveButton(android.R.string.no, new DialogInterface.OnClickListener(){
@@ -465,29 +450,12 @@ public class ServerListActivity extends ListActivity {
 						});
 						executes.add(1,new Runnable(){
 								public void run(){
-									if (pinging.get(getItem(p3)))return;
-									updater.putInQueue(getItem(p3), new PingHandlerImpl(){
-											public void onPingFailed(final Server s) {
-												super.onPingFailed(s);
-												runOnUiThread(new Runnable(){
-														public void run() {
-															wd.hideWorkingDialog();
-														}
-													});
-											}
-											public void onPingArrives(final ServerStatus s) {
-												super.onPingArrives(s);
-												runOnUiThread(new Runnable(){
-														public void run() {
-															wd.hideWorkingDialog();
-														}
-													});
-											}
-										});
-									((TextView)sl.getViewQuick(p3).findViewById(R.id.pingMillis)).setText(R.string.working);
-									((ImageView)sl.getViewQuick(p3).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
-									wd.showWorkingDialog();
-									pinging.put(list.get(p3), true);
+									if (sla.pinging.get(getItem(p3)))return;
+									sla.updater.putInQueue(getItem(p3), sla.new PingHandlerImpl(true));
+									((TextView)getViewQuick(p3).findViewById(R.id.pingMillis)).setText(R.string.working);
+									((ImageView)getViewQuick(p3).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(sla.getResources().getColor(R.color.stat_pending)));
+									sla.wd.showWorkingDialog();
+									sla.pinging.put(sla.list.get(p3), true);
 								}
 							});
 						executes.add(2,new Runnable(){
@@ -496,7 +464,7 @@ public class ServerListActivity extends ListActivity {
 									data.ip = getItem(p3).ip;
 									data.port = getItem(p3).port;
 									data.isPC = getItem(p3).isPC;
-									View dialog=getLayoutInflater().inflate(R.layout.serveradddialog, null);
+									View dialog=sla.getLayoutInflater().inflate(R.layout.serveradddialog, null);
 									final EditText ip=(EditText)dialog.findViewById(R.id.serverIp);
 									final EditText port=(EditText)dialog.findViewById(R.id.serverPort);
 									final CheckBox isPc=(CheckBox)dialog.findViewById(R.id.pc);
@@ -513,28 +481,11 @@ public class ServerListActivity extends ListActivity {
 												data.port = new Integer(port.getText().toString());
 												data.isPC = isPc.isChecked();
 
-												list.set(p3, data);
-												spp.putInQueue(getItem(p3), new PingHandlerImpl(){
-														public void onPingFailed(final Server s) {
-															super.onPingFailed(s);
-															runOnUiThread(new Runnable(){
-																	public void run() {
-																		wd.hideWorkingDialog();
-																	}
-																});
-														}
-														public void onPingArrives(final ServerStatus s) {
-															super.onPingArrives(s);
-															runOnUiThread(new Runnable(){
-																	public void run() {
-																		wd.hideWorkingDialog();
-																	}
-																});
-														}
-													});
-												((TextView)sl.getViewQuick(p3).findViewById(R.id.serverAddress)).setText(data.ip + ":" + data.port);
+												sla.list.set(p3, data);
+												sla.spp.putInQueue(getItem(p3), sla.new PingHandlerImpl(true));
+												((TextView)getViewQuick(p3).findViewById(R.id.serverAddress)).setText(data.ip + ":" + data.port);
 
-												saveServers();
+												sla.saveServers();
 											}
 										}).
 										setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener(){
@@ -547,12 +498,12 @@ public class ServerListActivity extends ListActivity {
 							});
 						executes.add(3,new Runnable(){
 								public void run(){
-									startActivity(new Intent(ServerListActivity.this, ServerTestActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port).putExtra("ispc", getItem(p3).isPC));
+									sla.startActivity(new Intent(sla, ServerTestActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port).putExtra("ispc", getItem(p3).isPC));
 								}
 							});
 						executes.add(4,new Runnable(){
 								public void run(){
-									startActivity(new Intent(ServerListActivity.this, RCONActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port));
+									sla.startActivity(new Intent(sla, RCONActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port));
 								}
 							});
 						executes.add(5,new Runnable(){
@@ -574,12 +525,12 @@ public class ServerListActivity extends ListActivity {
 							});
 						executes.add(6,new Runnable(){
 								public void run(){
-									startActivity(new Intent(ServerListActivity.this, ProxyActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port));
+									sla.startActivity(new Intent(sla, ProxyActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port));
 								}
 							});
 						executes.add(7,new Runnable(){
 								public void run(){
-									startActivity(new Intent(ServerListActivity.this, ServerFinder.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port).putExtra("ispc", getItem(p3).isPC));
+									sla.startActivity(new Intent(sla, ServerFinder.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port).putExtra("ispc", getItem(p3).isPC));
 								}
 							});
 						
@@ -589,10 +540,10 @@ public class ServerListActivity extends ListActivity {
 							executes.remove(all.get(5));
 							executes.remove(all.get(6));
 						}
-						if(!pref.getBoolean("feature_proxy",true)){
+						if(!sla.pref.getBoolean("feature_proxy",true)){
 							executes.remove(all.get(6));
 						}
-						if(!pref.getBoolean("feature_serverFinder",false)){
+						if(!sla.pref.getBoolean("feature_serverFinder",false)){
 							executes.remove(all.get(7));
 						}
 						
@@ -607,7 +558,7 @@ public class ServerListActivity extends ListActivity {
 		@Override
 		public void add(ServerListActivity.Server object) {
 			// TODO: Implement this method
-			if (!list.contains(object))super.add(object);
+			if (!sla.list.contains(object))super.add(object);
 		}
 
 		@Override
@@ -625,24 +576,28 @@ public class ServerListActivity extends ListActivity {
 		@Override
 		public void remove(ServerListActivity.Server object) {
 			// TODO: Implement this method
-			cached.remove(list.indexOf(object));
+			cached.remove(sla.list.indexOf(object));
 			super.remove(object);
 		}
 		
 		private String[] generateSubMenu(boolean isPC){
-			List<String> result=new ArrayList<String>(Arrays.<String>asList(getResources().getStringArray(R.array.serverSubMenu)));
+			List<String> result=new ArrayList<String>(Arrays.<String>asList(sla.getResources().getStringArray(R.array.serverSubMenu)));
 			List<String> all=new ArrayList<String>(result);
 			if(isPC){
 				result.remove(all.get(5));
 				result.remove(all.get(6));
 			}
-			if(!pref.getBoolean("feature_proxy",true)){
+			if(!sla.pref.getBoolean("feature_proxy",true)){
 				result.remove(all.get(6));
 			}
-			if(!pref.getBoolean("feature_serverFinder",false)){
+			if(!sla.pref.getBoolean("feature_serverFinder",false)){
 				result.remove(all.get(7));
 			}
 			return result.toArray(new String[result.size()]);
+		}
+		
+		public void attachNewActivity(ServerListActivity sla){
+			this.sla=sla;
 		}
 	}
 	public static class Server {
@@ -685,6 +640,13 @@ public class ServerListActivity extends ListActivity {
 		public long ping;
 	}
 	class PingHandlerImpl implements ServerPingProvider.PingHandler {
+		boolean closeDialog;
+		public PingHandlerImpl(){
+			this(false);
+		}
+		public PingHandlerImpl(boolean cd){
+			closeDialog=cd;
+		}
 		public void onPingFailed(final Server s) {
 			runOnUiThread(new Runnable(){
 					public void run() {
@@ -701,6 +663,9 @@ public class ServerListActivity extends ListActivity {
 						sn.isPC = s.isPC;
 						list.set(i_, sn);
 						pinging.put(list.get(i_), false);
+						if(closeDialog){
+							wd.hideWorkingDialog();
+						}
 					}
 				});
 		}
@@ -763,6 +728,9 @@ public class ServerListActivity extends ListActivity {
 						((TextView)sl.getViewQuick(i_).findViewById(R.id.pingMillis)).setText(s.ping + " ms");
 						list.set(i_, s);
 						pinging.put(list.get(i_), false);
+						if(closeDialog){
+							wd.hideWorkingDialog();
+						}
 					}
 				});
 		}
