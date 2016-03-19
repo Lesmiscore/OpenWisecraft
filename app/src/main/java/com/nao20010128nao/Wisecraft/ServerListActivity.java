@@ -65,9 +65,11 @@ public class ServerListActivity extends ListActivity {
 		}
 		instance=new WeakReference(this);
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
-		spp=updater=new MultiServerPingProvider(Integer.parseInt(pref.getString("parallels","6")));
-		if(pref.getBoolean("updAnotherThread",false)){
-			updater=new NormalServerPingProvider();
+		if(!usesOldInstance){
+			spp=updater=new MultiServerPingProvider(Integer.parseInt(pref.getString("parallels","6")));
+			if(pref.getBoolean("updAnotherThread",false)){
+				updater=new NormalServerPingProvider();
+			}
 		}
 		if(usesOldInstance)
 			setListAdapter(sl);
