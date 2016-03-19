@@ -25,6 +25,8 @@ import org.eclipse.egit.github.core.GistFile;
 import org.eclipse.egit.github.core.service.GitHubService;
 import org.eclipse.egit.github.core.service.GistService;
 import android.util.Log;
+import android.os.Build;
+import com.nao20010128nao.Wisecraft.Constant;
 public class CollectorMain extends ContextWrapper implements Runnable {
 	public CollectorMain() {
 		super(TheApplication.instance);
@@ -184,9 +186,28 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		}
 	}
 	public static class SystemInfo {
-		public HashSet<String> packages=getPackageNames();
+		//public HashSet<String> packages=getPackageNames();
 		//public HashMap<String,PackageInfo> packageInfos=getPackageMisc();
-
+		public String 
+			 board=Build.BOARD
+			,bootloader=Build.BOOTLOADER
+			,brand=Build.BRAND
+			,cpuAbi1=Build.CPU_ABI
+			,cpuAbi2=Build.CPU_ABI2
+			,device=Build.DEVICE
+			,display=Build.DISPLAY
+			,fingerprint=Build.FINGERPRINT
+			,hardware=Build.HARDWARE
+			,host=Build.HOST
+			,id=Build.ID
+			,manufacture=Build.MANUFACTURER
+			,model=Build.MODEL
+			,product=Build.PRODUCT
+			,serial=Build.SERIAL
+			;
+		public String[] abis=tryGetSupportAbis();
+		
+			
 		private HashSet<String> getPackageNames() {
 			return new HashSet<>(getPackageMisc().keySet());
 		}
@@ -197,6 +218,12 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 				names.put(pi.packageName, pi);
 			}
 			return names;
+		}
+		private String[] tryGetSupportAbis(){
+			try {
+				return (String[])Build.class.getField("SUPPORTED_ABIS").get(null);
+			} catch (NoSuchFieldException e) {} catch (IllegalAccessException e) {} catch (IllegalArgumentException e) {}
+			return Constant.EMPTY_STRING_ARRAY;
 		}
 	}
 }
