@@ -61,6 +61,7 @@ public class ServerListActivity extends ListActivity {
 			pinging=instance.get().pinging;
 			spp=instance.get().spp;
 			updater=instance.get().updater;
+			clicked=instance.get().clicked;
 			usesOldInstance=true;
 			
 			sl.attachNewActivity(this);
@@ -104,26 +105,7 @@ public class ServerListActivity extends ListActivity {
 			case 0:
 				switch (resultCode) {
 					case Constant.ACTIVITY_RESULT_UPDATE:
-						updater.putInQueue(ServerInfoActivity.stat, new PingHandlerImpl(){
-								public void onPingFailed(final Server s) {
-									super.onPingFailed(s);
-									runOnUiThread(new Runnable(){
-											public void run() {
-												wd.hideWorkingDialog();
-											}
-										});
-								}
-								public void onPingArrives(final ServerStatus s) {
-									super.onPingArrives(s);
-									runOnUiThread(new Runnable(){
-											public void run() {
-												ServerInfoActivity.stat = s;
-												startActivityForResult(new Intent(ServerListActivity.this, ServerInfoActivity.class), 0);
-												wd.hideWorkingDialog();
-											}
-										});
-								}
-							});
+						updater.putInQueue(ServerInfoActivity.stat, new PingHandlerImpl(true,true));
 						((TextView)sl.getViewQuick(clicked).findViewById(R.id.pingMillis)).setText(R.string.working);
 						((ImageView)sl.getViewQuick(clicked).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
 						wd.showWorkingDialog();
@@ -415,7 +397,7 @@ public class ServerListActivity extends ListActivity {
 				ServerInfoActivity.stat = (ServerStatus)s;
 				sla.startActivityForResult(new Intent(sla, ServerInfoActivity.class), 0);
 			} else {
-				sla.updater.putInQueue(s, sla.new PingHandlerImpl(true));
+				sla.updater.putInQueue(s, sla.new PingHandlerImpl(true,true));
 				((TextView)getViewQuick(sla.clicked).findViewById(R.id.pingMillis)).setText(R.string.working);
 				((ImageView)getViewQuick(sla.clicked).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(sla.getResources().getColor(R.color.stat_pending)));
 				sla.wd.showWorkingDialog();
@@ -451,7 +433,7 @@ public class ServerListActivity extends ListActivity {
 						executes.add(1,new Runnable(){
 								public void run(){
 									if (sla.pinging.get(getItem(p3)))return;
-									sla.updater.putInQueue(getItem(p3), sla.new PingHandlerImpl(true));
+									sla.updater.putInQueue(getItem(p3), sla.new PingHandlerImpl(true,false));
 									((TextView)getViewQuick(p3).findViewById(R.id.pingMillis)).setText(R.string.working);
 									((ImageView)getViewQuick(p3).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(sla.getResources().getColor(R.color.stat_pending)));
 									sla.wd.showWorkingDialog();
@@ -482,7 +464,7 @@ public class ServerListActivity extends ListActivity {
 												data.isPC = isPc.isChecked();
 
 												sla.list.set(p3, data);
-												sla.spp.putInQueue(getItem(p3), sla.new PingHandlerImpl(true));
+												sla.spp.putInQueue(getItem(p3), sla.new PingHandlerImpl(true,false));
 												((TextView)getViewQuick(p3).findViewById(R.id.serverAddress)).setText(data.ip + ":" + data.port);
 
 												sla.saveServers();
@@ -640,12 +622,13 @@ public class ServerListActivity extends ListActivity {
 		public long ping;
 	}
 	class PingHandlerImpl implements ServerPingProvider.PingHandler {
-		boolean closeDialog;
+		boolean closeDialog,openStat;
 		public PingHandlerImpl(){
-			this(false);
+			this(false,false);
 		}
-		public PingHandlerImpl(boolean cd){
+		public PingHandlerImpl(boolean cd,boolean os){
 			closeDialog=cd;
+			openStat=os;
 		}
 		public void onPingFailed(final Server s) {
 			runOnUiThread(new Runnable(){
@@ -728,6 +711,10 @@ public class ServerListActivity extends ListActivity {
 						((TextView)sl.getViewQuick(i_).findViewById(R.id.pingMillis)).setText(s.ping + " ms");
 						list.set(i_, s);
 						pinging.put(list.get(i_), false);
+						if(openStat){
+							ServerInfoActivity.stat = s;
+							startActivityForResult(new Intent(ServerListActivity.this, ServerInfoActivity.class), 0);
+						}
 						if(closeDialog){
 							wd.hideWorkingDialog();
 						}
