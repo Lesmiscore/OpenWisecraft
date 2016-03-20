@@ -93,6 +93,9 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 					if(fos!=null)fos.close();
 				} catch (IOException e) {}
 			}
+			for(String s:sb.getAll().keySet().toArray(new String[sb.getAll().size()])){
+				Log.d("remain", s);
+			}
 		}
 	}
 	public static class Infos {
