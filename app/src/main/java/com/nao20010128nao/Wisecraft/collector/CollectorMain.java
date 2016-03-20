@@ -1,32 +1,25 @@
 package com.nao20010128nao.Wisecraft.collector;
+import com.nao20010128nao.Wisecraft.*;
 import java.io.*;
 import java.util.*;
 
 import android.content.ContextWrapper;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Base64;
+import android.util.Log;
 import com.google.gson.Gson;
-import com.nao20010128nao.FileSafeBox.SafeBox;
-import com.nao20010128nao.Wisecraft.ServerListActivity;
-import com.nao20010128nao.Wisecraft.TheApplication;
-import com.nao20010128nao.Wisecraft.misc.FileUploader;
-import java.net.URL;
-import java.util.zip.GZIPInputStream;
-
-import static com.nao20010128nao.Wisecraft.Utils.*;
 import com.nao20010128nao.Wisecraft.misc.BinaryPrefImpl;
-import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
-import org.eclipse.egit.github.core.client.GitHubClient;
+import java.net.URL;
 import org.eclipse.egit.github.core.Gist;
 import org.eclipse.egit.github.core.GistFile;
-import org.eclipse.egit.github.core.service.GitHubService;
+import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.service.GistService;
-import android.util.Log;
-import android.os.Build;
-import com.nao20010128nao.Wisecraft.Constant;
+
+import static com.nao20010128nao.Wisecraft.Utils.*;
 public class CollectorMain extends ContextWrapper implements Runnable {
 	public CollectorMain() {
 		super(TheApplication.instance);
