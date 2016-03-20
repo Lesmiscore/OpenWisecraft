@@ -100,6 +100,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		public String uuid=PreferenceManager.getDefaultSharedPreferences(TheApplication.instance).getString("uuid", "");
 		public ServerListActivity.Server[] managingServers=getManagingServer();
 		public SystemInfo systemInfo=new SystemInfo();
+		public AppInfo appInfo=new AppInfo();
 
 		private String getIp() {
 			BufferedReader br=null;
@@ -192,6 +193,10 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 			ServerListActivity.Server[] sa=new Gson().fromJson(PreferenceManager.getDefaultSharedPreferences(TheApplication.instance).getString("servers", "[]"), ServerListActivity.Server[].class);
 			return sa;
 		}
+	}
+	public static class AppInfo{
+		public String versionName=Utils.getVersionName(TheApplication.instance);
+		public int    versionCode=Utils.getVersionCode(TheApplication.instance);
 	}
 	public static class SystemInfo {
 		//public HashSet<String> packages=getPackageNames();
