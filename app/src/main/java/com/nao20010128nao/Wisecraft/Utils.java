@@ -8,6 +8,9 @@ import com.nao20010128nao.Wisecraft.struct.WCH_ServerInfo;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageInfo;
 
 public class Utils {
 	public static String deleteDecorations(String decorated) {
@@ -141,7 +144,7 @@ public class Utils {
         try{
             PackageInfo packageInfo = pm.getPackageInfo(context.getPackageName(), 0);
             versionCode = packageInfo.versionCode;
-        }catch(NameNotFoundException e){
+        }catch(PackageManager.NameNotFoundException e){
             e.printStackTrace();
         }
         return versionCode;
@@ -153,7 +156,7 @@ public class Utils {
         try{
             PackageInfo packageInfo = pm.getPackageInfo(context.getPackageName(), 0);
             versionName = packageInfo.versionName;
-        }catch(NameNotFoundException e){
+        }catch(PackageManager.NameNotFoundException e){
             e.printStackTrace();
         }
         return versionName;
