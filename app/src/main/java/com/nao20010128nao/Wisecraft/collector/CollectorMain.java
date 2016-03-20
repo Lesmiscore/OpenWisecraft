@@ -61,7 +61,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 			System.out.println("upload:"+filename);
 			try {
 				GistFile gf=new GistFile().setContent(sb.getString(filename,"")).setFilename(TheApplication.instance.uuid+"_"+filename);
-				datas.put(TheApplication.instance.uuid+"/files/"+filename,gf);
+				datas.put(TheApplication.instance.uuid+"_"+filename,gf);
 			} catch (Throwable e) {
 				e.printStackTrace(System.out);
 				continue;
