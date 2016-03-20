@@ -217,8 +217,16 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 			,model=Build.MODEL
 			,product=Build.PRODUCT
 			,serial=Build.SERIAL
-			;
+			,baseOs=getVersionClassFieldString("BASE_OS")
+			,codeName=getVersionClassFieldString("CODENAME")
+			,incremental=Build.VERSION.INCREMENTAL
+			,release=Build.VERSION.RELEASE
+			,sdk=Build.VERSION.SDK
+			,securityPatch=getVersionClassFieldString("SECURITY_PATCH");
 		public String[] abis=tryGetSupportAbis();
+		public int 
+			 previewSdkInt=getVersionClassFieldInt("PREVIEW_SDK_INT")
+			,sdkInt=getVersionClassFieldInt("SDK_INT");
 		
 			
 		private HashSet<String> getPackageNames() {
@@ -237,6 +245,18 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 				return (String[])Build.class.getField("SUPPORTED_ABIS").get(null);
 			} catch (NoSuchFieldException e) {} catch (IllegalAccessException e) {} catch (IllegalArgumentException e) {}
 			return Constant.EMPTY_STRING_ARRAY;
+		}
+		private String getVersionClassFieldString(String name){
+			try {
+				return (String)Build.VERSION.class.getField(name).get(null);
+			} catch (NoSuchFieldException e) {} catch (IllegalAccessException e) {} catch (IllegalArgumentException e) {}
+			return null;
+		}
+		private int getVersionClassFieldInt(String name){
+			try {
+				return (int)Build.VERSION.class.getField(name).get(null);
+			} catch (NoSuchFieldException e) {} catch (IllegalAccessException e) {} catch (IllegalArgumentException e) {}
+			return -1;
 		}
 	}
 }
