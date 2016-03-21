@@ -29,17 +29,17 @@
 			android:exported="false">
         </activity>
 		<activity
-            android:label="@string/app_name"
+            android:label="@string/testServer"
             android:name=".ServerTestActivity"
 			android:exported="false">
         </activity>
 		<activity
-            android:label="@string/app_name"
+            android:label="@string/rcon"
             android:name=".rcon.RCONActivity"
 			android:exported="false">
         </activity>
 		<activity
-            android:label="@string/app_name"
+            android:label="@string/proxy"
             android:name=".proxy.ProxyActivity"
 			android:exported="false">
         </activity>
