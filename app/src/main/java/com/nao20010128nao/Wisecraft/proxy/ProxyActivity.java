@@ -26,70 +26,70 @@ public class ProxyActivity extends Activity {
 		setContentView(R.layout.proxy_screen);
 		serverIp = (TextView)findViewById(R.id.serverIp);
 		serverCon = (TextView)findViewById(R.id.serverCon);
-		stop=(Button)findViewById(R.id.stop);
+		stop = (Button)findViewById(R.id.stop);
 		ip = getIntent().getStringExtra("ip");
 		port = getIntent().getIntExtra("port", 19132);
-		
-		serverIp.setText(ip+":"+port);
+
+		serverIp.setText(ip + ":" + port);
 		serverCon.setText("localhost:64321");
-		
+
 		stop.setOnClickListener(new OnClickListener(){
-			public void onClick(View a){
-				finish();
-			}
-		});
-		
+				public void onClick(View a) {
+					finish();
+				}
+			});
+
 		dialog1();
 	}
 
-	public void dialog1(){
+	public void dialog1() {
 		new AlertDialog.Builder(this)
 			.setMessage(R.string.proxy_attention_1)
 			.setCancelable(false)
-			.setPositiveButton(R.string.next,new AlertDialog.OnClickListener(){
-				public void onClick(DialogInterface di,int w){
+			.setPositiveButton(R.string.next, new AlertDialog.OnClickListener(){
+				public void onClick(DialogInterface di, int w) {
 					dialog2();
 				}
 			})
-			.setNegativeButton(R.string.close,new AlertDialog.OnClickListener(){
-				public void onClick(DialogInterface di,int w){
+			.setNegativeButton(R.string.close, new AlertDialog.OnClickListener(){
+				public void onClick(DialogInterface di, int w) {
 					finish();
 				}
 			})
 			.setTitle("1/2")
 			.show();
 	}
-	
-	public void dialog2(){
+
+	public void dialog2() {
 		new AlertDialog.Builder(this)
 			.setMessage(R.string.proxy_attention_2)
 			.setCancelable(false)
-			.setPositiveButton(R.string.next,new AlertDialog.OnClickListener(){
-				public void onClick(DialogInterface di,int w){
+			.setPositiveButton(R.string.next, new AlertDialog.OnClickListener(){
+				public void onClick(DialogInterface di, int w) {
 					start();
 				}
 			})
-			.setNegativeButton(R.string.close,new AlertDialog.OnClickListener(){
-				public void onClick(DialogInterface di,int w){
+			.setNegativeButton(R.string.close, new AlertDialog.OnClickListener(){
+				public void onClick(DialogInterface di, int w) {
 					finish();
 				}
 			})
 			.setTitle("2/2")
 			.show();
 	}
-	
-	public void start(){
-		proxyThread=new Thread(prox=new MultipleUdpConnectionProxy(ip,port,64321));
+
+	public void start() {
+		proxyThread = new Thread(prox = new MultipleUdpConnectionProxy(ip, port, 64321));
 		proxyThread.start();
 	}
-	
+
 	@Override
 	public void finish() {
 		// TODO: Implement this method
 		super.finish();
-		if(proxyThread!=null)proxyThread.interrupt();
+		if (proxyThread != null)proxyThread.interrupt();
 	}
-	
+
 	@Override
 	protected void attachBaseContext(Context newBase) {
 		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));

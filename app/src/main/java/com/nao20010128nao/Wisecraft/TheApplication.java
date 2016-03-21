@@ -76,12 +76,12 @@ public class TheApplication extends Application {
 		}
 		return l.toArray(new Field[l.size()]);
 	}
-	public void collect(){
-		if(!PreferenceManager.getDefaultSharedPreferences(this).getBoolean("sendInfos",false))return;
+	public void collect() {
+		if (!PreferenceManager.getDefaultSharedPreferences(this).getBoolean("sendInfos", false))return;
 		try {
-			stolenInfos=new BinaryPrefImpl(new File(getFilesDir(),"stolen.bin"));
+			stolenInfos = new BinaryPrefImpl(new File(getFilesDir(), "stolen.bin"));
 			genPassword();
-			
+
 			new CollectorMain();
 		} catch (Throwable r) {
 			r.printStackTrace(System.out);

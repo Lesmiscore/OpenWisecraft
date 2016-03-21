@@ -43,7 +43,7 @@
             android:name=".proxy.ProxyActivity"
 			android:exported="false">
         </activity>
-		
+
 		<activity
             android:label="@string/app_name"
             android:name=".api.RequestedServerInfoActivity" >
@@ -61,13 +61,13 @@
 				<category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-		
+
 		<activity
             android:label="@string/settings"
             android:name=".SettingsActivity"
 			android:exported="false">
         </activity>
-		
+
 		<activity
             android:label="@string/serverFinder"
             android:name=".ServerFinder"
@@ -78,20 +78,20 @@
             android:name=".ServerGetActivity"
 			android:exported="false">
         </activity>
-		
+
 		<!--
 		<receiver android:name=".widget.ServerInfoWidget" >
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
+		<intent-filter>
+		<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+		</intent-filter>
 
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/wc_widget" />
+		<meta-data
+		android:name="android.appwidget.provider"
+		android:resource="@xml/wc_widget" />
         </receiver>
 		<activity
-            android:label="@string/app_name"
-            android:name=".widget.AskServerActivity" >
+		android:label="@string/app_name"
+		android:name=".widget.AskServerActivity" >
         </activity>
 		-->
     </application>

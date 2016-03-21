@@ -113,14 +113,14 @@ public class ServerInfoActivity extends FragmentActivity {
 				title = ip + ":" + port;
 			}
 			adap.clear();
-			CompatArrayAdapter.addAll(adap,sort);
+			CompatArrayAdapter.addAll(adap, sort);
 			adap2.clear();
-			CompatArrayAdapter.addAll(adap2,fs.getData().entrySet());
+			CompatArrayAdapter.addAll(adap2, fs.getData().entrySet());
 			adap3.clear();
 			if (fs.getData().containsKey("plugins")) {
 				String[] data=fs.getData().get("plugins").split("\\: ");
 				if (data.length >= 2)
-					CompatArrayAdapter.addAll(adap3,data[1].split("\\; "));
+					CompatArrayAdapter.addAll(adap3, data[1].split("\\; "));
 			}
 			setTitle(title);
 		} else if (resp instanceof Reply) {
@@ -138,19 +138,19 @@ public class ServerInfoActivity extends FragmentActivity {
 				}
 				Collections.sort(sort);
 				adap.clear();
-				CompatArrayAdapter.addAll(adap,sort);
+				CompatArrayAdapter.addAll(adap, sort);
 			} else {
 				adap.clear();
 			}
 
 			serverNameStr = deleteDecorations(rep.description);
 
-			if(rep.favicon!=null){
+			if (rep.favicon != null) {
 				byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
 				Bitmap bmp=BitmapFactory.decodeByteArray(image, 0, image.length);
 				serverIconObj = new BitmapDrawable(bmp);
-			}else{
-				serverIconObj=new ColorDrawable(Color.TRANSPARENT);
+			} else {
+				serverIconObj = new ColorDrawable(Color.TRANSPARENT);
 			}
 
 			adap2.clear();
@@ -159,7 +159,7 @@ public class ServerInfoActivity extends FragmentActivity {
 			data.put(getResources().getString(R.string.pc_nowPlayers), rep.players.getOnline() + "");
 			data.put(getResources().getString(R.string.pc_softwareVersion), rep.version.getName());
 			data.put(getResources().getString(R.string.pc_protocolVersion), rep.version.getProtocol() + "");
-			CompatArrayAdapter.addAll(adap2,data.entrySet());
+			CompatArrayAdapter.addAll(adap2, data.entrySet());
 		} else if (resp instanceof Reply19) {
 			Reply19 rep=(Reply19)resp;
 			if (rep.description == null) {
@@ -175,19 +175,19 @@ public class ServerInfoActivity extends FragmentActivity {
 				}
 				Collections.sort(sort);
 				adap.clear();
-				CompatArrayAdapter.addAll(adap,sort);
+				CompatArrayAdapter.addAll(adap, sort);
 			} else {
 				adap.clear();
 			}
 
 			serverNameStr = deleteDecorations(rep.description.text);
 
-			if(rep.favicon!=null){
+			if (rep.favicon != null) {
 				byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
 				Bitmap bmp=BitmapFactory.decodeByteArray(image, 0, image.length);
 				serverIconObj = new BitmapDrawable(bmp);
-			}else{
-				serverIconObj=new ColorDrawable(Color.TRANSPARENT);
+			} else {
+				serverIconObj = new ColorDrawable(Color.TRANSPARENT);
 			}
 
 			adap2.clear();
@@ -196,7 +196,7 @@ public class ServerInfoActivity extends FragmentActivity {
 			data.put(getResources().getString(R.string.pc_nowPlayers), rep.players.getOnline() + "");
 			data.put(getResources().getString(R.string.pc_softwareVersion), rep.version.getName());
 			data.put(getResources().getString(R.string.pc_protocolVersion), rep.version.getProtocol() + "");
-			CompatArrayAdapter.addAll(adap2,data.entrySet());
+			CompatArrayAdapter.addAll(adap2, data.entrySet());
 		} else if (resp instanceof SprPair) {
 			SprPair p=(SprPair)resp;
 			update(p.getA());

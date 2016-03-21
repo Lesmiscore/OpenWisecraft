@@ -126,37 +126,37 @@ public class Utils {
 		}
 		return sb.toString();
 	}
-	public static List<ServerListActivity.Server> convertServerObject(List<com.nao20010128nao.McServerList.Server> from){
+	public static List<ServerListActivity.Server> convertServerObject(List<com.nao20010128nao.McServerList.Server> from) {
 		ArrayList<ServerListActivity.Server> result=new ArrayList<>();
-		for(com.nao20010128nao.McServerList.Server obj:from){
+		for (com.nao20010128nao.McServerList.Server obj:from) {
 			ServerListActivity.Server wcs=new ServerListActivity.Server();
-			wcs.ip=obj.ip;
-			wcs.port=obj.port;
-			wcs.isPC=!obj.isPE;
+			wcs.ip = obj.ip;
+			wcs.port = obj.port;
+			wcs.isPC = !obj.isPE;
 			result.add(wcs);
 		}
 		return result;
 	}
-	
-	public static int getVersionCode(Context context){
+
+	public static int getVersionCode(Context context) {
         PackageManager pm = context.getPackageManager();
         int versionCode = 0;
-        try{
+        try {
             PackageInfo packageInfo = pm.getPackageInfo(context.getPackageName(), 0);
             versionCode = packageInfo.versionCode;
-        }catch(PackageManager.NameNotFoundException e){
+        } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
         return versionCode;
     }
 
-    public static String getVersionName(Context context){
+    public static String getVersionName(Context context) {
         PackageManager pm = context.getPackageManager();
         String versionName = "";
-        try{
+        try {
             PackageInfo packageInfo = pm.getPackageInfo(context.getPackageName(), 0);
             versionName = packageInfo.versionName;
-        }catch(PackageManager.NameNotFoundException e){
+        } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
         return versionName;

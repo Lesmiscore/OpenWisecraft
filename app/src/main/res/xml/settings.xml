@@ -5,18 +5,18 @@
 		android:title="@string/settingsAttention"
 		android:key=""
 		android:enabled="false"
-		/>
+	/>
 	<EditTextPreference 
 		android:key="parallels" 
 		android:title="@string/pingThreads"
 		android:inputType="number" 
 		android:maxLength="3"
 		android:defaultValue="6"
-		/>
+	/>
 	<CheckBoxPreference
 		android:title="@string/updAnotherThread"
 		android:key="updAnotherThread"
-		/>
+	/>
 	<PreferenceScreen
 		android:title="@string/features">
 		<CheckBoxPreference
@@ -48,5 +48,5 @@
 	<pref.StartPref
 		android:title="@string/trickSheet"
 		android:key="trickSheet"
-		/>
+	/>
 </PreferenceScreen>

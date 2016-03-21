@@ -28,7 +28,7 @@ import static com.nao20010128nao.Wisecraft.Utils.*;
 
 public class ServerListActivity extends ListActivity {
 	public static WeakReference<ServerListActivity> instance=new WeakReference(null);
-	
+
 	static File mcpeServerList=new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt");
 
 	ServerPingProvider spp,updater;
@@ -54,25 +54,25 @@ public class ServerListActivity extends ListActivity {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		boolean usesOldInstance=false;
-		if(instance.get()!=null){
-			list=instance.get().list;
-			sl=instance.get().sl;
-			pinging=instance.get().pinging;
-			spp=instance.get().spp;
-			updater=instance.get().updater;
-			clicked=instance.get().clicked;
-			usesOldInstance=true;
-			
+		if (instance.get() != null) {
+			list = instance.get().list;
+			sl = instance.get().sl;
+			pinging = instance.get().pinging;
+			spp = instance.get().spp;
+			updater = instance.get().updater;
+			clicked = instance.get().clicked;
+			usesOldInstance = true;
+
 			sl.attachNewActivity(this);
 		}
-		instance=new WeakReference(this);
+		instance = new WeakReference(this);
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
-		if(usesOldInstance){
+		if (usesOldInstance) {
 			setListAdapter(sl);
-		}else{
-			spp=updater=new MultiServerPingProvider(Integer.parseInt(pref.getString("parallels","6")));
-			if(pref.getBoolean("updAnotherThread",false)){
-				updater=new NormalServerPingProvider();
+		} else {
+			spp = updater = new MultiServerPingProvider(Integer.parseInt(pref.getString("parallels", "6")));
+			if (pref.getBoolean("updAnotherThread", false)) {
+				updater = new NormalServerPingProvider();
 			}
 			setListAdapter(sl = new ServerList(this));
 		}
@@ -80,8 +80,8 @@ public class ServerListActivity extends ListActivity {
 		getListView().setOnItemLongClickListener(sl);
 		getListView().setLongClickable(true);
 		wd = new WorkingDialog(this);
-		if(!usesOldInstance)loadServers();
-		for(int i=0;i<list.size();i++){
+		if (!usesOldInstance)loadServers();
+		for (int i=0;i < list.size();i++) {
 			sl.getViewQuick(i);
 		}
 	}
@@ -103,7 +103,7 @@ public class ServerListActivity extends ListActivity {
 			case 0:
 				switch (resultCode) {
 					case Constant.ACTIVITY_RESULT_UPDATE:
-						updater.putInQueue(ServerInfoActivity.stat, new PingHandlerImpl(true,true));
+						updater.putInQueue(ServerInfoActivity.stat, new PingHandlerImpl(true, true));
 						((TextView)sl.getViewQuick(clicked).findViewById(R.id.pingMillis)).setText(R.string.working);
 						((ImageView)sl.getViewQuick(clicked).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
 						wd.showWorkingDialog();
@@ -122,11 +122,11 @@ public class ServerListActivity extends ListActivity {
 		menu.add(Menu.NONE, 2, 2, R.string.update_all);
 		menu.add(Menu.NONE, 3, 3, R.string.export);
 		menu.add(Menu.NONE, 4, 4, R.string.imporT);
-		if(pref.getBoolean("feature_bott",true))
+		if (pref.getBoolean("feature_bott", true))
 			menu.add(Menu.NONE, 5, 5, R.string.bringOnlinesToTop);
-		if(pref.getBoolean("feature_serverFinder",false))
+		if (pref.getBoolean("feature_serverFinder", false))
 			menu.add(Menu.NONE, 6, 6, R.string.serverFinder);
-		if(pref.getBoolean("feature_asfsls",false))
+		if (pref.getBoolean("feature_asfsls", false))
 			menu.add(Menu.NONE, 7, 7, R.string.addServerFromServerListSite);
 		menu.add(Menu.NONE, 8, 8, R.string.settings);
 		menu.add(Menu.NONE, 9, 9, R.string.exit);
@@ -291,54 +291,54 @@ public class ServerListActivity extends ListActivity {
 				break;
 			case 5:
 				new Thread(){
-					public void run(){
+					public void run() {
 						final List<Server> sortingServer=Factories.arrayList();
-						
+
 						List<Server> tmpServer=Factories.arrayList(list);
-						
-						for(int i=0;i<list.size();i++){
-							if(list.get(i) instanceof ServerStatus){
+
+						for (int i=0;i < list.size();i++) {
+							if (list.get(i) instanceof ServerStatus) {
 								//Online
 								sortingServer.add(list.get(i).cloneAsServer());
-								
+
 								tmpServer.remove(list.get(i));
 							}
 						}
 						sortingServer.addAll(tmpServer);
-						
+
 						runOnUiThread(new Runnable(){
-							public void run(){
-								finish();
-								instance=new WeakReference(null);
-								new Handler().postDelayed(new Runnable(){
-										public void run(){
-											pref.edit().putString("servers", gson.toJson(sortingServer.toArray(new Server[sortingServer.size()]), Server[].class)).commit();
-											startActivity(new Intent(ServerListActivity.this,ServerListActivity.class));
-										}
-									},10);
-							}
-						});
+								public void run() {
+									finish();
+									instance = new WeakReference(null);
+									new Handler().postDelayed(new Runnable(){
+											public void run() {
+												pref.edit().putString("servers", gson.toJson(sortingServer.toArray(new Server[sortingServer.size()]), Server[].class)).commit();
+												startActivity(new Intent(ServerListActivity.this, ServerListActivity.class));
+											}
+										}, 10);
+								}
+							});
 					}
 				}.start();
 				break;
 			case 6:
-				startActivity(new Intent(this,ServerFinder.class));
+				startActivity(new Intent(this, ServerFinder.class));
 				break;
 			case 7:
-				startActivity(new Intent(this,ServerGetActivity.class));
+				startActivity(new Intent(this, ServerGetActivity.class));
 				break;
 			case 8:
-				startActivity(new Intent(this,SettingsActivity.class));
+				startActivity(new Intent(this, SettingsActivity.class));
 				break;
 			case 9:
 				finish();
 				saveServers();
-				instance=new WeakReference(null);
+				instance = new WeakReference(null);
 				new Handler().postDelayed(new Runnable(){
-					public void run(){
-						System.exit(0);
-					}
-				},150);
+						public void run() {
+							System.exit(0);
+						}
+					}, 150);
 				break;
 		}
 		return true;
@@ -360,7 +360,7 @@ public class ServerListActivity extends ListActivity {
 		ServerListActivity sla;
 		public ServerList(ServerListActivity sla) {
 			super(sla, 0, sla.list = new ArrayList<Server>());
-			this.sla=sla;
+			this.sla = sla;
 		}
 
 		@Override
@@ -382,9 +382,9 @@ public class ServerListActivity extends ListActivity {
 			((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.working);
 			((TextView)layout.findViewById(R.id.serverAddress)).setText(s.ip + ":" + s.port);
 			((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(sla.getResources().getColor(R.color.stat_pending)));
-			if(s instanceof ServerStatus){
+			if (s instanceof ServerStatus) {
 				sla.new PingHandlerImpl().onPingArrives((ServerStatus)s);
-			}else{
+			} else {
 				sla.spp.putInQueue(s, sla.new PingHandlerImpl());
 			}
 			cached.set(position, layout);
@@ -407,7 +407,7 @@ public class ServerListActivity extends ListActivity {
 				ServerInfoActivity.stat = (ServerStatus)s;
 				sla.startActivityForResult(new Intent(sla, ServerInfoActivity.class), 0);
 			} else {
-				sla.updater.putInQueue(s, sla.new PingHandlerImpl(true,true));
+				sla.updater.putInQueue(s, sla.new PingHandlerImpl(true, true));
 				((TextView)getViewQuick(sla.clicked).findViewById(R.id.pingMillis)).setText(R.string.working);
 				((ImageView)getViewQuick(sla.clicked).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(sla.getResources().getColor(R.color.stat_pending)));
 				sla.wd.showWorkingDialog();
@@ -423,35 +423,35 @@ public class ServerListActivity extends ListActivity {
 				.setItems(generateSubMenu(getItem(p3).isPC), new DialogInterface.OnClickListener(){
 					public void onClick(DialogInterface di, int which) {
 						List<Runnable> executes=new ArrayList<>();
-						executes.add(0,new Runnable(){
-							public void run(){
-								new AlertDialog.Builder(sla)
-									.setMessage(R.string.auSure)
-									.setNegativeButton(android.R.string.yes, new DialogInterface.OnClickListener(){
-										public void onClick(DialogInterface di, int i) {
-											sla.sl.remove(sla.list.get(sla.clicked));
-											sla.saveServers();
-										}
-									})
-									.setPositiveButton(android.R.string.no, new DialogInterface.OnClickListener(){
-										public void onClick(DialogInterface di, int i) {
-										}
-									})
-									.show();
-							}
-						});
-						executes.add(1,new Runnable(){
-								public void run(){
+						executes.add(0, new Runnable(){
+								public void run() {
+									new AlertDialog.Builder(sla)
+										.setMessage(R.string.auSure)
+										.setNegativeButton(android.R.string.yes, new DialogInterface.OnClickListener(){
+											public void onClick(DialogInterface di, int i) {
+												sla.sl.remove(sla.list.get(sla.clicked));
+												sla.saveServers();
+											}
+										})
+										.setPositiveButton(android.R.string.no, new DialogInterface.OnClickListener(){
+											public void onClick(DialogInterface di, int i) {
+											}
+										})
+										.show();
+								}
+							});
+						executes.add(1, new Runnable(){
+								public void run() {
 									if (sla.pinging.get(getItem(p3)))return;
-									sla.updater.putInQueue(getItem(p3), sla.new PingHandlerImpl(true,false));
+									sla.updater.putInQueue(getItem(p3), sla.new PingHandlerImpl(true, false));
 									((TextView)getViewQuick(p3).findViewById(R.id.pingMillis)).setText(R.string.working);
 									((ImageView)getViewQuick(p3).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(sla.getResources().getColor(R.color.stat_pending)));
 									sla.wd.showWorkingDialog();
 									sla.pinging.put(sla.list.get(p3), true);
 								}
 							});
-						executes.add(2,new Runnable(){
-								public void run(){
+						executes.add(2, new Runnable(){
+								public void run() {
 									final Server data=new Server();
 									data.ip = getItem(p3).ip;
 									data.port = getItem(p3).port;
@@ -474,7 +474,7 @@ public class ServerListActivity extends ListActivity {
 												data.isPC = isPc.isChecked();
 
 												sla.list.set(p3, data);
-												sla.spp.putInQueue(getItem(p3), sla.new PingHandlerImpl(true,false));
+												sla.spp.putInQueue(getItem(p3), sla.new PingHandlerImpl(true, false));
 												((TextView)getViewQuick(p3).findViewById(R.id.serverAddress)).setText(data.ip + ":" + data.port);
 
 												sla.saveServers();
@@ -488,57 +488,57 @@ public class ServerListActivity extends ListActivity {
 										show();
 								}
 							});
-						executes.add(3,new Runnable(){
-								public void run(){
+						executes.add(3, new Runnable(){
+								public void run() {
 									sla.startActivity(new Intent(sla, ServerTestActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port).putExtra("ispc", getItem(p3).isPC));
 								}
 							});
-						executes.add(4,new Runnable(){
-								public void run(){
+						executes.add(4, new Runnable(){
+								public void run() {
 									sla.startActivity(new Intent(sla, RCONActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port));
 								}
 							});
-						executes.add(5,new Runnable(){
-								public void run(){
+						executes.add(5, new Runnable(){
+								public void run() {
 									new Thread(){
 										public void run() {
 											File servLst=new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt");
 											Server s=getItem(p3);
 											String sls=Utils.readWholeFile(servLst);
-											if(sls==null)
-												sls="";
-											for(String l:Utils.lines(sls))
-												if(l.endsWith(s.toString()))return;
-											sls+="900:"+randomText()+":"+s+"\n";
-											Utils.writeToFile(servLst,sls);
+											if (sls == null)
+												sls = "";
+											for (String l:Utils.lines(sls))
+												if (l.endsWith(s.toString()))return;
+											sls += "900:" + randomText() + ":" + s + "\n";
+											Utils.writeToFile(servLst, sls);
 										}
 									}.start();
 								}
 							});
-						executes.add(6,new Runnable(){
-								public void run(){
+						executes.add(6, new Runnable(){
+								public void run() {
 									sla.startActivity(new Intent(sla, ProxyActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port));
 								}
 							});
-						executes.add(7,new Runnable(){
-								public void run(){
+						executes.add(7, new Runnable(){
+								public void run() {
 									sla.startActivity(new Intent(sla, ServerFinder.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port).putExtra("ispc", getItem(p3).isPC));
 								}
 							});
-						
+
 						List<Runnable> all=new ArrayList(executes);
-						
-						if(getItem(p3).isPC){
+
+						if (getItem(p3).isPC) {
 							executes.remove(all.get(5));
 							executes.remove(all.get(6));
 						}
-						if(!sla.pref.getBoolean("feature_proxy",true)){
+						if (!sla.pref.getBoolean("feature_proxy", true)) {
 							executes.remove(all.get(6));
 						}
-						if(!sla.pref.getBoolean("feature_serverFinder",false)){
+						if (!sla.pref.getBoolean("feature_serverFinder", false)) {
 							executes.remove(all.get(7));
 						}
-						
+
 						executes.get(which).run();
 					}
 				})
@@ -571,25 +571,25 @@ public class ServerListActivity extends ListActivity {
 			cached.remove(sla.list.indexOf(object));
 			super.remove(object);
 		}
-		
-		private String[] generateSubMenu(boolean isPC){
+
+		private String[] generateSubMenu(boolean isPC) {
 			List<String> result=new ArrayList<String>(Arrays.<String>asList(sla.getResources().getStringArray(R.array.serverSubMenu)));
 			List<String> all=new ArrayList<String>(result);
-			if(isPC){
+			if (isPC) {
 				result.remove(all.get(5));
 				result.remove(all.get(6));
 			}
-			if(!sla.pref.getBoolean("feature_proxy",true)){
+			if (!sla.pref.getBoolean("feature_proxy", true)) {
 				result.remove(all.get(6));
 			}
-			if(!sla.pref.getBoolean("feature_serverFinder",false)){
+			if (!sla.pref.getBoolean("feature_serverFinder", false)) {
 				result.remove(all.get(7));
 			}
 			return result.toArray(new String[result.size()]);
 		}
-		
-		public void attachNewActivity(ServerListActivity sla){
-			this.sla=sla;
+
+		public void attachNewActivity(ServerListActivity sla) {
+			this.sla = sla;
 		}
 	}
 	public static class Server {
@@ -616,9 +616,9 @@ public class ServerListActivity extends ListActivity {
 		@Override
 		public String toString() {
 			// TODO: Implement this method
-			return ip+":"+port;
+			return ip + ":" + port;
 		}
-		
+
 		public Server cloneAsServer() {
 			Server s=new Server();
 			s.ip = ip;
@@ -633,18 +633,18 @@ public class ServerListActivity extends ListActivity {
 	}
 	class PingHandlerImpl implements ServerPingProvider.PingHandler {
 		boolean closeDialog,openStat;
-		public PingHandlerImpl(){
-			this(false,false);
+		public PingHandlerImpl() {
+			this(false, false);
 		}
-		public PingHandlerImpl(boolean cd,boolean os){
-			closeDialog=cd;
-			openStat=os;
+		public PingHandlerImpl(boolean cd, boolean os) {
+			closeDialog = cd;
+			openStat = os;
 		}
 		public void onPingFailed(final Server s) {
 			runOnUiThread(new Runnable(){
 					public void run() {
 						int i_=list.indexOf(s);
-						if(i_==-1){
+						if (i_ == -1) {
 							return;
 						}
 						((ImageView)sl.getViewQuick(i_).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_error)));
@@ -656,7 +656,7 @@ public class ServerListActivity extends ListActivity {
 						sn.isPC = s.isPC;
 						list.set(i_, sn);
 						pinging.put(list.get(i_), false);
-						if(closeDialog){
+						if (closeDialog) {
 							wd.hideWorkingDialog();
 						}
 					}
@@ -666,7 +666,7 @@ public class ServerListActivity extends ListActivity {
 			runOnUiThread(new Runnable(){
 					public void run() {
 						int i_=list.indexOf(s);
-						if(i_==-1){
+						if (i_ == -1) {
 							return;
 						}
 						((ImageView)sl.getViewQuick(i_).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
@@ -721,11 +721,11 @@ public class ServerListActivity extends ListActivity {
 						((TextView)sl.getViewQuick(i_).findViewById(R.id.pingMillis)).setText(s.ping + " ms");
 						list.set(i_, s);
 						pinging.put(list.get(i_), false);
-						if(openStat){
+						if (openStat) {
 							ServerInfoActivity.stat = s;
 							startActivityForResult(new Intent(ServerListActivity.this, ServerInfoActivity.class), 0);
 						}
-						if(closeDialog){
+						if (closeDialog) {
 							wd.hideWorkingDialog();
 						}
 					}
