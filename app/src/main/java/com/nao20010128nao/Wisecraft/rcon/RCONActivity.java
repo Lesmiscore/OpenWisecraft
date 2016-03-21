@@ -95,10 +95,7 @@ public class RCONActivity extends FragmentActivity {
 		try {
 			rcon = new RConModified(ip, port, passChars);
 			return true;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return false;
-		} catch (AuthenticationException e) {
+		} catch (Throwable e) {
 			e.printStackTrace();
 			return false;
 		}
