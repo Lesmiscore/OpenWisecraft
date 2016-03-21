@@ -1,6 +1,9 @@
 package com.nao20010128nao.Wisecraft;
 import java.io.*;
 
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import com.google.gson.Gson;
 import com.google.rconclient.rcon.RCon;
 import com.nao20010128nao.Wisecraft.rcon.RConModified;
@@ -8,9 +11,6 @@ import com.nao20010128nao.Wisecraft.struct.WCH_ServerInfo;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageInfo;
 
 public class Utils {
 	public static String deleteDecorations(String decorated) {
