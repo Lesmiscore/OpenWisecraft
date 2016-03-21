@@ -51,6 +51,7 @@
 	<string name="addServerFromServerListSite">サーバーリストサイトからサーバーを追加</string>
 	<string name="error">エラー</string>
 	<string name="selectServers">サーバーを選択してください</string>
+	<string name="exit">終了</string>
 	
 	<string name="font">DroidSans.ttf</string>
 	<string name="fontField">droidSans</string>
