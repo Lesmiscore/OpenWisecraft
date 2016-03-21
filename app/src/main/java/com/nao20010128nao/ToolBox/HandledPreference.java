@@ -44,7 +44,7 @@ extends NormalButtonPreference {
             String string = this.getKey();
             return string;
         } catch (Throwable var1_2) {
-            var1_2.printStackTrace();
+            //var1_2.printStackTrace();
             return null;
         }
     }
@@ -54,7 +54,7 @@ extends NormalButtonPreference {
             String string = this.getSummary().toString();
             return string;
         } catch (Throwable var1_2) {
-            var1_2.printStackTrace();
+            //var1_2.printStackTrace();
             return null;
         }
     }
@@ -64,7 +64,7 @@ extends NormalButtonPreference {
             String string = this.getTitle().toString();
             return string;
         } catch (Throwable var1_2) {
-            var1_2.printStackTrace();
+            //var1_2.printStackTrace();
             return null;
         }
     }
