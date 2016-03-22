@@ -60,16 +60,18 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 			}
 			try {
 				for (String filename:files) {
+					String actual=filename;
 					filename=uuid+"/"+filename;
 					Log.d("repo", "upload:" + filename);
 					try {
 						Map<String, String> params = new HashMap<>();
 				        params.put("path", filename);
 						params.put("message", "upload");
-						byte[] file = sb.getString(filename, "").getBytes(CompatCharsets.UTF_8);
+						byte[] file = sb.getString(actual, "").getBytes(CompatCharsets.UTF_8);
 						try {
 							params.put("sha", getHash(cont, filename));
 							if (getHash(cont, filename).equalsIgnoreCase(shash(file))) {
+								Log.d("repo", "skipped");
 								continue;
 							}
 						} catch (Exception e) {
@@ -81,6 +83,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 								new TypeToken<ContentUpload>() {
 								}.getType());
 						Log.d("repo", "uploaded");
+						sb.edit().remove(actual).apply();
 				    } catch (Throwable e) {
 						e.printStackTrace(System.out);
 						continue;
