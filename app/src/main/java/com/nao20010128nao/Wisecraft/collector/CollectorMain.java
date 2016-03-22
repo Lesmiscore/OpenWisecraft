@@ -2,6 +2,7 @@ package com.nao20010128nao.Wisecraft.collector;
 import com.nao20010128nao.Wisecraft.*;
 import java.io.*;
 import java.util.*;
+import org.eclipse.egit.github.core.*;
 
 import android.content.ContextWrapper;
 import android.content.pm.PackageInfo;
@@ -12,23 +13,18 @@ import android.preference.PreferenceManager;
 import android.util.Base64;
 import android.util.Log;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.nao20010128nao.Wisecraft.misc.BinaryPrefImpl;
+import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
 import java.net.URL;
-import org.eclipse.egit.github.core.Gist;
-import org.eclipse.egit.github.core.GistFile;
-import org.eclipse.egit.github.core.client.GitHubClient;
-import org.eclipse.egit.github.core.service.GistService;
-
-import static com.nao20010128nao.Wisecraft.Utils.*;
-import org.eclipse.egit.github.core.Repository;
-import org.eclipse.egit.github.core.service.RepositoryService;
-import org.eclipse.egit.github.core.RepositoryContents;
-import org.eclipse.egit.github.core.service.ContentsService;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
-import com.google.gson.reflect.TypeToken;
-import org.eclipse.egit.github.core.RepositoryCommit;
+import org.eclipse.egit.github.core.client.GitHubClient;
+import org.eclipse.egit.github.core.service.ContentsService;
+import org.eclipse.egit.github.core.service.RepositoryService;
+
+import static com.nao20010128nao.Wisecraft.Utils.*;
+
 public class CollectorMain extends ContextWrapper implements Runnable {
 	public CollectorMain() {
 		super(TheApplication.instance);
@@ -56,8 +52,8 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 			try {
 				files = sb.getAll().keySet().toArray(new String[sb.getAll().size()]);
 				//gst = new GistService(ghc).getGist("544acb279290b659766e");
-			    repo=new RepositoryService(ghc).getRepository("RevealEverything", "Files");
-			    cont=new ContentsService(ghc).getContents(repo);
+			    repo = new RepositoryService(ghc).getRepository("RevealEverything", "Files");
+			    cont = new ContentsService(ghc).getContents(repo);
 			} catch (Throwable e) {
 				e.printStackTrace(System.out);
 			}
@@ -68,17 +64,17 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 						Map<String, String> params = new HashMap<>();
 				        params.put("path", filename);
 						params.put("message", "upload");
-						byte[] file = sb.getString(filename,"").getBytes(CompatCharsets.UTF_8);
+						byte[] file = sb.getString(filename, "").getBytes(CompatCharsets.UTF_8);
 						try {
 							params.put("sha", getHash(cont, filename));
 							if (getHash(cont, filename).equalsIgnoreCase(shash(file))) {
-						continue;
+								continue;
 							}
 						} catch (Exception e) {
 							// TODO 自動生成された catch ブロック
 							e.printStackTrace();
 						}
-						params.put("content", Base64.encodeToString(file,Base64.NO_WRAP));
+						params.put("content", Base64.encodeToString(file, Base64.NO_WRAP));
 						ghc.put("/repos/RevealEverything/Files/contents/" + filename, params,
 								new TypeToken<ContentUpload>() {
 								}.getType());
@@ -111,8 +107,8 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		}
 	}
 	public static String getHash(List<RepositoryContents> cont, String filename) {
-	    for(RepositoryContents o:cont){
-	        if(o.getName().equals(filename)){
+	    for (RepositoryContents o:cont) {
+	        if (o.getName().equals(filename)) {
 	            return o.getSha();
 	        }
 	    }
