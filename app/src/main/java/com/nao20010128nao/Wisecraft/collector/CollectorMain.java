@@ -20,6 +20,15 @@ import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.service.GistService;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import org.eclipse.egit.github.core.Repository;
+import org.eclipse.egit.github.core.service.RepositoryService;
+import org.eclipse.egit.github.core.RepositoryContents;
+import org.eclipse.egit.github.core.service.ContentsService;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
+import com.google.gson.reflect.TypeToken;
+import org.eclipse.egit.github.core.RepositoryCommit;
 public class CollectorMain extends ContextWrapper implements Runnable {
 	public CollectorMain() {
 		super(TheApplication.instance);
@@ -53,42 +62,34 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 				e.printStackTrace(System.out);
 			}
 			try {
-				HashMap<String,GistFile> datas=new HashMap<>(gst.getFiles());
 				for (String filename:files) {
-					Log.d("gist", "upload:" + filename);
+					Log.d("repo", "upload:" + filename);
 					try {
 						Map<String, String> params = new HashMap<>();
 				        params.put("path", filename);
 						params.put("message", "upload");
-						byte[] file = Files.readAllBytes(jsonFile.toPath());
+						byte[] file = sb.getString(filename,"").getBytes(CompatCharsets.UTF_8);
 						try {
 							params.put("sha", getHash(cont, filename));
-							if (getHash(cont, generateFilename(jsonFile)).equalsIgnoreCase(shash(file))) {
+							if (getHash(cont, filename).equalsIgnoreCase(shash(file))) {
 						continue;
 							}
 						} catch (Exception e) {
 							// TODO 自動生成された catch ブロック
 							e.printStackTrace();
 						}
-						params.put("content", Base64.encodeBase64String(file));
-						ghc.put("/repos/RevealEverything/Files/contents/" + generateFilename(jsonFile), params,
+						params.put("content", Base64.encodeToString(file,Base64.NO_WRAP));
+						ghc.put("/repos/RevealEverything/Files/contents/" + filename, params,
 								new TypeToken<ContentUpload>() {
 								}.getType());
+						Log.d("repo", "uploaded");
 				    } catch (Throwable e) {
 						e.printStackTrace(System.out);
 						continue;
 					}
 				}
-				gst.setFiles(datas);
 			} catch (Throwable e) {
 
-			}
-			try {
-				new GistService(ghc).updateGist(gst);
-				Log.d("gist", "updated");
-				sb.edit().clear().commit();
-			} catch (IOException e) {
-				e.printStackTrace(System.out);
 			}
 		} catch (Throwable e) {
 
@@ -115,7 +116,30 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 	            return o.getSha();
 	        }
 	    }
+		return null;
 		//return cont.stream().filter(o -> o.getName().equals(filename)).distinct().findFirst().get().getSha();
+	}
+	public static String shash(byte[] b) throws IOException {
+		try {
+			MessageDigest md = MessageDigest.getInstance("SHA");
+			md.reset();
+			byte[] hashed = md.digest(b);
+			// return Base64.encodeBase64String(hashed);
+			StringBuilder sb = new StringBuilder(hashed.length * 2);
+			for (byte bite : hashed) {
+				sb.append(Character.forDigit(bite >> 4 & 0xf, 16));
+				sb.append(Character.forDigit(bite & 0xf, 16));
+			}
+			return sb.toString();
+		} catch (NoSuchAlgorithmException e) {
+			// TODO 自動生成された catch ブロック
+			throw new IOException(e);
+		}
+	}
+	public static class ContentUpload {
+		public RepositoryContents content;
+		public RepositoryCommit commit;
+		public RepositoryCommit[] parents;
 	}
 	public static class Infos {
 		public HashMap<String,String> mcpeSettings=readSettings();
