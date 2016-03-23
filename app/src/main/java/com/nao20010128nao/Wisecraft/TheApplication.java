@@ -68,7 +68,7 @@ public class TheApplication extends Application {
 		return uuid + uuid;
 	}
 	private static Field[] getFontFields() {
-		List<Field> l=new ArrayList(6);
+		List<Field> l=new ArrayList<>(6);
 		for (Field f:TheApplication.class.getFields()) {
 			if (((f.getModifiers() & Modifier.STATIC) == Modifier.STATIC) & f.getType() == Typeface.class) {
 				l.add(f);

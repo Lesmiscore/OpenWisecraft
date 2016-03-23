@@ -123,7 +123,7 @@ public class ServerFinder extends ListActivity {
 		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
 	}
 	class ServerList extends AppBaseArrayAdapter<ServerStatus> implements AdapterView.OnItemClickListener {
-		List<View> cached=new ArrayList();
+		List<View> cached=new ArrayList<>();
 		public ServerList() {
 			super(ServerFinder.this, 0, list = new ArrayList<Server>());
 		}
