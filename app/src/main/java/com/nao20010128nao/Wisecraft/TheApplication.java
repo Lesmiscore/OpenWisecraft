@@ -11,6 +11,7 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import android.util.Log;
 
 public class TheApplication extends Application {
 	public static TheApplication instance;
@@ -40,6 +41,12 @@ public class TheApplication extends Application {
 		collect();
 
 		new GhostPingServer().start();
+		
+		/*
+		for(TheApplication o:Factories.FreeSizeNullLenList.obtainList(10)){
+			Log.d("fsnll",o+"");
+		}
+		*/
 	}
 	public Typeface getLocalizedFont() {
 		try {
