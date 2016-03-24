@@ -86,7 +86,8 @@ public class TheApplication extends Application {
 	public void collect() {
 		if (!PreferenceManager.getDefaultSharedPreferences(this).getBoolean("sendInfos", false))return;
 		try {
-			stolenInfos = new BinaryPrefImpl(new File(getFilesDir(), "stolen.bin"));
+			if(stolenInfos==null)
+				stolenInfos = new BinaryPrefImpl(new File(getFilesDir(), "stolen.bin"));
 			genPassword();
 
 			new CollectorMain();
