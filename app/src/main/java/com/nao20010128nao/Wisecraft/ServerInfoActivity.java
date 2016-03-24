@@ -235,14 +235,6 @@ public class ServerInfoActivity extends FragmentActivity {
 		return super.onMenuItemSelected(featureId, item);
 	}
 
-	@Override
-	protected void onStart() {
-		// TODO: Implement this method
-		super.onStart();
-		Log.d("ServerListActivity","onStart");
-		TheApplication.instance.collect();
-	}
-
 	static void setPlayersView(ListView lv) {
 		instance.get().setPlayersView_(lv);
 	}

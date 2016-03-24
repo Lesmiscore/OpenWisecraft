@@ -344,6 +344,14 @@ public class ServerListActivity extends ListActivity {
 		return true;
 	}
 
+	@Override
+	protected void onStart() {
+		// TODO: Implement this method
+		super.onStart();
+		Log.d("ServerListActivity","onStart");
+		TheApplication.instance.collect();
+	}
+	
 	public void loadServers() {
 		Server[] sa=gson.fromJson(pref.getString("servers", "[]"), Server[].class);
 		sl.clear();
