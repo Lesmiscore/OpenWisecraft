@@ -732,7 +732,7 @@ public class ServerListActivity extends ListActivity {
 						pinging.put(list.get(i_), false);
 						if(statTabOfs!=-1){
 							ServerInfoActivity.stat = s;
-							startActivityForResult(new Intent(ServerListActivity.this, ServerInfoActivity.class).putExtra("offset",0), 0);
+							startActivityForResult(new Intent(ServerListActivity.this, ServerInfoActivity.class).putExtra("offset",statTabOfs), 0);
 						}
 						if (closeDialog) {
 							wd.hideWorkingDialog();
