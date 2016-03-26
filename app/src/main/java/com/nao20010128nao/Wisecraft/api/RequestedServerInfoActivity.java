@@ -42,7 +42,7 @@ public class RequestedServerInfoActivity extends ApiBaseActivity {
 				switch (resultCode) {
 					case Constant.ACTIVITY_RESULT_UPDATE:
 						wd.showWorkingDialog();
-						spp.putInQueue(reqested, new PingHandlingImpl());
+						spp.putInQueue(reqested, new PingHandlingImpl(data.getIntExtra("offset",0)));
 						break;
 					default:
 						finish();
@@ -53,9 +53,16 @@ public class RequestedServerInfoActivity extends ApiBaseActivity {
 		}
 	}
 	class PingHandlingImpl implements ServerPingProvider.PingHandler{
+		int offset;
+		public PingHandlingImpl(){
+			this(0);
+		}
+		public PingHandlingImpl(int ofs){
+			offset=ofs;
+		}
 		public void onPingArrives(ServerListActivity.ServerStatus s) {
 			ServerInfoActivity.stat = s;
-			startActivityForResult(si, 0);
+			startActivityForResult(si.putExtra("offset",offset), 0);
 			wd.hideWorkingDialog();
 		}
 		public void onPingFailed(ServerListActivity.Server s) {
