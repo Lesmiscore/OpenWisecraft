@@ -34,7 +34,6 @@ public class RConModified extends RCon {
 			}
 		}
 		String[] data=lines(send("list"));
-		dump(data);
 		if (data.length >= 2) {
 			return data[1].split("\\, ");
 		}
@@ -45,7 +44,6 @@ public class RConModified extends RCon {
 	public String[] banList() throws IOException, AuthenticationException {
 		// TODO: Implement this method
 		String[] data=lines(send("banlist"));
-		dump(data);
 		if (data.length >= 2) {
 			return data[1].split("\\, ");
 		}
@@ -56,7 +54,6 @@ public class RConModified extends RCon {
 	public String[] banIPList() throws IOException, AuthenticationException {
 		// TODO: Implement this method
 		String[] data=lines(send("banlist ips"));
-		dump(data);
 		if (data.length >= 2) {
 			return data[1].split("\\, ");
 		}
@@ -65,10 +62,5 @@ public class RConModified extends RCon {
 
 	public WCH_ServerInfo getServerInfo() {
 		return servi;
-	}
-
-	private void dump(String[] s) {
-		System.out.println(s.length);
-		for (String as:s)System.out.println(as);
 	}
 }
