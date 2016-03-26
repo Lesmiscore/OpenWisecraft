@@ -1,12 +1,12 @@
 package com.nao20010128nao.Wisecraft.misc;
+import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.ContextWrapper;
 import com.nao20010128nao.Wisecraft.R;
 
 public class WorkingDialog extends ContextWrapper {
 	ProgressDialog waitDialog;
-	public WorkingDialog(Context c) {
+	public WorkingDialog(Activity c) {
 		super(c);
 	}
 	public void showWorkingDialog() {
