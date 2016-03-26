@@ -103,7 +103,7 @@ public class ServerListActivity extends ListActivity {
 			case 0:
 				switch (resultCode) {
 					case Constant.ACTIVITY_RESULT_UPDATE:
-						updater.putInQueue(ServerInfoActivity.stat, new PingHandlerImpl(true, true));
+						updater.putInQueue(ServerInfoActivity.stat, new PingHandlerImpl(true, data.getIntExtra("offset",0)));
 						((TextView)sl.getViewQuick(clicked).findViewById(R.id.pingMillis)).setText(R.string.working);
 						((ImageView)sl.getViewQuick(clicked).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
 						wd.showWorkingDialog();
@@ -415,7 +415,7 @@ public class ServerListActivity extends ListActivity {
 				ServerInfoActivity.stat = (ServerStatus)s;
 				sla.startActivityForResult(new Intent(sla, ServerInfoActivity.class), 0);
 			} else {
-				sla.updater.putInQueue(s, sla.new PingHandlerImpl(true, true));
+				sla.updater.putInQueue(s, sla.new PingHandlerImpl(true, 0));
 				((TextView)getViewQuick(sla.clicked).findViewById(R.id.pingMillis)).setText(R.string.working);
 				((ImageView)getViewQuick(sla.clicked).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(sla.getResources().getColor(R.color.stat_pending)));
 				sla.wd.showWorkingDialog();
@@ -451,7 +451,7 @@ public class ServerListActivity extends ListActivity {
 						executes.add(1, new Runnable(){
 								public void run() {
 									if (sla.pinging.get(getItem(p3)))return;
-									sla.updater.putInQueue(getItem(p3), sla.new PingHandlerImpl(true, false));
+									sla.updater.putInQueue(getItem(p3), sla.new PingHandlerImpl(true, -1));
 									((TextView)getViewQuick(p3).findViewById(R.id.pingMillis)).setText(R.string.working);
 									((ImageView)getViewQuick(p3).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(sla.getResources().getColor(R.color.stat_pending)));
 									sla.wd.showWorkingDialog();
@@ -482,7 +482,7 @@ public class ServerListActivity extends ListActivity {
 												data.isPC = isPc.isChecked();
 
 												sla.list.set(p3, data);
-												sla.spp.putInQueue(getItem(p3), sla.new PingHandlerImpl(true, false));
+												sla.spp.putInQueue(getItem(p3), sla.new PingHandlerImpl(true, -1));
 												((TextView)getViewQuick(p3).findViewById(R.id.serverAddress)).setText(data.ip + ":" + data.port);
 
 												sla.saveServers();
@@ -640,13 +640,14 @@ public class ServerListActivity extends ListActivity {
 		public long ping;
 	}
 	class PingHandlerImpl implements ServerPingProvider.PingHandler {
-		boolean closeDialog,openStat;
+		boolean closeDialog;
+		int statTabOfs;
 		public PingHandlerImpl() {
-			this(false, false);
+			this(false, -1);
 		}
-		public PingHandlerImpl(boolean cd, boolean os) {
+		public PingHandlerImpl(boolean cd, int os) {
 			closeDialog = cd;
-			openStat = os;
+			statTabOfs = os;
 		}
 		public void onPingFailed(final Server s) {
 			runOnUiThread(new Runnable(){
@@ -729,9 +730,9 @@ public class ServerListActivity extends ListActivity {
 						((TextView)sl.getViewQuick(i_).findViewById(R.id.pingMillis)).setText(s.ping + " ms");
 						list.set(i_, s);
 						pinging.put(list.get(i_), false);
-						if (openStat) {
+						if(statTabOfs!=-1){
 							ServerInfoActivity.stat = s;
-							startActivityForResult(new Intent(ServerListActivity.this, ServerInfoActivity.class), 0);
+							startActivityForResult(new Intent(ServerListActivity.this, ServerInfoActivity.class).putExtra("offset",0), 0);
 						}
 						if (closeDialog) {
 							wd.hideWorkingDialog();

@@ -22,6 +22,7 @@ import java.lang.ref.WeakReference;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import android.content.Intent;
 
 public class ServerInfoActivity extends FragmentActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
@@ -95,6 +96,8 @@ public class ServerInfoActivity extends FragmentActivity {
 
 		ip = stat.ip;
 		port = stat.port;
+		
+		fth.setCurrentTab(getIntent().getIntExtra("offset",0));
 
 		update(stat.response);
 	}
@@ -227,7 +230,7 @@ public class ServerInfoActivity extends FragmentActivity {
 		// TODO: Implement this method
 		switch (featureId) {
 			case 0://Update
-				setResult(Constant.ACTIVITY_RESULT_UPDATE);
+				setResult(Constant.ACTIVITY_RESULT_UPDATE,new Intent().putExtra("offset",fth.getCurrentTab()));
 				finish();//ServerListActivity updates the stat
 				return true;
 		}
