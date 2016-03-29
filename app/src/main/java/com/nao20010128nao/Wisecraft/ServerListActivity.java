@@ -57,6 +57,7 @@ public class ServerListActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.server_list_content);
 		srl=(SwipeRefreshLayout)findViewById(R.id.swipelayout);
+		srl.setColorSchemeResources(R.color.upd_1,R.color.upd_2,R.color.upd_3,R.color.upd_4);
 		boolean usesOldInstance=false;
 		if (instance.get() != null) {
 			list = instance.get().list;
