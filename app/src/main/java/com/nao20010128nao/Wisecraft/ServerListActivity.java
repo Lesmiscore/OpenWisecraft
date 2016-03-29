@@ -61,7 +61,7 @@ public class ServerListActivity extends ListActivity {
 		srl.setColorSchemeResources(R.color.upd_1,R.color.upd_2,R.color.upd_3,R.color.upd_4);
 		srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
 			public void onRefresh(){
-				onMenuItemSelected(2,items.get(2));
+				onOptionsItemSelected(items.get(2));
 			}
 		});
 		boolean usesOldInstance=false;
@@ -230,7 +230,10 @@ public class ServerListActivity extends ListActivity {
 						continue;
 					}
 					final int i_=i;
-					spp.putInQueue(list.get(i), new PingHandlerImpl(){
+					if(!srl.isRefreshing()){
+						srl.setRefreshing(true);
+					}
+					spp.putInQueue(list.get(i), new PingHandlerImpl(false,-1,false){
 							public void onPingFailed(final Server s) {
 								super.onPingFailed(s);
 								runOnUiThread(new Runnable(){
@@ -657,8 +660,12 @@ public class ServerListActivity extends ListActivity {
 			this(false, -1);
 		}
 		public PingHandlerImpl(boolean cd, int os) {
+			this(cd,os,true);
+		}
+		public PingHandlerImpl(boolean cd, int os,boolean updSrl) {
 			closeDialog = cd;
 			statTabOfs = os;
+			if(updSrl)srl.setRefreshing(true);
 		}
 		public void onPingFailed(final Server s) {
 			runOnUiThread(new Runnable(){
@@ -678,6 +685,10 @@ public class ServerListActivity extends ListActivity {
 						pinging.put(list.get(i_), false);
 						if (closeDialog) {
 							wd.hideWorkingDialog();
+						}
+						
+						if(!pinging.containsValue(true)){
+							srl.setRefreshing(false);
 						}
 					}
 				});
@@ -747,6 +758,10 @@ public class ServerListActivity extends ListActivity {
 						}
 						if (closeDialog) {
 							wd.hideWorkingDialog();
+						}
+						
+						if(!pinging.containsValue(true)){
+							srl.setRefreshing(false);
 						}
 					}
 				});
