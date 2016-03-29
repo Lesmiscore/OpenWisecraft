@@ -114,7 +114,7 @@ public class ServerListActivity extends ListActivity {
 			case 0:
 				switch (resultCode) {
 					case Constant.ACTIVITY_RESULT_UPDATE:
-						updater.putInQueue(ServerInfoActivity.stat, new PingHandlerImpl(true, data.getIntExtra("offset",0)));
+						updater.putInQueue(ServerInfoActivity.stat, new PingHandlerImpl(true, data.getIntExtra("offset",0),true));
 						((TextView)sl.getViewQuick(clicked).findViewById(R.id.pingMillis)).setText(R.string.working);
 						((ImageView)sl.getViewQuick(clicked).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
 						wd.showWorkingDialog();
@@ -407,7 +407,7 @@ public class ServerListActivity extends ListActivity {
 			if (s instanceof ServerStatus) {
 				sla.new PingHandlerImpl().onPingArrives((ServerStatus)s);
 			} else {
-				sla.spp.putInQueue(s, sla.new PingHandlerImpl());
+				sla.spp.putInQueue(s, sla.new PingHandlerImpl(false,-1,true));
 			}
 			cached.set(position, layout);
 			sla.pinging.put(s, true);
@@ -429,7 +429,7 @@ public class ServerListActivity extends ListActivity {
 				ServerInfoActivity.stat = (ServerStatus)s;
 				sla.startActivityForResult(new Intent(sla, ServerInfoActivity.class), 0);
 			} else {
-				sla.updater.putInQueue(s, sla.new PingHandlerImpl(true, 0));
+				sla.updater.putInQueue(s, sla.new PingHandlerImpl(true, 0,true));
 				((TextView)getViewQuick(sla.clicked).findViewById(R.id.pingMillis)).setText(R.string.working);
 				((ImageView)getViewQuick(sla.clicked).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(sla.getResources().getColor(R.color.stat_pending)));
 				sla.wd.showWorkingDialog();
