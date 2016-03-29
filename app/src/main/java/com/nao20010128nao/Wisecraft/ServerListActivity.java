@@ -40,6 +40,7 @@ public class ServerListActivity extends ListActivity {
 	int clicked=-1;
 	WorkingDialog wd;
 	SwipeRefreshLayout srl;
+	List<MenuItem> items=new ArrayList<>();
 	Map<Server,Boolean> pinging=new HashMap<Server,Boolean>(){
 		@Override
 		public Boolean get(Object key) {
@@ -58,6 +59,11 @@ public class ServerListActivity extends ListActivity {
 		setContentView(R.layout.server_list_content);
 		srl=(SwipeRefreshLayout)findViewById(R.id.swipelayout);
 		srl.setColorSchemeResources(R.color.upd_1,R.color.upd_2,R.color.upd_3,R.color.upd_4);
+		srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
+			public void onRefresh(){
+				onMenuItemSelected(2,items.get(2));
+			}
+		});
 		boolean usesOldInstance=false;
 		if (instance.get() != null) {
 			list = instance.get().list;
@@ -122,19 +128,19 @@ public class ServerListActivity extends ListActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO: Implement this method
-		menu.add(Menu.NONE, 0, 0, R.string.add);
-		menu.add(Menu.NONE, 1, 1, R.string.addFromMCPE);
-		menu.add(Menu.NONE, 2, 2, R.string.update_all);
-		menu.add(Menu.NONE, 3, 3, R.string.export);
-		menu.add(Menu.NONE, 4, 4, R.string.imporT);
+		items.add(menu.add(Menu.NONE, 0, 0, R.string.add));
+		items.add(menu.add(Menu.NONE, 1, 1, R.string.addFromMCPE));
+		items.add(menu.add(Menu.NONE, 2, 2, R.string.update_all));
+		items.add(menu.add(Menu.NONE, 3, 3, R.string.export));
+		items.add(menu.add(Menu.NONE, 4, 4, R.string.imporT));
 		if (pref.getBoolean("feature_bott", true))
-			menu.add(Menu.NONE, 5, 5, R.string.bringOnlinesToTop);
+			items.add(menu.add(Menu.NONE, 5, 5, R.string.bringOnlinesToTop));
 		if (pref.getBoolean("feature_serverFinder", false))
-			menu.add(Menu.NONE, 6, 6, R.string.serverFinder);
+			items.add(menu.add(Menu.NONE, 6, 6, R.string.serverFinder));
 		if (pref.getBoolean("feature_asfsls", false))
-			menu.add(Menu.NONE, 7, 7, R.string.addServerFromServerListSite);
-		menu.add(Menu.NONE, 8, 8, R.string.settings);
-		menu.add(Menu.NONE, 9, 9, R.string.exit);
+			items.add(menu.add(Menu.NONE, 7, 7, R.string.addServerFromServerListSite));
+		items.add(menu.add(Menu.NONE, 8, 8, R.string.settings));
+		items.add(menu.add(Menu.NONE, 9, 9, R.string.exit));
 		return true;
 	}
 
