@@ -79,7 +79,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 								Log.d("repo", "skipped");
 								continue;
 							}
-						} catch (Exception e) {
+						} catch (Throwable e) {
 							// TODO 自動生成された catch ブロック
 							e.printStackTrace();
 						}
@@ -123,7 +123,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 	            return o.getSha();
 	        }
 	    }
-		return null;
+		throw new RuntimeException();
 		//return cont.stream().filter(o -> o.getName().equals(filename)).distinct().findFirst().get().getSha();
 	}
 	public static String shash(byte[] b) throws IOException {
