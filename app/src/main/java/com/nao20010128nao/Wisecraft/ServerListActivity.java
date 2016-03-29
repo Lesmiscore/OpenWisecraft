@@ -25,6 +25,7 @@ import java.lang.ref.WeakReference;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import android.support.v4.widget.SwipeRefreshLayout;
 
 public class ServerListActivity extends ListActivity {
 	public static WeakReference<ServerListActivity> instance=new WeakReference(null);
@@ -38,6 +39,7 @@ public class ServerListActivity extends ListActivity {
 	List<Server> list;
 	int clicked=-1;
 	WorkingDialog wd;
+	SwipeRefreshLayout srl;
 	Map<Server,Boolean> pinging=new HashMap<Server,Boolean>(){
 		@Override
 		public Boolean get(Object key) {
@@ -53,6 +55,8 @@ public class ServerListActivity extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.server_list_content);
+		srl=(SwipeRefreshLayout)findViewById(R.id.swipelayout);
 		boolean usesOldInstance=false;
 		if (instance.get() != null) {
 			list = instance.get().list;
