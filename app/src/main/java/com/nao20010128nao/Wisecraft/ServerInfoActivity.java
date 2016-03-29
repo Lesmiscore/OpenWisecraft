@@ -240,15 +240,15 @@ public class ServerInfoActivity extends FragmentActivity {
 	}
 
 	@Override
-	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO: Implement this method
-		switch (featureId) {
+		switch (item.getItemId()) {
 			case 0://Update
 				setResult(Constant.ACTIVITY_RESULT_UPDATE,new Intent().putExtra("offset",fth.getCurrentTab()));
 				finish();//ServerListActivity updates the stat
 				return true;
 		}
-		return super.onMenuItemSelected(featureId, item);
+		return super.onOptionsItemSelected(item);
 	}
 
 	static void setPlayersView(ListView lv) {
