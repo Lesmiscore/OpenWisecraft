@@ -5,8 +5,8 @@
 	<color name="stat_error">#f00</color>
 	<color name="stat_ok">#0f0</color>
 	
-	<color name="upd_1">#574886</color>
-	<color name="upd_2">#51437c</color>
-	<color name="upd_3">#896727</color>
-	<color name="upd_4">#493615</color>
+	<color name="upd_1">#66599e</color>
+	<color name="upd_2">#605193</color>
+	<color name="upd_3">#a0782e</color>
+	<color name="upd_4">#60741c</color>
 </resources>
