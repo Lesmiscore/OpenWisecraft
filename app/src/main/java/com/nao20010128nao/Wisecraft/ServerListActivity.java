@@ -56,12 +56,37 @@ public class ServerListActivity extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.server_list_content);
+		pref = PreferenceManager.getDefaultSharedPreferences(this);
+		switch(pref.getInt("main_style",0)){
+			case 0:
+				setContentView(R.layout.server_list_content_nodrawer);
+				break;
+			case 1:
+				setContentView(R.layout.server_list_content);
+				findViewById(R.id.menu_1 ).setOnClickListener(new View.OnClickListener(){public void onClick(View v){execOption( 0);}});
+				findViewById(R.id.menu_2 ).setOnClickListener(new View.OnClickListener(){public void onClick(View v){execOption( 1);}});
+				findViewById(R.id.menu_3 ).setOnClickListener(new View.OnClickListener(){public void onClick(View v){execOption( 2);}});
+				findViewById(R.id.menu_4 ).setOnClickListener(new View.OnClickListener(){public void onClick(View v){execOption( 3);}});
+				findViewById(R.id.menu_5 ).setOnClickListener(new View.OnClickListener(){public void onClick(View v){execOption( 4);}});
+				findViewById(R.id.menu_6 ).setOnClickListener(new View.OnClickListener(){public void onClick(View v){execOption( 5);}});
+				findViewById(R.id.menu_7 ).setOnClickListener(new View.OnClickListener(){public void onClick(View v){execOption( 6);}});
+				findViewById(R.id.menu_8 ).setOnClickListener(new View.OnClickListener(){public void onClick(View v){execOption( 7);}});
+				findViewById(R.id.menu_9 ).setOnClickListener(new View.OnClickListener(){public void onClick(View v){execOption( 8);}});
+				findViewById(R.id.menu_10).setOnClickListener(new View.OnClickListener(){public void onClick(View v){execOption( 9);}});
+				
+				if (!pref.getBoolean("feature_bott", true))
+					findViewById(R.id.menu_6).setVisibility(View.GONE);
+				if (!pref.getBoolean("feature_serverFinder", false))
+					findViewById(R.id.menu_7).setVisibility(View.GONE);
+				if (!pref.getBoolean("feature_asfsls", false))
+					findViewById(R.id.menu_8).setVisibility(View.GONE);
+				break;
+		}
 		srl=(SwipeRefreshLayout)findViewById(R.id.swipelayout);
 		srl.setColorSchemeResources(R.color.upd_1,R.color.upd_2,R.color.upd_3,R.color.upd_4);
 		srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
 			public void onRefresh(){
-				onOptionsItemSelected(items.get(2));
+				execOption(2);
 			}
 		});
 		boolean usesOldInstance=false;
@@ -77,7 +102,6 @@ public class ServerListActivity extends ListActivity {
 			sl.attachNewActivity(this);
 		}
 		instance = new WeakReference(this);
-		pref = PreferenceManager.getDefaultSharedPreferences(this);
 		if (usesOldInstance) {
 			setListAdapter(sl);
 		} else {
@@ -128,26 +152,32 @@ public class ServerListActivity extends ListActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO: Implement this method
-		items.add(menu.add(Menu.NONE, 0, 0, R.string.add));
-		items.add(menu.add(Menu.NONE, 1, 1, R.string.addFromMCPE));
-		items.add(menu.add(Menu.NONE, 2, 2, R.string.update_all));
-		items.add(menu.add(Menu.NONE, 3, 3, R.string.export));
-		items.add(menu.add(Menu.NONE, 4, 4, R.string.imporT));
-		if (pref.getBoolean("feature_bott", true))
-			items.add(menu.add(Menu.NONE, 5, 5, R.string.bringOnlinesToTop));
-		if (pref.getBoolean("feature_serverFinder", false))
-			items.add(menu.add(Menu.NONE, 6, 6, R.string.serverFinder));
-		if (pref.getBoolean("feature_asfsls", false))
-			items.add(menu.add(Menu.NONE, 7, 7, R.string.addServerFromServerListSite));
-		items.add(menu.add(Menu.NONE, 8, 8, R.string.settings));
-		items.add(menu.add(Menu.NONE, 9, 9, R.string.exit));
+		if(pref.getInt("main_style",0)==0){
+			items.add(menu.add(Menu.NONE, 0, 0, R.string.add));
+			items.add(menu.add(Menu.NONE, 1, 1, R.string.addFromMCPE));
+			items.add(menu.add(Menu.NONE, 2, 2, R.string.update_all));
+			items.add(menu.add(Menu.NONE, 3, 3, R.string.export));
+			items.add(menu.add(Menu.NONE, 4, 4, R.string.imporT));
+			if (pref.getBoolean("feature_bott", true))
+				items.add(menu.add(Menu.NONE, 5, 5, R.string.bringOnlinesToTop));
+			if (pref.getBoolean("feature_serverFinder", false))
+				items.add(menu.add(Menu.NONE, 6, 6, R.string.serverFinder));
+			if (pref.getBoolean("feature_asfsls", false))
+				items.add(menu.add(Menu.NONE, 7, 7, R.string.addServerFromServerListSite));
+			items.add(menu.add(Menu.NONE, 8, 8, R.string.settings));
+			items.add(menu.add(Menu.NONE, 9, 9, R.string.exit));
+		}
 		return true;
 	}
-
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		return execOption(item.getItemId());
+	}
+	
+	public boolean execOption(int item){
 		// TODO: Implement this method
-		switch (item.getItemId()) {
+		switch (item) {
 			case 0:
 				final Server data=new Server();
 				data.ip = "localhost";

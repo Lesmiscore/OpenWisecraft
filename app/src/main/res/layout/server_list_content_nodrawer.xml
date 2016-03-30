@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="match_parent"
+	android:layout_width="match_parent">
+
+	<com.nao20010128nao.Wisecraft.misc.FixedRefreshLayout
+		android:id="@+id/swipelayout"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<ListView
+			android:id="@id/android:list"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"/>
+
+	</com.nao20010128nao.Wisecraft.misc.FixedRefreshLayout>
+
+</FrameLayout>
+

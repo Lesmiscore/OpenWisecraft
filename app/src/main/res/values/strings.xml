@@ -57,6 +57,7 @@
 	<string name="error">Error</string>
 	<string name="selectServers">Select Servers</string>
 	<string name="exit">Exit</string>
+	<string name="serverListStyle">Style of the Server List screen</string>
 	
 	
 	<string name="font">lato-light.ttf</string>
@@ -83,5 +84,10 @@
 		<item>minecraft.jp</item>
 		<item>pe.minecraft.jp</item>
 		<item>pmmp.jp.net</item>
+	</string-array>
+	
+	<string-array name="serverListStyles">
+		<item>Default</item>
+		<item>Use Navigation drawer instead of Menu</item>
 	</string-array>
 </resources>

@@ -46,6 +46,10 @@
 		android:defaultValue="false"
 	/>
 	<pref.StartPref
+		android:title="@string/serverListStyle"
+		android:key="serverListStyle"
+	/>
+	<pref.StartPref
 		android:title="@string/trickSheet"
 		android:key="trickSheet"
 	/>
