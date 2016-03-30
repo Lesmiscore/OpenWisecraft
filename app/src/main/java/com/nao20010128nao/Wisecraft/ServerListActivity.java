@@ -26,6 +26,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.DrawerLayout;
 
 public class ServerListActivity extends ListActivity {
 	public static WeakReference<ServerListActivity> instance=new WeakReference(null);
@@ -41,6 +42,8 @@ public class ServerListActivity extends ListActivity {
 	WorkingDialog wd;
 	SwipeRefreshLayout srl;
 	List<MenuItem> items=new ArrayList<>();
+	DrawerLayout dl;
+	boolean drawerOpened;
 	Map<Server,Boolean> pinging=new HashMap<Server,Boolean>(){
 		@Override
 		public Boolean get(Object key) {
@@ -80,6 +83,22 @@ public class ServerListActivity extends ListActivity {
 					findViewById(R.id.menu_7).setVisibility(View.GONE);
 				if (!pref.getBoolean("feature_asfsls", false))
 					findViewById(R.id.menu_8).setVisibility(View.GONE);
+					
+				dl=(DrawerLayout)findViewById(R.id.drawer);
+				dl.setDrawerListener(new DrawerLayout.DrawerListener(){
+					public void onDrawerSlide(View v,float slide){
+						
+					}
+					public void onDrawerStateChanged(int state){
+						
+					}
+					public void onDrawerClosed(View v){
+						drawerOpened=false;
+					}
+					public void onDrawerOpened(View v){
+						drawerOpened=true;
+					}
+				});
 				break;
 		}
 		srl=(SwipeRefreshLayout)findViewById(R.id.swipelayout);
@@ -129,6 +148,20 @@ public class ServerListActivity extends ListActivity {
 		// TODO: Implement this method
 		super.onDestroy();
 		saveServers();
+	}
+
+	@Override
+	public void onBackPressed() {
+		// TODO: Implement this method
+		if(dl==null){
+			super.onBackPressed();
+		}else{
+			if(drawerOpened){
+				dl.closeDrawers();
+			}else{
+				super.onBackPressed();
+			}
+		}
 	}
 
 	@Override
