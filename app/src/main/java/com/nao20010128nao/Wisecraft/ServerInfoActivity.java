@@ -39,7 +39,6 @@ public class ServerInfoActivity extends FragmentActivity {
 	ListView players,data,plugins;
 	FragmentTabHost fth;
 	TabHost.TabSpec playersF,dataF,pluginsF;
-	SwipeRefreshLayout srl;
 
 	ArrayAdapter<String> adap,adap3;
 	ArrayAdapter<Map.Entry<String,String>> adap2;
@@ -91,17 +90,6 @@ public class ServerInfoActivity extends FragmentActivity {
 		adap3 = new AppBaseArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
 
 		nonUpd = getIntent().getBooleanExtra("nonUpd", false);
-
-		srl=(SwipeRefreshLayout)findViewById(R.id.swipelayout);
-		if(!nonUpd){
-			srl.setEnabled(true);
-			srl.setColorSchemeResources(R.color.upd_1,R.color.upd_2,R.color.upd_3,R.color.upd_4);
-			srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
-					public void onRefresh(){
-						onOptionsItemSelected(updateBtn);
-					}
-				});
-		}
 
 		/*tc=new TipController(this);
 		 if(stat.isPC){
