@@ -119,7 +119,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 	}
 	public static String getHash(List<RepositoryContents> cont, String filename) {
 	    for (RepositoryContents o:cont) {
-	        if (o.getName().equals(filename)) {
+	        if (o.getName().equalsIgnoreCase(filename)) {
 	            return o.getSha();
 	        }
 	    }
