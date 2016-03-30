@@ -52,6 +52,7 @@
 	<string name="error">エラー</string>
 	<string name="selectServers">サーバーを選択してください</string>
 	<string name="exit">終了</string>
+	<string name="serverListStyle">サーバーリストの表示スタイル</string>
 	
 	<string name="font">DroidSans.ttf</string>
 	<string name="fontField">droidSans</string>
@@ -65,5 +66,10 @@
 		<item>@string/addToMcpe</item>
 		<item>@string/launchProxy</item>
 		<item>@string/serverFinder</item>
+	</string-array>
+
+	<string-array name="serverListStyles">
+		<item>デフォルト</item>
+		<item>ナビゲーションドロワーを使用するバージョン</item>
 	</string-array>
 </resources>
