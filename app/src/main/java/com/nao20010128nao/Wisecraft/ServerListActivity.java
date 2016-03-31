@@ -491,6 +491,7 @@ public class ServerListActivity extends ListActivity {
 			sla.clicked = p3;
 			if (sla.pinging.get(s))return;
 			if (s instanceof ServerStatus) {
+				ServerInfoActivity.stat.clear();
 				ServerInfoActivity.stat.add((ServerStatus)s);
 				int ofs=ServerInfoActivity.stat.indexOf(s);
 				Bundle bnd=new Bundle();
