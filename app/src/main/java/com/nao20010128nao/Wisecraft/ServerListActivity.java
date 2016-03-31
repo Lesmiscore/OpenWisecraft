@@ -171,7 +171,8 @@ public class ServerListActivity extends ListActivity {
 			case 0:
 				switch (resultCode) {
 					case Constant.ACTIVITY_RESULT_UPDATE:
-						updater.putInQueue(ServerInfoActivity.stat, new PingHandlerImpl(true, data.getIntExtra("offset",0),true));
+						Bundle obj=data.getBundleExtra("object");
+						updater.putInQueue(ServerInfoActivity.stat.get(obj.getInt("statListOffset")), new PingHandlerImpl(true, data.getIntExtra("offset",0),true,obj));
 						((TextView)sl.getViewQuick(clicked).findViewById(R.id.pingMillis)).setText(R.string.working);
 						((ImageView)sl.getViewQuick(clicked).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
 						wd.showWorkingDialog();
@@ -490,8 +491,11 @@ public class ServerListActivity extends ListActivity {
 			sla.clicked = p3;
 			if (sla.pinging.get(s))return;
 			if (s instanceof ServerStatus) {
-				ServerInfoActivity.stat = (ServerStatus)s;
-				sla.startActivityForResult(new Intent(sla, ServerInfoActivity.class), 0);
+				ServerInfoActivity.stat.add((ServerStatus)s);
+				int ofs=ServerInfoActivity.stat.indexOf(s);
+				Bundle bnd=new Bundle();
+				bnd.putInt("statListOffset",ofs);
+				sla.startActivityForResult(new Intent(sla, ServerInfoActivity.class).putExtra("statListOffset",ofs).putExtra("object",bnd), 0);
 			} else {
 				sla.updater.putInQueue(s, sla.new PingHandlerImpl(true, 0,true));
 				((TextView)getViewQuick(sla.clicked).findViewById(R.id.pingMillis)).setText(R.string.working);
@@ -720,6 +724,7 @@ public class ServerListActivity extends ListActivity {
 	class PingHandlerImpl implements ServerPingProvider.PingHandler {
 		boolean closeDialog;
 		int statTabOfs;
+		Bundle obj;
 		public PingHandlerImpl() {
 			this(false, -1);
 		}
@@ -727,9 +732,13 @@ public class ServerListActivity extends ListActivity {
 			this(cd,os,true);
 		}
 		public PingHandlerImpl(boolean cd, int os,boolean updSrl) {
+			this(cd,os,updSrl,null);
+		}
+		public PingHandlerImpl(boolean cd, int os,boolean updSrl,Bundle receive) {
 			closeDialog = cd;
 			statTabOfs = os;
 			if(updSrl)srl.setRefreshing(true);
+			obj=receive;
 		}
 		public void onPingFailed(final Server s) {
 			runOnUiThread(new Runnable(){
@@ -817,8 +826,13 @@ public class ServerListActivity extends ListActivity {
 						list.set(i_, s);
 						pinging.put(list.get(i_), false);
 						if(statTabOfs!=-1){
-							ServerInfoActivity.stat = s;
-							startActivityForResult(new Intent(ServerListActivity.this, ServerInfoActivity.class).putExtra("offset",statTabOfs), 0);
+							ServerInfoActivity.stat.add(s);
+							int ofs=ServerInfoActivity.stat.indexOf(s);
+							Intent caller=new Intent(ServerListActivity.this, ServerInfoActivity.class).putExtra("offset",statTabOfs).putExtra("statListOffset",ofs);
+							if(obj!=null){
+								caller.putExtra("object",obj);
+							}
+							startActivityForResult(caller, 0);
 						}
 						if (closeDialog) {
 							wd.hideWorkingDialog();

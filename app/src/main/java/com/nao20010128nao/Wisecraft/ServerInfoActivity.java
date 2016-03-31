@@ -27,7 +27,11 @@ import android.support.v4.widget.SwipeRefreshLayout;
 
 public class ServerInfoActivity extends FragmentActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
-	public static ServerListActivity.ServerStatus stat;
+	public static List<ServerListActivity.ServerStatus> stat=new ArrayList<>();
+	
+	ServerListActivity.ServerStatus localStat;
+	Bundle keeping;
+	
 	String ip;
 	int port;
 	boolean nonUpd,hidePlayer,hideData,hidePlugins;
@@ -54,11 +58,19 @@ public class ServerInfoActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		instance = new WeakReference(this);
 
-		if (stat == null) {
+		int statOfs=getIntent().getIntExtra("statListOffset",-1);
+		
+		if(stat.size()>statOfs&statOfs!=-1)localStat=stat.get(statOfs);
+		
+		if (localStat == null) {
 			finish();
 			return;
 		}
 
+		if(getIntent().hasExtra("object")){
+			keeping=getIntent().getBundleExtra("object");
+		}
+		
 		setContentView(R.layout.tabs);
 		fth = (FragmentTabHost)findViewById(android.R.id.tabhost);
 		fth.setup(this, getSupportFragmentManager(), R.id.container);
@@ -76,7 +88,10 @@ public class ServerInfoActivity extends FragmentActivity {
 		if (!hideData) {
 			dataF = fth.newTabSpec("dataList");
 			dataF.setIndicator(getResources().getString(R.string.data));
-			fth.addTab(dataF, DataFragment.class, null);
+			if(localStat.isPC)
+				fth.addTab(dataF, DataFragmentPC.class,null);
+			else
+				fth.addTab(dataF, DataFragmentPE.class,null);
 		}
 
 		if (!hidePlugins) {
@@ -96,12 +111,12 @@ public class ServerInfoActivity extends FragmentActivity {
 		 tc.visible(true).text(R.string.serverInfoPCMessage);
 		 }*/
 
-		ip = stat.ip;
-		port = stat.port;
+		ip = localStat.ip;
+		port = localStat.port;
 		
 		fth.setCurrentTab(getIntent().getIntExtra("offset",0));
 
-		update(stat.response);
+		update(localStat.response);
 	}
 	public synchronized void update(final ServerPingResult resp) {
 		if (resp instanceof FullStat) {
@@ -131,7 +146,7 @@ public class ServerInfoActivity extends FragmentActivity {
 		} else if (resp instanceof Reply) {
 			Reply rep=(Reply)resp;
 			if (rep.description == null) {
-				setTitle(stat.ip + ":" + stat.port);
+				setTitle(localStat.ip + ":" + localStat.port);
 			} else {
 				setTitle(deleteDecorations(rep.description));
 			}
@@ -168,7 +183,7 @@ public class ServerInfoActivity extends FragmentActivity {
 		} else if (resp instanceof Reply19) {
 			Reply19 rep=(Reply19)resp;
 			if (rep.description == null) {
-				setTitle(stat.ip + ":" + stat.port);
+				setTitle(localStat.ip + ":" + localStat.port);
 			} else {
 				setTitle(deleteDecorations(rep.description.text));
 			}
@@ -207,7 +222,7 @@ public class ServerInfoActivity extends FragmentActivity {
 			update(p.getA());
 			update(p.getB());
 		} else if (resp instanceof UnconnectedPing.UnconnectedPingResult) {
-			if (resp == stat.response) {
+			if (resp == localStat.response) {
 				finish();
 				Toast.makeText(this, R.string.ucpInfoError, 0).show();
 				return;
@@ -232,11 +247,22 @@ public class ServerInfoActivity extends FragmentActivity {
 		// TODO: Implement this method
 		switch (item.getItemId()) {
 			case 0://Update
-				setResult(Constant.ACTIVITY_RESULT_UPDATE,new Intent().putExtra("offset",fth.getCurrentTab()));
+				setResultInstead(Constant.ACTIVITY_RESULT_UPDATE,new Intent().putExtra("offset",fth.getCurrentTab()));
 				finish();//ServerListActivity updates the stat
 				return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	public void setResultInstead(int resultCode, Intent data) {
+		// TODO: Implement this method
+		setResult(resultCode, keeping!=null?data.putExtra("object",keeping):data);
+	}
+
+	@Override
+	public void finish() {
+		// TODO: Implement this method
+		super.finish();
 	}
 
 	static void setPlayersView(ListView lv) {
@@ -255,7 +281,7 @@ public class ServerInfoActivity extends FragmentActivity {
 	}
 	void setDataView_(View lv) {
 		data = (ListView)lv.findViewById(R.id.data);
-		if (stat.isPC) {
+		if (localStat.isPC) {
 			serverIcon = (ImageView)lv.findViewById(R.id.serverIcon);
 			serverName = (TextView)lv.findViewById(R.id.serverTitle);
 			serverIcon.setImageDrawable(serverIconObj);
@@ -281,11 +307,20 @@ public class ServerInfoActivity extends FragmentActivity {
 			return lv;
 		}
 	}
-	public static class DataFragment extends BaseFragment {
+	public static class DataFragmentPE extends BaseFragment {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
-			View lv= inflater.inflate(stat.isPC ?R.layout.data_tab_pc: R.layout.data_tab, null, false);
+			View lv= inflater.inflate(R.layout.data_tab, null, false);
+			setDataView(lv);
+			return lv;
+		}
+	}
+	public static class DataFragmentPC extends BaseFragment {
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+			// TODO: Implement this method
+			View lv= inflater.inflate(R.layout.data_tab_pc, null, false);
 			setDataView(lv);
 			return lv;
 		}

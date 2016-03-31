@@ -61,8 +61,9 @@ public class RequestedServerInfoActivity extends ApiBaseActivity {
 			offset=ofs;
 		}
 		public void onPingArrives(ServerListActivity.ServerStatus s) {
-			ServerInfoActivity.stat = s;
-			startActivityForResult(si.putExtra("offset",offset), 0);
+			ServerInfoActivity.stat.add(s);
+			int ofs=ServerInfoActivity.stat.indexOf(s);
+			startActivityForResult(si.putExtra("offset",offset).putExtra("statListOffset",ofs), 0);
 			wd.hideWorkingDialog();
 		}
 		public void onPingFailed(ServerListActivity.Server s) {
