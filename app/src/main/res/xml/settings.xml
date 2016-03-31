@@ -50,7 +50,11 @@
 		android:key="serverListStyle"
 	/>
 	<pref.StartPref
+		android:title="@string/selectFont"
+		android:key="selectFont"
+	/>
+	<!--<pref.StartPref
 		android:title="@string/trickSheet"
 		android:key="trickSheet"
-	/>
+	/>-->
 </PreferenceScreen>
