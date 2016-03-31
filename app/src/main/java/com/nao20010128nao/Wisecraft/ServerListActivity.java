@@ -211,7 +211,7 @@ public class ServerListActivity extends ListActivity {
 	
 	public boolean execOption(int item){
 		// TODO: Implement this method
-		dl.closeDrawers();
+		if(dl!=null)dl.closeDrawers();
 		switch (item) {
 			case 0:
 				final Server data=new Server();
