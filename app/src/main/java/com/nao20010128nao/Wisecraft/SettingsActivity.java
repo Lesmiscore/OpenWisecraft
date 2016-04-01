@@ -9,6 +9,7 @@ import com.nao20010128nao.MCPE.SC.misc.SHablePreferenceActivity;
 import com.nao20010128nao.ToolBox.HandledPreference;
 import java.lang.reflect.Field;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import android.widget.Toast;
 
 public class SettingsActivity extends SHablePreferenceActivity {
 	int which;
@@ -47,14 +48,16 @@ public class SettingsActivity extends SHablePreferenceActivity {
 			});
 		sH("selectFont",new HandledPreference.OnClickListener(){
 				public void onClick(String a,String b,String c){
-					String[] choice=TheApplication.instance.getDisplayFontNames(getFontChoices());
-					final List<String> choiceList=Arrays.asList(choice);
+					String[] choice=getFontChoices();
+					String[] display=TheApplication.instance.getDisplayFontNames(choice);
+					final List<String> choiceList=Arrays.<String>asList(choice);
 					new AlertDialog.Builder(SettingsActivity.this)
-						.setSingleChoiceItems(choice, choiceList.indexOf(TheApplication.instance.getFontFieldName())
+						.setSingleChoiceItems(display, choiceList.indexOf(TheApplication.instance.getFontFieldName())
 						, new DialogInterface.OnClickListener(){
 							public void onClick(DialogInterface di, int w) {
 								di.cancel();
 								TheApplication.instance.setFontFieldName(choiceList.get(w));
+								Toast.makeText(SettingsActivity.this,R.string.saved_fonts,Toast.LENGTH_LONG).show();
 							}
 						})
 						.show();
