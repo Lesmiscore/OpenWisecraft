@@ -59,6 +59,7 @@
 	<string name="exit">Exit</string>
 	<string name="serverListStyle">Style of the Server List screen</string>
 	<string name="saved_fonts">Saved your change. Please tap \"Exit\" button in the top screen to restart this app.</string>
+	<string name="allowAutoUpdateSLSCode">Allow update the library for getting servers. (Subset of McServerList)</string>
 	
 	
 	<string name="font">lato-light.ttf</string>

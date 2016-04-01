@@ -53,8 +53,14 @@
 		android:title="@string/selectFont"
 		android:key="selectFont"
 	/>
-	<!--<pref.StartPref
-		android:title="@string/trickSheet"
-		android:key="trickSheet"
-	/>-->
+	<PreferenceScreen
+		android:title="@string/addServerFromServerListSite"
+		android:dependency="feature_asfsls">
+		<CheckBoxPreference
+			android:title="@string/allowAutoUpdateSLSCode"
+			android:key="allowAutoUpdateSLSCode"
+			android:defaultValue="false"
+		/>
+		
+	</PreferenceScreen>
 </PreferenceScreen>
