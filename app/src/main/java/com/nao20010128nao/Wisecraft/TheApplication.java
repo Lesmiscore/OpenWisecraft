@@ -18,6 +18,7 @@ public class TheApplication extends Application {
 	public static Typeface latoLight,icomoon1,sysDefault,droidSans;
 	public static Field[] fonts=getFontFields();
 	public static Map<Typeface,String> fontFilenames;
+	public static Map<String,Integer> fontDisplayNames;
 	public BinaryPrefImpl stolenInfos;
 	public String uuid;
 	@Override
@@ -35,6 +36,12 @@ public class TheApplication extends Application {
 		fontFilenames.put(latoLight, "lato-light.ttf");
 		fontFilenames.put(icomoon1, "icomoon.ttf");
 		fontFilenames.put(sysDefault, "");
+		
+		fontDisplayNames=new HashMap<>();
+		fontDisplayNames.put("droidSans",R.string.font_droidSans);
+		fontDisplayNames.put("latoLight",R.string.font_latoLight);
+		fontDisplayNames.put("icomoon1",R.string.font_icomoon1);
+		fontDisplayNames.put("sysDefault",R.string.font_sysDefault);
 
 		CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath(getFontFilename()).setFontAttrId(R.attr.fontPath).build());
 		///////
@@ -68,6 +75,21 @@ public class TheApplication extends Application {
 	}
 	public String getFontFilename() {
 		return fontFilenames.get(getLocalizedFont());
+	}
+	public String getDisplayFontName(String field){
+		return getResources().getString(fontDisplayNames.get(field));
+	}
+	public String[] getDisplayFontNames(String[] field){
+		String[] result=new String[field.length];
+		for(int i=0;i<result.length;i++){
+			String disp=getDisplayFontName(field[i]);
+			if(disp==null){
+				result[i]=field[i];
+			}else{
+				result[i]=disp;
+			}
+		}
+		return result;
 	}
 	private String genPassword() {
 		uuid = PreferenceManager.getDefaultSharedPreferences(this).getString("uuid", UUID.randomUUID().toString());

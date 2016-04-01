@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="font_latoLight">Lato Light</string>
+	<string name="font_icomoon1">(Symbols)</string>
+	<string name="font_sysDefault">System Default</string>
+	<string name="font_droidSans">Droid Sans</string>
+</resources>

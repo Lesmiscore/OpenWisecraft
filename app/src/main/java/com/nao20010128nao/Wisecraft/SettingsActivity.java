@@ -1,17 +1,14 @@
 package com.nao20010128nao.Wisecraft;
-import android.preference.PreferenceActivity;
+import android.content.*;
+import java.util.*;
+
+import android.app.AlertDialog;
 import android.os.Bundle;
-import android.content.Context;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import android.preference.PreferenceManager;
 import com.nao20010128nao.MCPE.SC.misc.SHablePreferenceActivity;
 import com.nao20010128nao.ToolBox.HandledPreference;
-import java.io.IOException;
-import android.content.Intent;
-import com.nao20010128nao.Wisecraft.extender.ContextWrappingExtender;
-import android.app.AlertDialog;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.content.DialogInterface;
+import java.lang.reflect.Field;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class SettingsActivity extends SHablePreferenceActivity {
 	int which;
@@ -48,6 +45,29 @@ public class SettingsActivity extends SHablePreferenceActivity {
 						.show();
 				}
 			});
+		sH("selectFont",new HandledPreference.OnClickListener(){
+				public void onClick(String a,String b,String c){
+					String[] choice=TheApplication.instance.getDisplayFontNames(getFontChoices());
+					final List<String> choiceList=Arrays.asList(choice);
+					new AlertDialog.Builder(SettingsActivity.this)
+						.setSingleChoiceItems(choice, choiceList.indexOf(TheApplication.instance.getFontFieldName())
+						, new DialogInterface.OnClickListener(){
+							public void onClick(DialogInterface di, int w) {
+								di.cancel();
+								TheApplication.instance.setFontFieldName(choiceList.get(w));
+							}
+						})
+						.show();
+				}
+				String[] getFontChoices() {
+					List<String> l=new ArrayList();
+					for (Field f:TheApplication.fonts) {
+						l.add(f.getName());
+					}
+					l.remove("icomoon1");
+					return Factories.strArray(l);
+				}
+		});
 	}
 	@Override
 	protected void attachBaseContext(Context newBase) {

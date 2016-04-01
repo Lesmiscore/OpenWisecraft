@@ -53,6 +53,7 @@
 	<string name="selectServers">サーバーを選択してください</string>
 	<string name="exit">終了</string>
 	<string name="serverListStyle">サーバーリストの表示スタイル</string>
+	<string name="selectFont">フォントを選択</string>
 	
 	<string name="font">DroidSans.ttf</string>
 	<string name="fontField">droidSans</string>
