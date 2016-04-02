@@ -7,6 +7,11 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.URL;
+import com.nao20010128nao.Wisecraft.Utils;
+import android.util.Log;
 
 public class SlsUpdater extends Thread
 {
@@ -30,21 +35,58 @@ public class SlsUpdater extends Thread
 		}
 		
 		if(conName.equalsIgnoreCase("offline")){
+			Log.d("slsupd","no connection");
 			writeVersions(cache);
 			return;
 		}
 		if(!appSettings.getBoolean("allowAutoUpdateSLSCode",false)){
+			Log.d("slsupd","disabled");
 			writeVersions(cache);
 			return;
 		}
 		if(!appSettings.getBoolean("aausc_monnet",false)){
 			if("mobile".equalsIgnoreCase(conName)){
+				Log.d("slsupd","mobile update is not allowed");
 				writeVersions(cache);
 				return;
 			}
 		}
 		
 		//delete tmp and download the file
+		File tmp=new File(ctx.getFilesDir(),"mcserverlist/tmp.dex");
+		File dat=new File(ctx.getFilesDir(),"mcserverlist/dat.dex");
+		tmp.delete();
+		FileOutputStream fos=null;
+		InputStream is=null;
+		try{
+			fos=new FileOutputStream(tmp);
+			is=new URL("http://nao20010128nao.github.io/wisecraft/todaiji.dex").openConnection().getInputStream();
+			byte[] buf=new byte[1024];
+			int r=0;
+			while(true){
+				r=is.read(buf);
+				if(r<=0){
+					break;
+				}
+				fos.write(buf,0,r);
+			}
+		}catch(Throwable e){
+			
+		}finally{
+			try {
+				if (fos != null)fos.close();
+				if (is != null)is.close();
+			} catch (IOException e) {}
+			writeVersions(cache);
+		}
+		if(cache.contains("tmp.minwc")){
+			Log.d("slsupd","broken dex file downloaded");
+			return;
+		}
+		if(Utils.getVersionCode(ctx)<cache.getInt("tmp.minwc",0)){
+			Log.d("slsupd","unsupported minimum Wisecraft version:"+cache.getInt("tmp.minwc",0));
+			return;
+		}
 		
 		writeVersions(cache);
 	}
