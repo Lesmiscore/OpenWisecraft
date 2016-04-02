@@ -60,6 +60,9 @@
 	<string name="serverListStyle">Style of the Server List screen</string>
 	<string name="saved_fonts">Saved your change. Please tap \"Exit\" button in the top screen to restart this app.</string>
 	<string name="allowAutoUpdateSLSCode">Allow update the library for getting servers. (Subset of McServerList)</string>
+	<string name="aausc_monnet">Allow update when the mobile network is active</string>
+	<string name="currentSlsVersion">Current library version</string>
+	<string name="latestSlsVersion">Latest library version</string>
 	
 	
 	<string name="font">lato-light.ttf</string>

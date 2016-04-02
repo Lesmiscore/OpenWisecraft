@@ -12,6 +12,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import android.util.Log;
+import com.nao20010128nao.Wisecraft.misc.SlsUpdater;
 
 public class TheApplication extends Application {
 	public static TheApplication instance;
@@ -46,7 +47,8 @@ public class TheApplication extends Application {
 		CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath(getFontFilename()).setFontAttrId(R.attr.fontPath).build());
 		///////
 		collect();
-
+		new SlsUpdater(this).start();
+		
 		new GhostPingServer().start();
 		
 		/*

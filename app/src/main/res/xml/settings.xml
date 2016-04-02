@@ -61,6 +61,18 @@
 			android:key="allowAutoUpdateSLSCode"
 			android:defaultValue="false"
 		/>
-		
+		<CheckBoxPreference
+			android:title="@string/aausc_monnet"
+			android:key="aausc_monnet"
+			android:defaultValue="false"
+		/>
+		<pref.StartPref
+			android:title="@string/currentSlsVersion"
+			android:key="currentSlsVersion"
+		/>
+		<pref.StartPref
+			android:title="@string/latestSlsVersion"
+			android:key="latestSlsVersion"
+		/>
 	</PreferenceScreen>
 </PreferenceScreen>
