@@ -63,6 +63,7 @@
 	<string name="aausc_monnet">Allow update when the mobile network is active</string>
 	<string name="currentSlsVersion">Current library version</string>
 	<string name="latestSlsVersion">Latest library version</string>
+	<string name="unknown">Unknown</string>
 	
 	
 	<string name="font">lato-light.ttf</string>
