@@ -27,76 +27,80 @@ public class SlsUpdater extends Thread
 	@Override
 	public void run() {
 		// TODO: Implement this method
-		ConnectivityManager cm = (ConnectivityManager) ctx.getSystemService(ctx.CONNECTIVITY_SERVICE);
-		SharedPreferences appSettings=PreferenceManager.getDefaultSharedPreferences(ctx);
-		SharedPreferences cache=ctx.getSharedPreferences("sls_vers_cache",0);
-		
-		String conName;
-		if(cm.getActiveNetworkInfo()==null){
-			conName="offline";
-		}else{
-			conName=cm.getActiveNetworkInfo().getTypeName();
-		}
-		
-		if(conName.equalsIgnoreCase("offline")){
-			Log.d("slsupd","no connection");
-			writeVersions(cache);
-			return;
-		}
-		if(!appSettings.getBoolean("allowAutoUpdateSLSCode",false)){
-			Log.d("slsupd","disabled");
-			writeVersions(cache);
-			return;
-		}
-		if(!appSettings.getBoolean("aausc_monnet",false)){
-			if("mobile".equalsIgnoreCase(conName)){
-				Log.d("slsupd","mobile update is not allowed");
+		try {
+			ConnectivityManager cm = (ConnectivityManager) ctx.getSystemService(ctx.CONNECTIVITY_SERVICE);
+			SharedPreferences appSettings=PreferenceManager.getDefaultSharedPreferences(ctx);
+			SharedPreferences cache=ctx.getSharedPreferences("sls_vers_cache", 0);
+
+			String conName;
+			if (cm.getActiveNetworkInfo() == null) {
+				conName = "offline";
+			} else {
+				conName = cm.getActiveNetworkInfo().getTypeName();
+			}
+
+			if (conName.equalsIgnoreCase("offline")) {
+				Log.d("slsupd", "no connection");
 				writeVersions(cache);
 				return;
 			}
-		}
-		
-		//delete tmp and download the file
-		File tmp=new File(ctx.getFilesDir(),"mcserverlist/tmp.dex");
-		File dat=new File(ctx.getFilesDir(),"mcserverlist/dat.dex");
-		tmp.delete();
-		FileOutputStream fos=null;
-		InputStream is=null;
-		try{
-			fos=new FileOutputStream(tmp);
-			is=new URL("http://nao20010128nao.github.io/wisecraft/todaiji.dex").openConnection().getInputStream();
-			byte[] buf=new byte[1024];
-			int r=0;
-			while(true){
-				r=is.read(buf);
-				if(r<=0){
-					break;
-				}
-				fos.write(buf,0,r);
+			if (!appSettings.getBoolean("allowAutoUpdateSLSCode", false)) {
+				Log.d("slsupd", "disabled");
+				writeVersions(cache);
+				return;
 			}
-		}catch(Throwable e){
-			
-		}finally{
+			if (!appSettings.getBoolean("aausc_monnet", false)) {
+				if ("mobile".equalsIgnoreCase(conName)) {
+					Log.d("slsupd", "mobile update is not allowed");
+					writeVersions(cache);
+					return;
+				}
+			}
+
+			//delete tmp and download the file
+			File tmp=new File(ctx.getFilesDir(), "mcserverlist/tmp.dex");
+			File dat=new File(ctx.getFilesDir(), "mcserverlist/dat.dex");
+			tmp.delete();
+			FileOutputStream fos=null;
+			InputStream is=null;
 			try {
-				if (fos != null)fos.close();
-				if (is != null)is.close();
-			} catch (IOException e) {}
+				fos = new FileOutputStream(tmp);
+				is = new URL("http://nao20010128nao.github.io/wisecraft/todaiji.dex").openConnection().getInputStream();
+				byte[] buf=new byte[1024];
+				int r=0;
+				while (true) {
+					r = is.read(buf);
+					if (r <= 0) {
+						break;
+					}
+					fos.write(buf, 0, r);
+				}
+			} catch (Throwable e) {
+
+			} finally {
+				try {
+					if (fos != null)fos.close();
+					if (is != null)is.close();
+				} catch (IOException e) {}
+				writeVersions(cache);
+			}
+			if (!cache.contains("tmp.minwc")) {
+				Log.d("slsupd", "broken dex file downloaded");
+				loadCurrentCode();
+				return;
+			}
+			if (Utils.getVersionCode(ctx) < cache.getInt("tmp.minwc", 0)) {
+				Log.d("slsupd", "unsupported minimum Wisecraft version:" + cache.getInt("tmp.minwc", 0));
+				loadCurrentCode();
+				return;
+			}
+			dat.delete();
+			tmp.renameTo(dat);
 			writeVersions(cache);
-		}
-		if(!cache.contains("tmp.minwc")){
-			Log.d("slsupd","broken dex file downloaded");
 			loadCurrentCode();
-			return;
+		} catch (Throwable e) {
+			DebugWriter.writeToE("sls",e);
 		}
-		if(Utils.getVersionCode(ctx)<cache.getInt("tmp.minwc",0)){
-			Log.d("slsupd","unsupported minimum Wisecraft version:"+cache.getInt("tmp.minwc",0));
-			loadCurrentCode();
-			return;
-		}
-		dat.delete();
-		tmp.renameTo(dat);
-		writeVersions(cache);
-		loadCurrentCode();
 	}
 	public void writeVersions(SharedPreferences cache){
 		if(new File(ctx.getFilesDir(),"mcserverlist/tmp.dex").exists()){
@@ -108,6 +112,7 @@ public class SlsUpdater extends Thread
 				cache.edit().putString("tmp.vcode",vcode).putInt("tmp.minwc",minWcVers).apply();
 			} catch (IOException e) {
 				cache.edit().remove("tmp.vcode").remove("tmp.minwc").apply();
+				DebugWriter.writeToE("sls",e);
 			}
 		}else{
 			cache.edit().remove("tmp.vcode").remove("tmp.minwc").apply();
@@ -121,6 +126,7 @@ public class SlsUpdater extends Thread
 				cache.edit().putString("dat.vcode",vcode).putInt("dat.minwc",minWcVers).apply();
 			} catch (IOException e) {
 				cache.edit().remove("dat.vcode").remove("dat.minwc").apply();
+				DebugWriter.writeToE("sls",e);
 			}
 		}else{
 			cache.edit().remove("dat.vcode").remove("dat.minwc").apply();
@@ -133,18 +139,8 @@ public class SlsUpdater extends Thread
 			Object todai_ji=classTodai_ji.newInstance();
 			ServerListSite[] services=(ServerListSite[])classTodai_ji.getMethod("getServices").invoke(todai_ji);
 			for (ServerListSite sls:services)ServerAddressFetcher.addService(sls);
-		} catch (ClassNotFoundException e) {
-			
-		} catch (NoSuchMethodException e) {
-			
-		} catch (InstantiationException e) {
-			
-		} catch (InvocationTargetException e) {
-			
-		} catch (IllegalAccessException e) {
-			
-		} catch (IllegalArgumentException e) {
-			
+		} catch (Throwable e) {
+			DebugWriter.writeToE("sls",e);
 		}
 	}
 }
