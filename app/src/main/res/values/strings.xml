@@ -64,6 +64,7 @@
 	<string name="currentSlsVersion">Current library version</string>
 	<string name="latestSlsVersion">Latest library version</string>
 	<string name="unknown">Unknown</string>
+	<string name="addThisServer">Add this server</string>
 	
 	
 	<string name="font">lato-light.ttf</string>
@@ -78,6 +79,9 @@
 		<item>@string/addToMcpe</item>
 		<item>@string/launchProxy</item>
 		<item>@string/serverFinder</item>
+	</string-array>
+	<string-array name="serverFinderMenu">
+		<item>@string/addThisServer</item>
 	</string-array>
 	
 	
