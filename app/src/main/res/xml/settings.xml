@@ -69,6 +69,7 @@
 		<pref.StartPref
 			android:title="@string/currentSlsVersion"
 			android:key="currentSlsVersion"
+			android:enabled="false"
 		/>
 	</PreferenceScreen>
 </PreferenceScreen>
