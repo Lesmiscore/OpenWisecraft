@@ -63,8 +63,9 @@ public class SlsUpdater extends Thread
 			tmp.delete();
 			FileOutputStream fos=null;
 			InputStream is=null;
+			Data d;
 			try {
-				fos = new FileOutputStream(tmp);
+				fos = new FileOutputStream(dat);
 				is = new URL("http://nao20010128nao.github.io/wisecraft/todaiji.dex").openConnection().getInputStream();
 				byte[] buf=new byte[1024];
 				int r=0;
@@ -82,65 +83,80 @@ public class SlsUpdater extends Thread
 					if (fos != null)fos.close();
 					if (is != null)is.close();
 				} catch (IOException e) {}
-				writeVersions(cache);
+				d=writeVersions(cache);
 			}
-			if (!cache.contains("tmp.minwc")) {
+			if (!(cache.contains("tmp.minwc")|cache.contains("dat.minwc"))) {
 				Log.d("slsupd", "broken dex file downloaded");
-				loadCurrentCode();
+				loadCurrentCode(d.dxl);
 				return;
 			}
 			if (Utils.getVersionCode(ctx) < cache.getInt("tmp.minwc", 0)) {
 				Log.d("slsupd", "unsupported minimum Wisecraft version:" + cache.getInt("tmp.minwc", 0));
-				loadCurrentCode();
+				loadCurrentCode(d.dxl);
 				return;
 			}
-			dat.delete();
-			tmp.renameTo(dat);
-			writeVersions(cache);
-			loadCurrentCode();
+			loadCurrentCode(writeVersions(cache).dxl);
 		} catch (Throwable e) {
-			DebugWriter.writeToE("sls",e);
+			DebugWriter.writeToE("slsupd",e);
 		}
 	}
-	public void writeVersions(SharedPreferences cache){
-		if(new File(ctx.getFilesDir(),"mcserverlist/tmp.dex").exists()){
+	public Data writeVersions(SharedPreferences cache){
+		/*if(new File(ctx.getFilesDir(),"mcserverlist/tmp.dex").exists()){
 			try {
-				Process proc=new ProcessBuilder().command("dalvikvm", "-classpath", new File(ctx.getFilesDir(), "mcserverlist/tmp.dex").getAbsolutePath(), "com.nao20010128nao.Todai_ji.BeforeCheck").start();
-				BufferedReader br=new BufferedReader(new InputStreamReader(proc.getInputStream()));
-				String vcode=br.readLine();
-				int minWcVers=new Integer(br.readLine());
-				cache.edit().putString("tmp.vcode",vcode).putInt("tmp.minwc",minWcVers).apply();
-			} catch (IOException e) {
+				DexClassLoader dxl=new DexClassLoader(new File(ctx.getFilesDir(), "mcserverlist/tmp.dex").getAbsolutePath(), ctx.getCacheDir().getAbsolutePath(), null, ctx.getClassLoader());
+				Data d=getDataFromProvider(dxl.loadClass("com.nao20010128nao.Todai_ji.Providers"));
+				cache.edit().putString("tmp.vcode",d.vcode).putInt("tmp.minwc",d.minwc).apply();
+			} catch (Throwable e) {
 				cache.edit().remove("tmp.vcode").remove("tmp.minwc").apply();
-				DebugWriter.writeToE("sls",e);
+				DebugWriter.writeToE("slsupd",e);
 			}
-		}else{
+		} else {
 			cache.edit().remove("tmp.vcode").remove("tmp.minwc").apply();
-		}
+		}*/
 		if(new File(ctx.getFilesDir(),"mcserverlist/dat.dex").exists()){
 			try {
-				Process proc=new ProcessBuilder().command("dalvikvm", "-classpath", new File(ctx.getFilesDir(), "mcserverlist/dat.dex").getAbsolutePath(), "com.nao20010128nao.Todai_ji.BeforeCheck").start();
-				BufferedReader br=new BufferedReader(new InputStreamReader(proc.getInputStream()));
-				String vcode=br.readLine();
-				int minWcVers=new Integer(br.readLine());
-				cache.edit().putString("dat.vcode",vcode).putInt("dat.minwc",minWcVers).apply();
-			} catch (IOException e) {
+				DexClassLoader dxl=new DexClassLoader(new File(ctx.getFilesDir(), "mcserverlist/dat.dex").getAbsolutePath(), ctx.getCacheDir().getAbsolutePath(), null, ctx.getClassLoader());
+				Data d=getDataFromProvider(dxl.loadClass("com.nao20010128nao.Todai_ji.Providers"));
+				cache.edit().putString("dat.vcode",d.vcode).putInt("dat.minwc",d.minwc).apply();
+				d.dxl=dxl;
+				return d;
+			} catch (Throwable e) {
 				cache.edit().remove("dat.vcode").remove("dat.minwc").apply();
-				DebugWriter.writeToE("sls",e);
+				DebugWriter.writeToE("slsupd",e);
 			}
 		}else{
 			cache.edit().remove("dat.vcode").remove("dat.minwc").apply();
 		}
+		return null;
 	}
-	public void loadCurrentCode(){
+	public void loadCurrentCode(ClassLoader dxl){
 		try {
-			DexClassLoader dxl=new DexClassLoader(new File(ctx.getFilesDir(), "mcserverlist/dat.dex").getAbsolutePath(), ctx.getCacheDir().getAbsolutePath(), null, ctx.getClassLoader());
+			//DexClassLoader dxl=new DexClassLoader(new File(ctx.getFilesDir(), "mcserverlist/dat.dex").getAbsolutePath(), ctx.getCacheDir().getAbsolutePath(), null, ctx.getClassLoader());
 			Class classTodai_ji=dxl.loadClass("com.nao20010128nao.Todai_ji.Providers");
 			Object todai_ji=classTodai_ji.newInstance();
 			ServerListSite[] services=(ServerListSite[])classTodai_ji.getMethod("getServices").invoke(todai_ji);
 			for (ServerListSite sls:services)ServerAddressFetcher.addService(sls);
 		} catch (Throwable e) {
-			DebugWriter.writeToE("sls",e);
+			DebugWriter.writeToE("slsupd",e);
 		}
+	}
+	public Data getDataFromProvider(Class providerClass){
+		try {
+			Object prov=providerClass.newInstance();
+			Data d=new Data();
+			d.vcode = (String)providerClass.getMethod("getVersion").invoke(prov);
+			d.minwc = (int)providerClass.getMethod("getWisecraftMinVersion").invoke(prov);
+			d.dxl=providerClass.getClassLoader();
+			return d;
+		} catch (Throwable e) {
+			DebugWriter.writeToE("slsupd",e);
+		}
+		return null;
+	}
+	
+	public class Data{
+		public int minwc;
+		public String vcode;
+		public ClassLoader dxl;
 	}
 }
