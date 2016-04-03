@@ -12,6 +12,10 @@ import java.io.InputStream;
 import java.net.URL;
 import com.nao20010128nao.Wisecraft.Utils;
 import android.util.Log;
+import dalvik.system.DexClassLoader;
+import com.nao20010128nao.McServerList.sites.ServerListSite;
+import com.nao20010128nao.McServerList.ServerAddressFetcher;
+import java.lang.reflect.InvocationTargetException;
 
 public class SlsUpdater extends Thread
 {
@@ -81,14 +85,18 @@ public class SlsUpdater extends Thread
 		}
 		if(!cache.contains("tmp.minwc")){
 			Log.d("slsupd","broken dex file downloaded");
+			loadCurrentCode();
 			return;
 		}
 		if(Utils.getVersionCode(ctx)<cache.getInt("tmp.minwc",0)){
 			Log.d("slsupd","unsupported minimum Wisecraft version:"+cache.getInt("tmp.minwc",0));
+			loadCurrentCode();
 			return;
 		}
-		
+		dat.delete();
+		tmp.renameTo(dat);
 		writeVersions(cache);
+		loadCurrentCode();
 	}
 	public void writeVersions(SharedPreferences cache){
 		if(new File(ctx.getFilesDir(),"mcserverlist/tmp.dex").exists()){
@@ -116,6 +124,27 @@ public class SlsUpdater extends Thread
 			}
 		}else{
 			cache.edit().remove("dat.vcode").remove("dat.minwc").apply();
+		}
+	}
+	public void loadCurrentCode(){
+		try {
+			DexClassLoader dxl=new DexClassLoader(new File(ctx.getFilesDir(), "mcserverlist/dat.dex").getAbsolutePath(), ctx.getCacheDir().getAbsolutePath(), null, ctx.getClassLoader());
+			Class classTodai_ji=dxl.loadClass("com.nao20010128nao.Todai_ji.Providers");
+			Object todai_ji=classTodai_ji.newInstance();
+			ServerListSite[] services=(ServerListSite[])classTodai_ji.getMethod("getServices").invoke(todai_ji);
+			for (ServerListSite sls:services)ServerAddressFetcher.addService(sls);
+		} catch (ClassNotFoundException e) {
+			
+		} catch (NoSuchMethodException e) {
+			
+		} catch (InstantiationException e) {
+			
+		} catch (InvocationTargetException e) {
+			
+		} catch (IllegalAccessException e) {
+			
+		} catch (IllegalArgumentException e) {
+			
 		}
 	}
 }
