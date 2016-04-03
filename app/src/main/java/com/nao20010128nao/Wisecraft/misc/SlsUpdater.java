@@ -79,7 +79,7 @@ public class SlsUpdater extends Thread
 			} catch (IOException e) {}
 			writeVersions(cache);
 		}
-		if(cache.contains("tmp.minwc")){
+		if(!cache.contains("tmp.minwc")){
 			Log.d("slsupd","broken dex file downloaded");
 			return;
 		}
