@@ -101,18 +101,6 @@ public class SlsUpdater extends Thread
 		}
 	}
 	public Data writeVersions(SharedPreferences cache){
-		/*if(new File(ctx.getFilesDir(),"mcserverlist/tmp.dex").exists()){
-			try {
-				DexClassLoader dxl=new DexClassLoader(new File(ctx.getFilesDir(), "mcserverlist/tmp.dex").getAbsolutePath(), ctx.getCacheDir().getAbsolutePath(), null, ctx.getClassLoader());
-				Data d=getDataFromProvider(dxl.loadClass("com.nao20010128nao.Todai_ji.Providers"));
-				cache.edit().putString("tmp.vcode",d.vcode).putInt("tmp.minwc",d.minwc).apply();
-			} catch (Throwable e) {
-				cache.edit().remove("tmp.vcode").remove("tmp.minwc").apply();
-				DebugWriter.writeToE("slsupd",e);
-			}
-		} else {
-			cache.edit().remove("tmp.vcode").remove("tmp.minwc").apply();
-		}*/
 		if(new File(ctx.getFilesDir(),"mcserverlist/dat.dex").exists()){
 			try {
 				DexClassLoader dxl=new DexClassLoader(new File(ctx.getFilesDir(), "mcserverlist/dat.dex").getAbsolutePath(), ctx.getCacheDir().getAbsolutePath(), null, ctx.getClassLoader());

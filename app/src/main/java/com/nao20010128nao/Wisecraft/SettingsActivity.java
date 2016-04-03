@@ -72,10 +72,7 @@ public class SettingsActivity extends SHablePreferenceActivity {
 				}
 		});
 		SharedPreferences slsVersCache=getSharedPreferences("sls_vers_cache", 0);
-		if(slsVersCache.contains("dat.vcode")){
-			//findPreference("latestSlsVersion").setSummary(slsVersCache.getString("tmp.vcode",getResources().getString(R.string.unknown)));
-			findPreference("currentSlsVersion").setSummary(slsVersCache.getString("dat.vcode",getResources().getString(R.string.unknown)));
-		}
+		findPreference("currentSlsVersion").setSummary(slsVersCache.getString("dat.vcode",getResources().getString(R.string.unknown)));
 	}
 	@Override
 	protected void attachBaseContext(Context newBase) {
