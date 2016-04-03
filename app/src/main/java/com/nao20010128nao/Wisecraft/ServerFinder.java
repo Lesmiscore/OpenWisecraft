@@ -186,7 +186,18 @@ public class ServerFinder extends ListActivity {
 			// TODO: Implement this method
 			final Server s=getItem(p3);
 			if (s instanceof ServerStatus) {
-
+				new AlertDialog.Builder(ServerFinder.this)
+					.setTitle(s.toString())
+					.setItems(R.array.serverFinderMenu,new DialogInterface.OnClickListener(){
+						public void onClick(DialogInterface di,int w){
+							switch(w){
+								case 0:
+									ServerListActivity.instance.get().sl.add(s);
+									break;
+							}
+						}
+					})
+					.show();
 			}
 		}
 
