@@ -28,6 +28,7 @@ public class ServerFinder extends ListActivity {
 	String ip;
 	boolean isPC;
 	View dialog,dialog2;
+	ServerPingProvider spp;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +76,7 @@ public class ServerFinder extends ListActivity {
 		new AsyncTask<Void,ServerStatus,Void>(){
 			public Void doInBackground(Void... l) {
 				final int max=endPort - startPort;
-
-				ServerPingProvider spp;
+				
 				int threads=new Integer(PreferenceManager.getDefaultSharedPreferences(ServerFinder.this).getString("parallels", "6"));
 				if (isPC) {
 					spp = new PCMultiServerPingProvider(threads);
@@ -122,6 +122,17 @@ public class ServerFinder extends ListActivity {
 	protected void attachBaseContext(Context newBase) {
 		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
 	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO: Implement this method
+		super.onDestroy();
+		if(spp!=null){
+			spp.clearQueue();
+			spp.stop();
+		}
+	}
+	
 	class ServerList extends AppBaseArrayAdapter<ServerStatus> implements AdapterView.OnItemClickListener {
 		List<View> cached=new ArrayList<>();
 		public ServerList() {
