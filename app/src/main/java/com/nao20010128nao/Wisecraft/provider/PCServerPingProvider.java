@@ -28,14 +28,25 @@ public class PCServerPingProvider implements ServerPingProvider
 		// TODO: Implement this method
 		return queue.size();
 	}
+	@Override
+	public void stop() {
+		// TODO: Implement this method
+		pingThread.interrupt();
+	}
 
+	@Override
+	public void clearQueue() {
+		// TODO: Implement this method
+		queue.clear();
+	}
+	
 
 	private class PingThread extends Thread implements Runnable {
 		@Override
 		public void run() {
 			// TODO: Implement this method
 			Map.Entry<ServerListActivity.Server,PingHandler> now=null;
-			while (!queue.isEmpty()) {
+			while (!(queue.isEmpty()|isInterrupted())) {
 				Log.d(getClass().getName().split("\\.")[1], "Starting ping");
 				now = queue.poll();
 				ServerListActivity.ServerStatus stat=new ServerListActivity.ServerStatus();

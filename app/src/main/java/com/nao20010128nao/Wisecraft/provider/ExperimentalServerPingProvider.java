@@ -32,4 +32,18 @@ public class ExperimentalServerPingProvider implements ServerPingProvider {
 		}
 		return i;
 	}
+	@Override
+	public void stop() {
+		// TODO: Implement this method
+		for (ServerPingProvider spp:objects) {
+			spp.stop();
+		}
+	}
+	@Override
+	public void clearQueue() {
+		// TODO: Implement this method
+		for (ServerPingProvider spp:objects) {
+			spp.clearQueue();
+		}
+	}
 }
