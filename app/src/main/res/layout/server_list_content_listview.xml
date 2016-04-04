@@ -24,7 +24,7 @@
 	</FrameLayout>
 
 	<include
-		layout="@layout/server_list_side_drawer"/>
+		layout="@layout/server_list_side_drawer_listview"/>
 
 </com.nao20010128nao.Wisecraft.misc.FixedDrawerLayout>
 

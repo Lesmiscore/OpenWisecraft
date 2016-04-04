@@ -71,6 +71,7 @@
 
 	<string-array name="serverListStyles">
 		<item>デフォルト</item>
-		<item>ナビゲーションドロワーを使用するバージョン</item>
+		<item>メニューにボタンを用いたナビゲーションドロワーを使用するバージョン</item>
+		<item>メニューにリストを用いたナビゲーションドロワーを使用するバージョン</item>
 	</string-array>
 </resources>

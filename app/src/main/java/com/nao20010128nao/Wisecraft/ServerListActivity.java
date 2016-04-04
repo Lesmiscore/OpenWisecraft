@@ -124,7 +124,7 @@ public class ServerListActivity extends ListActivity {
 				if(!pref.getBoolean("feature_asfsls", false)){
 					editing.remove(grandMenu.get(7));
 				}
-				ArrayAdapter<String> la=new AppBaseArrayAdapter<String>(this,0);
+				ArrayAdapter<String> la=new AppBaseArrayAdapter<String>(this,R.layout.listview_item,android.R.id.title);
 				la.addAll(editing);//AppBaseArrayAdapter implements it
 				lv.setAdapter(la);
 				
