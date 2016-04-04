@@ -94,7 +94,7 @@ public class ServerInfoActivity extends FragmentActivity {
 				fth.addTab(dataF, DataFragmentPE.class,null);
 		}
 
-		if (!hidePlugins) {
+		if (!(hidePlugins|localStat.isPC)) {
 			pluginsF = fth.newTabSpec("pluginsList");
 			pluginsF.setIndicator(getResources().getString(R.string.plugins));
 			fth.addTab(pluginsF, PluginsFragment.class, null);
