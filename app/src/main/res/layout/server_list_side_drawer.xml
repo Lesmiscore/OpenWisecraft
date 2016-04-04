@@ -13,77 +13,8 @@
 		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:orientation="vertical">
-
-			<Button
-				style="?android:attr/buttonBarButtonStyle"
-				android:layout_height="wrap_content"
-				android:layout_width="match_parent"
-				android:text="@string/add"
-				android:id="@+id/menu_1"/>
-
-			<Button
-				style="?android:attr/buttonBarButtonStyle"
-				android:layout_height="wrap_content"
-				android:layout_width="match_parent"
-				android:text="@string/addFromMCPE"
-				android:id="@+id/menu_2"/>
-
-			<Button
-				style="?android:attr/buttonBarButtonStyle"
-				android:layout_height="wrap_content"
-				android:layout_width="match_parent"
-				android:text="@string/update.all"
-				android:id="@+id/menu_3"/>
-
-			<Button
-				style="?android:attr/buttonBarButtonStyle"
-				android:layout_height="wrap_content"
-				android:layout_width="match_parent"
-				android:text="@string/export"
-				android:id="@+id/menu_4"/>
-
-			<Button
-				style="?android:attr/buttonBarButtonStyle"
-				android:layout_height="wrap_content"
-				android:layout_width="match_parent"
-				android:text="@string/imporT"
-				android:id="@+id/menu_5"/>
-
-			<Button
-				style="?android:attr/buttonBarButtonStyle"
-				android:layout_height="wrap_content"
-				android:layout_width="match_parent"
-				android:text="@string/bringOnlinesToTop"
-				android:id="@+id/menu_6"/>
-
-			<Button
-				style="?android:attr/buttonBarButtonStyle"
-				android:layout_height="wrap_content"
-				android:layout_width="match_parent"
-				android:text="@string/serverFinder"
-				android:id="@+id/menu_7"/>
-
-			<Button
-				style="?android:attr/buttonBarButtonStyle"
-				android:layout_height="wrap_content"
-				android:layout_width="match_parent"
-				android:text="@string/addServerFromServerListSite"
-				android:id="@+id/menu_8"/>
-
-			<Button
-				style="?android:attr/buttonBarButtonStyle"
-				android:layout_height="wrap_content"
-				android:layout_width="match_parent"
-				android:text="@string/settings"
-				android:id="@+id/menu_9"/>
-
-			<Button
-				style="?android:attr/buttonBarButtonStyle"
-				android:layout_height="wrap_content"
-				android:layout_width="match_parent"
-				android:text="@string/exit"
-				android:id="@+id/menu_10"/>
+			android:orientation="vertical"
+			android:id="@+id/app_menu">
 
 		</LinearLayout>
 

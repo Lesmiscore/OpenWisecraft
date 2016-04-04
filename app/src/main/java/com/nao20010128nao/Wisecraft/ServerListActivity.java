@@ -32,7 +32,8 @@ public class ServerListActivity extends ListActivity {
 	public static WeakReference<ServerListActivity> instance=new WeakReference(null);
 
 	static File mcpeServerList=new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt");
-
+	
+	final List<String> grandMenu=new ArrayList<>();
 	ServerPingProvider spp,updater;
 	Gson gson=new Gson();
 	SharedPreferences pref;
@@ -60,30 +61,40 @@ public class ServerListActivity extends ListActivity {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
+		grandMenu.add(getResources().getString(R.string.add));//0
+		grandMenu.add(getResources().getString(R.string.addFromMCPE));//1
+		grandMenu.add(getResources().getString(R.string.update_all));//2
+		grandMenu.add(getResources().getString(R.string.export));//3
+		grandMenu.add(getResources().getString(R.string.imporT));//4
+		grandMenu.add(getResources().getString(R.string.bringOnlinesToTop));//5
+		grandMenu.add(getResources().getString(R.string.serverFinder));//6
+		grandMenu.add(getResources().getString(R.string.addServerFromServerListSite));//7
+		grandMenu.add(getResources().getString(R.string.settings));//8
+		grandMenu.add(getResources().getString(R.string.exit));//9
+		
 		switch(pref.getInt("main_style",0)){
 			case 0:
 				setContentView(R.layout.server_list_content_nodrawer);
 				break;
 			case 1:
 				setContentView(R.layout.server_list_content);
-				findViewById(R.id.menu_1 ).setOnClickListener(new View.OnClickListener(){public void onClick(View v){execOption( 0);}});
-				findViewById(R.id.menu_2 ).setOnClickListener(new View.OnClickListener(){public void onClick(View v){execOption( 1);}});
-				findViewById(R.id.menu_3 ).setOnClickListener(new View.OnClickListener(){public void onClick(View v){execOption( 2);}});
-				findViewById(R.id.menu_4 ).setOnClickListener(new View.OnClickListener(){public void onClick(View v){execOption( 3);}});
-				findViewById(R.id.menu_5 ).setOnClickListener(new View.OnClickListener(){public void onClick(View v){execOption( 4);}});
-				findViewById(R.id.menu_6 ).setOnClickListener(new View.OnClickListener(){public void onClick(View v){execOption( 5);}});
-				findViewById(R.id.menu_7 ).setOnClickListener(new View.OnClickListener(){public void onClick(View v){execOption( 6);}});
-				findViewById(R.id.menu_8 ).setOnClickListener(new View.OnClickListener(){public void onClick(View v){execOption( 7);}});
-				findViewById(R.id.menu_9 ).setOnClickListener(new View.OnClickListener(){public void onClick(View v){execOption( 8);}});
-				findViewById(R.id.menu_10).setOnClickListener(new View.OnClickListener(){public void onClick(View v){execOption( 9);}});
-				
-				if (!pref.getBoolean("feature_bott", true))
-					findViewById(R.id.menu_6).setVisibility(View.GONE);
-				if (!pref.getBoolean("feature_serverFinder", false))
-					findViewById(R.id.menu_7).setVisibility(View.GONE);
-				if (!pref.getBoolean("feature_asfsls", false))
-					findViewById(R.id.menu_8).setVisibility(View.GONE);
-					
+				LinearLayout ll=(LinearLayout)findViewById(R.id.app_menu);
+				for(String s:grandMenu){
+					if(grandMenu.indexOf(s)==5&!pref.getBoolean("feature_bott", true)){
+						continue;
+					}
+					if(grandMenu.indexOf(s)==6&!pref.getBoolean("feature_serverFinder", false)){
+						continue;
+					}
+					if(grandMenu.indexOf(s)==7&!pref.getBoolean("feature_asfsls", false)){
+						continue;
+					}
+					Button btn=(Button)getLayoutInflater().inflate(R.layout.server_list_bar_button,null).findViewById(R.id.menu_btn);
+					//((ViewGroup)btn.getParent()).removeView(btn);
+					btn.setText(s);
+					btn.setOnClickListener(new MenuExecClickListener(grandMenu.indexOf(s)));
+					ll.addView(btn);
+				}
 				dl=(DrawerLayout)findViewById(R.id.drawer);
 				dl.setDrawerListener(new DrawerLayout.DrawerListener(){
 					public void onDrawerSlide(View v,float slide){
@@ -187,19 +198,18 @@ public class ServerListActivity extends ListActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO: Implement this method
 		if(pref.getInt("main_style",0)==0){
-			items.add(menu.add(Menu.NONE, 0, 0, R.string.add));
-			items.add(menu.add(Menu.NONE, 1, 1, R.string.addFromMCPE));
-			items.add(menu.add(Menu.NONE, 2, 2, R.string.update_all));
-			items.add(menu.add(Menu.NONE, 3, 3, R.string.export));
-			items.add(menu.add(Menu.NONE, 4, 4, R.string.imporT));
-			if (pref.getBoolean("feature_bott", true))
-				items.add(menu.add(Menu.NONE, 5, 5, R.string.bringOnlinesToTop));
-			if (pref.getBoolean("feature_serverFinder", false))
-				items.add(menu.add(Menu.NONE, 6, 6, R.string.serverFinder));
-			if (pref.getBoolean("feature_asfsls", false))
-				items.add(menu.add(Menu.NONE, 7, 7, R.string.addServerFromServerListSite));
-			items.add(menu.add(Menu.NONE, 8, 8, R.string.settings));
-			items.add(menu.add(Menu.NONE, 9, 9, R.string.exit));
+			for(String s:grandMenu){
+				if(grandMenu.indexOf(s)==5&!pref.getBoolean("feature_bott", true)){
+					continue;
+				}
+				if(grandMenu.indexOf(s)==6&!pref.getBoolean("feature_serverFinder", false)){
+					continue;
+				}
+				if(grandMenu.indexOf(s)==7&!pref.getBoolean("feature_asfsls", false)){
+					continue;
+				}
+				menu.add(Menu.NONE,grandMenu.indexOf(s),grandMenu.indexOf(s),s);
+			}
 		}
 		return true;
 	}
@@ -844,6 +854,17 @@ public class ServerListActivity extends ListActivity {
 						}
 					}
 				});
+		}
+	}
+	class MenuExecClickListener implements View.OnClickListener {
+		int o;
+		public MenuExecClickListener(int d){
+			o=d;
+		}
+		@Override
+		public void onClick(View p1) {
+			// TODO: Implement this method
+			execOption(o);
 		}
 	}
 }
