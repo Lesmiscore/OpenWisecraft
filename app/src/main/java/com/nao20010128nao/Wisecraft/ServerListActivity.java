@@ -111,6 +111,39 @@ public class ServerListActivity extends ListActivity {
 					}
 				});
 				break;
+			case 2:
+				setContentView(R.layout.server_list_content_listview);
+				ListView lv=(ListView)findViewById(R.id.app_menu);
+				List<String> editing=new ArrayList<>(grandMenu);
+				if(!pref.getBoolean("feature_bott", true)){
+					editing.remove(grandMenu.get(5));
+				}
+				if(!pref.getBoolean("feature_serverFinder", false)){
+					editing.remove(grandMenu.get(6));
+				}
+				if(!pref.getBoolean("feature_asfsls", false)){
+					editing.remove(grandMenu.get(7));
+				}
+				ArrayAdapter<String> la=new AppBaseArrayAdapter<String>(this,0);
+				la.addAll(editing);//AppBaseArrayAdapter implements it
+				lv.setAdapter(la);
+				
+				dl=(DrawerLayout)findViewById(R.id.drawer);
+				dl.setDrawerListener(new DrawerLayout.DrawerListener(){
+						public void onDrawerSlide(View v,float slide){
+
+						}
+						public void onDrawerStateChanged(int state){
+
+						}
+						public void onDrawerClosed(View v){
+							drawerOpened=false;
+						}
+						public void onDrawerOpened(View v){
+							drawerOpened=true;
+						}
+					});
+				break;
 		}
 		srl=(SwipeRefreshLayout)findViewById(R.id.swipelayout);
 		srl.setColorSchemeResources(R.color.upd_1,R.color.upd_2,R.color.upd_3,R.color.upd_4);
