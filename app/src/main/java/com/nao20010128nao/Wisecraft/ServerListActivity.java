@@ -36,6 +36,7 @@ import android.content.res.AssetManager;
 import android.util.DisplayMetrics;
 import android.content.res.Configuration;
 import android.content.res.XmlResourceParser;
+import android.content.res.Resources.NotFoundException;
 
 class ServerListActivityImpl extends ListActivity {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
@@ -757,25 +758,29 @@ class ServerListActivityImpl extends ListActivity {
 		public void onPingFailed(final Server s) {
 			runOnUiThread(new Runnable(){
 					public void run() {
-						int i_=list.indexOf(s);
-						if (i_ == -1) {
-							return;
-						}
-						((ImageView)sl.getViewQuick(i_).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_error)));
-						((TextView)sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(s.ip + ":" + s.port);
-						((TextView)sl.getViewQuick(i_).findViewById(R.id.pingMillis)).setText(R.string.notResponding);
-						Server sn=new Server();
-						sn.ip = s.ip;
-						sn.port = s.port;
-						sn.isPC = s.isPC;
-						list.set(i_, sn);
-						pinging.put(list.get(i_), false);
-						if (closeDialog) {
-							wd.hideWorkingDialog();
-						}
-						
-						if(!pinging.containsValue(true)){
-							srl.setRefreshing(false);
+						try {
+							int i_=list.indexOf(s);
+							if (i_ == -1) {
+								return;
+							}
+							((ImageView)sl.getViewQuick(i_).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_error)));
+							((TextView)sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(s.ip + ":" + s.port);
+							((TextView)sl.getViewQuick(i_).findViewById(R.id.pingMillis)).setText(R.string.notResponding);
+							Server sn=new Server();
+							sn.ip = s.ip;
+							sn.port = s.port;
+							sn.isPC = s.isPC;
+							list.set(i_, sn);
+							pinging.put(list.get(i_), false);
+							if (closeDialog) {
+								wd.hideWorkingDialog();
+							}
+
+							if (!pinging.containsValue(true)) {
+								srl.setRefreshing(false);
+							}
+						} catch (Throwable e) {
+							
 						}
 					}
 				});
@@ -783,42 +788,15 @@ class ServerListActivityImpl extends ListActivity {
 		public void onPingArrives(final ServerStatus s) {
 			runOnUiThread(new Runnable(){
 					public void run() {
-						int i_=list.indexOf(s);
-						if (i_ == -1) {
-							return;
-						}
-						((ImageView)sl.getViewQuick(i_).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
-						final String title;
-						if (s.response instanceof FullStat) {//PE
-							FullStat fs=(FullStat)s.response;
-							Map<String,String> m=fs.getData();
-							if (m.containsKey("hostname")) {
-								title = deleteDecorations(m.get("hostname"));
-							} else if (m.containsKey("motd")) {
-								title = deleteDecorations(m.get("motd"));
-							} else {
-								title = s.ip + ":" + s.port;
+						try {
+							int i_=list.indexOf(s);
+							if (i_ == -1) {
+								return;
 							}
-						} else if (s.response instanceof Reply19) {//PC 1.9~
-							Reply19 rep=(Reply19)s.response;
-							if (rep.description == null) {
-								title = s.ip + ":" + s.port;
-							} else {
-								title = deleteDecorations(rep.description.text);
-							}
-						} else if (s.response instanceof Reply) {//PC
-							Reply rep=(Reply)s.response;
-							if (rep.description == null) {
-								title = s.ip + ":" + s.port;
-							} else {
-								title = deleteDecorations(rep.description);
-							}
-						} else if (s.response instanceof SprPair) {//PE?
-							SprPair sp=((SprPair)s.response);
-							if (sp.getB() instanceof UnconnectedPing.UnconnectedPingResult) {
-								title = ((UnconnectedPing.UnconnectedPingResult)sp.getB()).getServerName();
-							} else if (sp.getA() instanceof FullStat) {
-								FullStat fs=(FullStat)sp.getA();
+							((ImageView)sl.getViewQuick(i_).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
+							final String title;
+							if (s.response instanceof FullStat) {//PE
+								FullStat fs=(FullStat)s.response;
 								Map<String,String> m=fs.getData();
 								if (m.containsKey("hostname")) {
 									title = deleteDecorations(m.get("hostname"));
@@ -827,33 +805,64 @@ class ServerListActivityImpl extends ListActivity {
 								} else {
 									title = s.ip + ":" + s.port;
 								}
-							} else {
+							} else if (s.response instanceof Reply19) {//PC 1.9~
+								Reply19 rep=(Reply19)s.response;
+								if (rep.description == null) {
+									title = s.ip + ":" + s.port;
+								} else {
+									title = deleteDecorations(rep.description.text);
+								}
+							} else if (s.response instanceof Reply) {//PC
+								Reply rep=(Reply)s.response;
+								if (rep.description == null) {
+									title = s.ip + ":" + s.port;
+								} else {
+									title = deleteDecorations(rep.description);
+								}
+							} else if (s.response instanceof SprPair) {//PE?
+								SprPair sp=((SprPair)s.response);
+								if (sp.getB() instanceof UnconnectedPing.UnconnectedPingResult) {
+									title = ((UnconnectedPing.UnconnectedPingResult)sp.getB()).getServerName();
+								} else if (sp.getA() instanceof FullStat) {
+									FullStat fs=(FullStat)sp.getA();
+									Map<String,String> m=fs.getData();
+									if (m.containsKey("hostname")) {
+										title = deleteDecorations(m.get("hostname"));
+									} else if (m.containsKey("motd")) {
+										title = deleteDecorations(m.get("motd"));
+									} else {
+										title = s.ip + ":" + s.port;
+									}
+								} else {
+									title = s.ip + ":" + s.port;
+								}
+							} else if (s.response instanceof UnconnectedPing.UnconnectedPingResult) {
+								title = ((UnconnectedPing.UnconnectedPingResult)s.response).getServerName();
+							} else {//Unreachable
 								title = s.ip + ":" + s.port;
 							}
-						} else if (s.response instanceof UnconnectedPing.UnconnectedPingResult) {
-							title = ((UnconnectedPing.UnconnectedPingResult)s.response).getServerName();
-						} else {//Unreachable
-							title = s.ip + ":" + s.port;
-						}
-						((TextView)sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(deleteDecorations(title));
-						((TextView)sl.getViewQuick(i_).findViewById(R.id.pingMillis)).setText(s.ping + " ms");
-						list.set(i_, s);
-						pinging.put(list.get(i_), false);
-						if(statTabOfs!=-1){
-							ServerInfoActivity.stat.add(s);
-							int ofs=ServerInfoActivity.stat.indexOf(s);
-							Intent caller=new Intent(ServerListActivityImpl.this, ServerInfoActivity.class).putExtra("offset",statTabOfs).putExtra("statListOffset",ofs);
-							if(obj!=null){
-								caller.putExtra("object",obj);
+							((TextView)sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(deleteDecorations(title));
+							((TextView)sl.getViewQuick(i_).findViewById(R.id.pingMillis)).setText(s.ping + " ms");
+							list.set(i_, s);
+							pinging.put(list.get(i_), false);
+							if (statTabOfs != -1) {
+								ServerInfoActivity.stat.add(s);
+								int ofs=ServerInfoActivity.stat.indexOf(s);
+								Intent caller=new Intent(ServerListActivityImpl.this, ServerInfoActivity.class).putExtra("offset", statTabOfs).putExtra("statListOffset", ofs);
+								if (obj != null) {
+									caller.putExtra("object", obj);
+								}
+								startActivityForResult(caller, 0);
 							}
-							startActivityForResult(caller, 0);
-						}
-						if (closeDialog) {
-							wd.hideWorkingDialog();
-						}
-						
-						if(!pinging.containsValue(true)){
-							srl.setRefreshing(false);
+							if (closeDialog) {
+								wd.hideWorkingDialog();
+							}
+
+							if (!pinging.containsValue(true)) {
+								srl.setRefreshing(false);
+							}
+						} catch (Throwable e) {
+							onPingFailed(s);
 						}
 					}
 				});
