@@ -333,36 +333,44 @@ class ServerListActivityImpl extends ListActivity {
 				}.start();
 				break;
 			case 2:
-				for (int i=0;i < list.size();i++) {
-					if (pinging.get(list.get(i))) {
-						continue;
-					}
-					final int i_=i;
-					if (!srl.isRefreshing()) {
-						srl.setRefreshing(true);
-					}
-					spp.putInQueue(list.get(i), new PingHandlerImpl(false, -1, false){
-							public void onPingFailed(final Server s) {
-								super.onPingFailed(s);
-								runOnUiThread(new Runnable(){
-										public void run() {			
-											wd.hideWorkingDialog();
-										}
-									});
+				new Thread(){
+					public void run(){
+						for (int i=0;i < list.size();i++) {
+							if (pinging.get(list.get(i))) {
+								continue;
 							}
-							public void onPingArrives(final ServerStatus s) {
-								super.onPingArrives(s);
-								runOnUiThread(new Runnable(){
-										public void run() {
-											wd.hideWorkingDialog();
-										}
-									});
+							final int i_=i;
+							if (!srl.isRefreshing()) {
+								srl.setRefreshing(true);
 							}
-						});
-					((TextView)sl.getViewQuick(i).findViewById(R.id.pingMillis)).setText(R.string.working);
-					((ImageView)sl.getViewQuick(i_).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
-					pinging.put(list.get(i), true);
-				}
+							spp.putInQueue(list.get(i), new PingHandlerImpl(false, -1, false){
+									public void onPingFailed(final Server s) {
+										super.onPingFailed(s);
+										runOnUiThread(new Runnable(){
+												public void run() {			
+													wd.hideWorkingDialog();
+												}
+											});
+									}
+									public void onPingArrives(final ServerStatus s) {
+										super.onPingArrives(s);
+										runOnUiThread(new Runnable(){
+												public void run() {
+													wd.hideWorkingDialog();
+												}
+											});
+									}
+								});
+							pinging.put(list.get(i), true);
+							runOnUiThread(new Runnable(){
+								public void run(){
+									((TextView)sl.getViewQuick(i_).findViewById(R.id.pingMillis)).setText(R.string.working);
+									((ImageView)sl.getViewQuick(i_).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
+								}
+							});
+						}
+					}
+				}.start();
 				break;
 			case 3:
 				new AsyncTask<Void,Void,File>(){
