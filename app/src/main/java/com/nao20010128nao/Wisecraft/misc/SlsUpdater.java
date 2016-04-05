@@ -16,6 +16,10 @@ import dalvik.system.DexClassLoader;
 import com.nao20010128nao.McServerList.sites.ServerListSite;
 import com.nao20010128nao.McServerList.ServerAddressFetcher;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
+import com.nao20010128nao.Wisecraft.ServerGetActivity;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SlsUpdater extends Thread
 {
@@ -124,6 +128,19 @@ public class SlsUpdater extends Thread
 			Object todai_ji=classTodai_ji.newInstance();
 			ServerListSite[] services=(ServerListSite[])classTodai_ji.getMethod("getServices").invoke(todai_ji);
 			for (ServerListSite sls:services)ServerAddressFetcher.addService(sls);
+			Object servDomains;
+			try {
+				servDomains=classTodai_ji.getMethod("getAddtionalDomains").invoke(todai_ji);
+			} catch (Throwable e) {
+				servDomains=null;
+			}
+			if(servDomains==null){
+				//do nothing
+			}else if(servDomains instanceof List<String>){
+				ServerGetActivity.addForServerList=new ArrayList<String>((List<String>)servDomains);
+			}else if(servDomains instanceof String[]){
+				ServerGetActivity.addForServerList=new ArrayList<>(Arrays.<String>asList((String[])servDomains));
+			}
 		} catch (Throwable e) {
 			DebugWriter.writeToE("slsupd",e);
 		}
