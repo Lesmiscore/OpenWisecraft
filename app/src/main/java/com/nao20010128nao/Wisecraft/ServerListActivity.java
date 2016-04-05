@@ -865,14 +865,36 @@ class ServerListActivityImpl extends ListActivity {
 	}
 }
 public class ServerListActivity extends ActivityGroup {
-
+	boolean nonLoop=false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		setContentView(getLocalActivityManager().startActivity("main",new Intent(this,Content.class)).getDecorView());
 	}
-	public static class Content extends ServerListActivityImpl{
-		
+	public static class Content extends ServerListActivityImpl{}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// TODO: Implement this method
+		if(nonLoop){
+			return true;
+		}
+		nonLoop=true;
+		boolean val= getLocalActivityManager().getActivity("main").onCreateOptionsMenu(menu);
+		nonLoop=false;
+		return val;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO: Implement this method
+		if(nonLoop){
+			return true;
+		}
+		nonLoop=true;
+		boolean val= getLocalActivityManager().getActivity("main").onOptionsItemSelected(item);
+		nonLoop=false;
+		return val;
 	}
 }
