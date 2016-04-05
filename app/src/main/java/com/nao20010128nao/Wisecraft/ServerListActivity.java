@@ -27,6 +27,15 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import static com.nao20010128nao.Wisecraft.Utils.*;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.DrawerLayout;
+import android.preference.PreferenceActivity;
+import android.preference.PreferenceScreen;
+import pref.StartPref;
+import android.content.res.Resources;
+import com.nao20010128nao.ToolBox.HandledPreference;
+import android.content.res.AssetManager;
+import android.util.DisplayMetrics;
+import android.content.res.Configuration;
+import android.content.res.XmlResourceParser;
 
 class ServerListActivityImpl extends ListActivity {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
@@ -60,6 +69,7 @@ class ServerListActivityImpl extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
+		getLayoutInflater().inflate(R.layout.hacks,null);//空インフレート
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
 		grandMenu.add(getResources().getString(R.string.add));//0
 		grandMenu.add(getResources().getString(R.string.addFromMCPE));//1
@@ -113,8 +123,8 @@ class ServerListActivityImpl extends ListActivity {
 				break;
 			case 2:
 				setContentView(R.layout.server_list_content_listview);
-				ListView lv=(ListView)findViewById(R.id.app_menu);
-				final List<String> editing=new ArrayList<>(grandMenu);
+				LinearLayout lv=(LinearLayout)findViewById(R.id.app_menu);
+				ArrayList<String> editing=new ArrayList<>(grandMenu);
 				if(!pref.getBoolean("feature_bott", true)){
 					editing.remove(grandMenu.get(5));
 				}
@@ -124,10 +134,7 @@ class ServerListActivityImpl extends ListActivity {
 				if(!pref.getBoolean("feature_asfsls", false)){
 					editing.remove(grandMenu.get(7));
 				}
-				ArrayAdapter<String> la=new AppBaseArrayAdapter<String>(this,R.layout.listview_item,android.R.id.title);
-				la.addAll(editing);//AppBaseArrayAdapter implements it
-				lv.setAdapter(la);
-				lv.setOnItemClickListener(new ListView.OnItemClickListener(){public void onItemClick(AdapterView<?> av,View v,int o,long ic){execOption(grandMenu.indexOf(editing.get(o)));}});
+				lv.addView(((ActivityGroup)getParent()).getLocalActivityManager().startActivity("menu",new Intent(this,MenuPreferenceActivity.class).putExtra("values",editing)).getDecorView());
 				
 				dl=(DrawerLayout)findViewById(R.id.drawer);
 				dl.setDrawerListener(new DrawerLayout.DrawerListener(){
@@ -861,6 +868,31 @@ class ServerListActivityImpl extends ListActivity {
 		public void onClick(View p1) {
 			// TODO: Implement this method
 			execOption(o);
+		}
+	}
+	public static class MenuPreferenceActivity extends PreferenceActivity {
+		@Override
+		protected void onCreate(Bundle savedInstanceState) {
+			// TODO: Implement this method
+			super.onCreate(savedInstanceState);
+			addPreferencesFromResource(R.xml.pref_blank);
+			
+			List<String> values=getIntent().getStringArrayListExtra("values");
+			PreferenceScreen scr=getPreferenceScreen();
+			for(String s:values){
+				StartPref p=new StartPref(this);
+				p.setTitle(s);
+				p.setOnClickListener(new PrefHandler());
+				scr.addPreference(p);
+			}
+		}
+		class PrefHandler implements HandledPreference.OnClickListener {
+			@Override
+			public void onClick(String var1, String var2, String var3) {
+				// TODO: Implement this method
+				ServerListActivityImpl ins=ServerListActivityImpl.instance.get();
+				ins.execOption(ins.grandMenu.indexOf(var2));
+			}
 		}
 	}
 }
