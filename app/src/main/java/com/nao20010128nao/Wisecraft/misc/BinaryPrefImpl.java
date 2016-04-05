@@ -22,7 +22,7 @@ public class BinaryPrefImpl implements SharedPreferences {
 
 	public BinaryPrefImpl() {
 		// TODO 自動生成されたコンストラクター・スタブ
-		this(new HashMap<>());
+		this(new HashMap<String,Object>());
 	}
 
 	public BinaryPrefImpl(Map<String, ?> map) {
@@ -152,7 +152,7 @@ public class BinaryPrefImpl implements SharedPreferences {
 					} else if (o instanceof Set<?>) {
 						dos.writeByte(1);
 						dos.writeInt(((Set) o).size());
-						for(String s:(Set)o){
+						for(String s:(Set<String>)o){
 							try {
 								dos.writeUTF(s);
 							} catch (Exception e) {

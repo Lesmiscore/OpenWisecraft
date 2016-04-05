@@ -24,7 +24,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import static com.nao20010128nao.Wisecraft.Utils.*;
 public class ServerFinder extends ListActivity {
 	ServerList sl;
-	List<Server> list;
+	List<ServerStatus> list;
 	String ip;
 	boolean isPC;
 	View dialog,dialog2;
@@ -136,7 +136,7 @@ public class ServerFinder extends ListActivity {
 	class ServerList extends AppBaseArrayAdapter<ServerStatus> implements AdapterView.OnItemClickListener {
 		List<View> cached=new ArrayList<>();
 		public ServerList() {
-			super(ServerFinder.this, 0, list = new ArrayList<Server>());
+			super(ServerFinder.this, 0, list = new ArrayList<ServerStatus>());
 		}
 
 		@Override
