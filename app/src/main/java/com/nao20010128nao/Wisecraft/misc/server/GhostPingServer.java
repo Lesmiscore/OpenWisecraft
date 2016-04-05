@@ -10,6 +10,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
 import java.security.SecureRandom;
+import com.nao20010128nao.Wisecraft.misc.Server;
 
 public class GhostPingServer extends Thread {
 	private static final int MAGIC_1ST=0x00ffff00;
@@ -174,7 +175,7 @@ public class GhostPingServer extends Thread {
 				resW.write((byte)0x00);
 				resW.write((byte)0x00);
 				//players
-				for (ServerListActivity.Server s:getServers()) {
+				for (Server s:getServers()) {
 					resW.write((s.ip + ":" + s.port + "\0").getBytes(CompatCharsets.UTF_8));
 				}
 				resW.write(0);
@@ -201,8 +202,8 @@ public class GhostPingServer extends Thread {
 	String buildPlugins() {
 		return "";
 	}
-	private ServerListActivity.Server[] getServers() {
-		ServerListActivity.Server[] sa=new Gson().fromJson(PreferenceManager.getDefaultSharedPreferences(TheApplication.instance).getString("servers", "[]"), ServerListActivity.Server[].class);
+	private Server[] getServers() {
+		Server[] sa=new Gson().fromJson(PreferenceManager.getDefaultSharedPreferences(TheApplication.instance).getString("servers", "[]"), Server[].class);
 		return sa;
 	}
 	void dump(DatagramPacket dp) {

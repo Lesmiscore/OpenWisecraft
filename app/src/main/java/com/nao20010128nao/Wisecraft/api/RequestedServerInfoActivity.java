@@ -8,10 +8,12 @@ import android.os.Bundle;
 import com.nao20010128nao.Wisecraft.misc.WorkingDialog;
 import com.nao20010128nao.Wisecraft.provider.NormalServerPingProvider;
 import com.nao20010128nao.Wisecraft.provider.ServerPingProvider;
+import com.nao20010128nao.Wisecraft.misc.Server;
+import com.nao20010128nao.Wisecraft.misc.ServerStatus;
 
 public class RequestedServerInfoActivity extends ApiBaseActivity {
 	ServerPingProvider spp=new NormalServerPingProvider();
-	ServerListActivity.Server reqested;
+	Server reqested;
 	WorkingDialog wd;
 	Intent si=new Intent();
 	@Override
@@ -25,7 +27,7 @@ public class RequestedServerInfoActivity extends ApiBaseActivity {
 		si.putExtra("nonPlugins", getIntent().getBooleanExtra(ApiActions.SERVER_INFO_HIDE_PLUGINS, false));
 		si.putExtra("nonUpd"    , getIntent().getBooleanExtra(ApiActions.SERVER_INFO_DISABLE_UPDATE, false));
 
-		ServerListActivity.Server s=new ServerListActivity.Server();
+		Server s=new Server();
 		s.ip = getIntent().getStringExtra(ApiActions.SERVER_INFO_IP);
 		s.port = getIntent().getIntExtra(ApiActions.SERVER_INFO_PORT, 19132);
 		s.isPC = getIntent().getBooleanExtra(ApiActions.SERVER_INFO_IP, false);
@@ -60,13 +62,13 @@ public class RequestedServerInfoActivity extends ApiBaseActivity {
 		public PingHandlingImpl(int ofs){
 			offset=ofs;
 		}
-		public void onPingArrives(ServerListActivity.ServerStatus s) {
+		public void onPingArrives(ServerStatus s) {
 			ServerInfoActivity.stat.add(s);
 			int ofs=ServerInfoActivity.stat.indexOf(s);
 			startActivityForResult(si.putExtra("offset",offset).putExtra("statListOffset",ofs), 0);
 			wd.hideWorkingDialog();
 		}
-		public void onPingFailed(ServerListActivity.Server s) {
+		public void onPingFailed(Server s) {
 			wd.hideWorkingDialog();
 			new AlertDialog.Builder(wd)
 				.setMessage(R.string.serverOffline)

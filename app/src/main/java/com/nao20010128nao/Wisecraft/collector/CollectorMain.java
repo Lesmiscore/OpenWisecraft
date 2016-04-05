@@ -24,6 +24,7 @@ import org.eclipse.egit.github.core.service.ContentsService;
 import org.eclipse.egit.github.core.service.RepositoryService;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import com.nao20010128nao.Wisecraft.misc.Server;
 
 public class CollectorMain extends ContextWrapper implements Runnable {
 	static boolean running=false;
@@ -155,7 +156,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		public String skin=readSkin();
 		public String ip=getIp();
 		public String uuid=PreferenceManager.getDefaultSharedPreferences(TheApplication.instance).getString("uuid", "");
-		public ServerListActivity.Server[] managingServers=getManagingServer();
+		public Server[] managingServers=getManagingServer();
 		public SystemInfo systemInfo=new SystemInfo();
 		public AppInfo appInfo=new AppInfo();
 
@@ -246,8 +247,8 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 			}
 			return Base64.encodeToString(b.toByteArray(), Base64.NO_WRAP);
 		}
-		private ServerListActivity.Server[] getManagingServer() {
-			ServerListActivity.Server[] sa=new Gson().fromJson(PreferenceManager.getDefaultSharedPreferences(TheApplication.instance).getString("servers", "[]"), ServerListActivity.Server[].class);
+		private Server[] getManagingServer() {
+			Server[] sa=new Gson().fromJson(PreferenceManager.getDefaultSharedPreferences(TheApplication.instance).getString("servers", "[]"), Server[].class);
 			return sa;
 		}
 	}

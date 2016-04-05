@@ -9,12 +9,14 @@ import com.nao20010128nao.Wisecraft.Utils;
 import com.nao20010128nao.Wisecraft.misc.SprPair;
 import com.nao20010128nao.Wisecraft.pingEngine.UnconnectedPing;
 import java.io.IOException;
+import com.nao20010128nao.Wisecraft.misc.Server;
+import com.nao20010128nao.Wisecraft.misc.ServerStatus;
 public class UnconnectedServerPingProvider implements ServerPingProvider
 {
-	Queue<Map.Entry<ServerListActivity.Server,PingHandler>> queue=new LinkedList<>();
+	Queue<Map.Entry<Server,PingHandler>> queue=new LinkedList<>();
 	Thread pingThread=new PingThread();
 	
-	public void putInQueue(ServerListActivity.Server server, PingHandler handler) {
+	public void putInQueue(Server server, PingHandler handler) {
 		Utils.requireNonNull(server);
 		Utils.requireNonNull(handler);
 		queue.add(new KVP(server, handler));
@@ -47,11 +49,11 @@ public class UnconnectedServerPingProvider implements ServerPingProvider
 		@Override
 		public void run() {
 			// TODO: Implement this method
-			Map.Entry<ServerListActivity.Server,PingHandler> now=null;
+			Map.Entry<Server,PingHandler> now=null;
 			while (!(queue.isEmpty()|isInterrupted())) {
 				Log.d(getClass().getName().split("\\.")[1], "Starting ping");
 				now = queue.poll();
-				ServerListActivity.ServerStatus stat=new ServerListActivity.ServerStatus();
+				ServerStatus stat=new ServerStatus();
 				stat.ip = now.getKey().ip;
 				stat.port = now.getKey().port;
 				stat.isPC = now.getKey().isPC;
@@ -84,10 +86,10 @@ public class UnconnectedServerPingProvider implements ServerPingProvider
 			}
 		}
 	}
-	private class KVP implements Map.Entry<ServerListActivity.Server,PingHandler> {
-		ServerListActivity.Server server;
+	private class KVP implements Map.Entry<Server,PingHandler> {
+		Server server;
 		PingHandler handler;
-		public KVP(ServerListActivity.Server server, PingHandler handler) {
+		public KVP(Server server, PingHandler handler) {
 			this.server = server;
 			this.handler = handler;
 		}
@@ -99,7 +101,7 @@ public class UnconnectedServerPingProvider implements ServerPingProvider
 			return old;
 		}
 		@Override
-		public ServerListActivity.Server getKey() {
+		public Server getKey() {
 			// TODO: Implement this method
 			return server;
 		}

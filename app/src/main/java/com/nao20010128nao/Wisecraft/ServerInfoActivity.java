@@ -27,9 +27,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 
 public class ServerInfoActivity extends FragmentActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
-	public static List<ServerListActivity.ServerStatus> stat=new ArrayList<>();
+	public static List<ServerStatus> stat=new ArrayList<>();
 	
-	ServerListActivity.ServerStatus localStat;
+	ServerStatus localStat;
 	Bundle keeping;
 	
 	String ip;

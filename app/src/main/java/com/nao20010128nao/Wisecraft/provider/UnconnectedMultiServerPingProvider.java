@@ -2,6 +2,7 @@ package com.nao20010128nao.Wisecraft.provider;
 import com.nao20010128nao.Wisecraft.ServerListActivity;
 import java.util.ArrayList;
 import java.util.List;
+import com.nao20010128nao.Wisecraft.misc.Server;
 
 public class UnconnectedMultiServerPingProvider implements ServerPingProvider {
 	List<UnconnectedServerPingProvider> objects=new ArrayList<>();
@@ -12,7 +13,7 @@ public class UnconnectedMultiServerPingProvider implements ServerPingProvider {
 		}
 	}
 	@Override
-	public void putInQueue(ServerListActivity.Server server, ServerPingProvider.PingHandler handler) {
+	public void putInQueue(Server server, ServerPingProvider.PingHandler handler) {
 		// TODO: Implement this method
 		objects.get(count).putInQueue(server, handler);
 		count++;

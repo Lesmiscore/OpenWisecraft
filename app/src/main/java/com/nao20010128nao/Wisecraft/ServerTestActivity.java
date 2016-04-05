@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 import com.nao20010128nao.MCPing.pc.Reply;
 import com.nao20010128nao.MCPing.pc.Reply19;
 import com.nao20010128nao.MCPing.pe.FullStat;
-import com.nao20010128nao.Wisecraft.ServerListActivity.Server;
-import com.nao20010128nao.Wisecraft.ServerListActivity.ServerStatus;
+import com.nao20010128nao.Wisecraft.misc.Server;
+import com.nao20010128nao.Wisecraft.misc.ServerStatus;
 import com.nao20010128nao.Wisecraft.misc.AppBaseArrayAdapter;
 import com.nao20010128nao.Wisecraft.misc.SprPair;
 import com.nao20010128nao.Wisecraft.pingEngine.UnconnectedPing;
@@ -206,7 +206,7 @@ public class ServerTestActivity extends ListActivity {
 		}
 
 		@Override
-		public void remove(ServerListActivity.Server object) {
+		public void remove(Server object) {
 			// TODO: Implement this method
 			cached.remove(list.indexOf(object));
 			super.remove(object);

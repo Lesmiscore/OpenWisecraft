@@ -13,8 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.nao20010128nao.MCPing.pc.Reply;
 import com.nao20010128nao.MCPing.pc.Reply19;
-import com.nao20010128nao.Wisecraft.ServerListActivity.Server;
-import com.nao20010128nao.Wisecraft.ServerListActivity.ServerStatus;
+import com.nao20010128nao.Wisecraft.misc.Server;
+import com.nao20010128nao.Wisecraft.misc.ServerStatus;
 import com.nao20010128nao.Wisecraft.misc.AppBaseArrayAdapter;
 import com.nao20010128nao.Wisecraft.pingEngine.UnconnectedPing;
 import java.util.ArrayList;
@@ -203,7 +203,7 @@ public class ServerFinder extends ListActivity {
 						public void onClick(DialogInterface di,int w){
 							switch(w){
 								case 0:
-									ServerListActivity.instance.get().sl.add(s);
+									ServerListActivityImpl.instance.get().sl.add(s);
 									break;
 							}
 						}
@@ -213,7 +213,7 @@ public class ServerFinder extends ListActivity {
 		}
 
 		@Override
-		public void remove(ServerListActivity.ServerStatus object) {
+		public void remove(ServerStatus object) {
 			// TODO: Implement this method
 			cached.remove(list.indexOf(object));
 			super.remove(object);

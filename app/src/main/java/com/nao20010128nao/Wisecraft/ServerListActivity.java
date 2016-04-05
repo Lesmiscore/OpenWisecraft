@@ -28,8 +28,8 @@ import static com.nao20010128nao.Wisecraft.Utils.*;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.DrawerLayout;
 
-public class ServerListActivity extends ListActivity {
-	public static WeakReference<ServerListActivity> instance=new WeakReference(null);
+class ServerListActivityImpl extends ListActivity {
+	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
 
 	static File mcpeServerList=new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt");
 	
@@ -278,7 +278,7 @@ public class ServerListActivity extends ListActivity {
 							data.port = new Integer(port.getText().toString());
 							data.isPC = isPc.isChecked();
 							if (list.contains(data)) {
-								Toast.makeText(ServerListActivity.this, R.string.alreadyExists, Toast.LENGTH_LONG).show();
+								Toast.makeText(ServerListActivityImpl.this, R.string.alreadyExists, Toast.LENGTH_LONG).show();
 							} else {
 								sl.add(data);
 							}
@@ -293,7 +293,7 @@ public class ServerListActivity extends ListActivity {
 					show();
 				break;
 			case 1:
-				Toast.makeText(ServerListActivity.this, R.string.importing, Toast.LENGTH_LONG).show();
+				Toast.makeText(ServerListActivityImpl.this, R.string.importing, Toast.LENGTH_LONG).show();
 				new Thread(){
 					public void run() {
 						ArrayList<String[]> al=new ArrayList<String[]>();
@@ -380,9 +380,9 @@ public class ServerListActivity extends ListActivity {
 					}
 					public void onPostExecute(File f) {
 						if (f != null) {
-							Toast.makeText(ServerListActivity.this, getResources().getString(R.string.export_complete).replace("[PATH]", f + ""), Toast.LENGTH_LONG).show();
+							Toast.makeText(ServerListActivityImpl.this, getResources().getString(R.string.export_complete).replace("[PATH]", f + ""), Toast.LENGTH_LONG).show();
 						} else {
-							Toast.makeText(ServerListActivity.this, getResources().getString(R.string.export_failed), Toast.LENGTH_LONG).show();
+							Toast.makeText(ServerListActivityImpl.this, getResources().getString(R.string.export_failed), Toast.LENGTH_LONG).show();
 						}
 					}
 				}.execute();
@@ -396,7 +396,7 @@ public class ServerListActivity extends ListActivity {
 					.setView(et)
 					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 						public void onClick(DialogInterface di, int w) {
-							Toast.makeText(ServerListActivity.this, R.string.importing, Toast.LENGTH_LONG).show();
+							Toast.makeText(ServerListActivityImpl.this, R.string.importing, Toast.LENGTH_LONG).show();
 							new Thread(){
 								public void run() {
 									final Server[] sv=gson.fromJson(readWholeFile(new File(et.getText().toString())), Server[].class);
@@ -436,7 +436,7 @@ public class ServerListActivity extends ListActivity {
 									new Handler().postDelayed(new Runnable(){
 											public void run() {
 												pref.edit().putString("servers", gson.toJson(sortingServer.toArray(new Server[sortingServer.size()]), Server[].class)).commit();
-												startActivity(new Intent(ServerListActivity.this, ServerListActivity.class));
+												startActivity(new Intent(ServerListActivityImpl.this, ServerListActivity.class));
 											}
 										}, 10);
 								}
@@ -488,8 +488,8 @@ public class ServerListActivity extends ListActivity {
 
 	static class ServerList extends AppBaseArrayAdapter<Server> implements AdapterView.OnItemClickListener,AdapterView.OnItemLongClickListener {
 		List<View> cached=new ArrayList();
-		ServerListActivity sla;
-		public ServerList(ServerListActivity sla) {
+		ServerListActivityImpl sla;
+		public ServerList(ServerListActivityImpl sla) {
 			super(sla, 0, sla.list = new ArrayList<Server>());
 			this.sla = sla;
 		}
@@ -683,25 +683,25 @@ public class ServerListActivity extends ListActivity {
 		}
 
 		@Override
-		public void add(ServerListActivity.Server object) {
+		public void add(Server object) {
 			// TODO: Implement this method
 			if (!sla.list.contains(object))super.add(object);
 		}
 
 		@Override
-		public void addAll(ServerListActivity.Server[] items) {
+		public void addAll(Server[] items) {
 			// TODO: Implement this method
 			for (Server s:items)add(s);
 		}
 
 		@Override
-		public void addAll(Collection<? extends ServerListActivity.Server> collection) {
+		public void addAll(Collection<? extends Server> collection) {
 			// TODO: Implement this method
 			for (Server s:collection)add(s);
 		}
 
 		@Override
-		public void remove(ServerListActivity.Server object) {
+		public void remove(Server object) {
 			// TODO: Implement this method
 			cached.remove(sla.list.indexOf(object));
 			super.remove(object);
@@ -723,49 +723,11 @@ public class ServerListActivity extends ListActivity {
 			return result.toArray(new String[result.size()]);
 		}
 
-		public void attachNewActivity(ServerListActivity sla) {
+		public void attachNewActivity(ServerListActivityImpl sla) {
 			this.sla = sla;
 		}
 	}
-	public static class Server {
-		public String ip;
-		public int port;
-		public boolean isPC;
-
-		@Override
-		public int hashCode() {
-			// TODO: Implement this method
-			return ip.hashCode() ^ port;
-		}
-
-		@Override
-		public boolean equals(Object o) {
-			// TODO: Implement this method
-			if (!(o instanceof Server)) {
-				return false;
-			}
-			Server os=(Server)o;
-			return os.ip.equals(ip) & os.port == port & (os.isPC ^ isPC) == false;
-		}
-
-		@Override
-		public String toString() {
-			// TODO: Implement this method
-			return ip + ":" + port;
-		}
-
-		public Server cloneAsServer() {
-			Server s=new Server();
-			s.ip = ip;
-			s.port = port;
-			s.isPC = isPC;
-			return s;
-		}
-	}
-	public static class ServerStatus extends Server {
-		public ServerPingResult response;
-		public long ping;
-	}
+	
 	class PingHandlerImpl implements ServerPingProvider.PingHandler {
 		boolean closeDialog;
 		int statTabOfs;
@@ -873,7 +835,7 @@ public class ServerListActivity extends ListActivity {
 						if(statTabOfs!=-1){
 							ServerInfoActivity.stat.add(s);
 							int ofs=ServerInfoActivity.stat.indexOf(s);
-							Intent caller=new Intent(ServerListActivity.this, ServerInfoActivity.class).putExtra("offset",statTabOfs).putExtra("statListOffset",ofs);
+							Intent caller=new Intent(ServerListActivityImpl.this, ServerInfoActivity.class).putExtra("offset",statTabOfs).putExtra("statListOffset",ofs);
 							if(obj!=null){
 								caller.putExtra("object",obj);
 							}
@@ -900,5 +862,17 @@ public class ServerListActivity extends ListActivity {
 			// TODO: Implement this method
 			execOption(o);
 		}
+	}
+}
+public class ServerListActivity extends ActivityGroup {
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO: Implement this method
+		super.onCreate(savedInstanceState);
+		setContentView(getLocalActivityManager().startActivity("main",new Intent(this,Content.class)).getDecorView());
+	}
+	public static class Content extends ServerListActivityImpl{
+		
 	}
 }

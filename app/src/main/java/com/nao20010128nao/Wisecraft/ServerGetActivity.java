@@ -83,7 +83,7 @@ public class ServerGetActivity extends WebViewActivity {
 								.setPositiveButton(R.string.add, new DialogInterface.OnClickListener(){
 									public void onClick(DialogInterface di, int w) {
 										List<com.nao20010128nao.McServerList.Server> selected=getServers(serv, selections);
-										((ArrayAdapter)ServerListActivity.instance.get().getListAdapter()).addAll(Utils.convertServerObject(selected));
+										((ArrayAdapter)ServerListActivityImpl.instance.get().getListAdapter()).addAll(Utils.convertServerObject(selected));
 										di.dismiss();
 									}
 								})

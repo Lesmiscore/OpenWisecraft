@@ -11,6 +11,7 @@ import com.nao20010128nao.Wisecraft.struct.WCH_ServerInfo;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
+import com.nao20010128nao.Wisecraft.misc.Server;
 
 public class Utils {
 	public static String deleteDecorations(String decorated) {
@@ -126,10 +127,10 @@ public class Utils {
 		}
 		return sb.toString();
 	}
-	public static List<ServerListActivity.Server> convertServerObject(List<com.nao20010128nao.McServerList.Server> from) {
-		ArrayList<ServerListActivity.Server> result=new ArrayList<>();
+	public static List<Server> convertServerObject(List<com.nao20010128nao.McServerList.Server> from) {
+		ArrayList<Server> result=new ArrayList<>();
 		for (com.nao20010128nao.McServerList.Server obj:from) {
-			ServerListActivity.Server wcs=new ServerListActivity.Server();
+			Server wcs=new Server();
 			wcs.ip = obj.ip;
 			wcs.port = obj.port;
 			wcs.isPC = !obj.isPE;
