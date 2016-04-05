@@ -2,6 +2,7 @@ package com.nao20010128nao.Wisecraft;
 import android.app.*;
 import android.content.*;
 import android.os.*;
+import android.preference.*;
 import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.misc.*;
@@ -10,39 +11,29 @@ import java.io.*;
 import java.util.*;
 
 import android.graphics.drawable.ColorDrawable;
-import android.preference.PreferenceManager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import com.google.gson.Gson;
-import com.nao20010128nao.MCPing.ServerPingResult;
 import com.nao20010128nao.MCPing.pc.Reply;
 import com.nao20010128nao.MCPing.pc.Reply19;
 import com.nao20010128nao.MCPing.pe.FullStat;
+import com.nao20010128nao.ToolBox.HandledPreference;
 import com.nao20010128nao.Wisecraft.extender.ContextWrappingExtender;
 import com.nao20010128nao.Wisecraft.pingEngine.UnconnectedPing;
 import com.nao20010128nao.Wisecraft.proxy.ProxyActivity;
 import com.nao20010128nao.Wisecraft.rcon.RCONActivity;
 import java.lang.ref.WeakReference;
+import pref.StartPref;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v4.widget.DrawerLayout;
-import android.preference.PreferenceActivity;
-import android.preference.PreferenceScreen;
-import pref.StartPref;
-import android.content.res.Resources;
-import com.nao20010128nao.ToolBox.HandledPreference;
-import android.content.res.AssetManager;
-import android.util.DisplayMetrics;
-import android.content.res.Configuration;
-import android.content.res.XmlResourceParser;
-import android.content.res.Resources.NotFoundException;
 
 class ServerListActivityImpl extends ListActivity {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
 
 	static File mcpeServerList=new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt");
-	
+
 	final List<String> grandMenu=new ArrayList<>();
 	ServerPingProvider spp,updater;
 	Gson gson=new Gson();
@@ -70,7 +61,7 @@ class ServerListActivityImpl extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
-		getLayoutInflater().inflate(R.layout.hacks,null);//空インフレート
+		getLayoutInflater().inflate(R.layout.hacks, null);//空インフレート
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
 		grandMenu.add(getResources().getString(R.string.add));//0
 		grandMenu.add(getResources().getString(R.string.addFromMCPE));//1
@@ -82,85 +73,85 @@ class ServerListActivityImpl extends ListActivity {
 		grandMenu.add(getResources().getString(R.string.addServerFromServerListSite));//7
 		grandMenu.add(getResources().getString(R.string.settings));//8
 		grandMenu.add(getResources().getString(R.string.exit));//9
-		
-		switch(pref.getInt("main_style",0)){
+
+		switch (pref.getInt("main_style", 0)) {
 			case 0:
 				setContentView(R.layout.server_list_content_nodrawer);
 				break;
 			case 1:
 				setContentView(R.layout.server_list_content);
 				LinearLayout ll=(LinearLayout)findViewById(R.id.app_menu);
-				for(String s:grandMenu){
-					if(grandMenu.indexOf(s)==5&!pref.getBoolean("feature_bott", true)){
+				for (String s:grandMenu) {
+					if (grandMenu.indexOf(s) == 5 & !pref.getBoolean("feature_bott", true)) {
 						continue;
 					}
-					if(grandMenu.indexOf(s)==6&!pref.getBoolean("feature_serverFinder", false)){
+					if (grandMenu.indexOf(s) == 6 & !pref.getBoolean("feature_serverFinder", false)) {
 						continue;
 					}
-					if(grandMenu.indexOf(s)==7&!pref.getBoolean("feature_asfsls", false)){
+					if (grandMenu.indexOf(s) == 7 & !pref.getBoolean("feature_asfsls", false)) {
 						continue;
 					}
-					Button btn=(Button)getLayoutInflater().inflate(R.layout.server_list_bar_button,null).findViewById(R.id.menu_btn);
+					Button btn=(Button)getLayoutInflater().inflate(R.layout.server_list_bar_button, null).findViewById(R.id.menu_btn);
 					//((ViewGroup)btn.getParent()).removeView(btn);
 					btn.setText(s);
 					btn.setOnClickListener(new MenuExecClickListener(grandMenu.indexOf(s)));
 					ll.addView(btn);
 				}
-				dl=(DrawerLayout)findViewById(R.id.drawer);
+				dl = (DrawerLayout)findViewById(R.id.drawer);
 				dl.setDrawerListener(new DrawerLayout.DrawerListener(){
-					public void onDrawerSlide(View v,float slide){
-						
-					}
-					public void onDrawerStateChanged(int state){
-						
-					}
-					public void onDrawerClosed(View v){
-						drawerOpened=false;
-					}
-					public void onDrawerOpened(View v){
-						drawerOpened=true;
-					}
-				});
+						public void onDrawerSlide(View v, float slide) {
+
+						}
+						public void onDrawerStateChanged(int state) {
+
+						}
+						public void onDrawerClosed(View v) {
+							drawerOpened = false;
+						}
+						public void onDrawerOpened(View v) {
+							drawerOpened = true;
+						}
+					});
 				break;
 			case 2:
 				setContentView(R.layout.server_list_content_listview);
 				LinearLayout lv=(LinearLayout)findViewById(R.id.app_menu);
 				ArrayList<String> editing=new ArrayList<>(grandMenu);
-				if(!pref.getBoolean("feature_bott", true)){
+				if (!pref.getBoolean("feature_bott", true)) {
 					editing.remove(grandMenu.get(5));
 				}
-				if(!pref.getBoolean("feature_serverFinder", false)){
+				if (!pref.getBoolean("feature_serverFinder", false)) {
 					editing.remove(grandMenu.get(6));
 				}
-				if(!pref.getBoolean("feature_asfsls", false)){
+				if (!pref.getBoolean("feature_asfsls", false)) {
 					editing.remove(grandMenu.get(7));
 				}
-				lv.addView(((ActivityGroup)getParent()).getLocalActivityManager().startActivity("menu",new Intent(this,MenuPreferenceActivity.class).putExtra("values",editing)).getDecorView());
-				
-				dl=(DrawerLayout)findViewById(R.id.drawer);
+				lv.addView(((ActivityGroup)getParent()).getLocalActivityManager().startActivity("menu", new Intent(this, MenuPreferenceActivity.class).putExtra("values", editing)).getDecorView());
+
+				dl = (DrawerLayout)findViewById(R.id.drawer);
 				dl.setDrawerListener(new DrawerLayout.DrawerListener(){
-						public void onDrawerSlide(View v,float slide){
+						public void onDrawerSlide(View v, float slide) {
 
 						}
-						public void onDrawerStateChanged(int state){
+						public void onDrawerStateChanged(int state) {
 
 						}
-						public void onDrawerClosed(View v){
-							drawerOpened=false;
+						public void onDrawerClosed(View v) {
+							drawerOpened = false;
 						}
-						public void onDrawerOpened(View v){
-							drawerOpened=true;
+						public void onDrawerOpened(View v) {
+							drawerOpened = true;
 						}
 					});
 				break;
 		}
-		srl=(SwipeRefreshLayout)findViewById(R.id.swipelayout);
-		srl.setColorSchemeResources(R.color.upd_1,R.color.upd_2,R.color.upd_3,R.color.upd_4);
+		srl = (SwipeRefreshLayout)findViewById(R.id.swipelayout);
+		srl.setColorSchemeResources(R.color.upd_1, R.color.upd_2, R.color.upd_3, R.color.upd_4);
 		srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
-			public void onRefresh(){
-				execOption(2);
-			}
-		});
+				public void onRefresh() {
+					execOption(2);
+				}
+			});
 		boolean usesOldInstance=false;
 		if (instance.get() != null) {
 			list = instance.get().list;
@@ -206,12 +197,12 @@ class ServerListActivityImpl extends ListActivity {
 	@Override
 	public void onBackPressed() {
 		// TODO: Implement this method
-		if(dl==null){
+		if (dl == null) {
 			super.onBackPressed();
-		}else{
-			if(drawerOpened){
+		} else {
+			if (drawerOpened) {
 				dl.closeDrawers();
-			}else{
+			} else {
 				super.onBackPressed();
 			}
 		}
@@ -225,7 +216,7 @@ class ServerListActivityImpl extends ListActivity {
 				switch (resultCode) {
 					case Constant.ACTIVITY_RESULT_UPDATE:
 						Bundle obj=data.getBundleExtra("object");
-						updater.putInQueue(ServerInfoActivity.stat.get(obj.getInt("statListOffset")), new PingHandlerImpl(true, data.getIntExtra("offset",0),true,obj));
+						updater.putInQueue(ServerInfoActivity.stat.get(obj.getInt("statListOffset")), new PingHandlerImpl(true, data.getIntExtra("offset", 0), true, obj));
 						((TextView)sl.getViewQuick(clicked).findViewById(R.id.pingMillis)).setText(R.string.working);
 						((ImageView)sl.getViewQuick(clicked).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
 						wd.showWorkingDialog();
@@ -239,31 +230,31 @@ class ServerListActivityImpl extends ListActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO: Implement this method
-		if(pref.getInt("main_style",0)==0){
-			for(String s:grandMenu){
-				if(grandMenu.indexOf(s)==5&!pref.getBoolean("feature_bott", true)){
+		if (pref.getInt("main_style", 0) == 0) {
+			for (String s:grandMenu) {
+				if (grandMenu.indexOf(s) == 5 & !pref.getBoolean("feature_bott", true)) {
 					continue;
 				}
-				if(grandMenu.indexOf(s)==6&!pref.getBoolean("feature_serverFinder", false)){
+				if (grandMenu.indexOf(s) == 6 & !pref.getBoolean("feature_serverFinder", false)) {
 					continue;
 				}
-				if(grandMenu.indexOf(s)==7&!pref.getBoolean("feature_asfsls", false)){
+				if (grandMenu.indexOf(s) == 7 & !pref.getBoolean("feature_asfsls", false)) {
 					continue;
 				}
-				menu.add(Menu.NONE,grandMenu.indexOf(s),grandMenu.indexOf(s),s);
+				menu.add(Menu.NONE, grandMenu.indexOf(s), grandMenu.indexOf(s), s);
 			}
 		}
 		return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		return execOption(item.getItemId());
 	}
-	
-	public boolean execOption(int item){
+
+	public boolean execOption(int item) {
 		// TODO: Implement this method
-		if(dl!=null)dl.closeDrawers();
+		if (dl != null)dl.closeDrawers();
 		switch (item) {
 			case 0:
 				final Server data=new Server();
@@ -347,10 +338,10 @@ class ServerListActivityImpl extends ListActivity {
 						continue;
 					}
 					final int i_=i;
-					if(!srl.isRefreshing()){
+					if (!srl.isRefreshing()) {
 						srl.setRefreshing(true);
 					}
-					spp.putInQueue(list.get(i), new PingHandlerImpl(false,-1,false){
+					spp.putInQueue(list.get(i), new PingHandlerImpl(false, -1, false){
 							public void onPingFailed(final Server s) {
 								super.onPingFailed(s);
 								runOnUiThread(new Runnable(){
@@ -479,10 +470,10 @@ class ServerListActivityImpl extends ListActivity {
 	protected void onStart() {
 		// TODO: Implement this method
 		super.onStart();
-		Log.d("ServerListActivity","onStart");
+		Log.d("ServerListActivity", "onStart");
 		TheApplication.instance.collect();
 	}
-	
+
 	public void loadServers() {
 		Server[] sa=gson.fromJson(pref.getString("servers", "[]"), Server[].class);
 		sl.clear();
@@ -524,7 +515,7 @@ class ServerListActivityImpl extends ListActivity {
 			if (s instanceof ServerStatus) {
 				sla.new PingHandlerImpl().onPingArrives((ServerStatus)s);
 			} else {
-				sla.spp.putInQueue(s, sla.new PingHandlerImpl(false,-1,true));
+				sla.spp.putInQueue(s, sla.new PingHandlerImpl(false, -1, true));
 			}
 			cached.set(position, layout);
 			sla.pinging.put(s, true);
@@ -547,10 +538,10 @@ class ServerListActivityImpl extends ListActivity {
 				ServerInfoActivity.stat.add((ServerStatus)s);
 				int ofs=ServerInfoActivity.stat.indexOf(s);
 				Bundle bnd=new Bundle();
-				bnd.putInt("statListOffset",ofs);
-				sla.startActivityForResult(new Intent(sla, ServerInfoActivity.class).putExtra("statListOffset",ofs).putExtra("object",bnd), 0);
+				bnd.putInt("statListOffset", ofs);
+				sla.startActivityForResult(new Intent(sla, ServerInfoActivity.class).putExtra("statListOffset", ofs).putExtra("object", bnd), 0);
 			} else {
-				sla.updater.putInQueue(s, sla.new PingHandlerImpl(true, 0,true));
+				sla.updater.putInQueue(s, sla.new PingHandlerImpl(true, 0, true));
 				((TextView)getViewQuick(sla.clicked).findViewById(R.id.pingMillis)).setText(R.string.working);
 				((ImageView)getViewQuick(sla.clicked).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(sla.getResources().getColor(R.color.stat_pending)));
 				sla.wd.showWorkingDialog();
@@ -735,7 +726,7 @@ class ServerListActivityImpl extends ListActivity {
 			this.sla = sla;
 		}
 	}
-	
+
 	class PingHandlerImpl implements ServerPingProvider.PingHandler {
 		boolean closeDialog;
 		int statTabOfs;
@@ -744,16 +735,16 @@ class ServerListActivityImpl extends ListActivity {
 			this(false, -1);
 		}
 		public PingHandlerImpl(boolean cd, int os) {
-			this(cd,os,true);
+			this(cd, os, true);
 		}
-		public PingHandlerImpl(boolean cd, int os,boolean updSrl) {
-			this(cd,os,updSrl,null);
+		public PingHandlerImpl(boolean cd, int os, boolean updSrl) {
+			this(cd, os, updSrl, null);
 		}
-		public PingHandlerImpl(boolean cd, int os,boolean updSrl,Bundle receive) {
+		public PingHandlerImpl(boolean cd, int os, boolean updSrl, Bundle receive) {
 			closeDialog = cd;
 			statTabOfs = os;
-			if(updSrl)srl.setRefreshing(true);
-			obj=receive;
+			if (updSrl)srl.setRefreshing(true);
+			obj = receive;
 		}
 		public void onPingFailed(final Server s) {
 			runOnUiThread(new Runnable(){
@@ -780,7 +771,7 @@ class ServerListActivityImpl extends ListActivity {
 								srl.setRefreshing(false);
 							}
 						} catch (Throwable e) {
-							
+
 						}
 					}
 				});
@@ -870,8 +861,8 @@ class ServerListActivityImpl extends ListActivity {
 	}
 	class MenuExecClickListener implements View.OnClickListener {
 		int o;
-		public MenuExecClickListener(int d){
-			o=d;
+		public MenuExecClickListener(int d) {
+			o = d;
 		}
 		@Override
 		public void onClick(View p1) {
@@ -885,10 +876,10 @@ class ServerListActivityImpl extends ListActivity {
 			// TODO: Implement this method
 			super.onCreate(savedInstanceState);
 			addPreferencesFromResource(R.xml.pref_blank);
-			
+
 			List<String> values=getIntent().getStringArrayListExtra("values");
 			PreferenceScreen scr=getPreferenceScreen();
-			for(String s:values){
+			for (String s:values) {
 				StartPref p=new StartPref(this);
 				p.setTitle(s);
 				p.setOnClickListener(new PrefHandler());
@@ -911,31 +902,31 @@ public class ServerListActivity extends ActivityGroup {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
-		setContentView(getLocalActivityManager().startActivity("main",new Intent(this,Content.class)).getDecorView());
+		setContentView(getLocalActivityManager().startActivity("main", new Intent(this, Content.class)).getDecorView());
 	}
-	public static class Content extends ServerListActivityImpl{}
+	public static class Content extends ServerListActivityImpl {}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO: Implement this method
-		if(nonLoop){
+		if (nonLoop) {
 			return true;
 		}
-		nonLoop=true;
+		nonLoop = true;
 		boolean val= getLocalActivityManager().getActivity("main").onCreateOptionsMenu(menu);
-		nonLoop=false;
+		nonLoop = false;
 		return val;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO: Implement this method
-		if(nonLoop){
+		if (nonLoop) {
 			return true;
 		}
-		nonLoop=true;
+		nonLoop = true;
 		boolean val= getLocalActivityManager().getActivity("main").onOptionsItemSelected(item);
-		nonLoop=false;
+		nonLoop = false;
 		return val;
 	}
 }
