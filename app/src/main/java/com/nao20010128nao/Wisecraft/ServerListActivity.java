@@ -333,6 +333,13 @@ class ServerListActivityImpl extends ListActivity {
 				}.start();
 				break;
 			case 2:
+				for (int i=0;i < list.size();i++) {
+					if (pinging.get(list.get(i))) {
+						continue;
+					}
+					((TextView)sl.getViewQuick(i).findViewById(R.id.pingMillis)).setText(R.string.working);
+					((ImageView)sl.getViewQuick(i).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
+				}
 				new Thread(){
 					public void run(){
 						for (int i=0;i < list.size();i++) {
@@ -362,12 +369,6 @@ class ServerListActivityImpl extends ListActivity {
 									}
 								});
 							pinging.put(list.get(i), true);
-							runOnUiThread(new Runnable(){
-								public void run(){
-									((TextView)sl.getViewQuick(i_).findViewById(R.id.pingMillis)).setText(R.string.working);
-									((ImageView)sl.getViewQuick(i_).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
-								}
-							});
 						}
 					}
 				}.start();
