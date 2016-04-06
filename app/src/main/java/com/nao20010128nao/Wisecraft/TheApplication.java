@@ -6,13 +6,12 @@ import android.graphics.Typeface;
 import android.preference.PreferenceManager;
 import com.nao20010128nao.Wisecraft.collector.CollectorMain;
 import com.nao20010128nao.Wisecraft.misc.BinaryPrefImpl;
+import com.nao20010128nao.Wisecraft.misc.SlsUpdater;
 import com.nao20010128nao.Wisecraft.misc.server.GhostPingServer;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
-import android.util.Log;
-import com.nao20010128nao.Wisecraft.misc.SlsUpdater;
 
 public class TheApplication extends Application {
 	public static TheApplication instance;

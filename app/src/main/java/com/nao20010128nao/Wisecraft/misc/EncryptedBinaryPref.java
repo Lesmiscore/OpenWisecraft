@@ -1,17 +1,12 @@
 package com.nao20010128nao.Wisecraft.misc;
-import java.util.*;
 import java.io.*;
-import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.CipherInputStream;
+import java.util.*;
+
 import java.security.SecureRandom;
-import javax.crypto.BadPaddingException;
-import java.security.InvalidAlgorithmParameterException;
-import javax.crypto.NoSuchPaddingException;
-import java.security.NoSuchAlgorithmException;
-import java.security.InvalidKeyException;
-import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.Cipher;
+import javax.crypto.CipherInputStream;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 
 public class EncryptedBinaryPref extends BinaryPrefImpl
 {

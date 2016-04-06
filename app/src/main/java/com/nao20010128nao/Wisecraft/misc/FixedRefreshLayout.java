@@ -1,9 +1,9 @@
 package com.nao20010128nao.Wisecraft.misc;
 
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.content.Context;
-import android.util.AttributeSet;
 import android.os.Parcelable;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.AttributeSet;
 import android.util.Log;
 
 public class FixedRefreshLayout extends SwipeRefreshLayout {

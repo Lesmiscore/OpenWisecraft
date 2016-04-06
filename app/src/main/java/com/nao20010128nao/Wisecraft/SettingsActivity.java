@@ -5,11 +5,11 @@ import java.util.*;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.widget.Toast;
 import com.nao20010128nao.MCPE.SC.misc.SHablePreferenceActivity;
 import com.nao20010128nao.ToolBox.HandledPreference;
 import java.lang.reflect.Field;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-import android.widget.Toast;
 
 public class SettingsActivity extends SHablePreferenceActivity {
 	int which;

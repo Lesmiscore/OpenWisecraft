@@ -1,4 +1,6 @@
 package com.nao20010128nao.Wisecraft;
+import java.util.*;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
@@ -10,9 +12,6 @@ import android.widget.ArrayAdapter;
 import com.nao20010128nao.McServerList.ServerAddressFetcher;
 import com.nao20010128nao.Wisecraft.misc.WebViewActivity;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Arrays;
 
 public class ServerGetActivity extends WebViewActivity {
 	public static List<String> addForServerList;

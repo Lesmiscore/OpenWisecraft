@@ -1,5 +1,4 @@
 package com.nao20010128nao.Wisecraft.misc.server;
-import com.nao20010128nao.Wisecraft.*;
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -8,9 +7,11 @@ import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import com.google.gson.Gson;
+import com.nao20010128nao.Wisecraft.Factories;
+import com.nao20010128nao.Wisecraft.TheApplication;
+import com.nao20010128nao.Wisecraft.misc.Server;
 import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
 import java.security.SecureRandom;
-import com.nao20010128nao.Wisecraft.misc.Server;
 
 public class GhostPingServer extends Thread {
 	private static final int MAGIC_1ST=0x00ffff00;

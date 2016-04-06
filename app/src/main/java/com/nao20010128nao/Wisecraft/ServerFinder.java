@@ -1,6 +1,7 @@
 package com.nao20010128nao.Wisecraft;
 import android.app.*;
 import android.widget.*;
+import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.provider.*;
 
 import android.content.Context;
@@ -13,9 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.nao20010128nao.MCPing.pc.Reply;
 import com.nao20010128nao.MCPing.pc.Reply19;
-import com.nao20010128nao.Wisecraft.misc.Server;
-import com.nao20010128nao.Wisecraft.misc.ServerStatus;
-import com.nao20010128nao.Wisecraft.misc.AppBaseArrayAdapter;
 import com.nao20010128nao.Wisecraft.pingEngine.UnconnectedPing;
 import java.util.ArrayList;
 import java.util.List;
