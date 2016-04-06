@@ -885,6 +885,7 @@ class ServerListActivityImpl extends ListActivity {
 								srl.setRefreshing(false);
 							}
 						} catch (Throwable e) {
+							DebugWriter.writeToE("ServerListActivity",e);
 							onPingFailed(s);
 						}
 					}
