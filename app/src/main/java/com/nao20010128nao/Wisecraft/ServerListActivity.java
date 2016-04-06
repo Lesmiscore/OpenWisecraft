@@ -339,16 +339,15 @@ class ServerListActivityImpl extends ListActivity {
 					}
 					((TextView)sl.getViewQuick(i).findViewById(R.id.pingMillis)).setText(R.string.working);
 					((ImageView)sl.getViewQuick(i).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
+					if (!srl.isRefreshing()) {
+						srl.setRefreshing(true);
+					}
 				}
 				new Thread(){
 					public void run(){
 						for (int i=0;i < list.size();i++) {
 							if (pinging.get(list.get(i))) {
 								continue;
-							}
-							final int i_=i;
-							if (!srl.isRefreshing()) {
-								srl.setRefreshing(true);
 							}
 							spp.putInQueue(list.get(i), new PingHandlerImpl(false, -1, false){
 									public void onPingFailed(final Server s) {
