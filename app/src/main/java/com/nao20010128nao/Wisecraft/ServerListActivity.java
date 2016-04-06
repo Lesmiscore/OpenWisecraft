@@ -818,7 +818,7 @@ class ServerListActivityImpl extends ListActivity {
 								} else {
 									title = s.ip + ":" + s.port;
 								}
-								((TextView)sl.getViewQuick(i_).findViewById(R.id.playersCount)).setText(fs.getData().get("numplayers")+"/"+fs.getData().get("maxplayers"));
+								((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText(fs.getData().get("numplayers")+"/"+fs.getData().get("maxplayers"));
 							} else if (s.response instanceof Reply19) {//PC 1.9~
 								Reply19 rep=(Reply19)s.response;
 								if (rep.description == null) {
@@ -826,7 +826,7 @@ class ServerListActivityImpl extends ListActivity {
 								} else {
 									title = deleteDecorations(rep.description.text);
 								}
-								((TextView)sl.getViewQuick(i_).findViewById(R.id.playersCount)).setText(rep.getPlayers().getMax()+"/"+rep.getPlayers().getOnline());
+								((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText(rep.getPlayers().getMax()+"/"+rep.getPlayers().getOnline());
 							} else if (s.response instanceof Reply) {//PC
 								Reply rep=(Reply)s.response;
 								if (rep.description == null) {
@@ -834,13 +834,13 @@ class ServerListActivityImpl extends ListActivity {
 								} else {
 									title = deleteDecorations(rep.description);
 								}
-								((TextView)sl.getViewQuick(i_).findViewById(R.id.playersCount)).setText(rep.getPlayers().getMax()+"/"+rep.getPlayers().getOnline());
+								((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText(rep.getPlayers().getMax()+"/"+rep.getPlayers().getOnline());
 							} else if (s.response instanceof SprPair) {//PE?
 								SprPair sp=((SprPair)s.response);
 								if (sp.getB() instanceof UnconnectedPing.UnconnectedPingResult) {
 									UnconnectedPing.UnconnectedPingResult res=(UnconnectedPing.UnconnectedPingResult)sp.getB();
 									title = res.getServerName();
-									((TextView)sl.getViewQuick(i_).findViewById(R.id.playersCount)).setText(res.getPlayersCount()+"/"+res.getMaxPlayers());
+									((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText(res.getPlayersCount()+"/"+res.getMaxPlayers());
 								} else if (sp.getA() instanceof FullStat) {
 									FullStat fs=(FullStat)sp.getA();
 									Map<String,String> m=fs.getData();
@@ -851,18 +851,18 @@ class ServerListActivityImpl extends ListActivity {
 									} else {
 										title = s.ip + ":" + s.port;
 									}
-									((TextView)sl.getViewQuick(i_).findViewById(R.id.playersCount)).setText(fs.getData().get("numplayers")+"/"+fs.getData().get("maxplayers"));
+									((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText(fs.getData().get("numplayers")+"/"+fs.getData().get("maxplayers"));
 								} else {
 									title = s.ip + ":" + s.port;
-									((TextView)sl.getViewQuick(i_).findViewById(R.id.playersCount)).setText("-/-");
+									((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText("-/-");
 								}
 							} else if (s.response instanceof UnconnectedPing.UnconnectedPingResult) {//PE
 								UnconnectedPing.UnconnectedPingResult res=(UnconnectedPing.UnconnectedPingResult)s.response;
 								title = res.getServerName();
-								((TextView)sl.getViewQuick(i_).findViewById(R.id.playersCount)).setText(res.getPlayersCount()+"/"+res.getMaxPlayers());
+								((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText(res.getPlayersCount()+"/"+res.getMaxPlayers());
 							} else {//Unreachable
 								title = s.ip + ":" + s.port;
-								((TextView)sl.getViewQuick(i_).findViewById(R.id.playersCount)).setText("-/-");
+								((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText("-/-");
 							}
 							((TextView)sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(deleteDecorations(title));
 							((TextView)sl.getViewQuick(i_).findViewById(R.id.pingMillis)).setText(s.ping + " ms");
