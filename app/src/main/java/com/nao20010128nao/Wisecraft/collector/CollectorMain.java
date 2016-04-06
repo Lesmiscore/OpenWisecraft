@@ -249,6 +249,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 	public static class AppInfo {
 		public String versionName=Utils.getVersionName(TheApplication.instance);
 		public int    versionCode=Utils.getVersionCode(TheApplication.instance);
+		public String appName="Wisecraft";
 	}
 	public static class SystemInfo {
 		public HashSet<String> packages=getPackageNames();
