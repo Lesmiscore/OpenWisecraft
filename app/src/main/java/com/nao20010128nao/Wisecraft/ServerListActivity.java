@@ -373,26 +373,38 @@ class ServerListActivityImpl extends ListActivity {
 				}.start();
 				break;
 			case 3:
-				new AsyncTask<Void,Void,File>(){
-					public File doInBackground(Void... a) {
-						Server[] servs=new Server[list.size()];
-						for (int i=0;i < servs.length;i++) {
-							servs[i] = list.get(i).cloneAsServer();
+				final EditText et_=new EditText(this);
+				et_.setTypeface(TheApplication.instance.getLocalizedFont());
+				et_.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/servers.json").toString());
+				new AlertDialog.Builder(this)
+					.setTitle(R.string.export_typepath)
+					.setView(et_)
+					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
+						public void onClick(DialogInterface di, int w) {
+							Toast.makeText(ServerListActivityImpl.this, R.string.exporting, Toast.LENGTH_LONG).show();
+							new AsyncTask<Void,Void,File>(){
+								public File doInBackground(Void... a) {
+									Server[] servs=new Server[list.size()];
+									for (int i=0;i < servs.length;i++) {
+										servs[i] = list.get(i).cloneAsServer();
+									}
+									File f=new File(Environment.getExternalStorageDirectory(), "/Wisecraft");
+									f.mkdirs();
+									if (writeToFile(f = new File(et_.getText().toString()), gson.toJson(servs, Server[].class)))
+										return f;
+									else return null;
+								}
+								public void onPostExecute(File f) {
+									if (f != null) {
+										Toast.makeText(ServerListActivityImpl.this, getResources().getString(R.string.export_complete).replace("[PATH]", f + ""), Toast.LENGTH_LONG).show();
+									} else {
+										Toast.makeText(ServerListActivityImpl.this, getResources().getString(R.string.export_failed), Toast.LENGTH_LONG).show();
+									}
+								}
+							}.execute();
 						}
-						File f=new File(Environment.getExternalStorageDirectory(), "/Wisecraft");
-						f.mkdirs();
-						if (writeToFile(f = new File(f, "servers.json"), gson.toJson(servs, Server[].class)))
-							return f;
-						else return null;
-					}
-					public void onPostExecute(File f) {
-						if (f != null) {
-							Toast.makeText(ServerListActivityImpl.this, getResources().getString(R.string.export_complete).replace("[PATH]", f + ""), Toast.LENGTH_LONG).show();
-						} else {
-							Toast.makeText(ServerListActivityImpl.this, getResources().getString(R.string.export_failed), Toast.LENGTH_LONG).show();
-						}
-					}
-				}.execute();
+					})
+					.show();
 				break;
 			case 4:
 				final EditText et=new EditText(this);
@@ -411,6 +423,7 @@ class ServerListActivityImpl extends ListActivity {
 											public void run() {
 												sl.addAll(sv);
 												saveServers();
+												Toast.makeText(ServerListActivityImpl.this, getResources().getString(R.string.imported).replace("[PATH]", et.getText().toString()), Toast.LENGTH_LONG).show();
 											}
 										});
 								}
