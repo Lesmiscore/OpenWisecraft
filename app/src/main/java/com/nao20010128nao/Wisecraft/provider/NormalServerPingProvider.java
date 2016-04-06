@@ -1,16 +1,13 @@
 package com.nao20010128nao.Wisecraft.provider;
+import com.nao20010128nao.Wisecraft.misc.*;
 import java.util.*;
 
 import android.util.Log;
 import com.nao20010128nao.MCPing.pc.PCQuery;
 import com.nao20010128nao.MCPing.pe.PEQuery;
-import com.nao20010128nao.Wisecraft.ServerListActivity;
 import com.nao20010128nao.Wisecraft.Utils;
-import com.nao20010128nao.Wisecraft.misc.SprPair;
 import com.nao20010128nao.Wisecraft.pingEngine.UnconnectedPing;
 import java.io.IOException;
-import com.nao20010128nao.Wisecraft.misc.Server;
-import com.nao20010128nao.Wisecraft.misc.ServerStatus;
 
 public class NormalServerPingProvider implements ServerPingProvider {
 	Queue<Map.Entry<Server,PingHandler>> queue=new LinkedList<>();
