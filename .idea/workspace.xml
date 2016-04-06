@@ -10,47 +10,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e018eed5-f2dc-4345-95af-64168025e885" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wisecraft-i18n/.gitignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wisecraft-i18n/src/main/AndroidManifest.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/animated_vector_drawable_23_2_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/appcompat_v7_23_2_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wisecraft-i18n/src/main/res/values/arrays.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wisecraft-i18n/build.gradle" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wisecraft-i18n/src/main/res/values/colors.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wisecraft-i18n/src/main/res/values/font_display_names.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wisecraft-i18n/src/main/res/values/msl.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wisecraft-i18n/proguard-rules.pro" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wisecraft-i18n/src/main/res/values/proxy.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wisecraft-i18n/src/main/res/values-ja/proxy.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wisecraft-i18n/src/main/res/values/rcon.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wisecraft-i18n/src/main/res/values-ja/rcon.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wisecraft-i18n/src/main/res/values/rcon_give_amount.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wisecraft-i18n/src/main/res/values/rcon_give_item.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wisecraft-i18n/src/main/res/values/server_info_pc_keys.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wisecraft-i18n/src/main/res/values-ja/server_info_pc_keys.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wisecraft-i18n/src/main/res/values/strings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wisecraft-i18n/src/main/res/values-ja/strings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wisecraft-i18n/src/main/res/values/styles.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wisecraft-i18n/src/main/res/values-v14/styles.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wisecraft-i18n/src/main/res/values-v21/styles.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/support_vector_drawable_23_2_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wisecraft-i18n/wisecraft-i18n.iml" />
-      <change type="DELETED" beforePath="C:\Users\nao\Documents\GitLab\Wisecraft\.idea\libraries\appcompat_v7_23_1_1.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/gradle.xml" afterPath="$PROJECT_DIR$/.idea/gradle.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/gson_2_6_2.xml" afterPath="$PROJECT_DIR$/.idea/libraries/gson_2_6_2.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/jsoup_1_7_3.xml" afterPath="$PROJECT_DIR$/.idea/libraries/jsoup_1_7_3.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/nanohttpd_2_2_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/nanohttpd_2_2_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/org_eclipse_egit_github_core_2_1_5.xml" afterPath="$PROJECT_DIR$/.idea/libraries/org_eclipse_egit_github_core_2_1_5.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings.gradle" afterPath="$PROJECT_DIR$/settings.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_annotations_23_2_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_annotations_23_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wisecraft-i18n/wisecraft-i18n.iml" afterPath="$PROJECT_DIR$/wisecraft-i18n/wisecraft-i18n.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="e018eed5-f2dc-4345-95af-64168025e885" name="Default" comment="" />
     <ignored path="McServerDDoS.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -204,8 +164,8 @@
       <file leaf-file-name="build.gradle" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.52538073">
-              <caret line="32" column="23" selection-start-line="32" selection-start-column="23" selection-end-line="32" selection-end-column="23" />
+            <state vertical-scroll-proportion="0.47138965">
+              <caret line="30" column="36" selection-start-line="30" selection-start-column="36" selection-end-line="30" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -2891,7 +2851,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -3459,8 +3419,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.52538073">
-          <caret line="32" column="23" selection-start-line="32" selection-start-column="23" selection-end-line="32" selection-end-column="23" />
+        <state vertical-scroll-proportion="0.47138965">
+          <caret line="30" column="36" selection-start-line="30" selection-start-column="36" selection-end-line="30" selection-end-column="36" />
           <folding />
         </state>
       </provider>
