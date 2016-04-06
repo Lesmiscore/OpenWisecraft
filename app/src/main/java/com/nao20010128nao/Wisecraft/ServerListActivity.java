@@ -778,7 +778,7 @@ class ServerListActivityImpl extends ListActivity {
 							((ImageView)sl.getViewQuick(i_).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_error)));
 							((TextView)sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(s.ip + ":" + s.port);
 							((TextView)sl.getViewQuick(i_).findViewById(R.id.pingMillis)).setText(R.string.notResponding);
-							((TextView)sl.getViewQuick(i_).findViewById(R.id.playersCount)).setText("-/-");
+							((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText("-/-");
 							Server sn=new Server();
 							sn.ip = s.ip;
 							sn.port = s.port;
