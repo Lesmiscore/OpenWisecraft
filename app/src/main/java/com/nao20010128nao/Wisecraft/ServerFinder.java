@@ -148,6 +148,7 @@ public class ServerFinder extends ListActivity {
 			}
 			//if(convertView!=null)return convertView;
 			final View layout=getLayoutInflater().inflate(R.layout.quickstatus, null, false);
+			layout.findViewById(R.id.serverPlayers).setVisibility(View.GONE);
 			ServerStatus s=getItem(position);
 			layout.setTag(s);
 			((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
