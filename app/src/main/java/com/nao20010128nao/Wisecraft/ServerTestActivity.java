@@ -2,6 +2,7 @@ package com.nao20010128nao.Wisecraft;
 import android.app.*;
 import android.content.*;
 import android.widget.*;
+import com.nao20010128nao.Wisecraft.misc.*;
 import java.util.*;
 
 import android.graphics.drawable.ColorDrawable;
@@ -11,10 +12,6 @@ import android.view.ViewGroup;
 import com.nao20010128nao.MCPing.pc.Reply;
 import com.nao20010128nao.MCPing.pc.Reply19;
 import com.nao20010128nao.MCPing.pe.FullStat;
-import com.nao20010128nao.Wisecraft.misc.Server;
-import com.nao20010128nao.Wisecraft.misc.ServerStatus;
-import com.nao20010128nao.Wisecraft.misc.AppBaseArrayAdapter;
-import com.nao20010128nao.Wisecraft.misc.SprPair;
 import com.nao20010128nao.Wisecraft.pingEngine.UnconnectedPing;
 import com.nao20010128nao.Wisecraft.provider.NormalServerPingProvider;
 import com.nao20010128nao.Wisecraft.provider.ServerPingProvider;

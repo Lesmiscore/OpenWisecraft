@@ -4,6 +4,7 @@ import java.net.*;
 
 import com.nao20010128nao.MCPing.PingHost;
 import com.nao20010128nao.MCPing.ServerPingResult;
+import android.util.Log;
 
 public class UnconnectedPing {
 	public static final byte UCP_PID=0x01;
@@ -46,6 +47,7 @@ public class UnconnectedPing {
 			dis.readLong();//MAGIC
 			dis.readLong();//MAGIC
 			String s=dis.readUTF();
+			Log.d("UCP",s);
 			return new UnconnectedPingResult(s, t);
 		} catch (IOException e) {
 			throw e;
@@ -64,6 +66,12 @@ public class UnconnectedPing {
 		}
 		public String getServerName() {
 			return serverInfos[1];
+		}
+		public int getPlayersCount() {
+			return new Integer(serverInfos[4]);
+		}
+		public int getMaxPlayers() {
+			return new Integer(serverInfos[5]);
 		}
 		public String getRaw() {
 			return raw;

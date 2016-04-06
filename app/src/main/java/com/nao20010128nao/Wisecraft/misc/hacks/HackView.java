@@ -1,7 +1,7 @@
 package com.nao20010128nao.Wisecraft.misc.hacks;
-import android.view.View;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.View;
 import pref.StartPref;
 
 public class HackView extends View

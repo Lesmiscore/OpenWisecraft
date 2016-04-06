@@ -339,16 +339,15 @@ class ServerListActivityImpl extends ListActivity {
 					}
 					((TextView)sl.getViewQuick(i).findViewById(R.id.pingMillis)).setText(R.string.working);
 					((ImageView)sl.getViewQuick(i).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
+					if (!srl.isRefreshing()) {
+						srl.setRefreshing(true);
+					}
 				}
 				new Thread(){
 					public void run(){
 						for (int i=0;i < list.size();i++) {
 							if (pinging.get(list.get(i))) {
 								continue;
-							}
-							final int i_=i;
-							if (!srl.isRefreshing()) {
-								srl.setRefreshing(true);
 							}
 							spp.putInQueue(list.get(i), new PingHandlerImpl(false, -1, false){
 									public void onPingFailed(final Server s) {
@@ -374,26 +373,38 @@ class ServerListActivityImpl extends ListActivity {
 				}.start();
 				break;
 			case 3:
-				new AsyncTask<Void,Void,File>(){
-					public File doInBackground(Void... a) {
-						Server[] servs=new Server[list.size()];
-						for (int i=0;i < servs.length;i++) {
-							servs[i] = list.get(i).cloneAsServer();
+				final EditText et_=new EditText(this);
+				et_.setTypeface(TheApplication.instance.getLocalizedFont());
+				et_.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/servers.json").toString());
+				new AlertDialog.Builder(this)
+					.setTitle(R.string.export_typepath)
+					.setView(et_)
+					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
+						public void onClick(DialogInterface di, int w) {
+							Toast.makeText(ServerListActivityImpl.this, R.string.exporting, Toast.LENGTH_LONG).show();
+							new AsyncTask<Void,Void,File>(){
+								public File doInBackground(Void... a) {
+									Server[] servs=new Server[list.size()];
+									for (int i=0;i < servs.length;i++) {
+										servs[i] = list.get(i).cloneAsServer();
+									}
+									File f=new File(Environment.getExternalStorageDirectory(), "/Wisecraft");
+									f.mkdirs();
+									if (writeToFile(f = new File(et_.getText().toString()), gson.toJson(servs, Server[].class)))
+										return f;
+									else return null;
+								}
+								public void onPostExecute(File f) {
+									if (f != null) {
+										Toast.makeText(ServerListActivityImpl.this, getResources().getString(R.string.export_complete).replace("[PATH]", f + ""), Toast.LENGTH_LONG).show();
+									} else {
+										Toast.makeText(ServerListActivityImpl.this, getResources().getString(R.string.export_failed), Toast.LENGTH_LONG).show();
+									}
+								}
+							}.execute();
 						}
-						File f=new File(Environment.getExternalStorageDirectory(), "/Wisecraft");
-						f.mkdirs();
-						if (writeToFile(f = new File(f, "servers.json"), gson.toJson(servs, Server[].class)))
-							return f;
-						else return null;
-					}
-					public void onPostExecute(File f) {
-						if (f != null) {
-							Toast.makeText(ServerListActivityImpl.this, getResources().getString(R.string.export_complete).replace("[PATH]", f + ""), Toast.LENGTH_LONG).show();
-						} else {
-							Toast.makeText(ServerListActivityImpl.this, getResources().getString(R.string.export_failed), Toast.LENGTH_LONG).show();
-						}
-					}
-				}.execute();
+					})
+					.show();
 				break;
 			case 4:
 				final EditText et=new EditText(this);
@@ -412,6 +423,7 @@ class ServerListActivityImpl extends ListActivity {
 											public void run() {
 												sl.addAll(sv);
 												saveServers();
+												Toast.makeText(ServerListActivityImpl.this, getResources().getString(R.string.imported).replace("[PATH]", et.getText().toString()), Toast.LENGTH_LONG).show();
 											}
 										});
 								}
@@ -766,6 +778,7 @@ class ServerListActivityImpl extends ListActivity {
 							((ImageView)sl.getViewQuick(i_).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_error)));
 							((TextView)sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(s.ip + ":" + s.port);
 							((TextView)sl.getViewQuick(i_).findViewById(R.id.pingMillis)).setText(R.string.notResponding);
+							((TextView)sl.getViewQuick(i_).findViewById(R.id.playersCount)).setText("-/-");
 							Server sn=new Server();
 							sn.ip = s.ip;
 							sn.port = s.port;
@@ -805,6 +818,7 @@ class ServerListActivityImpl extends ListActivity {
 								} else {
 									title = s.ip + ":" + s.port;
 								}
+								((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText(fs.getData().get("numplayers")+"/"+fs.getData().get("maxplayers"));
 							} else if (s.response instanceof Reply19) {//PC 1.9~
 								Reply19 rep=(Reply19)s.response;
 								if (rep.description == null) {
@@ -812,6 +826,7 @@ class ServerListActivityImpl extends ListActivity {
 								} else {
 									title = deleteDecorations(rep.description.text);
 								}
+								((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText(rep.getPlayers().getMax()+"/"+rep.getPlayers().getOnline());
 							} else if (s.response instanceof Reply) {//PC
 								Reply rep=(Reply)s.response;
 								if (rep.description == null) {
@@ -819,10 +834,13 @@ class ServerListActivityImpl extends ListActivity {
 								} else {
 									title = deleteDecorations(rep.description);
 								}
+								((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText(rep.getPlayers().getMax()+"/"+rep.getPlayers().getOnline());
 							} else if (s.response instanceof SprPair) {//PE?
 								SprPair sp=((SprPair)s.response);
 								if (sp.getB() instanceof UnconnectedPing.UnconnectedPingResult) {
-									title = ((UnconnectedPing.UnconnectedPingResult)sp.getB()).getServerName();
+									UnconnectedPing.UnconnectedPingResult res=(UnconnectedPing.UnconnectedPingResult)sp.getB();
+									title = res.getServerName();
+									((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText(res.getPlayersCount()+"/"+res.getMaxPlayers());
 								} else if (sp.getA() instanceof FullStat) {
 									FullStat fs=(FullStat)sp.getA();
 									Map<String,String> m=fs.getData();
@@ -833,13 +851,18 @@ class ServerListActivityImpl extends ListActivity {
 									} else {
 										title = s.ip + ":" + s.port;
 									}
+									((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText(fs.getData().get("numplayers")+"/"+fs.getData().get("maxplayers"));
 								} else {
 									title = s.ip + ":" + s.port;
+									((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText("-/-");
 								}
-							} else if (s.response instanceof UnconnectedPing.UnconnectedPingResult) {
-								title = ((UnconnectedPing.UnconnectedPingResult)s.response).getServerName();
+							} else if (s.response instanceof UnconnectedPing.UnconnectedPingResult) {//PE
+								UnconnectedPing.UnconnectedPingResult res=(UnconnectedPing.UnconnectedPingResult)s.response;
+								title = res.getServerName();
+								((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText(res.getPlayersCount()+"/"+res.getMaxPlayers());
 							} else {//Unreachable
 								title = s.ip + ":" + s.port;
+								((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText("-/-");
 							}
 							((TextView)sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(deleteDecorations(title));
 							((TextView)sl.getViewQuick(i_).findViewById(R.id.pingMillis)).setText(s.ping + " ms");
@@ -862,6 +885,7 @@ class ServerListActivityImpl extends ListActivity {
 								srl.setRefreshing(false);
 							}
 						} catch (Throwable e) {
+							DebugWriter.writeToE("ServerListActivity",e);
 							onPingFailed(s);
 						}
 					}

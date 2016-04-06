@@ -1,21 +1,18 @@
 package com.nao20010128nao.Wisecraft.misc;
+import java.io.*;
+import java.util.*;
+
 import android.content.Context;
-import android.net.ConnectivityManager;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.preference.PreferenceManager;
-import java.io.File;
-import java.io.InputStreamReader;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.net.URL;
-import com.nao20010128nao.Wisecraft.Utils;
 import android.util.Log;
-import dalvik.system.DexClassLoader;
-import com.nao20010128nao.McServerList.sites.ServerListSite;
 import com.nao20010128nao.McServerList.ServerAddressFetcher;
-import java.lang.reflect.InvocationTargetException;
+import com.nao20010128nao.McServerList.sites.ServerListSite;
+import com.nao20010128nao.Wisecraft.ServerGetActivity;
+import com.nao20010128nao.Wisecraft.Utils;
+import dalvik.system.DexClassLoader;
+import java.net.URL;
 
 public class SlsUpdater extends Thread
 {
@@ -124,6 +121,19 @@ public class SlsUpdater extends Thread
 			Object todai_ji=classTodai_ji.newInstance();
 			ServerListSite[] services=(ServerListSite[])classTodai_ji.getMethod("getServices").invoke(todai_ji);
 			for (ServerListSite sls:services)ServerAddressFetcher.addService(sls);
+			Object servDomains;
+			try {
+				servDomains=classTodai_ji.getMethod("getAddtionalDomains").invoke(todai_ji);
+			} catch (Throwable e) {
+				servDomains=null;
+			}
+			if(servDomains==null){
+				//do nothing
+			}else if(servDomains instanceof List<String>){
+				ServerGetActivity.addForServerList=new ArrayList<String>((List<String>)servDomains);
+			}else if(servDomains instanceof String[]){
+				ServerGetActivity.addForServerList=new ArrayList<>(Arrays.<String>asList((String[])servDomains));
+			}
 		} catch (Throwable e) {
 			DebugWriter.writeToE("slsupd",e);
 		}

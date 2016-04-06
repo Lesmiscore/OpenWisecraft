@@ -8,6 +8,7 @@ import com.nao20010128nao.Wisecraft.misc.*;
 import java.util.*;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
@@ -22,8 +23,6 @@ import java.lang.ref.WeakReference;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
-import android.content.Intent;
-import android.support.v4.widget.SwipeRefreshLayout;
 
 public class ServerInfoActivity extends FragmentActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);

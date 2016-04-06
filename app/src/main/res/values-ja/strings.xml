@@ -54,6 +54,15 @@
 	<string name="exit">終了</string>
 	<string name="serverListStyle">サーバーリストの表示スタイル</string>
 	<string name="selectFont">フォントを選択</string>
+	<string name="saved_fonts">変更を保存しました。アプリのメイン画面のメニューにある「終了」を選択してアプリを終了してからもう一度起動してください。</string>
+	<string name="allowAutoUpdateSLSCode">サーバーリストサイトからのサーバーの取得機能を向上・修正するプログラムをダウンロードする</string>
+	<string name="aausc_monnet">モバイルネットワーク接続中でもダウンロード(更新)する</string>
+	<string name="currentSlsVersion">現在のライブラリのバージョン</string>
+	<string name="unknown">不明</string>
+	<string name="addThisServer">このサーバーを追加</string>
+	<string name="export_typepath">エクスポートするJSONファイルのパスを入力してください</string>
+	<string name="exporting">エクスポートしています...</string>
+	<string name="imported">インポート完了: [PATH]</string>
 	
 	<string name="font">DroidSans.ttf</string>
 	<string name="fontField">droidSans</string>

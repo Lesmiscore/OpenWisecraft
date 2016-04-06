@@ -1,4 +1,6 @@
 package com.nao20010128nao.Wisecraft;
+import java.util.*;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
@@ -10,20 +12,21 @@ import android.widget.ArrayAdapter;
 import com.nao20010128nao.McServerList.ServerAddressFetcher;
 import com.nao20010128nao.Wisecraft.misc.WebViewActivity;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ServerGetActivity extends WebViewActivity {
+	public static List<String> addForServerList;
 	String domain;
+	String[] serverList;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
+		serverList=createServerListDomains();
 		new AlertDialog.Builder(this)
-			.setSingleChoiceItems(R.array.serverListSites, -1, new DialogInterface.OnClickListener(){
+			.setSingleChoiceItems(serverList, -1, new DialogInterface.OnClickListener(){
 				public void onClick(DialogInterface di, int w) {
 					di.dismiss();
-					loadUrl("http://" + (domain = getResources().getStringArray(R.array.serverListSites)[w]) + "/");
+					loadUrl("http://" + (domain = serverList[w]) + "/");
 				}
 			})
 			.setTitle(R.string.selectWebSite)
@@ -129,5 +132,12 @@ public class ServerGetActivity extends WebViewActivity {
 		} else {
 			finish();
 		}
+	}
+	
+	public String[] createServerListDomains(){
+		List<String> result=new ArrayList<>();
+		result.addAll(Arrays.asList(getResources().getStringArray(R.array.serverListSites)));
+		if(addForServerList!=null)result.addAll(addForServerList);
+		return Factories.strArray(result);
 	}
 }

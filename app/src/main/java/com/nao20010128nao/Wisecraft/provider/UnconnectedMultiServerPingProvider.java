@@ -1,8 +1,7 @@
 package com.nao20010128nao.Wisecraft.provider;
-import com.nao20010128nao.Wisecraft.ServerListActivity;
+import com.nao20010128nao.Wisecraft.misc.Server;
 import java.util.ArrayList;
 import java.util.List;
-import com.nao20010128nao.Wisecraft.misc.Server;
 
 public class UnconnectedMultiServerPingProvider implements ServerPingProvider {
 	List<UnconnectedServerPingProvider> objects=new ArrayList<>();

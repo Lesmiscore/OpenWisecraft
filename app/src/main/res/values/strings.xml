@@ -25,11 +25,11 @@
 	<string name="testTimes">How many times do you want to ping? :</string>
 	<string name="isPC">This server is PC version.</string>
 	<string name="serverInfoPCMessage">PC version of Minecraft does not send all the informations to show here.\nThis is a speficication of Minecraft server.</string>
-	<string name="export">Export the list</string>
-	<string name="imporT">Import from the list</string>
+	<string name="export">Export the list to a file</string>
+	<string name="imporT">Import from a file</string>
 	<string name="import_typepath">Type the path to the json file to import</string>
-	<string name="export_complete">Export Complete: [PATH]</string>
-	<string name="export_failed">Export failed</string>
+	<string name="export_complete">Exported: [PATH]</string>
+	<string name="export_failed">Failed Exporting</string>
 	<string name="serverOffline">Server is Offline.</string>
 	<string name="selectFont">Select Font</string>
 	<string name="ucpInfoError">No details for this server.</string>
@@ -59,12 +59,15 @@
 	<string name="exit">Exit</string>
 	<string name="serverListStyle">Style of the Server List screen</string>
 	<string name="saved_fonts">Saved your change. Please tap \"Exit\" button in the top screen to restart this app.</string>
-	<string name="allowAutoUpdateSLSCode">Allow updating the library for getting servers. (Subset of McServerList)</string>
+	<string name="allowAutoUpdateSLSCode">Allow updating the library for getting servers.</string>
 	<string name="aausc_monnet">Allow updating when the mobile network is active</string>
 	<string name="currentSlsVersion">Current library version</string>
 	<string name="latestSlsVersion">Latest library version</string>
 	<string name="unknown">Unknown</string>
 	<string name="addThisServer">Add this server</string>
+	<string name="export_typepath">Type the path to the json file to export</string>
+	<string name="exporting">Exporting...</string>
+	<string name="imported">Imported: [PATH]</string>
 	
 	
 	<string name="font">lato-light.ttf</string>

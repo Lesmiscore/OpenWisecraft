@@ -1,11 +1,10 @@
 package com.nao20010128nao.Wisecraft.misc;
 
-import android.view.View.*;
-import android.content.*;
-import android.util.*;
-import android.support.v4.widget.*;
+import android.content.Context;
+import android.support.v4.widget.DrawerLayout;
+import android.util.AttributeSet;
 
-public class FixedDrawerLayout extends DrawerLayout{
+public class FixedDrawerLayout extends DrawerLayout {
 
     public FixedDrawerLayout(Context context) {
         super(context);
