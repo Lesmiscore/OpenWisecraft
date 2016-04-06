@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="send">送信</string>
+
+	<string name="serversystem">サーバーシステム</string>
+	<string name="stop">サーバーを停止</string>
+	<string name="op">OP権限を与える</string>
+	<string name="deop">OP権限を剥奪する</string>
+	<string name="ban">プレイヤーを追放する</string>
+	<string name="ban_ip">プレイヤーを、IPごと追放する</string>
+	<string name="kick">プレイヤーを強制退出させる</string>
+	<string name="pardon">追放したプレイヤーを恩赦する (pardon)</string>
+	<string name="pardon_ip">追放したプレイヤーIPごとを恩赦する (pardon-ip)</string>
+	<string name="gametime">ゲーム内の時間を変更</string>
+	<string name="changepgm">プレイヤーのゲームモードを変更する</string>
+	<string name="saveall">全て強制的に保存</string>
+	<string name="saveon">自動保存を有効化</string>
+	<string name="saveoff">自動保存を無効化</string>
+
+	<string name="playertools">プレイヤーツール</string>
+	<string name="give">アイテムをあげる</string>
+	<string name="clear">アイテムを剥奪</string>
+	<string name="kill">プレイヤーを強制殺害</string>
+	<string name="tell">プレイヤーにプライベートメッセージを送信</string>
+	<string name="tp">プレイヤーを移動</string>
+	<string name="xp">経験値を付与または剥奪</string>
+
+	<string name="gamesystem">ゲームシステム</string>
+	<string name="placeblock">ブロックを設置</string>
+	<string name="defaultgm">デフォルトのゲームモードを設定</string>
+	<string name="changeweather">天気を変更</string>
+
+	<string name="nocategory">その他のコマンド</string>
+	<string name="me">meコマンド</string>
+	<string name="banlist">追放されたプレイヤーの一覧</string>
+	
+	<string name="console">コンソール</string>
+	<string name="typePassword">接続パスワードを入力して下さい:</string>
+	<string name="incorrectPassword">パスワードが間違っています。\n再度お試し下さい。</string>
+	<string name="connecting">接続中...</string>
+	<string name="connected">接続成功</string>
+	<string name="emptyResponse">(返答メッセージ無し)</string>
+	<string name="giveOpAsk">\"[PLAYER]\"にOP権限を付与してもよろしいですか?</string>
+	<string name="deprivateOpAsk">\"[PLAYER]\"からOP権限を剥奪してもよろしいですか?</string>
+	<string name="kickAsk">\"[PLAYER]\"をkickしてもよろしいですか?</string>
+	<string name="banAsk">\"[PLAYER]\"を追放してもよろしいですか?</string>
+	<string name="banIpAsk">\"[PLAYER]\"をIPごと追放してもよろしいですか?</string>
+	<string name="banIpHint">名前もしくはIPアドレス</string>
+	<string name="pardonAsk">\"[PLAYER]\"をpardonしてもよろしいですか?</string>
+	<string name="pardonIpAsk">\"[PLAYER]\"pardon-ipしてもよろしいですか?</string>
+	<string name="pardonIpHint">IPアドレスのみ</string>
+	<string name="setTimeAsk">ゲーム内時間を\"[TIME]\"にしてもよろしいですか?</string>
+	<string name="setTimeHint">数値もしくは文字列</string>
+	<string name="gamemodeAsk">[PLAYER]のゲームモードを[MODE]に設定してもよろしいですか?</string>
+	<string name="gamemodeHint">数値もしくは文字列</string>
+	<string name="player">プレイヤー:</string>
+	<string name="change">変更</string>
+	<string name="item">アイテム:</string>
+	<string name="amount">量:</string>
+	<string name="execute">実行</string>
+	<string name="giveAmountHint">数値のみ</string>
+	<string name="givePlayerHint"></string>
+	<string name="giveItemHint">アイテムID (PC ~1.7.10,PE) もしくはアイテムコード (PC 1.8~)</string>
+	<string name="giveSelectAmount">量を指定して下さい</string>
+	<string name="giveSelectPlayer">プレイヤーを指定して下さい</string>
+	<string name="giveSelectItem">アイテムを指定して下さい</string>
+	<string name="killAsk">\"[PLAYER]\"を殺してもよろしいですか?</string>
+	<string name="tellSetMessage">メッセージを指定して下さい</string>
+	<string name="message">メッセージ:</string>
+	<string name="tellMessageHint">なんでもどうぞ</string>
+	<string name="defaultgamemodeAsk">デフォルトのゲームモードを[MODE]に指定してもよろしいですか?</string>
+	<string name="weatherAsk">ゲーム内の天候を[MODE]に設定してもよろしいですか?</string>
+
+	<string name="indicatePlayers">オンラインのプレイヤー: [PLAYERS]</string>
+</resources>

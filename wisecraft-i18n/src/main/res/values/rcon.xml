@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="send">OK</string>
+	
+	<string name="serversystem">Server System</string>
+	<string name="stop">Stop server</string>
+	<string name="op">Grant Operator permission</string>
+	<string name="deop">Deprivation Operator permission</string>
+	<string name="ban">Ban player</string>
+	<string name="ban_ip">Ban IP</string>
+	<string name="kick">Kick out player</string>
+	<string name="pardon">Forgive banned player (pardon)</string>
+	<string name="pardon_ip">Forgive banned IP (pardon-ip)</string>
+	<string name="gametime">Change the game time</string>
+	<string name="changepgm">Change player game mode</string>
+	<string name="saveall">Save all</string>
+	<string name="saveon">Turn on auto save</string>
+	<string name="saveoff">Turn off auto save</string>
+
+	<string name="playertools">Player tools</string>
+	<string name="give">Give item</string>
+	<string name="clear">Take item</string>
+	<string name="kill">Kill player</string>
+	<string name="tell">Tell to player</string>
+	<string name="tp">Teleport player</string>
+	<string name="xp">Give or take experimental to player</string>
+
+	<string name="gamesystem">Game system</string>
+	<string name="placeblock">Place a block</string>
+	<string name="defaultgm">Set default game mode</string>
+	<string name="changeweather">Change weather</string>
+
+	<string name="nocategory">Other commands</string>
+	<string name="me">me</string>
+	<string name="banlist">Show banned player list</string>
+	
+	<string name="rcon">RCON</string>
+	<string name="console">Console</string>
+	<string name="typePassword">Type the password to connect:</string>
+	<string name="incorrectPassword">Incorrect Password.\nTry again!</string>
+	<string name="connecting">Connecting...</string>
+	<string name="connected">Connected!</string>
+	<string name="emptyResponse">(No Response Text)</string>
+	<string name="giveOpAsk">Are you sure to give op to \"[PLAYER]\"?</string>
+	<string name="deprivateOpAsk">Are you sure to deprive op from \"[PLAYER]\"?</string>
+	<string name="kickAsk">Are you sure to kick \"[PLAYER]\" from the game?</string>
+	<string name="banAsk">Are you sure to ban \"[PLAYER]\"?</string>
+	<string name="banIpAsk">Are you sure to ban-ip \"[PLAYER]\"?</string>
+	<string name="banIpHint">Name or IP address</string>
+	<string name="pardonAsk">Are you sure to pardon \"[PLAYER]\"?</string>
+	<string name="pardonIpAsk">Are you sure to pardon-ip \"[PLAYER]\"?</string>
+	<string name="pardonIpHint">IP address only</string>
+	<string name="setTimeAsk">Are you sure to set the time to \"[TIME]\"?</string>
+	<string name="setTimeHint">Number or string</string>
+	<string name="gamemodeAsk">Are you sure to set [PLAYER]\'s gamemode to [MODE]?</string>
+	<string name="gamemodeHint">Number or string</string>
+	<string name="player">Player:</string>
+	<string name="change">Change</string>
+	<string name="item">Item:</string>
+	<string name="amount">Amount:</string>
+	<string name="execute">Execute</string>
+	<string name="giveAmountHint">Number only</string>
+	<string name="givePlayerHint"></string>
+	<string name="giveItemHint">Item ID (PC ~1.7.10,PE) or Item Code (PC 1.8~)</string>
+	<string name="giveSelectAmount">Please set the amount</string>
+	<string name="giveSelectPlayer">Please set the player</string>
+	<string name="giveSelectItem">Please set the item</string>
+	<string name="killAsk">Are you sure to kill \"[PLAYER]\"?</string>
+	<string name="tellSetMessage">Please set the message</string>
+	<string name="message">Message:</string>
+	<string name="tellMessageHint">Anything here</string>
+	<string name="defaultgamemodeAsk">Are you sure to set defaultgamemode to [MODE]?</string>
+	<string name="weatherAsk">Are you sure to set the weather to [MODE]?</string>
+	
+	<string name="indicatePlayers">Online Players: [PLAYERS]</string>
+	
+	<string-array name="setTimeConst">
+		<item>night</item>
+		<item>day</item>
+	</string-array>
+	<string-array name="gamemodeConst">
+		<item>survival</item>
+		<item>creative</item>
+		<item>adventure</item>
+		<item>spectator</item>
+	</string-array>
+	<string-array name="defaultgamemodeConst">
+		<item>survival</item>
+		<item>creative</item>
+		<item>adventure</item>
+	</string-array>
+</resources>
