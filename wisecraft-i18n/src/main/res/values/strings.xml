@@ -71,6 +71,7 @@
 	<string name="basics">Basic Settings</string>
 	<string name="sortPlayerNames">Sort player names</string>
 	<string name="sortPluginNames">Sort plugin names</string>
+	<string name="showPcUserFace">Show skin of face of PC version users.</string>
 	
 	
 	<string name="font">lato-light.ttf</string>

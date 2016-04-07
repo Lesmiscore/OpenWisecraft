@@ -28,6 +28,11 @@
 			android:title="@string/sortPluginNames"
 			android:key="sortPluginNames"
 		/>
+		<CheckBoxPreference
+			android:title="@string/showPcUserFace"
+			android:key="showPcUserFace"
+			android:defaultValue="false"
+		/>
 		<pref.StartPref
 			android:title="@string/serverListStyle"
 			android:key="serverListStyle"
