@@ -34,16 +34,14 @@ public class FullStat implements ServerPingResult {
 		for (int i = 2; i < dataEnds; i += 2) {
 			String k = new String(temp[i]);
 			String v = new String(temp[i + 1]);
-			if ("".equals(k) | "".equals(v)) {
+			if ("".equals(k) | "".equals(v))
 				continue;
-			}
 			datas.put(k, v);
 		}
 
-		playerList = new ArrayList<String>();//
-		for (int i = dataEnds + 2; i < temp.length; i++) {
+		playerList = new ArrayList<String>();
+		for (int i = dataEnds + 2; i < temp.length; i++)
 			playerList.add(new String(temp[i]));
-		}
 	}
 
 	public Map<String, String> getData() {
@@ -53,6 +51,4 @@ public class FullStat implements ServerPingResult {
 	public List<String> getPlayerList() {
 		return Collections.unmodifiableList(playerList);
 	}
-
-	// TODO getPlayers return hashmap/array/arraylist
 }
