@@ -65,6 +65,7 @@
 			android:title="@string/aausc_monnet"
 			android:key="aausc_monnet"
 			android:defaultValue="false"
+			android:dependency="allowAutoUpdateSLSCode"
 		/>
 		<pref.StartPref
 			android:title="@string/currentSlsVersion"
