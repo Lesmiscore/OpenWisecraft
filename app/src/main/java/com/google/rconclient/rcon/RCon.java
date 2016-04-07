@@ -11,6 +11,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Random;
 import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
+import java.util.Arrays;
 
 /**
  * This class implements the communication with MineCraft using the RCon
@@ -79,14 +80,9 @@ public class RCon {
 		socket = new Socket(host, port);
 		outputStream = socket.getOutputStream();
 		inputStream = socket.getInputStream();
-		final byte[] passwordBytes = new byte[password.length];
-		for (int i = 0; i < password.length; i++) {
-			passwordBytes[i] = (byte) password[i];
-		}
+		final byte[] passwordBytes = new String(password).getBytes(CompatCharsets.UTF_8);
 		final byte[] response = send(LOGIN_TYPE, passwordBytes);
-		for (int i = 0; i < passwordBytes.length; i++) {
-			passwordBytes[i] = 0;
-		}
+		Arrays.fill(passwordBytes,(byte)0);
 		assert response.length == 0;
 	}
 
