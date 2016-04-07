@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-	<string name="msl_websiteNotSupported">"This website is not supported: "</string>
-	<string name="msl_unsupportedWebpage">"Unsupported webpage: "</string>
-</resources>

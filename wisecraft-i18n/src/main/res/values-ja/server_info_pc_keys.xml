@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-	<string name="pc_maxPlayers">最大プレイヤー数</string>
-	<string name="pc_nowPlayers">参加中のプレイヤー数</string>
-	<string name="pc_protocolVersion">プロトコルバージョン</string>
-	<string name="pc_softwareVersion">サーバーソフトウェア</string>
-	
-</resources>
