@@ -94,11 +94,11 @@ public class GhostPingServer extends Thread {
 			dos.writeInt(MAGIC_3RD);
 			dos.writeInt(MAGIC_4TH);
 
-			List<String> datas=new ArrayList();
+			List<String> datas=new ArrayList<>();
 			datas.add("MCPE");//MCPE
 			datas.add("§5Wisecraft");//Server name
-			datas.add("45");//Protocol (45=0.14.0)
-			datas.add("0.14.0");//Version (Displayed on MCPE)
+			datas.add("46");//Protocol (46=0.14.1)
+			datas.add("0.14.1");//Version (Displayed on MCPE)
 			datas.add(Integer.MAX_VALUE + "");//Players count
 			datas.add(Integer.MAX_VALUE + "");//Max players
 
@@ -153,7 +153,7 @@ public class GhostPingServer extends Thread {
 				kv.put("plugins", "Wisecraft Ghost Ping" + buildPlugins());
 				kv.put("hostname", "§5Wisecraft");
 				kv.put("numplayers", Integer.MAX_VALUE + "");
-				kv.put("version", "v0.14.0 alpha");
+				kv.put("version", "v0.14.1 alpha");
 				kv.put("game_id", "MINECRAFTPE");
 				kv.put("hostip", "0.0.0.0");
 				kv.put("maxplayers", Integer.MAX_VALUE + "");
