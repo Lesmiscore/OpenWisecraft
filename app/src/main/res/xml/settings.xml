@@ -13,10 +13,22 @@
 		android:maxLength="3"
 		android:defaultValue="6"
 	/>
-	<CheckBoxPreference
-		android:title="@string/updAnotherThread"
-		android:key="updAnotherThread"
-	/>
+	<PreferenceScreen
+		android:title="@string/basics">
+		<CheckBoxPreference
+			android:title="@string/updAnotherThread"
+			android:key="updAnotherThread"
+		/>
+		<CheckBoxPreference
+			android:title="@string/sortPlayerNames"
+			android:key="sortPlayerNames"
+			android:defaultValue="true"
+		/>
+		<CheckBoxPreference
+			android:title="@string/sortPluginNames"
+			android:key="sortPluginNames"
+		/>
+	</PreferenceScreen>
 	<PreferenceScreen
 		android:title="@string/features">
 		<CheckBoxPreference

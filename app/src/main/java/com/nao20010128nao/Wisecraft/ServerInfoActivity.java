@@ -23,10 +23,13 @@ import java.lang.ref.WeakReference;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 public class ServerInfoActivity extends FragmentActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
 	public static List<ServerStatus> stat=new ArrayList<>();
+	SharedPreferences pref;
 	
 	ServerStatus localStat;
 	Bundle keeping;
@@ -56,6 +59,7 @@ public class ServerInfoActivity extends FragmentActivity {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		instance = new WeakReference(this);
+		pref=PreferenceManager.getDefaultSharedPreferences(this);
 
 		int statOfs=getIntent().getIntExtra("statListOffset",-1);
 		
@@ -121,7 +125,8 @@ public class ServerInfoActivity extends FragmentActivity {
 		if (resp instanceof FullStat) {
 			FullStat fs=(FullStat)resp;
 			final ArrayList<String> sort=new ArrayList<>(fs.getPlayerList());
-			Collections.sort(sort);
+			if(pref.getBoolean("sortPlayerNames",true))
+				Collections.sort(sort);
 			final String title;
 			Map<String,String> m=fs.getData();
 			if (m.containsKey("hostname")) {
@@ -138,8 +143,12 @@ public class ServerInfoActivity extends FragmentActivity {
 			adap3.clear();
 			if (fs.getData().containsKey("plugins")) {
 				String[] data=fs.getData().get("plugins").split("\\: ");
-				if (data.length >= 2)
-					CompatArrayAdapter.addAll(adap3, data[1].split("\\; "));
+				if (data.length >= 2){
+					ArrayList<String> plugins=new ArrayList<>(Arrays.<String>asList(data[1].split("\\; ")));
+					if(pref.getBoolean("sortPluginNames",false))
+						Collections.sort(plugins);
+					CompatArrayAdapter.addAll(adap3, plugins);
+				}
 			}
 			setTitle(title);
 		} else if (resp instanceof Reply) {
@@ -155,7 +164,8 @@ public class ServerInfoActivity extends FragmentActivity {
 				for (Reply.Player o:rep.players.getSample()) {
 					sort.add(o.getName());
 				}
-				Collections.sort(sort);
+				if(pref.getBoolean("sortPlayerNames",true))
+					Collections.sort(sort);
 				adap.clear();
 				CompatArrayAdapter.addAll(adap, sort);
 			} else {

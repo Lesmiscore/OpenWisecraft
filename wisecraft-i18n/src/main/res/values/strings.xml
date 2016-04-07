@@ -68,6 +68,9 @@
 	<string name="export_typepath">Type the path to the json file to export</string>
 	<string name="exporting">Exporting...</string>
 	<string name="imported">Imported: [PATH]</string>
+	<string name="basics">Basic Settings</string>
+	<string name="sortPlayerNames">Sort player names</string>
+	<string name="sortPluginNames">Sort plugin names</string>
 	
 	
 	<string name="font">lato-light.ttf</string>
