@@ -65,8 +65,7 @@ public class PEQuery implements PingHost{
 
 		byte[] result = sendUDP(send);
 
-		BasicStat res = new BasicStat(result);
-		return res;
+		return new BasicStat(result);
 	}
 
 	/**
@@ -75,11 +74,6 @@ public class PEQuery implements PingHost{
 	 * @return a <code>QueryResponse</code> object
 	 */
 	public FullStat fullStatUni() {
-		// basicStat() calls handshake()
-		// QueryResponse basicResp = this.basicStat();
-		// int numPlayers = basicResp.onlinePlayers; //TODO use to determine max
-		// length of full stat
-
 		long t1=System.currentTimeMillis();
 		handshake();
 		t1=System.currentTimeMillis()-t1;
@@ -98,12 +92,7 @@ public class PEQuery implements PingHost{
 
 		lastPing=t1+t2;
 		
-		/*
-		 * note: buffer size = base + #players(online) * 16(max username length)
-		 */
-
-		FullStat res = new FullStat(result);
-		return res;
+		return new FullStat(result);
 	}
 
 	private byte[] sendUDP(byte[] input) {
