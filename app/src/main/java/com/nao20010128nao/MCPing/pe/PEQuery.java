@@ -73,7 +73,7 @@ public class PEQuery implements PingHost{
 	 *
 	 * @return a <code>QueryResponse</code> object
 	 */
-	public FullStat fullStatUni() {
+	public FullStat fullStat() {
 		long t1=System.currentTimeMillis();
 		handshake();
 		t1=System.currentTimeMillis()-t1;

@@ -73,7 +73,7 @@ public class NormalServerPingProvider implements ServerPingProvider {
 					Log.d(getClass().getName().split("\\.")[1], "PE");
 					PEQuery query=new PEQuery(stat.ip, stat.port);
 					try {
-						stat.response = query.fullStatUni();
+						stat.response = query.fullStat();
 						Log.d(getClass().getName().split("\\.")[1], "Success: Full Stat");
 						try {
 							UnconnectedPing.UnconnectedPingResult res=UnconnectedPing.doPing(stat.ip, stat.port);
