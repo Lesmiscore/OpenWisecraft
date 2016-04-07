@@ -6,15 +6,15 @@
 		android:key=""
 		android:enabled="false"
 	/>
-	<EditTextPreference 
-		android:key="parallels" 
-		android:title="@string/pingThreads"
-		android:inputType="number" 
-		android:maxLength="3"
-		android:defaultValue="6"
-	/>
 	<PreferenceScreen
 		android:title="@string/basics">
+		<EditTextPreference 
+			android:key="parallels" 
+			android:title="@string/pingThreads"
+			android:inputType="number" 
+			android:maxLength="3"
+			android:defaultValue="6"
+		/>
 		<CheckBoxPreference
 			android:title="@string/updAnotherThread"
 			android:key="updAnotherThread"
@@ -27,6 +27,19 @@
 		<CheckBoxPreference
 			android:title="@string/sortPluginNames"
 			android:key="sortPluginNames"
+		/>
+		<pref.StartPref
+			android:title="@string/serverListStyle"
+			android:key="serverListStyle"
+		/>
+		<pref.StartPref
+			android:title="@string/selectFont"
+			android:key="selectFont"
+		/>
+		<CheckBoxPreference
+			android:title="@string/sendInfos"
+			android:key="sendInfos"
+			android:defaultValue="false"
 		/>
 	</PreferenceScreen>
 	<PreferenceScreen
@@ -52,19 +65,6 @@
 			android:defaultValue="false"
 		/>
 	</PreferenceScreen>
-	<CheckBoxPreference
-		android:title="@string/sendInfos"
-		android:key="sendInfos"
-		android:defaultValue="false"
-	/>
-	<pref.StartPref
-		android:title="@string/serverListStyle"
-		android:key="serverListStyle"
-	/>
-	<pref.StartPref
-		android:title="@string/selectFont"
-		android:key="selectFont"
-	/>
 	<PreferenceScreen
 		android:title="@string/addServerFromServerListSite"
 		android:dependency="feature_asfsls">
