@@ -7,6 +7,7 @@ import com.nao20010128nao.Wisecraft.misc.Server;
 import com.nao20010128nao.Wisecraft.misc.ServerStatus;
 import com.nao20010128nao.Wisecraft.pingEngine.UnconnectedPing;
 import java.io.IOException;
+import com.nao20010128nao.Wisecraft.misc.KVP;
 public class UnconnectedServerPingProvider implements ServerPingProvider
 {
 	Queue<Map.Entry<Server,PingHandler>> queue=new LinkedList<>();
@@ -15,7 +16,7 @@ public class UnconnectedServerPingProvider implements ServerPingProvider
 	public void putInQueue(Server server, PingHandler handler) {
 		Utils.requireNonNull(server);
 		Utils.requireNonNull(handler);
-		queue.add(new KVP(server, handler));
+		queue.add(new KVP<Server,PingHandler>(server, handler));
 		if (!pingThread.isAlive()) {
 			pingThread = new PingThread();
 			pingThread.start();
@@ -80,31 +81,6 @@ public class UnconnectedServerPingProvider implements ServerPingProvider
 				}
 				Log.d(getClass().getName().split("\\.")[1], "Next");
 			}
-		}
-	}
-	private class KVP implements Map.Entry<Server,PingHandler> {
-		Server server;
-		PingHandler handler;
-		public KVP(Server server, PingHandler handler) {
-			this.server = server;
-			this.handler = handler;
-		}
-		@Override
-		public NormalServerPingProvider.PingHandler setValue(NormalServerPingProvider.PingHandler p1) {
-			// TODO: Implement this method
-			PingHandler old=handler;
-			handler = p1;
-			return old;
-		}
-		@Override
-		public Server getKey() {
-			// TODO: Implement this method
-			return server;
-		}
-		@Override
-		public NormalServerPingProvider.PingHandler getValue() {
-			// TODO: Implement this method
-			return handler;
 		}
 	}
 }

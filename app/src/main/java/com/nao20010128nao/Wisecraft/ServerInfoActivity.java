@@ -105,8 +105,12 @@ public class ServerInfoActivity extends FragmentActivity {
 
 		adap = new AppBaseArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
 		adap2 = new KVListAdapter<>(this);
-		adap3 = new AppBaseArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
-
+		if(pref.getBoolean("showPcUserFace",false)&localStat.isPC){
+			
+		}else{
+			adap3 = new AppBaseArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
+		}
+		
 		nonUpd = getIntent().getBooleanExtra("nonUpd", false);
 
 		/*tc=new TipController(this);
@@ -297,6 +301,24 @@ public class ServerInfoActivity extends FragmentActivity {
 	protected void attachBaseContext(Context newBase) {
 		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
 	}
+	
+	class PCUserFaceAdapter extends AppBaseArrayAdapter<String>{
+		public PCUserFaceAdapter(){
+			super(ServerInfoActivity.this,R.layout.simple_list_item_with_image,new ArrayList<String>());
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			// TODO: Implement this method
+			if(convertView==null){
+				convertView=getLayoutInflater().inflate(R.layout.simple_list_item_with_image,null);
+			}
+			String playerName=getItem(position);
+			((TextView)convertView.findViewById(android.R.id.text1)).setText(playerName);
+			return convertView;
+		}
+	}
+	
 	public static class PlayersFragment extends BaseFragment<ServerInfoActivity> {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
