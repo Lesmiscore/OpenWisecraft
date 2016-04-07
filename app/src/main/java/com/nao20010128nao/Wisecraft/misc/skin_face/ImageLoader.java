@@ -5,6 +5,9 @@ import java.net.URL;
 import java.util.LinkedList;
 import java.util.Map;
 import com.nao20010128nao.Wisecraft.misc.KVP;
+import android.graphics.BitmapFactory;
+import java.io.InputStream;
+import java.io.IOException;
 
 public class ImageLoader
 {
@@ -21,11 +24,35 @@ public class ImageLoader
 		@Override
 		public void run() {
 			// TODO: Implement this method
-			
+			while(queue.size()!=0){
+				Map.Entry<URL,ImageStatusListener> dat=queue.poll();
+				if(dat==null){
+					continue;
+				}
+				InputStream is=null;
+				Bitmap bmp=null;
+				try {
+					bmp=BitmapFactory.decodeStream(is = dat.getKey().openStream());
+				} catch (Throwable e) {
+					try{
+						dat.getValue().onError(e,dat.getKey());
+					}catch(Throwable e_){
+					}
+					continue;
+				}finally{
+					try {
+						if (is != null)is.close();
+					} catch (IOException e) {}
+				}
+				try{
+					dat.getValue().onSuccess(bmp,dat.getKey());
+				}catch(Throwable e_){
+				}
+			}
 		}
 	}
 	public static interface ImageStatusListener{
-		public void onSuccess(Bitmap bmp);
-		public void onError(Throwable err);
+		public void onSuccess(Bitmap bmp,URL url);
+		public void onError(Throwable err,URL url);
 	}
 }
