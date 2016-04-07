@@ -298,26 +298,26 @@ public class RCONActivity extends FragmentActivity {
 			return v;
 		}
 	}
-	public static class ConsoleFragment extends BaseFragment {
+	public static class ConsoleFragment extends BaseFragment<RCONActivity> {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
 			View v=inflater.inflate(R.layout.console, null, false);
-			instance.get().setConsoleLayout((LinearLayout)v.findViewById(R.id.consoleText));
-			instance.get().setCommandOk((Button)v.findViewById(R.id.send));
-			instance.get().setCommandTextBox((EditText)v.findViewById(R.id.command));
+			getParentActivity().setConsoleLayout((LinearLayout)v.findViewById(R.id.consoleText));
+			getParentActivity().setCommandOk((Button)v.findViewById(R.id.send));
+			getParentActivity().setCommandTextBox((EditText)v.findViewById(R.id.command));
 			return v;
 		}
 	}
-	public static class PlayersFragment extends BaseFragment {
+	public static class PlayersFragment extends BaseFragment<RCONActivity> {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
 			View v=inflater.inflate(R.layout.rcon_players_tab, null, false);
-			instance.get().setPlayersListView((ListView)v.findViewById(R.id.players));
-			instance.get().setPlayersCountTextView((TextView)v.findViewById(R.id.playersCount));
-			instance.get().setUpdatePlayersButton((ImageButton)v.findViewById(R.id.updatePlayers));
-			instance.get().refreshPlayers();
+			getParentActivity().setPlayersListView((ListView)v.findViewById(R.id.players));
+			getParentActivity().setPlayersCountTextView((TextView)v.findViewById(R.id.playersCount));
+			getParentActivity().setUpdatePlayersButton((ImageButton)v.findViewById(R.id.updatePlayers));
+			getParentActivity().refreshPlayers();
 			return v;
 		}
 	}

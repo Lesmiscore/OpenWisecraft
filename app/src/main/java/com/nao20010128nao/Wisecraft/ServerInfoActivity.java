@@ -264,21 +264,11 @@ public class ServerInfoActivity extends FragmentActivity {
 		super.finish();
 	}
 
-	static void setPlayersView(ListView lv) {
-		instance.get().setPlayersView_(lv);
-	}
-	static void setDataView(View lv) {
-		instance.get().setDataView_(lv);
-	}
-	static void setPluginsView(ListView lv) {
-		instance.get().setPluginsView_(lv);
-	}
-
-	void setPlayersView_(ListView lv) {
+	public void setPlayersView(ListView lv) {
 		players = lv;
 		lv.setAdapter(adap);
 	}
-	void setDataView_(View lv) {
+	public void setDataView(View lv) {
 		data = (ListView)lv.findViewById(R.id.data);
 		if (localStat.isPC) {
 			serverIcon = (ImageView)lv.findViewById(R.id.serverIcon);
@@ -288,7 +278,7 @@ public class ServerInfoActivity extends FragmentActivity {
 		}
 		data.setAdapter(adap2);
 	}
-	void setPluginsView_(ListView lv) {
+	public void setPluginsView(ListView lv) {
 		plugins = lv;
 		lv.setAdapter(adap3);
 	}
@@ -297,39 +287,39 @@ public class ServerInfoActivity extends FragmentActivity {
 	protected void attachBaseContext(Context newBase) {
 		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
 	}
-	public static class PlayersFragment extends BaseFragment {
+	public static class PlayersFragment extends BaseFragment<ServerInfoActivity> {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
 			ListView lv=(ListView) inflater.inflate(R.layout.players_tab, null, false);
-			setPlayersView(lv);
+			getParentActivity().setPlayersView(lv);
 			return lv;
 		}
 	}
-	public static class DataFragmentPE extends BaseFragment {
+	public static class DataFragmentPE extends BaseFragment<ServerInfoActivity> {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
 			View lv= inflater.inflate(R.layout.data_tab, null, false);
-			setDataView(lv);
+			getParentActivity().setDataView(lv);
 			return lv;
 		}
 	}
-	public static class DataFragmentPC extends BaseFragment {
+	public static class DataFragmentPC extends BaseFragment<ServerInfoActivity> {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
 			View lv= inflater.inflate(R.layout.data_tab_pc, null, false);
-			setDataView(lv);
+			getParentActivity().setDataView(lv);
 			return lv;
 		}
 	}
-	public static class PluginsFragment extends BaseFragment {
+	public static class PluginsFragment extends BaseFragment<ServerInfoActivity> {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
 			ListView lv=(ListView) inflater.inflate(R.layout.players_tab, null, false);
-			setPluginsView(lv);
+			getParentActivity().setPluginsView(lv);
 			return lv;
 		}
 	}
