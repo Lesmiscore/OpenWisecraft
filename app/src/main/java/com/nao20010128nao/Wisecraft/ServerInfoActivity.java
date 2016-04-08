@@ -313,9 +313,17 @@ public class ServerInfoActivity extends FragmentActivity {
 	protected void attachBaseContext(Context newBase) {
 		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
 	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO: Implement this method
+		super.onDestroy();
+		//if(skinFaceImages!=null)for(Bitmap bmp:skinFaceImages)bmp.recycle();
+	}
 	
 	class PCUserFaceAdapter extends AppBaseArrayAdapter<String>{
 		List<View> cached=new ArrayList<>(Constant.ONE_HUNDRED_LENGTH_NULL_LIST);
+		Map<String,Bitmap> faces=new HashMap<>();
 		public PCUserFaceAdapter(){
 			super(ServerInfoActivity.this,R.layout.simple_list_item_with_image,new ArrayList<String>());
 		}
@@ -329,7 +337,14 @@ public class ServerInfoActivity extends FragmentActivity {
 			while(cached.size()<position)cached.addAll(Constant.ONE_HUNDRED_LENGTH_NULL_LIST);
 			String playerName=getItem(position);
 			((TextView)convertView.findViewById(android.R.id.text1)).setText(playerName);
-			sff.requestLoadSkin(playerName,new Handler());
+			if(faces.containsKey(playerName)){
+				ImageView iv=(ImageView)convertView.findViewById(R.id.image);
+				iv.setVisibility(View.VISIBLE);
+				iv.setImageBitmap(faces.get(playerName));
+				iv.setScaleType(ImageView.ScaleType.FIT_CENTER);
+			}else{
+				sff.requestLoadSkin(playerName,new Handler());
+			}
 			cached.set(position,convertView);
 			return convertView;
 		}
@@ -352,13 +367,11 @@ public class ServerInfoActivity extends FragmentActivity {
 						return ImageResizer.resizeBitmapPixel(toProc,clSiz,Bitmap.Config.RGB_565);
 					}
 					public void onPostExecute(final Bitmap bmp){
+						skinFaceImages.add(bmp);
+						faces.put(player,bmp);
 						runOnUiThread(new Runnable(){
 								public void run(){
-									View v=cached.get(getPosition(player));
-									ImageView iv=(ImageView)v.findViewById(R.id.image);
-									iv.setVisibility(View.VISIBLE);
-									iv.setImageBitmap(bmp);
-									iv.setScaleType(ImageView.ScaleType.FIT_CENTER);
+									notifyDataSetChanged();
 									Log.d("face","ok:"+player);
 								}
 							});
