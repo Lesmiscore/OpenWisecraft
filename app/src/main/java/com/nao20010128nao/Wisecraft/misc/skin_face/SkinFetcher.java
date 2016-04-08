@@ -2,6 +2,7 @@ package com.nao20010128nao.Wisecraft.misc.skin_face;
 import java.net.URL;
 import android.graphics.Bitmap;
 import java.net.MalformedURLException;
+import com.nao20010128nao.Wisecraft.misc.DebugWriter;
 
 public class SkinFetcher
 {
@@ -9,7 +10,9 @@ public class SkinFetcher
 	public void requestLoadSkin(String player,SkinFetchListener listener){
 		try {
 			il.putInQueue(new URL("http://skins.minecraft.net/MinecraftSkins/"+player+".png"), new LoaderListener(player, listener));
-		} catch (MalformedURLException e) {}
+		} catch (MalformedURLException e) {
+			DebugWriter.writeToE("SkinFetcher",e);
+		}
 	}
 	class LoaderListener implements ImageLoader.ImageStatusListener {
 		String player;

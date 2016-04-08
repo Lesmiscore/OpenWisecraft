@@ -115,8 +115,10 @@ public class ServerInfoActivity extends FragmentActivity {
 			skinFaceImages=new ArrayList<>();
 			sff=new SkinFaceFetcher();
 			adap3=new PCUserFaceAdapter();
+			Log.d("ServerInfoActivity","face on");
 		}else{
 			adap3 = new AppBaseArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
+			Log.d("ServerInfoActivity","face off");
 		}
 		
 		nonUpd = getIntent().getBooleanExtra("nonUpd", false);
@@ -322,10 +324,10 @@ public class ServerInfoActivity extends FragmentActivity {
 			if(convertView==null){
 				convertView=getLayoutInflater().inflate(R.layout.simple_list_item_with_image,null);
 			}
+			while(cached.size()<position)cached.addAll(Constant.ONE_HUNDRED_LENGTH_NULL_LIST);
 			String playerName=getItem(position);
 			((TextView)convertView.findViewById(android.R.id.text1)).setText(playerName);
 			sff.requestLoadSkin(playerName,new Handler());
-			while(cached.size()<position)cached.addAll(Constant.ONE_HUNDRED_LENGTH_NULL_LIST);
 			cached.set(position,convertView);
 			return convertView;
 		}
