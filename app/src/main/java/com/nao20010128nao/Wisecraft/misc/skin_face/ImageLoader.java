@@ -22,7 +22,7 @@ public class ImageLoader
 			loader.start();
 		}
 	}
-	class LoaderThread extends Thread {
+	class LoaderThread extends Thread implements Runnable{
 		@Override
 		public void run() {
 			// TODO: Implement this method

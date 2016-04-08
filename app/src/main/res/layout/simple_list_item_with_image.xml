@@ -12,7 +12,7 @@
 		android:id="@+id/image"/>
 
 	<include
-		android:layout="@android:layout/simple_list_item_1"/>
+		layout="@android:layout/simple_list_item_1"/>
 
 </LinearLayout>
 

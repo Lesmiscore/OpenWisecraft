@@ -109,17 +109,17 @@ public class ServerInfoActivity extends FragmentActivity {
 			fth.addTab(pluginsF, PluginsFragment.class, null);
 		}
 
-		adap = new AppBaseArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
-		adap2 = new KVListAdapter<>(this);
 		if(pref.getBoolean("showPcUserFace",false)&localStat.isPC){
 			skinFaceImages=new ArrayList<>();
 			sff=new SkinFaceFetcher();
-			adap3=new PCUserFaceAdapter();
+			adap=new PCUserFaceAdapter();
 			Log.d("ServerInfoActivity","face on");
 		}else{
-			adap3 = new AppBaseArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
+			adap = new AppBaseArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
 			Log.d("ServerInfoActivity","face off");
 		}
+		adap2 = new KVListAdapter<>(this);
+		adap3 = new AppBaseArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
 		
 		nonUpd = getIntent().getBooleanExtra("nonUpd", false);
 
