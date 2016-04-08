@@ -8,7 +8,8 @@
 	<ImageView
 		android:layout_height="?android:attr/listPreferredItemHeight"
 		android:layout_width="?android:attr/listPreferredItemHeight"
-		android:visibility="gone"/>
+		android:visibility="gone"
+		android:id="@+id/image"/>
 
 	<include
 		android:layout="@android:layout/simple_list_item_1"/>

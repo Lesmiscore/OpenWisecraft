@@ -25,6 +25,9 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import static com.nao20010128nao.Wisecraft.Utils.*;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import com.nao20010128nao.Wisecraft.misc.skin_face.SkinFaceFetcher;
+import com.nao20010128nao.Wisecraft.misc.skin_face.SkinFetcher;
+import android.util.Log;
 
 public class ServerInfoActivity extends FragmentActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
@@ -49,6 +52,9 @@ public class ServerInfoActivity extends FragmentActivity {
 	ArrayAdapter<String> adap,adap3;
 	ArrayAdapter<Map.Entry<String,String>> adap2;
 
+	List<Bitmap> skinFaceImages;
+	SkinFaceFetcher sff;
+	
 	/*Only for PC servers*/
 	ImageView serverIcon;
 	TextView serverName;
@@ -106,7 +112,9 @@ public class ServerInfoActivity extends FragmentActivity {
 		adap = new AppBaseArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
 		adap2 = new KVListAdapter<>(this);
 		if(pref.getBoolean("showPcUserFace",false)&localStat.isPC){
-			
+			skinFaceImages=new ArrayList<>();
+			sff=new SkinFaceFetcher();
+			adap3=new PCUserFaceAdapter();
 		}else{
 			adap3 = new AppBaseArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
 		}
@@ -303,6 +311,7 @@ public class ServerInfoActivity extends FragmentActivity {
 	}
 	
 	class PCUserFaceAdapter extends AppBaseArrayAdapter<String>{
+		List<View> cached=new ArrayList<>(Constant.ONE_HUNDRED_LENGTH_NULL_LIST);
 		public PCUserFaceAdapter(){
 			super(ServerInfoActivity.this,R.layout.simple_list_item_with_image,new ArrayList<String>());
 		}
@@ -315,7 +324,29 @@ public class ServerInfoActivity extends FragmentActivity {
 			}
 			String playerName=getItem(position);
 			((TextView)convertView.findViewById(android.R.id.text1)).setText(playerName);
+			sff.requestLoadSkin(playerName,new Handler());
+			while(cached.size()<position)cached.addAll(Constant.ONE_HUNDRED_LENGTH_NULL_LIST);
+			cached.set(position,convertView);
 			return convertView;
+		}
+		
+		class Handler implements SkinFetcher.SkinFetchListener {
+			@Override
+			public void onError(String player) {
+				// TODO: Implement this method
+				Log.d("face","err:"+player);
+			}
+
+			@Override
+			public void onSuccess(Bitmap bmp, String player) {
+				// TODO: Implement this method
+				View v=cached.get(getPosition(player));
+				ImageView iv=(ImageView)v.findViewById(R.id.image);
+				iv.setVisibility(View.VISIBLE);
+				iv.setImageBitmap(bmp);
+				iv.setScaleType(ImageView.ScaleType.FIT_CENTER);
+				Log.d("face","ok:"+player);
+			}
 		}
 	}
 	

@@ -8,6 +8,7 @@ import com.nao20010128nao.Wisecraft.misc.KVP;
 import android.graphics.BitmapFactory;
 import java.io.InputStream;
 import java.io.IOException;
+import com.nao20010128nao.Wisecraft.misc.DebugWriter;
 
 public class ImageLoader
 {
@@ -37,6 +38,7 @@ public class ImageLoader
 					try{
 						dat.getValue().onError(e,dat.getKey());
 					}catch(Throwable e_){
+						DebugWriter.writeToE("ImageLoader",e_);
 					}
 					continue;
 				}finally{
@@ -47,6 +49,7 @@ public class ImageLoader
 				try{
 					dat.getValue().onSuccess(bmp,dat.getKey());
 				}catch(Throwable e_){
+					DebugWriter.writeToE("ImageLoader",e_);
 				}
 			}
 		}
