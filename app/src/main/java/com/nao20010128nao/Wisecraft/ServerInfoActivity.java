@@ -28,6 +28,8 @@ import android.preference.PreferenceManager;
 import com.nao20010128nao.Wisecraft.misc.skin_face.SkinFaceFetcher;
 import com.nao20010128nao.Wisecraft.misc.skin_face.SkinFetcher;
 import android.util.Log;
+import android.os.AsyncTask;
+import com.nao20010128nao.Wisecraft.misc.skin_face.ImageResizer;
 
 public class ServerInfoActivity extends FragmentActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
@@ -342,16 +344,26 @@ public class ServerInfoActivity extends FragmentActivity {
 			@Override
 			public void onSuccess(final Bitmap bmp, final String player) {
 				// TODO: Implement this method
-				runOnUiThread(new Runnable(){
-					public void run(){
-						View v=cached.get(getPosition(player));
-						ImageView iv=(ImageView)v.findViewById(R.id.image);
-						iv.setVisibility(View.VISIBLE);
-						iv.setImageBitmap(bmp);
-						iv.setScaleType(ImageView.ScaleType.FIT_CENTER);
-						Log.d("face","ok:"+player);
+				skinFaceImages.add(bmp);
+				new AsyncTask<Bitmap,Void,Bitmap>(){
+					public Bitmap doInBackground(Bitmap... datas){
+						Bitmap toProc=datas[0];
+						int clSiz=getResources().getDimensionPixelSize(R.dimen.list_height)/8+1;
+						return ImageResizer.resizeBitmapPixel(toProc,clSiz,Bitmap.Config.RGB_565);
 					}
-				});
+					public void onPostExecute(final Bitmap bmp){
+						runOnUiThread(new Runnable(){
+								public void run(){
+									View v=cached.get(getPosition(player));
+									ImageView iv=(ImageView)v.findViewById(R.id.image);
+									iv.setVisibility(View.VISIBLE);
+									iv.setImageBitmap(bmp);
+									iv.setScaleType(ImageView.ScaleType.FIT_CENTER);
+									Log.d("face","ok:"+player);
+								}
+							});
+					}
+				}.execute(bmp);
 			}
 		}
 	}
