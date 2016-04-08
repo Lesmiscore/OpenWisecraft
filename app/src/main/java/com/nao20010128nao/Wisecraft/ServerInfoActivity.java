@@ -34,6 +34,7 @@ import com.nao20010128nao.Wisecraft.misc.skin_face.ImageResizer;
 public class ServerInfoActivity extends FragmentActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
 	public static List<ServerStatus> stat=new ArrayList<>();
+	public static Map<String,Bitmap> faces=new HashMap<>();
 	SharedPreferences pref;
 	
 	ServerStatus localStat;
@@ -313,17 +314,9 @@ public class ServerInfoActivity extends FragmentActivity {
 	protected void attachBaseContext(Context newBase) {
 		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
 	}
-
-	@Override
-	protected void onDestroy() {
-		// TODO: Implement this method
-		super.onDestroy();
-		//if(skinFaceImages!=null)for(Bitmap bmp:skinFaceImages)bmp.recycle();
-	}
 	
 	class PCUserFaceAdapter extends AppBaseArrayAdapter<String>{
 		List<View> cached=new ArrayList<>(Constant.ONE_HUNDRED_LENGTH_NULL_LIST);
-		Map<String,Bitmap> faces=new HashMap<>();
 		public PCUserFaceAdapter(){
 			super(ServerInfoActivity.this,R.layout.simple_list_item_with_image,new ArrayList<String>());
 		}
@@ -364,7 +357,7 @@ public class ServerInfoActivity extends FragmentActivity {
 					public Bitmap doInBackground(Bitmap... datas){
 						Bitmap toProc=datas[0];
 						int clSiz=getResources().getDimensionPixelSize(R.dimen.list_height)/8+1;
-						return ImageResizer.resizeBitmapPixel(toProc,clSiz,Bitmap.Config.RGB_565);
+						return ImageResizer.resizeBitmapPixel(toProc,clSiz,Bitmap.Config.ARGB_4444);
 					}
 					public void onPostExecute(final Bitmap bmp){
 						skinFaceImages.add(bmp);
