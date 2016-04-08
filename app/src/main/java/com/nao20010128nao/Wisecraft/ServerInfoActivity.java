@@ -340,14 +340,18 @@ public class ServerInfoActivity extends FragmentActivity {
 			}
 
 			@Override
-			public void onSuccess(Bitmap bmp, String player) {
+			public void onSuccess(final Bitmap bmp, final String player) {
 				// TODO: Implement this method
-				View v=cached.get(getPosition(player));
-				ImageView iv=(ImageView)v.findViewById(R.id.image);
-				iv.setVisibility(View.VISIBLE);
-				iv.setImageBitmap(bmp);
-				iv.setScaleType(ImageView.ScaleType.FIT_CENTER);
-				Log.d("face","ok:"+player);
+				runOnUiThread(new Runnable(){
+					public void run(){
+						View v=cached.get(getPosition(player));
+						ImageView iv=(ImageView)v.findViewById(R.id.image);
+						iv.setVisibility(View.VISIBLE);
+						iv.setImageBitmap(bmp);
+						iv.setScaleType(ImageView.ScaleType.FIT_CENTER);
+						Log.d("face","ok:"+player);
+					}
+				});
 			}
 		}
 	}

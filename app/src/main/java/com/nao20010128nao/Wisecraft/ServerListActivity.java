@@ -209,7 +209,7 @@ class ServerListActivityImpl extends ListActivity {
 	}
 
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO: Implement this method
 		switch (requestCode) {
 			case 0:
@@ -226,7 +226,7 @@ class ServerListActivityImpl extends ListActivity {
 				break;
 		}
 	}
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO: Implement this method
@@ -961,5 +961,12 @@ public class ServerListActivity extends ActivityGroup {
 		boolean val= getLocalActivityManager().getActivity("main").onOptionsItemSelected(item);
 		nonLoop = false;
 		return val;
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO: Implement this method
+		//super.onActivityResult(requestCode, resultCode, data);
+		((ServerListActivityImpl)getLocalActivityManager().getActivity("main")).onActivityResult(requestCode,resultCode,data);
 	}
 }
