@@ -55,6 +55,7 @@ public class TheApplication extends Application {
 			Log.d("fsnll",o+"");
 		}
 		*/
+		PreferenceManager.getDefaultSharedPreferences(this).edit().putString("previousVersion", Utils.getVersionName(this)).putInt("previousVersionInt",Utils.getVersionCode(this)).commit();
 	}
 	public Typeface getLocalizedFont() {
 		try {
