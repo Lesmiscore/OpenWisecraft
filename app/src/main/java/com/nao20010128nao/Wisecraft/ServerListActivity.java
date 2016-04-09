@@ -870,7 +870,7 @@ class ServerListActivityImpl extends ListActivity {
 							pinging.put(list.get(i_), false);
 							if (statTabOfs != -1) {
 								ServerInfoActivity.stat.add(s);
-								int ofs=ServerInfoActivity.stat.indexOf(s);
+								int ofs=ServerInfoActivity.stat.lastIndexOf(s);
 								Intent caller=new Intent(ServerListActivityImpl.this, ServerInfoActivity.class).putExtra("offset", statTabOfs).putExtra("statListOffset", ofs);
 								if (obj != null) {
 									caller.putExtra("object", obj);
