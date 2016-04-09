@@ -1,18 +1,21 @@
 package com.nao20010128nao.Wisecraft;
 
+import android.content.*;
 import android.graphics.*;
 import android.graphics.drawable.*;
 import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+import com.nao20010128nao.Wisecraft.misc.skin_face.*;
 import java.util.*;
 
-import android.content.Context;
-import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.util.Base64;
+import android.util.Log;
 import com.nao20010128nao.MCPing.ServerPingResult;
 import com.nao20010128nao.MCPing.pc.Reply;
 import com.nao20010128nao.MCPing.pc.Reply19;
@@ -23,13 +26,6 @@ import java.lang.ref.WeakReference;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import com.nao20010128nao.Wisecraft.misc.skin_face.SkinFaceFetcher;
-import com.nao20010128nao.Wisecraft.misc.skin_face.SkinFetcher;
-import android.util.Log;
-import android.os.AsyncTask;
-import com.nao20010128nao.Wisecraft.misc.skin_face.ImageResizer;
 
 public class ServerInfoActivity extends FragmentActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
