@@ -1,14 +1,11 @@
 package com.nao20010128nao.Wisecraft.provider;
+import com.nao20010128nao.Wisecraft.misc.*;
 import java.util.*;
 
 import android.util.Log;
 import com.nao20010128nao.MCPing.pc.PCQuery;
 import com.nao20010128nao.Wisecraft.Utils;
-import com.nao20010128nao.Wisecraft.misc.Server;
-import com.nao20010128nao.Wisecraft.misc.ServerStatus;
 import java.io.IOException;
-import com.nao20010128nao.Wisecraft.misc.KVP;
-import com.nao20010128nao.Wisecraft.misc.DebugWriter;
 public class PCServerPingProvider implements ServerPingProvider
 {
 	Queue<Map.Entry<Server,PingHandler>> queue=new LinkedList<>();

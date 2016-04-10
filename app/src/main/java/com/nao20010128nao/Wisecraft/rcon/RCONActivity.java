@@ -2,7 +2,7 @@ package com.nao20010128nao.Wisecraft.rcon;
 import android.content.*;
 import android.view.*;
 import android.widget.*;
-import com.google.rconclient.rcon.*;
+import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.rcon.buttonActions.*;
 import java.util.*;
 
@@ -13,13 +13,12 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v4.widget.DrawerLayout;
+import com.google.rconclient.rcon.IncorrectRequestIdException;
+import com.google.rconclient.rcon.RCon;
 import com.nao20010128nao.Wisecraft.R;
-import com.nao20010128nao.Wisecraft.misc.AppBaseArrayAdapter;
-import com.nao20010128nao.Wisecraft.misc.BaseFragment;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-import com.nao20010128nao.Wisecraft.misc.DebugWriter;
 
 public class RCONActivity extends FragmentActivity {
 	public static WeakReference<RCONActivity> instance=new WeakReference(null);

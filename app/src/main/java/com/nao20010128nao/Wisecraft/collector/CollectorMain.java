@@ -1,5 +1,6 @@
 package com.nao20010128nao.Wisecraft.collector;
 import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.misc.*;
 import java.io.*;
 import java.util.*;
 import org.eclipse.egit.github.core.*;
@@ -14,8 +15,6 @@ import android.util.Base64;
 import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.nao20010128nao.Wisecraft.misc.BinaryPrefImpl;
-import com.nao20010128nao.Wisecraft.misc.Server;
 import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
 import java.net.URL;
 import java.security.MessageDigest;
@@ -25,7 +24,6 @@ import org.eclipse.egit.github.core.service.ContentsService;
 import org.eclipse.egit.github.core.service.RepositoryService;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
-import com.nao20010128nao.Wisecraft.misc.DebugWriter;
 
 public class CollectorMain extends ContextWrapper implements Runnable {
 	static boolean running=false;

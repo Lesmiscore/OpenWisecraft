@@ -6,13 +6,13 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import com.google.gson.Gson;
 import com.google.rconclient.rcon.RCon;
+import com.nao20010128nao.Wisecraft.misc.DebugWriter;
 import com.nao20010128nao.Wisecraft.misc.Server;
 import com.nao20010128nao.Wisecraft.rcon.RConModified;
 import com.nao20010128nao.Wisecraft.struct.WCH_ServerInfo;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
-import com.nao20010128nao.Wisecraft.misc.DebugWriter;
 
 public class Utils {
 	public static String deleteDecorations(String decorated) {

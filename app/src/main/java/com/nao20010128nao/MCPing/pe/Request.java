@@ -1,8 +1,6 @@
 package com.nao20010128nao.MCPing.pe;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 
 import com.nao20010128nao.MCPing.Utils;
 import com.nao20010128nao.Wisecraft.misc.DebugWriter;

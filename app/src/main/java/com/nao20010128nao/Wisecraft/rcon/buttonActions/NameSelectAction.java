@@ -7,10 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import com.google.rconclient.rcon.AuthenticationException;
 import com.nao20010128nao.Wisecraft.R;
+import com.nao20010128nao.Wisecraft.misc.DebugWriter;
+import com.nao20010128nao.Wisecraft.misc.compat.CompatArrayAdapter;
 import com.nao20010128nao.Wisecraft.rcon.RCONActivity;
 import java.io.IOException;
-import com.nao20010128nao.Wisecraft.misc.compat.CompatArrayAdapter;
-import com.nao20010128nao.Wisecraft.misc.DebugWriter;
 
 public abstract class NameSelectAction extends BaseAction {
 	EditText name;
