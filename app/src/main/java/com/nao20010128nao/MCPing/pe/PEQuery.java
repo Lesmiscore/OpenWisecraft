@@ -119,7 +119,9 @@ public class PEQuery implements PingHost{
 			socket.setSoTimeout(2500); // one half second timeout
 			socket.receive(packet);
 
-			return packet.getData();
+			byte[] result=new byte[packet.getLength()];
+			System.arraycopy(packet.getData(),0,result,0,result.length);
+			return result;
 		} catch (SocketException e) {
 			DebugWriter.writeToE("PEQuery",e);
 		} catch (SocketTimeoutException e) {
