@@ -123,10 +123,8 @@ public class PEQuery implements PingHost{
 		} catch (SocketException e) {
 			DebugWriter.writeToE("PEQuery",e);
 		} catch (SocketTimeoutException e) {
-			Log.e("PEQuery","Socket Timeout! Is the server offline?");
 			DebugWriter.writeToE("PEQuery",e);
 		} catch (UnknownHostException e) {
-			Log.e("PEQuery","Unknown host!");
 			DebugWriter.writeToE("PEQuery",e);
 		} catch (Exception e) {
 			DebugWriter.writeToE("PEQuery",e);
