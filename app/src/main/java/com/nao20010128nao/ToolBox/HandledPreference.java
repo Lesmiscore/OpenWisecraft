@@ -17,32 +17,30 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import com.nao20010128nao.ToolBox.NormalButtonPreference;
+import pref.StartPref;
 
 public class HandledPreference
 extends NormalButtonPreference {
-    OnClickListener clicklis;
+	static final nullocl defHandler=new nullocl();
+    OnClickListener clicklis=defHandler;
 
     public HandledPreference(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
-        this.clicklis = new nullocl((HandledPreference)this, null);
+		StartPref.as = attributeSet;
     }
 
     public static OnClickListener createListenerFrom(final View.OnClickListener onClickListener) {
-        OnClickListener onClickListener2 = new OnClickListener(){
-
+        return new OnClickListener(){
             @Override
             public void onClick(String string, String string2, String string3) {
-                View view = new View(null);
-                onClickListener.onClick(view);
+                onClickListener.onClick(null);
             }
         };
-        return onClickListener2;
     }
 
     private String getKeySafety() {
         try {
-            String string = this.getKey();
-            return string;
+            return getKey();
         } catch (Throwable var1_2) {
             //var1_2.printStackTrace();
             return null;
@@ -50,63 +48,46 @@ extends NormalButtonPreference {
     }
 
     private String getSummarySafety() {
-        try {
-            String string = this.getSummary().toString();
-            return string;
-        } catch (Throwable var1_2) {
-            //var1_2.printStackTrace();
-            return null;
-        }
+		if (getSummary() == null) {
+			return null;
+		} else {
+			return getSummary().toString();
+		}
     }
 
     private String getTitleSafety() {
-        try {
-            String string = this.getTitle().toString();
-            return string;
-        } catch (Throwable var1_2) {
-            //var1_2.printStackTrace();
-            return null;
-        }
+		if (getTitle() == null) {
+			return null;
+		} else {
+			return getTitle().toString();
+		}
     }
 
     public OnClickListener getOnClickListener() {
-        return this.clicklis;
+        return clicklis;
     }
 
     @Override
     protected void onClick() {
-        this.clicklis.onClick(this.getKeySafety(), this.getTitleSafety(), this.getSummarySafety());
+        clicklis.onClick(getKeySafety(), getTitleSafety(), getSummarySafety());
     }
 
     /*
      * Enabled aggressive block sorting
      */
     public void setOnClickListener(OnClickListener onClickListener) {
-        OnClickListener onClickListener2 = onClickListener == null ? this.clicklis : onClickListener;
-        this.clicklis = onClickListener2;
+        clicklis = onClickListener == null ? defHandler : onClickListener;
     }
 
     public static interface OnClickListener {
         public void onClick(String var1, String var2, String var3);
     }
 
-    private class nullocl
-    implements OnClickListener {
-        final /* synthetic */ HandledPreference this0;
-
-        private nullocl(HandledPreference handledPreference) {
-            this.this0 = handledPreference;
-        }
-
-        /* synthetic */ nullocl(HandledPreference handledPreference, nullocl nullocl) {
-            this(handledPreference);
-        }
-
+    private static class nullocl implements OnClickListener {
         @Override
         public void onClick(String string, String string2, String string3) {
         }
     }
-
 }
 
 
