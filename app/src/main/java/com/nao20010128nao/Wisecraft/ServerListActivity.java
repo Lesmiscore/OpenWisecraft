@@ -216,7 +216,7 @@ class ServerListActivityImpl extends ListActivity {
 				switch (resultCode) {
 					case Constant.ACTIVITY_RESULT_UPDATE:
 						Bundle obj=data.getBundleExtra("object");
-						updater.putInQueue(ServerInfoActivity.stat.get(obj.getInt("statListOffset")), new PingHandlerImpl(true, data.getIntExtra("offset", 0), true, obj));
+						updater.putInQueue(list.get(clicked), new PingHandlerImpl(true, data.getIntExtra("offset", 0), true));
 						((TextView)sl.getViewQuick(clicked).findViewById(R.id.pingMillis)).setText(R.string.working);
 						((ImageView)sl.getViewQuick(clicked).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
 						wd.showWorkingDialog();

@@ -13,6 +13,7 @@ public class Reply19 implements ServerPingResult,PCQueryResult {
 	public Players players;
 	public Version version;
 	public String favicon;
+	public ModInfo modinfo;//TODO: Is this correct?
 
 	public class Players {
 		public int max;
@@ -32,5 +33,15 @@ public class Reply19 implements ServerPingResult,PCQueryResult {
 
 	public class Description{
 		public String text;
+	}
+	
+	public class ModInfo{
+		public String type;
+		public ModListContent[] modList;
+	}
+
+	public class ModListContent{
+		public String modid;
+		public String version;
 	}
 }

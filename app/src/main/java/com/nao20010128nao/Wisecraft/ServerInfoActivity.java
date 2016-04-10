@@ -26,6 +26,7 @@ import java.lang.ref.WeakReference;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import java.lang.reflect.Modifier;
 
 public class ServerInfoActivity extends FragmentActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
@@ -38,18 +39,20 @@ public class ServerInfoActivity extends FragmentActivity {
 	
 	String ip;
 	int port;
-	boolean nonUpd,hidePlayer,hideData,hidePlugins;
+	boolean nonUpd,hidePlayer,hideData,hidePlugins,hideMods;
 
 	TipController tc;
 	MenuItem updateBtn;
 
 	List<Thread> t=new ArrayList<>();
-	ListView players,data,plugins;
+	ListView players,data,plugins,mods;
+	TextView modLoader;
 	FragmentTabHost fth;
-	TabHost.TabSpec playersF,dataF,pluginsF;
+	TabHost.TabSpec playersF,dataF,pluginsF,modsF;
 
 	ArrayAdapter<String> adap,adap3;
 	ArrayAdapter<Map.Entry<String,String>> adap2;
+	ArrayAdapter<Object> adap4;
 
 	List<Bitmap> skinFaceImages;
 	SkinFaceFetcher sff;
@@ -59,6 +62,7 @@ public class ServerInfoActivity extends FragmentActivity {
 	TextView serverName;
 	Drawable serverIconObj;
 	String serverNameStr;
+	String modLoaderTypeName;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
@@ -75,9 +79,7 @@ public class ServerInfoActivity extends FragmentActivity {
 			return;
 		}
 
-		if(getIntent().hasExtra("object")){
-			keeping=getIntent().getBundleExtra("object");
-		}
+		keeping=getIntent().getBundleExtra("object");
 		
 		setContentView(R.layout.tabs);
 		fth = (FragmentTabHost)findViewById(android.R.id.tabhost);
@@ -86,7 +88,8 @@ public class ServerInfoActivity extends FragmentActivity {
 		hideData   = getIntent().getBooleanExtra("nonDetails", false);
 		hidePlayer = getIntent().getBooleanExtra("nonPlayers", false);
 		hidePlugins = getIntent().getBooleanExtra("nonPlugins", false);
-
+		hideMods = getIntent().getBooleanExtra("nonMods", false);
+		
 		if (!hidePlayer) {
 			playersF = fth.newTabSpec("playersList");
 			playersF.setIndicator(getResources().getString(R.string.players));
@@ -107,7 +110,7 @@ public class ServerInfoActivity extends FragmentActivity {
 			pluginsF.setIndicator(getResources().getString(R.string.plugins));
 			fth.addTab(pluginsF, PluginsFragment.class, null);
 		}
-
+		
 		if(pref.getBoolean("showPcUserFace",false)&localStat.isPC){
 			skinFaceImages=new ArrayList<>();
 			sff=new SkinFaceFetcher();
@@ -119,6 +122,7 @@ public class ServerInfoActivity extends FragmentActivity {
 		}
 		adap2 = new KVListAdapter<>(this);
 		adap3 = new AppBaseArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
+		adap4 = new ModInfoListAdapter();
 		
 		nonUpd = getIntent().getBooleanExtra("nonUpd", false);
 
@@ -202,6 +206,12 @@ public class ServerInfoActivity extends FragmentActivity {
 			data.put(getResources().getString(R.string.pc_softwareVersion), rep.version.name);
 			data.put(getResources().getString(R.string.pc_protocolVersion), rep.version.protocol + "");
 			CompatArrayAdapter.addAll(adap2, data.entrySet());
+			
+			if(rep.modinfo!=null){
+				addModsTab();
+				CompatArrayAdapter.addAll(adap4,rep.modinfo.modList);
+				modLoaderTypeName=rep.modinfo.type;
+			}
 		} else if (resp instanceof Reply19) {
 			Reply19 rep=(Reply19)resp;
 			if (rep.description == null) {
@@ -239,6 +249,12 @@ public class ServerInfoActivity extends FragmentActivity {
 			data.put(getResources().getString(R.string.pc_softwareVersion), rep.version.name);
 			data.put(getResources().getString(R.string.pc_protocolVersion), rep.version.protocol + "");
 			CompatArrayAdapter.addAll(adap2, data.entrySet());
+			
+			if(rep.modinfo!=null){
+				addModsTab();
+				CompatArrayAdapter.addAll(adap4,rep.modinfo.modList);
+				modLoaderTypeName=rep.modinfo.type;
+			}
 		} else if (resp instanceof SprPair) {
 			SprPair p=(SprPair)resp;
 			update(p.getA());
@@ -278,7 +294,7 @@ public class ServerInfoActivity extends FragmentActivity {
 
 	public void setResultInstead(int resultCode, Intent data) {
 		// TODO: Implement this method
-		setResult(resultCode, keeping!=null?data.putExtra("object",keeping):data);
+		setResult(resultCode, data.putExtra("object",keeping));
 	}
 
 	@Override
@@ -287,6 +303,14 @@ public class ServerInfoActivity extends FragmentActivity {
 		super.finish();
 	}
 
+	public void addModsTab(){
+		if ((!hideMods)|localStat.isPC) {
+			modsF = fth.newTabSpec("modsList");
+			modsF.setIndicator(getResources().getString(R.string.mods));
+			fth.addTab(modsF, ModsFragment.class, null);
+		}
+	}
+	
 	public void setPlayersView(ListView lv) {
 		players = lv;
 		lv.setAdapter(adap);
@@ -305,7 +329,15 @@ public class ServerInfoActivity extends FragmentActivity {
 		plugins = lv;
 		lv.setAdapter(adap3);
 	}
-
+	public void setModsListView(ListView lv) {
+		mods = lv;
+		lv.setAdapter(adap4);
+	}
+	public void setModLoaderNameView(TextView lv) {
+		modLoader = lv;
+		modLoader.setText(modLoaderTypeName);
+	}
+	
 	@Override
 	protected void attachBaseContext(Context newBase) {
 		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
@@ -369,6 +401,29 @@ public class ServerInfoActivity extends FragmentActivity {
 			}
 		}
 	}
+	class ModInfoListAdapter extends AppBaseArrayAdapter<Object>{
+		List<View> cached=new ArrayList<>(Constant.ONE_HUNDRED_LENGTH_NULL_LIST);
+		public ModInfoListAdapter(){
+			super(ServerInfoActivity.this,R.layout.simple_list_item_with_image,new ArrayList<Object>());
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			// TODO: Implement this method
+			View v=getLayoutInflater().inflate(R.layout.mod_info_content,null);
+			Object o=getItem(position);
+			if(o instanceof Reply.ModListContent){
+				Reply.ModListContent mlc=(Reply.ModListContent)o;
+				((TextView)v.findViewById(R.id.modName)).setText(mlc.modid);
+				((TextView)v.findViewById(R.id.modVersion)).setText(mlc.version);
+			}else if(o instanceof Reply19.ModListContent){
+				Reply19.ModListContent mlc=(Reply19.ModListContent)o;
+				((TextView)v.findViewById(R.id.modName)).setText(mlc.modid);
+				((TextView)v.findViewById(R.id.modVersion)).setText(mlc.version);
+			}
+			return v;
+		}
+	}
 	
 	public static class PlayersFragment extends BaseFragment<ServerInfoActivity> {
 		@Override
@@ -403,6 +458,16 @@ public class ServerInfoActivity extends FragmentActivity {
 			// TODO: Implement this method
 			ListView lv=(ListView) inflater.inflate(R.layout.players_tab, null, false);
 			getParentActivity().setPluginsView(lv);
+			return lv;
+		}
+	}
+	public static class ModsFragment extends BaseFragment<ServerInfoActivity> {
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+			// TODO: Implement this method
+			View lv=inflater.inflate(R.layout.mods_tab, null, false);
+			getParentActivity().setModsListView((ListView)lv.findViewById(R.id.players));
+			getParentActivity().setModLoaderNameView((TextView)lv.findViewById(R.id.modLoaderType));
 			return lv;
 		}
 	}

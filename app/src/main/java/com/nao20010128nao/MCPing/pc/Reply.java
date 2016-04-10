@@ -13,6 +13,7 @@ public class Reply implements ServerPingResult,PCQueryResult {
 	public Players players;
 	public Version version;
 	public String favicon;
+	public ModInfo modinfo;
 	
 	public class Players {
 		public int max;
@@ -28,5 +29,15 @@ public class Reply implements ServerPingResult,PCQueryResult {
 	public class Version {
 		public String name;
 		public int protocol;
+	}
+	
+	public class ModInfo{
+		public String type;
+		public ModListContent[] modList;
+	}
+	
+	public class ModListContent{
+		public String modid;
+		public String version;
 	}
 }
