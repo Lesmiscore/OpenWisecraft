@@ -1,7 +1,7 @@
 package pref;
-import com.nao20010128nao.ToolBox.*;
-import android.util.*;
-import android.content.*;
+import android.content.Context;
+import android.util.AttributeSet;
+import com.nao20010128nao.ToolBox.HandledPreference;
 
 public class StartPref extends HandledPreference{
 	public static AttributeSet as;
