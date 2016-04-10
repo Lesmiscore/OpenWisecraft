@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="AppTheme" parent="@android:style/Theme.Material.Light">
+		<item name="android:colorPrimary">#F5F5F5</item>
+		<item name="android:colorAccent">@color/upd_2</item>
 	</style>
 	<style name="AppDialog" parent="@android:style/Theme.Material.Light.Dialog">
+		<item name="android:colorPrimary">#F5F5F5</item>
+		<item name="android:colorAccent">@color/upd_2</item>
 	</style>
 </resources>
