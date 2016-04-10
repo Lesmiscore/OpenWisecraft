@@ -1,6 +1,5 @@
 package com.nao20010128nao.Wisecraft;
 import java.util.*;
-import java.io.InvalidObjectException;
 
 public class Factories {
 	public static String[] strArray(int size) {

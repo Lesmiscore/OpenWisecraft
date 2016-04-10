@@ -1,11 +1,9 @@
 package com.nao20010128nao.Wisecraft.extender;
-import android.content.ContextWrapper;
+import android.content.res.*;
+
 import android.content.Context;
-import android.content.res.Resources;
-import android.content.res.Configuration;
-import android.content.res.AssetManager;
+import android.content.ContextWrapper;
 import android.util.DisplayMetrics;
-import android.graphics.drawable.Drawable;
 
 public class ContextWrappingExtender extends ContextWrapper
 {

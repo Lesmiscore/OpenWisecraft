@@ -2,9 +2,9 @@ package com.nao20010128nao.Wisecraft.pingEngine;
 import java.io.*;
 import java.net.*;
 
+import android.util.Log;
 import com.nao20010128nao.MCPing.PingHost;
 import com.nao20010128nao.MCPing.ServerPingResult;
-import android.util.Log;
 
 public class UnconnectedPing {
 	public static final byte UCP_PID=0x01;
