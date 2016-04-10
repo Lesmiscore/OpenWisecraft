@@ -1,6 +1,7 @@
 package com.nao20010128nao.MCPE.SC.misc;
-import android.preference.*;
-import com.nao20010128nao.ToolBox.*;
+import android.preference.Preference;
+import android.preference.PreferenceActivity;
+import com.nao20010128nao.ToolBox.HandledPreference;
 
 public abstract class SHablePreferenceActivity extends PreferenceActivity {
 	protected void sH(Preference pref, HandledPreference.OnClickListener handler) {

@@ -1,6 +1,6 @@
 package com.nao20010128nao.MCPE.SC.misc;
-import android.app.*;
-import android.view.*;
+import android.app.ListActivity;
+import android.view.View;
 
 public abstract class SmartFindViewListActivity extends ListActivity {
 
