@@ -481,7 +481,7 @@ class ServerListActivityImpl extends ListActivity {
 						public void run() {
 							System.exit(0);
 						}
-					}, 150);
+					}, 150*2);
 				break;
 		}
 		return true;
