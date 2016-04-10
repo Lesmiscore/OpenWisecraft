@@ -21,8 +21,8 @@ import pref.StartPref;
 
 public class HandledPreference
 extends NormalButtonPreference {
-	static final nullocl defHandler=new nullocl();
-    OnClickListener clicklis=defHandler;
+	static final NullClickListener defHandler=new NullClickListener();
+    OnClickListener clickListener=defHandler;
 
     public HandledPreference(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
@@ -64,26 +64,26 @@ extends NormalButtonPreference {
     }
 
     public OnClickListener getOnClickListener() {
-        return clicklis;
+        return clickListener;
     }
 
     @Override
     protected void onClick() {
-        clicklis.onClick(getKeySafety(), getTitleSafety(), getSummarySafety());
+        clickListener.onClick(getKeySafety(), getTitleSafety(), getSummarySafety());
     }
 
     /*
      * Enabled aggressive block sorting
      */
     public void setOnClickListener(OnClickListener onClickListener) {
-        clicklis = onClickListener == null ? defHandler : onClickListener;
+        clickListener = onClickListener == null ? defHandler : onClickListener;
     }
 
     public static interface OnClickListener {
         public void onClick(String var1, String var2, String var3);
     }
 
-    private static class nullocl implements OnClickListener {
+    private static class NullClickListener implements OnClickListener {
         @Override
         public void onClick(String string, String string2, String string3) {
         }
