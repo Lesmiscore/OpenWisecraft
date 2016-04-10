@@ -169,7 +169,7 @@ public class BinaryPrefImpl implements SharedPreferences {
 			return baos.toByteArray();
 		} catch (IOException e) {
 			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
+			DebugWriter.writeToE("BinaryPrefImpl",e);
 			return new byte[4];
 		}
 	}

@@ -19,6 +19,7 @@ import com.nao20010128nao.Wisecraft.misc.BaseFragment;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import com.nao20010128nao.Wisecraft.misc.DebugWriter;
 
 public class RCONActivity extends FragmentActivity {
 	public static WeakReference<RCONActivity> instance=new WeakReference(null);
@@ -96,7 +97,7 @@ public class RCONActivity extends FragmentActivity {
 			rcon = new RConModified(ip, port, passChars);
 			return true;
 		} catch (Throwable e) {
-			e.printStackTrace();
+			DebugWriter.writeToE("RCON",e);
 			return false;
 		}
 	}
@@ -137,9 +138,9 @@ public class RCONActivity extends FragmentActivity {
 											}
 										});
 								} catch (IOException e) {
-									e.printStackTrace();
+									DebugWriter.writeToE("RCON",e);
 								} catch (IncorrectRequestIdException e) {
-									e.printStackTrace();
+									DebugWriter.writeToE("RCON",e);
 								}
 							}
 						}.start();
@@ -166,7 +167,7 @@ public class RCONActivity extends FragmentActivity {
 				try {
 					return rcon.list();
 				} catch (Throwable e) {
-					e.printStackTrace();
+					DebugWriter.writeToE("RCON",e);
 				}
 				return null;
 			}
@@ -217,9 +218,9 @@ public class RCONActivity extends FragmentActivity {
 						}
 						appendIntoConsole(s);
 					} catch (IOException e) {
-						e.printStackTrace();
+						DebugWriter.writeToE("RCON",e);
 					} catch (IncorrectRequestIdException e) {
-						e.printStackTrace();
+						DebugWriter.writeToE("RCON",e);
 					}
 				}
 			}.start();

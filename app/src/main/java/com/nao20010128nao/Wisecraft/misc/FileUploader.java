@@ -32,7 +32,7 @@ public class FileUploader {
 			return socket.getOutputStream();
 		} catch (IOException e) {
 			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
+			DebugWriter.writeToE("FileUploader",e);
 			return null;
 		}
 	}
@@ -63,7 +63,7 @@ public class FileUploader {
 			return dos;
 		} catch (IOException e) {
 			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
+			DebugWriter.writeToE("FileUplaoder",e);
 			return null;
 		}
 	}

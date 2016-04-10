@@ -45,22 +45,22 @@ public class NormalServerPingProvider implements ServerPingProvider {
 			// TODO: Implement this method
 			Map.Entry<Server,PingHandler> now=null;
 			while (!(queue.isEmpty()|isInterrupted())) {
-				Log.d(getClass().getName().split("\\.")[1], "Starting ping");
+				Log.d("NSPP", "Starting ping");
 				now = queue.poll();
 				ServerStatus stat=new ServerStatus();
 				stat.ip = now.getKey().ip;
 				stat.port = now.getKey().port;
 				stat.isPC = now.getKey().isPC;
-				Log.d(getClass().getName().split("\\.")[1], stat.ip + ":" + stat.port + " " + stat.isPC);
+				Log.d("NSPP", stat.ip + ":" + stat.port + " " + stat.isPC);
 				if (now.getKey().isPC) {
-					Log.d(getClass().getName().split("\\.")[1], "PC");
+					Log.d("NSPP", "PC");
 					PCQuery query=new PCQuery(stat.ip, stat.port);
 					try {
 						stat.response = query.fetchReply();
-						Log.d(getClass().getName().split("\\.")[1], "Success");
+						Log.d("NSPP", "Success");
 					} catch (IOException e) {
-						e.printStackTrace();
-						Log.d(getClass().getName().split("\\.")[1], "Failed");
+						DebugWriter.writeToE("NSPP",e);
+						Log.d("NSPP", "Failed");
 						try {
 							now.getValue().onPingFailed(now.getKey());
 						} catch (Throwable ex) {
@@ -70,36 +70,36 @@ public class NormalServerPingProvider implements ServerPingProvider {
 					}
 					stat.ping = query.getLatestPingElapsed();
 				} else {
-					Log.d(getClass().getName().split("\\.")[1], "PE");
+					Log.d("NSPP", "PE");
 					PEQuery query=new PEQuery(stat.ip, stat.port);
 					try {
 						stat.response = query.fullStat();
-						Log.d(getClass().getName().split("\\.")[1], "Success: Full Stat");
+						Log.d("NSPP", "Success: Full Stat");
 						try {
 							UnconnectedPing.UnconnectedPingResult res=UnconnectedPing.doPing(stat.ip, stat.port);
 							SprPair pair=new SprPair();
 							pair.setA(stat.response);
 							pair.setB(res);
 							stat.response = pair;
-							Log.d(getClass().getName().split("\\.")[1], "Success: Full Stat & Unconnected Ping");
+							Log.d("NSPP", "Success: Full Stat & Unconnected Ping");
 						} catch (IOException e) {
-							Log.d(getClass().getName().split("\\.")[1], "Success: Full Stat");
+							Log.d("NSPP", "Success: Full Stat");
 						}
 						stat.ping = query.getLatestPingElapsed();
 					} catch (Throwable e) {
-						e.printStackTrace();
+						DebugWriter.writeToE("NSPP",e);
 						try {
 							UnconnectedPing.UnconnectedPingResult res=UnconnectedPing.doPing(stat.ip, stat.port);
 							stat.response = res;
 							stat.ping = res.getLatestPingElapsed();
-							Log.d(getClass().getName().split("\\.")[1], "Success: Unconnected Ping");
+							Log.d("NSPP", "Success: Unconnected Ping");
 						} catch (IOException ex) {
 							try {
 								now.getValue().onPingFailed(now.getKey());
 							} catch (Throwable ex_) {
 
 							}
-							Log.d(getClass().getName().split("\\.")[1], "Failed");
+							Log.d("NSPP", "Failed");
 							continue;
 						}
 					}
@@ -109,7 +109,7 @@ public class NormalServerPingProvider implements ServerPingProvider {
 				} catch (Throwable f) {
 
 				}
-				Log.d(getClass().getName().split("\\.")[1], "Next");
+				Log.d("NSPP", "Next");
 			}
 		}
 	}

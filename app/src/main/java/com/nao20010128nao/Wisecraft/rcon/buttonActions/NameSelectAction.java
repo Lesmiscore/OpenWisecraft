@@ -10,6 +10,7 @@ import com.nao20010128nao.Wisecraft.R;
 import com.nao20010128nao.Wisecraft.rcon.RCONActivity;
 import java.io.IOException;
 import com.nao20010128nao.Wisecraft.misc.compat.CompatArrayAdapter;
+import com.nao20010128nao.Wisecraft.misc.DebugWriter;
 
 public abstract class NameSelectAction extends BaseAction {
 	EditText name;
@@ -62,9 +63,9 @@ public abstract class NameSelectAction extends BaseAction {
 				try {
 					return onPlayersList();
 				} catch (IOException e) {
-					e.printStackTrace();
+					DebugWriter.writeToE("RCON-NSA",e);
 				} catch (AuthenticationException e) {
-					e.printStackTrace();
+					DebugWriter.writeToE("RCON-NSA",e);
 				}
 				return null;
 			}

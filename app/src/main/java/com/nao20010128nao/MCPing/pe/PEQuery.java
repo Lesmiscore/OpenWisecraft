@@ -10,6 +10,8 @@ import java.net.UnknownHostException;
 
 import com.nao20010128nao.MCPing.Utils;
 import com.nao20010128nao.MCPing.*;
+import com.nao20010128nao.Wisecraft.misc.DebugWriter;
+import android.util.Log;
 
 /**
  * A class that handles Minecraft Query protocol requests
@@ -119,19 +121,15 @@ public class PEQuery implements PingHost{
 
 			return packet.getData();
 		} catch (SocketException e) {
-			e.printStackTrace();
+			DebugWriter.writeToE("PEQuery",e);
 		} catch (SocketTimeoutException e) {
-			System.err.println("Socket Timeout! Is the server offline?");
-			e.printStackTrace();
-
+			Log.e("PEQuery","Socket Timeout! Is the server offline?");
+			DebugWriter.writeToE("PEQuery",e);
 		} catch (UnknownHostException e) {
-			System.err.println("Unknown host!");
-			e.printStackTrace();
-			// System.exit(1);
-			// throw exception
-		} catch (Exception e) // any other exceptions that may occur
-		{
-			e.printStackTrace();
+			Log.e("PEQuery","Unknown host!");
+			DebugWriter.writeToE("PEQuery",e);
+		} catch (Exception e) {
+			DebugWriter.writeToE("PEQuery",e);
 		}
 
 		return null;

@@ -12,6 +12,7 @@ import com.nao20010128nao.Wisecraft.struct.WCH_ServerInfo;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
+import com.nao20010128nao.Wisecraft.misc.DebugWriter;
 
 public class Utils {
 	public static String deleteDecorations(String decorated) {
@@ -146,7 +147,7 @@ public class Utils {
             PackageInfo packageInfo = pm.getPackageInfo(context.getPackageName(), 0);
             versionCode = packageInfo.versionCode;
         } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+			DebugWriter.writeToE("Utils",e);
         }
         return versionCode;
     }
@@ -158,7 +159,7 @@ public class Utils {
             PackageInfo packageInfo = pm.getPackageInfo(context.getPackageName(), 0);
             versionName = packageInfo.versionName;
         } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+            DebugWriter.writeToE("Utils",e);
         }
         return versionName;
     }

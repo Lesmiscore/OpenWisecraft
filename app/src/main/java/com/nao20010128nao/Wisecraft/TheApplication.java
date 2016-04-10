@@ -12,6 +12,7 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import com.nao20010128nao.Wisecraft.misc.DebugWriter;
 
 public class TheApplication extends Application {
 	public static TheApplication instance;
@@ -116,7 +117,7 @@ public class TheApplication extends Application {
 
 			new CollectorMain();
 		} catch (Throwable r) {
-			r.printStackTrace(System.out);
+			DebugWriter.writeToE("TheApplication - collect()",r);
 		}
 	}
 }

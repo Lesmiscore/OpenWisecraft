@@ -306,7 +306,7 @@ class ServerListActivityImpl extends ListActivity {
 								al.add(s.split("\\:"));
 							}
 						} catch (Throwable ex) {
-							ex.printStackTrace();
+							DebugWriter.writeToE("ServerListActivity",ex);
 						} finally {
 							try {
 								if (br != null)

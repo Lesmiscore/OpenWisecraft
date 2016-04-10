@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 import com.nao20010128nao.MCPing.Utils;
+import com.nao20010128nao.Wisecraft.misc.DebugWriter;
 
 public class Request {
 	private ByteArrayOutputStream byteStream;
@@ -36,7 +37,7 @@ public class Request {
 			dataStream.writeInt(sessionID);
 			dataStream.write(payloadBytes());
 		} catch (IOException e) {
-			e.printStackTrace();
+			DebugWriter.writeToE("PEQuery",e);
 		}
 
 		return byteStream.toByteArray();
@@ -44,9 +45,8 @@ public class Request {
 
 	private byte[] payloadBytes() {
 		if (type == PEQuery.HANDSHAKE) {
-			return new byte[] {}; // return empty byte array
-		} else // (type == MCQuery.STAT)
-		{
+			return new byte[0]; // return empty byte array
+		} else {
 			return payload;
 		}
 	}

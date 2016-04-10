@@ -8,6 +8,7 @@ import com.nao20010128nao.Wisecraft.misc.Server;
 import com.nao20010128nao.Wisecraft.misc.ServerStatus;
 import java.io.IOException;
 import com.nao20010128nao.Wisecraft.misc.KVP;
+import com.nao20010128nao.Wisecraft.misc.DebugWriter;
 public class PCServerPingProvider implements ServerPingProvider
 {
 	Queue<Map.Entry<Server,PingHandler>> queue=new LinkedList<>();
@@ -46,22 +47,22 @@ public class PCServerPingProvider implements ServerPingProvider
 			// TODO: Implement this method
 			Map.Entry<Server,PingHandler> now=null;
 			while (!(queue.isEmpty()|isInterrupted())) {
-				Log.d(getClass().getName().split("\\.")[1], "Starting ping");
+				Log.d("PCSPP", "Starting ping");
 				now = queue.poll();
 				ServerStatus stat=new ServerStatus();
 				stat.ip = now.getKey().ip;
 				stat.port = now.getKey().port;
 				stat.isPC = now.getKey().isPC;
-				Log.d(getClass().getName().split("\\.")[1], stat.ip + ":" + stat.port + " " + stat.isPC);
+				Log.d("PCSPP", stat.ip + ":" + stat.port + " " + stat.isPC);
 				if (now.getKey().isPC) {
-					Log.d(getClass().getName().split("\\.")[1], "PC");
+					Log.d("PCSPP", "PC");
 					PCQuery query=new PCQuery(stat.ip, stat.port);
 					try {
 						stat.response = query.fetchReply();
-						Log.d(getClass().getName().split("\\.")[1], "Success");
+						Log.d("PCSPP", "Success");
 					} catch (IOException e) {
-						e.printStackTrace();
-						Log.d(getClass().getName().split("\\.")[1], "Failed");
+						DebugWriter.writeToE("PCSPP",e);
+						Log.d("PCSPP", "Failed");
 						try {
 							now.getValue().onPingFailed(now.getKey());
 						} catch (Throwable ex) {
@@ -83,7 +84,7 @@ public class PCServerPingProvider implements ServerPingProvider
 				} catch (Throwable f) {
 
 				}
-				Log.d(getClass().getName().split("\\.")[1], "Next");
+				Log.d("PCSPP", "Next");
 			}
 		}
 	}

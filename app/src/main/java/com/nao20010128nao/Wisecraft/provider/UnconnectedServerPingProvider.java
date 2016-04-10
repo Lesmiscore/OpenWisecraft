@@ -48,13 +48,13 @@ public class UnconnectedServerPingProvider implements ServerPingProvider
 			// TODO: Implement this method
 			Map.Entry<Server,PingHandler> now=null;
 			while (!(queue.isEmpty()|isInterrupted())) {
-				Log.d(getClass().getName().split("\\.")[1], "Starting ping");
+				Log.d("UPP", "Starting ping");
 				now = queue.poll();
 				ServerStatus stat=new ServerStatus();
 				stat.ip = now.getKey().ip;
 				stat.port = now.getKey().port;
 				stat.isPC = now.getKey().isPC;
-				Log.d(getClass().getName().split("\\.")[1], stat.ip + ":" + stat.port + " " + stat.isPC);
+				Log.d("UPP", stat.ip + ":" + stat.port + " " + stat.isPC);
 				if (now.getKey().isPC) {
 					try{
 						now.getValue().onPingFailed(now.getKey());
@@ -67,9 +67,9 @@ public class UnconnectedServerPingProvider implements ServerPingProvider
 						UnconnectedPing.UnconnectedPingResult res=UnconnectedPing.doPing(stat.ip, stat.port);
 						stat.response = res;
 						stat.ping=res.getLatestPingElapsed();
-						Log.d(getClass().getName().split("\\.")[1], "Success: Unconnected Ping");
+						Log.d("UPP", "Success: Unconnected Ping");
 					} catch (IOException e) {
-						Log.d(getClass().getName().split("\\.")[1], "Failed");
+						Log.d("UPP", "Failed");
 						now.getValue().onPingFailed(now.getKey());
 						continue;
 					}
@@ -79,7 +79,7 @@ public class UnconnectedServerPingProvider implements ServerPingProvider
 				} catch (Throwable f) {
 
 				}
-				Log.d(getClass().getName().split("\\.")[1], "Next");
+				Log.d("UPP", "Next");
 			}
 		}
 	}

