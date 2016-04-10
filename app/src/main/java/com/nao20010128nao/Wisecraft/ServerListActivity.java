@@ -826,7 +826,7 @@ class ServerListActivityImpl extends ListActivity {
 								} else {
 									title = deleteDecorations(rep.description.text);
 								}
-								((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText(rep.getPlayers().getOnline()+"/"+rep.getPlayers().getMax());
+								((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText(rep.players.online+"/"+rep.players.max);
 							} else if (s.response instanceof Reply) {//PC
 								Reply rep=(Reply)s.response;
 								if (rep.description == null) {
@@ -834,7 +834,7 @@ class ServerListActivityImpl extends ListActivity {
 								} else {
 									title = deleteDecorations(rep.description);
 								}
-								((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText(rep.getPlayers().getOnline()+"/"+rep.getPlayers().getMax());
+								((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText(rep.players.online+"/"+rep.players.max);
 							} else if (s.response instanceof SprPair) {//PE?
 								SprPair sp=((SprPair)s.response);
 								if (sp.getB() instanceof UnconnectedPing.UnconnectedPingResult) {

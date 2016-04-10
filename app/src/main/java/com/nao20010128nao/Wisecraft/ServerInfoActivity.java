@@ -172,10 +172,10 @@ public class ServerInfoActivity extends FragmentActivity {
 				setTitle(deleteDecorations(rep.description));
 			}
 
-			if (rep.players.getSample() != null) {
+			if (rep.players.sample != null) {
 				final ArrayList<String> sort=new ArrayList<>();
-				for (Reply.Player o:rep.players.getSample()) {
-					sort.add(o.getName());
+				for (Reply.Player o:rep.players.sample) {
+					sort.add(o.name);
 				}
 				if(pref.getBoolean("sortPlayerNames",true))
 					Collections.sort(sort);
@@ -197,10 +197,10 @@ public class ServerInfoActivity extends FragmentActivity {
 
 			adap2.clear();
 			Map<String,String> data=new HashMap<>();
-			data.put(getResources().getString(R.string.pc_maxPlayers), rep.players.getMax() + "");
-			data.put(getResources().getString(R.string.pc_nowPlayers), rep.players.getOnline() + "");
-			data.put(getResources().getString(R.string.pc_softwareVersion), rep.version.getName());
-			data.put(getResources().getString(R.string.pc_protocolVersion), rep.version.getProtocol() + "");
+			data.put(getResources().getString(R.string.pc_maxPlayers), rep.players.max + "");
+			data.put(getResources().getString(R.string.pc_nowPlayers), rep.players.online + "");
+			data.put(getResources().getString(R.string.pc_softwareVersion), rep.version.name);
+			data.put(getResources().getString(R.string.pc_protocolVersion), rep.version.protocol + "");
 			CompatArrayAdapter.addAll(adap2, data.entrySet());
 		} else if (resp instanceof Reply19) {
 			Reply19 rep=(Reply19)resp;
@@ -210,10 +210,10 @@ public class ServerInfoActivity extends FragmentActivity {
 				setTitle(deleteDecorations(rep.description.text));
 			}
 
-			if (rep.players.getSample() != null) {
+			if (rep.players.sample != null) {
 				final ArrayList<String> sort=new ArrayList<>();
-				for (Reply19.Player o:rep.players.getSample()) {
-					sort.add(o.getName());
+				for (Reply19.Player o:rep.players.sample) {
+					sort.add(o.name);
 				}
 				Collections.sort(sort);
 				adap.clear();
@@ -234,10 +234,10 @@ public class ServerInfoActivity extends FragmentActivity {
 
 			adap2.clear();
 			Map<String,String> data=new HashMap<>();
-			data.put(getResources().getString(R.string.pc_maxPlayers), rep.players.getMax() + "");
-			data.put(getResources().getString(R.string.pc_nowPlayers), rep.players.getOnline() + "");
-			data.put(getResources().getString(R.string.pc_softwareVersion), rep.version.getName());
-			data.put(getResources().getString(R.string.pc_protocolVersion), rep.version.getProtocol() + "");
+			data.put(getResources().getString(R.string.pc_maxPlayers), rep.players.max + "");
+			data.put(getResources().getString(R.string.pc_nowPlayers), rep.players.online + "");
+			data.put(getResources().getString(R.string.pc_softwareVersion), rep.version.name);
+			data.put(getResources().getString(R.string.pc_protocolVersion), rep.version.protocol + "");
 			CompatArrayAdapter.addAll(adap2, data.entrySet());
 		} else if (resp instanceof SprPair) {
 			SprPair p=(SprPair)resp;
