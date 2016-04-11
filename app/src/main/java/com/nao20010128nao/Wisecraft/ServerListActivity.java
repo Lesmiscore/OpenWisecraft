@@ -644,27 +644,71 @@ class ServerListActivityImpl extends ListActivity {
 									data.ip = getItem(p3).ip;
 									data.port = getItem(p3).port;
 									data.isPC = getItem(p3).isPC;
-									View dialog=sla.getLayoutInflater().inflate(R.layout.serveradddialog, null);
-									final EditText ip=(EditText)dialog.findViewById(R.id.serverIp);
-									final EditText port=(EditText)dialog.findViewById(R.id.serverPort);
-									final CheckBox isPc=(CheckBox)dialog.findViewById(R.id.pc);
+									View dialog=sla.getLayoutInflater().inflate(R.layout.server_add_dialog_new, null);
+									final LinearLayout peFrame=(LinearLayout)dialog.findViewById(R.id.pe);
+									final LinearLayout pcFrame=(LinearLayout)dialog.findViewById(R.id.pc);
+									final EditText pe_ip=(EditText)dialog.findViewById(R.id.pe).findViewById(R.id.serverIp);
+									final EditText pe_port=(EditText)dialog.findViewById(R.id.pe).findViewById(R.id.serverPort);
+									final EditText pc_ip=(EditText)dialog.findViewById(R.id.pc).findViewById(R.id.serverIp);
+									final CheckBox split=(CheckBox)dialog.findViewById(R.id.switchFirm);
 
-									ip.setText(data.ip);
-									port.setText(data.port + "");
-									isPc.setChecked(data.isPC);
+									if(data.isPC){
+										if(data.port==25565){
+											pc_ip.setText(data.ip);
+										}else{
+											pc_ip.setText(data.toString());
+										}
+									}else{
+										pe_ip.setText(data.ip);
+										pe_port.setText(data.port+"");
+									}
+									split.setChecked(data.isPC);
 
-									new AlertDialog.Builder(getContext()).
+									split.setOnClickListener(new View.OnClickListener(){
+											public void onClick(View v){
+												if(split.isChecked()){
+													//PE->PC
+													peFrame.setVisibility(View.GONE);
+													pcFrame.setVisibility(View.VISIBLE);
+													split.setText(R.string.pc);
+													StringBuilder result=new StringBuilder();
+													result.append(pe_ip.getText());
+													int port=new Integer(pe_port.getText().toString()).intValue();
+													if(!(port==25565|port==19132)){
+														result.append(':').append(pe_port.getText());
+													}
+													pc_ip.setText(result);
+												}else{
+													//PC->PE
+													pcFrame.setVisibility(View.GONE);
+													peFrame.setVisibility(View.VISIBLE);
+													split.setText(R.string.pe);
+													Server s=Utils.convertServerObject(Arrays.<com.nao20010128nao.McServerList.Server>asList(com.nao20010128nao.McServerList.Server.makeServerFromString(pc_ip.getText().toString(),false))).get(0);
+													pe_ip.setText(s.ip);
+													pe_port.setText(s.port+"");
+												}
+											}
+										});
+										
+									new AlertDialog.Builder(sla).
 										setView(dialog).
 										setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener(){
 											public void onClick(DialogInterface d, int sel) {
-												data.ip = ip.getText().toString();
-												data.port = new Integer(port.getText().toString());
-												data.isPC = isPc.isChecked();
+												Server s;
+												if(split.isChecked()){
+													s=Utils.convertServerObject(Arrays.<com.nao20010128nao.McServerList.Server>asList(com.nao20010128nao.McServerList.Server.makeServerFromString(pc_ip.getText().toString(),false))).get(0);
+												}else{
+													s=new Server();
+													s.ip = pe_ip.getText().toString();
+													s.port = new Integer(pe_port.getText().toString());
+													s.isPC = split.isChecked();
+												}
 
-												sla.list.set(p3, data);
-												sla.spp.putInQueue(getItem(p3), sla.new PingHandlerImpl(true, -1));
-												((TextView)getViewQuick(p3).findViewById(R.id.serverAddress)).setText(data.ip + ":" + data.port);
-
+												if (sla.list.contains(s)) {
+													Toast.makeText(sla, R.string.alreadyExists, Toast.LENGTH_LONG).show();
+												} else {
+													sla.sl.add(s);
+												}
 												sla.saveServers();
 											}
 										}).
