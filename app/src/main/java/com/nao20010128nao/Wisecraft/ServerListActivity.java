@@ -257,6 +257,7 @@ class ServerListActivityImpl extends ListActivity {
 		if (dl != null)dl.closeDrawers();
 		switch (item) {
 			case 0:
+				/*
 				final Server data=new Server();
 				data.ip = "localhost";
 				data.port = 19132;
@@ -280,6 +281,73 @@ class ServerListActivityImpl extends ListActivity {
 								Toast.makeText(ServerListActivityImpl.this, R.string.alreadyExists, Toast.LENGTH_LONG).show();
 							} else {
 								sl.add(data);
+							}
+							saveServers();
+						}
+					}).
+					setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener(){
+						public void onClick(DialogInterface d, int sel) {
+
+						}
+					}).
+					show();
+					*/
+				View dialog=getLayoutInflater().inflate(R.layout.server_add_dialog_new, null);
+				final LinearLayout peFrame=(LinearLayout)dialog.findViewById(R.id.pe);
+				final LinearLayout pcFrame=(LinearLayout)dialog.findViewById(R.id.pc);
+				final EditText pe_ip=(EditText)dialog.findViewById(R.id.pe).findViewById(R.id.serverIp);
+				final EditText pe_port=(EditText)dialog.findViewById(R.id.pe).findViewById(R.id.serverPort);
+				final EditText pc_ip=(EditText)dialog.findViewById(R.id.pc).findViewById(R.id.serverIp);
+				final CheckBox split=(CheckBox)dialog.findViewById(R.id.switchFirm);
+				
+				pe_ip.setText("localhost");
+				pe_port.setText("19132");
+				split.setChecked(false);
+				
+				split.setOnClickListener(new View.OnClickListener(){
+					public void onClick(View v){
+						if(split.isChecked()){
+							//PE->PC
+							peFrame.setVisibility(View.GONE);
+							pcFrame.setVisibility(View.VISIBLE);
+							split.setText(R.string.pc);
+							StringBuilder result=new StringBuilder();
+							result.append(pe_ip.getText());
+							int port=new Integer(pe_port.getText().toString()).intValue();
+							if(!(port==25565|port==19132)){
+								result.append(':').append(pe_port.getText());
+							}
+							pc_ip.setText(result);
+						}else{
+							//PC->PE
+							pcFrame.setVisibility(View.GONE);
+							peFrame.setVisibility(View.VISIBLE);
+							split.setText(R.string.pe);
+							Server s=Utils.convertServerObject(Arrays.asList(com.nao20010128nao.McServerList.Server.makeServerFromString(pc_ip.getText().toString(),false))).get(0);
+							pe_ip.setText(s.ip);
+							pe_port.setText(s.port+"");
+						}
+					}
+				});
+				
+				new AlertDialog.Builder(this).
+					setView(dialog).
+					setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener(){
+						public void onClick(DialogInterface d, int sel) {
+							Server s;
+							if(split.isChecked()){
+								s=Utils.convertServerObject(Arrays.asList(com.nao20010128nao.McServerList.Server.makeServerFromString(pc_ip.getText().toString(),false))).get(0);
+							}else{
+								s=new Server();
+								s.ip = pe_ip.getText().toString();
+								s.port = new Integer(pe_port.getText().toString());
+								s.isPC = split.isChecked();
+							}
+							
+							if (list.contains(s)) {
+								Toast.makeText(ServerListActivityImpl.this, R.string.alreadyExists, Toast.LENGTH_LONG).show();
+							} else {
+								sl.add(s);
 							}
 							saveServers();
 						}
