@@ -410,6 +410,11 @@ public class ServerInfoActivity extends FragmentActivity {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			// TODO: Implement this method
+			if(position==0){
+				return getLayoutInflater().inflate(R.layout.void_view,null);
+			}else{
+				position--;
+			}
 			View v=getLayoutInflater().inflate(R.layout.mod_info_content,null);
 			Object o=getItem(position);
 			if(o instanceof Reply.ModListContent){
@@ -422,6 +427,12 @@ public class ServerInfoActivity extends FragmentActivity {
 				((TextView)v.findViewById(R.id.modVersion)).setText(mlc.version);
 			}
 			return v;
+		}
+
+		@Override
+		public int getCount() {
+			// TODO: Implement this method
+			return super.getCount()+1;
 		}
 	}
 	
