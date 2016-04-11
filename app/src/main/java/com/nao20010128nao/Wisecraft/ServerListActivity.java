@@ -257,41 +257,6 @@ class ServerListActivityImpl extends ListActivity {
 		if (dl != null)dl.closeDrawers();
 		switch (item) {
 			case 0:
-				/*
-				final Server data=new Server();
-				data.ip = "localhost";
-				data.port = 19132;
-				data.isPC = false;
-				View dialog=getLayoutInflater().inflate(R.layout.serveradddialog, null);
-				final EditText ip=(EditText)dialog.findViewById(R.id.serverIp);
-				final EditText port=(EditText)dialog.findViewById(R.id.serverPort);
-				final CheckBox isPc=(CheckBox)dialog.findViewById(R.id.pc);
-
-				ip.setText(data.ip);
-				port.setText(data.port + "");
-
-				new AlertDialog.Builder(this).
-					setView(dialog).
-					setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener(){
-						public void onClick(DialogInterface d, int sel) {
-							data.ip = ip.getText().toString();
-							data.port = new Integer(port.getText().toString());
-							data.isPC = isPc.isChecked();
-							if (list.contains(data)) {
-								Toast.makeText(ServerListActivityImpl.this, R.string.alreadyExists, Toast.LENGTH_LONG).show();
-							} else {
-								sl.add(data);
-							}
-							saveServers();
-						}
-					}).
-					setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener(){
-						public void onClick(DialogInterface d, int sel) {
-
-						}
-					}).
-					show();
-					*/
 				View dialog=getLayoutInflater().inflate(R.layout.server_add_dialog_new, null);
 				final LinearLayout peFrame=(LinearLayout)dialog.findViewById(R.id.pe);
 				final LinearLayout pcFrame=(LinearLayout)dialog.findViewById(R.id.pc);
