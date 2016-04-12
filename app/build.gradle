@@ -19,7 +19,7 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:23.2.1'
+	compile 'com.android.support:support-v4:23.2.1'
     compile 'com.google.code.gson:gson:2.6.2'
     compile files('libs/antenna-bin-0.9.13.jar')
     compile 'uk.co.chrisjenx:calligraphy:2.1.0'
@@ -35,4 +35,5 @@ dependencies {
 	compile 'org.eclipse.mylyn.github:org.eclipse.egit.github.core:3.4.0.201406110918-r'
     compile project(':wisecraft-i18n') // https://github.com/nao20010128nao/Wisecraft-Multilanguage
 	compile 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
+	compile project(':compat')
 }
