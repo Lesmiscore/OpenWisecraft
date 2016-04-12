@@ -8,7 +8,7 @@ import android.view.MenuInflater;
 import android.view.ViewGroup.LayoutParams;
 import android.view.View;
 
-public class AppCompatListViewActivity extends ListActivity
+public class AppCompatListViewActivity extends LocalListActivity
 {
 	AppCompatDelegate dlg;
 	@Override
