@@ -136,13 +136,8 @@ public class BinaryPrefImpl implements SharedPreferences {
 					} else if (o instanceof Set<?>) {
 						dos.writeByte(1);
 						dos.writeInt(((Set) o).size());
-						for (String s:(Set<String>)o) {
-							try {
-								dos.writeUTF(s);
-							} catch (Exception e) {
-								// Unreachable
-							}
-						}
+						for (String s:(Set<String>)o)
+							dos.writeUTF(s);
 					} else if (o instanceof Integer) {
 						dos.writeByte(2);
 						dos.writeInt((int) o);
@@ -277,9 +272,8 @@ public class BinaryPrefImpl implements SharedPreferences {
 					case 1:// String Set
 						int sLen = dis.readInt();
 						Set<String> set = new HashSet<>(sLen);
-						for (int j = 0; j < sLen; j++) {
+						for (int j = 0; j < sLen; j++)
 							set.add(dis.readUTF());
-						}
 						map.put(key, Collections.unmodifiableSet(set));
 						break;
 					case 2:// int
