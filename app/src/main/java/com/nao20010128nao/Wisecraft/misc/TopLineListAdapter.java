@@ -1,13 +1,12 @@
 package com.nao20010128nao.Wisecraft.misc;
-import android.widget.ListAdapter;
+import android.view.*;
+
+import android.content.Context;
 import android.database.DataSetObserver;
-import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ListAdapter;
+import com.nao20010128nao.Wisecraft.R;
 import com.nao20010128nao.Wisecraft.Utils;
 import java.security.SecureRandom;
-import android.view.LayoutInflater;
-import com.nao20010128nao.Wisecraft.R;
-import android.content.Context;
 
 public final class TopLineListAdapter implements ListAdapter
 {
