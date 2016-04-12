@@ -1,6 +1,7 @@
 package com.nao20010128nao.Wisecraft.misc;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 public class ServerListArrayList extends ArrayList<Server>
 {
@@ -17,13 +18,24 @@ public class ServerListArrayList extends ArrayList<Server>
 	@Override
 	public boolean contains(Object object) {
 		// TODO: Implement this method
-		return super.contains(object);
+		if(object==null)return false;
+		Iterator<Server> i=iterator();
+		while(i.hasNext())
+			if(i.next().equals(object))
+				return true;
+		return false;
 	}
 
 	@Override
 	public int indexOf(Object object) {
 		// TODO: Implement this method
-		return super.indexOf(object);
+		if(object==null)return -1;
+		Iterator<Server> i=iterator();
+		Server s=null;
+		while(i.hasNext())
+			if((s=i.next()).equals(object))
+				return super.indexOf(s);
+		return -1;
 	}
 
 	@Override

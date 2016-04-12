@@ -539,11 +539,19 @@ class ServerListActivityImpl extends ListActivity {
 		Log.d("json", json);
 	}
 
+	public void dryUpdate(Server s){
+		if (pinging.get(s))return;
+		updater.putInQueue(s, new PingHandlerImpl(true, -1));
+		((TextView)sl.getViewQuick(list.indexOf(s)).findViewById(R.id.pingMillis)).setText(R.string.working);
+		((ImageView)sl.getViewQuick(list.indexOf(s)).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
+		pinging.put(s, true);
+	}
+	
 	static class ServerList extends AppBaseArrayAdapter<Server> implements AdapterView.OnItemClickListener,AdapterView.OnItemLongClickListener {
 		List<View> cached=new ArrayList();
 		ServerListActivityImpl sla;
 		public ServerList(ServerListActivityImpl sla) {
-			super(sla, 0, sla.list = new ArrayList<Server>());
+			super(sla, 0, sla.list = new ServerListArrayList());
 			this.sla = sla;
 		}
 
@@ -640,10 +648,7 @@ class ServerListActivityImpl extends ListActivity {
 							});
 						executes.add(2, new Runnable(){
 								public void run() {
-									final Server data=new Server();
-									data.ip = getItem(p3).ip;
-									data.port = getItem(p3).port;
-									data.isPC = getItem(p3).isPC;
+									final Server data=getItem(p3);
 									View dialog=sla.getLayoutInflater().inflate(R.layout.server_add_dialog_new, null);
 									final LinearLayout peFrame=(LinearLayout)dialog.findViewById(R.id.pe);
 									final LinearLayout pcFrame=(LinearLayout)dialog.findViewById(R.id.pc);
@@ -663,6 +668,15 @@ class ServerListActivityImpl extends ListActivity {
 										pe_port.setText(data.port+"");
 									}
 									split.setChecked(data.isPC);
+									if(data.isPC){
+										peFrame.setVisibility(View.GONE);
+										pcFrame.setVisibility(View.VISIBLE);
+										split.setText(R.string.pc);
+									}else{
+										pcFrame.setVisibility(View.GONE);
+										peFrame.setVisibility(View.VISIBLE);
+										split.setText(R.string.pe);
+									}
 
 									split.setOnClickListener(new View.OnClickListener(){
 											public void onClick(View v){
@@ -704,10 +718,15 @@ class ServerListActivityImpl extends ListActivity {
 													s.isPC = split.isChecked();
 												}
 
-												if (sla.list.contains(s)) {
-													Toast.makeText(sla, R.string.alreadyExists, Toast.LENGTH_LONG).show();
-												} else {
-													sla.sl.add(s);
+												List<Server> localServers=new ArrayList<>(sla.list);
+												int ofs=localServers.indexOf(data);
+												localServers.set(ofs,s);
+												if(localServers.contains(data)){
+													Toast.makeText(sla,R.string.alreadyExists,Toast.LENGTH_LONG).show();
+												}else{
+													sla.list.set(ofs,s);
+													sla.sl.notifyDataSetChanged();
+													sla.dryUpdate(s);
 												}
 												sla.saveServers();
 											}
@@ -856,6 +875,7 @@ class ServerListActivityImpl extends ListActivity {
 							((TextView)sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(s.ip + ":" + s.port);
 							((TextView)sl.getViewQuick(i_).findViewById(R.id.pingMillis)).setText(R.string.notResponding);
 							((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText("-/-");
+							((TextView)sl.getViewQuick(i_).findViewById(R.id.serverAddress)).setText(s.ip + ":" + s.port);
 							Server sn=new Server();
 							sn.ip = s.ip;
 							sn.port = s.port;
@@ -943,6 +963,7 @@ class ServerListActivityImpl extends ListActivity {
 							}
 							((TextView)sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(deleteDecorations(title));
 							((TextView)sl.getViewQuick(i_).findViewById(R.id.pingMillis)).setText(s.ping + " ms");
+							((TextView)sl.getViewQuick(i_).findViewById(R.id.serverAddress)).setText(s.ip + ":" + s.port);
 							list.set(i_, s);
 							pinging.put(list.get(i_), false);
 							if (statTabOfs != -1) {
