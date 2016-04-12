@@ -16,7 +16,7 @@ public class BinaryPrefImpl implements SharedPreferences {
 
 	public BinaryPrefImpl(Map<String, ?> map) {
 		// TODO 自動生成されたコンストラクター・スタブ
-		data = new HashMap<>(map);
+		data = validateMap(new HashMap<>(map));
 	}
 
 	public BinaryPrefImpl(File f) throws IOException {
@@ -40,11 +40,6 @@ public class BinaryPrefImpl implements SharedPreferences {
 	@Override
 	public Map<String, ?> getAll() {
 		// TODO 自動生成されたメソッド・スタブ
-		/*if (!unchanged) {
-			allCache = Collections.unmodifiableMap(new HashMap<>(data));
-			unchanged = true;
-		}
-		return allCache;*/
 		return Collections.unmodifiableMap(new HashMap<>(data));
 	}
 
@@ -116,13 +111,13 @@ public class BinaryPrefImpl implements SharedPreferences {
 
 	@Override
 	public void registerOnSharedPreferenceChangeListener(
-			OnSharedPreferenceChangeListener listener) {
+		OnSharedPreferenceChangeListener listener) {
 		// Do nothing here
 	}
 
 	@Override
 	public void unregisterOnSharedPreferenceChangeListener(
-			OnSharedPreferenceChangeListener listener) {
+		OnSharedPreferenceChangeListener listener) {
 		// Do nothing here
 	}
 
@@ -131,7 +126,7 @@ public class BinaryPrefImpl implements SharedPreferences {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			DataOutputStream dos = new DataOutputStream(baos);
 			dos.writeInt(data.size());
-			for(Map.Entry<String,Object> ent:data.entrySet()){
+			for (Map.Entry<String,Object> ent:data.entrySet()) {
 				try {
 					dos.writeUTF(ent.getKey());
 					Object o = ent.getValue();
@@ -141,7 +136,7 @@ public class BinaryPrefImpl implements SharedPreferences {
 					} else if (o instanceof Set<?>) {
 						dos.writeByte(1);
 						dos.writeInt(((Set) o).size());
-						for(String s:(Set<String>)o){
+						for (String s:(Set<String>)o) {
 							try {
 								dos.writeUTF(s);
 							} catch (Exception e) {
@@ -165,11 +160,11 @@ public class BinaryPrefImpl implements SharedPreferences {
 					// Unreachable
 				}
 			}
-			
+
 			return baos.toByteArray();
 		} catch (IOException e) {
 			// TODO 自動生成された catch ブロック
-			DebugWriter.writeToE("BinaryPrefImpl",e);
+			DebugWriter.writeToE("BinaryPrefImpl", e);
 			return new byte[4];
 		}
 	}
@@ -253,7 +248,7 @@ public class BinaryPrefImpl implements SharedPreferences {
 		public void apply() {
 			// TODO 自動生成されたメソッド・スタブ
 			BinaryPrefImpl.this.data.putAll(data);
-			for(String k:removes)BinaryPrefImpl.this.data.remove(k);
+			for (String k:removes)BinaryPrefImpl.this.data.remove(k);
 			data = null;
 		}
 	}
@@ -266,7 +261,7 @@ public class BinaryPrefImpl implements SharedPreferences {
 	}
 
 	private static Map<String, ?> readAllFromStream(InputStream is,
-			boolean close) throws IOException {
+													boolean close) throws IOException {
 		Map<String, Object> map = new HashMap<>(10);
 		DataInputStream dis = null;
 		try {
@@ -276,29 +271,29 @@ public class BinaryPrefImpl implements SharedPreferences {
 				String key = dis.readUTF();
 				byte mode = dis.readByte();
 				switch (mode) {
-				case 0:// String
-					map.put(key, dis.readUTF());
-					break;
-				case 1:// String Set
-					int sLen = dis.readInt();
-					Set<String> set = new HashSet<>(sLen);
-					for (int j = 0; j < sLen; j++) {
-						set.add(dis.readUTF());
-					}
-					map.put(key, Collections.unmodifiableSet(set));
-					break;
-				case 2:// int
-					map.put(key, dis.readInt());
-					break;
-				case 3:// long
-					map.put(key, dis.readLong());
-					break;
-				case 4:// float
-					map.put(key, dis.readFloat());
-					break;
-				case 5:// boolean
-					map.put(key, dis.readBoolean());
-					break;
+					case 0:// String
+						map.put(key, dis.readUTF());
+						break;
+					case 1:// String Set
+						int sLen = dis.readInt();
+						Set<String> set = new HashSet<>(sLen);
+						for (int j = 0; j < sLen; j++) {
+							set.add(dis.readUTF());
+						}
+						map.put(key, Collections.unmodifiableSet(set));
+						break;
+					case 2:// int
+						map.put(key, dis.readInt());
+						break;
+					case 3:// long
+						map.put(key, dis.readLong());
+						break;
+					case 4:// float
+						map.put(key, dis.readFloat());
+						break;
+					case 5:// boolean
+						map.put(key, dis.readBoolean());
+						break;
 				}
 			}
 		} finally {
@@ -317,5 +312,26 @@ public class BinaryPrefImpl implements SharedPreferences {
 			// TODO 自動生成された catch ブロック
 			return null;
 		}
+	}
+
+	private static HashMap<String,Object> validateMap(Map<String,Object> map) {
+		HashMap<String,Object> result=new HashMap<>();
+		for (Map.Entry<String,Object> ent:map.entrySet()) {
+			Object o = ent.getValue();
+			if (o instanceof String) {
+				result.put(ent.getKey(), o);
+			} else if (o instanceof Set<?>) {
+				result.put(ent.getKey(), Collections.unmodifiableSet(new HashSet<>(o)));
+			} else if (o instanceof Integer) {
+				result.put(ent.getKey(), o);
+			} else if (o instanceof Long) {
+				result.put(ent.getKey(), o);
+			} else if (o instanceof Float) {
+				result.put(ent.getKey(), o);
+			} else if (o instanceof Boolean) {
+				result.put(ent.getKey(), o);
+			}
+		}
+		return result;
 	}
 }
