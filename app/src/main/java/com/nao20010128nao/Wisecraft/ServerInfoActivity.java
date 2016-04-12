@@ -26,6 +26,7 @@ import java.lang.ref.WeakReference;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import java.lang.reflect.Modifier;
 
 public class ServerInfoActivity extends FragmentActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
@@ -52,7 +53,6 @@ public class ServerInfoActivity extends FragmentActivity {
 	ArrayAdapter<String> adap,adap3;
 	ArrayAdapter<Map.Entry<String,String>> adap2;
 	ArrayAdapter<Object> adap4;
-	ListAdapter adap4_show;
 
 	List<Bitmap> skinFaceImages;
 	SkinFaceFetcher sff;
@@ -123,7 +123,6 @@ public class ServerInfoActivity extends FragmentActivity {
 		adap2 = new KVListAdapter<>(this);
 		adap3 = new AppBaseArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
 		adap4 = new ModInfoListAdapter();
-		adap4_show=new TopLineListAdapter(adap4,getLayoutInflater());
 		
 		nonUpd = getIntent().getBooleanExtra("nonUpd", false);
 
@@ -332,7 +331,7 @@ public class ServerInfoActivity extends FragmentActivity {
 	}
 	public void setModsListView(ListView lv) {
 		mods = lv;
-		lv.setAdapter(adap4_show);
+		lv.setAdapter(adap4);
 	}
 	public void setModLoaderNameView(TextView lv) {
 		modLoader = lv;
@@ -411,6 +410,11 @@ public class ServerInfoActivity extends FragmentActivity {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			// TODO: Implement this method
+			if(position==0){
+				return getLayoutInflater().inflate(R.layout.void_view,null);
+			}else{
+				position--;
+			}
 			View v=getLayoutInflater().inflate(R.layout.mod_info_content,null);
 			Object o=getItem(position);
 			if(o instanceof Reply.ModListContent){
@@ -423,6 +427,12 @@ public class ServerInfoActivity extends FragmentActivity {
 				((TextView)v.findViewById(R.id.modVersion)).setText(mlc.version);
 			}
 			return v;
+		}
+
+		@Override
+		public int getCount() {
+			// TODO: Implement this method
+			return super.getCount()+1;
 		}
 	}
 	
