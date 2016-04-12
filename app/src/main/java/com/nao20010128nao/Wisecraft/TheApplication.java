@@ -84,11 +84,10 @@ public class TheApplication extends Application {
 		String[] result=new String[field.length];
 		for(int i=0;i<result.length;i++){
 			String disp=getDisplayFontName(field[i]);
-			if(disp==null){
+			if(disp==null)
 				result[i]=field[i];
-			}else{
+			else
 				result[i]=disp;
-			}
 		}
 		return result;
 	}
@@ -99,11 +98,9 @@ public class TheApplication extends Application {
 	}
 	private static Field[] getFontFields() {
 		List<Field> l=new ArrayList<>(6);
-		for (Field f:TheApplication.class.getFields()) {
-			if (((f.getModifiers() & Modifier.STATIC) == Modifier.STATIC) & f.getType() == Typeface.class) {
+		for (Field f:TheApplication.class.getFields())
+			if (((f.getModifiers() & Modifier.STATIC) == Modifier.STATIC) & f.getType() == Typeface.class)
 				l.add(f);
-			}
-		}
 		return l.toArray(new Field[l.size()]);
 	}
 	public void collect() {
