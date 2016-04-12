@@ -28,8 +28,10 @@ import pref.StartPref;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import com.nao20010128nao.Wisecraft.misc.compat.AppCompatListViewActivity;
+import android.support.design.widget.CoordinatorLayout;
 
-class ServerListActivityImpl extends ListActivity {
+class ServerListActivityImpl extends AppCompatListViewActivity {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
 
 	static File mcpeServerList=new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt");
@@ -60,6 +62,7 @@ class ServerListActivityImpl extends ListActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
+		CoordinatorLayout.class.toString();
 		super.onCreate(savedInstanceState);
 		getLayoutInflater().inflate(R.layout.hacks, null);//空インフレート
 		pref = PreferenceManager.getDefaultSharedPreferences(this);

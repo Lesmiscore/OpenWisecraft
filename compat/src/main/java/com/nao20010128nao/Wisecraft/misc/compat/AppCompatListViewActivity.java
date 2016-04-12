@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
 import android.content.res.Configuration;
 import android.support.v7.app.ActionBar;
+import android.view.MenuInflater;
 
 public class AppCompatListViewActivity extends ListActivity
 {
@@ -11,10 +12,11 @@ public class AppCompatListViewActivity extends ListActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.content_lv);
 		dlg=AppCompatDelegate.create(this,null);
+		dlg.installViewFactory();
 		dlg.onCreate(savedInstanceState);
+		super.onCreate(savedInstanceState);
 		
 	}
 
@@ -62,5 +64,25 @@ public class AppCompatListViewActivity extends ListActivity
 		// TODO: Implement this method
 		super.onStop();
 		dlg.onStop();
+	}
+
+	@Override
+	public MenuInflater getMenuInflater() {
+		// TODO: Implement this method
+		return dlg.getMenuInflater();
+	}
+
+	@Override
+	protected void onTitleChanged(CharSequence title, int color) {
+		// TODO: Implement this method
+		super.onTitleChanged(title, color);
+		dlg.setTitle(title);
+	}
+
+	@Override
+	public void invalidateOptionsMenu() {
+		// TODO: Implement this method
+		super.invalidateOptionsMenu();
+		dlg.invalidateOptionsMenu();
 	}
 }
