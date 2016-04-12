@@ -239,8 +239,8 @@ public class LocalListActivity extends ActionBarActivity {
     @Override
     public void onContentChanged() {
         super.onContentChanged();
-        View emptyView = findViewById(com.android.internal.R.id.empty);
-        mList = (ListView)findViewById(com.android.internal.R.id.list);
+        View emptyView = findViewById(android.R.id.empty);
+        mList = (ListView)findViewById(android.R.id.list);
         if (mList == null) {
             throw new RuntimeException(
 				"Your content must have a ListView whose id attribute is " +
