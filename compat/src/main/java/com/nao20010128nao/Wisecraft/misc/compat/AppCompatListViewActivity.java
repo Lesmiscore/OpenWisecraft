@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatDelegate;
 import android.content.res.Configuration;
 import android.support.v7.app.ActionBar;
 import android.view.MenuInflater;
+import android.view.ViewGroup.LayoutParams;
+import android.view.View;
 
 public class AppCompatListViewActivity extends ListActivity
 {
@@ -12,12 +14,10 @@ public class AppCompatListViewActivity extends ListActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
-		setContentView(R.layout.content_lv);
 		dlg=AppCompatDelegate.create(this,null);
 		dlg.installViewFactory();
 		dlg.onCreate(savedInstanceState);
 		super.onCreate(savedInstanceState);
-		
 	}
 
 	public ActionBar getSupportActionBar(){
@@ -84,5 +84,17 @@ public class AppCompatListViewActivity extends ListActivity
 		// TODO: Implement this method
 		super.invalidateOptionsMenu();
 		dlg.invalidateOptionsMenu();
+	}
+
+	@Override
+	public void setContentView(View view) {
+		// TODO: Implement this method
+		dlg.setContentView(view);
+	}
+
+	@Override
+	public void setContentView(int layoutResID) {
+		// TODO: Implement this method
+		dlg.setContentView(layoutResID);
 	}
 }
