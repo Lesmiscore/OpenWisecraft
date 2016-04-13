@@ -18,9 +18,9 @@ import com.nao20010128nao.Wisecraft.provider.ServerPingProvider;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
-import com.nao20010128nao.Wisecraft.misc.compat.AppCompatListViewActivity;
+import com.nao20010128nao.Wisecraft.misc.compat.AppCompatListActivity;
 
-public class ServerTestActivity extends AppCompatListViewActivity {
+public class ServerTestActivity extends AppCompatListActivity {
 	ServerPingProvider spp=new NormalServerPingProvider();
 	ServerList sl;
 	List<Server> list;

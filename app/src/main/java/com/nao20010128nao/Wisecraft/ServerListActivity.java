@@ -28,10 +28,10 @@ import pref.StartPref;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
-import com.nao20010128nao.Wisecraft.misc.compat.AppCompatListViewActivity;
+import com.nao20010128nao.Wisecraft.misc.compat.AppCompatListActivity;
 import android.support.design.widget.CoordinatorLayout;
 
-class ServerListActivityImpl extends AppCompatListViewActivity {
+class ServerListActivityImpl extends AppCompatListActivity {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
 
 	static File mcpeServerList=new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt");

@@ -8,7 +8,7 @@ import android.view.MenuInflater;
 import android.view.ViewGroup.LayoutParams;
 import android.view.View;
 
-public class AppCompatListViewActivity extends LocalListActivity
+public class AppCompatListActivity extends LocalListActivity
 {
 	/*
 	AppCompatDelegate dlg;
