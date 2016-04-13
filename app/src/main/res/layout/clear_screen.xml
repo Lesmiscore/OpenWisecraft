@@ -17,13 +17,13 @@
 			android:layout_weight="1.0"
 			android:gravity="center_horizontal">
 
-			<TextView
+			<android.support.v7.widget.AppCompatTextView
 				android:layout_height="wrap_content"
 				android:textAppearance="?android:attr/textAppearanceMedium"
 				android:layout_width="wrap_content"
 				android:text="@string/player"/>
 
-			<TextView
+			<android.support.v7.widget.AppCompatTextView
 				android:layout_height="wrap_content"
 				android:textAppearance="?android:attr/textAppearanceMedium"
 				android:layout_width="wrap_content"
@@ -31,7 +31,7 @@
 
 		</LinearLayout>
 
-		<Button
+		<android.support.v7.widget.AppCompatButton
 			android:layout_height="wrap_content"
 			android:layout_width="wrap_content"
 			android:text="@string/change"
@@ -51,13 +51,13 @@
 			android:layout_weight="1.0"
 			android:gravity="center_horizontal">
 
-			<TextView
+			<android.support.v7.widget.AppCompatTextView
 				android:layout_height="wrap_content"
 				android:textAppearance="?android:attr/textAppearanceMedium"
 				android:layout_width="wrap_content"
 				android:text="@string/item"/>
 
-			<TextView
+			<android.support.v7.widget.AppCompatTextView
 				android:layout_height="wrap_content"
 				android:textAppearance="?android:attr/textAppearanceMedium"
 				android:layout_width="wrap_content"
@@ -65,7 +65,7 @@
 
 		</LinearLayout>
 
-		<Button
+		<android.support.v7.widget.AppCompatButton
 			android:layout_height="wrap_content"
 			android:layout_width="wrap_content"
 			android:text="@string/change"
@@ -73,7 +73,7 @@
 
 	</LinearLayout>
 
-	<Button
+	<android.support.v7.widget.AppCompatButton
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:text="@string/execute"

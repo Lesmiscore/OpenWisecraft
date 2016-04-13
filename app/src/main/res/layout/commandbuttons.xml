@@ -8,155 +8,155 @@
 	android:id="@+id/commandButtons"
 	android:background="#FFFFFF">
 
-	<TextView
+	<android.support.v7.widget.AppCompatTextView
 		android:layout_height="wrap_content"
 		android:layout_width="wrap_content"
 		android:text="@string/serversystem"/>
 
-	<Button
+	<android.support.v7.widget.AppCompatButton
 		style="?android:attr/buttonBarButtonStyle"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:text="@string/stop"
 		android:id="@+id/stopServer"/>
 
-	<Button
+	<android.support.v7.widget.AppCompatButton
 		style="?android:attr/buttonBarButtonStyle"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:text="@string/op"
 		android:id="@+id/op"/>
 
-	<Button
+	<android.support.v7.widget.AppCompatButton
 		style="?android:attr/buttonBarButtonStyle"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:text="@string/deop"
 		android:id="@+id/deop"/>
 
-	<Button
+	<android.support.v7.widget.AppCompatButton
 		style="?android:attr/buttonBarButtonStyle"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:text="@string/kick"
 		android:id="@+id/kick"/>
 
-	<Button
+	<android.support.v7.widget.AppCompatButton
 		style="?android:attr/buttonBarButtonStyle"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:text="@string/ban"
 		android:id="@+id/ban"/>
 
-	<Button
+	<android.support.v7.widget.AppCompatButton
 		style="?android:attr/buttonBarButtonStyle"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:text="@string/ban_ip"
 		android:id="@+id/banip"/>
 
-	<Button
+	<android.support.v7.widget.AppCompatButton
 		style="?android:attr/buttonBarButtonStyle"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:text="@string/pardon"
 		android:id="@+id/pardon"/>
 
-	<Button
+	<android.support.v7.widget.AppCompatButton
 		style="?android:attr/buttonBarButtonStyle"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:text="@string/pardon_ip"
 		android:id="@+id/pardonip"/>
 
-	<Button
+	<android.support.v7.widget.AppCompatButton
 		style="?android:attr/buttonBarButtonStyle"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:text="@string/gametime"
 		android:id="@+id/settime"/>
 
-	<Button
+	<android.support.v7.widget.AppCompatButton
 		style="?android:attr/buttonBarButtonStyle"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:text="@string/changepgm"
 		android:id="@+id/gamemode"/>
 
-	<Button
+	<android.support.v7.widget.AppCompatButton
 		style="?android:attr/buttonBarButtonStyle"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:text="@string/saveall"
 		android:id="@+id/saveall"/>
 
-	<Button
+	<android.support.v7.widget.AppCompatButton
 		style="?android:attr/buttonBarButtonStyle"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:text="@string/saveon"
 		android:id="@+id/saveon"/>
 
-	<Button
+	<android.support.v7.widget.AppCompatButton
 		style="?android:attr/buttonBarButtonStyle"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:text="@string/saveoff"
 		android:id="@+id/saveoff"/>
 
-	<TextView
+	<android.support.v7.widget.AppCompatTextView
 		android:layout_height="wrap_content"
 		android:layout_width="wrap_content"
 		android:text="@string/playertools"/>
 
-	<Button
+	<android.support.v7.widget.AppCompatButton
 		style="?android:attr/buttonBarButtonStyle"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:text="@string/give"
 		android:id="@+id/give"/>
 
-	<Button
+	<android.support.v7.widget.AppCompatButton
 		style="?android:attr/buttonBarButtonStyle"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:text="@string/clear"
 		android:id="@+id/clear"/>
 
-	<Button
+	<android.support.v7.widget.AppCompatButton
 		style="?android:attr/buttonBarButtonStyle"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:text="@string/kill"
 		android:id="@+id/kill"/>
 
-	<Button
+	<android.support.v7.widget.AppCompatButton
 		style="?android:attr/buttonBarButtonStyle"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:text="@string/tell"
 		android:id="@+id/tell"/>
 
-	<Button
+	<android.support.v7.widget.AppCompatButton
 		style="?android:attr/buttonBarButtonStyle"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:text="@string/tp"
 		android:id="@+id/tp"/>
 
-	<Button
+	<android.support.v7.widget.AppCompatButton
 		style="?android:attr/buttonBarButtonStyle"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:text="@string/xp"
 		android:id="@+id/xp"/>
 
-	<TextView
+	<android.support.v7.widget.AppCompatTextView
 		android:layout_height="wrap_content"
 		android:layout_width="wrap_content"
 		android:text="@string/gamesystem"/>
 
-	<Button
+	<android.support.v7.widget.AppCompatButton
 		style="?android:attr/buttonBarButtonStyle"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
@@ -164,33 +164,33 @@
 		android:id="@+id/setblock"
 		android:visibility="gone"/>
 
-	<Button
+	<android.support.v7.widget.AppCompatButton
 		style="?android:attr/buttonBarButtonStyle"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:text="@string/defaultgm"
 		android:id="@+id/defaultgamemode"/>
 
-	<Button
+	<android.support.v7.widget.AppCompatButton
 		style="?android:attr/buttonBarButtonStyle"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:text="@string/changeweather"
 		android:id="@+id/weather"/>
 
-	<TextView
+	<android.support.v7.widget.AppCompatTextView
 		android:layout_height="wrap_content"
 		android:layout_width="wrap_content"
 		android:text="@string/nocategory"/>
 
-	<Button
+	<android.support.v7.widget.AppCompatButton
 		style="?android:attr/buttonBarButtonStyle"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:text="@string/me"
 		android:id="@+id/me"/>
 
-	<Button
+	<android.support.v7.widget.AppCompatButton
 		style="?android:attr/buttonBarButtonStyle"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"

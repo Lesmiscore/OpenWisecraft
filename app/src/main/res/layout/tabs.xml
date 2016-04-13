@@ -45,7 +45,7 @@
 
 		</android.support.v4.app.FragmentTabHost>
 
-		<TextView
+		<android.support.v7.widget.AppCompatTextView
 			android:layout_height="match_parent"
 			android:textAppearance="?android:attr/textAppearanceLarge"
 			android:layout_width="match_parent"

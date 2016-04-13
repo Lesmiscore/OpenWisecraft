@@ -5,13 +5,13 @@
 	android:layout_height="match_parent"
 	android:orientation="vertical">
 
-	<TextView
+	<android.support.v7.widget.AppCompatTextView
 		android:layout_height="wrap_content"
 		android:textAppearance="?android:attr/textAppearanceMedium"
 		android:layout_width="wrap_content"
 		android:id="@+id/status"/>
 
-	<ProgressBar
+	<android.support.v7.widget.AppCompatProgressBar
 		style="?android:attr/progressBarStyleHorizontal"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"

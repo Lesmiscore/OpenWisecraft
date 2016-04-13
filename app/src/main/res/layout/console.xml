@@ -24,14 +24,14 @@
 		android:orientation="horizontal"
 		android:layout_weight="0">
 
-		<EditText
+		<android.support.v7.widget.AppCompatEditText
 			android:layout_height="wrap_content"
 			android:layout_width="wrap_content"
 			android:ems="10"
 			android:id="@+id/command"
 			android:layout_weight="1.0"/>
 
-		<Button
+		<android.support.v7.widget.AppCompatButton
 			android:layout_height="wrap_content"
 			android:layout_width="wrap_content"
 			android:text="@string/send"

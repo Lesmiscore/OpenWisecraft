@@ -16,14 +16,14 @@
 		android:layout_width="match_parent"
 		android:orientation="horizontal">
 
-		<EditText
+		<android.support.v7.widget.AppCompatEditText
 			android:layout_height="match_parent"
 			android:layout_width="match_parent"
 			android:ems="10"
 			android:id="@+id/playerName"
 			android:layout_weight="1.0"/>
 
-		<Button
+		<android.support.v7.widget.AppCompatButton
 			android:layout_height="wrap_content"
 			android:layout_width="wrap_content"
 			android:text="@android:string/ok"

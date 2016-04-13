@@ -5,7 +5,7 @@
 	android:layout_height="fill_parent"
 	android:orientation="vertical">
 
-	<CheckBox
+	<android.support.v7.widget.AppCompatCheckBox
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:id="@+id/switchFirm"
@@ -17,7 +17,7 @@
 		android:orientation="horizontal"
 		android:id="@+id/pe">
 
-		<EditText
+		<android.support.v7.widget.AppCompatEditText
 			android:layout_height="wrap_content"
 			android:layout_width="wrap_content"
 			android:ems="10"
@@ -25,7 +25,7 @@
 			android:id="@+id/serverIp"
 			android:hint="@string/ex.ip"/>
 
-		<EditText
+		<android.support.v7.widget.AppCompatEditText
 			android:layout_height="wrap_content"
 			android:inputType="number"
 			android:layout_width="wrap_content"
@@ -43,7 +43,7 @@
 		android:id="@+id/pc"
 		android:visibility="gone">
 
-		<EditText
+		<android.support.v7.widget.AppCompatEditText
 			android:layout_height="wrap_content"
 			android:layout_width="wrap_content"
 			android:ems="10"

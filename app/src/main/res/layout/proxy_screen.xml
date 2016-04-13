@@ -12,31 +12,31 @@
 		android:orientation="vertical"
 		android:gravity="center_horizontal">
 
-		<TextView
+		<android.support.v7.widget.AppCompatTextView
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceLarge"
 			android:layout_width="wrap_content"
 			android:text="@string/connecting_colon"/>
 
-		<TextView
+		<android.support.v7.widget.AppCompatTextView
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceMedium"
 			android:layout_width="wrap_content"
 			android:id="@+id/serverIp"/>
 
-		<TextView
+		<android.support.v7.widget.AppCompatTextView
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceLarge"
 			android:layout_width="wrap_content"
 			android:text="@string/connect_to"/>
 
-		<TextView
+		<android.support.v7.widget.AppCompatTextView
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceMedium"
 			android:layout_width="wrap_content"
 			android:id="@+id/serverCon"/>
 
-		<ImageView
+		<android.support.v7.widget.AppCompatImageView
 			android:layout_height="100dp"
 			android:layout_width="100dp"
 			android:src="@drawable/ic_launcher"
@@ -44,7 +44,7 @@
 
 	</LinearLayout>
 
-	<Button
+	<android.support.v7.widget.AppCompatButton
 		style="?android:attr/buttonBarButtonStyle"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"

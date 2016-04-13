@@ -8,7 +8,7 @@
 	android:paddingEnd="?android:attr/scrollbarSize"
 	android:background="?android:attr/selectableItemBackground">
 
-	<ImageView
+	<android.support.v7.widget.AppCompatImageView
 		android:id="@+android:id/icon"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
 		android:layout_marginBottom="6dip"
 		android:layout_weight="1">
 
-		<TextView
+		<android.support.v7.widget.AppCompatTextView
 			android:id="@+android:id/title"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
 			android:ellipsize="marquee"
 			android:fadingEdge="horizontal"/>
 
-		<TextView
+		<android.support.v7.widget.AppCompatTextView
 			android:id="@+android:id/summary"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"

@@ -5,7 +5,7 @@
 	android:layout_height="wrap_content"
 	android:orientation="horizontal">
 
-	<ImageView
+	<android.support.v7.widget.AppCompatImageView
 		android:layout_height="?android:attr/listPreferredItemHeightSmall"
 		android:layout_width="?android:attr/listPreferredItemHeightSmall"
 		android:visibility="gone"
