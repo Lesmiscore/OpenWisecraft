@@ -10,6 +10,7 @@ import android.view.View;
 
 public class AppCompatListViewActivity extends LocalListActivity
 {
+	/*
 	AppCompatDelegate dlg;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -96,5 +97,5 @@ public class AppCompatListViewActivity extends LocalListActivity
 	public void setContentView(int layoutResID) {
 		// TODO: Implement this method
 		dlg.setContentView(layoutResID);
-	}
+	}*/
 }

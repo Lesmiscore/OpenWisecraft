@@ -20,7 +20,8 @@ import java.util.List;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
-public class ServerFinder extends ListActivity {
+import com.nao20010128nao.Wisecraft.misc.compat.AppCompatListViewActivity;
+public class ServerFinder extends AppCompatListViewActivity {
 	ServerList sl;
 	List<ServerStatus> list;
 	String ip;

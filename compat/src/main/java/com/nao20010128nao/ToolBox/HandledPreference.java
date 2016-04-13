@@ -17,7 +17,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import com.nao20010128nao.ToolBox.NormalButtonPreference;
-import pref.StartPref;
 
 public class HandledPreference
 extends NormalButtonPreference {
@@ -26,7 +25,11 @@ extends NormalButtonPreference {
 
     public HandledPreference(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
-		StartPref.as = attributeSet;
+		try {
+			Class.forName("pref.StartPref").getField("as").set(null,attributeSet);
+		} catch (Throwable e) {
+			
+		}
     }
 
     public static OnClickListener createListenerFrom(final View.OnClickListener onClickListener) {
