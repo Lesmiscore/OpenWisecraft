@@ -11,6 +11,7 @@ import java.io.*;
 import java.util.*;
 
 import android.graphics.drawable.ColorDrawable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
@@ -20,6 +21,7 @@ import com.nao20010128nao.MCPing.pc.Reply19;
 import com.nao20010128nao.MCPing.pe.FullStat;
 import com.nao20010128nao.ToolBox.HandledPreference;
 import com.nao20010128nao.Wisecraft.extender.ContextWrappingExtender;
+import com.nao20010128nao.Wisecraft.misc.compat.AppCompatListActivity;
 import com.nao20010128nao.Wisecraft.pingEngine.UnconnectedPing;
 import com.nao20010128nao.Wisecraft.proxy.ProxyActivity;
 import com.nao20010128nao.Wisecraft.rcon.RCONActivity;
@@ -28,8 +30,6 @@ import pref.StartPref;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
-import com.nao20010128nao.Wisecraft.misc.compat.AppCompatListActivity;
-import android.support.design.widget.CoordinatorLayout;
 
 class ServerListActivityImpl extends AppCompatListActivity {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);

@@ -10,9 +10,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import com.nao20010128nao.McServerList.ServerAddressFetcher;
-import com.nao20010128nao.Wisecraft.misc.WebViewActivity;
-import java.net.URL;
 import com.nao20010128nao.Wisecraft.misc.compat.CompatWebViewActivity;
+import java.net.URL;
 
 public class ServerGetActivity extends CompatWebViewActivity {
 	public static List<String> addForServerList;

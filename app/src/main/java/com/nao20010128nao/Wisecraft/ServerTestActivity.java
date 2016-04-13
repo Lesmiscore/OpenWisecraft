@@ -1,10 +1,11 @@
 package com.nao20010128nao.Wisecraft;
-import android.app.*;
 import android.content.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import java.util.*;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
@@ -12,13 +13,13 @@ import android.view.ViewGroup;
 import com.nao20010128nao.MCPing.pc.Reply;
 import com.nao20010128nao.MCPing.pc.Reply19;
 import com.nao20010128nao.MCPing.pe.FullStat;
+import com.nao20010128nao.Wisecraft.misc.compat.AppCompatListActivity;
 import com.nao20010128nao.Wisecraft.pingEngine.UnconnectedPing;
 import com.nao20010128nao.Wisecraft.provider.NormalServerPingProvider;
 import com.nao20010128nao.Wisecraft.provider.ServerPingProvider;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
-import com.nao20010128nao.Wisecraft.misc.compat.AppCompatListActivity;
 
 public class ServerTestActivity extends AppCompatListActivity {
 	ServerPingProvider spp=new NormalServerPingProvider();

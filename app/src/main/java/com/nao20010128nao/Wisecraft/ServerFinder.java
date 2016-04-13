@@ -1,9 +1,10 @@
 package com.nao20010128nao.Wisecraft;
-import android.app.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.provider.*;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
@@ -14,13 +15,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.nao20010128nao.MCPing.pc.Reply;
 import com.nao20010128nao.MCPing.pc.Reply19;
+import com.nao20010128nao.Wisecraft.misc.compat.AppCompatListActivity;
 import com.nao20010128nao.Wisecraft.pingEngine.UnconnectedPing;
 import java.util.ArrayList;
 import java.util.List;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
-import com.nao20010128nao.Wisecraft.misc.compat.AppCompatListActivity;
 public class ServerFinder extends AppCompatListActivity {
 	ServerList sl;
 	List<ServerStatus> list;

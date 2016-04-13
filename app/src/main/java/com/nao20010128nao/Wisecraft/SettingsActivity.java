@@ -6,11 +6,10 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
-import com.nao20010128nao.MCPE.SC.misc.SHablePreferenceActivity;
 import com.nao20010128nao.ToolBox.HandledPreference;
+import com.nao20010128nao.Wisecraft.misc.compat.CompatSHablePreferenceActivity;
 import java.lang.reflect.Field;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-import com.nao20010128nao.Wisecraft.misc.compat.CompatSHablePreferenceActivity;
 
 public class SettingsActivity extends CompatSHablePreferenceActivity {
 	int which;
