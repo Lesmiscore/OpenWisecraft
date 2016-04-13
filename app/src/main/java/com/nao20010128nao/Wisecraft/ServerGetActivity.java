@@ -54,7 +54,7 @@ public class ServerGetActivity extends CompatWebViewActivity {
 	}
 
 	@Override
-	protected boolean onMenuItemSelected(int featureId, MenuItem item) {
+	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO: Implement this method
 		switch (item.getItemId()) {
 			case 0:
