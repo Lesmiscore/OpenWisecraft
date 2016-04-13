@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:title="@string/addServerFromServerListSite">
+	<CheckBoxPreference
+		android:title="@string/allowAutoUpdateSLSCode"
+		android:key="allowAutoUpdateSLSCode"
+		android:defaultValue="false"
+	/>
+	<CheckBoxPreference
+		android:title="@string/aausc_monnet"
+		android:key="aausc_monnet"
+		android:defaultValue="false"
+		android:dependency="allowAutoUpdateSLSCode"
+	/>
+	<pref.StartPref
+		android:title="@string/currentSlsVersion"
+		android:key="currentSlsVersion"
+		android:enabled="false"
+	/>
+</PreferenceScreen>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	<pref.StartPref
+		android:title="@string/settingsAttention"
+		android:key=""
+		android:enabled="false"
+	/>
+	<pref.StartPref
+		android:title="@string/basics"
+		android:key="basics"
+		/>
+	<pref.StartPref
+		android:title="@string/features"
+		android:key="features"
+		/>
+	<pref.StartPref
+		android:title="@string/addServerFromServerListSite"
+		android:key="asfsls"
+		/>
+</PreferenceScreen>

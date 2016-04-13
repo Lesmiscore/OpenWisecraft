@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:title="@string/features">
+	<CheckBoxPreference
+		android:title="@string/proxy"
+		android:key="feature_proxy"
+		android:defaultValue="true"
+	/>
+	<CheckBoxPreference
+		android:title="@string/bringOnlinesToTop"
+		android:key="feature_bott"
+		android:defaultValue="true"
+	/>
+	<CheckBoxPreference
+		android:title="@string/serverFinder"
+		android:key="feature_serverFinder"
+		android:defaultValue="false"
+	/>
+	<CheckBoxPreference
+		android:title="@string/addServerFromServerListSite"
+		android:key="feature_asfsls"
+		android:defaultValue="false"
+	/>
+</PreferenceScreen>

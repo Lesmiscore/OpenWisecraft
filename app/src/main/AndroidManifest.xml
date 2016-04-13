@@ -68,6 +68,21 @@
             android:name=".SettingsActivity"
 			android:exported="false">
         </activity>
+		<activity
+            android:label="@string/basics"
+            android:name=".SettingsActivity$Basics"
+			android:exported="false">
+        </activity>
+		<activity
+            android:label="@string/features"
+            android:name=".SettingsActivity$Features"
+			android:exported="false">
+        </activity>
+		<activity
+            android:label="@string/addServerFromServerListSite"
+            android:name=".SettingsActivity$Asfsls"
+			android:exported="false">
+        </activity>
 
 		<activity
             android:label="@string/serverFinder"

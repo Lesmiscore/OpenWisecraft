@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:title="@string/basics">
+	<EditTextPreference 
+		android:key="parallels" 
+		android:title="@string/pingThreads"
+		android:inputType="number" 
+		android:maxLength="3"
+		android:defaultValue="6"
+	/>
+	<CheckBoxPreference
+		android:title="@string/updAnotherThread"
+		android:key="updAnotherThread"
+	/>
+	<CheckBoxPreference
+		android:title="@string/sortPlayerNames"
+		android:key="sortPlayerNames"
+		android:defaultValue="true"
+	/>
+	<CheckBoxPreference
+		android:title="@string/sortPluginNames"
+		android:key="sortPluginNames"
+	/>
+	<CheckBoxPreference
+		android:title="@string/showPcUserFace"
+		android:key="showPcUserFace"
+		android:defaultValue="false"
+	/>
+	<pref.StartPref
+		android:title="@string/serverListStyle"
+		android:key="serverListStyle"
+	/>
+	<pref.StartPref
+		android:title="@string/selectFont"
+		android:key="selectFont"
+	/>
+	<CheckBoxPreference
+		android:title="@string/sendInfos"
+		android:key="sendInfos"
+		android:defaultValue="false"
+	/>
+</PreferenceScreen>
