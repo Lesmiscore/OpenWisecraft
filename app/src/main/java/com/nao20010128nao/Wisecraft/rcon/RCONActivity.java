@@ -10,9 +10,9 @@ import android.app.AlertDialog;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
 import com.google.rconclient.rcon.IncorrectRequestIdException;
 import com.google.rconclient.rcon.RCon;
 import com.nao20010128nao.Wisecraft.R;
@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class RCONActivity extends FragmentActivity {
+public class RCONActivity extends AppCompatActivity {
 	public static WeakReference<RCONActivity> instance=new WeakReference(null);
 	static List<String> consoleLogs=new ArrayList<>();
 	static RCon rcon;
