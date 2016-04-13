@@ -12,8 +12,9 @@ import android.widget.ArrayAdapter;
 import com.nao20010128nao.McServerList.ServerAddressFetcher;
 import com.nao20010128nao.Wisecraft.misc.WebViewActivity;
 import java.net.URL;
+import com.nao20010128nao.Wisecraft.misc.compat.CompatWebViewActivity;
 
-public class ServerGetActivity extends WebViewActivity {
+public class ServerGetActivity extends CompatWebViewActivity {
 	public static List<String> addForServerList;
 	String domain;
 	String[] serverList;
@@ -53,7 +54,7 @@ public class ServerGetActivity extends WebViewActivity {
 	}
 
 	@Override
-	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+	protected boolean onMenuItemSelected(int featureId, MenuItem item) {
 		// TODO: Implement this method
 		switch (item.getItemId()) {
 			case 0:
