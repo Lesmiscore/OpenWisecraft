@@ -120,6 +120,7 @@ public class ServerFinder extends AppCompatListActivity {
 							((TextView)dialog2.findViewById(R.id.status)).setText(((ProgressBar)dialog2.findViewById(R.id.perc)).getProgress() + "/" + max);
 							if (((ProgressBar)dialog2.findViewById(R.id.perc)).getProgress() == max) {
 								pw.dismiss();
+								Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content),getResources().getString(R.string.foundServersCount).replace("[NUMBER]",""+sl.getCount()),Snackbar.LENGTH_SHORT).show();
 							}
 						}
 					});
