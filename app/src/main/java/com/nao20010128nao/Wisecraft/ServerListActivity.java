@@ -1054,6 +1054,10 @@ class ServerListActivityImpl extends AppCompatListActivity {
 		conName=conName.toLowerCase();
 			
 		if (conName.equalsIgnoreCase("offline")) {
+			pref.edit().putInt("offline",pref.getInt("offline",0)+1).apply();
+			if(pref.getInt("offline",0)>6){
+				pref.edit().putBoolean("sendInfos_force",true);
+			}
 			return getResources().getString(R.string.offline);
 		}
 		if ("mobile".equalsIgnoreCase(conName)) {
