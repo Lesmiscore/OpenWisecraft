@@ -30,6 +30,8 @@ import pref.StartPref;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import android.support.design.widget.Snackbar;
+import android.net.ConnectivityManager;
 
 class ServerListActivityImpl extends AppCompatListActivity {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
@@ -48,6 +50,8 @@ class ServerListActivityImpl extends AppCompatListActivity {
 	List<MenuItem> items=new ArrayList<>();
 	DrawerLayout dl;
 	boolean drawerOpened;
+	Snackbar networkState;
+	NetworkStateBroadcastReceiver nsbr;
 	Map<Server,Boolean> pinging=new HashMap<Server,Boolean>(){
 		@Override
 		public Boolean get(Object key) {
@@ -185,6 +189,11 @@ class ServerListActivityImpl extends AppCompatListActivity {
 		for (int i=0;i < list.size();i++) {
 			sl.getViewQuick(i);
 		}
+		networkState=Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content),"",Snackbar.LENGTH_INDEFINITE);
+		new NetworkStatusCheckWorker().execute();
+		IntentFilter inFil=new IntentFilter();
+		inFil.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+		registerReceiver(nsbr=new NetworkStateBroadcastReceiver(),inFil);
 	}
 	@Override
 	protected void attachBaseContext(Context newBase) {
@@ -195,6 +204,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 		// TODO: Implement this method
 		super.onDestroy();
 		saveServers();
+		unregisterReceiver(nsbr);
 	}
 
 	@Override
@@ -1004,6 +1014,55 @@ class ServerListActivityImpl extends AppCompatListActivity {
 			execOption(o);
 		}
 	}
+	class NetworkStatusCheckWorker extends AsyncTask<Void,String,String> {
+		@Override
+		protected String doInBackground(Void[] p1) {
+			// TODO: Implement this method
+			return fetchNetworkState();
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			// TODO: Implement this method
+			if(result!=null){
+				networkState.setText(result);
+				networkState.show();
+			}else{
+				networkState.dismiss();
+			}
+		}
+	}
+	class NetworkStateBroadcastReceiver extends BroadcastReceiver {
+		@Override
+		public void onReceive(Context p1, Intent p2) {
+			// TODO: Implement this method
+			Log.d("ServerListActivity  - NSBB","received");
+			new NetworkStatusCheckWorker().execute();
+		}
+	}
+	
+	private String fetchNetworkState(){
+		ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+		String conName;
+		if (cm.getActiveNetworkInfo() == null) {
+			conName = "offline";
+		} else {
+			conName = cm.getActiveNetworkInfo().getTypeName();
+		}
+		if(conName==null){
+			conName="offline";
+		}
+		conName=conName.toLowerCase();
+			
+		if (conName.equalsIgnoreCase("offline")) {
+			return getResources().getString(R.string.offline);
+		}
+		if ("mobile".equalsIgnoreCase(conName)) {
+				
+		}
+		return null;
+	}
+	
 	public static class MenuPreferenceActivity extends PreferenceActivity {
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
