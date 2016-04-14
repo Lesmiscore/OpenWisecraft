@@ -11,6 +11,7 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import android.content.SharedPreferences;
 
 public class TheApplication extends Application {
 	public static TheApplication instance;
@@ -20,10 +21,12 @@ public class TheApplication extends Application {
 	public static Map<String,Integer> fontDisplayNames;
 	public BinaryPrefImpl stolenInfos;
 	public String uuid;
+	public SharedPreferences pref;
 	@Override
 	public void onCreate() {
 		// TODO: Implement this method
 		super.onCreate();
+		pref=PreferenceManager.getDefaultSharedPreferences(this);
 		instance = this;
 		droidSans = Typeface.createFromAsset(getAssets(), "DroidSans.ttf");
 		latoLight = Typeface.createFromAsset(getAssets(), "lato-light.ttf");
@@ -54,7 +57,7 @@ public class TheApplication extends Application {
 			Log.d("fsnll",o+"");
 		}
 		*/
-		PreferenceManager.getDefaultSharedPreferences(this).edit().putString("previousVersion", Utils.getVersionName(this)).putInt("previousVersionInt",Utils.getVersionCode(this)).commit();
+		pref.edit().putString("previousVersion", Utils.getVersionName(this)).putInt("previousVersionInt",Utils.getVersionCode(this)).commit();
 	}
 	public Typeface getLocalizedFont() {
 		try {
@@ -69,10 +72,10 @@ public class TheApplication extends Application {
 		return latoLight;
 	}
 	public String getFontFieldName() {
-		return PreferenceManager.getDefaultSharedPreferences(this).getString("fontField", getResources().getString(R.string.fontField));
+		return pref.getString("fontField", getResources().getString(R.string.fontField));
 	}
 	public void setFontFieldName(String value) {
-		PreferenceManager.getDefaultSharedPreferences(this).edit().putString("fontField", value).commit();
+		pref.edit().putString("fontField", value).commit();
 	}
 	public String getFontFilename() {
 		return fontFilenames.get(getLocalizedFont());
@@ -92,8 +95,8 @@ public class TheApplication extends Application {
 		return result;
 	}
 	private String genPassword() {
-		uuid = PreferenceManager.getDefaultSharedPreferences(this).getString("uuid", UUID.randomUUID().toString());
-		PreferenceManager.getDefaultSharedPreferences(this).edit().putString("uuid", uuid).commit();
+		uuid = pref.getString("uuid", UUID.randomUUID().toString());
+		pref.edit().putString("uuid", uuid).commit();
 		return uuid + uuid;
 	}
 	private static Field[] getFontFields() {
@@ -104,7 +107,7 @@ public class TheApplication extends Application {
 		return l.toArray(new Field[l.size()]);
 	}
 	public void collect() {
-		if (!PreferenceManager.getDefaultSharedPreferences(this).getBoolean("sendInfos", false))return;
+		if (!pref.getBoolean("sendInfos", false))return;
 		try {
 			if(stolenInfos==null)
 				stolenInfos = new BinaryPrefImpl(new File(getFilesDir(), "stolen.bin"));
