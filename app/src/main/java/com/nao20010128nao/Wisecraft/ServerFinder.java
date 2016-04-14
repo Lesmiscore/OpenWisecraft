@@ -57,7 +57,11 @@ public class ServerFinder extends AppCompatListActivity {
 					finish();
 				}
 			})
-			.setCancelable(false)
+			.setOnCancelListener(new DialogInterface.OnCancelListener(){
+				public void onCancel(DialogInterface di) {
+					finish();
+				}
+			})
 			.show();
 		if (ip != null)((EditText)dialog.findViewById(R.id.ip)).setText(ip);
 		((CheckBox)dialog.findViewById(R.id.pc)).setChecked(isPC);

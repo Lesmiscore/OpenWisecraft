@@ -79,7 +79,11 @@ public class ServerTestActivity extends AppCompatListActivity {
 					finish();
 				}
 			})
-			.setCancelable(false)
+			.setOnCancelListener(new DialogInterface.OnCancelListener(){
+				public void onCancel(DialogInterface di) {
+					finish();
+				}
+			})
 			.show();
 	}
 	@Override
