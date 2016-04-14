@@ -1061,7 +1061,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 			return getResources().getString(R.string.offline);
 		}
 		if ("mobile".equalsIgnoreCase(conName)) {
-				
+			return getResources().getString(R.string.onMobileNetwork);
 		}
 		return null;
 	}
