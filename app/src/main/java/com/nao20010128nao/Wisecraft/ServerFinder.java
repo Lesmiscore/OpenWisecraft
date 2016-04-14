@@ -1,18 +1,19 @@
 package com.nao20010128nao.Wisecraft;
+import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.provider.*;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.view.View;
-import android.view.ViewGroup;
+import android.support.design.widget.Snackbar;
+import android.util.DisplayMetrics;
 import com.nao20010128nao.MCPing.pc.Reply;
 import com.nao20010128nao.MCPing.pc.Reply19;
 import com.nao20010128nao.Wisecraft.misc.compat.AppCompatListActivity;
@@ -22,13 +23,6 @@ import java.util.List;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.AppCompatPopupWindow;
-import android.view.Gravity;
-import android.support.v7.widget.AppCompatProgressBarHelper;
-import android.content.res.Configuration;
-import android.util.DisplayMetrics;
-import android.graphics.Color;
 public class ServerFinder extends AppCompatListActivity {
 	ServerList sl;
 	List<ServerStatus> list;
