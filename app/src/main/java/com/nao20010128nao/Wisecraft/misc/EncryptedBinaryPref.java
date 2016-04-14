@@ -72,10 +72,9 @@ public class EncryptedBinaryPref extends BinaryPrefImpl
 		return readAllFromStream(new FileInputStream(f), true);
 	}
 
-	private static Map<String, ?> readAllFromStream(InputStream is,
+	private static Map<String, ?> readAllFromStream(InputStream fis,
 													boolean close) throws IOException {
 		try {
-			FileInputStream fis = new FileInputStream("preference.bin");
 			DataInputStream dis = new DataInputStream(fis);
 			Cipher cip = Cipher.getInstance("AES/CBC/PKCS5Padding");
 			dis.readFully(PREF_KEY);
@@ -86,6 +85,8 @@ public class EncryptedBinaryPref extends BinaryPrefImpl
 			return readAllFromStreamRaw(new CipherInputStream(dis, cip), close);
 		} catch (Throwable e) {
 			throw new IOException(e);
+		} finally {
+			if(fis!=null&close)fis.close();
 		}
 	}
 
