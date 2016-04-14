@@ -1,8 +1,7 @@
 package com.nao20010128nao.Wisecraft.misc.compat;
-import krsw.device.locker.AppCompatPreferenceActivity;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
 import com.nao20010128nao.ToolBox.HandledPreference;
+import krsw.device.locker.AppCompatPreferenceActivity;
 
 public class CompatSHablePreferenceActivity extends AppCompatPreferenceActivity
 {

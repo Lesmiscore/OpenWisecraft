@@ -1,6 +1,4 @@
 package com.nao20010128nao.Wisecraft.misc.compat;
-import android.support.v7.app.ActionBarActivity;
-import android.app.Activity;
 import android.os.Bundle;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;

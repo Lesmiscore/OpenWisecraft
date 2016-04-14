@@ -1,12 +1,5 @@
 package com.nao20010128nao.Wisecraft.misc.compat;
-import android.app.ListActivity;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatDelegate;
-import android.content.res.Configuration;
-import android.support.v7.app.ActionBar;
-import android.view.MenuInflater;
-import android.view.ViewGroup.LayoutParams;
-import android.view.View;
+
 
 public class AppCompatListActivity extends LocalListActivity
 {
