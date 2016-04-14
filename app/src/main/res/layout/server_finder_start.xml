@@ -61,5 +61,11 @@
 		android:id="@+id/endPort"
 		android:text="65535"/>
 
+	<android.support.v7.widget.AppCompatCheckBox
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:id="@+id/bigRangeSearch"
+		android:text="@string/bigRangeSearch"/>
+
 </LinearLayout>
 
