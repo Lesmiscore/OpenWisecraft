@@ -9,7 +9,7 @@ import android.widget.ListView;
 import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 
-public class LocalListActivity extends ActionBarActivity {
+public class LocalListActivity extends SimpleCompatActivity {
     protected ListAdapter mAdapter;
     protected ListView mList;
 
