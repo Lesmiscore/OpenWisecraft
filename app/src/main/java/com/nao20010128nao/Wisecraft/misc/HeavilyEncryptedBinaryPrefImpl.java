@@ -1,14 +1,12 @@
 package com.nao20010128nao.Wisecraft.misc;
 import java.io.*;
 import java.util.*;
+import javax.crypto.*;
 
+import com.nao20010128nao.Wisecraft.Utils;
 import java.security.SecureRandom;
-import javax.crypto.Cipher;
-import javax.crypto.CipherInputStream;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import javax.crypto.CipherOutputStream;
-import com.nao20010128nao.Wisecraft.Utils;
 
 public class HeavilyEncryptedBinaryPrefImpl extends BinaryPrefImpl
 {
