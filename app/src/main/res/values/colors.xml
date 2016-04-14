@@ -11,4 +11,5 @@
 	<color name="upd_4">#60741c</color>
 	
 	<color name="primary">#F5F5F5</color>
+	<color name="accent">@color/upd_2</color>
 </resources>
