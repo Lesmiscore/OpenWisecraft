@@ -163,4 +163,21 @@ public class Utils {
         }
         return versionName;
     }
+	
+	public static byte[] readAll(InputStream is)throws IOException{
+		ByteArrayOutputStream os=new ByteArrayOutputStream(1000);
+		byte[] buf=new byte[1000];
+		try {
+			while (true) {
+				int r=is.read(buf);
+				if (r <= 0) {
+					break;
+				}
+				os.write(buf, 0, r);
+			}
+		} finally {
+			is.close();
+		}
+		return os.toByteArray();
+	}
 }
