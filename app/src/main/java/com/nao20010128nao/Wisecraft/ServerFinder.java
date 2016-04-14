@@ -22,6 +22,13 @@ import java.util.List;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import android.support.design.widget.Snackbar;
+import android.support.v7.widget.AppCompatPopupWindow;
+import android.view.Gravity;
+import android.support.v7.widget.AppCompatProgressBarHelper;
+import android.content.res.Configuration;
+import android.util.DisplayMetrics;
+import android.graphics.Color;
 public class ServerFinder extends AppCompatListActivity {
 	ServerList sl;
 	List<ServerStatus> list;
@@ -62,17 +69,18 @@ public class ServerFinder extends AppCompatListActivity {
 		((CheckBox)dialog.findViewById(R.id.pc)).setChecked(isPC);
 	}
 	private void startFinding(final String ip, final int startPort, final int endPort, final boolean isPC) {
-		final Dialog d=new AlertDialog.Builder(this)
-			.setTitle(R.string.findingServers)
-			.setView(dialog2 = getLayoutInflater().inflate(R.layout.server_finder_finding, null, false))
-			.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener(){
-				public void onClick(DialogInterface di, int w) {
-					di.dismiss();
-					finish();
-				}
-			})
-			.setCancelable(false)
-			.show();
+		DisplayMetrics dm=getResources().getDisplayMetrics();
+		final PopupWindow pw=new PopupWindow(this);
+		pw.setTouchable(false);
+		pw.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+		pw.setContentView(dialog2 = getLayoutInflater().inflate(R.layout.server_finder_finding, null, false));
+		pw.setWidth(Math.min(dm.widthPixels,dm.heightPixels));
+		pw.setHeight(getResources().getDimensionPixelSize(R.dimen.server_finder_finding_height));
+		
+		dialog2.setAlpha(0.7f);
+		
+		pw.showAtLocation(getWindow().getDecorView().findViewById(android.R.id.content),Gravity.CENTER,0,0);
+		;
 		new AsyncTask<Void,ServerStatus,Void>(){
 			public Void doInBackground(Void... l) {
 				final int max=endPort - startPort;
@@ -111,7 +119,7 @@ public class ServerFinder extends AppCompatListActivity {
 							((ProgressBar)dialog2.findViewById(R.id.perc)).setProgress(((ProgressBar)dialog2.findViewById(R.id.perc)).getProgress() + 1);
 							((TextView)dialog2.findViewById(R.id.status)).setText(((ProgressBar)dialog2.findViewById(R.id.perc)).getProgress() + "/" + max);
 							if (((ProgressBar)dialog2.findViewById(R.id.perc)).getProgress() == max) {
-								d.dismiss();
+								pw.dismiss();
 							}
 						}
 					});
