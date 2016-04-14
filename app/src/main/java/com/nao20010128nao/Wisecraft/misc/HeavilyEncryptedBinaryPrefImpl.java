@@ -47,7 +47,7 @@ public class HeavilyEncryptedBinaryPrefImpl extends BinaryPrefImpl
 			fos.write("ConfigAF*45678fu".getBytes());
 			OutputStream os=fos;
 			SecureRandom sr = new SecureRandom();
-			for(int i=0;i<40;i++){
+			for(int i=0;i<35;i++){
 				byte[] PREF_KEY = new byte[16];
 				byte[] PREF_IV = new byte[16];
 	
@@ -81,7 +81,7 @@ public class HeavilyEncryptedBinaryPrefImpl extends BinaryPrefImpl
 		try {
 			DataInputStream dis = new DataInputStream(fis);
 			dis.readLong();dis.readLong();//header
-			for(int i=0;i<40;i++){
+			for(int i=0;i<35;i++){
 				byte[] PREF_KEY = new byte[16];
 				byte[] PREF_IV = new byte[16];
 				
