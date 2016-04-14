@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.*;
 
 import android.content.SharedPreferences;
+import com.nao20010128nao.OTC.OrderTrustedMap;
 
 public class BinaryPrefImpl implements SharedPreferences {
 	Map<String, Object> data, allCache;
@@ -11,7 +12,7 @@ public class BinaryPrefImpl implements SharedPreferences {
 
 	public BinaryPrefImpl() {
 		// TODO 自動生成されたコンストラクター・スタブ
-		this(new HashMap<String,Object>());
+		this(new OrderTrustedMap<String,Object>());
 	}
 
 	public BinaryPrefImpl(Map<String, ?> map) {
