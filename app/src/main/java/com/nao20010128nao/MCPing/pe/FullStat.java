@@ -8,12 +8,13 @@ import java.util.Map;
 
 import com.nao20010128nao.MCPing.ServerPingResult;
 import com.nao20010128nao.MCPing.Utils;
+import com.nao20010128nao.OTC.OrderTrustedMap;
 
 public class FullStat implements ServerPingResult {
 	static byte NULL = 00;
 	static byte SPACE = 20;
 
-	private Map<String, String> datas = new HashMap<>();
+	private Map<String, String> datas = new OrderTrustedMap<>();
 	private ArrayList<String> playerList = new ArrayList<>();
 
 	public FullStat(byte[] data) {
