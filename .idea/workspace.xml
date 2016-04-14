@@ -19,7 +19,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wisecraft-i18n/wisecraft-i18n.iml" afterPath="$PROJECT_DIR$/wisecraft-i18n/wisecraft-i18n.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
-    <ignored path="McServerDDoS.iws" />
+    <ignored path="Wisecraft.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -50,7 +50,7 @@
                 <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ExternalProjectsStructure$RootNode" />
               </PATH_ELEMENT>
               <PATH_ELEMENT>
-                <option name="myItemId" value="McServerDDoS" />
+                <option name="myItemId" value="Wisecraft" />
                 <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ProjectNode" />
               </PATH_ELEMENT>
               <PATH_ELEMENT>
@@ -64,7 +64,7 @@
                 <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ExternalProjectsStructure$RootNode" />
               </PATH_ELEMENT>
               <PATH_ELEMENT>
-                <option name="myItemId" value="McServerDDoS" />
+                <option name="myItemId" value="Wisecraft" />
                 <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ProjectNode" />
               </PATH_ELEMENT>
               <PATH_ELEMENT>
@@ -86,11 +86,11 @@
                 <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ExternalProjectsStructure$RootNode" />
               </PATH_ELEMENT>
               <PATH_ELEMENT>
-                <option name="myItemId" value="McServerDDoS" />
+                <option name="myItemId" value="Wisecraft" />
                 <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ProjectNode" />
               </PATH_ELEMENT>
               <PATH_ELEMENT>
-                <option name="myItemId" value="McServerDDoS" />
+                <option name="myItemId" value="Wisecraft" />
                 <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ModuleNode" />
               </PATH_ELEMENT>
               <PATH_ELEMENT>
@@ -108,7 +108,7 @@
     </system>
   </component>
   <component name="FavoritesManager">
-    <favorites_list name="McServerDDoS" />
+    <favorites_list name="Wisecraft" />
   </component>
   <component name="FileEditorManager">
     <leaf>
@@ -1966,8 +1966,8 @@
     <option name="modificationStamps">
       <map>
         <entry key="C:\Users\nao\Documents\GitLab\Wisecraft" value="5839798795467" />
-        <entry key="C:\Users\nao\StudioProjects\McServerDDoS-wc" value="4361900922699" />
-        <entry key="G:\brepos\McServerDDoS" value="4368619193318" />
+        <entry key="C:\Users\nao\StudioProjects\Wisecraft-wc" value="4361900922699" />
+        <entry key="G:\brepos\Wisecraft" value="4368619193318" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -2444,7 +2444,7 @@
         <subPane>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="McServerDDoS" />
+              <option name="myItemId" value="Wisecraft" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -2454,7 +2454,7 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="McServerDDoS" />
+              <option name="myItemId" value="Wisecraft" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -2485,7 +2485,7 @@
     </key>
   </component>
   <component name="RunManager" selected="Android Application.app">
-    <configuration default="false" name="G:/brepos/McServerDDoS/app [check]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration default="false" name="G:/brepos/Wisecraft/app [check]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/app" />
@@ -2514,7 +2514,7 @@
         <option name="Make" enabled="false" />
       </method>
     </configuration>
-    <configuration default="false" name="G:/brepos/McServerDDoS/app [preDexDebug]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration default="false" name="G:/brepos/Wisecraft/app [preDexDebug]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/app" />
@@ -2701,15 +2701,15 @@
     </configuration>
     <list size="4">
       <item index="0" class="java.lang.String" itemvalue="Android Application.app" />
-      <item index="1" class="java.lang.String" itemvalue="Gradle.G:/brepos/McServerDDoS/app [check]" />
+      <item index="1" class="java.lang.String" itemvalue="Gradle.G:/brepos/Wisecraft/app [check]" />
       <item index="2" class="java.lang.String" itemvalue="Groovy.build" />
-      <item index="3" class="java.lang.String" itemvalue="Gradle.G:/brepos/McServerDDoS/app [preDexDebug]" />
+      <item index="3" class="java.lang.String" itemvalue="Gradle.G:/brepos/Wisecraft/app [preDexDebug]" />
     </list>
     <recent_temporary>
       <list size="3">
-        <item index="0" class="java.lang.String" itemvalue="Gradle.G:/brepos/McServerDDoS/app [preDexDebug]" />
+        <item index="0" class="java.lang.String" itemvalue="Gradle.G:/brepos/Wisecraft/app [preDexDebug]" />
         <item index="1" class="java.lang.String" itemvalue="Groovy.build" />
-        <item index="2" class="java.lang.String" itemvalue="Gradle.G:/brepos/McServerDDoS/app [check]" />
+        <item index="2" class="java.lang.String" itemvalue="Gradle.G:/brepos/Wisecraft/app [check]" />
       </list>
     </recent_temporary>
     <configuration name="&lt;template&gt;" type="Applet" default="true" selected="false">
