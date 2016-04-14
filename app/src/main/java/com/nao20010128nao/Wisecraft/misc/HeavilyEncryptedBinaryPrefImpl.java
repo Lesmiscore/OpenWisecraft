@@ -44,7 +44,7 @@ public class HeavilyEncryptedBinaryPrefImpl extends BinaryPrefImpl
 		try {
 			byte[] base= super.toBytes();
 			ByteArrayOutputStream fos=new ByteArrayOutputStream();
-			fos.write("".getBytes());
+			fos.write("ConfigAF*45678fu".getBytes());
 			OutputStream os=fos;
 			SecureRandom sr = new SecureRandom();
 			for(int i=0;i<40;i++){
@@ -65,7 +65,7 @@ public class HeavilyEncryptedBinaryPrefImpl extends BinaryPrefImpl
 			os.close();
 			return fos.toByteArray();
 		} catch (Throwable e) {
-			return "\0\0\0\0".getBytes();
+			return "ConfigAF*45678fu\0\0\0\0".getBytes();
 		}
 	}
 
