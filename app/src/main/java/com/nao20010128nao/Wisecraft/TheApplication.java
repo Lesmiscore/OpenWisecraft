@@ -1,17 +1,17 @@
 package com.nao20010128nao.Wisecraft;
-import com.nao20010128nao.Wisecraft.misc.*;
 import java.util.*;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.preference.PreferenceManager;
 import com.nao20010128nao.Wisecraft.collector.CollectorMain;
+import com.nao20010128nao.Wisecraft.misc.DebugWriter;
+import com.nao20010128nao.Wisecraft.misc.SlsUpdater;
 import com.nao20010128nao.Wisecraft.misc.server.GhostPingServer;
-import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
-import android.content.SharedPreferences;
 
 public class TheApplication extends Application {
 	public static TheApplication instance;
