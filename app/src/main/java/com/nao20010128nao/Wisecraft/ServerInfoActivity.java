@@ -124,12 +124,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 		adap4 = new ModInfoListAdapter();
 		
 		nonUpd = getIntent().getBooleanExtra("nonUpd", false);
-
-		/*tc=new TipController(this);
-		 if(stat.isPC){
-		 tc.visible(true).text(R.string.serverInfoPCMessage);
-		 }*/
-
+		
 		ip = localStat.ip;
 		port = localStat.port;
 		
