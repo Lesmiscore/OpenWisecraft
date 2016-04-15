@@ -31,6 +31,7 @@ import pref.StartPref;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import com.nao20010128nao.Wisecraft.misc.compat.CompatActivityGroup;
 
 class ServerListActivityImpl extends AppCompatListActivity {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
@@ -1091,12 +1092,13 @@ class ServerListActivityImpl extends AppCompatListActivity {
 		}
 	}
 }
-public class ServerListActivity extends ActivityGroup {
+public class ServerListActivity extends CompatActivityGroup {
 	boolean nonLoop=false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
+		getSupportActionBar().hide();
 		setContentView(getLocalActivityManager().startActivity("main", new Intent(this, Content.class)).getDecorView());
 	}
 	public static class Content extends ServerListActivityImpl {}
@@ -1130,5 +1132,10 @@ public class ServerListActivity extends ActivityGroup {
 		// TODO: Implement this method
 		//super.onActivityResult(requestCode, resultCode, data);
 		((ServerListActivityImpl)getLocalActivityManager().getActivity("main")).onActivityResult(requestCode,resultCode,data);
+	}
+	
+	@Override
+	protected void attachBaseContext(Context newBase) {
+		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
 	}
 }
