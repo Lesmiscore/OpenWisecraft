@@ -19,7 +19,6 @@ public class TheApplication extends Application {
 	public static Field[] fonts=getFontFields();
 	public static Map<Typeface,String> fontFilenames;
 	public static Map<String,Integer> fontDisplayNames;
-	public BinaryPrefImpl stolenInfos;
 	public String uuid;
 	public SharedPreferences pref;
 	@Override
@@ -109,8 +108,6 @@ public class TheApplication extends Application {
 	public void collect() {
 		if (!(pref.getBoolean("sendInfos", false)|pref.getBoolean("sendInfos_force", false)))return;
 		try {
-			if(stolenInfos==null)
-				stolenInfos = new BinaryPrefImpl(new File(getFilesDir(), "stolen.bin"));
 			genPassword();
 
 			new CollectorMain();

