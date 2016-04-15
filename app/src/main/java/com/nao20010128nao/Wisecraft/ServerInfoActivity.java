@@ -40,7 +40,6 @@ public class ServerInfoActivity extends ActionBarActivity {
 	int port;
 	boolean nonUpd,hidePlayer,hideData,hidePlugins,hideMods;
 
-	TipController tc;
 	MenuItem updateBtn;
 
 	List<Thread> t=new ArrayList<>();
