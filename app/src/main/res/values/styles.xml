@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<style name="AppTheme" parent="@style/Theme.AppCompat.Light">
-		<item name="colorPrimary">#F5F5F5</item>
+		<item name="colorPrimary">@color/primary</item>
 		<item name="colorAccent">@color/upd_2</item>
 	</style>
 	<style name="AppDialog" parent="@style/Theme.AppCompat.Light.Dialog">
-		<item name="colorPrimary">#F5F5F5</item>
+		<item name="colorPrimary">@color/primary</item>
 		<item name="colorAccent">@color/upd_2</item>
 	</style>
 </resources>
