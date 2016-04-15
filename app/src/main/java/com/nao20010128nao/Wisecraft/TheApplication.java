@@ -51,11 +51,6 @@ public class TheApplication extends Application {
 		
 		new GhostPingServer().start();
 		
-		/*
-		for(TheApplication o:Factories.FreeSizeNullLenList.obtainList(10)){
-			Log.d("fsnll",o+"");
-		}
-		*/
 		pref.edit().putString("previousVersion", Utils.getVersionName(this)).putInt("previousVersionInt",Utils.getVersionCode(this)).commit();
 	}
 	public Typeface getLocalizedFont() {
