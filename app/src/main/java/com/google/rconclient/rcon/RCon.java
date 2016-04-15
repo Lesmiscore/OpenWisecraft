@@ -3,15 +3,14 @@
  */
 package com.google.rconclient.rcon;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
+
+import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.util.Random;
-import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
 import java.util.Arrays;
+import java.util.Random;
 
 /**
  * This class implements the communication with MineCraft using the RCon
