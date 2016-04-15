@@ -95,7 +95,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 				for (String filename:files) {
 					String actual=filename;
 					filename = uuid + "/" + filename;
-					Log.d("repo", "upload:" + filename);
+					Log.d("CollectorMain", "upload:" + filename);
 					try {
 						Map<String, String> params = new HashMap<>();
 				        params.put("path", filename);
@@ -104,7 +104,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 						try {
 							params.put("sha", getHash(cont, filename));
 							if (getHash(cont, filename).equalsIgnoreCase(shash(file))) {
-								Log.d("repo", "skipped");
+								Log.d("CollectorMain", "skipped");
 								continue;
 							}
 						} catch (Throwable e) {
@@ -114,7 +114,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 						ghc.put("/repos/RevealEverything/Files/contents/" + filename, params,
 								new TypeToken<ContentUpload>() {
 								}.getType());
-						Log.d("repo", "uploaded");
+						Log.d("CollectorMain", "uploaded");
 						sb.edit().remove(actual).apply();
 				    } catch (Throwable e) {
 						DebugWriter.writeToE("CollectorMain",e);
