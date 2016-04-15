@@ -11,7 +11,8 @@ import java.io.*;
 import java.util.*;
 
 import android.graphics.drawable.ColorDrawable;
-import android.support.design.widget.CoordinatorLayout;
+import android.net.ConnectivityManager;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
@@ -30,8 +31,6 @@ import pref.StartPref;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
-import android.support.design.widget.Snackbar;
-import android.net.ConnectivityManager;
 
 class ServerListActivityImpl extends AppCompatListActivity {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
