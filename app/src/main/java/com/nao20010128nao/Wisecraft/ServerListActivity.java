@@ -23,6 +23,7 @@ import com.nao20010128nao.MCPing.pe.FullStat;
 import com.nao20010128nao.ToolBox.HandledPreference;
 import com.nao20010128nao.Wisecraft.extender.ContextWrappingExtender;
 import com.nao20010128nao.Wisecraft.misc.compat.AppCompatListActivity;
+import com.nao20010128nao.Wisecraft.misc.compat.CompatActivityGroup;
 import com.nao20010128nao.Wisecraft.pingEngine.UnconnectedPing;
 import com.nao20010128nao.Wisecraft.proxy.ProxyActivity;
 import com.nao20010128nao.Wisecraft.rcon.RCONActivity;
@@ -31,7 +32,6 @@ import pref.StartPref;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
-import com.nao20010128nao.Wisecraft.misc.compat.CompatActivityGroup;
 
 class ServerListActivityImpl extends AppCompatListActivity {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
