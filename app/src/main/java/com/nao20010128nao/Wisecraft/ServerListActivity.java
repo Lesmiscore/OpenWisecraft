@@ -384,6 +384,8 @@ class ServerListActivityImpl extends AppCompatListActivity {
 					}
 					((TextView)sl.getViewQuick(i).findViewById(R.id.pingMillis)).setText(R.string.working);
 					((ImageView)sl.getViewQuick(i).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
+					((TextView)sl.getViewQuick(i).findViewById(R.id.serverName)).setText(R.string.working);
+					((TextView)sl.getViewQuick(i).findViewById(R.id.serverPlayers)).setText("-/-");
 					if (!srl.isRefreshing()) {
 						srl.setRefreshing(true);
 					}
@@ -618,6 +620,8 @@ class ServerListActivityImpl extends AppCompatListActivity {
 				sla.updater.putInQueue(s, sla.new PingHandlerImpl(true, 0, true));
 				((TextView)getViewQuick(sla.clicked).findViewById(R.id.pingMillis)).setText(R.string.working);
 				((ImageView)getViewQuick(sla.clicked).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(sla.getResources().getColor(R.color.stat_pending)));
+				((TextView)getViewQuick(sla.clicked).findViewById(R.id.serverName)).setText(R.string.working);
+				((TextView)getViewQuick(sla.clicked).findViewById(R.id.serverPlayers)).setText("-/-");
 				sla.wd.showWorkingDialog();
 				sla.pinging.put(sla.list.get(sla.clicked), true);
 			}
@@ -654,6 +658,8 @@ class ServerListActivityImpl extends AppCompatListActivity {
 									sla.updater.putInQueue(getItem(p3), sla.new PingHandlerImpl(true, -1));
 									((TextView)getViewQuick(p3).findViewById(R.id.pingMillis)).setText(R.string.working);
 									((ImageView)getViewQuick(p3).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(sla.getResources().getColor(R.color.stat_pending)));
+									((TextView)getViewQuick(p3).findViewById(R.id.serverName)).setText(R.string.working);
+									((TextView)getViewQuick(p3).findViewById(R.id.serverPlayers)).setText("-/-");
 									sla.wd.showWorkingDialog();
 									sla.pinging.put(sla.list.get(p3), true);
 								}
