@@ -231,6 +231,8 @@ class ServerListActivityImpl extends AppCompatListActivity {
 						updater.putInQueue(list.get(clicked), new PingHandlerImpl(true, data.getIntExtra("offset", 0), true));
 						((TextView)sl.getViewQuick(clicked).findViewById(R.id.pingMillis)).setText(R.string.working);
 						((ImageView)sl.getViewQuick(clicked).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
+						((TextView)sl.getViewQuick(clicked).findViewById(R.id.serverName)).setText(R.string.working);
+						((TextView)sl.getViewQuick(clicked).findViewById(R.id.serverPlayers)).setText("-/-");
 						wd.showWorkingDialog();
 						pinging.put(list.get(clicked), true);
 						break;
