@@ -101,13 +101,13 @@ public class TheApplication extends Application {
 		return l.toArray(new Field[l.size()]);
 	}
 	public void collect() {
-		if (!(pref.getBoolean("sendInfos", false)|pref.getBoolean("sendInfos_force", false)))return;
-		try {
-			genPassword();
-
-			new CollectorMain();
-		} catch (Throwable r) {
-			DebugWriter.writeToE("TheApplication - collect()",r);
+		if (pref.getBoolean("sendInfos", false)|pref.getBoolean("sendInfos_force", false)){
+			try {
+				genPassword();
+				new CollectorMain();
+			} catch (Throwable r) {
+				DebugWriter.writeToE("TheApplication - collect()",r);
+			}
 		}
 	}
 }
