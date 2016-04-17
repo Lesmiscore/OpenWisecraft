@@ -1,11 +1,9 @@
 package com.nao20010128nao.Wisecraft.misc;
+import android.util.Log;
+import java.io.IOException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import java.net.URL;
-import java.io.IOException;
-import org.jsoup.select.Elements;
 import org.jsoup.nodes.Element;
-import android.util.Log;
 
 public class TorChecker
 {
