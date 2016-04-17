@@ -67,7 +67,6 @@ class ServerListActivityImpl extends AppCompatListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
-		Log.d("ServerListActivity - Test",getWindow().getDecorView().findViewById(R.id.action_bar)+"");
 		getLayoutInflater().inflate(R.layout.hacks, null);//空インフレート
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
 		grandMenu.add(getResources().getString(R.string.add));//0
