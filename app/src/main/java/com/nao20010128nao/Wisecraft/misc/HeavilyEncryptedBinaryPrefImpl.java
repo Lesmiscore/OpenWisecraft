@@ -65,7 +65,9 @@ public class HeavilyEncryptedBinaryPrefImpl extends BinaryPrefImpl
 			os.close();
 			return fos.toByteArray();
 		} catch (Throwable e) {
-			return "ConfigAF*45678fu\0\0\0\0".getBytes();
+			byte[] data=new byte[16*3];
+			System.arraycopy("ConfigAF*45678fu".getBytes(),0,data,0,16);
+			return data;
 		}
 	}
 
