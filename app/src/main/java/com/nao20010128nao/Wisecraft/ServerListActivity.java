@@ -345,24 +345,14 @@ class ServerListActivityImpl extends AppCompatListActivity {
 				new Thread(){
 					public void run() {
 						ArrayList<String[]> al=new ArrayList<String[]>();
-						BufferedReader br=null;
 						try {
-							br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt"))));
-							while (true) {
-								String s=br.readLine();
-								if (s == null)break;
+							String[] lines=Utils.lines(Utils.readWholeFile(new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt")));
+							for(String s:lines){
 								Log.d("readLine", s);
 								al.add(s.split("\\:"));
 							}
 						} catch (Throwable ex) {
 							DebugWriter.writeToE("ServerListActivity", ex);
-						} finally {
-							try {
-								if (br != null)
-									br.close();
-							} catch (IOException e) {
-
-							}
 						}
 						final ArrayList<Server> sv=new ArrayList<>();
 						for (String[] s:al) {
