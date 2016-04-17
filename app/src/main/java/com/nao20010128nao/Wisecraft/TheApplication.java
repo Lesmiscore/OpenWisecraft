@@ -12,10 +12,12 @@ import com.nao20010128nao.Wisecraft.misc.server.GhostPingServer;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import android.content.res.Resources.NotFoundException;
+import android.content.res.Resources;
 
 public class TheApplication extends Application {
 	public static TheApplication instance;
-	public static Typeface latoLight,icomoon1,sysDefault,droidSans;
+	public static Typeface latoLight,icomoon1,sysDefault,droidSans,robotoSlabLight;
 	public static Field[] fonts=getFontFields();
 	public static Map<Typeface,String> fontFilenames;
 	public static Map<String,Integer> fontDisplayNames;
@@ -31,12 +33,14 @@ public class TheApplication extends Application {
 		latoLight = Typeface.createFromAsset(getAssets(), "lato-light.ttf");
 		icomoon1 = Typeface.createFromAsset(getAssets(), "icomoon.ttf");
 		sysDefault = Typeface.DEFAULT;
-
+		robotoSlabLight = Typeface.createFromAsset(getAssets(), "RobotoSlab-Light.ttf");
+		
 		fontFilenames = new HashMap<Typeface,String>();
 		fontFilenames.put(droidSans, "DroidSans.ttf");
 		fontFilenames.put(latoLight, "lato-light.ttf");
 		fontFilenames.put(icomoon1, "icomoon.ttf");
 		fontFilenames.put(sysDefault, "");
+		fontFilenames.put(robotoSlabLight, "RobotoSlab-Light.ttf");
 		
 		fontDisplayNames=new HashMap<>();
 		fontDisplayNames.put("droidSans",R.string.font_droidSans);
@@ -75,7 +79,11 @@ public class TheApplication extends Application {
 		return fontFilenames.get(getLocalizedFont());
 	}
 	public String getDisplayFontName(String field){
-		return getResources().getString(fontDisplayNames.get(field));
+		try {
+			return getResources().getString(fontDisplayNames.get(field));
+		} catch (Throwable e) {
+			return null;
+		}
 	}
 	public String[] getDisplayFontNames(String[] field){
 		String[] result=new String[field.length];
