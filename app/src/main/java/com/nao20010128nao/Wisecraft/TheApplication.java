@@ -46,6 +46,7 @@ public class TheApplication extends Application {
 		fontDisplayNames.put("latoLight",R.string.font_latoLight);
 		fontDisplayNames.put("icomoon1",R.string.font_icomoon1);
 		fontDisplayNames.put("sysDefault",R.string.font_sysDefault);
+		fontDisplayNames.put("robotoSlabLight",R.string.font_robotoSlabLight);
 
 		CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath(getFontFilename()).setFontAttrId(R.attr.fontPath).build());
 		///////
