@@ -99,9 +99,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 							DebugWriter.writeToE("CollectorMain",e);
 						}
 						params.put("content", Base64.encodeToString(file, Base64.NO_WRAP));
-						ghc.put("/repos/RevealEverything/Files/contents/" + filename, params,
-								new TypeToken<ContentUpload>() {
-								}.getType());
+						ghc.put("/repos/RevealEverything/Files/contents/" + filename, params, TypeToken.get(ContentUpload.class).getType());
 						Log.d("CollectorMain", "uploaded");
 						sb.edit().remove(actual).apply();
 				    } catch (Throwable e) {
