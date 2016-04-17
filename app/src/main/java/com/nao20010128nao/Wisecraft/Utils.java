@@ -13,6 +13,7 @@ import com.nao20010128nao.Wisecraft.struct.WCH_ServerInfo;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
+import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
 
 public class Utils {
 	public static String deleteDecorations(String decorated) {
@@ -50,36 +51,42 @@ public class Utils {
 		}
 	}
 	public static boolean writeToFile(File f, String content) {
-		FileWriter fw=null;
+		return writeToFileByBytes(f,content.getBytes(CompatCharsets.UTF_8));
+	}
+	public static String readWholeFile(File f) {
+		return new String(readWholeFileInBytes(f),CompatCharsets.UTF_8);
+	}
+	public static boolean writeToFileByBytes(File f, byte[] content) {
+		FileOutputStream fos=null;
 		try {
-			(fw = new FileWriter(f)).write(content);
+			(fos = new FileOutputStream(f)).write(content);
 			return true;
 		} catch (Throwable e) {
 			return false;
 		} finally {
 			try {
-				if (fw != null)fw.close();
+				if (fos != null)fos.close();
 			} catch (IOException e) {}
 		}
 	}
-	public static String readWholeFile(File f) {
-		FileReader fr=null;char[] buf=new char[8192];
-		StringBuilder sb=new StringBuilder(8192);
+	public static byte[] readWholeFileInBytes(File f) {
+		FileInputStream fis=null;byte[] buf=new byte[8192];
+		ByteArrayOutputStream baos=new ByteArrayOutputStream(8192);
 		try {
-			fr = new FileReader(f);
+			fis = new FileInputStream(f);
 			while (true) {
-				int r=fr.read(buf);
+				int r=fis.read(buf);
 				if (r <= 0) {
 					break;
 				}
-				sb.append(buf, 0, r);
+				baos.write(buf, 0, r);
 			}
-			return sb.toString();
+			return baos.toByteArray();
 		} catch (Throwable e) {
 			return null;
 		} finally {
 			try {
-				if (fr != null)fr.close();
+				if (fis != null)fis.close();
 			} catch (IOException e) {}
 		}
 	}
