@@ -194,7 +194,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 		IntentFilter inFil=new IntentFilter();
 		inFil.addAction("android.net.conn.CONNECTIVITY_CHANGE");
 		registerReceiver(nsbr = new NetworkStateBroadcastReceiver(), inFil);
-		new HirarchyDumper(getWindow().getDecorView()).start();
+		new HirarchyDumper(this).start();
 	}
 	@Override
 	protected void attachBaseContext(Context newBase) {
