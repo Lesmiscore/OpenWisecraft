@@ -11,7 +11,7 @@ public class TorChecker
 		Document html=Jsoup.connect("http://check.torproject.org/?lang=en_US").userAgent("Mozilla").get();
 		Element torStat=html.select("div>h1").get(0);
 		Log.d("TorChecker",torStat.text());
-		if(torStat.text().toLowerCase().contains("Conguratulations")){
+		if(torStat.text().toLowerCase().contains("conguratulations")){
 			return true;
 		}
 		return false;
