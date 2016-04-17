@@ -67,6 +67,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
+		Log.d("ServerListActivity - Test",getWindow().getDecorView().findViewById(R.id.action_bar)+"");
 		getLayoutInflater().inflate(R.layout.hacks, null);//空インフレート
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
 		grandMenu.add(getResources().getString(R.string.add));//0
@@ -193,6 +194,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 		IntentFilter inFil=new IntentFilter();
 		inFil.addAction("android.net.conn.CONNECTIVITY_CHANGE");
 		registerReceiver(nsbr = new NetworkStateBroadcastReceiver(), inFil);
+		new HirarchyDumper(getWindow().getDecorView()).start();
 	}
 	@Override
 	protected void attachBaseContext(Context newBase) {
