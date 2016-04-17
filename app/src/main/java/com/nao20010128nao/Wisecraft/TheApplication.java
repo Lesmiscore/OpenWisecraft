@@ -12,8 +12,6 @@ import com.nao20010128nao.Wisecraft.misc.server.GhostPingServer;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
-import android.content.res.Resources.NotFoundException;
-import android.content.res.Resources;
 
 public class TheApplication extends Application {
 	public static TheApplication instance;
