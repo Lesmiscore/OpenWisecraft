@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class KVListAdapter<K,V> extends AppBaseArrayAdapter<Map.Entry<K,V>> {
 	public KVListAdapter(Context ctx) {
-		super(ctx, 0, new HackedArrayList<K,V>());
+		super(ctx, 0, new ArrayList<Map.Entry<K,V>>());
 	}
 	public View getView(int pos, View v, ViewGroup ignore) {
 		if (v == null)
@@ -20,11 +20,5 @@ public class KVListAdapter<K,V> extends AppBaseArrayAdapter<Map.Entry<K,V>> {
 	}
 	LayoutInflater getLayoutInflater() {
 		return (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	}
-
-	static private class HackedArrayList<K,V> extends ArrayList<Map.Entry<K,V>> {
-		public HackedArrayList() {
-
-		}
 	}
 }
