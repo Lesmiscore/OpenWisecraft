@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Base64;
 import android.util.Log;
+import com.google.gson.Gson;
 import com.nao20010128nao.MCPing.ServerPingResult;
 import com.nao20010128nao.MCPing.pc.Reply;
 import com.nao20010128nao.MCPing.pc.Reply19;
@@ -26,7 +27,6 @@ import java.lang.ref.WeakReference;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
-import com.google.gson.Gson;
 
 public class ServerInfoActivity extends ActionBarActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
