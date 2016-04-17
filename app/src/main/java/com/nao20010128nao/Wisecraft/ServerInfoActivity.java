@@ -26,6 +26,7 @@ import java.lang.ref.WeakReference;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import com.google.gson.Gson;
 
 public class ServerInfoActivity extends ActionBarActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
@@ -173,6 +174,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 				final ArrayList<String> sort=new ArrayList<>();
 				for (Reply.Player o:rep.players.sample) {
 					sort.add(o.name);
+					TheApplication.instance.pcUserUUIDs.put(o.name,o.id);
 				}
 				if(pref.getBoolean("sortPlayerNames",true))
 					Collections.sort(sort);
@@ -217,6 +219,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 				final ArrayList<String> sort=new ArrayList<>();
 				for (Reply19.Player o:rep.players.sample) {
 					sort.add(o.name);
+					TheApplication.instance.pcUserUUIDs.put(o.name,o.id);
 				}
 				Collections.sort(sort);
 				adap.clear();
@@ -294,6 +297,17 @@ public class ServerInfoActivity extends ActionBarActivity {
 	public void finish() {
 		// TODO: Implement this method
 		super.finish();
+	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO: Implement this method
+		super.onDestroy();
+		new Thread(){
+			public void run(){
+				pref.edit().putString("pcuseruuids",new Gson().toJson(TheApplication.instance.pcUserUUIDs)).commit();
+			}
+		}.start();
 	}
 
 	public void addModsTab(){

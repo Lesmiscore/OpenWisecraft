@@ -12,6 +12,8 @@ import com.nao20010128nao.Wisecraft.misc.server.GhostPingServer;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import com.google.gson.Gson;
+import com.nao20010128nao.Wisecraft.misc.PCUserUUIDMap;
 
 public class TheApplication extends Application {
 	public static TheApplication instance;
@@ -19,6 +21,7 @@ public class TheApplication extends Application {
 	public static Field[] fonts=getFontFields();
 	public static Map<Typeface,String> fontFilenames;
 	public static Map<String,Integer> fontDisplayNames;
+	public static Map<String,String> pcUserUUIDs;
 	public String uuid;
 	public SharedPreferences pref;
 	@Override
@@ -54,6 +57,7 @@ public class TheApplication extends Application {
 		new GhostPingServer().start();
 		
 		pref.edit().putString("previousVersion", Utils.getVersionName(this)).putInt("previousVersionInt",Utils.getVersionCode(this)).commit();
+		pcUserUUIDs=new Gson().fromJson(pref.getString("pcuseruuids","{}"),PCUserUUIDMap.class);
 	}
 	public Typeface getLocalizedFont() {
 		try {
