@@ -6,9 +6,8 @@ import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.util.Arrays;
-import java.util.Random;
 import java.security.SecureRandom;
+import java.util.Arrays;
 
 public class RCon {
 
