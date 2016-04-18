@@ -189,6 +189,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 			sl.getViewQuick(i);
 		}
 		networkState = Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "", Snackbar.LENGTH_INDEFINITE);
+		networkState.getView().setAlpha(0.5f);
 		new NetworkStatusCheckWorker().execute();
 		IntentFilter inFil=new IntentFilter();
 		inFil.addAction("android.net.conn.CONNECTIVITY_CHANGE");
