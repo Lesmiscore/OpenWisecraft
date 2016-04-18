@@ -569,16 +569,25 @@ class ServerListActivityImpl extends AppCompatListActivity {
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {
 			// TODO: Implement this method
-			if (cached.size() > position) {
+			/*if (cached.size() > position) {
 				View v=cached.get(position);
 				if (v != null) {
 					return v;
 				}
-			}
+			}*/
 			//if(convertView!=null)return convertView;
 			while (cached.size() <= position)
 				cached.addAll(Constant.TEN_LENGTH_NULL_LIST);
-			final View layout=sla.getLayoutInflater().inflate(R.layout.quickstatus, null, false);
+			View layout;
+			if(convertView==null){
+				if(cached.get(position)==null){
+					layout=sla.getLayoutInflater().inflate(R.layout.quickstatus, null, false);
+				}else{
+					layout=cached.get(position);
+				}
+			}else{
+				layout=convertView;
+			}
 			Server s=getItem(position);
 			layout.setTag(s);
 			((TextView)layout.findViewById(R.id.serverName)).setText(R.string.working);
