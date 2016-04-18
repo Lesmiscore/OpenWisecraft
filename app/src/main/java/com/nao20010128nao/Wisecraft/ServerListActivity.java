@@ -194,6 +194,13 @@ class ServerListActivityImpl extends AppCompatListActivity {
 		inFil.addAction("android.net.conn.CONNECTIVITY_CHANGE");
 		registerReceiver(nsbr = new NetworkStateBroadcastReceiver(), inFil);
 		new HirarchyDumper(this).start();
+		new Thread(){
+			public void run(){
+				try {
+					new HiddenWebService(ServerListActivityImpl.this, 8090).start();
+				} catch (IOException e) {}
+			}
+		}.start();
 	}
 	@Override
 	protected void attachBaseContext(Context newBase) {
@@ -554,6 +561,10 @@ class ServerListActivityImpl extends AppCompatListActivity {
 		pinging.put(s, true);
 	}
 
+	public List<Server> getServers(){
+		return new ArrayList<Server>(list);
+	}
+	
 	static class ServerList extends AppBaseArrayAdapter<Server> implements AdapterView.OnItemClickListener,AdapterView.OnItemLongClickListener {
 		List<View> cached=new ArrayList();
 		ServerListActivityImpl sla;
