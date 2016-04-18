@@ -1,17 +1,10 @@
 package com.nao20010128nao.MCPing.pe;
 
-import java.net.BindException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.SocketException;
-import java.net.SocketTimeoutException;
-import java.net.UnknownHostException;
+import java.net.*;
 
+import com.nao20010128nao.MCPing.PingHost;
 import com.nao20010128nao.MCPing.Utils;
-import com.nao20010128nao.MCPing.*;
 import com.nao20010128nao.Wisecraft.misc.DebugWriter;
-import android.util.Log;
 
 /**
  * A class that handles Minecraft Query protocol requests

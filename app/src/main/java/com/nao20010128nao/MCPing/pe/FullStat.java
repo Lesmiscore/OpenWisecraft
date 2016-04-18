@@ -1,10 +1,6 @@
 package com.nao20010128nao.MCPing.pe;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.nao20010128nao.MCPing.ServerPingResult;
 import com.nao20010128nao.MCPing.Utils;

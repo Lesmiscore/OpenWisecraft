@@ -1,8 +1,7 @@
 package com.nao20010128nao.MCPing.pc;
 
-import java.util.List;
-
 import com.nao20010128nao.MCPing.ServerPingResult;
+import java.util.List;
 
 /**
  * References: http://wiki.vg/Server_List_Ping

@@ -1,17 +1,14 @@
 package com.nao20010128nao.MCPing.pc;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.Socket;
+import java.io.*;
 
-import com.google.gson.Gson;
-import com.nao20010128nao.MCPing.Utils;
-import com.nao20010128nao.MCPing.*;
-import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
 import android.util.Log;
+import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.nao20010128nao.MCPing.PingHost;
+import com.nao20010128nao.MCPing.Utils;
+import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
+import java.net.Socket;
 
 public class PCQuery implements PingHost{
 	private Gson gson = new Gson();
