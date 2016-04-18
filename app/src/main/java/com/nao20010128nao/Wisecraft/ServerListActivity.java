@@ -902,7 +902,9 @@ class ServerListActivityImpl extends AppCompatListActivity {
 							if (closeDialog) {
 								wd.hideWorkingDialog();
 							}
-
+							if (statTabOfs != -1) {
+								Toast.makeText(ServerListActivityImpl.this,R.string.serverOffline,Toast.LENGTH_SHORT).show();
+							}
 							if (!pinging.containsValue(true)) {
 								srl.setRefreshing(false);
 							}
