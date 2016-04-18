@@ -11,6 +11,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.select.Elements;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
+import android.util.Log;
+import java.io.IOException;
 
 public class HiddenWebService extends NanoHTTPD
 {
@@ -38,16 +40,44 @@ public class HiddenWebService extends NanoHTTPD
 		if(session.getUri().equals("/")){
 			List<Server> sl=act.getServers();
 			Document doc=Jsoup.parse("<!doctype html><html><head><title></title></head><body></body></html>");
+			Element body=doc.select("body").get(0);
+			{
+				Element flg=Jsoup.parseBodyFragment("<div id=\"parent\"></div>").select("div#parent").get(0);
+				flg.appendElement("a").attr("href","/exit").text("Exit");
+				flg.appendElement("a").attr("href","/update").text("Update All");
+				body.appendChild(flg);
+			}
+			body.appendElement("hr");
 			for(Server s:sl){
-				Document flg_=Jsoup.parseBodyFragment("<p>IP:<div id=\"ip\"></div><br>Port:<div id=\"port\"></div><br>Is Online:<div id=\"online\"></div></p>");
-				Element e=flg_.select("p").get(0);
-				e.select("p>div#ip").html(s.ip);
-				e.select("p>div#port").html(s.port+"");
-				e.select("p>div#online").html((s instanceof ServerStatus)+"");
-				doc.select("body").get(0).appendChild(e);
+				Document flg_=Jsoup.parseBodyFragment("<div id=\"parent\">IP:<div id=\"ip\"></div><br>Port:<div id=\"port\"></div><br>Is Online:<div id=\"online\"></div></div>");
+				Element e=flg_.select("div#parent").get(0);
+				e.select("div#parent>div#ip").html(s.ip);
+				e.select("div#parent>div#port").html(s.port+"");
+				e.select("div#parent>div#online").html((s instanceof ServerStatus)+"");
+				body.appendChild(e).appendElement("hr");
 			}
 			doc.select("html>head>title").html("Wisecraft "+Utils.getVersionName(act));
 			return newFixedLengthResponse(doc.html());
+		}
+		if(session.getUri().equalsIgnoreCase("/exit")){
+			try {
+				Document doc=Jsoup.parse("<!doctype html><html><head><title></title></head><body></body></html>");
+				doc.select("html>head>title").html("Wisecraft " + Utils.getVersionName(act));
+				doc.select("body").get(0).appendElement("p").text("Exiting application...");
+				return newFixedLengthResponse(doc.html());
+			} finally {
+				act.runOnUiThread(new Runnable(){public void run(){act.execOption(9);}});
+			}
+		}
+		if(session.getUri().equalsIgnoreCase("/update")){
+			try {
+				Document doc=Jsoup.parse("<!doctype html><html><head><title></title></head><body></body></html>");
+				doc.select("html>head>title").html("Wisecraft " + Utils.getVersionName(act));
+				doc.select("body").get(0).appendElement("p").text("Updating statuses...");
+				return newFixedLengthResponse(doc.html());
+			} finally {
+				act.runOnUiThread(new Runnable(){public void run(){act.execOption(2);}});
+			}
 		}
 		return unknownResponse();
 	}
