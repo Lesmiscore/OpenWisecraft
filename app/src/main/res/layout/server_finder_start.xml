@@ -23,9 +23,13 @@
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:id="@+id/pc"
-		android:text="@string/isPC"
-		android:layout_marginBottom="1dp"/>
+		android:text="@string/isPC"/>
 
+	<View
+		android:background="#CCCCCC"
+		android:layout_height="match_parent"
+		android:layout_width="1dp"/>
+	
 	<android.support.v7.widget.AppCompatTextView
 		android:layout_height="wrap_content"
 		android:textAppearance="?android:attr/textAppearanceLarge"

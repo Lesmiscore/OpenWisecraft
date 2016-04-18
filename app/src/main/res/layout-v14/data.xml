@@ -22,10 +22,9 @@
 	</LinearLayout>
 
 	<View
-		android:background="?android:attr/dividerHorizontal"
+		android:background="#CCCCCC"
 		android:layout_height="match_parent"
 		android:layout_width="1dp"/>
-
 	<LinearLayout
 		android:layout_height="match_parent"
 		android:layout_width="match_parent"

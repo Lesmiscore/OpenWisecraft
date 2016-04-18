@@ -35,6 +35,11 @@
 
 		</LinearLayout>
 
+		<View
+			android:background="#CCCCCC"
+			android:layout_height="match_parent"
+			android:layout_width="1dp"/>
+
 		<LinearLayout
 			android:layout_height="match_parent"
 			android:layout_width="match_parent"
@@ -61,7 +66,7 @@
 
 	</LinearLayout>
 
-	<android.support.v7.widget.AppCompatImageView
+	<com.nao20010128nao.Wisecraft.misc.view.ExtendedImageView
 		android:layout_height="4dp"
 		android:layout_width="match_parent"
 		android:id="@+id/statColor"/>
