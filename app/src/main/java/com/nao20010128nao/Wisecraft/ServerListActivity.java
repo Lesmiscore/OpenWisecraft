@@ -32,6 +32,7 @@ import pref.StartPref;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import com.nao20010128nao.Wisecraft.misc.view.ExtendedImageView;
 
 class ServerListActivityImpl extends AppCompatListActivity {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
@@ -233,7 +234,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 						Bundle obj=data.getBundleExtra("object");
 						updater.putInQueue(list.get(clicked), new PingHandlerImpl(true, data.getIntExtra("offset", 0), true));
 						((TextView)sl.getViewQuick(clicked).findViewById(R.id.pingMillis)).setText(R.string.working);
-						((ImageView)sl.getViewQuick(clicked).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
+						((ExtendedImageView)sl.getViewQuick(clicked).findViewById(R.id.statColor)).setColor(getResources().getColor(R.color.stat_pending));
 						((TextView)sl.getViewQuick(clicked).findViewById(R.id.serverName)).setText(R.string.working);
 						((TextView)sl.getViewQuick(clicked).findViewById(R.id.serverPlayers)).setText("-/-");
 						wd.showWorkingDialog();
@@ -378,7 +379,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 						continue;
 					}
 					((TextView)sl.getViewQuick(i).findViewById(R.id.pingMillis)).setText(R.string.working);
-					((ImageView)sl.getViewQuick(i).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
+					((ExtendedImageView)sl.getViewQuick(i).findViewById(R.id.statColor)).setColor(getResources().getColor(R.color.stat_pending));
 					((TextView)sl.getViewQuick(i).findViewById(R.id.serverName)).setText(R.string.working);
 					((TextView)sl.getViewQuick(i).findViewById(R.id.serverPlayers)).setText("-/-");
 					if (!srl.isRefreshing()) {
@@ -552,7 +553,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 		if (pinging.get(s))return;
 		updater.putInQueue(s, new PingHandlerImpl(true, -1));
 		((TextView)sl.getViewQuick(list.indexOf(s)).findViewById(R.id.pingMillis)).setText(R.string.working);
-		((ImageView)sl.getViewQuick(list.indexOf(s)).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
+		((ExtendedImageView)sl.getViewQuick(list.indexOf(s)).findViewById(R.id.statColor)).setColor(getResources().getColor(R.color.stat_pending));
 		pinging.put(s, true);
 	}
 
@@ -585,7 +586,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 			((TextView)layout.findViewById(R.id.serverName)).setText(R.string.working);
 			((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.working);
 			((TextView)layout.findViewById(R.id.serverAddress)).setText(s.ip + ":" + s.port);
-			((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(sla.getResources().getColor(R.color.stat_pending)));
+			((ExtendedImageView)layout.findViewById(R.id.statColor)).setColor(sla.getResources().getColor(R.color.stat_pending));
 			if (s instanceof ServerStatus) {
 				sla.new PingHandlerImpl().onPingArrives((ServerStatus)s);
 			} else {
@@ -617,7 +618,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 			} else {
 				sla.updater.putInQueue(s, sla.new PingHandlerImpl(true, 0, true));
 				((TextView)getViewQuick(sla.clicked).findViewById(R.id.pingMillis)).setText(R.string.working);
-				((ImageView)getViewQuick(sla.clicked).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(sla.getResources().getColor(R.color.stat_pending)));
+				((ExtendedImageView)getViewQuick(sla.clicked).findViewById(R.id.statColor)).setColor(sla.getResources().getColor(R.color.stat_pending));
 				((TextView)getViewQuick(sla.clicked).findViewById(R.id.serverName)).setText(R.string.working);
 				((TextView)getViewQuick(sla.clicked).findViewById(R.id.serverPlayers)).setText("-/-");
 				sla.wd.showWorkingDialog();
@@ -655,7 +656,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 									if (sla.pinging.get(getItem(p3)))return;
 									sla.updater.putInQueue(getItem(p3), sla.new PingHandlerImpl(true, -1));
 									((TextView)getViewQuick(p3).findViewById(R.id.pingMillis)).setText(R.string.working);
-									((ImageView)getViewQuick(p3).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(sla.getResources().getColor(R.color.stat_pending)));
+									((ExtendedImageView)getViewQuick(p3).findViewById(R.id.statColor)).setColor(sla.getResources().getColor(R.color.stat_pending));
 									((TextView)getViewQuick(p3).findViewById(R.id.serverName)).setText(R.string.working);
 									((TextView)getViewQuick(p3).findViewById(R.id.serverPlayers)).setText("-/-");
 									sla.wd.showWorkingDialog();
@@ -887,7 +888,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 							if (i_ == -1) {
 								return;
 							}
-							((ImageView)sl.getViewQuick(i_).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_error)));
+							((ExtendedImageView)sl.getViewQuick(i_).findViewById(R.id.statColor)).setColor(getResources().getColor(R.color.stat_error));
 							((TextView)sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(s.ip + ":" + s.port);
 							((TextView)sl.getViewQuick(i_).findViewById(R.id.pingMillis)).setText(R.string.notResponding);
 							((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText("-/-");
@@ -919,7 +920,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 							if (i_ == -1) {
 								return;
 							}
-							((ImageView)sl.getViewQuick(i_).findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
+							((ExtendedImageView)sl.getViewQuick(i_).findViewById(R.id.statColor)).setColor(getResources().getColor(R.color.stat_ok));
 							final String title;
 							if (s.response instanceof FullStat) {//PE
 								FullStat fs=(FullStat)s.response;
