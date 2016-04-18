@@ -336,22 +336,18 @@ public class RCon {
 			receivedBuffer.get(receivedPayload);
 			receivedBuffer.get(new byte[2]);
 			if (receivedRequestId != requestId) {
-				final IncorrectRequestIdException exception = new IncorrectRequestIdException(receivedRequestId);
-				throw exception;
+				throw new IncorrectRequestIdException(receivedRequestId);
 			}
 		}
 		return receivedPayload;
 	}
 
 	private String send(final int type, final String payload) throws IOException, IncorrectRequestIdException {
-		final String responsePayload = new String(send(type, payload.getBytes(CompatCharsets.UTF_8)),
-				CompatCharsets.UTF_8);
-		return responsePayload;
+		return new String(send(type, payload.getBytes(CompatCharsets.UTF_8)), CompatCharsets.UTF_8);
 	}
 
 	public String send(final String payload) throws IOException, IncorrectRequestIdException {
-		final String response = send(COMMAND_TYPE, payload);
-		return response;
+		return send(COMMAND_TYPE, payload);
 	}
 
 	@Override
