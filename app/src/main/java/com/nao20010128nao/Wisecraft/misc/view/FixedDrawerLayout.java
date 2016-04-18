@@ -1,4 +1,4 @@
-package com.nao20010128nao.Wisecraft.misc;
+package com.nao20010128nao.Wisecraft.misc.view;
 
 import android.content.Context;
 import android.support.v4.widget.DrawerLayout;

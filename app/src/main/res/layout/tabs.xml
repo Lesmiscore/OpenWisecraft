@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.nao20010128nao.Wisecraft.misc.FixedRefreshLayout
+<com.nao20010128nao.Wisecraft.misc.view.FixedRefreshLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/swipelayout"
 	android:layout_width="match_parent"
@@ -56,5 +56,5 @@
 
 	</LinearLayout>
 
-</com.nao20010128nao.Wisecraft.misc.FixedRefreshLayout>
+</com.nao20010128nao.Wisecraft.misc.view.FixedRefreshLayout>
 

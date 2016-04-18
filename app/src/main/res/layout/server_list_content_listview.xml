@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.nao20010128nao.Wisecraft.misc.FixedDrawerLayout
+<com.nao20010128nao.Wisecraft.misc.view.FixedDrawerLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_height="match_parent"
 	android:layout_width="match_parent"
@@ -9,7 +9,7 @@
 		android:layout_height="match_parent"
 		android:layout_width="match_parent">
 
-		<com.nao20010128nao.Wisecraft.misc.FixedRefreshLayout
+		<com.nao20010128nao.Wisecraft.misc.view.FixedRefreshLayout
 			android:id="@+id/swipelayout"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent">
@@ -19,12 +19,12 @@
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"/>
 
-		</com.nao20010128nao.Wisecraft.misc.FixedRefreshLayout>
+		</com.nao20010128nao.Wisecraft.misc.view.FixedRefreshLayout>
 
 	</FrameLayout>
 
 	<include
 		layout="@layout/server_list_side_drawer_listview"/>
 
-</com.nao20010128nao.Wisecraft.misc.FixedDrawerLayout>
+</com.nao20010128nao.Wisecraft.misc.view.FixedDrawerLayout>
 
