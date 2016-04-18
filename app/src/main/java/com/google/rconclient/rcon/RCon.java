@@ -11,6 +11,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
 import java.util.Random;
+import java.security.SecureRandom;
 
 /**
  * This class implements the communication with MineCraft using the RCon
@@ -73,8 +74,7 @@ public class RCon {
 	 *             The authentication using the password failed.
 	 */
 	public RCon(final String host, final int port, final char[] password) throws IOException, AuthenticationException {
-		super();
-		final Random random = new Random();
+		final SecureRandom random = new SecureRandom();
 		requestId = random.nextInt();
 		socket = new Socket(host, port);
 		outputStream = socket.getOutputStream();
