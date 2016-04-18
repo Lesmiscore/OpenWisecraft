@@ -21,6 +21,7 @@ import com.nao20010128nao.MCPing.ServerPingResult;
 import com.nao20010128nao.MCPing.pc.Reply;
 import com.nao20010128nao.MCPing.pc.Reply19;
 import com.nao20010128nao.MCPing.pe.FullStat;
+import com.nao20010128nao.OTC.OrderTrustedMap;
 import com.nao20010128nao.Wisecraft.misc.compat.CompatArrayAdapter;
 import com.nao20010128nao.Wisecraft.pingEngine.UnconnectedPing;
 import java.lang.ref.WeakReference;
@@ -195,7 +196,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 			}
 
 			adap2.clear();
-			Map<String,String> data=new HashMap<>();
+			Map<String,String> data=new OrderTrustedMap<>();
 			data.put(getResources().getString(R.string.pc_maxPlayers), rep.players.max + "");
 			data.put(getResources().getString(R.string.pc_nowPlayers), rep.players.online + "");
 			data.put(getResources().getString(R.string.pc_softwareVersion), rep.version.name);
@@ -239,7 +240,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 			}
 
 			adap2.clear();
-			Map<String,String> data=new HashMap<>();
+			Map<String,String> data=new OrderTrustedMap<>();
 			data.put(getResources().getString(R.string.pc_maxPlayers), rep.players.max + "");
 			data.put(getResources().getString(R.string.pc_nowPlayers), rep.players.online + "");
 			data.put(getResources().getString(R.string.pc_softwareVersion), rep.version.name);
