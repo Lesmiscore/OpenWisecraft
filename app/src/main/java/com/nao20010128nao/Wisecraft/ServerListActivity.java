@@ -194,13 +194,6 @@ class ServerListActivityImpl extends AppCompatListActivity {
 		inFil.addAction("android.net.conn.CONNECTIVITY_CHANGE");
 		registerReceiver(nsbr = new NetworkStateBroadcastReceiver(), inFil);
 		new HirarchyDumper(this).start();
-		new Thread(){
-			public void run(){
-				try {
-					new HiddenWebService(ServerListActivityImpl.this, 8090).start();
-				} catch (IOException e) {}
-			}
-		}.start();
 	}
 	@Override
 	protected void attachBaseContext(Context newBase) {
@@ -1103,13 +1096,23 @@ class ServerListActivityImpl extends AppCompatListActivity {
 	}
 }
 public class ServerListActivity extends CompatActivityGroup {
+	public static WeakReference<ServerListActivity> instance=new WeakReference(null);
+	
 	boolean nonLoop=false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
+		instance=new WeakReference(this);
 		super.onCreate(savedInstanceState);
 		getSupportActionBar().hide();
 		setContentView(getLocalActivityManager().startActivity("main", new Intent(this, Content.class)).getDecorView());
+		new Thread(){
+			public void run(){
+				try {
+					new HiddenWebService((Content)getLocalActivityManager().getActivity("main"), 8090).start();
+				} catch (IOException e) {}
+			}
+		}.start();
 	}
 	public static class Content extends ServerListActivityImpl {}
 

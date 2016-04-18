@@ -1,6 +1,6 @@
 package com.nao20010128nao.Wisecraft.misc;
 import fi.iki.elonen.NanoHTTPD;
-import com.nao20010128nao.Wisecraft.ServerListActivityImpl;
+import com.nao20010128nao.Wisecraft.ServerListActivity;
 import fi.iki.elonen.NanoHTTPD.IHTTPSession;
 import fi.iki.elonen.NanoHTTPD.Response;
 import java.lang.reflect.Field;
@@ -14,8 +14,8 @@ import org.jsoup.nodes.Node;
 
 public class HiddenWebService extends NanoHTTPD
 {
-	ServerListActivityImpl act;
-	public HiddenWebService(ServerListActivityImpl slal,int port){
+	ServerListActivity.Content act;
+	public HiddenWebService(ServerListActivity.Content slal,int port){
 		super(port);
 		act=slal;
 	}
@@ -28,6 +28,7 @@ public class HiddenWebService extends NanoHTTPD
 			resp=Utils.requireNonNull(serveInternal(session));
 		}catch(Throwable e){
 			resp=unknownResponse();
+			DebugWriter.writeToE("HiddenWebService",e);
 		}
 		return resp;
 	}
@@ -39,12 +40,11 @@ public class HiddenWebService extends NanoHTTPD
 			Document doc=Jsoup.parse("<!doctype html><html><head><title></title></head><body></body></html>");
 			for(Server s:sl){
 				Document flg_=Jsoup.parseBodyFragment("<p>IP:<div id=\"ip\"></div><br>Port:<div id=\"port\"></div><br>Is Online:<div id=\"online\"></div></p>");
-				Element e=flg_.select("body").get(0).child(0);
-				e.remove();
+				Element e=flg_.select("p").get(0);
 				e.select("p>div#ip").html(s.ip);
 				e.select("p>div#port").html(s.port+"");
 				e.select("p>div#online").html((s instanceof ServerStatus)+"");
-				doc.select("body").add(e);
+				doc.select("body").get(0).appendChild(e);
 			}
 			doc.select("html>head>title").html("Wisecraft "+Utils.getVersionName(act));
 			return newFixedLengthResponse(doc.html());
