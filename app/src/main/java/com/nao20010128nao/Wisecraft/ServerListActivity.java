@@ -1106,6 +1106,7 @@ public class ServerListActivity extends CompatActivityGroup {
 		super.onCreate(savedInstanceState);
 		getSupportActionBar().hide();
 		setContentView(getLocalActivityManager().startActivity("main", new Intent(this, Content.class)).getDecorView());
+		/*
 		new Thread(){
 			public void run(){
 				try {
@@ -1113,6 +1114,7 @@ public class ServerListActivity extends CompatActivityGroup {
 				} catch (IOException e) {}
 			}
 		}.start();
+		*/
 	}
 	public static class Content extends ServerListActivityImpl {}
 
