@@ -13,6 +13,9 @@ import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 import android.util.Log;
 import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.StringWriter;
 
 public class HiddenWebService extends NanoHTTPD
 {
@@ -39,17 +42,17 @@ public class HiddenWebService extends NanoHTTPD
 		// TODO: Implement this method
 		if(session.getUri().equals("/")){
 			List<Server> sl=act.getServers();
-			Document doc=Jsoup.parse("<!doctype html><html><head><title></title></head><body></body></html>");
+			Document doc=Jsoup.parse(readAsset("webserver/base.html"));
 			Element body=doc.select("body").get(0);
 			{
-				Element flg=Jsoup.parseBodyFragment("<div id=\"parent\"></div>").select("div#parent").get(0);
+				Element flg=Jsoup.parseBodyFragment(readAsset("webserver/flg_link.html")).select("div#parent").get(0);
 				flg.appendElement("a").attr("href","/exit").text("Exit");
 				flg.appendElement("a").attr("href","/update").text("Update All");
 				body.appendChild(flg);
 			}
 			body.appendElement("hr");
 			for(Server s:sl){
-				Document flg_=Jsoup.parseBodyFragment("<div id=\"parent\">IP:<div id=\"ip\"></div><br>Port:<div id=\"port\"></div><br>Is Online:<div id=\"online\"></div></div>");
+				Document flg_=Jsoup.parseBodyFragment(readAsset("webserver/flg_server.html"));
 				Element e=flg_.select("div#parent").get(0);
 				e.select("div#parent>div#ip").html(s.ip);
 				e.select("div#parent>div#port").html(s.port+"");
@@ -61,7 +64,7 @@ public class HiddenWebService extends NanoHTTPD
 		}
 		if(session.getUri().equalsIgnoreCase("/exit")){
 			try {
-				Document doc=Jsoup.parse("<!doctype html><html><head><title></title></head><body></body></html>");
+				Document doc=Jsoup.parse(readAsset("webserver/base.html"));
 				doc.select("html>head>title").html("Wisecraft " + Utils.getVersionName(act));
 				doc.select("body").get(0).appendElement("p").text("Exiting application...");
 				return newFixedLengthResponse(doc.html());
@@ -71,7 +74,7 @@ public class HiddenWebService extends NanoHTTPD
 		}
 		if(session.getUri().equalsIgnoreCase("/update")){
 			try {
-				Document doc=Jsoup.parse("<!doctype html><html><head><title></title></head><body></body></html>");
+				Document doc=Jsoup.parse(readAsset("webserver/base.html"));
 				doc.select("html>head>title").html("Wisecraft " + Utils.getVersionName(act));
 				doc.select("body").get(0).appendElement("p").text("Updating statuses...");
 				return newFixedLengthResponse(doc.html());
@@ -98,5 +101,16 @@ public class HiddenWebService extends NanoHTTPD
 		} catch (Throwable e) {
 			return null;
 		}
+	}
+	
+	
+	private String readAsset(String s)throws IOException{
+		BufferedReader br=new BufferedReader(new InputStreamReader(act.getAssets().open(s)));
+		StringWriter sw=new StringWriter();
+		char[] buf=new char[128];
+		int r=0;
+		while((r=br.read(buf))<=0)sw.write(buf,0,r);
+		br.close();
+		return sw.toString();
 	}
 }
