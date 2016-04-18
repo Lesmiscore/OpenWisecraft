@@ -568,14 +568,6 @@ class ServerListActivityImpl extends AppCompatListActivity {
 
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {
-			// TODO: Implement this method
-			/*if (cached.size() > position) {
-				View v=cached.get(position);
-				if (v != null) {
-					return v;
-				}
-			}*/
-			//if(convertView!=null)return convertView;
 			while (cached.size() <= position)
 				cached.addAll(Constant.TEN_LENGTH_NULL_LIST);
 			View layout;
