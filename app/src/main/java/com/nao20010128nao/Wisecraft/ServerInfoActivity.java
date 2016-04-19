@@ -67,6 +67,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
+		getWindow().requestFeature(Window.FEATURE_ACTION_MODE_OVERLAY);
 		instance = new WeakReference(this);
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -270,8 +271,11 @@ public class ServerInfoActivity extends ActionBarActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO: Implement this method
-		if (!nonUpd)
+		if (!nonUpd){
 			updateBtn=menu.add(Menu.NONE, 0, 0, R.string.update);
+			updateBtn.setIcon(R.drawable.ic_menu_refresh);
+			updateBtn.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+		}
 		//menu.add(Menu.NONE, 0, 1, "メニュー2");
 
 		return true;
