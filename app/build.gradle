@@ -38,5 +38,4 @@ dependencies {
 	compile 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
 	compile project(':compat')
 	compile files('libs/otc.jar')
-	compile project(':IconicDroid')
 }
