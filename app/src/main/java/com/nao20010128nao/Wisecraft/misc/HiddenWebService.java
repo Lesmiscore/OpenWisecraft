@@ -16,10 +16,15 @@ import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
+import java.util.Map;
+import com.nao20010128nao.Wisecraft.provider.MultiServerPingProvider;
+import java.util.HashMap;
+import com.nao20010128nao.Wisecraft.R;
 
 public class HiddenWebService extends NanoHTTPD
 {
 	ServerListActivity.Content act;
+	Map<String,MultiServerPingProvider> serverFinderInstanes=new HashMap<>();
 	public HiddenWebService(ServerListActivity.Content slal,int port){
 		super(port);
 		act=slal;
@@ -45,9 +50,10 @@ public class HiddenWebService extends NanoHTTPD
 			Document doc=Jsoup.parse(readAsset("webserver/base.html"));
 			Element body=doc.select("body").get(0);
 			{
-				Element flg=Jsoup.parseBodyFragment(readAsset("webserver/flg_link.html")).select("div#parent").get(0);
-				flg.appendElement("a").attr("href","/exit").text("Exit");
-				flg.appendElement("a").attr("href","/update").text("Update All");
+				Element flg=Jsoup.parseBodyFragment(readAsset("webserver/flg_link.html")).select("div").get(0);
+				flg.appendElement("a").attr("href","/add").text(act.getResources().getString(R.string.add));
+				flg.appendElement("a").attr("href","/exit").text(act.getResources().getString(R.string.exit));
+				flg.appendElement("a").attr("href","/update").text(act.getResources().getString(R.string.update_all));
 				body.appendChild(flg);
 			}
 			body.appendElement("hr");
@@ -77,10 +83,47 @@ public class HiddenWebService extends NanoHTTPD
 				Document doc=Jsoup.parse(readAsset("webserver/base.html"));
 				doc.select("html>head>title").html("Wisecraft " + Utils.getVersionName(act));
 				doc.select("body").get(0).appendElement("p").text("Updating statuses...");
-				return newFixedLengthResponse(doc.html());
+				Response r= newFixedLengthResponse(getStatus("Moved"),"text/html",doc.html());
+				r.addHeader("Location","/");
+				return r;
 			} finally {
 				act.runOnUiThread(new Runnable(){public void run(){act.execOption(2);}});
 			}
+		}
+		if(session.getUri().equalsIgnoreCase("/add")){
+			Document doc=Jsoup.parse(readAsset("webserver/base.html"));
+			doc.select("html>head>title").html("Wisecraft " + Utils.getVersionName(act));
+			Element form=doc.select("body").get(0).appendElement("form");
+			form.attr("action", "/add_exec");
+			{
+				Element ip=form.appendElement("input");
+				ip.attr("type", "text");
+				ip.attr("name", "ip");
+				ip.attr("id", "ip");
+				ip.attr("value", "localhost");
+			}
+			{
+				Element port=form.appendElement("input");
+				port.attr("type", "number");
+				port.attr("name", "port");
+				port.attr("id", "port");
+				port.attr("value", "19132");
+			}
+			{
+				Element ispc=form.appendElement("input");
+				ispc.attr("type", "checkbox");
+				ispc.attr("name", "ispc");
+				ispc.attr("id", "ispc");
+				ispc.attr("value", "false");
+			}
+			{
+				Element submit=form.appendElement("input");
+				submit.attr("type", "submit");
+				submit.attr("name", "ip");
+				submit.attr("id", "ip");
+				submit.attr("value", "Add");
+			}
+			return newFixedLengthResponse(doc.html());
 		}
 		return unknownResponse();
 	}
