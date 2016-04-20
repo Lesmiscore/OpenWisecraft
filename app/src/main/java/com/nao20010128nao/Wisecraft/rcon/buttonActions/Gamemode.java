@@ -1,10 +1,10 @@
 package com.nao20010128nao.Wisecraft.rcon.buttonActions;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.util.Log;
-import com.nao20010128nao.Wisecraft.misc.rcon.AuthenticationException;
 import com.nao20010128nao.Wisecraft.R;
+import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
+import com.nao20010128nao.Wisecraft.misc.rcon.AuthenticationException;
 import com.nao20010128nao.Wisecraft.rcon.RCONActivity;
 import java.io.IOException;
 
@@ -26,7 +26,7 @@ public class Gamemode extends NameSelectAction {
 			onClick(null);
 			return;
 		}
-		new AlertDialog.Builder(this)
+		new AppCompatAlertDialog.Builder(this)
 			.setMessage(getResString(R.string.gamemodeAsk).replace("[PLAYER]", player).replace("[MODE]", s))
 			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 				public void onClick(DialogInterface di, int w) {

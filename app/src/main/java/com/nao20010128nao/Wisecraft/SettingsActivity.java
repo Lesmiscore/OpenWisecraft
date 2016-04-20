@@ -2,11 +2,11 @@ package com.nao20010128nao.Wisecraft;
 import android.content.*;
 import java.util.*;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 import com.nao20010128nao.ToolBox.HandledPreference;
+import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
 import com.nao20010128nao.Wisecraft.misc.compat.CompatSHablePreferenceActivity;
 import java.lang.reflect.Field;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -65,7 +65,7 @@ public class SettingsActivity extends CompatSHablePreferenceActivity {
 			addPreferencesFromResource(R.xml.settings_basic);
 			sH("serverListStyle", new HandledPreference.OnClickListener(){
 					public void onClick(String a, String b, String c) {
-						new AlertDialog.Builder(Basics.this)
+						new AppCompatAlertDialog.Builder(Basics.this)
 							.setTitle(R.string.serverListStyle)
 							.setSingleChoiceItems(getResources().getStringArray(R.array.serverListStyles),pref.getInt("main_style",0),new DialogInterface.OnClickListener(){
 								public void onClick(DialogInterface di,int w){
@@ -90,7 +90,7 @@ public class SettingsActivity extends CompatSHablePreferenceActivity {
 						String[] choice=getFontChoices();
 						String[] display=TheApplication.instance.getDisplayFontNames(choice);
 						final List<String> choiceList=Arrays.<String>asList(choice);
-						new AlertDialog.Builder(Basics.this)
+						new AppCompatAlertDialog.Builder(Basics.this)
 							.setSingleChoiceItems(display, choiceList.indexOf(TheApplication.instance.getFontFieldName())
 							, new DialogInterface.OnClickListener(){
 								public void onClick(DialogInterface di, int w) {

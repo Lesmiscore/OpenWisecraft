@@ -1,15 +1,15 @@
 package com.nao20010128nao.Wisecraft.rcon.buttonActions;
 import android.widget.*;
 
-import android.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import com.nao20010128nao.Wisecraft.R;
+import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
 import com.nao20010128nao.Wisecraft.rcon.RCONActivity;
 
 public class Me extends BaseAction {
 	EditText cmd;
-	AlertDialog dialog;
+	AppCompatAlertDialog dialog;
 	public Me(RCONActivity r) {
 		super(r);
 	}
@@ -17,7 +17,7 @@ public class Me extends BaseAction {
 	@Override
 	public void onClick(View p1) {
 		// TODO: Implement this method
-		dialog = new AlertDialog.Builder(this)
+		dialog = (AppCompatAlertDialog)new AppCompatAlertDialog.Builder(this)
 			.setView(inflateDialogView())
 			.show();
 	}

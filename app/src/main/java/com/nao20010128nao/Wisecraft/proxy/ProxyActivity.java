@@ -1,6 +1,5 @@
 package com.nao20010128nao.Wisecraft.proxy;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -10,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.nao20010128nao.MCProxy.MultipleUdpConnectionProxy;
 import com.nao20010128nao.Wisecraft.R;
+import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ProxyActivity extends Activity {
@@ -43,15 +43,15 @@ public class ProxyActivity extends Activity {
 	}
 
 	public void dialog1() {
-		new AlertDialog.Builder(this)
+		new AppCompatAlertDialog.Builder(this)
 			.setMessage(R.string.proxy_attention_1)
 			.setCancelable(false)
-			.setPositiveButton(R.string.next, new AlertDialog.OnClickListener(){
+			.setPositiveButton(R.string.next, new AppCompatAlertDialog.OnClickListener(){
 				public void onClick(DialogInterface di, int w) {
 					dialog2();
 				}
 			})
-			.setNegativeButton(R.string.close, new AlertDialog.OnClickListener(){
+			.setNegativeButton(R.string.close, new AppCompatAlertDialog.OnClickListener(){
 				public void onClick(DialogInterface di, int w) {
 					finish();
 				}
@@ -61,15 +61,15 @@ public class ProxyActivity extends Activity {
 	}
 
 	public void dialog2() {
-		new AlertDialog.Builder(this)
+		new AppCompatAlertDialog.Builder(this)
 			.setMessage(R.string.proxy_attention_2)
 			.setCancelable(false)
-			.setPositiveButton(R.string.next, new AlertDialog.OnClickListener(){
+			.setPositiveButton(R.string.next, new AppCompatAlertDialog.OnClickListener(){
 				public void onClick(DialogInterface di, int w) {
 					start();
 				}
 			})
-			.setNegativeButton(R.string.close, new AlertDialog.OnClickListener(){
+			.setNegativeButton(R.string.close, new AppCompatAlertDialog.OnClickListener(){
 				public void onClick(DialogInterface di, int w) {
 					finish();
 				}

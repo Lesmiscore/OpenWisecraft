@@ -1,12 +1,12 @@
 package com.nao20010128nao.Wisecraft.rcon.buttonActions;
-import android.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import com.nao20010128nao.Wisecraft.misc.rcon.AuthenticationException;
 import com.nao20010128nao.Wisecraft.Constant;
 import com.nao20010128nao.Wisecraft.R;
+import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
+import com.nao20010128nao.Wisecraft.misc.rcon.AuthenticationException;
 import com.nao20010128nao.Wisecraft.rcon.RCONActivity;
 import java.io.IOException;
 
@@ -20,7 +20,7 @@ public class Tell extends NameSelectAction {
 	/*      |             ,           |*/
 
 	Button executeButton;
-	AlertDialog dialog;
+	AppCompatAlertDialog dialog;
 
 	String[] list;
 	String hint;
@@ -33,7 +33,7 @@ public class Tell extends NameSelectAction {
 	@Override
 	public void onClick(View p1) {
 		// TODO: Implement this method
-		dialog = new AlertDialog.Builder(this)
+		dialog = (AppCompatAlertDialog)new AppCompatAlertDialog.Builder(this)
 			.setView(inflateDialogView())
 			.show();
 	}
@@ -89,7 +89,7 @@ public class Tell extends NameSelectAction {
 		executeButton.setOnClickListener(new View.OnClickListener(){
 				public void onClick(View v) {
 					if (isNullString(player) || isNullString(item)) {
-						AlertDialog.Builder b=new AlertDialog.Builder(Tell.this);
+						AppCompatAlertDialog.Builder b=new AppCompatAlertDialog.Builder(Tell.this);
 						String mes="";
 						if (isNullString(player)) {
 							mes += getResString(R.string.giveSelectPlayer) + "\n";

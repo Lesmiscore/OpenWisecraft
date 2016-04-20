@@ -15,6 +15,7 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewCompat;
 import android.util.DisplayMetrics;
+import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
 import com.nao20010128nao.Wisecraft.misc.compat.AppCompatListActivity;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.Reply;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.Reply19;
@@ -40,7 +41,7 @@ public class ServerFinder extends AppCompatListActivity {
 		getListView().setOnItemClickListener(sl);
 		ip = getIntent().getStringExtra("ip");
 		isPC = getIntent().getBooleanExtra("ispc", false);
-		new AlertDialog.Builder(this)
+		new AppCompatAlertDialog.Builder(this)
 			.setTitle(R.string.serverFinder)
 			.setView(dialog = getLayoutInflater().inflate(R.layout.server_finder_start, null, false))
 			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){

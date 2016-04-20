@@ -4,16 +4,16 @@ import android.widget.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import java.util.*;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
+import com.nao20010128nao.Wisecraft.misc.compat.AppCompatListActivity;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.Reply;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.Reply19;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.FullStat;
-import com.nao20010128nao.Wisecraft.misc.compat.AppCompatListActivity;
 import com.nao20010128nao.Wisecraft.pingEngine.UnconnectedPing;
 import com.nao20010128nao.Wisecraft.provider.NormalServerPingProvider;
 import com.nao20010128nao.Wisecraft.provider.ServerPingProvider;
@@ -51,7 +51,7 @@ public class ServerTestActivity extends AppCompatListActivity {
 		ip = getIntent().getStringExtra("ip");
 		port = getIntent().getIntExtra("port", -1);
 		isPC = getIntent().getBooleanExtra("ispc", false);
-		new AlertDialog.Builder(this)
+		new AppCompatAlertDialog.Builder(this)
 			.setTitle(R.string.testServer)
 			.setView(dialog = getLayoutInflater().inflate(R.layout.test_server_dialog, null, false))
 			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){

@@ -33,6 +33,7 @@ import java.lang.ref.WeakReference;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
 
 class ServerListActivityImpl extends AppCompatListActivity {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
@@ -313,7 +314,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 						}
 					});
 
-				new AlertDialog.Builder(this).
+				new AppCompatAlertDialog.Builder(this).
 					setView(dialog).
 					setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener(){
 						public void onClick(DialogInterface d, int sel) {
@@ -419,7 +420,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 				final EditText et_=new EditText(this);
 				et_.setTypeface(TheApplication.instance.getLocalizedFont());
 				et_.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/servers.json").toString());
-				new AlertDialog.Builder(this)
+				new AppCompatAlertDialog.Builder(this)
 					.setTitle(R.string.export_typepath)
 					.setView(et_)
 					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
@@ -453,7 +454,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 				final EditText et=new EditText(this);
 				et.setTypeface(TheApplication.instance.getLocalizedFont());
 				et.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/servers.json").toString());
-				new AlertDialog.Builder(this)
+				new AppCompatAlertDialog.Builder(this)
 					.setTitle(R.string.import_typepath)
 					.setView(et)
 					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
@@ -630,13 +631,13 @@ class ServerListActivityImpl extends AppCompatListActivity {
 		public boolean onItemLongClick(AdapterView<?> p1, View p2, final int p3, long p4) {
 			// TODO: Implement this method
 			sla.clicked = p3;
-			Dialog d=new AlertDialog.Builder(sla)
+			Dialog d=new AppCompatAlertDialog.Builder(sla)
 				.setItems(generateSubMenu(getItem(p3).isPC), new DialogInterface.OnClickListener(){
 					public void onClick(DialogInterface di, int which) {
 						List<Runnable> executes=new ArrayList<>();
 						executes.add(0, new Runnable(){
 								public void run() {
-									new AlertDialog.Builder(sla)
+									new AppCompatAlertDialog.Builder(sla)
 										.setMessage(R.string.auSure)
 										.setNegativeButton(android.R.string.yes, new DialogInterface.OnClickListener(){
 											public void onClick(DialogInterface di, int i) {
@@ -721,7 +722,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 											}
 										});
 
-									new AlertDialog.Builder(sla).
+									new AppCompatAlertDialog.Builder(sla).
 										setView(dialog).
 										setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener(){
 											public void onClick(DialogInterface d, int sel) {

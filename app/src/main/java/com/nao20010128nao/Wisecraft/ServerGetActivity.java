@@ -1,7 +1,6 @@
 package com.nao20010128nao.Wisecraft;
 import java.util.*;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import com.nao20010128nao.McServerList.ServerAddressFetcher;
+import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
 import com.nao20010128nao.Wisecraft.misc.compat.CompatWebViewActivity;
 import java.net.URL;
 
@@ -22,7 +22,7 @@ public class ServerGetActivity extends CompatWebViewActivity {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		serverList=createServerListDomains();
-		new AlertDialog.Builder(this)
+		new AppCompatAlertDialog.Builder(this)
 			.setSingleChoiceItems(serverList, -1, new DialogInterface.OnClickListener(){
 				public void onClick(DialogInterface di, int w) {
 					di.dismiss();
@@ -76,7 +76,7 @@ public class ServerGetActivity extends CompatWebViewActivity {
 							for (int i=0;i < servSel.length;i++) {
 								servSel[i] = serv.get(i).toString();
 							}
-							new AlertDialog.Builder(ServerGetActivity.this)
+							new AppCompatAlertDialog.Builder(ServerGetActivity.this)
 								.setTitle(R.string.selectServers)
 								.setMultiChoiceItems(servSel, selections = new boolean[servSel.length], new DialogInterface.OnMultiChoiceClickListener(){
 									public void onClick(DialogInterface di, int w, boolean c) {
@@ -102,7 +102,7 @@ public class ServerGetActivity extends CompatWebViewActivity {
 								dialogMsg = getResources().getString(R.string.msl_unsupportedWebpage) + url;
 							}
 
-							new AlertDialog.Builder(ServerGetActivity.this)
+							new AppCompatAlertDialog.Builder(ServerGetActivity.this)
 								.setTitle(R.string.error)
 								.setMessage(dialogMsg)
 								.setPositiveButton(android.R.string.ok, Constant.BLANK_DIALOG_CLICK_LISTENER)

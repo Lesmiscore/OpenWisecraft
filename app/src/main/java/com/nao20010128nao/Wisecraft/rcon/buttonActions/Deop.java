@@ -1,8 +1,8 @@
 package com.nao20010128nao.Wisecraft.rcon.buttonActions;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import com.nao20010128nao.Wisecraft.Constant;
 import com.nao20010128nao.Wisecraft.R;
+import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
 import com.nao20010128nao.Wisecraft.rcon.RCONActivity;
 
 public class Deop extends NameSelectAction {
@@ -13,7 +13,7 @@ public class Deop extends NameSelectAction {
 	@Override
 	public void onSelected(final String s) {
 		// TODO: Implement this method
-		new AlertDialog.Builder(this)
+		new AppCompatAlertDialog.Builder(this)
 			.setMessage(getResString(R.string.deprivateOpAsk).replace("[PLAYER]", s))
 			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 				public void onClick(DialogInterface di, int w) {

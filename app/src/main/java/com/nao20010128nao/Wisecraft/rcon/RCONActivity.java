@@ -6,7 +6,6 @@ import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.rcon.buttonActions.*;
 import java.util.*;
 
-import android.app.AlertDialog;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,6 +13,7 @@ import android.support.v4.app.FragmentTabHost;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import com.nao20010128nao.Wisecraft.R;
+import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
 import com.nao20010128nao.Wisecraft.misc.rcon.IncorrectRequestIdException;
 import com.nao20010128nao.Wisecraft.misc.rcon.RCon;
 import java.io.IOException;
@@ -260,7 +260,7 @@ public class RCONActivity extends AppCompatActivity {
 			super(RCONActivity.this);
 		}
 		public void askPassword() {
-			new AlertDialog.Builder(this)
+			new AppCompatAlertDialog.Builder(this)
 				.setView(inflateDialogView())
 				.setCancelable(false)
 				.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){

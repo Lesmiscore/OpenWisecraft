@@ -1,14 +1,14 @@
 package com.nao20010128nao.Wisecraft.rcon.buttonActions;
 import android.widget.*;
 
-import android.app.AlertDialog;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
-import com.nao20010128nao.Wisecraft.misc.rcon.AuthenticationException;
 import com.nao20010128nao.Wisecraft.R;
 import com.nao20010128nao.Wisecraft.misc.DebugWriter;
+import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
 import com.nao20010128nao.Wisecraft.misc.compat.CompatArrayAdapter;
+import com.nao20010128nao.Wisecraft.misc.rcon.AuthenticationException;
 import com.nao20010128nao.Wisecraft.rcon.RCONActivity;
 import java.io.IOException;
 
@@ -16,7 +16,7 @@ public abstract class NameSelectAction extends BaseAction {
 	EditText name;
 	ListView online;
 	Button submit;
-	AlertDialog dialog;
+	AppCompatAlertDialog dialog;
 	public NameSelectAction(RCONActivity act) {
 		super(act);
 	}
@@ -24,7 +24,7 @@ public abstract class NameSelectAction extends BaseAction {
 	@Override
 	public void onClick(View p1) {
 		// TODO: Implement this method
-		dialog = new AlertDialog.Builder(this)
+		dialog = (AppCompatAlertDialog)new AppCompatAlertDialog.Builder(this)
 			.setView(inflatePlayersView())
 			.show();
 	}

@@ -2,10 +2,10 @@ package com.nao20010128nao.Wisecraft.api;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
 import com.nao20010128nao.Wisecraft.provider.NormalServerPingProvider;
 import com.nao20010128nao.Wisecraft.provider.ServerPingProvider;
 
@@ -68,7 +68,7 @@ public class RequestedServerInfoActivity extends ApiBaseActivity {
 		}
 		public void onPingFailed(Server s) {
 			wd.hideWorkingDialog();
-			new AlertDialog.Builder(wd)
+			new AppCompatAlertDialog.Builder(wd)
 				.setMessage(R.string.serverOffline)
 				.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 					public void onClick(DialogInterface di, int t) {

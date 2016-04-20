@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import com.nao20010128nao.Wisecraft.Constant;
 import com.nao20010128nao.Wisecraft.R;
 import com.nao20010128nao.Wisecraft.rcon.RCONActivity;
+import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
 
 public class Kill extends NameSelectAction {
 	public Kill(RCONActivity a) {
@@ -13,7 +14,7 @@ public class Kill extends NameSelectAction {
 	@Override
 	public void onSelected(final String s) {
 		// TODO: Implement this method
-		new AlertDialog.Builder(this)
+		new AppCompatAlertDialog.Builder(this)
 			.setMessage(getResString(R.string.killAsk).replace("[PLAYER]", s))
 			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 				public void onClick(DialogInterface di, int w) {
