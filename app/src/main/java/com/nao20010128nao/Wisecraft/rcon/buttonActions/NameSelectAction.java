@@ -33,7 +33,7 @@ public abstract class NameSelectAction extends BaseAction {
 		online = (ListView)v.findViewById(R.id.players);
 		name = (EditText)v.findViewById(R.id.playerName);
 		submit = (Button)v.findViewById(R.id.ok);
-		final ArrayAdapter aa=new ArrayAdapter(this, android.R.layout.simple_list_item_1);
+		final ArrayAdapter<String> aa=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
 		online.setAdapter(aa);
 		online.setOnItemClickListener(new ListView.OnItemClickListener(){
 				public void onItemClick(AdapterView a, View v, int o, long i) {
