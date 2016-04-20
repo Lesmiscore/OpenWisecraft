@@ -33,6 +33,7 @@ import java.lang.ref.WeakReference;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import android.support.v7.widget.AppCompatEditText;
 
 class ServerListActivityImpl extends AppCompatListActivity {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
@@ -416,7 +417,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 				}.start();
 				break;
 			case 3:
-				final EditText et_=new EditText(this);
+				final AppCompatEditText et_=new AppCompatEditText(this);
 				et_.setTypeface(TheApplication.instance.getLocalizedFont());
 				et_.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/servers.json").toString());
 				new AppCompatAlertDialog.Builder(this)
@@ -450,7 +451,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 					.show();
 				break;
 			case 4:
-				final EditText et=new EditText(this);
+				final AppCompatEditText et=new AppCompatEditText(this);
 				et.setTypeface(TheApplication.instance.getLocalizedFont());
 				et.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/servers.json").toString());
 				new AppCompatAlertDialog.Builder(this)
