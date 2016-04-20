@@ -33,6 +33,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
 import com.nao20010128nao.Wisecraft.misc.view.ExtendedImageView;
+import com.nao20010128nao.Wisecraft.misc.contextwrappers.colored_text.ColoredTextViewsContextWrapper;
 
 class ServerListActivityImpl extends AppCompatListActivity {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
@@ -1091,7 +1092,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 		}
 		@Override
 		protected void attachBaseContext(Context newBase) {
-			super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+			super.attachBaseContext(ColoredTextViewsContextWrapper.wrap(CalligraphyContextWrapper.wrap(newBase),getResources().getColor(R.color.upd_2)));
 		}
 		class PrefHandler implements HandledPreference.OnClickListener {
 			@Override
