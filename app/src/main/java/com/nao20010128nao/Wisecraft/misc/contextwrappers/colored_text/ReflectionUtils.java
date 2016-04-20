@@ -54,7 +54,7 @@ class ReflectionUtils {
         try {
             if (method == null) return;
             method.invoke(object, args);
-        } catch (IllegalAccessException | InvocationTargetException e) {
+        } catch (Throwable e) {
             Log.d(TAG, "Can't invoke method using reflection", e);
         }
     }

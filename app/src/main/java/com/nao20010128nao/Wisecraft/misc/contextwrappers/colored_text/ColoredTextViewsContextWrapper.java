@@ -9,11 +9,10 @@ import android.os.Build;
 import android.util.AttributeSet;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import android.app.Activity;
 
 public class ColoredTextViewsContextWrapper extends ContextWrapper
 {
-	CalligraphyFactory mCalligraphyFactory;
-	
 	int textColor;
 	public static ColoredTextViewsContextWrapper wrap(Context ctz,int color){
 		return new ColoredTextViewsContextWrapper(ctz,color);
@@ -27,7 +26,7 @@ public class ColoredTextViewsContextWrapper extends ContextWrapper
 	public Object getSystemService(String name) {
 		// TODO: Implement this method
 		if(LAYOUT_INFLATER_SERVICE.equals(name)){
-			return new CalligraphyLayoutInflater(this,0,textColor);
+			return new CalligraphyLayoutInflater((LayoutInflater)super.getSystemService(LAYOUT_INFLATER_SERVICE),this,0,false,textColor);
 		}
 		return super.getSystemService(name);
 	}
