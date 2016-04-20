@@ -3,9 +3,9 @@ import com.nao20010128nao.Wisecraft.misc.*;
 import java.util.*;
 
 import android.util.Log;
+import com.nao20010128nao.Wisecraft.Utils;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.PCQuery;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.PEQuery;
-import com.nao20010128nao.Wisecraft.Utils;
 import com.nao20010128nao.Wisecraft.pingEngine.UnconnectedPing;
 import java.io.IOException;
 

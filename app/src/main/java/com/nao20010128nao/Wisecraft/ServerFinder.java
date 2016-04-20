@@ -1,5 +1,4 @@
 package com.nao20010128nao.Wisecraft;
-import android.support.v4.view.ViewCompat;
 import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.misc.*;
@@ -14,10 +13,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.ViewCompat;
 import android.util.DisplayMetrics;
+import com.nao20010128nao.Wisecraft.misc.compat.AppCompatListActivity;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.Reply;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.Reply19;
-import com.nao20010128nao.Wisecraft.misc.compat.AppCompatListActivity;
 import com.nao20010128nao.Wisecraft.pingEngine.UnconnectedPing;
 import java.util.ArrayList;
 import java.util.List;
