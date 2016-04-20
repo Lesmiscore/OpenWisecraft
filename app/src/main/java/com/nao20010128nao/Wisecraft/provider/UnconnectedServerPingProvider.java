@@ -46,36 +46,40 @@ public class UnconnectedServerPingProvider implements ServerPingProvider
 			// TODO: Implement this method
 			Map.Entry<Server,PingHandler> now=null;
 			while (!(queue.isEmpty()|isInterrupted())) {
-				Log.d("UPP", "Starting ping");
-				now = queue.poll();
-				ServerStatus stat=new ServerStatus();
-				stat.ip = now.getKey().ip;
-				stat.port = now.getKey().port;
-				stat.isPC = now.getKey().isPC;
-				Log.d("UPP", stat.ip + ":" + stat.port + " " + stat.isPC);
-				if (now.getKey().isPC) {
-					try{
-						now.getValue().onPingFailed(now.getKey());
-					}catch(Throwable h){
-
-					}
-					continue;
-				} else {
-					try {
-						UnconnectedPing.UnconnectedPingResult res=UnconnectedPing.doPing(stat.ip, stat.port);
-						stat.response = res;
-						stat.ping=res.getLatestPingElapsed();
-						Log.d("UPP", "Success: Unconnected Ping");
-					} catch (IOException e) {
-						Log.d("UPP", "Failed");
-						now.getValue().onPingFailed(now.getKey());
-						continue;
-					}
-				}
 				try {
-					now.getValue().onPingArrives(stat);
-				} catch (Throwable f) {
+					Log.d("UPP", "Starting ping");
+					now = queue.poll();
+					ServerStatus stat=new ServerStatus();
+					stat.ip = now.getKey().ip;
+					stat.port = now.getKey().port;
+					stat.isPC = now.getKey().isPC;
+					Log.d("UPP", stat.ip + ":" + stat.port + " " + stat.isPC);
+					if (now.getKey().isPC) {
+                        try{
+                            now.getValue().onPingFailed(now.getKey());
+                        }catch(Throwable h){
 
+                        }
+                        continue;
+                    } else {
+                        try {
+                            UnconnectedPing.UnconnectedPingResult res=UnconnectedPing.doPing(stat.ip, stat.port);
+                            stat.response = res;
+                            stat.ping=res.getLatestPingElapsed();
+                            Log.d("UPP", "Success: Unconnected Ping");
+                        } catch (IOException e) {
+                            Log.d("UPP", "Failed");
+                            now.getValue().onPingFailed(now.getKey());
+                            continue;
+                        }
+                    }
+					try {
+                        now.getValue().onPingArrives(stat);
+                    } catch (Throwable f) {
+
+                    }
+				} catch (Throwable e) {
+					e.printStackTrace();
 				}
 				Log.d("UPP", "Next");
 			}

@@ -46,68 +46,72 @@ public class NormalServerPingProvider implements ServerPingProvider {
 			Map.Entry<Server,PingHandler> now=null;
 			while (!(queue.isEmpty()|isInterrupted())) {
 				Log.d("NSPP", "Starting ping");
-				now = queue.poll();
-				ServerStatus stat=new ServerStatus();
-				stat.ip = now.getKey().ip;
-				stat.port = now.getKey().port;
-				stat.isPC = now.getKey().isPC;
-				Log.d("NSPP", stat.ip + ":" + stat.port + " " + stat.isPC);
-				if (now.getKey().isPC) {
-					Log.d("NSPP", "PC");
-					PCQuery query=new PCQuery(stat.ip, stat.port);
-					try {
-						stat.response = query.fetchReply();
-						Log.d("NSPP", "Success");
-					} catch (IOException e) {
-						DebugWriter.writeToE("NSPP",e);
-						Log.d("NSPP", "Failed");
-						try {
-							now.getValue().onPingFailed(now.getKey());
-						} catch (Throwable ex) {
-
-						}
-						continue;
-					}
-					stat.ping = query.getLatestPingElapsed();
-				} else {
-					Log.d("NSPP", "PE");
-					PEQuery query=new PEQuery(stat.ip, stat.port);
-					try {
-						stat.response = query.fullStat();
-						Log.d("NSPP", "Success: Full Stat");
-						try {
-							UnconnectedPing.UnconnectedPingResult res=UnconnectedPing.doPing(stat.ip, stat.port);
-							SprPair pair=new SprPair();
-							pair.setA(stat.response);
-							pair.setB(res);
-							stat.response = pair;
-							Log.d("NSPP", "Success: Full Stat & Unconnected Ping");
-						} catch (IOException e) {
-							Log.d("NSPP", "Success: Full Stat");
-						}
-						stat.ping = query.getLatestPingElapsed();
-					} catch (Throwable e) {
-						DebugWriter.writeToE("NSPP",e);
-						try {
-							UnconnectedPing.UnconnectedPingResult res=UnconnectedPing.doPing(stat.ip, stat.port);
-							stat.response = res;
-							stat.ping = res.getLatestPingElapsed();
-							Log.d("NSPP", "Success: Unconnected Ping");
-						} catch (IOException ex) {
-							try {
-								now.getValue().onPingFailed(now.getKey());
-							} catch (Throwable ex_) {
-
-							}
-							Log.d("NSPP", "Failed");
-							continue;
-						}
-					}
-				}
 				try {
-					now.getValue().onPingArrives(stat);
-				} catch (Throwable f) {
+					now = queue.poll();
+					ServerStatus stat=new ServerStatus();
+					stat.ip = now.getKey().ip;
+					stat.port = now.getKey().port;
+					stat.isPC = now.getKey().isPC;
+					Log.d("NSPP", stat.ip + ":" + stat.port + " " + stat.isPC);
+					if (now.getKey().isPC) {
+                        Log.d("NSPP", "PC");
+                        PCQuery query=new PCQuery(stat.ip, stat.port);
+                        try {
+                            stat.response = query.fetchReply();
+                            Log.d("NSPP", "Success");
+                        } catch (IOException e) {
+                            DebugWriter.writeToE("NSPP",e);
+                            Log.d("NSPP", "Failed");
+                            try {
+                                now.getValue().onPingFailed(now.getKey());
+                            } catch (Throwable ex) {
 
+                            }
+                            continue;
+                        }
+                        stat.ping = query.getLatestPingElapsed();
+                    } else {
+                        Log.d("NSPP", "PE");
+                        PEQuery query=new PEQuery(stat.ip, stat.port);
+                        try {
+                            stat.response = query.fullStat();
+                            Log.d("NSPP", "Success: Full Stat");
+                            try {
+                                UnconnectedPing.UnconnectedPingResult res=UnconnectedPing.doPing(stat.ip, stat.port);
+                                SprPair pair=new SprPair();
+                                pair.setA(stat.response);
+                                pair.setB(res);
+                                stat.response = pair;
+                                Log.d("NSPP", "Success: Full Stat & Unconnected Ping");
+                            } catch (IOException e) {
+                                Log.d("NSPP", "Success: Full Stat");
+                            }
+                            stat.ping = query.getLatestPingElapsed();
+                        } catch (Throwable e) {
+                            DebugWriter.writeToE("NSPP",e);
+                            try {
+                                UnconnectedPing.UnconnectedPingResult res=UnconnectedPing.doPing(stat.ip, stat.port);
+                                stat.response = res;
+                                stat.ping = res.getLatestPingElapsed();
+                                Log.d("NSPP", "Success: Unconnected Ping");
+                            } catch (IOException ex) {
+                                try {
+                                    now.getValue().onPingFailed(now.getKey());
+                                } catch (Throwable ex_) {
+
+                                }
+                                Log.d("NSPP", "Failed");
+                                continue;
+                            }
+                        }
+                    }
+					try {
+                        now.getValue().onPingArrives(stat);
+                    } catch (Throwable f) {
+
+                    }
+				} catch (Throwable e) {
+					e.printStackTrace();
 				}
 				Log.d("NSPP", "Next");
 			}
