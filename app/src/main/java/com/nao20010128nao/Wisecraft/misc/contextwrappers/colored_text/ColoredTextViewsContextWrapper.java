@@ -27,7 +27,7 @@ public class ColoredTextViewsContextWrapper extends ContextWrapper
 	public Object getSystemService(String name) {
 		// TODO: Implement this method
 		if(LAYOUT_INFLATER_SERVICE.equals(name)){
-			return new CalligraphyLayoutInflater(this,0);
+			return new CalligraphyLayoutInflater(this,0,textColor);
 		}
 		return super.getSystemService(name);
 	}

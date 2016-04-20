@@ -29,24 +29,27 @@ class CalligraphyLayoutInflater extends LayoutInflater {
     // Reflection Hax
     private boolean mSetPrivateFactory = false;
     private Field mConstructorArgs = null;
+	private int textColor;
 
-    protected CalligraphyLayoutInflater(Context context, int attributeId) {
+    protected CalligraphyLayoutInflater(Context context, int attributeId, int textColor) {
         super(context);
         mAttributeId = attributeId;
-        mCalligraphyFactory = new CalligraphyFactory(attributeId);
+        mCalligraphyFactory = new CalligraphyFactory(attributeId,textColor);
         setUpLayoutFactories(false);
+		this.textColor=textColor;
     }
 
-    protected CalligraphyLayoutInflater(LayoutInflater original, Context newContext, int attributeId, final boolean cloned) {
+    protected CalligraphyLayoutInflater(LayoutInflater original, Context newContext, int attributeId, final boolean cloned, int textColor) {
         super(original, newContext);
         mAttributeId = attributeId;
-        mCalligraphyFactory = new CalligraphyFactory(attributeId);
+        mCalligraphyFactory = new CalligraphyFactory(attributeId,textColor);
         setUpLayoutFactories(cloned);
+		this.textColor=textColor;
     }
 
     @Override
     public LayoutInflater cloneInContext(Context newContext) {
-        return new CalligraphyLayoutInflater(this, newContext, mAttributeId, true);
+        return new CalligraphyLayoutInflater(this, newContext, mAttributeId, true, textColor);
     }
 
     // ===

@@ -21,7 +21,7 @@ class CalligraphyFactory {
     private static final String ACTION_BAR_TITLE = "action_bar_title";
     private static final String ACTION_BAR_SUBTITLE = "action_bar_subtitle";
 
-	public int color;
+	private int color;
 	
     /**
      * Some styles are in sub styles, such as actionBarTextStyle etc..
@@ -97,8 +97,9 @@ class CalligraphyFactory {
 
     private final int[] mAttributeId;
 
-    public CalligraphyFactory(int attributeId) {
+    public CalligraphyFactory(int attributeId, int textColor) {
         this.mAttributeId = new int[]{attributeId};
+		this.color=textColor;
     }
 
     /**
