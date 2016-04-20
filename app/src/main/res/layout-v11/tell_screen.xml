@@ -3,8 +3,7 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
-	android:orientation="vertical"
-	android:background="@color/background">
+	android:orientation="vertical">
 
 	<LinearLayout
 		android:layout_height="wrap_content"
@@ -56,7 +55,7 @@
 				android:layout_height="wrap_content"
 				android:textAppearance="?android:attr/textAppearanceMedium"
 				android:layout_width="wrap_content"
-				android:text="@string/item"/>
+				android:text="@string/message"/>
 
 			<android.support.v7.widget.AppCompatTextView
 				android:layout_height="wrap_content"
@@ -71,40 +70,6 @@
 			android:layout_width="wrap_content"
 			android:text="@string/change"
 			android:id="@+id/changeItem"/>
-
-	</LinearLayout>
-
-	<LinearLayout
-		android:layout_height="wrap_content"
-		android:layout_width="match_parent"
-		android:orientation="horizontal">
-
-		<LinearLayout
-			android:layout_height="match_parent"
-			android:layout_width="match_parent"
-			android:orientation="vertical"
-			android:layout_weight="1.0"
-			android:gravity="center_horizontal">
-
-			<android.support.v7.widget.AppCompatTextView
-				android:layout_height="wrap_content"
-				android:textAppearance="?android:attr/textAppearanceMedium"
-				android:layout_width="wrap_content"
-				android:text="@string/amount"/>
-
-			<android.support.v7.widget.AppCompatTextView
-				android:layout_height="wrap_content"
-				android:textAppearance="?android:attr/textAppearanceMedium"
-				android:layout_width="wrap_content"
-				android:id="@+id/amountView"/>
-
-		</LinearLayout>
-
-		<android.support.v7.widget.AppCompatButton
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			android:text="@string/change"
-			android:id="@+id/changeAmount"/>
 
 	</LinearLayout>
 
