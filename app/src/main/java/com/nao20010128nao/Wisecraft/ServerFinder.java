@@ -1,4 +1,5 @@
 package com.nao20010128nao.Wisecraft;
+import android.support.v4.view.ViewCompat;
 import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.misc.*;
@@ -72,10 +73,10 @@ public class ServerFinder extends AppCompatListActivity {
 		pw.setTouchable(false);
 		pw.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 		pw.setContentView(dialog2 = getLayoutInflater().inflate(R.layout.server_finder_finding, null, false));
-		pw.setWidth(Math.min(dm.widthPixels,dm.heightPixels));
+		pw.setWidth(Math.min(dm.widthPixels, dm.heightPixels));
 		pw.setHeight(getResources().getDimensionPixelSize(R.dimen.server_finder_finding_height));
 		
-		dialog2.setAlpha(0.7f);
+		ViewCompat.setAlpha(dialog2,0.7f);
 		
 		pw.showAtLocation(getWindow().getDecorView().findViewById(android.R.id.content),Gravity.CENTER,0,0);
 		;

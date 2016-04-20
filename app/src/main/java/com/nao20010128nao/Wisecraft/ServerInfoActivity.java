@@ -3,6 +3,7 @@ package com.nao20010128nao.Wisecraft;
 import android.content.*;
 import android.graphics.*;
 import android.graphics.drawable.*;
+import android.support.v4.view.MenuItemCompat;
 import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.misc.*;
@@ -274,7 +275,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 		if (!nonUpd){
 			updateBtn=menu.add(Menu.NONE, 0, 0, R.string.update);
 			updateBtn.setIcon(R.drawable.ic_menu_refresh);
-			updateBtn.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+			MenuItemCompat.setShowAsAction(updateBtn,MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
 		}
 		//menu.add(Menu.NONE, 0, 1, "メニュー2");
 

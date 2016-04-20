@@ -316,7 +316,7 @@ public class BinaryPrefImpl implements SharedPreferences {
 			if (o instanceof String) {
 				result.put(ent.getKey(), o);
 			} else if (o instanceof Set<?>) {
-				result.put(ent.getKey(), Collections.unmodifiableSet(new HashSet<>(o)));
+				result.put(ent.getKey(), Collections.unmodifiableSet(new HashSet<String>((Set<String>)o)));
 			} else if (o instanceof Integer) {
 				result.put(ent.getKey(), o);
 			} else if (o instanceof Long) {

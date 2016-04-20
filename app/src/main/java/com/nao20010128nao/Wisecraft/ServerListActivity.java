@@ -3,6 +3,7 @@ import android.app.*;
 import android.content.*;
 import android.os.*;
 import android.preference.*;
+import android.support.v4.view.ViewCompat;
 import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.misc.*;
@@ -189,7 +190,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 			sl.getViewQuick(i);
 		}
 		networkState = Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "", Snackbar.LENGTH_INDEFINITE);
-		networkState.getView().setAlpha(0.7f);
+		ViewCompat.setAlpha(networkState.getView(),0.7f);
 		networkState.getView().setClickable(false);
 		new NetworkStatusCheckWorker().execute();
 		IntentFilter inFil=new IntentFilter();

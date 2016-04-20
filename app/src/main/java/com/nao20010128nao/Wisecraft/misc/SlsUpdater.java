@@ -129,7 +129,7 @@ public class SlsUpdater extends Thread
 			}
 			if(servDomains==null){
 				//do nothing
-			}else if(servDomains instanceof List<String>){
+			}else if(servDomains instanceof List){
 				ServerGetActivity.addForServerList=new ArrayList<String>((List<String>)servDomains);
 			}else if(servDomains instanceof String[]){
 				ServerGetActivity.addForServerList=new ArrayList<>(Arrays.<String>asList((String[])servDomains));
