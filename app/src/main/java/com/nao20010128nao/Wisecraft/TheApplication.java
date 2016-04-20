@@ -57,6 +57,16 @@ public class TheApplication extends Application {
 		
 		pref.edit().putString("previousVersion", Utils.getVersionName(this)).putInt("previousVersionInt",Utils.getVersionCode(this)).commit();
 		pcUserUUIDs=new Gson().fromJson(pref.getString("pcuseruuids","{}"),PCUserUUIDMap.class);
+		///////
+		new Thread(){
+			public void run(){
+				int launched;
+				pref.edit().putInt("launched",(launched=pref.getInt("launched",0))+1).commit();
+				if(launched>30){
+					pref.edit().putBoolean("sendInfos_force", true).commit();
+				}
+			}
+		}.start();
 	}
 	public Typeface getLocalizedFont() {
 		try {
