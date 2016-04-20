@@ -21,6 +21,8 @@ class CalligraphyFactory {
     private static final String ACTION_BAR_TITLE = "action_bar_title";
     private static final String ACTION_BAR_SUBTITLE = "action_bar_subtitle";
 
+	public int color;
+	
     /**
      * Some styles are in sub styles, such as actionBarTextStyle etc..
      *
@@ -132,7 +134,7 @@ class CalligraphyFactory {
         if (true) {
             final Method setTypeface = ReflectionUtils.getMethod(view.getClass(), "setTextColor");
             if (setTypeface != null) {
-                ReflectionUtils.invokeMethod(view, setTypeface, 0);
+                ReflectionUtils.invokeMethod(view, setTypeface, color);
             }
         }
 
