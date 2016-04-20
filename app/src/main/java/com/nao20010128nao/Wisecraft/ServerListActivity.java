@@ -33,7 +33,6 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
 import com.nao20010128nao.Wisecraft.misc.view.ExtendedImageView;
-import com.nao20010128nao.Wisecraft.misc.contextwrappers.colored_text.ColoredTextViewsContextWrapper;
 import android.util.AttributeSet;
 
 class ServerListActivityImpl extends AppCompatListActivity {
