@@ -1093,7 +1093,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 		}
 		@Override
 		protected void attachBaseContext(Context newBase) {
-			super.attachBaseContext(ColoredTextViewsContextWrapper.wrap(CalligraphyContextWrapper.wrap(newBase),TheApplication.instance.getResources().getColor(R.color.upd_2)));
+			super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
 		}
 		
 		class PrefHandler implements HandledPreference.OnClickListener {
