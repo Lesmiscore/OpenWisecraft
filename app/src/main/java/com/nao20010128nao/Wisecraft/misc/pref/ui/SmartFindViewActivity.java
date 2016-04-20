@@ -1,8 +1,8 @@
-package com.nao20010128nao.MCPE.SC.misc;
-import android.app.ListActivity;
+package com.nao20010128nao.Wisecraft.misc.pref.ui;
+import android.app.Activity;
 import android.view.View;
 
-public abstract class SmartFindViewListActivity extends ListActivity {
+public abstract class SmartFindViewActivity extends Activity {
 
 	public <T extends View> T find(int id) {
 		// TODO: Implement this method

@@ -1,4 +1,4 @@
-package com.google.rconclient.rcon;
+package com.nao20010128nao.Wisecraft.misc.rcon;
 
 public class AuthenticationException extends Exception {
 	private static final long serialVersionUID = 1L;

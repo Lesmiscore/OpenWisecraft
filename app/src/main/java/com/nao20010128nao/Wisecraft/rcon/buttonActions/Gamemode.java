@@ -3,7 +3,7 @@ package com.nao20010128nao.Wisecraft.rcon.buttonActions;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.util.Log;
-import com.google.rconclient.rcon.AuthenticationException;
+import com.nao20010128nao.Wisecraft.misc.rcon.AuthenticationException;
 import com.nao20010128nao.Wisecraft.R;
 import com.nao20010128nao.Wisecraft.rcon.RCONActivity;
 import java.io.IOException;

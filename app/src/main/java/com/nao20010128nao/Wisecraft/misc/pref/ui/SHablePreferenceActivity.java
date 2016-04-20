@@ -1,4 +1,4 @@
-package com.nao20010128nao.MCPE.SC.misc;
+package com.nao20010128nao.Wisecraft.misc.pref.ui;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import com.nao20010128nao.ToolBox.HandledPreference;

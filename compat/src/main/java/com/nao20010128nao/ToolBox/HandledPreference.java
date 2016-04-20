@@ -26,7 +26,7 @@ extends NormalButtonPreference {
     public HandledPreference(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
 		try {
-			Class.forName("pref.StartPref").getField("as").set(null,attributeSet);
+			Class.forName("com.nao20010128nao.Wisecraft.misc.pref.StartPref").getField("as").set(null,attributeSet);
 		} catch (Throwable e) {
 			
 		}

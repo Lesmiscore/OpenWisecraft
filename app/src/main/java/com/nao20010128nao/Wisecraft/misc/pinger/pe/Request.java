@@ -1,8 +1,8 @@
-package com.nao20010128nao.MCPing.pe;
+package com.nao20010128nao.Wisecraft.misc.pinger.pe;
 
 import java.io.*;
 
-import com.nao20010128nao.MCPing.Utils;
+import com.nao20010128nao.Wisecraft.misc.pinger.Utils;
 import com.nao20010128nao.Wisecraft.misc.DebugWriter;
 
 public class Request {

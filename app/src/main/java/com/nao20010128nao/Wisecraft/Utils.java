@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import com.google.gson.Gson;
-import com.google.rconclient.rcon.RCon;
+import com.nao20010128nao.Wisecraft.misc.rcon.RCon;
 import com.nao20010128nao.Wisecraft.misc.DebugWriter;
 import com.nao20010128nao.Wisecraft.misc.Server;
 import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;

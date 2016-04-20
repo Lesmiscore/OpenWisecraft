@@ -5,7 +5,7 @@ import android.app.AlertDialog;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
-import com.google.rconclient.rcon.AuthenticationException;
+import com.nao20010128nao.Wisecraft.misc.rcon.AuthenticationException;
 import com.nao20010128nao.Wisecraft.R;
 import com.nao20010128nao.Wisecraft.misc.DebugWriter;
 import com.nao20010128nao.Wisecraft.misc.compat.CompatArrayAdapter;

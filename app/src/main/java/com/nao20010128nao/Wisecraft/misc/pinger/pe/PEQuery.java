@@ -1,9 +1,9 @@
-package com.nao20010128nao.MCPing.pe;
+package com.nao20010128nao.Wisecraft.misc.pinger.pe;
 
 import java.net.*;
 
-import com.nao20010128nao.MCPing.PingHost;
-import com.nao20010128nao.MCPing.Utils;
+import com.nao20010128nao.Wisecraft.misc.pinger.PingHost;
+import com.nao20010128nao.Wisecraft.misc.pinger.Utils;
 import com.nao20010128nao.Wisecraft.misc.DebugWriter;
 
 /**

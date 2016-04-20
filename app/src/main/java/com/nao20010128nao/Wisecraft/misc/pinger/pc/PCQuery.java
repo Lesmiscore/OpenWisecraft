@@ -1,12 +1,12 @@
-package com.nao20010128nao.MCPing.pc;
+package com.nao20010128nao.Wisecraft.misc.pinger.pc;
 
 import java.io.*;
 
 import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import com.nao20010128nao.MCPing.PingHost;
-import com.nao20010128nao.MCPing.Utils;
+import com.nao20010128nao.Wisecraft.misc.pinger.PingHost;
+import com.nao20010128nao.Wisecraft.misc.pinger.Utils;
 import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
 import java.net.Socket;
 

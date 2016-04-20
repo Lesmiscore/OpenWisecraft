@@ -1,9 +1,9 @@
-package com.nao20010128nao.MCPing.pe;
+package com.nao20010128nao.Wisecraft.misc.pinger.pe;
 
 import java.util.*;
 
-import com.nao20010128nao.MCPing.ServerPingResult;
-import com.nao20010128nao.MCPing.Utils;
+import com.nao20010128nao.Wisecraft.misc.pinger.ServerPingResult;
+import com.nao20010128nao.Wisecraft.misc.pinger.Utils;
 import com.nao20010128nao.OTC.OrderTrustedMap;
 
 public class FullStat implements ServerPingResult {

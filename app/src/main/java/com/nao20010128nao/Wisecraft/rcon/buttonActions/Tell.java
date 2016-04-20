@@ -4,7 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import com.google.rconclient.rcon.AuthenticationException;
+import com.nao20010128nao.Wisecraft.misc.rcon.AuthenticationException;
 import com.nao20010128nao.Wisecraft.Constant;
 import com.nao20010128nao.Wisecraft.R;
 import com.nao20010128nao.Wisecraft.rcon.RCONActivity;

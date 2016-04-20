@@ -13,7 +13,7 @@
 		android:defaultValue="false"
 		android:dependency="allowAutoUpdateSLSCode"
 	/>
-	<pref.StartPref
+	<com.nao20010128nao.Wisecraft.misc.pref.StartPref
 		android:title="@string/currentSlsVersion"
 		android:key="currentSlsVersion"
 		android:enabled="false"

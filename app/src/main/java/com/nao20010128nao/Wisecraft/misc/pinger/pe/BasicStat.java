@@ -1,7 +1,7 @@
-package com.nao20010128nao.MCPing.pe;
+package com.nao20010128nao.Wisecraft.misc.pinger.pe;
 
-import com.nao20010128nao.MCPing.ServerPingResult;
-import com.nao20010128nao.MCPing.Utils;
+import com.nao20010128nao.Wisecraft.misc.pinger.ServerPingResult;
+import com.nao20010128nao.Wisecraft.misc.pinger.Utils;
 
 public class BasicStat implements ServerPingResult {
 	static byte NULL = 00;

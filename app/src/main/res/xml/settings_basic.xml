@@ -27,11 +27,11 @@
 		android:key="showPcUserFace"
 		android:defaultValue="false"
 	/>
-	<pref.StartPref
+	<com.nao20010128nao.Wisecraft.misc.pref.StartPref
 		android:title="@string/serverListStyle"
 		android:key="serverListStyle"
 	/>
-	<pref.StartPref
+	<com.nao20010128nao.Wisecraft.misc.pref.StartPref
 		android:title="@string/selectFont"
 		android:key="selectFont"
 	/>

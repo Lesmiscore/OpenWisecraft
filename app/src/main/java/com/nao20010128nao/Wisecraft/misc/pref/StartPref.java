@@ -1,4 +1,4 @@
-package pref;
+package com.nao20010128nao.Wisecraft.misc.pref;
 import android.content.Context;
 import android.util.AttributeSet;
 import com.nao20010128nao.ToolBox.HandledPreference;

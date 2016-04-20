@@ -3,7 +3,7 @@ import com.nao20010128nao.Wisecraft.misc.*;
 import java.util.*;
 
 import android.util.Log;
-import com.nao20010128nao.MCPing.pc.PCQuery;
+import com.nao20010128nao.Wisecraft.misc.pinger.pc.PCQuery;
 import com.nao20010128nao.Wisecraft.Utils;
 import java.io.IOException;
 public class PCServerPingProvider implements ServerPingProvider
