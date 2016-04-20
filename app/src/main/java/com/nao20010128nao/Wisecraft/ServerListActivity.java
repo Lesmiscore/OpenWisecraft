@@ -1,14 +1,16 @@
 package com.nao20010128nao.Wisecraft;
-import android.app.*;
 import android.content.*;
 import android.os.*;
 import android.preference.*;
 import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.provider.*;
 import java.util.*;
 
+import android.app.ActivityGroup;
+import android.app.Dialog;
 import android.net.ConnectivityManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewCompat;
@@ -17,8 +19,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import com.google.gson.Gson;
 import com.nao20010128nao.ToolBox.HandledPreference;
-import com.nao20010128nao.Wisecraft.misc.compat.AppCompatListActivity;
-import com.nao20010128nao.Wisecraft.misc.compat.CompatActivityGroup;
 import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.ContextWrappingExtender;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.Reply;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.Reply19;
@@ -33,7 +33,6 @@ import java.lang.ref.WeakReference;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
-import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
 
 class ServerListActivityImpl extends AppCompatListActivity {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
