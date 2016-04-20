@@ -1,4 +1,4 @@
-package com.nao20010128nao.Wisecraft.extender;
+package com.nao20010128nao.Wisecraft.misc.contextwrappers.extender;
 import android.content.res.*;
 
 import android.content.Context;

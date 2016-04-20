@@ -21,7 +21,7 @@ import com.nao20010128nao.MCPing.pc.Reply;
 import com.nao20010128nao.MCPing.pc.Reply19;
 import com.nao20010128nao.MCPing.pe.FullStat;
 import com.nao20010128nao.ToolBox.HandledPreference;
-import com.nao20010128nao.Wisecraft.extender.ContextWrappingExtender;
+import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.ContextWrappingExtender;
 import com.nao20010128nao.Wisecraft.misc.compat.AppCompatListActivity;
 import com.nao20010128nao.Wisecraft.misc.compat.CompatActivityGroup;
 import com.nao20010128nao.Wisecraft.pingEngine.UnconnectedPing;
@@ -1088,6 +1088,10 @@ class ServerListActivityImpl extends AppCompatListActivity {
 				p.setOnClickListener(new PrefHandler());
 				scr.addPreference(p);
 			}
+		}
+		@Override
+		protected void attachBaseContext(Context newBase) {
+			super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
 		}
 		class PrefHandler implements HandledPreference.OnClickListener {
 			@Override
