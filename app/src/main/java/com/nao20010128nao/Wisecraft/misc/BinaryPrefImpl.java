@@ -292,10 +292,8 @@ public class BinaryPrefImpl implements SharedPreferences {
 				}
 			}
 		} finally {
-			if (dis != null) {
-				if (close)
-					dis.close();
-			}
+			if (dis != null&close)
+				dis.close();
 		}
 		return map;
 	}
