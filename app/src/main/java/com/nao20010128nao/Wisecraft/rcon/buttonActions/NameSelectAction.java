@@ -62,9 +62,7 @@ public abstract class NameSelectAction extends BaseAction {
 			public String[] doInBackground(Void[] a) {
 				try {
 					return onPlayersList();
-				} catch (IOException e) {
-					DebugWriter.writeToE("RCON-NSA",e);
-				} catch (AuthenticationException e) {
+				} catch (Throwable e) {
 					DebugWriter.writeToE("RCON-NSA",e);
 				}
 				return null;
