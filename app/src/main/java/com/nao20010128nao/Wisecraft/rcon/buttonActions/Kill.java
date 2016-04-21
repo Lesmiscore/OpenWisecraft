@@ -1,10 +1,9 @@
 package com.nao20010128nao.Wisecraft.rcon.buttonActions;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import com.nao20010128nao.Wisecraft.Constant;
 import com.nao20010128nao.Wisecraft.R;
-import com.nao20010128nao.Wisecraft.rcon.RCONActivity;
 import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
+import com.nao20010128nao.Wisecraft.rcon.RCONActivity;
 
 public class Kill extends NameSelectAction {
 	public Kill(RCONActivity a) {

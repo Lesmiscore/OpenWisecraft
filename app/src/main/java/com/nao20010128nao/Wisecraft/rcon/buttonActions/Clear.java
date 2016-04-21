@@ -1,5 +1,4 @@
 package com.nao20010128nao.Wisecraft.rcon.buttonActions;
-import android.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -90,7 +89,7 @@ public class Clear extends NameSelectAction {
 		executeButton.setOnClickListener(new View.OnClickListener(){
 				public void onClick(View v) {
 					if (isNullString(player) || isNullString(item)) {
-						AlertDialog.Builder b=new AlertDialog.Builder(Clear.this);
+						AppCompatAlertDialog.Builder b=new AppCompatAlertDialog.Builder(Clear.this);
 						String mes="";
 						if (isNullString(player)) {
 							mes += getResString(R.string.giveSelectPlayer) + "\n";

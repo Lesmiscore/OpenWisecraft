@@ -1,5 +1,4 @@
 package com.nao20010128nao.Wisecraft.rcon.buttonActions;
-import android.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -104,7 +103,7 @@ public class Give extends NameSelectAction {
 		executeButton.setOnClickListener(new View.OnClickListener(){
 				public void onClick(View v) {
 					if (isNullString(amount) || isNullString(player) || isNullString(item)) {
-						AlertDialog.Builder b=new AlertDialog.Builder(Give.this);
+						AppCompatAlertDialog.Builder b=new AppCompatAlertDialog.Builder(Give.this);
 						String mes="";
 						if (isNullString(amount)) {
 							mes += getResString(R.string.giveSelectAmount) + "\n";

@@ -4,7 +4,6 @@ import android.widget.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.provider.*;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -207,7 +206,7 @@ public class ServerFinder extends AppCompatListActivity {
 			// TODO: Implement this method
 			final Server s=getItem(p3);
 			if (s instanceof ServerStatus) {
-				new AlertDialog.Builder(ServerFinder.this)
+				new AppCompatAlertDialog.Builder(ServerFinder.this)
 					.setTitle(s.toString())
 					.setItems(R.array.serverFinderMenu,new DialogInterface.OnClickListener(){
 						public void onClick(DialogInterface di,int w){
