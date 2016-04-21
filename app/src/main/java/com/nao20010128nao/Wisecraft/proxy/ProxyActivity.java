@@ -43,7 +43,7 @@ public class ProxyActivity extends Activity {
 	}
 
 	public void dialog1() {
-		new AppCompatAlertDialog.Builder(this)
+		new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
 			.setMessage(R.string.proxy_attention_1)
 			.setCancelable(false)
 			.setPositiveButton(R.string.next, new AppCompatAlertDialog.OnClickListener(){
@@ -61,7 +61,7 @@ public class ProxyActivity extends Activity {
 	}
 
 	public void dialog2() {
-		new AppCompatAlertDialog.Builder(this)
+		new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
 			.setMessage(R.string.proxy_attention_2)
 			.setCancelable(false)
 			.setPositiveButton(R.string.next, new AppCompatAlertDialog.OnClickListener(){

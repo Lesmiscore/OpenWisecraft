@@ -14,7 +14,7 @@ public class Banlist extends BaseAction {
 	@Override
 	public void onClick(View p1) {
 		// TODO: Implement this method
-		new AppCompatAlertDialog.Builder(this)
+		new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
 			.setMessage(R.string.auSure)
 			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 				public void onClick(DialogInterface di, int w) {

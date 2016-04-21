@@ -40,7 +40,7 @@ public class ServerFinder extends AppCompatListActivity {
 		getListView().setOnItemClickListener(sl);
 		ip = getIntent().getStringExtra("ip");
 		isPC = getIntent().getBooleanExtra("ispc", false);
-		new AppCompatAlertDialog.Builder(this)
+		new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
 			.setTitle(R.string.serverFinder)
 			.setView(dialog = getLayoutInflater().inflate(R.layout.server_finder_start, null, false))
 			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){

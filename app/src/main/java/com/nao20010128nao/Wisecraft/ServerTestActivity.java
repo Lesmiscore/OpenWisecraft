@@ -51,7 +51,7 @@ public class ServerTestActivity extends AppCompatListActivity {
 		ip = getIntent().getStringExtra("ip");
 		port = getIntent().getIntExtra("port", -1);
 		isPC = getIntent().getBooleanExtra("ispc", false);
-		new AppCompatAlertDialog.Builder(this)
+		new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
 			.setTitle(R.string.testServer)
 			.setView(dialog = getLayoutInflater().inflate(R.layout.test_server_dialog, null, false))
 			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){

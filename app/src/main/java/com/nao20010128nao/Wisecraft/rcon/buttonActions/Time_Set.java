@@ -15,7 +15,7 @@ public class Time_Set extends NameSelectAction {
 	@Override
 	public void onSelected(final String s) {
 		// TODO: Implement this method
-		new AppCompatAlertDialog.Builder(this)
+		new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
 			.setMessage(getResString(R.string.setTimeAsk).replace("[TIME]", s))
 			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 				public void onClick(DialogInterface di, int w) {

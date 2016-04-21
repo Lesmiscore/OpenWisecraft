@@ -65,7 +65,7 @@ public class SettingsActivity extends CompatSHablePreferenceActivity {
 			addPreferencesFromResource(R.xml.settings_basic);
 			sH("serverListStyle", new HandledPreference.OnClickListener(){
 					public void onClick(String a, String b, String c) {
-						new AppCompatAlertDialog.Builder(Basics.this)
+						new AppCompatAlertDialog.Builder(Basics.this,R.style.AppAlertDialog)
 							.setTitle(R.string.serverListStyle)
 							.setSingleChoiceItems(getResources().getStringArray(R.array.serverListStyles),pref.getInt("main_style",0),new DialogInterface.OnClickListener(){
 								public void onClick(DialogInterface di,int w){
@@ -90,7 +90,7 @@ public class SettingsActivity extends CompatSHablePreferenceActivity {
 						String[] choice=getFontChoices();
 						String[] display=TheApplication.instance.getDisplayFontNames(choice);
 						final List<String> choiceList=Arrays.<String>asList(choice);
-						new AppCompatAlertDialog.Builder(Basics.this)
+						new AppCompatAlertDialog.Builder(Basics.this,R.style.AppAlertDialog)
 							.setSingleChoiceItems(display, choiceList.indexOf(TheApplication.instance.getFontFieldName())
 							, new DialogInterface.OnClickListener(){
 								public void onClick(DialogInterface di, int w) {

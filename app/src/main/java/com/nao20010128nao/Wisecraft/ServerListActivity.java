@@ -314,7 +314,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 						}
 					});
 
-				new AppCompatAlertDialog.Builder(this).
+				new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog).
 					setView(dialog).
 					setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener(){
 						public void onClick(DialogInterface d, int sel) {
@@ -420,7 +420,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 				final AppCompatEditText et_=new AppCompatEditText(this);
 				et_.setTypeface(TheApplication.instance.getLocalizedFont());
 				et_.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/servers.json").toString());
-				new AppCompatAlertDialog.Builder(this)
+				new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
 					.setTitle(R.string.export_typepath)
 					.setView(et_)
 					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
@@ -454,7 +454,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 				final AppCompatEditText et=new AppCompatEditText(this);
 				et.setTypeface(TheApplication.instance.getLocalizedFont());
 				et.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/servers.json").toString());
-				new AppCompatAlertDialog.Builder(this)
+				new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
 					.setTitle(R.string.import_typepath)
 					.setView(et)
 					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){

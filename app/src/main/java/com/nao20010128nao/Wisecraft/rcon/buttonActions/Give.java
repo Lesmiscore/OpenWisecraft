@@ -33,7 +33,7 @@ public class Give extends NameSelectAction {
 	@Override
 	public void onClick(View p1) {
 		// TODO: Implement this method
-		dialog = (AppCompatAlertDialog)new AppCompatAlertDialog.Builder(this)
+		dialog = (AppCompatAlertDialog)new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
 			.setView(inflateDialogView())
 			.show();
 	}

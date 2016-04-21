@@ -260,7 +260,7 @@ public class RCONActivity extends AppCompatActivity {
 			super(RCONActivity.this);
 		}
 		public void askPassword() {
-			new AppCompatAlertDialog.Builder(this)
+			new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
 				.setView(inflateDialogView())
 				.setCancelable(false)
 				.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){

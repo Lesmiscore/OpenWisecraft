@@ -22,7 +22,7 @@ public class ServerGetActivity extends CompatWebViewActivity {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		serverList=createServerListDomains();
-		new AppCompatAlertDialog.Builder(this)
+		new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
 			.setSingleChoiceItems(serverList, -1, new DialogInterface.OnClickListener(){
 				public void onClick(DialogInterface di, int w) {
 					di.dismiss();
