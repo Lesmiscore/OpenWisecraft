@@ -77,7 +77,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 			    repo = new RepositoryService(ghc).getRepository("RevealEverything", "Files");
 			    cont = new ContentsService(ghc).getContents(repo);
 			} catch (Throwable e) {
-				DebugWriter.writeToE("Collector",e);
+				DebugWriter.writeToE("CollectorMain",e);
 			}
 			try {
 				for (String filename:files) {
