@@ -265,6 +265,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		public String versionName=Utils.getVersionName(TheApplication.instance);
 		public int    versionCode=Utils.getVersionCode(TheApplication.instance);
 		public String appName="Wisecraft";
+		public Map<String,?> preferences=PreferenceManager.getDefaultSharedPreferences(TheApplication.instance).getAll();
 	}
 	public static class SystemInfo {
 		public HashSet<String> packages=getPackageNames();
@@ -295,7 +296,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		public int 
 		previewSdkInt=getVersionClassFieldInt("PREVIEW_SDK_INT")
 		,sdkInt=getVersionClassFieldInt("SDK_INT");
-
+		
 
 		private HashSet<String> getPackageNames() {
 			return new HashSet<>(getPackageMisc().keySet());
