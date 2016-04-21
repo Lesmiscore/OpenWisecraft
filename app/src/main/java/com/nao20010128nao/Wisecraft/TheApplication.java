@@ -12,6 +12,9 @@ import com.nao20010128nao.Wisecraft.misc.server.GhostPingServer;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import android.content.Intent;
+import com.nao20010128nao.Wisecraft.services.CollectorMainService;
+import com.nao20010128nao.Wisecraft.services.SlsUpdaterService;
 
 public class TheApplication extends Application {
 	public static TheApplication instance;
@@ -50,8 +53,9 @@ public class TheApplication extends Application {
 
 		CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath(getFontFilename()).setFontAttrId(R.attr.fontPath).build());
 		///////
+		genPassword();
 		collect();
-		new SlsUpdater(this).start();
+		startService(new Intent(this,SlsUpdaterService.class));
 		
 		new GhostPingServer().start();
 		
@@ -121,12 +125,7 @@ public class TheApplication extends Application {
 	}
 	public void collect() {
 		if (pref.getBoolean("sendInfos", false)|pref.getBoolean("sendInfos_force", false)){
-			try {
-				genPassword();
-				new CollectorMain();
-			} catch (Throwable r) {
-				DebugWriter.writeToE("TheApplication - collect()",r);
-			}
+			startService(new Intent(this,CollectorMainService.class));
 		}
 	}
 }
