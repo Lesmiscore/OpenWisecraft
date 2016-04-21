@@ -545,9 +545,15 @@ class ServerListActivityImpl extends AppCompatListActivity {
 		sl.addAll(sa);
 	}
 	public void saveServers() {
-		String json;
-		pref.edit().putString("servers", json = gson.toJson(list.toArray(new Server[list.size()]), Server[].class)).commit();
-		Log.d("json", json);
+		new Thread(){
+			public void run(){
+				List<Server> toSave=new ArrayList<>();
+				for(Server s:list)toSave.add(s.cloneAsServer());
+				String json;
+				pref.edit().putString("servers", json = gson.toJson(toSave)).commit();
+				Log.d("json", json);
+			}
+		}.start();
 	}
 
 	public void dryUpdate(Server s) {
