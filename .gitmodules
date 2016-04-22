@@ -1,0 +1,3 @@
+[submodule "wisecraft-i18n"]
+	path = wisecraft-i18n
+	url = https://github.com/nao20010128nao/Wisecraft-Multilanguage
