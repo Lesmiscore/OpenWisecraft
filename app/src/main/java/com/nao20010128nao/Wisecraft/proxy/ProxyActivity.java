@@ -1,8 +1,8 @@
 package com.nao20010128nao.Wisecraft.proxy;
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -12,7 +12,7 @@ import com.nao20010128nao.Wisecraft.R;
 import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class ProxyActivity extends Activity {
+public class ProxyActivity extends AppCompatActivity {
 	MultipleUdpConnectionProxy prox;
 	TextView serverIp,serverCon;
 	Button stop;
