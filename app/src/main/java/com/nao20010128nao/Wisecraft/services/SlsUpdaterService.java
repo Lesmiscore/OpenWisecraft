@@ -1,7 +1,7 @@
 package com.nao20010128nao.Wisecraft.services;
 import android.app.Service;
-import android.os.IBinder;
 import android.content.Intent;
+import android.os.IBinder;
 import com.nao20010128nao.Wisecraft.misc.SlsUpdater;
 
 public class SlsUpdaterService extends Service
