@@ -792,7 +792,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 							});
 						executes.add(6, new Runnable(){
 								public void run() {
-									sla.startActivity(new Intent(sla, ProxyActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port));
+									sla.startActivity(new Intent(sla, ProxyActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port).setAction("start"));
 								}
 							});
 						executes.add(7, new Runnable(){
