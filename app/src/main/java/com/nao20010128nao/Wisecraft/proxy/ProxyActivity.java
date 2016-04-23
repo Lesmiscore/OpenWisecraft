@@ -1,33 +1,23 @@
 package com.nao20010128nao.Wisecraft.proxy;
-import android.content.Context;
-import android.content.DialogInterface;
+import android.content.*;
+import java.io.*;
+import java.net.*;
+
+import android.app.Activity;
+import android.app.ActivityManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
-import com.nao20010128nao.MCProxy.MultipleUdpConnectionProxy;
 import com.nao20010128nao.Wisecraft.R;
-import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-import java.net.DatagramSocket;
-import java.net.DatagramPacket;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.io.IOException;
-import com.nao20010128nao.Wisecraft.misc.Server;
-import java.io.DataInput;
-import java.io.DataInputStream;
-import java.io.ByteArrayInputStream;
-import android.content.Intent;
-import com.nao20010128nao.Wisecraft.services.MCProxyService;
-import java.net.SocketException;
 import com.nao20010128nao.Wisecraft.misc.DebugWriter;
-import android.app.ActivityManager;
-import android.support.v4.app.ActivityCompat;
-import android.app.Activity;
+import com.nao20010128nao.Wisecraft.misc.Server;
+import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
+import com.nao20010128nao.Wisecraft.services.MCProxyService;
 import java.lang.reflect.InvocationTargetException;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ProxyActivity extends AppCompatActivity {
 	static ServiceController cont;
