@@ -25,6 +25,9 @@ import com.nao20010128nao.Wisecraft.services.MCProxyService;
 import java.net.SocketException;
 import com.nao20010128nao.Wisecraft.misc.DebugWriter;
 import android.app.ActivityManager;
+import android.support.v4.app.ActivityCompat;
+import android.app.Activity;
+import java.lang.reflect.InvocationTargetException;
 
 public class ProxyActivity extends AppCompatActivity {
 	static ServiceController cont;
@@ -82,6 +85,10 @@ public class ProxyActivity extends AppCompatActivity {
 			
 			dialog1();
 		}else if(act.equals("status")){
+			if(!isProxyRunning()){
+				finish();
+				return;
+			}
 			cont.getServer(new ServiceController$GetServerResult(){
 				public void onResult(final Server s){
 					runOnUiThread(new Runnable(){
@@ -140,6 +147,16 @@ public class ProxyActivity extends AppCompatActivity {
 	@Override
 	protected void attachBaseContext(Context newBase) {
 		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+	}
+
+	@Override
+	public void finish() {
+		// TODO: Implement this method
+		try {
+			Activity.class.getMethod("finishAndRemoveTask").invoke(this);
+			return;
+		} catch (IllegalAccessException e) {} catch (NoSuchMethodException e) {} catch (IllegalArgumentException e) {} catch (InvocationTargetException e) {}
+		finish();
 	}
 	
 	public boolean isProxyRunning(){
