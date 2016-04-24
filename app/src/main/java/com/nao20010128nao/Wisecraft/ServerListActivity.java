@@ -521,6 +521,9 @@ class ServerListActivityImpl extends AppCompatListActivity {
 				finish();
 				saveServers();
 				instance = new WeakReference(null);
+				if(pref.getBoolean("exitCompletely",false)){
+					ProxyActivity.cont.stopService();
+				}
 				new Handler().postDelayed(new Runnable(){
 						public void run() {
 							System.exit(0);

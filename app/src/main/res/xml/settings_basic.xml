@@ -40,4 +40,9 @@
 		android:key="sendInfos"
 		android:defaultValue="false"
 	/>
+	<CheckBoxPreference
+		android:title="@string/exitCompletely"
+		android:key="exitCompletely"
+		android:defaultValue="false"
+	/>
 </PreferenceScreen>

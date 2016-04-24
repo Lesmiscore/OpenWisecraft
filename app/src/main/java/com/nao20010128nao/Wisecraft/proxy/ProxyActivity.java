@@ -20,7 +20,7 @@ import java.lang.reflect.InvocationTargetException;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ProxyActivity extends AppCompatActivity {
-	static ServiceController cont;
+	public static ServiceController cont;
 	
 	TextView serverIp,serverCon;
 	Button stop;
