@@ -52,7 +52,7 @@ public class MCProxyService extends Service
 		proxyThread.start();
 		
 		new ControlHandler().start();
-		return START_REDELIVER_INTENT;
+		return START_NOT_STICKY;
 	}
 	
 	class ControlHandler extends Thread {
