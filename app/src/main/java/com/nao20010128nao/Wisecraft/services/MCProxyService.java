@@ -34,18 +34,18 @@ public class MCProxyService extends Service
 		ctrlPort=intent.getIntExtra("control",35590);
 		
 		NotificationCompat.Builder nb=new NotificationCompat.Builder(this);
-		nb=nb.setContentTitle(getResources().getString(R.string.app_name));
-		nb=nb.setContentText(getResources().getString(R.string.proxyIsWorking));
+		nb.setContentTitle(getResources().getString(R.string.app_name));
+		nb.setContentText(getResources().getString(R.string.proxyIsWorking));
 		NotificationCompat.InboxStyle style=new NotificationCompat.InboxStyle();
 		style.setBigContentTitle(getResources().getString(R.string.proxy));
 		style.setSummaryText(getResources().getString(R.string.app_name));
 		style.addLine(getResources().getString(R.string.connect_to)+"localhost:64321");
 		style.addLine(getResources().getString(R.string.connecting_colon)+ip+":"+port);
-		nb=nb.setStyle(style);
-		nb=nb.setContentIntent(PendingIntent.getActivity(this,0,new Intent(this,ProxyActivity.class).setAction("status"),0));
-		nb=nb.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
-		nb=nb.setColor(getResources().getColor(R.color.upd_2));
-		nb=nb.setSmallIcon(R.drawable.ic_launcher);
+		nb.setStyle(style);
+		nb.setContentIntent(PendingIntent.getActivity(this,0,new Intent(this,ProxyActivity.class).setAction("status"),0));
+		nb.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+		nb.setColor(getResources().getColor(R.color.upd_2));
+		nb.setSmallIcon(R.drawable.ic_launcher);
 		startForeground(ntfId,nb.build());
 		
 		proxyThread = new Thread(prox = new MultipleUdpConnectionProxy(ip, port, 64321));
