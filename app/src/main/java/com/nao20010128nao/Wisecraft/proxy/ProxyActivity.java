@@ -146,7 +146,7 @@ public class ProxyActivity extends AppCompatActivity {
 			Activity.class.getMethod("finishAndRemoveTask").invoke(this);
 			return;
 		} catch (IllegalAccessException e) {} catch (NoSuchMethodException e) {} catch (IllegalArgumentException e) {} catch (InvocationTargetException e) {}
-		finish();
+		super.finish();
 	}
 	
 	public boolean isProxyRunning(){
