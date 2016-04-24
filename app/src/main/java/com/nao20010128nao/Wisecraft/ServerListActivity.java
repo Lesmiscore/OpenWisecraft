@@ -54,6 +54,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 	boolean drawerOpened;
 	Snackbar networkState;
 	NetworkStateBroadcastReceiver nsbr;
+	boolean skipSave=false;
 	Map<Server,Boolean> pinging=new HashMap<Server,Boolean>(){
 		@Override
 		public Boolean get(Object key) {
@@ -207,7 +208,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 	protected void onDestroy() {
 		// TODO: Implement this method
 		super.onDestroy();
-		saveServers();
+		if(!skipSave)saveServers();
 		unregisterReceiver(nsbr);
 	}
 
@@ -493,6 +494,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 						}
 						sortingServer.addAll(tmpServer);
 
+						skipSave=true;
 						runOnUiThread(new Runnable(){
 								public void run() {
 									finish();
@@ -522,7 +524,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 				saveServers();
 				instance = new WeakReference(null);
 				if(pref.getBoolean("exitCompletely",false)){
-					ProxyActivity.cont.stopService();
+					if(ProxyActivity.cont!=null)ProxyActivity.cont.stopService();
 				}
 				new Handler().postDelayed(new Runnable(){
 						public void run() {
