@@ -63,7 +63,7 @@ public class MCProxyService extends Service
 			try {
 				ds = new DatagramSocket(ctrlPort);
 				DatagramPacket dp;
-				while (true) {
+				while (!isInterrupted()) {
 					try {
 						dp = new DatagramPacket(new byte[200], 200);
 						ds.receive(dp);
@@ -84,6 +84,11 @@ public class MCProxyService extends Service
 								DatagramPacket reply1=new DatagramPacket(baos.toByteArray(),0,baos.size());
 								reply1.setSocketAddress(dp.getSocketAddress());
 								ds.send(reply1);
+								break;
+							case 2://ping to the service
+								DatagramPacket reply2=new DatagramPacket(new byte[2],0,1);
+								reply2.setSocketAddress(dp.getSocketAddress());
+								ds.send(reply2);
 								break;
 						}
 					} catch (IOException e) {
