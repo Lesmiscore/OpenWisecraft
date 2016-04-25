@@ -18,6 +18,7 @@ import com.nao20010128nao.Wisecraft.services.SlsUpdaterService;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
+import android.util.Log;
 
 public class TheApplication extends Application {
 	public static TheApplication instance;
@@ -147,6 +148,7 @@ public class TheApplication extends Application {
 		public void onReceive(Context p1, Intent p2) {
 			// TODO: Implement this method
 			SlsUpdater.loadCurrentCode(p1);
+			Log.d("slsupd","loaded");
 		}
 	}
 }
