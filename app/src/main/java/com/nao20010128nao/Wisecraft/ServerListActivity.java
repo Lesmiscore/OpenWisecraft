@@ -192,7 +192,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 			sl.getViewQuick(i);
 		}
 		networkState = Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "", Snackbar.LENGTH_INDEFINITE);
-		ViewCompat.setAlpha(networkState.getView(),0.7f);
+		ViewCompat.setAlpha(networkState.getView(), 0.7f);
 		networkState.getView().setClickable(false);
 		new NetworkStatusCheckWorker().execute();
 		IntentFilter inFil=new IntentFilter();
@@ -207,7 +207,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 	protected void onDestroy() {
 		// TODO: Implement this method
 		super.onDestroy();
-		if(!skipSave)saveServers();
+		if (!skipSave)saveServers();
 		unregisterReceiver(nsbr);
 	}
 
@@ -314,7 +314,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 						}
 					});
 
-				new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog).
+				new AppCompatAlertDialog.Builder(this, R.style.AppAlertDialog).
 					setView(dialog).
 					setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener(){
 						public void onClick(DialogInterface d, int sel) {
@@ -350,7 +350,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 						ArrayList<String[]> al=new ArrayList<String[]>();
 						try {
 							String[] lines=Utils.lines(Utils.readWholeFile(new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt")));
-							for(String s:lines){
+							for (String s:lines) {
 								Log.d("readLine", s);
 								al.add(s.split("\\:"));
 							}
@@ -420,7 +420,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 				final AppCompatEditText et_=new AppCompatEditText(this);
 				et_.setTypeface(TheApplication.instance.getLocalizedFont());
 				et_.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/servers.json").toString());
-				new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
+				new AppCompatAlertDialog.Builder(this, R.style.AppAlertDialog)
 					.setTitle(R.string.export_typepath)
 					.setView(et_)
 					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
@@ -454,7 +454,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 				final AppCompatEditText et=new AppCompatEditText(this);
 				et.setTypeface(TheApplication.instance.getLocalizedFont());
 				et.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/servers.json").toString());
-				new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
+				new AppCompatAlertDialog.Builder(this, R.style.AppAlertDialog)
 					.setTitle(R.string.import_typepath)
 					.setView(et)
 					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
@@ -493,7 +493,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 						}
 						sortingServer.addAll(tmpServer);
 
-						skipSave=true;
+						skipSave = true;
 						runOnUiThread(new Runnable(){
 								public void run() {
 									finish();
@@ -522,8 +522,8 @@ class ServerListActivityImpl extends AppCompatListActivity {
 				finish();
 				saveServers();
 				instance = new WeakReference(null);
-				if(pref.getBoolean("exitCompletely",false)){
-					if(ProxyActivity.cont!=null)ProxyActivity.cont.stopService();
+				if (pref.getBoolean("exitCompletely", false)) {
+					if (ProxyActivity.cont != null)ProxyActivity.cont.stopService();
 				}
 				new Handler().postDelayed(new Runnable(){
 						public void run() {
@@ -550,9 +550,9 @@ class ServerListActivityImpl extends AppCompatListActivity {
 	}
 	public void saveServers() {
 		new Thread(){
-			public void run(){
+			public void run() {
 				List<Server> toSave=new ArrayList<>();
-				for(Server s:list)toSave.add(s.cloneAsServer());
+				for (Server s:list)toSave.add(s.cloneAsServer());
 				String json;
 				pref.edit().putString("servers", json = gson.toJson(toSave)).commit();
 				Log.d("json", json);
@@ -568,10 +568,10 @@ class ServerListActivityImpl extends AppCompatListActivity {
 		pinging.put(s, true);
 	}
 
-	public List<Server> getServers(){
+	public List<Server> getServers() {
 		return new ArrayList<Server>(list);
 	}
-	
+
 	static class ServerList extends AppBaseArrayAdapter<Server> implements AdapterView.OnItemClickListener,AdapterView.OnItemLongClickListener {
 		List<View> cached=new ArrayList();
 		ServerListActivityImpl sla;
@@ -914,7 +914,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 								wd.hideWorkingDialog();
 							}
 							if (statTabOfs != -1) {
-								Toast.makeText(ServerListActivityImpl.this,R.string.serverOffline,Toast.LENGTH_SHORT).show();
+								Toast.makeText(ServerListActivityImpl.this, R.string.serverOffline, Toast.LENGTH_SHORT).show();
 							}
 							if (!pinging.containsValue(true)) {
 								srl.setRefreshing(false);
@@ -1104,7 +1104,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 		protected void attachBaseContext(Context newBase) {
 			super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
 		}
-		
+
 		class PrefHandler implements HandledPreference.OnClickListener {
 			@Override
 			public void onClick(String var1, String var2, String var3) {
@@ -1117,24 +1117,24 @@ class ServerListActivityImpl extends AppCompatListActivity {
 }
 public class ServerListActivity extends CompatActivityGroup {
 	public static WeakReference<ServerListActivity> instance=new WeakReference(null);
-	
+
 	boolean nonLoop=false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
-		instance=new WeakReference(this);
+		instance = new WeakReference(this);
 		super.onCreate(savedInstanceState);
 		getSupportActionBar().hide();
 		setContentView(getLocalActivityManager().startActivity("main", new Intent(this, Content.class)).getDecorView());
 		/*
-		new Thread(){
-			public void run(){
-				try {
-					new HiddenWebService((Content)getLocalActivityManager().getActivity("main"), 8090).start();
-				} catch (IOException e) {}
-			}
-		}.start();
-		*/
+		 new Thread(){
+		 public void run(){
+		 try {
+		 new HiddenWebService((Content)getLocalActivityManager().getActivity("main"), 8090).start();
+		 } catch (IOException e) {}
+		 }
+		 }.start();
+		 */
 	}
 	public static class Content extends ServerListActivityImpl {}
 
