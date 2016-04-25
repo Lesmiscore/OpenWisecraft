@@ -20,8 +20,11 @@ import com.nao20010128nao.Wisecraft.provider.ServerPingProvider;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import java.lang.ref.WeakReference;
 
 public class ServerTestActivity extends AppCompatListActivity {
+	static WeakReference<ServerTestActivity> instance=new WeakReference(null);
+	
 	ServerPingProvider spp=new NormalServerPingProvider();
 	ServerList sl;
 	List<Server> list;
@@ -31,7 +34,7 @@ public class ServerTestActivity extends AppCompatListActivity {
 	String ip;
 	boolean isPC;
 	View dialog;
-	Map<Server,Boolean> pinging=new HashMap<Server,Boolean>(){
+	Map<Integer,Boolean> pinging=new HashMap<Integer,Boolean>(){
 		@Override
 		public Boolean get(Object key) {
 			// TODO: Implement this method
@@ -46,54 +49,78 @@ public class ServerTestActivity extends AppCompatListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
-		setListAdapter(sl = new ServerList());
+		boolean usesOldInstance=false;
+		if(instance.get()!=null){
+			sl=instance.get().sl;
+			pinging=instance.get().pinging;
+			usesOldInstance=true;
+		}else{
+			sl=new ServerList(this);
+		}
+		instance=new WeakReference(this);
+		setListAdapter(sl);
 		getListView().setOnItemClickListener(sl);
 		ip = getIntent().getStringExtra("ip");
 		port = getIntent().getIntExtra("port", -1);
 		isPC = getIntent().getBooleanExtra("ispc", false);
-		new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
-			.setTitle(R.string.testServer)
-			.setView(dialog = getLayoutInflater().inflate(R.layout.test_server_dialog, null, false))
-			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
-				public void onClick(DialogInterface di, int w) {
-					di.dismiss();
-					String nu=((EditText)dialog.findViewById(R.id.pingTimes)).getText().toString();
-					try {
-						times = new Integer(nu);
-					} catch (NumberFormatException e) {
+		if(usesOldInstance&sl.getCount()!=0){
+			
+		}else{
+			new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
+				.setTitle(R.string.testServer)
+				.setView(dialog = getLayoutInflater().inflate(R.layout.test_server_dialog, null, false))
+				.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
+					public void onClick(DialogInterface di, int w) {
+						di.dismiss();
+						String nu=((EditText)dialog.findViewById(R.id.pingTimes)).getText().toString();
+						try {
+							times = new Integer(nu);
+						} catch (NumberFormatException e) {
+							finish();
+						}
+						for (int i=0;i < times;i++) {
+							Server s=new Server();
+							s.ip = ip;
+							s.port = port;
+							s.isPC = isPC;
+							sl.add(s);
+							sl.getViewQuick(i);
+						}
+					}
+				})
+				.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener(){
+					public void onClick(DialogInterface di, int w) {
+						di.dismiss();
 						finish();
 					}
-					for (int i=0;i < times;i++) {
-						Server s=new Server();
-						s.ip = ip;
-						s.port = port;
-						s.isPC = isPC;
-						sl.add(s);
-						sl.getViewQuick(i);
+				})
+				.setOnCancelListener(new DialogInterface.OnCancelListener(){
+					public void onCancel(DialogInterface di) {
+						finish();
 					}
-				}
-			})
-			.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener(){
-				public void onClick(DialogInterface di, int w) {
-					di.dismiss();
-					finish();
-				}
-			})
-			.setOnCancelListener(new DialogInterface.OnCancelListener(){
-				public void onCancel(DialogInterface di) {
-					finish();
-				}
-			})
-			.show();
+				})
+				.show();
+		}
 	}
 	@Override
 	protected void attachBaseContext(Context newBase) {
 		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
 	}
-	class ServerList extends AppBaseArrayAdapter<Server> implements AdapterView.OnItemClickListener {
+
+	@Override
+	public void onBackPressed() {
+		// TODO: Implement this method
+		super.onBackPressed();
+		instance=new WeakReference(null);
+	}
+	
+	static class ServerList extends AppBaseArrayAdapter<Server> implements AdapterView.OnItemClickListener {
 		List<View> cached=new ArrayList();
-		public ServerList() {
-			super(ServerTestActivity.this, 0, list = new ArrayList<Server>());
+		ServerTestActivity sta;
+		
+		public ServerList(ServerTestActivity parent) {
+			super(parent, 0, parent.list = new ArrayList<Server>());
+			sta=parent;
 		}
 
 		@Override
@@ -106,24 +133,24 @@ public class ServerTestActivity extends AppCompatListActivity {
 				}
 			}
 			//if(convertView!=null)return convertView;
-			final View layout=getLayoutInflater().inflate(R.layout.quickstatus, null, false);
+			final View layout=sta.getLayoutInflater().inflate(R.layout.quickstatus, null, false);
 			Server s=getItem(position);
 			layout.setTag(s);
-			spp.putInQueue(s, new ServerPingProvider.PingHandler(){
+			sta.spp.putInQueue(s, new ServerPingProvider.PingHandler(){
 					public void onPingFailed(final Server s) {
-						runOnUiThread(new Runnable(){
+						sta.runOnUiThread(new Runnable(){
 								public void run() {
-									((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_error)));
+									((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(sta.getResources().getColor(R.color.stat_error)));
 									((TextView)layout.findViewById(R.id.serverName)).setText(s.ip + ":" + s.port);
 									((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.notResponding);
-									pinging.put(s, false);
+									sta.pinging.put(position, false);
 								}
 							});
 					}
 					public void onPingArrives(final ServerStatus sv) {
-						runOnUiThread(new Runnable(){
+						sta.runOnUiThread(new Runnable(){
 								public void run() {
-									((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
+									((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(sta.getResources().getColor(R.color.stat_ok)));
 									final String title;
 									if (sv.response instanceof FullStat) {//PE
 										FullStat fs=(FullStat)sv.response;
@@ -173,8 +200,8 @@ public class ServerTestActivity extends AppCompatListActivity {
 									}
 									((TextView)layout.findViewById(R.id.serverName)).setText(deleteDecorations(title));
 									((TextView)layout.findViewById(R.id.pingMillis)).setText(sv.ping + " ms");
-									list.set(position, sv);
-									pinging.put(sv, false);
+									sta.list.set(position, sv);
+									sta.pinging.put(position, false);
 								}
 							});
 					}
@@ -182,12 +209,12 @@ public class ServerTestActivity extends AppCompatListActivity {
 			((TextView)layout.findViewById(R.id.serverName)).setText(R.string.working);
 			((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.working);
 			((TextView)layout.findViewById(R.id.serverAddress)).setText(s.ip + ":" + s.port);
-			((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_pending)));
+			((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(sta.getResources().getColor(R.color.stat_pending)));
 			if (cached.size() <= position) {
 				cached.addAll(Constant.ONE_HUNDRED_LENGTH_NULL_LIST);
 			}
 			cached.set(position, layout);
-			pinging.put(s, true);
+			sta.pinging.put(position, true);
 			return layout;
 		}
 		public View getCachedView(int position) {
@@ -200,19 +227,23 @@ public class ServerTestActivity extends AppCompatListActivity {
 		public void onItemClick(AdapterView<?> p1, View p2, int p3, long p4) {
 			// TODO: Implement this method
 			Server s=getItem(p3);
-			clicked = p3;
+			sta.clicked = p3;
 			if (s instanceof ServerStatus) {
 				ServerInfoActivity.stat.add((ServerStatus)s);
 				int ofs=ServerInfoActivity.stat.indexOf(s);
-				startActivityForResult(new Intent(ServerTestActivity.this, ServerInfoActivity.class).putExtra("nonUpd", true).putExtra("statListOffset",ofs), 0);
+				sta.startActivityForResult(new Intent(sta, ServerInfoActivity.class).putExtra("nonUpd", true).putExtra("statListOffset",ofs), 0);
 			}
 		}
 
 		@Override
 		public void remove(Server object) {
 			// TODO: Implement this method
-			cached.remove(list.indexOf(object));
+			cached.remove(sta.list.indexOf(object));
 			super.remove(object);
+		}
+		
+		public void attachNewActivity(ServerTestActivity newSta){
+			sta=newSta;
 		}
 	}
 }
