@@ -41,6 +41,7 @@ public class SlsUpdater extends Thread
 			if (conName.equalsIgnoreCase("offline")) {
 				Log.d("slsupd", "no connection");
 				writeVersions(cache);
+				loadCurrentCode();
 				return;
 			}
 			if (!appSettings.getBoolean("allowAutoUpdateSLSCode", false)) {
@@ -52,6 +53,7 @@ public class SlsUpdater extends Thread
 				if ("mobile".equalsIgnoreCase(conName)) {
 					Log.d("slsupd", "mobile update is not allowed");
 					writeVersions(cache);
+					loadCurrentCode();
 					return;
 				}
 			}
@@ -119,6 +121,7 @@ public class SlsUpdater extends Thread
 				br.close();
 				DataInputStream dis=new DataInputStream(new ByteArrayInputStream(Base64.decodeBase64(data.getBytes())));
 				cache.edit().putString("dat.vcode",dis.readUTF()).putInt("dat.minwc",dis.readInt()).apply();
+				Log.i("slsupd","data:"+data);
 			} catch (Throwable e) {
 				cache.edit().remove("dat.vcode").remove("dat.minwc").apply();
 				DebugWriter.writeToE("slsupd",e);
@@ -142,6 +145,7 @@ public class SlsUpdater extends Thread
 				br.close();
 				DataInputStream dis=new DataInputStream(new ByteArrayInputStream(Base64.decodeBase64(data.getBytes())));
 				cache.edit().putString("tmp.vcode",dis.readUTF()).putInt("tmp.minwc",dis.readInt()).apply();
+				Log.i("slsupd","data:"+data);
 			} catch (Throwable e) {
 				cache.edit().remove("tmp.vcode").remove("tmp.minwc").apply();
 				DebugWriter.writeToE("slsupd",e);
