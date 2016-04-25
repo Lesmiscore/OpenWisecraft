@@ -1,9 +1,8 @@
 package com.nao20010128nao.Wisecraft.misc;
+import android.content.*;
 import java.io.*;
 import java.util.*;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -11,21 +10,25 @@ import com.nao20010128nao.McServerList.ServerAddressFetcher;
 import com.nao20010128nao.McServerList.sites.ServerListSite;
 import com.nao20010128nao.Wisecraft.ServerGetActivity;
 import com.nao20010128nao.Wisecraft.Utils;
+import com.nao20010128nao.Wisecraft.services.SlsUpdaterService;
 import dalvik.system.DexClassLoader;
 import java.net.URL;
 import org.apache.commons.codec.binary.Base64;
-import com.nao20010128nao.Wisecraft.TheApplication;
 
 public class SlsUpdater extends Thread
 {
-	Context ctx;
-	public SlsUpdater(Context conte){
+	static boolean execOnce=false;
+	SlsUpdaterService ctx;
+	public SlsUpdater(SlsUpdaterService conte){
 		ctx=conte;
-		new File(ctx.getFilesDir(),"mcserverlist").mkdirs();
+		ctx.getDir("mcserverlist",777);
 	}
 	@Override
 	public void run() {
-		// TODO: Implement this method
+		if(execOnce){
+			System.exit(1);
+		}
+		execOnce=true;
 		try {
 			ConnectivityManager cm = (ConnectivityManager) ctx.getSystemService(ctx.CONNECTIVITY_SERVICE);
 			SharedPreferences appSettings=PreferenceManager.getDefaultSharedPreferences(ctx);
@@ -155,6 +158,11 @@ public class SlsUpdater extends Thread
 		}
 	}
 	public void loadCurrentCode(){
+		Intent data=new Intent();
+		data.setAction(ctx.replyAction);
+		ctx.sendBroadcast(data);//send to the parent process
+	}
+	public static void loadCurrentCode(Context ctx){
 		try {
 			DexClassLoader dxl=new DexClassLoader(new File(ctx.getFilesDir(), "mcserverlist/dat.dex").getAbsolutePath(), ctx.getCacheDir().getAbsolutePath(), null, ctx.getClassLoader());
 			Class classTodai_ji=dxl.loadClass("com.nao20010128nao.Todai_ji.Providers");

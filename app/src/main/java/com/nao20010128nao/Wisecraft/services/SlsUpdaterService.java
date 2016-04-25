@@ -6,7 +6,7 @@ import com.nao20010128nao.Wisecraft.misc.SlsUpdater;
 
 public class SlsUpdaterService extends Service
 {
-
+	public String replyAction;
 	@Override
 	public IBinder onBind(Intent p1) {
 		// TODO: Implement this method
@@ -16,6 +16,7 @@ public class SlsUpdaterService extends Service
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		// TODO: Implement this method
+		replyAction=intent.getStringExtra("action");
 		ExecWorker ew=new ExecWorker();
 		ew.start();
 		return START_NOT_STICKY;
