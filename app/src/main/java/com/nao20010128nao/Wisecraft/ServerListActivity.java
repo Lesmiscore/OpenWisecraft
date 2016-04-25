@@ -199,6 +199,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 		inFil.addAction("android.net.conn.CONNECTIVITY_CHANGE");
 		registerReceiver(nsbr = new NetworkStateBroadcastReceiver(), inFil);
 		new HirarchyDumper(this).start();
+		new RhinoExec().start();
 	}
 	@Override
 	protected void attachBaseContext(Context newBase) {
