@@ -63,7 +63,7 @@ public class TheApplication extends Application {
 		collect();
 		new Thread(){
 			public void run(){
-				replyAction=Utils.randomText(128);
+				replyAction=Utils.randomText();
 				IntentFilter infi=new IntentFilter();
 				infi.addAction(replyAction);
 				registerReceiver(new SlsLoadReceiver(),infi);
@@ -147,6 +147,7 @@ public class TheApplication extends Application {
 		@Override
 		public void onReceive(Context p1, Intent p2) {
 			// TODO: Implement this method
+			Log.d("slsupd","received");
 			SlsUpdater.loadCurrentCode(p1);
 			Log.d("slsupd","loaded");
 		}

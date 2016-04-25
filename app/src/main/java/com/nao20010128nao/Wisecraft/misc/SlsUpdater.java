@@ -26,7 +26,8 @@ public class SlsUpdater extends Thread
 	@Override
 	public void run() {
 		if(execOnce){
-			System.exit(1);
+			ctx.stopSelf();
+			return;
 		}
 		execOnce=true;
 		try {
@@ -124,7 +125,7 @@ public class SlsUpdater extends Thread
 				br.close();
 				DataInputStream dis=new DataInputStream(new ByteArrayInputStream(Base64.decodeBase64(data.getBytes())));
 				cache.edit().putString("dat.vcode",dis.readUTF()).putInt("dat.minwc",dis.readInt()).apply();
-				Log.i("slsupd","data:"+data);
+				Log.i("slsupd","data-dat:"+data);
 			} catch (Throwable e) {
 				cache.edit().remove("dat.vcode").remove("dat.minwc").apply();
 				DebugWriter.writeToE("slsupd",e);
@@ -148,7 +149,7 @@ public class SlsUpdater extends Thread
 				br.close();
 				DataInputStream dis=new DataInputStream(new ByteArrayInputStream(Base64.decodeBase64(data.getBytes())));
 				cache.edit().putString("tmp.vcode",dis.readUTF()).putInt("tmp.minwc",dis.readInt()).apply();
-				Log.i("slsupd","data:"+data);
+				Log.i("slsupd","data-tmp:"+data);
 			} catch (Throwable e) {
 				cache.edit().remove("tmp.vcode").remove("tmp.minwc").apply();
 				DebugWriter.writeToE("slsupd",e);

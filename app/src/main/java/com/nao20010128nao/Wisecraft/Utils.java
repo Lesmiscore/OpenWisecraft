@@ -126,7 +126,7 @@ public class Utils {
 		return randomText(16);
 	}
 	public static String randomText(int len) {
-		StringBuilder sb=new StringBuilder();
+		StringBuilder sb=new StringBuilder(len*2);
 		byte[] buf=new byte[len];
 		new SecureRandom().nextBytes(buf);
 		for (byte b:buf) {
