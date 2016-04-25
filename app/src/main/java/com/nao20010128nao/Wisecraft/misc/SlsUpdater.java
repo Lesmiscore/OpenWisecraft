@@ -13,6 +13,7 @@ import com.nao20010128nao.Wisecraft.ServerGetActivity;
 import com.nao20010128nao.Wisecraft.Utils;
 import dalvik.system.DexClassLoader;
 import java.net.URL;
+import org.apache.commons.codec.binary.Base64;
 
 public class SlsUpdater extends Thread
 {
@@ -156,5 +157,18 @@ public class SlsUpdater extends Thread
 		public int minwc;
 		public String vcode;
 		public ClassLoader dxl;
+	}
+	
+	public static void main(String...args)throws Throwable{
+		String cache=args[0];
+		String dex=args[1];
+		DexClassLoader dxl=new DexClassLoader(dex,cache,null,SlsUpdater.class.getClassLoader());
+		Class providerClass=dxl.loadClass("com.nao20010128nao.Todai_ji.Providers");
+		Object prov=providerClass.newInstance();
+		ByteArrayOutputStream baos=new ByteArrayOutputStream();
+		DataOutputStream dos=new DataOutputStream(baos);
+		dos.writeUTF((String)providerClass.getMethod("getVersion").invoke(prov));
+		dos.writeInt(providerClass.getMethod("getWisecraftMinVersion").invoke(prov));
+		System.out.println(new String(Base64.encodeBase64(baos.toByteArray())).replace("\n","").replace("\r",""));
 	}
 }
