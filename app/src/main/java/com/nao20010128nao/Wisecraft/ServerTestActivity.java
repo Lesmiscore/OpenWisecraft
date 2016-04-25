@@ -17,10 +17,10 @@ import com.nao20010128nao.Wisecraft.misc.pinger.pe.FullStat;
 import com.nao20010128nao.Wisecraft.pingEngine.UnconnectedPing;
 import com.nao20010128nao.Wisecraft.provider.NormalServerPingProvider;
 import com.nao20010128nao.Wisecraft.provider.ServerPingProvider;
+import java.lang.ref.WeakReference;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
-import java.lang.ref.WeakReference;
 
 public class ServerTestActivity extends AppCompatListActivity {
 	static WeakReference<ServerTestActivity> instance=new WeakReference(null);
