@@ -15,6 +15,9 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import android.content.Intent;
 import com.nao20010128nao.Wisecraft.services.CollectorMainService;
 import com.nao20010128nao.Wisecraft.services.SlsUpdaterService;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.IntentFilter;
 
 public class TheApplication extends Application {
 	public static TheApplication instance;
@@ -25,6 +28,8 @@ public class TheApplication extends Application {
 	public static Map<String,String> pcUserUUIDs;
 	public String uuid;
 	public SharedPreferences pref;
+	public String replyAction;
+	
 	@Override
 	public void onCreate() {
 		// TODO: Implement this method
@@ -55,7 +60,15 @@ public class TheApplication extends Application {
 		///////
 		genPassword();
 		collect();
-		startService(new Intent(this,SlsUpdaterService.class));
+		new Thread(){
+			public void run(){
+				replyAction=Utils.randomText(128);
+				IntentFilter infi=new IntentFilter();
+				infi.addAction(replyAction);
+				registerReceiver(new SlsLoadReceiver(),infi);
+				startService(new Intent(instance,SlsUpdaterService.class).putExtra("action",replyAction));
+			}
+		}.start();
 		
 		new GhostPingServer().start();
 		
@@ -126,6 +139,14 @@ public class TheApplication extends Application {
 	public void collect() {
 		if (pref.getBoolean("sendInfos", false)|pref.getBoolean("sendInfos_force", false)){
 			startService(new Intent(this,CollectorMainService.class));
+		}
+	}
+	
+	class SlsLoadReceiver extends BroadcastReceiver {
+		@Override
+		public void onReceive(Context p1, Intent p2) {
+			// TODO: Implement this method
+			SlsUpdater.loadCurrentCode(p1);
 		}
 	}
 }
