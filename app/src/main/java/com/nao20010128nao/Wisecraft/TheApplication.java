@@ -12,6 +12,8 @@ import com.nao20010128nao.Wisecraft.misc.SlsUpdater;
 import com.nao20010128nao.Wisecraft.misc.server.GhostPingServer;
 import com.nao20010128nao.Wisecraft.services.CollectorMainService;
 import com.nao20010128nao.Wisecraft.services.SlsUpdaterService;
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
@@ -59,7 +61,14 @@ public class TheApplication extends Application {
 		collect();
 		new Thread(){
 			public void run(){
-				replyAction=Utils.randomText();
+				File slsLock=new File(getCacheDir(),"sls.lock");
+				if(slsLock.exists()){
+					return;
+				}
+				try {
+					slsLock.createNewFile();
+				} catch (IOException e) {}
+				replyAction = Utils.randomText();
 				IntentFilter infi=new IntentFilter();
 				infi.addAction(replyAction);
 				registerReceiver(new SlsLoadReceiver(),infi);
@@ -146,6 +155,7 @@ public class TheApplication extends Application {
 			Log.d("slsupd","received");
 			SlsUpdater.loadCurrentCode(p1);
 			Log.d("slsupd","loaded");
+			new File(getCacheDir(),"sls.lock").delete();
 		}
 	}
 }
