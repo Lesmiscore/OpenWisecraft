@@ -1,24 +1,20 @@
 package com.nao20010128nao.Wisecraft;
-import com.nao20010128nao.Wisecraft.misc.*;
+import android.content.*;
 import java.util.*;
 
 import android.app.Application;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import com.google.gson.Gson;
-import com.nao20010128nao.Wisecraft.collector.CollectorMain;
+import com.nao20010128nao.Wisecraft.misc.PCUserUUIDMap;
+import com.nao20010128nao.Wisecraft.misc.SlsUpdater;
 import com.nao20010128nao.Wisecraft.misc.server.GhostPingServer;
+import com.nao20010128nao.Wisecraft.services.CollectorMainService;
+import com.nao20010128nao.Wisecraft.services.SlsUpdaterService;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
-import android.content.Intent;
-import com.nao20010128nao.Wisecraft.services.CollectorMainService;
-import com.nao20010128nao.Wisecraft.services.SlsUpdaterService;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.IntentFilter;
-import android.util.Log;
 
 public class TheApplication extends Application {
 	public static TheApplication instance;
