@@ -14,6 +14,7 @@ import com.nao20010128nao.Wisecraft.Utils;
 import dalvik.system.DexClassLoader;
 import java.net.URL;
 import org.apache.commons.codec.binary.Base64;
+import com.nao20010128nao.Wisecraft.TheApplication;
 
 public class SlsUpdater extends Thread
 {
@@ -63,7 +64,7 @@ public class SlsUpdater extends Thread
 			InputStream is=null;
 			Data d;
 			try {
-				fos = new FileOutputStream(dat);
+				fos = new FileOutputStream(tmp);
 				is = new URL("http://nao20010128nao.github.io/wisecraft/todaiji.dex").openConnection().getInputStream();
 				byte[] buf=new byte[1024];
 				int r=0;
@@ -81,31 +82,43 @@ public class SlsUpdater extends Thread
 					if (fos != null)fos.close();
 					if (is != null)is.close();
 				} catch (IOException e) {}
-				d=writeVersions(cache);
+				writeVersions(cache);
 			}
 			if (!(cache.contains("tmp.minwc")|cache.contains("dat.minwc"))) {
 				Log.d("slsupd", "broken dex file downloaded");
-				loadCurrentCode(d.dxl);
+				loadCurrentCode();
 				return;
 			}
 			if (Utils.getVersionCode(ctx) < cache.getInt("tmp.minwc", 0)) {
 				Log.d("slsupd", "unsupported minimum Wisecraft version:" + cache.getInt("tmp.minwc", 0));
-				loadCurrentCode(d.dxl);
+				loadCurrentCode();
 				return;
 			}
-			loadCurrentCode(writeVersions(cache).dxl);
+			
+			tmp.renameTo(dat);
+			loadCurrentCode();
 		} catch (Throwable e) {
 			DebugWriter.writeToE("slsupd",e);
 		}
 	}
-	public Data writeVersions(SharedPreferences cache){
+	public void writeVersions(SharedPreferences cache){
 		if(new File(ctx.getFilesDir(),"mcserverlist/dat.dex").exists()){
 			try {
-				DexClassLoader dxl=new DexClassLoader(new File(ctx.getFilesDir(), "mcserverlist/dat.dex").getAbsolutePath(), ctx.getCacheDir().getAbsolutePath(), null, ctx.getClassLoader());
-				Data d=getDataFromProvider(dxl.loadClass("com.nao20010128nao.Todai_ji.Providers"));
-				cache.edit().putString("dat.vcode",d.vcode).putInt("dat.minwc",d.minwc).apply();
-				d.dxl=dxl;
-				return d;
+				List<String> args=new ArrayList();
+				args.add("dalvikvm");
+				args.add("-classpath");
+				args.add(ctx.getApplicationInfo().sourceDir);
+				args.add(SlsUpdater.class.getName());
+				args.add(ctx.getCacheDir().getAbsolutePath());
+				args.add(new File(ctx.getFilesDir(), "mcserverlist/dat.dex").getAbsolutePath());
+				ProcessBuilder pb=new ProcessBuilder(args);
+				pb.directory(ctx.getCacheDir());
+				Process proc=pb.start();
+				BufferedReader br=new BufferedReader(new InputStreamReader(proc.getInputStream()));
+				String data=br.readLine();
+				br.close();
+				DataInputStream dis=new DataInputStream(new ByteArrayInputStream(Base64.decodeBase64(data.getBytes())));
+				cache.edit().putString("dat.vcode",dis.readUTF()).putInt("dat.minwc",dis.readInt()).apply();
 			} catch (Throwable e) {
 				cache.edit().remove("dat.vcode").remove("dat.minwc").apply();
 				DebugWriter.writeToE("slsupd",e);
@@ -113,11 +126,33 @@ public class SlsUpdater extends Thread
 		}else{
 			cache.edit().remove("dat.vcode").remove("dat.minwc").apply();
 		}
-		return null;
+		if(new File(ctx.getFilesDir(),"mcserverlist/tmp.dex").exists()){
+			try {
+				List<String> args=new ArrayList();
+				args.add("dalvikvm");
+				args.add("-classpath");
+				args.add(ctx.getApplicationInfo().sourceDir);
+				args.add(ctx.getCacheDir().getAbsolutePath());
+				args.add(new File(ctx.getFilesDir(), "mcserverlist/tmp.dex").getAbsolutePath());
+				ProcessBuilder pb=new ProcessBuilder(args);
+				pb.directory(ctx.getCacheDir());
+				Process proc=pb.start();
+				BufferedReader br=new BufferedReader(new InputStreamReader(proc.getInputStream()));
+				String data=br.readLine();
+				br.close();
+				DataInputStream dis=new DataInputStream(new ByteArrayInputStream(Base64.decodeBase64(data.getBytes())));
+				cache.edit().putString("tmp.vcode",dis.readUTF()).putInt("tmp.minwc",dis.readInt()).apply();
+			} catch (Throwable e) {
+				cache.edit().remove("tmp.vcode").remove("tmp.minwc").apply();
+				DebugWriter.writeToE("slsupd",e);
+			}
+		}else{
+			cache.edit().remove("tmp.vcode").remove("tmp.minwc").apply();
+		}
 	}
-	public void loadCurrentCode(ClassLoader dxl){
+	public void loadCurrentCode(){
 		try {
-			//DexClassLoader dxl=new DexClassLoader(new File(ctx.getFilesDir(), "mcserverlist/dat.dex").getAbsolutePath(), ctx.getCacheDir().getAbsolutePath(), null, ctx.getClassLoader());
+			DexClassLoader dxl=new DexClassLoader(new File(ctx.getFilesDir(), "mcserverlist/dat.dex").getAbsolutePath(), ctx.getCacheDir().getAbsolutePath(), null, ctx.getClassLoader());
 			Class classTodai_ji=dxl.loadClass("com.nao20010128nao.Todai_ji.Providers");
 			Object todai_ji=classTodai_ji.newInstance();
 			ServerListSite[] services=(ServerListSite[])classTodai_ji.getMethod("getServices").invoke(todai_ji);
