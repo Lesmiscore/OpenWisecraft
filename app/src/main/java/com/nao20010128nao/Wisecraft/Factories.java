@@ -23,9 +23,8 @@ public class Factories {
 		final Object[] forTest;
 		
 		public static <T> FreeSizeNullLenList<T> obtainList(int len){
-			if(cache.containsKey(len)){
+			if(cache.containsKey(len))
 				return (FreeSizeNullLenList<T>)cache.get(len);
-			}
 			FreeSizeNullLenList<T> list=new FreeSizeNullLenList<>(len);
 			cache.put(len,list);
 			return list;
@@ -47,9 +46,8 @@ public class Factories {
 		@Override
 		public int indexOf(Object p1) {
 			// TODO: Implement this method
-			if(p1!=null){
+			if(p1!=null)
 				return -1;
-			}
 			return 0;
 		}
 
@@ -80,14 +78,11 @@ public class Factories {
 		@Override
 		public <T extends Object> T[] toArray(T[] p1) {
 			// TODO: Implement this method
-			if(p1.length<=length){
+			if(p1.length<=length)
 				Arrays.fill(p1,null);
-			}
-			if(p1.length>length){
-				for(int i=0;i<length;i++){
+			if(p1.length>length)
+				for(int i=0;i<length;i++)
 					p1[i]=null;
-				}
-			}
 			
 			return p1;
 		}
@@ -113,11 +108,9 @@ public class Factories {
 		@Override
 		public boolean containsAll(Collection<?> p1) {
 			// TODO: Implement this method
-			for(Object o:p1){
-				if(o!=null){
+			for(Object o:p1)
+				if(o!=null)
 					return false;
-				}
-			}
 			return true;
 		}
 
@@ -160,9 +153,8 @@ public class Factories {
 		@Override
 		public int lastIndexOf(Object p1) {
 			// TODO: Implement this method
-			if(p1!=null){
+			if(p1!=null)
 				return -1;
-			}
 			return length-1;
 		}
 
@@ -193,9 +185,8 @@ public class Factories {
 		@Override
 		public boolean contains(Object p1) {
 			// TODO: Implement this method
-			if(p1!=null){
+			if(p1!=null)
 				return false;
-			}
 			return true;
 		}
 		
