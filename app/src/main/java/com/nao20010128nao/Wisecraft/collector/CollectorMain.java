@@ -1,11 +1,11 @@
 package com.nao20010128nao.Wisecraft.collector;
+import android.content.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import java.io.*;
 import java.util.*;
 import org.eclipse.egit.github.core.*;
 
-import android.content.ContextWrapper;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -24,8 +24,6 @@ import org.eclipse.egit.github.core.service.ContentsService;
 import org.eclipse.egit.github.core.service.RepositoryService;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
-import android.content.SharedPreferences;
-import android.content.Context;
 
 public class CollectorMain extends ContextWrapper implements Runnable {
 	static boolean running=false;
