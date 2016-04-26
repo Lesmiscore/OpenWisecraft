@@ -325,7 +325,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 								s = new Server();
 								s.ip = pe_ip.getText().toString();
 								s.port = new Integer(pe_port.getText().toString());
-								s.isPC = split.isChecked();
+								s.mode = split.isChecked()?1:0;
 							}
 
 							if (list.contains(s)) {
@@ -362,7 +362,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 							Server svr=new Server();
 							svr.ip = s[2];
 							svr.port = new Integer(s[3]);
-							svr.isPC = false;
+							svr.mode = 0;
 							sv.add(svr);
 						}
 						runOnUiThread(new Runnable(){
@@ -462,7 +462,23 @@ class ServerListActivityImpl extends AppCompatListActivity {
 							Toast.makeText(ServerListActivityImpl.this, R.string.importing, Toast.LENGTH_LONG).show();
 							new Thread(){
 								public void run() {
-									final Server[] sv=gson.fromJson(readWholeFile(new File(et.getText().toString())), Server[].class);
+									final Server[] sv;
+									String json=readWholeFile(new File(et.getText().toString()));
+									if(json.contains("\"isPC\"")&(json.contains("true")|json.contains("false"))){
+										//old version json file
+										OldServer19[] sa=gson.fromJson(json, OldServer19[].class);
+										List<Server> ns=new ArrayList<>();
+										for(OldServer19 s:sa){
+											Server nso=new Server();
+											nso.ip=s.ip;
+											nso.port=s.port;
+											nso.mode=s.isPC?1:0;
+											ns.add(nso);
+										}
+										sv=ns.toArray(new Server[ns.size()]);
+									}else{
+										sv=gson.fromJson(json, Server[].class);
+									}
 									runOnUiThread(new Runnable(){
 											public void run() {
 												sl.addAll(sv);
@@ -544,9 +560,37 @@ class ServerListActivityImpl extends AppCompatListActivity {
 	}
 
 	public void loadServers() {
-		Server[] sa=gson.fromJson(pref.getString("servers", "[]"), Server[].class);
-		sl.clear();
-		sl.addAll(sa);
+		int version=pref.getInt("serversJsonVersion",0);
+		version=version==0?pref.getString("servers","[]").equals("[]")?version:0:version;
+		switch(version){
+			case 0:
+				wd.showWorkingDialog(getResources().getString(R.string.upgrading));
+				new AsyncTask<Void,Void,Void>(){
+					public Void doInBackground(Void...args){
+						OldServer19[] sa=gson.fromJson(pref.getString("servers", "[]"), OldServer19[].class);
+						List<Server> ns=new ArrayList<>();
+						for(OldServer19 s:sa){
+							Server nso=new Server();
+							nso.ip=s.ip;
+							nso.port=s.port;
+							nso.mode=s.isPC?1:0;
+							ns.add(nso);
+						}
+						pref.edit().putInt("serversJsonVersion",1).putString("servers",gson.toJson(ns)).commit();
+						return null;
+					}
+					public void onPostExecute(Void v){
+						wd.hideWorkingDialog();
+						loadServers();
+					}
+				}.execute();
+				break;
+			case 1:
+				Server[] sa=gson.fromJson(pref.getString("servers", "[]"), Server[].class);
+				sl.clear();
+				sl.addAll(sa);
+				break;
+		}
 	}
 	public void saveServers() {
 		new Thread(){
@@ -642,7 +686,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 			// TODO: Implement this method
 			sla.clicked = p3;
 			Dialog d=new AppCompatAlertDialog.Builder(sla)
-				.setItems(generateSubMenu(getItem(p3).isPC), new DialogInterface.OnClickListener(){
+				.setItems(generateSubMenu(getItem(p3).mode==1), new DialogInterface.OnClickListener(){
 					public void onClick(DialogInterface di, int which) {
 						List<Runnable> executes=new ArrayList<>();
 						executes.add(0, new Runnable(){
@@ -685,7 +729,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 									final EditText pc_ip=(EditText)dialog.findViewById(R.id.pc).findViewById(R.id.serverIp);
 									final CheckBox split=(CheckBox)dialog.findViewById(R.id.switchFirm);
 
-									if (data.isPC) {
+									if (data.mode==1) {
 										if (data.port == 25565) {
 											pc_ip.setText(data.ip);
 										} else {
@@ -695,8 +739,8 @@ class ServerListActivityImpl extends AppCompatListActivity {
 										pe_ip.setText(data.ip);
 										pe_port.setText(data.port + "");
 									}
-									split.setChecked(data.isPC);
-									if (data.isPC) {
+									split.setChecked(data.mode==1);
+									if (data.mode==1) {
 										peFrame.setVisibility(View.GONE);
 										pcFrame.setVisibility(View.VISIBLE);
 										split.setText(R.string.pc);
@@ -743,7 +787,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 													s = new Server();
 													s.ip = pe_ip.getText().toString();
 													s.port = new Integer(pe_port.getText().toString());
-													s.isPC = split.isChecked();
+													s.mode = split.isChecked()?1:0;
 												}
 
 												List<Server> localServers=new ArrayList<>(sla.list);
@@ -769,7 +813,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 							});
 						executes.add(3, new Runnable(){
 								public void run() {
-									sla.startActivity(new Intent(sla, ServerTestActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port).putExtra("ispc", getItem(p3).isPC));
+									sla.startActivity(new Intent(sla, ServerTestActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port).putExtra("ispc", getItem(p3).mode));
 								}
 							});
 						executes.add(4, new Runnable(){
@@ -801,13 +845,13 @@ class ServerListActivityImpl extends AppCompatListActivity {
 							});
 						executes.add(7, new Runnable(){
 								public void run() {
-									sla.startActivity(new Intent(sla, ServerFinder.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port).putExtra("ispc", getItem(p3).isPC));
+									sla.startActivity(new Intent(sla, ServerFinder.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port).putExtra("ispc", getItem(p3).mode));
 								}
 							});
 
 						List<Runnable> all=new ArrayList(executes);
 
-						if (getItem(p3).isPC) {
+						if (getItem(p3).mode==1) {
 							executes.remove(all.get(5));
 							executes.remove(all.get(6));
 						}
@@ -907,7 +951,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 							Server sn=new Server();
 							sn.ip = s.ip;
 							sn.port = s.port;
-							sn.isPC = s.isPC;
+							sn.mode = s.mode;
 							list.set(i_, sn);
 							pinging.put(list.get(i_), false);
 							if (closeDialog) {

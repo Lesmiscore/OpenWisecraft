@@ -141,7 +141,7 @@ public class Utils {
 			Server wcs=new Server();
 			wcs.ip = obj.ip;
 			wcs.port = obj.port;
-			wcs.isPC = !obj.isPE;
+			wcs.mode = obj.isPE?0:1;
 			result.add(wcs);
 		}
 		return result;

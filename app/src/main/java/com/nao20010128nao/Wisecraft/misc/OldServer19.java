@@ -1,24 +1,24 @@
 package com.nao20010128nao.Wisecraft.misc;
 
-public class Server {
+public class OldServer19 {
 	public String ip;
 	public int port;
-	public int mode;//0 is PE, 1 is PC
+	public boolean isPC;
 
 	@Override
 	public int hashCode() {
 		// TODO: Implement this method
-		return ip.hashCode() ^ port^mode;
+		return ip.hashCode() ^ port^((Boolean)isPC).hashCode();
 	}
 
 	@Override
 	public boolean equals(Object o) {
 		// TODO: Implement this method
-		if (!(o instanceof Server)) {
+		if (!(o instanceof OldServer19)) {
 			return false;
 		}
-		Server os=(Server)o;
-		return os.ip.equals(ip) & os.port == port & os.mode == mode;
+		OldServer19 os=(OldServer19)o;
+		return os.ip.equals(ip) & os.port == port & (os.isPC ^ isPC) == false;
 	}
 
 	@Override
@@ -27,11 +27,11 @@ public class Server {
 		return ip + ":" + port;
 	}
 
-	public Server cloneAsServer() {
-		Server s=new Server();
+	public OldServer19 cloneAsServer() {
+		OldServer19 s=new OldServer19();
 		s.ip = ip;
 		s.port = port;
-		s.mode = mode;
+		s.isPC = isPC;
 		return s;
 	}
 }

@@ -52,27 +52,29 @@ public class UnconnectedServerPingProvider implements ServerPingProvider
 					ServerStatus stat=new ServerStatus();
 					stat.ip = now.getKey().ip;
 					stat.port = now.getKey().port;
-					stat.isPC = now.getKey().isPC;
-					Log.d("UPP", stat.ip + ":" + stat.port + " " + stat.isPC);
-					if (now.getKey().isPC) {
-                        try{
-                            now.getValue().onPingFailed(now.getKey());
-                        }catch(Throwable h){
+					stat.mode = now.getKey().mode;
+					Log.d("UPP", stat.ip + ":" + stat.port + " " + stat.mode);
+					switch(now.getKey().mode){
+						case 0:
+							try {
+								UnconnectedPing.UnconnectedPingResult res=UnconnectedPing.doPing(stat.ip, stat.port);
+								stat.response = res;
+								stat.ping=res.getLatestPingElapsed();
+								Log.d("UPP", "Success: Unconnected Ping");
+							} catch (IOException e) {
+								Log.d("UPP", "Failed");
+								now.getValue().onPingFailed(now.getKey());
+								continue;
+							}
+							break;
+						case 1:
+							try{
+								now.getValue().onPingFailed(now.getKey());
+							}catch(Throwable h){
 
-                        }
-                        continue;
-                    } else {
-                        try {
-                            UnconnectedPing.UnconnectedPingResult res=UnconnectedPing.doPing(stat.ip, stat.port);
-                            stat.response = res;
-                            stat.ping=res.getLatestPingElapsed();
-                            Log.d("UPP", "Success: Unconnected Ping");
-                        } catch (IOException e) {
-                            Log.d("UPP", "Failed");
-                            now.getValue().onPingFailed(now.getKey());
-                            continue;
-                        }
-                    }
+							}
+							continue;
+					}
 					try {
                         now.getValue().onPingArrives(stat);
                     } catch (Throwable f) {

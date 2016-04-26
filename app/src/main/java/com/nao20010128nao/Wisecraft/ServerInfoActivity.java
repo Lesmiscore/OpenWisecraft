@@ -101,19 +101,19 @@ public class ServerInfoActivity extends ActionBarActivity {
 		if (!hideData) {
 			dataF = fth.newTabSpec("dataList");
 			dataF.setIndicator(getResources().getString(R.string.data));
-			if(localStat.isPC)
-				fth.addTab(dataF, DataFragmentPC.class,null);
-			else
-				fth.addTab(dataF, DataFragmentPE.class,null);
+			switch(localStat.mode){
+				case 0:fth.addTab(dataF, DataFragmentPE.class,null);break;
+				case 1:fth.addTab(dataF, DataFragmentPC.class,null);break;
+			}
 		}
 
-		if (!(hidePlugins|localStat.isPC)) {
+		if (!(hidePlugins|localStat.mode==1)) {
 			pluginsF = fth.newTabSpec("pluginsList");
 			pluginsF.setIndicator(getResources().getString(R.string.plugins));
 			fth.addTab(pluginsF, PluginsFragment.class, null);
 		}
 		
-		if(pref.getBoolean("showPcUserFace",false)&localStat.isPC){
+		if(pref.getBoolean("showPcUserFace",false)&localStat.mode==1){
 			skinFaceImages=new ArrayList<>();
 			sff=new SkinFaceFetcher();
 			adap=new PCUserFaceAdapter();
@@ -317,7 +317,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 	}
 
 	public void addModsTab(){
-		if ((!hideMods)|localStat.isPC) {
+		if ((!hideMods)|localStat.mode==1) {
 			modsF = fth.newTabSpec("modsList");
 			modsF.setIndicator(getResources().getString(R.string.mods));
 			fth.addTab(modsF, ModsFragment.class, null);
@@ -330,7 +330,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 	}
 	public void setDataView(View lv) {
 		data = (ListView)lv.findViewById(R.id.data);
-		if (localStat.isPC) {
+		if (localStat.mode==1) {
 			serverIcon = (ImageView)lv.findViewById(R.id.serverIcon);
 			serverName = (TextView)lv.findViewById(R.id.serverTitle);
 			serverIcon.setImageDrawable(serverIconObj);

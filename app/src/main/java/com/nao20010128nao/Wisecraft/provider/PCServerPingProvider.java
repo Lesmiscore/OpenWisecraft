@@ -50,33 +50,35 @@ public class PCServerPingProvider implements ServerPingProvider
 					ServerStatus stat=new ServerStatus();
 					stat.ip = now.getKey().ip;
 					stat.port = now.getKey().port;
-					stat.isPC = now.getKey().isPC;
-					Log.d("PCSPP", stat.ip + ":" + stat.port + " " + stat.isPC);
-					if (now.getKey().isPC) {
-                        Log.d("PCSPP", "PC");
-                        PCQuery query=new PCQuery(stat.ip, stat.port);
-                        try {
-                            stat.response = query.fetchReply();
-                            Log.d("PCSPP", "Success");
-                        } catch (IOException e) {
-                            DebugWriter.writeToE("PCSPP",e);
-                            Log.d("PCSPP", "Failed");
-                            try {
-                                now.getValue().onPingFailed(now.getKey());
-                            } catch (Throwable ex) {
+					stat.mode = now.getKey().mode;
+					Log.d("PCSPP", stat.ip + ":" + stat.port + " " + stat.mode);
+					switch(now.getKey().mode){
+						case 0:
+							try{
+								now.getValue().onPingFailed(now.getKey());
+							}catch(Throwable h){
 
-                            }
-                            continue;
-                        }
-                        stat.ping = query.getLatestPingElapsed();
-                    } else {
-                        try{
-                            now.getValue().onPingFailed(now.getKey());
-                        }catch(Throwable h){
+							}
+							continue;
+						case 1:
+							Log.d("PCSPP", "PC");
+							PCQuery query=new PCQuery(stat.ip, stat.port);
+							try {
+								stat.response = query.fetchReply();
+								Log.d("PCSPP", "Success");
+							} catch (IOException e) {
+								DebugWriter.writeToE("PCSPP",e);
+								Log.d("PCSPP", "Failed");
+								try {
+									now.getValue().onPingFailed(now.getKey());
+								} catch (Throwable ex) {
 
-                        }
-                        continue;
-                    }
+								}
+								continue;
+							}
+							stat.ping = query.getLatestPingElapsed();
+							break;
+					}
 					try {
                         now.getValue().onPingArrives(stat);
                     } catch (Throwable f) {

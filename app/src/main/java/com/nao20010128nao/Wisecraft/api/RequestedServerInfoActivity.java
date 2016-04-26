@@ -28,7 +28,7 @@ public class RequestedServerInfoActivity extends ApiBaseActivity {
 		Server s=new Server();
 		s.ip = getIntent().getStringExtra(ApiActions.SERVER_INFO_IP);
 		s.port = getIntent().getIntExtra(ApiActions.SERVER_INFO_PORT, 19132);
-		s.isPC = getIntent().getBooleanExtra(ApiActions.SERVER_INFO_ISPC, false);
+		s.mode = getIntent().getBooleanExtra(ApiActions.SERVER_INFO_ISPC, false)?1:0;
 		reqested = s.cloneAsServer();
 		wd.showWorkingDialog();
 		spp.putInQueue(reqested, new PingHandlingImpl());

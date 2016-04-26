@@ -95,7 +95,7 @@ public class ServerFinder extends AppCompatListActivity {
 					Server s=new Server();
 					s.ip = ip;
 					s.port = p;
-					s.isPC = isPC;
+					s.mode = isPC?1:0;
 					spp.putInQueue(s, new ServerPingProvider.PingHandler(){
 							public void onPingArrives(ServerStatus s) {
 								publishProgress(s);

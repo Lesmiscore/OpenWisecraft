@@ -82,7 +82,7 @@ public class ServerTestActivity extends AppCompatListActivity {
 							Server s=new Server();
 							s.ip = ip;
 							s.port = port;
-							s.isPC = isPC;
+							s.mode = isPC?1:0;
 							sl.add(s);
 							sl.getViewQuick(i);
 						}
