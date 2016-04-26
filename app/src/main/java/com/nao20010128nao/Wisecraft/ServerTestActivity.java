@@ -32,7 +32,7 @@ public class ServerTestActivity extends AppCompatListActivity {
 	ProgressDialog waitDialog;
 	int times,port;
 	String ip;
-	boolean isPC;
+	int mode;
 	View dialog;
 	Map<Integer,Boolean> pinging=new HashMap<Integer,Boolean>(){
 		@Override
@@ -62,7 +62,7 @@ public class ServerTestActivity extends AppCompatListActivity {
 		getListView().setOnItemClickListener(sl);
 		ip = getIntent().getStringExtra("ip");
 		port = getIntent().getIntExtra("port", -1);
-		isPC = getIntent().getBooleanExtra("ispc", false);
+		mode = getIntent().getIntExtra("ispc", 0);
 		if(usesOldInstance&sl.getCount()!=0){
 			
 		}else{
@@ -82,7 +82,7 @@ public class ServerTestActivity extends AppCompatListActivity {
 							Server s=new Server();
 							s.ip = ip;
 							s.port = port;
-							s.mode = isPC?1:0;
+							s.mode = mode;
 							sl.add(s);
 							sl.getViewQuick(i);
 						}
