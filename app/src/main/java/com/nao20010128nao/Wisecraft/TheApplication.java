@@ -12,14 +12,11 @@ import com.nao20010128nao.Wisecraft.misc.SlsUpdater;
 import com.nao20010128nao.Wisecraft.misc.server.GhostPingServer;
 import com.nao20010128nao.Wisecraft.services.CollectorMainService;
 import com.nao20010128nao.Wisecraft.services.SlsUpdaterService;
-import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import java.net.ServerSocket;
-import java.net.SocketException;
-import java.net.InetAddress;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class TheApplication extends Application {
 	public static TheApplication instance;
