@@ -17,6 +17,9 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import java.net.ServerSocket;
+import java.net.SocketException;
+import java.net.InetAddress;
 
 public class TheApplication extends Application {
 	public static TheApplication instance;
@@ -59,20 +62,30 @@ public class TheApplication extends Application {
 		genPassword();
 		new Thread(){
 			String replyAction;
+			ServerSocket ss=null;
 			public void run(){
-				replyAction = Utils.randomText();
-				IntentFilter infi=new IntentFilter();
-				infi.addAction(replyAction);
-				registerReceiver(new BroadcastReceiver(){
-						@Override
-						public void onReceive(Context p1, Intent p2) {
-							// TODO: Implement this method
-							Log.d("slsupd","received");
-							SlsUpdater.loadCurrentCode(p1);
-							Log.d("slsupd","loaded");
-						}
-					},infi);
-				startService(new Intent(instance,SlsUpdaterService.class).putExtra("action",replyAction));
+				try{
+					ss=new ServerSocket(35590);//bind for this port for critical session
+					replyAction = Utils.randomText();
+					IntentFilter infi=new IntentFilter();
+					infi.addAction(replyAction);
+					registerReceiver(new BroadcastReceiver(){
+							@Override
+							public void onReceive(Context p1, Intent p2) {
+								// TODO: Implement this method
+								Log.d("slsupd","received");
+								SlsUpdater.loadCurrentCode(p1);
+								Log.d("slsupd","loaded");
+								try {
+									if (ss != null)ss.close();
+								} catch (IOException e) {}
+								abortBroadcast();
+							}
+						},infi);
+					startService(new Intent(instance,SlsUpdaterService.class).putExtra("action",replyAction));
+				}catch(IOException se){
+					
+				}
 			}
 		}.start();
 		
