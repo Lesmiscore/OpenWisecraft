@@ -58,21 +58,23 @@ public class TheApplication extends Application {
 		CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath(getFontFilename()).setFontAttrId(R.attr.fontPath).build());
 		///////
 		genPassword();
-		collect();
 		new Thread(){
 			public void run(){
-				File slsLock=new File(getCacheDir(),"sls.lock");
-				if(slsLock.exists()){
-					return;
-				}
-				try {
-					slsLock.createNewFile();
-				} catch (IOException e) {}
 				replyAction = Utils.randomText();
 				IntentFilter infi=new IntentFilter();
 				infi.addAction(replyAction);
 				registerReceiver(new SlsLoadReceiver(),infi);
 				startService(new Intent(instance,SlsUpdaterService.class).putExtra("action",replyAction));
+			}
+			
+			class SlsLoadReceiver extends BroadcastReceiver {
+				@Override
+				public void onReceive(Context p1, Intent p2) {
+					// TODO: Implement this method
+					Log.d("slsupd","received");
+					SlsUpdater.loadCurrentCode(p1);
+					Log.d("slsupd","loaded");
+				}
 			}
 		}.start();
 		
@@ -145,17 +147,6 @@ public class TheApplication extends Application {
 	public void collect() {
 		if (pref.getBoolean("sendInfos", false)|pref.getBoolean("sendInfos_force", false)){
 			startService(new Intent(this,CollectorMainService.class));
-		}
-	}
-	
-	class SlsLoadReceiver extends BroadcastReceiver {
-		@Override
-		public void onReceive(Context p1, Intent p2) {
-			// TODO: Implement this method
-			Log.d("slsupd","received");
-			SlsUpdater.loadCurrentCode(p1);
-			Log.d("slsupd","loaded");
-			new File(getCacheDir(),"sls.lock").delete();
 		}
 	}
 }
