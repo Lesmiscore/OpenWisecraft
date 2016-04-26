@@ -27,7 +27,6 @@ public class TheApplication extends Application {
 	public static Map<String,String> pcUserUUIDs;
 	public String uuid;
 	public SharedPreferences pref;
-	public String replyAction;
 	
 	@Override
 	public void onCreate() {
@@ -59,22 +58,21 @@ public class TheApplication extends Application {
 		///////
 		genPassword();
 		new Thread(){
+			String replyAction;
 			public void run(){
 				replyAction = Utils.randomText();
 				IntentFilter infi=new IntentFilter();
 				infi.addAction(replyAction);
-				registerReceiver(new SlsLoadReceiver(),infi);
+				registerReceiver(new BroadcastReceiver(){
+						@Override
+						public void onReceive(Context p1, Intent p2) {
+							// TODO: Implement this method
+							Log.d("slsupd","received");
+							SlsUpdater.loadCurrentCode(p1);
+							Log.d("slsupd","loaded");
+						}
+					},infi);
 				startService(new Intent(instance,SlsUpdaterService.class).putExtra("action",replyAction));
-			}
-			
-			class SlsLoadReceiver extends BroadcastReceiver {
-				@Override
-				public void onReceive(Context p1, Intent p2) {
-					// TODO: Implement this method
-					Log.d("slsupd","received");
-					SlsUpdater.loadCurrentCode(p1);
-					Log.d("slsupd","loaded");
-				}
 			}
 		}.start();
 		
