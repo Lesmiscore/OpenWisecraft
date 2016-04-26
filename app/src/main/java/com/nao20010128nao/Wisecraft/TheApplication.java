@@ -62,7 +62,7 @@ public class TheApplication extends Application {
 			ServerSocket ss=null;
 			public void run(){
 				try{
-					ss=new ServerSocket(35590);//bind for this port for critical session
+					ss=new ServerSocket(35590);//bind to this port to start a critical session
 					replyAction = Utils.randomText();
 					IntentFilter infi=new IntentFilter();
 					infi.addAction(replyAction);
