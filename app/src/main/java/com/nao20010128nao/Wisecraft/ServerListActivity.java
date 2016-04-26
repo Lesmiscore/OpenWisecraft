@@ -1170,15 +1170,6 @@ public class ServerListActivity extends CompatActivityGroup {
 		super.onCreate(savedInstanceState);
 		getSupportActionBar().hide();
 		setContentView(getLocalActivityManager().startActivity("main", new Intent(this, Content.class)).getDecorView());
-		/*
-		 new Thread(){
-		 public void run(){
-		 try {
-		 new HiddenWebService((Content)getLocalActivityManager().getActivity("main"), 8090).start();
-		 } catch (IOException e) {}
-		 }
-		 }.start();
-		 */
 	}
 	public static class Content extends ServerListActivityImpl {}
 
