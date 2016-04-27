@@ -8,7 +8,7 @@ public class Server {
 	@Override
 	public int hashCode() {
 		// TODO: Implement this method
-		return ip.hashCode() ^ port^mode;
+		return ip.hashCode() ^ port ^ mode;
 	}
 
 	@Override
