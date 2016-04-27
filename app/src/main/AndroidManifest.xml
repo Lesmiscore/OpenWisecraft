@@ -40,7 +40,7 @@
 			android:exported="false">
         </activity>
 		<activity
-            android:label="@string/proxy"
+            android:label="@string/mtl"
             android:name=".proxy.ProxyActivity"
 			android:exported="false">
         </activity>

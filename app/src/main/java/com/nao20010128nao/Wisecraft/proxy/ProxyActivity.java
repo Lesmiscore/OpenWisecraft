@@ -57,7 +57,7 @@ public class ProxyActivity extends AppCompatActivity {
 		if(act.equals("start")){
 			if(isProxyRunning()){
 				new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
-					.setMessage(R.string.proxyIsAlreadyRunning)
+					.setMessage(R.string.mtlIsAlreadyRunning)
 					.setCancelable(false)
 					.setTitle(R.string.error)
 					.setPositiveButton(android.R.string.ok, new AppCompatAlertDialog.OnClickListener(){
@@ -96,7 +96,7 @@ public class ProxyActivity extends AppCompatActivity {
 
 	public void dialog1() {
 		new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
-			.setMessage(R.string.proxy_attention_1)
+			.setMessage(R.string.mtl_attention_1)
 			.setCancelable(false)
 			.setPositiveButton(R.string.next, new AppCompatAlertDialog.OnClickListener(){
 				public void onClick(DialogInterface di, int w) {
@@ -114,7 +114,7 @@ public class ProxyActivity extends AppCompatActivity {
 
 	public void dialog2() {
 		new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
-			.setMessage(R.string.proxy_attention_2)
+			.setMessage(R.string.mtl_attention_2)
 			.setCancelable(false)
 			.setPositiveButton(R.string.next, new AppCompatAlertDialog.OnClickListener(){
 				public void onClick(DialogInterface di, int w) {

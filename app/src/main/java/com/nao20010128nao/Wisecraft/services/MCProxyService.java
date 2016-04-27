@@ -35,9 +35,9 @@ public class MCProxyService extends Service
 		
 		NotificationCompat.Builder nb=new NotificationCompat.Builder(this);
 		nb.setContentTitle(getResources().getString(R.string.app_name));
-		nb.setContentText(getResources().getString(R.string.proxyIsWorking));
+		nb.setContentText(getResources().getString(R.string.mtlIsWorking));
 		NotificationCompat.InboxStyle style=new NotificationCompat.InboxStyle();
-		style.setBigContentTitle(getResources().getString(R.string.proxy));
+		style.setBigContentTitle(getResources().getString(R.string.mtl));
 		style.setSummaryText(getResources().getString(R.string.app_name));
 		style.addLine(getResources().getString(R.string.connect_to)+"localhost:64321");
 		style.addLine(getResources().getString(R.string.connecting_colon)+ip+":"+port);
