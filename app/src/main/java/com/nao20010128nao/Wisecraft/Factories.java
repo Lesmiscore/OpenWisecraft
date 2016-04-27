@@ -220,9 +220,8 @@ public class Factories {
 			@Override
 			public boolean hasPrevious() {
 				// TODO: Implement this method
-				if(count==0){
+				if(count==0)
 					return false;
-				}
 				return true;
 			}
 
