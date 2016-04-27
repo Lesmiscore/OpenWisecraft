@@ -22,12 +22,12 @@ dependencies {
 	compile 'com.android.support:design:23.2.1'
 	compile 'com.android.support:support-v4:23.2.1'
     compile 'com.google.code.gson:gson:2.6.2'
-    compile files('libs/antenna-bin-0.9.13.jar')
+    //compile files('libs/antenna-bin-0.9.13.jar')
     compile 'uk.co.chrisjenx:calligraphy:2.1.0'
     compile 'com.android.support:cardview-v7:23.2.1'
     compile files('libs/fsb.jar')
-    compile files('libs/me4se.jar')
-    compile files('libs/xmlpull_1_1_3_1.jar')
+    //compile files('libs/me4se.jar')
+    //compile files('libs/xmlpull_1_1_3_1.jar')
 	compile 'com.android.support:appcompat-v7:23.2.1'
 	compile files('libs/mcprox.jar')
 	compile files('libs/mcservlst.jar')
@@ -38,6 +38,6 @@ dependencies {
 	compile 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
 	compile project(':compat')
 	compile files('libs/otc.jar')
-	compile files('libs/js.jar')
+	//compile files('libs/js.jar')
 	compile 'com.android.support:multidex:+'
 }
