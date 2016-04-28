@@ -2,7 +2,6 @@ package com.nao20010128nao.Wisecraft.collector;
 import android.content.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
-import java.io.*;
 import java.util.*;
 import org.eclipse.egit.github.core.*;
 
@@ -18,18 +17,18 @@ import com.google.gson.reflect.TypeToken;
 import com.nao20010128nao.OTC.OrderTrustedMap;
 import com.nao20010128nao.OTC.OrderTrustedSet;
 import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
-import java.net.URL;
+import java.io.File;
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.service.ContentsService;
 import org.eclipse.egit.github.core.service.RepositoryService;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.HttpResponse;
-import org.apache.http.util.EntityUtils;
 
 public class CollectorMain extends ContextWrapper implements Runnable {
 	static boolean running=false;
