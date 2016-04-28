@@ -15,6 +15,8 @@ import android.util.Base64;
 import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.nao20010128nao.OTC.OrderTrustedMap;
+import com.nao20010128nao.OTC.OrderTrustedSet;
 import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
 import java.net.URL;
 import java.security.MessageDigest;
@@ -24,8 +26,6 @@ import org.eclipse.egit.github.core.service.ContentsService;
 import org.eclipse.egit.github.core.service.RepositoryService;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
-import com.nao20010128nao.OTC.OrderTrustedSet;
-import com.nao20010128nao.OTC.OrderTrustedMap;
 
 public class CollectorMain extends ContextWrapper implements Runnable {
 	static boolean running=false;
