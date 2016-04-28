@@ -12,6 +12,8 @@ import com.nao20010128nao.McServerList.ServerAddressFetcher;
 import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
 import com.nao20010128nao.Wisecraft.misc.compat.CompatWebViewActivity;
 import java.net.URL;
+import android.content.Context;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ServerGetActivity extends CompatWebViewActivity {
 	public static List<String> addForServerList;
@@ -139,5 +141,10 @@ public class ServerGetActivity extends CompatWebViewActivity {
 		result.addAll(Arrays.asList(getResources().getStringArray(R.array.serverListSites)));
 		if(addForServerList!=null)result.addAll(addForServerList);
 		return Factories.strArray(result);
+	}
+	
+	@Override
+	protected void attachBaseContext(Context newBase) {
+		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
 	}
 }
