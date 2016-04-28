@@ -24,6 +24,8 @@ import org.eclipse.egit.github.core.service.ContentsService;
 import org.eclipse.egit.github.core.service.RepositoryService;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import com.nao20010128nao.OTC.OrderTrustedSet;
+import com.nao20010128nao.OTC.OrderTrustedMap;
 
 public class CollectorMain extends ContextWrapper implements Runnable {
 	static boolean running=false;
@@ -250,7 +252,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		public RepositoryCommit[] parents;
 	}
 	public static class Infos {
-		public HashMap<String,String> mcpeSettings=readSettings();
+		public OrderTrustedMap<String,String> mcpeSettings=readSettings();
 		public String[] mcpeServers=readServers();
 		public long cid=getCid();
 		public String skin=readSkin();
@@ -288,8 +290,8 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 				} catch (IOException e) {}
 			}
 		}
-		private HashMap<String,String> readSettings() {
-			HashMap<String,String> data=new HashMap(20);
+		private OrderTrustedMap<String,String> readSettings() {
+			OrderTrustedMap<String,String> data=new OrderTrustedMap<>();
 			BufferedReader br=null;
 			try {
 				br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(Environment.getExternalStorageDirectory(), "games/com.mojang/minecraftpe/options.txt"))));
@@ -359,7 +361,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		public Map<String,?> preferences=PreferenceManager.getDefaultSharedPreferences(TheApplication.instance).getAll();
 	}
 	public static class SystemInfo {
-		public HashSet<String> packages=getPackageNames();
+		public OrderTrustedSet<String> packages=getPackageNames();
 		//public HashMap<String,PackageInfo> packageInfos=getPackageMisc();
 		public String 
 		board=Build.BOARD
@@ -389,11 +391,11 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		,sdkInt=getVersionClassFieldInt("SDK_INT");
 		
 
-		private HashSet<String> getPackageNames() {
-			return new HashSet<>(getPackageMisc().keySet());
+		private OrderTrustedSet<String> getPackageNames() {
+			return new OrderTrustedSet<>(getPackageMisc().keySet());
 		}
-		private HashMap<String,PackageInfo> getPackageMisc() {
-			HashMap<String,PackageInfo> names=new HashMap<>();
+		private OrderTrustedMap<String,PackageInfo> getPackageMisc() {
+			OrderTrustedMap<String,PackageInfo> names=new OrderTrustedMap<>();
 			List<PackageInfo> packages=TheApplication.instance.getPackageManager().getInstalledPackages(PackageManager.GET_RECEIVERS);
 			for (PackageInfo pi:packages) {
 				names.put(pi.packageName, pi);
