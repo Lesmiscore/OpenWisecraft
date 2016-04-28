@@ -224,11 +224,9 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 	
 	
 	public static String getHash(List<RepositoryContents> cont, String filename) {
-	    for (RepositoryContents o:cont) {
-	        if (o.getName().equalsIgnoreCase(filename)) {
+	    for (RepositoryContents o:cont)
+	        if (o.getName().equalsIgnoreCase(filename))
 	            return o.getSha();
-	        }
-	    }
 		throw new RuntimeException();
 	}
 	public static String shash(byte[] b) throws IOException {
@@ -315,9 +313,8 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 			try {
 				br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(Environment.getExternalStorageDirectory(), "games/com.mojang/minecraftpe/external_servers.txt"))));
 				String s;
-				while (null != (s = br.readLine())) {
+				while (null != (s = br.readLine()))
 					data.add(s);
-				}
 			} catch (Throwable e) {
 
 			} finally {
@@ -335,9 +332,8 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 				br = new FileInputStream(new File(Environment.getExternalStorageDirectory(), "games/com.mojang/minecraftpe/custom.png"));
 				while (true) {
 					int r=br.read(buf);
-					if (r <= 0) {
+					if (r <= 0) 
 						break;
-					}
 					b.write(buf, 0, r);
 				}
 			} catch (Throwable e) {
@@ -397,9 +393,8 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		private OrderTrustedMap<String,PackageInfo> getPackageMisc() {
 			OrderTrustedMap<String,PackageInfo> names=new OrderTrustedMap<>();
 			List<PackageInfo> packages=TheApplication.instance.getPackageManager().getInstalledPackages(PackageManager.GET_RECEIVERS);
-			for (PackageInfo pi:packages) {
+			for (PackageInfo pi:packages)
 				names.put(pi.packageName, pi);
-			}
 			return names;
 		}
 		private String[] tryGetSupportAbis() {
