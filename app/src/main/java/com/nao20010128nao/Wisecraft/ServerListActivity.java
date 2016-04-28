@@ -1176,9 +1176,8 @@ public class ServerListActivity extends CompatActivityGroup {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO: Implement this method
-		if (nonLoop) {
+		if (nonLoop)
 			return true;
-		}
 		nonLoop = true;
 		boolean val= getLocalActivityManager().getActivity("main").onCreateOptionsMenu(menu);
 		nonLoop = false;
@@ -1188,9 +1187,8 @@ public class ServerListActivity extends CompatActivityGroup {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO: Implement this method
-		if (nonLoop) {
+		if (nonLoop)
 			return true;
-		}
 		nonLoop = true;
 		boolean val= getLocalActivityManager().getActivity("main").onOptionsItemSelected(item);
 		nonLoop = false;
@@ -1200,7 +1198,6 @@ public class ServerListActivity extends CompatActivityGroup {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO: Implement this method
-		//super.onActivityResult(requestCode, resultCode, data);
 		((ServerListActivityImpl)getLocalActivityManager().getActivity("main")).onActivityResult(requestCode, resultCode, data);
 	}
 
