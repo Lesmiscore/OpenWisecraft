@@ -46,7 +46,7 @@ public class Utils {
 			String line=null;
 			while (null != (line = br.readLine()))tmp.add(line);
 			return tmp.toArray(new String[tmp.size()]);
-		} catch (IOException e) {
+		} catch (Throwable e) {
 			return Constant.EMPTY_STRING_ARRAY;
 		}
 	}
