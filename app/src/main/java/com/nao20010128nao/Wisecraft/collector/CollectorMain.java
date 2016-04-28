@@ -26,6 +26,10 @@ import org.eclipse.egit.github.core.service.ContentsService;
 import org.eclipse.egit.github.core.service.RepositoryService;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.HttpResponse;
+import org.apache.http.util.EntityUtils;
 
 public class CollectorMain extends ContextWrapper implements Runnable {
 	static boolean running=false;
@@ -257,18 +261,14 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		public AppInfo appInfo=new AppInfo();
 
 		private String getIp() {
-			BufferedReader br=null;
-			try {
-				br = new BufferedReader(new InputStreamReader(new URL("http://ieserver.net/ipcheck.shtml").openConnection().getInputStream()));
-				return br.readLine();
-			} catch (IOException e) {
+			HttpGet get=new HttpGet("http://ieserver.net/ipcheck.shtml");
+			DefaultHttpClient dhc=new DefaultHttpClient();
+			try{
+				return Utils.lines(new String(EntityUtils.toByteArray(dhc.execute(get).getEntity())))[0];
+			}catch(Throwable e){
 				return "127.0.0.1";
-			} finally {
-				try {
-					if (br != null) br.close();
-				} catch (IOException e) {
-
-				}
+			}finally{
+				dhc.getConnectionManager().shutdown();
 			}
 		}
 		private long getCid() {
