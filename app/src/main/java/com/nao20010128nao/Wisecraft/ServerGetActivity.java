@@ -1,6 +1,7 @@
 package com.nao20010128nao.Wisecraft;
 import java.util.*;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,7 +13,6 @@ import com.nao20010128nao.McServerList.ServerAddressFetcher;
 import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
 import com.nao20010128nao.Wisecraft.misc.compat.CompatWebViewActivity;
 import java.net.URL;
-import android.content.Context;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ServerGetActivity extends CompatWebViewActivity {
