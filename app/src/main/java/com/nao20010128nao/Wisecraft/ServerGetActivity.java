@@ -79,7 +79,7 @@ public class ServerGetActivity extends CompatWebViewActivity {
 							for (int i=0;i < servSel.length;i++) {
 								servSel[i] = serv.get(i).toString();
 							}
-							new AppCompatAlertDialog.Builder(ServerGetActivity.this)
+							new AppCompatAlertDialog.Builder(ServerGetActivity.this,R.style.AppAlertDialog)
 								.setTitle(R.string.selectServers)
 								.setMultiChoiceItems(servSel, selections = new boolean[servSel.length], new DialogInterface.OnMultiChoiceClickListener(){
 									public void onClick(DialogInterface di, int w, boolean c) {
