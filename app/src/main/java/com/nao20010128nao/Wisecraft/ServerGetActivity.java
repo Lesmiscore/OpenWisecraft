@@ -14,6 +14,7 @@ import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
 import com.nao20010128nao.Wisecraft.misc.compat.CompatWebViewActivity;
 import java.net.URL;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import com.nao20010128nao.Wisecraft.misc.compat.CompatArrayAdapter;
 
 public class ServerGetActivity extends CompatWebViewActivity {
 	public static List<String> addForServerList;
@@ -88,7 +89,7 @@ public class ServerGetActivity extends CompatWebViewActivity {
 								.setPositiveButton(R.string.add, new DialogInterface.OnClickListener(){
 									public void onClick(DialogInterface di, int w) {
 										List<com.nao20010128nao.McServerList.Server> selected=getServers(serv, selections);
-										((ArrayAdapter)ServerListActivityImpl.instance.get().getListAdapter()).addAll(Utils.convertServerObject(selected));
+										CompatArrayAdapter.addAll((ArrayAdapter)ServerListActivityImpl.instance.get().getListAdapter(),Utils.convertServerObject(selected));
 										di.dismiss();
 									}
 								})
