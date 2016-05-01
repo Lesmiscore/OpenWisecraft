@@ -10,8 +10,7 @@ public class EditTextPreference extends android.preference.EditTextPreference
         super(context, attrs, defStyleAttr);
     }
 
-    public EditTextPreference(
-		Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public EditTextPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 

@@ -10,8 +10,7 @@ public class CheckBoxPreference extends android.preference.CheckBoxPreference
         super(context, attrs, defStyleAttr);
     }
 
-    public CheckBoxPreference(
-		Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public CheckBoxPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
