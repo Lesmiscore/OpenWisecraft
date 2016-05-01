@@ -1,17 +1,15 @@
 package com.nao20010128nao.Wisecraft.misc;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.ContextWrapper;
-import com.nao20010128nao.Wisecraft.R;
 import android.content.Context;
-import android.support.v7.app.AppCompatDelegate;
+import android.content.ContextWrapper;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v7.app.AppCompatDialog;
+import com.nao20010128nao.Wisecraft.R;
 
 public class WorkingDialog extends ContextWrapper {
 	ProgressDialog waitDialog;
