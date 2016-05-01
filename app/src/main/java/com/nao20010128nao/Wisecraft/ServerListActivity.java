@@ -223,7 +223,6 @@ class ServerListActivityImpl extends AppCompatListActivity {
 								try {
 									if (ss != null)ss.close();
 								} catch (IOException e) {}
-								abortBroadcast();
 							}
 						},infi);
 					startService(new Intent(ServerListActivityImpl.this,SlsUpdaterService.class).putExtra("action",replyAction));
