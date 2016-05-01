@@ -3,7 +3,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
-import android.support.v4.widget.TextViewCompat;
 
 public class CheckBoxPreference extends android.preference.CheckBoxPreference
 {
