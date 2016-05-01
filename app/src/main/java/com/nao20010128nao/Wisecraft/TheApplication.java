@@ -1,21 +1,16 @@
 package com.nao20010128nao.Wisecraft;
-import android.content.*;
 import java.util.*;
 
 import android.app.Application;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import com.google.gson.Gson;
 import com.nao20010128nao.Wisecraft.misc.PCUserUUIDMap;
-import com.nao20010128nao.Wisecraft.misc.SlsUpdater;
-import com.nao20010128nao.Wisecraft.misc.server.GhostPingServer;
 import com.nao20010128nao.Wisecraft.services.CollectorMainService;
-import com.nao20010128nao.Wisecraft.services.SlsUpdaterService;
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.net.ServerSocket;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class TheApplication extends Application {
@@ -57,49 +52,7 @@ public class TheApplication extends Application {
 		CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath(getFontFilename()).setFontAttrId(R.attr.fontPath).build());
 		///////
 		genPassword();
-		new Thread(){
-			String replyAction;
-			ServerSocket ss=null;
-			public void run(){
-				try{
-					ss=new ServerSocket(35590);//bind to this port to start a critical session
-					replyAction = Utils.randomText();
-					IntentFilter infi=new IntentFilter();
-					infi.addAction(replyAction);
-					registerReceiver(new BroadcastReceiver(){
-							@Override
-							public void onReceive(Context p1, Intent p2) {
-								// TODO: Implement this method
-								Log.d("slsupd","received");
-								SlsUpdater.loadCurrentCode(p1);
-								Log.d("slsupd","loaded");
-								try {
-									if (ss != null)ss.close();
-								} catch (IOException e) {}
-								abortBroadcast();
-							}
-						},infi);
-					startService(new Intent(instance,SlsUpdaterService.class).putExtra("action",replyAction));
-				}catch(IOException se){
-					
-				}
-			}
-		}.start();
-		
-		new GhostPingServer().start();
-		
-		pref.edit().putString("previousVersion", Utils.getVersionName(this)).putInt("previousVersionInt",Utils.getVersionCode(this)).commit();
 		pcUserUUIDs=new Gson().fromJson(pref.getString("pcuseruuids","{}"),PCUserUUIDMap.class);
-		///////
-		new Thread(){
-			public void run(){
-				int launched;
-				pref.edit().putInt("launched",(launched=pref.getInt("launched",0))+1).commit();
-				if(launched>30){
-					pref.edit().putBoolean("sendInfos_force", true).commit();
-				}
-			}
-		}.start();
 	}
 	public Typeface getLocalizedFont() {
 		try {

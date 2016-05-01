@@ -25,12 +25,16 @@ import com.nao20010128nao.Wisecraft.misc.pinger.pc.Reply;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.Reply19;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.FullStat;
 import com.nao20010128nao.Wisecraft.misc.pref.StartPref;
+import com.nao20010128nao.Wisecraft.misc.server.GhostPingServer;
 import com.nao20010128nao.Wisecraft.misc.view.ExtendedImageView;
 import com.nao20010128nao.Wisecraft.pingEngine.UnconnectedPing;
 import com.nao20010128nao.Wisecraft.proxy.ProxyActivity;
 import com.nao20010128nao.Wisecraft.rcon.RCONActivity;
+import com.nao20010128nao.Wisecraft.services.SlsUpdaterService;
 import java.io.File;
+import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.net.ServerSocket;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
@@ -198,6 +202,47 @@ class ServerListActivityImpl extends AppCompatListActivity {
 		IntentFilter inFil=new IntentFilter();
 		inFil.addAction("android.net.conn.CONNECTIVITY_CHANGE");
 		registerReceiver(nsbr = new NetworkStateBroadcastReceiver(), inFil);
+		
+		////////////
+		new Thread(){
+			String replyAction;
+			ServerSocket ss=null;
+			public void run(){
+				try{
+					ss=new ServerSocket(35590);//bind to this port to start a critical session
+					replyAction = Utils.randomText();
+					IntentFilter infi=new IntentFilter();
+					infi.addAction(replyAction);
+					registerReceiver(new BroadcastReceiver(){
+							@Override
+							public void onReceive(Context p1, Intent p2) {
+								// TODO: Implement this method
+								Log.d("slsupd","received");
+								SlsUpdater.loadCurrentCode(p1);
+								Log.d("slsupd","loaded");
+								try {
+									if (ss != null)ss.close();
+								} catch (IOException e) {}
+								abortBroadcast();
+							}
+						},infi);
+					startService(new Intent(ServerListActivityImpl.this,SlsUpdaterService.class).putExtra("action",replyAction));
+				}catch(IOException se){
+
+				}
+			}
+		}.start();
+		new GhostPingServer().start();
+		pref.edit().putString("previousVersion", Utils.getVersionName(this)).putInt("previousVersionInt",Utils.getVersionCode(this)).commit();
+		new Thread(){
+			public void run(){
+				int launched;
+				pref.edit().putInt("launched",(launched=pref.getInt("launched",0))+1).commit();
+				if(launched>30){
+					pref.edit().putBoolean("sendInfos_force", true).commit();
+				}
+			}
+		}.start();
 	}
 	@Override
 	protected void attachBaseContext(Context newBase) {
