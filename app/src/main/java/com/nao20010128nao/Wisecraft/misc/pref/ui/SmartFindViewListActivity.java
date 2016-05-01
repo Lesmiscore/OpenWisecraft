@@ -13,13 +13,7 @@ public abstract class SmartFindViewListActivity extends ListActivity {
 		// TODO: Implement this method
 		try {
 			return find((int)Class.forName(getPackageName() + ".R$id").getField(id).get(null));
-		} catch (ClassNotFoundException e) {
-
-		} catch (NoSuchFieldException e) {
-
-		} catch (IllegalAccessException e) {
-
-		} catch (IllegalArgumentException e) {
+		} catch (Throwable e) {
 
 		}
 		return null;
@@ -34,13 +28,7 @@ public abstract class SmartFindViewListActivity extends ListActivity {
 		// TODO: Implement this method
 		try {
 			return find((int)Class.forName(getPackageName() + ".R$id").getField(id).get(null), parent);
-		} catch (ClassNotFoundException e) {
-
-		} catch (NoSuchFieldException e) {
-
-		} catch (IllegalAccessException e) {
-
-		} catch (IllegalArgumentException e) {
+		} catch (Throwable e) {
 
 		}
 		return null;
@@ -50,13 +38,7 @@ public abstract class SmartFindViewListActivity extends ListActivity {
 		// TODO: Implement this method
 		try {
 			return (int)Class.forName(getPackageName() + ".R$" + resKind).getField(name).get(null);
-		} catch (ClassNotFoundException e) {
-
-		} catch (NoSuchFieldException e) {
-
-		} catch (IllegalAccessException e) {
-
-		} catch (IllegalArgumentException e) {
+		} catch (Throwable e) {
 
 		}
 		return -1;
