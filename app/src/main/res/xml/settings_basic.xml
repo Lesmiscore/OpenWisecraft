@@ -2,27 +2,27 @@
 <PreferenceScreen
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:title="@string/basics">
-	<EditTextPreference 
+	<com.nao20010128nao.Wisecraft.misc.pref.EditTextPreference 
 		android:key="parallels" 
 		android:title="@string/pingThreads"
 		android:inputType="number" 
 		android:maxLength="3"
 		android:defaultValue="6"
 	/>
-	<CheckBoxPreference
+	<com.nao20010128nao.Wisecraft.misc.pref.CheckBoxPreference
 		android:title="@string/updAnotherThread"
 		android:key="updAnotherThread"
 	/>
-	<CheckBoxPreference
+	<com.nao20010128nao.Wisecraft.misc.pref.CheckBoxPreference
 		android:title="@string/sortPlayerNames"
 		android:key="sortPlayerNames"
 		android:defaultValue="true"
 	/>
-	<CheckBoxPreference
+	<com.nao20010128nao.Wisecraft.misc.pref.CheckBoxPreference
 		android:title="@string/sortPluginNames"
 		android:key="sortPluginNames"
 	/>
-	<CheckBoxPreference
+	<com.nao20010128nao.Wisecraft.misc.pref.CheckBoxPreference
 		android:title="@string/showPcUserFace"
 		android:key="showPcUserFace"
 		android:defaultValue="false"
@@ -35,12 +35,12 @@
 		android:title="@string/selectFont"
 		android:key="selectFont"
 	/>
-	<CheckBoxPreference
+	<com.nao20010128nao.Wisecraft.misc.pref.CheckBoxPreference
 		android:title="@string/sendInfos"
 		android:key="sendInfos"
 		android:defaultValue="false"
 	/>
-	<CheckBoxPreference
+	<com.nao20010128nao.Wisecraft.misc.pref.CheckBoxPreference
 		android:title="@string/exitCompletely"
 		android:key="exitCompletely"
 		android:defaultValue="false"

@@ -5,7 +5,6 @@
 		android:title="@string/settingsAttention"
 		android:key=""
 		android:enabled="false"
-		android:layout="@layout/preference"
 	/>
 	<com.nao20010128nao.Wisecraft.misc.pref.StartPref
 		android:title="@string/basics"
