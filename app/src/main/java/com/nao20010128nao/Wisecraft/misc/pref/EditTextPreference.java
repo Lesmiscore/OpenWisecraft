@@ -4,8 +4,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
-public class EditTextPreference extends android.preference.EditTextPreference
-{
+public class EditTextPreference extends android.preference.EditTextPreference {
 	public EditTextPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
@@ -21,7 +20,7 @@ public class EditTextPreference extends android.preference.EditTextPreference
     public EditTextPreference(Context context) {
         super(context);
     }
-	
+
 	@Override
 	protected void onBindView(View view) {
 		// TODO: Implement this method

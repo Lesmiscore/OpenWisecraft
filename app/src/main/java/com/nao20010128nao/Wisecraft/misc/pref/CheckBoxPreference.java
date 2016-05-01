@@ -4,8 +4,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
-public class CheckBoxPreference extends android.preference.CheckBoxPreference
-{
+public class CheckBoxPreference extends android.preference.CheckBoxPreference {
 	public CheckBoxPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
