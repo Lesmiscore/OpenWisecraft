@@ -7,6 +7,7 @@ import com.nao20010128nao.Wisecraft.R;
 import android.text.style.TextAppearanceSpan;
 import java.util.Arrays;
 import android.util.Log;
+import android.text.style.ForegroundColorSpan;
 
 public class MinecraftFormattingCodeParser
 {
@@ -64,6 +65,24 @@ public class MinecraftFormattingCodeParser
 		R.style.minecraftFormattingColorE_Large,
 		R.style.minecraftFormattingColorF_Large
 	};
+	private static final int[] TEXT_COLORS=new int[]{
+		0x000000,
+		0x0000AA,
+		0x00AA00,
+		0x00AAAA,
+		0xAA0000,
+		0xAA00AA,
+		0xFFAA00,
+		0xAAAAAA,
+		0x555555,
+		0x5555FF,
+		0x55FF55,
+		0x55FFFF,
+		0xFF5555,
+		0xFF55FF,
+		0xFFFF55,
+		0xFFFFFF
+	};
 	
 	public static final int SIZE_MEDIUM=0;
 	public static final int SIZE_LARGE=1;
@@ -84,82 +103,71 @@ public class MinecraftFormattingCodeParser
 				char keyChar=chars[offset++];
 				switch(keyChar){
 					case '0':
-						flags[undecOffset]=0;
+						Arrays.fill(flags,undecOffset,flags.length,(byte)0);
 						break;
 					case '1':
-						flags[undecOffset]=1;
+						Arrays.fill(flags,undecOffset,flags.length,(byte)1);
 						break;
 					case '2':
-						flags[undecOffset]=2;
+						Arrays.fill(flags,undecOffset,flags.length,(byte)2);
 						break;
 					case '3':
-						flags[undecOffset]=3;
+						Arrays.fill(flags,undecOffset,flags.length,(byte)3);
 						break;
 					case '4':
-						flags[undecOffset]=4;
+						Arrays.fill(flags,undecOffset,flags.length,(byte)4);
 						break;
 					case '5':
-						flags[undecOffset]=5;
+						Arrays.fill(flags,undecOffset,flags.length,(byte)5);
 						break;
 					case '6':
-						flags[undecOffset]=6;
+						Arrays.fill(flags,undecOffset,flags.length,(byte)6);
 						break;
 					case '7':
-						flags[undecOffset]=7;
+						Arrays.fill(flags,undecOffset,flags.length,(byte)7);
 						break;
 					case '8':
-						flags[undecOffset]=8;
+						Arrays.fill(flags,undecOffset,flags.length,(byte)8);
 						break;
 					case '9':
-						flags[undecOffset]=9;
+						Arrays.fill(flags,undecOffset,flags.length,(byte)9);
 						break;
 					case 'a':case 'A':
-						flags[undecOffset]=10;
+						Arrays.fill(flags,undecOffset,flags.length,(byte)10);
 						break;
 					case 'b':case 'B':
-						flags[undecOffset]=11;
+						Arrays.fill(flags,undecOffset,flags.length,(byte)11);
 						break;
 					case 'c':case 'C':
-						flags[undecOffset]=12;
+						Arrays.fill(flags,undecOffset,flags.length,(byte)12);
 						break;
 					case 'd':case 'D':
-						flags[undecOffset]=13;
+						Arrays.fill(flags,undecOffset,flags.length,(byte)13);
 						break;
 					case 'e':case 'E':
-						flags[undecOffset]=14;
+						Arrays.fill(flags,undecOffset,flags.length,(byte)14);
 						break;
 					case 'f':case 'F':
-						flags[undecOffset]=15;
+						Arrays.fill(flags,undecOffset,flags.length,(byte)15);
 						break;
 					case 'r':case 'R':
-						flags[undecOffset]=defaultFlag;
+						Arrays.fill(flags,undecOffset,flags.length,defaultFlag);
 						break;
 				}
 				continue;
 			}
-			if(undecOffset!=0)
-				flags[undecOffset]=flags[undecOffset-1];
-			else
-				flags[undecOffset]=defaultFlag;
 			offset++;
 			undecOffset++;
 		}
 		
-		Log.d("MFCP","offset:"+offset+",undecOffset:"+undecOffset);
+		Log.d("MFCP","offset:"+offset+",undecOffset:"+undecOffset+",flags[0]:"+flags[0]);
 	}
 	
 	public Spannable build(Context x,int size){
-		int[] resArray;
-		switch(size){
-			case SIZE_MEDIUM:resArray=SIZE_MEDIUM_RESOURCES;break;
-			case SIZE_SMALL:resArray=SIZE_SMALL_RESOURCES;break;
-			case SIZE_LARGE:resArray=SIZE_LARGE_RESOURCES;break;
-			default:throw new RuntimeException(size+" is invalid value for size parameter.");
-		}
 		SpannableStringBuilder ssb=new SpannableStringBuilder();
 		for(int i=0;i<escaped.length;i++){
-			TextAppearanceSpan tas=new TextAppearanceSpan(x,resArray[flags[i]&0xF]);
-			ssb.append(escaped[i]+"",tas,SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+			ForegroundColorSpan fcs=new ForegroundColorSpan(TEXT_COLORS[flags[i]&0xF]);
+			ssb.append(escaped[i]+"",fcs,SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
 		}
 		return ssb;
 	}
