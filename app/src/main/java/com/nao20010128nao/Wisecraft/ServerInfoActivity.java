@@ -195,7 +195,11 @@ public class ServerInfoActivity extends ActionBarActivity {
 			}
 
 			if(pref.getBoolean("colorFormattedText",false)){
-				serverNameStr = Utils.parseMinecraftFormattingCode(rep.description);
+				if(pref.getBoolean("darkBackgroundForServerName",false)){
+					serverNameStr = Utils.parseMinecraftFormattingCodeForDark(rep.description);
+				}else{
+					serverNameStr = Utils.parseMinecraftFormattingCode(rep.description);
+				}
 			}else{
 				serverNameStr = Utils.deleteDecorations(rep.description);
 			}
@@ -243,7 +247,11 @@ public class ServerInfoActivity extends ActionBarActivity {
 			}
 
 			if(pref.getBoolean("colorFormattedText",false)){
-				serverNameStr = Utils.parseMinecraftFormattingCode(rep.description.text);
+				if(pref.getBoolean("darkBackgroundForServerName",false)){
+					serverNameStr = Utils.parseMinecraftFormattingCodeForDark(rep.description.text);
+				}else{
+					serverNameStr = Utils.parseMinecraftFormattingCode(rep.description.text);
+				}
 			}else{
 				serverNameStr = Utils.deleteDecorations(rep.description.text);
 			}
@@ -318,7 +326,11 @@ public class ServerInfoActivity extends ActionBarActivity {
 	public void setTitle(CharSequence title) {
 		// TODO: Implement this method
 		if(pref.getBoolean("colorFormattedText",false)){
-			super.setTitle(Utils.parseMinecraftFormattingCode(title.toString()));
+			if(pref.getBoolean("darkBackgroundForServerName",false)){
+				super.setTitle(Utils.parseMinecraftFormattingCodeForDark(title.toString()));
+			}else{
+				super.setTitle(Utils.parseMinecraftFormattingCode(title.toString()));
+			}
 		}else{
 			super.setTitle(Utils.deleteDecorations(title.toString()));
 		}
