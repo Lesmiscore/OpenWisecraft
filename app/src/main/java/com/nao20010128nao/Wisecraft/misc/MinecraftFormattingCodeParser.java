@@ -66,22 +66,22 @@ public class MinecraftFormattingCodeParser
 		R.style.minecraftFormattingColorF_Large
 	};
 	private static final int[] TEXT_COLORS=new int[]{
-		0x000000,
-		0x0000AA,
-		0x00AA00,
-		0x00AAAA,
-		0xAA0000,
-		0xAA00AA,
-		0xFFAA00,
-		0xAAAAAA,
-		0x555555,
-		0x5555FF,
-		0x55FF55,
-		0x55FFFF,
-		0xFF5555,
-		0xFF55FF,
-		0xFFFF55,
-		0xFFFFFF
+		0xff000000,
+		0xff0000AA,
+		0xff00AA00,
+		0xff00AAAA,
+		0xffAA0000,
+		0xffAA00AA,
+		0xffFFAA00,
+		0xffAAAAAA,
+		0xff555555,
+		0xff5555FF,
+		0xff55FF55,
+		0xff55FFFF,
+		0xffFF5555,
+		0xffFF55FF,
+		0xffFFFF55,
+		0xffFFFFFF
 	};
 	
 	public static final int SIZE_MEDIUM=0;
