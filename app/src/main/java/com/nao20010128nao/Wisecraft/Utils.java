@@ -32,10 +32,10 @@ public class Utils {
 		}
 		return sb.toString();
 	}
-	public static Spannable parseMinecraftFormattingCode(String s,int size){
+	public static Spannable parseMinecraftFormattingCode(String s){
 		MinecraftFormattingCodeParser mfcp=new MinecraftFormattingCodeParser();
 		mfcp.loadFlags(s,(byte)0);
-		return mfcp.build(TheApplication.instance,size);
+		return mfcp.build();
 	}
 	public static boolean isNullString(String s) {
 		if (s == null) {

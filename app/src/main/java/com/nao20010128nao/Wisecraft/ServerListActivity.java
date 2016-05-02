@@ -1080,7 +1080,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 								((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText("-/-");
 							}
 							if(pref.getBoolean("colorFormattedText",false)){
-								((TextView)sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(parseMinecraftFormattingCode(title,MinecraftFormattingCodeParser.SIZE_LARGE));
+								((TextView)sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(parseMinecraftFormattingCode(title));
 							}else{
 								((TextView)sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(deleteDecorations(title));
 							}
