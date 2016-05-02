@@ -62,7 +62,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 	ImageView serverIcon;
 	TextView serverName;
 	Drawable serverIconObj;
-	String serverNameStr;
+	CharSequence serverNameStr;
 	String modLoaderTypeName;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -144,9 +144,9 @@ public class ServerInfoActivity extends ActionBarActivity {
 			final String title;
 			Map<String,String> m=fs.getData();
 			if (m.containsKey("hostname")) {
-				title = deleteDecorations(m.get("hostname"));
+				title = m.get("hostname");
 			} else if (m.containsKey("motd")) {
-				title = deleteDecorations(m.get("motd"));
+				title = m.get("motd");
 			} else {
 				title = ip + ":" + port;
 			}
@@ -170,7 +170,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 			if (rep.description == null) {
 				setTitle(localStat.ip + ":" + localStat.port);
 			} else {
-				setTitle(deleteDecorations(rep.description));
+				setTitle(rep.description);
 			}
 
 			if (rep.players.sample != null) {
@@ -187,7 +187,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 				adap.clear();
 			}
 
-			serverNameStr = deleteDecorations(rep.description);
+			serverNameStr = Utils.parseMinecraftFormattingCode(rep.description,0);
 
 			if (rep.favicon != null) {
 				byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
@@ -215,7 +215,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 			if (rep.description == null) {
 				setTitle(localStat.ip + ":" + localStat.port);
 			} else {
-				setTitle(deleteDecorations(rep.description.text));
+				setTitle(rep.description.text);
 			}
 
 			if (rep.players.sample != null) {
@@ -231,7 +231,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 				adap.clear();
 			}
 
-			serverNameStr = deleteDecorations(rep.description.text);
+			serverNameStr = Utils.parseMinecraftFormattingCode(rep.description.text,0);
 
 			if (rep.favicon != null) {
 				byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
@@ -264,7 +264,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 				Toast.makeText(this, R.string.ucpInfoError, 0).show();
 				return;
 			} else {
-				setTitle(deleteDecorations((((UnconnectedPing.UnconnectedPingResult)resp).getServerName())));
+				setTitle((((UnconnectedPing.UnconnectedPingResult)resp).getServerName()));
 			}
 		}
 	}
@@ -300,9 +300,9 @@ public class ServerInfoActivity extends ActionBarActivity {
 	}
 
 	@Override
-	public void finish() {
+	public void setTitle(CharSequence title) {
 		// TODO: Implement this method
-		super.finish();
+		super.setTitle(Utils.parseMinecraftFormattingCode(title.toString(),0));
 	}
 
 	@Override
