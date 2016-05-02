@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<style name="minecraftFormattingColor0" parent="@android:style/TextAppearance.Medium">
+		<item name="android:textColor">#000000</item>
+	</style>
+	<style name="minecraftFormattingColor1" parent="@android:style/TextAppearance.Medium">
+		<item name="android:textColor">#0000AA</item>
+	</style>
+	<style name="minecraftFormattingColor2" parent="@android:style/TextAppearance.Medium">
+		<item name="android:textColor">#00AA00</item>
+	</style>
+	<style name="minecraftFormattingColor3" parent="@android:style/TextAppearance.Medium">
+		<item name="android:textColor">#00AAAA</item>
+	</style>
+	<style name="minecraftFormattingColor4" parent="@android:style/TextAppearance.Medium">
+		<item name="android:textColor">#AA0000</item>
+	</style>
+	<style name="minecraftFormattingColor5" parent="@android:style/TextAppearance.Medium">
+		<item name="android:textColor">#AA00AA</item>
+	</style>
+	<style name="minecraftFormattingColor6" parent="@android:style/TextAppearance.Medium">
+		<item name="android:textColor">#FFAA00</item>
+	</style>
+	<style name="minecraftFormattingColor7" parent="@android:style/TextAppearance.Medium">
+		<item name="android:textColor">#AAAAAA</item>
+	</style>
+	<style name="minecraftFormattingColor8" parent="@android:style/TextAppearance.Medium">
+		<item name="android:textColor">#555555</item>
+	</style>
+	<style name="minecraftFormattingColor9" parent="@android:style/TextAppearance.Medium">
+		<item name="android:textColor">#5555FF</item>
+	</style>
+	<style name="minecraftFormattingColorA" parent="@android:style/TextAppearance.Medium">
+		<item name="android:textColor">#55FF55</item>
+	</style>
+	<style name="minecraftFormattingColorB" parent="@android:style/TextAppearance.Medium">
+		<item name="android:textColor">#55FFFF</item>
+	</style>
+	<style name="minecraftFormattingColorC" parent="@android:style/TextAppearance.Medium">
+		<item name="android:textColor">#FF5555</item>
+	</style>
+	<style name="minecraftFormattingColorD" parent="@android:style/TextAppearance.Medium">
+		<item name="android:textColor">#FF55FF</item>
+	</style>
+	<style name="minecraftFormattingColorE" parent="@android:style/TextAppearance.Medium">
+		<item name="android:textColor">#FFFF55</item>
+	</style>
+	<style name="minecraftFormattingColorF" parent="@android:style/TextAppearance.Medium">
+		<item name="android:textColor">#FFFFFF</item>
+	</style>
+	
+	<style name="minecraftFormattingColor0.Small" parent="@android:style/TextAppearance.Small">
+		<item name="android:textColor">#000000</item>
+	</style>
+	<style name="minecraftFormattingColor1.Small" parent="@android:style/TextAppearance.Small">
+		<item name="android:textColor">#0000AA</item>
+	</style>
+	<style name="minecraftFormattingColor2.Small" parent="@android:style/TextAppearance.Small">
+		<item name="android:textColor">#00AA00</item>
+	</style>
+	<style name="minecraftFormattingColor3.Small" parent="@android:style/TextAppearance.Small">
+		<item name="android:textColor">#00AAAA</item>
+	</style>
+	<style name="minecraftFormattingColor4.Small" parent="@android:style/TextAppearance.Small">
+		<item name="android:textColor">#AA0000</item>
+	</style>
+	<style name="minecraftFormattingColor5.Small" parent="@android:style/TextAppearance.Small">
+		<item name="android:textColor">#AA00AA</item>
+	</style>
+	<style name="minecraftFormattingColor6.Small" parent="@android:style/TextAppearance.Small">
+		<item name="android:textColor">#FFAA00</item>
+	</style>
+	<style name="minecraftFormattingColor7.Small" parent="@android:style/TextAppearance.Small">
+		<item name="android:textColor">#AAAAAA</item>
+	</style>
+	<style name="minecraftFormattingColor8.Small" parent="@android:style/TextAppearance.Small">
+		<item name="android:textColor">#555555</item>
+	</style>
+	<style name="minecraftFormattingColor9.Small" parent="@android:style/TextAppearance.Small">
+		<item name="android:textColor">#5555FF</item>
+	</style>
+	<style name="minecraftFormattingColorA.Small" parent="@android:style/TextAppearance.Small">
+		<item name="android:textColor">#55FF55</item>
+	</style>
+	<style name="minecraftFormattingColorB.Small" parent="@android:style/TextAppearance.Small">
+		<item name="android:textColor">#55FFFF</item>
+	</style>
+	<style name="minecraftFormattingColorC.Small" parent="@android:style/TextAppearance.Small">
+		<item name="android:textColor">#FF5555</item>
+	</style>
+	<style name="minecraftFormattingColorD.Small" parent="@android:style/TextAppearance.Small">
+		<item name="android:textColor">#FF55FF</item>
+	</style>
+	<style name="minecraftFormattingColorE.Small" parent="@android:style/TextAppearance.Small">
+		<item name="android:textColor">#FFFF55</item>
+	</style>
+	<style name="minecraftFormattingColorF.Small" parent="@android:style/TextAppearance.Small">
+		<item name="android:textColor">#FFFFFF</item>
+	</style>
+	
+	<style name="minecraftFormattingColor0.Large" parent="@android:style/TextAppearance.Large">
+		<item name="android:textColor">#000000</item>
+	</style>
+	<style name="minecraftFormattingColor1.Large" parent="@android:style/TextAppearance.Large">
+		<item name="android:textColor">#0000AA</item>
+	</style>
+	<style name="minecraftFormattingColor2.Large" parent="@android:style/TextAppearance.Large">
+		<item name="android:textColor">#00AA00</item>
+	</style>
+	<style name="minecraftFormattingColor3.Large" parent="@android:style/TextAppearance.Large">
+		<item name="android:textColor">#00AAAA</item>
+	</style>
+	<style name="minecraftFormattingColor4.Large" parent="@android:style/TextAppearance.Large">
+		<item name="android:textColor">#AA0000</item>
+	</style>
+	<style name="minecraftFormattingColor5.Large" parent="@android:style/TextAppearance.Large">
+		<item name="android:textColor">#AA00AA</item>
+	</style>
+	<style name="minecraftFormattingColor6.Large" parent="@android:style/TextAppearance.Large">
+		<item name="android:textColor">#FFAA00</item>
+	</style>
+	<style name="minecraftFormattingColor7.Large" parent="@android:style/TextAppearance.Large">
+		<item name="android:textColor">#AAAAAA</item>
+	</style>
+	<style name="minecraftFormattingColor8.Large" parent="@android:style/TextAppearance.Large">
+		<item name="android:textColor">#555555</item>
+	</style>
+	<style name="minecraftFormattingColor9.Large" parent="@android:style/TextAppearance.Large">
+		<item name="android:textColor">#5555FF</item>
+	</style>
+	<style name="minecraftFormattingColorA.Large" parent="@android:style/TextAppearance.Large">
+		<item name="android:textColor">#55FF55</item>
+	</style>
+	<style name="minecraftFormattingColorB.Large" parent="@android:style/TextAppearance.Large">
+		<item name="android:textColor">#55FFFF</item>
+	</style>
+	<style name="minecraftFormattingColorC.Large" parent="@android:style/TextAppearance.Large">
+		<item name="android:textColor">#FF5555</item>
+	</style>
+	<style name="minecraftFormattingColorD.Large" parent="@android:style/TextAppearance.Large">
+		<item name="android:textColor">#FF55FF</item>
+	</style>
+	<style name="minecraftFormattingColorE.Large" parent="@android:style/TextAppearance.Large">
+		<item name="android:textColor">#FFFF55</item>
+	</style>
+	<style name="minecraftFormattingColorF.Large" parent="@android:style/TextAppearance.Large">
+		<item name="android:textColor">#FFFFFF</item>
+	</style>
+</resources>
