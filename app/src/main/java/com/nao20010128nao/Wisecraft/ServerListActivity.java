@@ -1079,7 +1079,11 @@ class ServerListActivityImpl extends AppCompatListActivity {
 								title = s.ip + ":" + s.port;
 								((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText("-/-");
 							}
-							((TextView)sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(parseMinecraftFormattingCode(title,MinecraftFormattingCodeParser.SIZE_LARGE));
+							if(pref.getBoolean("colorFormattedText",false)){
+								((TextView)sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(parseMinecraftFormattingCode(title,MinecraftFormattingCodeParser.SIZE_LARGE));
+							}else{
+								((TextView)sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(deleteDecorations(title));
+							}
 							((TextView)sl.getViewQuick(i_).findViewById(R.id.pingMillis)).setText(s.ping + " ms");
 							((TextView)sl.getViewQuick(i_).findViewById(R.id.serverAddress)).setText(s.ip + ":" + s.port);
 							list.set(i_, s);

@@ -231,7 +231,11 @@ public class ServerInfoActivity extends ActionBarActivity {
 				adap.clear();
 			}
 
-			serverNameStr = Utils.parseMinecraftFormattingCode(rep.description.text,0);
+			if(pref.getBoolean("colorFormattedText",false)){
+				serverNameStr = Utils.parseMinecraftFormattingCode(rep.description.text,0);
+			}else{
+				serverNameStr = Utils.deleteDecorations(rep.description.text);
+			}
 
 			if (rep.favicon != null) {
 				byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
@@ -302,7 +306,11 @@ public class ServerInfoActivity extends ActionBarActivity {
 	@Override
 	public void setTitle(CharSequence title) {
 		// TODO: Implement this method
-		super.setTitle(Utils.parseMinecraftFormattingCode(title.toString(),0));
+		if(pref.getBoolean("colorFormattedText",false)){
+			super.setTitle(Utils.parseMinecraftFormattingCode(title.toString(),0));
+		}else{
+			super.setTitle(Utils.deleteDecorations(title.toString()));
+		}
 	}
 
 	@Override
