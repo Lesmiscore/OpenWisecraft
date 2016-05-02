@@ -54,5 +54,6 @@
 		android:title="@string/darkBackgroundForServerName"
 		android:key="darkBackgroundForServerName"
 		android:defaultValue="false"
+		android:dependency="colorFormattedText"
 	/>
 </PreferenceScreen>

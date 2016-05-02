@@ -197,6 +197,14 @@ class ServerListActivityImpl extends AppCompatListActivity {
 		for (int i=0;i < list.size();i++) {
 			sl.getViewQuick(i);
 		}
+		if(pref.getBoolean("colorFormattedText",false)&pref.getBoolean("darkBackgroundForServerName",false)){
+			BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
+			bd.setTargetDensity(getResources().getDisplayMetrics());
+			bd.setTileModeXY(Shader.TileMode.REPEAT,Shader.TileMode.REPEAT);
+			getListView().setBackground(bd);
+		}
+		
+		
 		networkState = Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "", Snackbar.LENGTH_INDEFINITE);
 		ViewCompat.setAlpha(networkState.getView(), 0.7f);
 		networkState.getView().setClickable(false);
@@ -682,14 +690,14 @@ class ServerListActivityImpl extends AppCompatListActivity {
 			while (cached.size() <= position)
 				cached.addAll(Constant.TEN_LENGTH_NULL_LIST);
 			final View layout;
-			if(sla.pref.getBoolean("darkBackgroundForServerName",false)){
-				layout=sla.getLayoutInflater().inflate(R.layout.quickstatus_dark, null, false);
-				BitmapDrawable bd=(BitmapDrawable)sla.getResources().getDrawable(R.drawable.soil);
-				bd.setTargetDensity(sla.getResources().getDisplayMetrics());
-				bd.setTileModeXY(Shader.TileMode.REPEAT,Shader.TileMode.REPEAT);
-				layout.setBackground(bd);
+			if(sla.pref.getBoolean("colorFormattedText",false)){
+				if(sla.pref.getBoolean("darkBackgroundForServerName",false)){
+					layout=sla.getLayoutInflater().inflate(R.layout.quickstatus_dark, null, false);
+				}else{
+					layout=sla.getLayoutInflater().inflate(R.layout.quickstatus, null, false);
+				}
 			}else{
-				layout=sla.getLayoutInflater().inflate(R.layout.quickstatus, null, false);		
+				layout=sla.getLayoutInflater().inflate(R.layout.quickstatus, null, false);
 			}
 			Server s=getItem(position);
 			layout.setTag(s);

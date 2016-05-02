@@ -134,6 +134,13 @@ public class ServerInfoActivity extends ActionBarActivity {
 		fth.setCurrentTab(getIntent().getIntExtra("offset",0));
 
 		update(localStat.response);
+		
+		if(pref.getBoolean("colorFormattedText",false)&pref.getBoolean("darkBackgroundForServerName",false)){
+			BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
+			bd.setTargetDensity(getResources().getDisplayMetrics());
+			bd.setTileModeXY(Shader.TileMode.REPEAT,Shader.TileMode.REPEAT);
+			getSupportActionBar().setBackgroundDrawable(bd);
+		}
 	}
 	public synchronized void update(final ServerPingResult resp) {
 		if (resp instanceof FullStat) {
@@ -483,8 +490,15 @@ public class ServerInfoActivity extends ActionBarActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
+			SharedPreferences pref=PreferenceManager.getDefaultSharedPreferences(getActivity());
 			View lv= inflater.inflate(R.layout.data_tab_pc, null, false);
 			getParentActivity().setDataView(lv);
+			if(pref.getBoolean("colorFormattedText",false)&pref.getBoolean("darkBackgroundForServerName",false)){
+				BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
+				bd.setTargetDensity(getResources().getDisplayMetrics());
+				bd.setTileModeXY(Shader.TileMode.REPEAT,Shader.TileMode.REPEAT);
+				lv.findViewById(R.id.serverImageAndName).setBackground(bd);
+			}
 			return lv;
 		}
 	}
