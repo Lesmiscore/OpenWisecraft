@@ -5,6 +5,8 @@ import android.text.SpannableStringBuilder;
 import android.content.Context;
 import com.nao20010128nao.Wisecraft.R;
 import android.text.style.TextAppearanceSpan;
+import java.util.Arrays;
+import android.util.Log;
 
 public class MinecraftFormattingCodeParser
 {
@@ -78,8 +80,8 @@ public class MinecraftFormattingCodeParser
 		int undecOffset=0;
 		while (chars.length > offset) {
 			if (chars[offset] == '§') {
-				char keyChar=chars[++offset];
 				offset++;
+				char keyChar=chars[offset++];
 				switch(keyChar){
 					case '0':
 						flags[undecOffset]=0;
@@ -132,22 +134,18 @@ public class MinecraftFormattingCodeParser
 					case 'r':case 'R':
 						flags[undecOffset]=defaultFlag;
 						break;
-					default:
-						if(undecOffset!=0)
-							flags[undecOffset]=flags[undecOffset-1];
-						else
-							flags[undecOffset]=defaultFlag;
-						break;
 				}
 				continue;
 			}
-			offset++;
-			undecOffset++;
 			if(undecOffset!=0)
 				flags[undecOffset]=flags[undecOffset-1];
 			else
 				flags[undecOffset]=defaultFlag;
+			offset++;
+			undecOffset++;
 		}
+		
+		Log.d("MFCP","offset:"+offset+",undecOffset:"+undecOffset);
 	}
 	
 	public Spannable build(Context x,int size){
@@ -159,10 +157,9 @@ public class MinecraftFormattingCodeParser
 			default:throw new RuntimeException(size+" is invalid value for size parameter.");
 		}
 		SpannableStringBuilder ssb=new SpannableStringBuilder();
-		ssb.append(new String(escaped));
 		for(int i=0;i<escaped.length;i++){
 			TextAppearanceSpan tas=new TextAppearanceSpan(x,resArray[flags[i]&0xF]);
-			ssb.setSpan(tas,i,i,SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+			ssb.append(escaped[i]+"",tas,SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
 		}
 		return ssb;
 	}

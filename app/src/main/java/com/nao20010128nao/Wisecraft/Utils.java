@@ -14,6 +14,8 @@ import com.nao20010128nao.Wisecraft.struct.WCH_ServerInfo;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
+import android.text.Spannable;
+import com.nao20010128nao.Wisecraft.misc.MinecraftFormattingCodeParser;
 
 public class Utils {
 	public static String deleteDecorations(String decorated) {
@@ -29,6 +31,11 @@ public class Utils {
 			offset++;
 		}
 		return sb.toString();
+	}
+	public static Spannable parseMinecraftFormattingCode(String s,int size){
+		MinecraftFormattingCodeParser mfcp=new MinecraftFormattingCodeParser();
+		mfcp.loadFlags(s,(byte)0);
+		return mfcp.build(TheApplication.instance,size);
 	}
 	public static boolean isNullString(String s) {
 		if (s == null) {
