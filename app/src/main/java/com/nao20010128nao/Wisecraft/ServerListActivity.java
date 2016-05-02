@@ -1027,9 +1027,9 @@ class ServerListActivityImpl extends AppCompatListActivity {
 								FullStat fs=(FullStat)s.response;
 								Map<String,String> m=fs.getData();
 								if (m.containsKey("hostname")) {
-									title = deleteDecorations(m.get("hostname"));
+									title = m.get("hostname");
 								} else if (m.containsKey("motd")) {
-									title = deleteDecorations(m.get("motd"));
+									title = m.get("motd");
 								} else {
 									title = s.ip + ":" + s.port;
 								}
@@ -1039,7 +1039,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 								if (rep.description == null) {
 									title = s.ip + ":" + s.port;
 								} else {
-									title = deleteDecorations(rep.description.text);
+									title = rep.description.text;
 								}
 								((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText(rep.players.online + "/" + rep.players.max);
 							} else if (s.response instanceof Reply) {//PC
@@ -1047,7 +1047,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 								if (rep.description == null) {
 									title = s.ip + ":" + s.port;
 								} else {
-									title = deleteDecorations(rep.description);
+									title = rep.description;
 								}
 								((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText(rep.players.online + "/" + rep.players.max);
 							} else if (s.response instanceof SprPair) {//PE?
@@ -1060,9 +1060,9 @@ class ServerListActivityImpl extends AppCompatListActivity {
 									FullStat fs=(FullStat)sp.getA();
 									Map<String,String> m=fs.getData();
 									if (m.containsKey("hostname")) {
-										title = deleteDecorations(m.get("hostname"));
+										title = m.get("hostname");
 									} else if (m.containsKey("motd")) {
-										title = deleteDecorations(m.get("motd"));
+										title = m.get("motd");
 									} else {
 										title = s.ip + ":" + s.port;
 									}
