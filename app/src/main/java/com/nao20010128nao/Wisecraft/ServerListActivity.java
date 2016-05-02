@@ -38,6 +38,8 @@ import java.net.ServerSocket;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.Shader;
 
 class ServerListActivityImpl extends AppCompatListActivity {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
@@ -679,7 +681,16 @@ class ServerListActivityImpl extends AppCompatListActivity {
 			//if(convertView!=null)return convertView;
 			while (cached.size() <= position)
 				cached.addAll(Constant.TEN_LENGTH_NULL_LIST);
-			final View layout=sla.getLayoutInflater().inflate(R.layout.quickstatus, null, false);
+			final View layout;
+			if(sla.pref.getBoolean("darkBackgroundForServerName",false)){
+				layout=sla.getLayoutInflater().inflate(R.layout.quickstatus_dark, null, false);
+				BitmapDrawable bd=(BitmapDrawable)sla.getResources().getDrawable(R.drawable.soil);
+				bd.setTargetDensity(sla.getResources().getDisplayMetrics());
+				bd.setTileModeXY(Shader.TileMode.REPEAT,Shader.TileMode.REPEAT);
+				layout.setBackground(bd);
+			}else{
+				layout=sla.getLayoutInflater().inflate(R.layout.quickstatus, null, false);		
+			}
 			Server s=getItem(position);
 			layout.setTag(s);
 			((TextView)layout.findViewById(R.id.serverName)).setText(R.string.working);
@@ -1080,7 +1091,11 @@ class ServerListActivityImpl extends AppCompatListActivity {
 								((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText("-/-");
 							}
 							if(pref.getBoolean("colorFormattedText",false)){
-								((TextView)sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(parseMinecraftFormattingCode(title));
+								if(pref.getBoolean("darkBackgroundForServerName",false)){
+									((TextView)sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(parseMinecraftFormattingCodeForDark(title));
+								}else{
+									((TextView)sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(parseMinecraftFormattingCode(title));
+								}
 							}else{
 								((TextView)sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(deleteDecorations(title));
 							}

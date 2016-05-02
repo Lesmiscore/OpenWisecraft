@@ -50,4 +50,9 @@
 		android:key="colorFormattedText"
 		android:defaultValue="false"
 	/>
+	<com.nao20010128nao.Wisecraft.misc.pref.CheckBoxPreference
+		android:title="@string/darkBackgroundForServerName"
+		android:key="darkBackgroundForServerName"
+		android:defaultValue="false"
+	/>
 </PreferenceScreen>

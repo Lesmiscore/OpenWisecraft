@@ -37,6 +37,11 @@ public class Utils {
 		mfcp.loadFlags(s,(byte)0);
 		return mfcp.build();
 	}
+	public static Spannable parseMinecraftFormattingCodeForDark(String s){
+		MinecraftFormattingCodeParser mfcp=new MinecraftFormattingCodeParser();
+		mfcp.loadFlags(s,(byte)15);
+		return mfcp.build();
+	}
 	public static boolean isNullString(String s) {
 		if (s == null) {
 			return true;
