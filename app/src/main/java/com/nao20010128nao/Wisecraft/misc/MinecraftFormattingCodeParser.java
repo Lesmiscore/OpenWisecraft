@@ -128,16 +128,16 @@ public class MinecraftFormattingCodeParser
 			ForegroundColorSpan fcs=new ForegroundColorSpan(TEXT_COLORS[flags[i]&0xF]);
 			ssb.append(escaped[i]+"",fcs,SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
 			if(0!=(flags[i]&0b00010000)){
-				ssb.setSpan(new StyleSpan(Typeface.BOLD),ssb.length(),ssb.length(),SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+				ssb.setSpan(new StyleSpan(Typeface.BOLD),ssb.length()-1,ssb.length(),SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
 			}
 			if(0!=(flags[i]&0b00100000)){
-				ssb.setSpan(new StrikethroughSpan(),ssb.length(),ssb.length(),SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+				ssb.setSpan(new StrikethroughSpan(),ssb.length()-1,ssb.length(),SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
 			}
 			if(0!=(flags[i]&0b01000000)){
-				ssb.setSpan(new UnderlineSpan(),ssb.length(),ssb.length(),SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+				ssb.setSpan(new UnderlineSpan(),ssb.length()-1,ssb.length(),SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
 			}
 			if(0!=(flags[i]&0b10000000)){
-				ssb.setSpan(new StyleSpan(Typeface.ITALIC),ssb.length(),ssb.length(),SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+				ssb.setSpan(new StyleSpan(Typeface.ITALIC),ssb.length()-1,ssb.length(),SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
 			}
 		}
 		return ssb;
