@@ -842,7 +842,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 											}
 										});
 
-									new AppCompatAlertDialog.Builder(sla).
+									new AppCompatAlertDialog.Builder(sla,R.style.AppAlertDialog).
 										setView(dialog).
 										setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener(){
 											public void onClick(DialogInterface d, int sel) {
