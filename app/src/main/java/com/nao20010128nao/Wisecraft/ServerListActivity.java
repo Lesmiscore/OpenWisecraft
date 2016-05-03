@@ -11,6 +11,8 @@ import java.util.*;
 
 import android.app.ActivityGroup;
 import android.app.Dialog;
+import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.ConnectivityManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewCompat;
@@ -38,8 +40,6 @@ import java.net.ServerSocket;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.Shader;
 
 class ServerListActivityImpl extends AppCompatListActivity {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
