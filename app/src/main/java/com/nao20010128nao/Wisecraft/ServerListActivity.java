@@ -414,11 +414,13 @@ class ServerListActivityImpl extends AppCompatListActivity {
 						final ArrayList<Server> sv=new ArrayList<>();
 						for (String[] s:al) {
 							if(s.length!=4)continue;
-							Server svr=new Server();
-							svr.ip = s[2];
-							svr.port = new Integer(s[3]);
-							svr.mode = 0;
-							sv.add(svr);
+							try {
+								Server svr=new Server();
+								svr.ip = s[2];
+								svr.port = new Integer(s[3]);
+								svr.mode = 0;
+								sv.add(svr);
+							} catch (NumberFormatException e) {}
 						}
 						runOnUiThread(new Runnable(){
 								public void run() {
@@ -896,8 +898,12 @@ class ServerListActivityImpl extends AppCompatListActivity {
 												sls = "";
 											for (String l:Utils.lines(sls))
 												if (l.endsWith(s.toString()))return;
-											sls += "900:" + randomText() + ":" + s + "\n";
-											Utils.writeToFile(servLst, sls);
+											sls += "\n900:" + randomText() + ":" + s + "\n";
+											StringBuilder sb=new StringBuilder(100);
+											for(String line:Utils.lines(sls))
+												if(line.split("\\:").length==4)
+													sb.append(line).append('\n');
+											Utils.writeToFile(servLst, sb.toString());
 										}
 									}.start();
 								}
