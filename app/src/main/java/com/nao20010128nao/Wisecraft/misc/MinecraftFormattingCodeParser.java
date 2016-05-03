@@ -4,6 +4,10 @@ import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import com.nao20010128nao.Wisecraft.Utils;
+import android.text.style.StyleSpan;
+import android.graphics.Typeface;
+import android.text.style.StrikethroughSpan;
+import android.text.style.UnderlineSpan;
 
 public class MinecraftFormattingCodeParser
 {
@@ -41,6 +45,7 @@ public class MinecraftFormattingCodeParser
 				offset++;
 				char keyChar=chars[offset++];
 				switch(keyChar){
+					/*Colors*/
 					case '0':
 						flag=(byte)((flag&(0xf0))|0);
 						break;
@@ -89,6 +94,22 @@ public class MinecraftFormattingCodeParser
 					case 'f':case 'F':
 						flag=(byte)((flag&(0xf0))|15);
 						break;
+						
+					/*Styles*/
+					case 'l':case 'L':
+						flag=(byte)(flag|0b00010000);
+						break;
+					case 'm':case 'M':
+						flag=(byte)(flag|0b00100000);
+						break;
+					case 'n':case 'N':
+						flag=(byte)(flag|0b01000000);
+						break;
+					case 'o':case 'O':
+						flag=(byte)(flag|0b10000000);
+						break;
+					
+					/*Reset*/
 					case 'r':case 'R':
 						flag=0;
 						break;
@@ -108,6 +129,18 @@ public class MinecraftFormattingCodeParser
 		for(int i=0;i<escaped.length;i++){
 			ForegroundColorSpan fcs=new ForegroundColorSpan(TEXT_COLORS[flags[i]&0xF]);
 			ssb.append(escaped[i]+"",fcs,SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+			if(0!=(flags[i]&0b00010000)){
+				ssb.setSpan(new StyleSpan(Typeface.BOLD),ssb.length(),ssb.length(),SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+			}
+			if(0!=(flags[i]&0b00100000)){
+				ssb.setSpan(new StrikethroughSpan(),ssb.length(),ssb.length(),SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+			}
+			if(0!=(flags[i]&0b01000000)){
+				ssb.setSpan(new UnderlineSpan(),ssb.length(),ssb.length(),SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+			}
+			if(0!=(flags[i]&0b10000000)){
+				ssb.setSpan(new StyleSpan(Typeface.ITALIC),ssb.length(),ssb.length(),SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+			}
 		}
 		return ssb;
 	}
