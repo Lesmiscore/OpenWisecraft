@@ -413,6 +413,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 						}
 						final ArrayList<Server> sv=new ArrayList<>();
 						for (String[] s:al) {
+							if(s.length!=4)continue;
 							Server svr=new Server();
 							svr.ip = s[2];
 							svr.port = new Integer(s[3]);
