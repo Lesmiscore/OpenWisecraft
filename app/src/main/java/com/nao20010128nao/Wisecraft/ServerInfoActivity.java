@@ -19,6 +19,7 @@ import android.util.Base64;
 import android.util.Log;
 import com.google.gson.Gson;
 import com.nao20010128nao.OTC.OrderTrustedMap;
+import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
 import com.nao20010128nao.Wisecraft.misc.compat.CompatArrayAdapter;
 import com.nao20010128nao.Wisecraft.misc.pinger.ServerPingResult;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.Reply;
@@ -29,9 +30,6 @@ import java.lang.ref.WeakReference;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
-import android.support.v7.widget.Toolbar;
-import android.os.Handler;
-import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
 
 public class ServerInfoActivity extends ActionBarActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
