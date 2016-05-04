@@ -98,22 +98,34 @@ public class ServerInfoActivity extends ActionBarActivity {
 		if (!hidePlayer) {
 			playersF = fth.newTabSpec("playersList");
 			playersF.setIndicator(getResources().getString(R.string.players));
-			fth.addTab(playersF, PlayersFragment.class, null);
+			if(localStat.response instanceof UnconnectedPing.UnconnectedPingResult){
+				fth.addTab(playersF,UcpInfoFragment.class,null);
+			}else{
+				fth.addTab(playersF, PlayersFragment.class, null);
+			}
 		}
 
 		if (!hideData) {
 			dataF = fth.newTabSpec("dataList");
 			dataF.setIndicator(getResources().getString(R.string.data));
-			switch(localStat.mode){
-				case 0:fth.addTab(dataF, DataFragmentPE.class,null);break;
-				case 1:fth.addTab(dataF, DataFragmentPC.class,null);break;
+			if(localStat.response instanceof UnconnectedPing.UnconnectedPingResult){
+				fth.addTab(dataF,UcpInfoFragment.class,null);
+			}else{
+				switch(localStat.mode){
+					case 0:fth.addTab(dataF, DataFragmentPE.class,null);break;
+					case 1:fth.addTab(dataF, DataFragmentPC.class,null);break;
+				}
 			}
 		}
 
 		if (!(hidePlugins|localStat.mode==1)) {
 			pluginsF = fth.newTabSpec("pluginsList");
 			pluginsF.setIndicator(getResources().getString(R.string.plugins));
-			fth.addTab(pluginsF, PluginsFragment.class, null);
+			if(localStat.response instanceof UnconnectedPing.UnconnectedPingResult){
+				fth.addTab(pluginsF,UcpInfoFragment.class,null);
+			}else{
+				fth.addTab(pluginsF, PluginsFragment.class, null);
+			}
 		}
 		
 		if(pref.getBoolean("showPcUserFace",false)&localStat.mode==1){
@@ -285,13 +297,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 			update(p.getA());
 			update(p.getB());
 		} else if (resp instanceof UnconnectedPing.UnconnectedPingResult) {
-			if (resp == localStat.response) {
-				finish();
-				Toast.makeText(this, R.string.ucpInfoError, 0).show();
-				return;
-			} else {
-				setTitle((((UnconnectedPing.UnconnectedPingResult)resp).getServerName()));
-			}
+			setTitle((((UnconnectedPing.UnconnectedPingResult)resp).getServerName()));
 		}
 	}
 
@@ -555,6 +561,13 @@ public class ServerInfoActivity extends ActionBarActivity {
 			getParentActivity().setModsListView((ListView)lv.findViewById(R.id.players));
 			getParentActivity().setModLoaderNameView((TextView)lv.findViewById(R.id.modLoaderType));
 			return lv;
+		}
+	}
+	public static class UcpInfoFragment extends BaseFragment<ServerInfoActivity> {
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+			// TODO: Implement this method
+			return inflater.inflate(R.layout.server_info_no_details_fragment,null,false);
 		}
 	}
 }
