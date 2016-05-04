@@ -29,6 +29,9 @@ import java.lang.ref.WeakReference;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import android.support.v7.widget.Toolbar;
+import android.os.Handler;
+import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
 
 public class ServerInfoActivity extends ActionBarActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
@@ -43,7 +46,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 	int port;
 	boolean nonUpd,hidePlayer,hideData,hidePlugins,hideMods;
 
-	MenuItem updateBtn;
+	MenuItem updateBtn,seeTitleButton;
 
 	List<Thread> t=new ArrayList<>();
 	ListView players,data,plugins,mods;
@@ -295,13 +298,14 @@ public class ServerInfoActivity extends ActionBarActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO: Implement this method
+		seeTitleButton=menu.add(Menu.NONE,0,0,R.string.seeTitle);
+		seeTitleButton.setIcon(R.drawable.ic_action_previous_item);
+		MenuItemCompat.setShowAsAction(seeTitleButton,MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
 		if (!nonUpd){
-			updateBtn=menu.add(Menu.NONE, 0, 0, R.string.update);
+			updateBtn=menu.add(Menu.NONE, 1, 1, R.string.update);
 			updateBtn.setIcon(R.drawable.ic_menu_refresh);
 			MenuItemCompat.setShowAsAction(updateBtn,MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
 		}
-		//menu.add(Menu.NONE, 0, 1, "メニュー2");
-
 		return true;
 	}
 
@@ -309,10 +313,30 @@ public class ServerInfoActivity extends ActionBarActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO: Implement this method
 		switch (item.getItemId()) {
-			case 0://Update
+			case 1://Update
 				setResultInstead(Constant.ACTIVITY_RESULT_UPDATE,new Intent().putExtra("offset",fth.getCurrentTab()));
 				finish();//ServerListActivity updates the stat
 				return true;
+			case 0://See the title for all
+				AppCompatAlertDialog.Builder ab=new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog);
+				LinearLayout ll;
+				if(pref.getBoolean("colorFormattedText",false)){
+					if(pref.getBoolean("darkBackgroundForServerName",false)){
+						ll=(LinearLayout)getLayoutInflater().inflate(R.layout.server_info_show_title_dark,null);
+						BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
+						bd.setTargetDensity(getResources().getDisplayMetrics());
+						bd.setTileModeXY(Shader.TileMode.REPEAT,Shader.TileMode.REPEAT);
+						ll.setBackground(bd);
+					}else{
+						ll=(LinearLayout)getLayoutInflater().inflate(R.layout.server_info_show_title,null);
+					}
+				}else{
+					ll=(LinearLayout)getLayoutInflater().inflate(R.layout.server_info_show_title,null);
+				}
+				TextView serverNameView=(TextView)ll.findViewById(R.id.serverName);
+				serverNameView.setText(getTitle());
+				ab.setView(ll).show();
+				break;
 		}
 		return super.onOptionsItemSelected(item);
 	}
