@@ -127,6 +127,21 @@ class ServerListActivityImpl extends AppCompatListActivity {
 							drawerOpened = true;
 						}
 					});
+					
+				if(pref.getBoolean("specialDrawer1",false)){
+					ViewGroup decor=(ViewGroup)getWindow().getDecorView();
+					View decorChild=decor.getChildAt(0);
+					View dChild=dl.getChildAt(0);
+					ViewGroup content=(ViewGroup)dl.getParent();
+
+					dl.removeView(dChild);
+					decor.removeView(decorChild);
+					content.removeView(dl);
+
+					content.addView(dChild);
+					decor.addView(dl);
+					dl.addView(decorChild,0);
+				}
 				break;
 			case 2:
 				setContentView(R.layout.server_list_content_listview);
@@ -158,6 +173,21 @@ class ServerListActivityImpl extends AppCompatListActivity {
 							drawerOpened = true;
 						}
 					});
+					
+				if(pref.getBoolean("specialDrawer1",false)){
+					ViewGroup decor=(ViewGroup)getWindow().getDecorView();
+					View decorChild=decor.getChildAt(0);
+					View dChild=dl.getChildAt(0);
+					ViewGroup content=(ViewGroup)dl.getParent();
+
+					dl.removeView(dChild);
+					decor.removeView(decorChild);
+					content.removeView(dl);
+
+					content.addView(dChild);
+					decor.addView(dl);
+					dl.addView(decorChild,0);
+				}
 				break;
 		}
 		srl = (SwipeRefreshLayout)findViewById(R.id.swipelayout);
