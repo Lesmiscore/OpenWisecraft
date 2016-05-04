@@ -295,7 +295,13 @@ public class ServerInfoActivity extends ActionBarActivity {
 			update(p.getA());
 			update(p.getB());
 		} else if (resp instanceof UnconnectedPing.UnconnectedPingResult) {
-			setTitle((((UnconnectedPing.UnconnectedPingResult)resp).getServerName()));
+			if(pref.getBoolean("showDetailsIfNoDetails",false)){
+				setTitle((((UnconnectedPing.UnconnectedPingResult)resp).getServerName()));
+			}else{
+				finish();
+				Toast.makeText(this,R.string.ucpInfoError,Toast.LENGTH_SHORT).show();
+				return;
+			}
 		}
 	}
 

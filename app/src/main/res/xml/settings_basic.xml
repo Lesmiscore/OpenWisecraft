@@ -61,4 +61,9 @@
 		android:key="specialDrawer1"
 		android:defaultValue="false"
 	/>
+	<com.nao20010128nao.Wisecraft.misc.pref.CheckBoxPreference
+		android:title="@string/showDetailsIfNoDetails"
+		android:key="showDetailsIfNoDetails"
+		android:defaultValue="false"
+	/>
 </PreferenceScreen>
