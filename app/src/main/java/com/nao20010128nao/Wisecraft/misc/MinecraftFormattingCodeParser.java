@@ -45,52 +45,52 @@ public class MinecraftFormattingCodeParser
 				switch(keyChar){
 					/*Colors*/
 					case '0':
-						flag=(byte)((flag&(0xf0))|0);
+						flag=0;
 						break;
 					case '1':
-						flag=(byte)((flag&(0xf0))|1);
+						flag=1;
 						break;
 					case '2':
-						flag=(byte)((flag&(0xf0))|2);
+						flag=2;
 						break;
 					case '3':
-						flag=(byte)((flag&(0xf0))|3);
+						flag=3;
 						break;
 					case '4':
-						flag=(byte)((flag&(0xf0))|4);
+						flag=4;
 						break;
 					case '5':
-						flag=(byte)((flag&(0xf0))|5);
+						flag=5;
 						break;
 					case '6':
-						flag=(byte)((flag&(0xf0))|6);
+						flag=6;
 						break;
 					case '7':
-						flag=(byte)((flag&(0xf0))|7);
+						flag=7;
 						break;
 					case '8':
-						flag=(byte)((flag&(0xf0))|8);
+						flag=8;
 						break;
 					case '9':
-						flag=(byte)((flag&(0xf0))|9);
+						flag=9;
 						break;
 					case 'a':case 'A':
-						flag=(byte)((flag&(0xf0))|10);
+						flag=10;
 						break;
 					case 'b':case 'B':
-						flag=(byte)((flag&(0xf0))|11);
+						flag=11;
 						break;
 					case 'c':case 'C':
-						flag=(byte)((flag&(0xf0))|12);
+						flag=12;
 						break;
 					case 'd':case 'D':
-						flag=(byte)((flag&(0xf0))|13);
+						flag=13;
 						break;
 					case 'e':case 'E':
-						flag=(byte)((flag&(0xf0))|14);
+						flag=14;
 						break;
 					case 'f':case 'F':
-						flag=(byte)((flag&(0xf0))|15);
+						flag=15;
 						break;
 						
 					/*Styles*/
@@ -109,7 +109,7 @@ public class MinecraftFormattingCodeParser
 					
 					/*Reset*/
 					case 'r':case 'R':
-						flag=0;
+						flag=defaultFlag;
 						break;
 				}
 				continue;
