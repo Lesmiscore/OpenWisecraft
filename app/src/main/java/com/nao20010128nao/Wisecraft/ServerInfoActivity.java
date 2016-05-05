@@ -309,15 +309,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO: Implement this method
 		seeTitleButton=menu.add(Menu.NONE,0,0,R.string.seeTitle);
-		if(pref.getBoolean("colorFormattedText",false)){
-			if(pref.getBoolean("darkBackgroundForServerName",false)){
-				seeTitleButton.setIcon(R.drawable.ic_action_previous_item_dark);
-			}else{
-				seeTitleButton.setIcon(R.drawable.ic_action_previous_item);
-			}
-		}else{
-			seeTitleButton.setIcon(R.drawable.ic_action_previous_item);
-		}
+		seeTitleButton.setIcon(R.drawable.ic_menu_view);
 		MenuItemCompat.setShowAsAction(seeTitleButton,MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
 		if (!nonUpd){
 			updateBtn=menu.add(Menu.NONE, 1, 1, R.string.update);
