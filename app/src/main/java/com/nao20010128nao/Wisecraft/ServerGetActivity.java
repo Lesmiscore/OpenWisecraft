@@ -1,4 +1,5 @@
 package com.nao20010128nao.Wisecraft;
+import com.nao20010128nao.Wisecraft.misc.compat.*;
 import java.util.*;
 
 import android.content.Context;
@@ -10,11 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import com.nao20010128nao.McServerList.ServerAddressFetcher;
-import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
-import com.nao20010128nao.Wisecraft.misc.compat.CompatWebViewActivity;
 import java.net.URL;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-import com.nao20010128nao.Wisecraft.misc.compat.CompatArrayAdapter;
 
 public class ServerGetActivity extends CompatWebViewActivity {
 	public static List<String> addForServerList;
