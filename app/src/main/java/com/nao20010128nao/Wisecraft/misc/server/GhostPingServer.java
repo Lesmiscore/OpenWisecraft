@@ -96,7 +96,7 @@ public class GhostPingServer extends Thread {
 
 			List<String> datas=new ArrayList<>();
 			datas.add("MCPE");//MCPE
-			datas.add("§5Wisecraft");//Server name
+			datas.add("§6Wisecraft");//Server name
 			datas.add("46");//Protocol (46=0.14.1)
 			datas.add("0.14.1");//Version (Displayed on MCPE)
 			datas.add(Integer.MAX_VALUE + "");//Players count
@@ -151,7 +151,7 @@ public class GhostPingServer extends Thread {
 				kv.put("hostport", localPort + "");
 				kv.put("whitelist", "on");
 				kv.put("plugins", "Wisecraft Ghost Ping" + buildPlugins());
-				kv.put("hostname", "§5Wisecraft");
+				kv.put("hostname", "§6Wisecraft");
 				kv.put("numplayers", Integer.MAX_VALUE + "");
 				kv.put("version", "v0.14.1 alpha");
 				kv.put("game_id", "MINECRAFTPE");
