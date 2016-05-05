@@ -340,16 +340,16 @@ public class ServerInfoActivity extends ActionBarActivity {
 				LinearLayout ll;
 				if(pref.getBoolean("colorFormattedText",false)){
 					if(pref.getBoolean("darkBackgroundForServerName",false)){
-						ll=(LinearLayout)getLayoutInflater().inflate(R.layout.server_info_show_title_dark,null);
+						ll=(LinearLayout)TheApplication.instance.getLayoutInflater().inflate(R.layout.server_info_show_title_dark,null);
 						BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
 						bd.setTargetDensity(getResources().getDisplayMetrics());
 						bd.setTileModeXY(Shader.TileMode.REPEAT,Shader.TileMode.REPEAT);
 						ll.setBackground(bd);
 					}else{
-						ll=(LinearLayout)getLayoutInflater().inflate(R.layout.server_info_show_title,null);
+						ll=(LinearLayout)TheApplication.instance.getLayoutInflater().inflate(R.layout.server_info_show_title,null);
 					}
 				}else{
-					ll=(LinearLayout)getLayoutInflater().inflate(R.layout.server_info_show_title,null);
+					ll=(LinearLayout)TheApplication.instance.getLayoutInflater().inflate(R.layout.server_info_show_title,null);
 				}
 				TextView serverNameView=(TextView)ll.findViewById(R.id.serverName);
 				serverNameView.setText(getTitle());

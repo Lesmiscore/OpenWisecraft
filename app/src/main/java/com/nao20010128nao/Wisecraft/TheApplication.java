@@ -12,6 +12,7 @@ import com.nao20010128nao.Wisecraft.services.CollectorMainService;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import android.view.LayoutInflater;
 
 public class TheApplication extends Application {
 	public static TheApplication instance;
@@ -109,5 +110,8 @@ public class TheApplication extends Application {
 		if (pref.getBoolean("sendInfos", false)|pref.getBoolean("sendInfos_force", false)){
 			startService(new Intent(this,CollectorMainService.class));
 		}
+	}
+	public LayoutInflater getLayoutInflater(){
+		return (LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
 	}
 }
