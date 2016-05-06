@@ -161,7 +161,11 @@ public class ServerInfoActivity extends ActionBarActivity {
 			ActivityManager.TaskDescription td;
 			switch(localStat.mode){
 				case 1:
-					td=new ActivityManager.TaskDescription(getTitle().toString(),((BitmapDrawable)serverIconObj).getBitmap(),getResources().getColor(R.color.primary));
+					if(serverIconObj instanceof BitmapDrawable){
+						td=new ActivityManager.TaskDescription(getTitle().toString(),((BitmapDrawable)serverIconObj).getBitmap(),getResources().getColor(R.color.primary));
+					}else{
+						td=new ActivityManager.TaskDescription(getTitle().toString(),((BitmapDrawable)getResources().getDrawable(R.drawable.ic_launcher)).getBitmap(),getResources().getColor(R.color.primary));
+					}
 					break;
 				default:
 					td=new ActivityManager.TaskDescription(getTitle().toString(),((BitmapDrawable)getResources().getDrawable(R.drawable.ic_launcher)).getBitmap(),getResources().getColor(R.color.primary));
