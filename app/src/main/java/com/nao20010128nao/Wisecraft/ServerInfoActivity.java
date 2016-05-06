@@ -30,6 +30,9 @@ import java.lang.ref.WeakReference;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import android.os.Build;
+import android.app.ActivityManager;
+import android.support.v4.app.ActivityManagerCompat;
 
 public class ServerInfoActivity extends ActionBarActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
@@ -153,6 +156,18 @@ public class ServerInfoActivity extends ActionBarActivity {
 			bd.setTargetDensity(getResources().getDisplayMetrics());
 			bd.setTileModeXY(Shader.TileMode.REPEAT,Shader.TileMode.REPEAT);
 			getSupportActionBar().setBackgroundDrawable(bd);
+		}
+		if(Build.VERSION.SDK_INT>=21){
+			ActivityManager.TaskDescription td;
+			switch(localStat.mode){
+				case 1:
+					td=new ActivityManager.TaskDescription(getTitle().toString(),((BitmapDrawable)serverIconObj).getBitmap(),getResources().getColor(R.color.primary));
+					break;
+				default:
+					td=new ActivityManager.TaskDescription(getTitle().toString(),((BitmapDrawable)getResources().getDrawable(R.drawable.ic_launcher)).getBitmap(),getResources().getColor(R.color.primary));
+					break;
+			}
+			setTaskDescription(td);
 		}
 	}
 	public synchronized void update(final ServerPingResult resp) {
