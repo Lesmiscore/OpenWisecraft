@@ -3,14 +3,14 @@ package com.nao20010128nao.Wisecraft;
 import android.content.*;
 import android.graphics.*;
 import android.graphics.drawable.*;
+import android.os.*;
 import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.skin_face.*;
 import java.util.*;
 
-import android.os.AsyncTask;
-import android.os.Bundle;
+import android.app.ActivityManager;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v4.view.MenuItemCompat;
@@ -30,10 +30,6 @@ import java.lang.ref.WeakReference;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
-import android.os.Build;
-import android.app.ActivityManager;
-import android.support.v4.app.ActivityManagerCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 
 public class ServerInfoActivity extends ActionBarActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
