@@ -351,15 +351,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 				AppCompatAlertDialog.Builder ab=new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog);
 				LinearLayout ll;
 				boolean dark;
-				if(pref.getBoolean("colorFormattedText",false)){
-					if(pref.getBoolean("darkBackgroundForServerName",false)){
-						dark=true;
-					}else{
-						dark=false;
-					}
-				}else{
-					dark=false;
-				}
+				dark=pref.getBoolean("colorFormattedText",false)?pref.getBoolean("darkBackgroundForServerName",false):false;
 				{
 					if(dark){
 						ll=(LinearLayout)TheApplication.instance.getLayoutInflater().inflate(R.layout.server_info_show_title_dark,null);
