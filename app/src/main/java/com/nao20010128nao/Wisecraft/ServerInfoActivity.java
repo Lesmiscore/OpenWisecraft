@@ -33,6 +33,7 @@ import static com.nao20010128nao.Wisecraft.Utils.*;
 import android.os.Build;
 import android.app.ActivityManager;
 import android.support.v4.app.ActivityManagerCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 
 public class ServerInfoActivity extends ActionBarActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
@@ -358,9 +359,19 @@ public class ServerInfoActivity extends ActionBarActivity {
 						ll.setBackground(bd);
 					}else{
 						ll=(LinearLayout)TheApplication.instance.getLayoutInflater().inflate(R.layout.server_info_show_title,null);
+						BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
+						bd.setTargetDensity(getResources().getDisplayMetrics());
+						bd.setTileModeXY(Shader.TileMode.REPEAT,Shader.TileMode.REPEAT);
+						bd.setAlpha(0);
+						ll.setBackground(bd);
 					}
 				}else{
 					ll=(LinearLayout)TheApplication.instance.getLayoutInflater().inflate(R.layout.server_info_show_title,null);
+					BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
+					bd.setTargetDensity(getResources().getDisplayMetrics());
+					bd.setTileModeXY(Shader.TileMode.REPEAT,Shader.TileMode.REPEAT);
+					bd.setAlpha(0);
+					ll.setBackground(bd);
 				}
 				TextView serverNameView=(TextView)ll.findViewById(R.id.serverName);
 				serverNameView.setText(getTitle());
