@@ -123,6 +123,7 @@ public class SettingsActivity extends CompatSHablePreferenceActivity {
 						return Factories.strArray(l);
 					}
 				});
+			findPreference("useBright").setEnabled(getResources().getBoolean(R.bool.useBrightEnabled));
 		}
 	}
 	public static class Features extends BaseSettingsActivity {
