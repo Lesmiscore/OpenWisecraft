@@ -6,6 +6,7 @@ import java.net.*;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,7 +19,6 @@ import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
 import com.nao20010128nao.Wisecraft.services.MCProxyService;
 import java.lang.reflect.InvocationTargetException;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-import android.preference.PreferenceManager;
 
 public class ProxyActivity extends AppCompatActivity {
 	public static ServiceController cont;

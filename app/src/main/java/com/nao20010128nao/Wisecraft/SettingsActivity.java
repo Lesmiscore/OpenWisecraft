@@ -10,7 +10,6 @@ import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
 import com.nao20010128nao.Wisecraft.misc.compat.CompatSHablePreferenceActivity;
 import java.lang.reflect.Field;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-import android.os.PersistableBundle;
 
 public class SettingsActivity extends CompatSHablePreferenceActivity {
 	int which;

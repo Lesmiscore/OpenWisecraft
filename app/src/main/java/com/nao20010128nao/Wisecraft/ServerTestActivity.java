@@ -7,6 +7,7 @@ import java.util.*;
 import android.app.ProgressDialog;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.ViewGroup;
 import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
@@ -21,7 +22,6 @@ import java.lang.ref.WeakReference;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
-import android.preference.PreferenceManager;
 
 public class ServerTestActivity extends AppCompatListActivity {
 	static WeakReference<ServerTestActivity> instance=new WeakReference(null);
