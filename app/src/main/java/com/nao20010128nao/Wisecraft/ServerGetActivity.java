@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import com.nao20010128nao.McServerList.ServerAddressFetcher;
 import java.net.URL;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import android.preference.PreferenceManager;
 
 public class ServerGetActivity extends CompatWebViewActivity {
 	public static List<String> addForServerList;
@@ -21,6 +22,10 @@ public class ServerGetActivity extends CompatWebViewActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
+		if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("useBright",false)){
+			setTheme(R.style.AppTheme_Bright);
+			getTheme().applyStyle(R.style.AppTheme_Bright,true);
+		}
 		super.onCreate(savedInstanceState);
 		serverList=createServerListDomains();
 		new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)

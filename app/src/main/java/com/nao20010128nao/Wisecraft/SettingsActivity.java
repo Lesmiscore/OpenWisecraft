@@ -10,6 +10,7 @@ import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
 import com.nao20010128nao.Wisecraft.misc.compat.CompatSHablePreferenceActivity;
 import java.lang.reflect.Field;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import android.os.PersistableBundle;
 
 public class SettingsActivity extends CompatSHablePreferenceActivity {
 	int which;
@@ -17,8 +18,12 @@ public class SettingsActivity extends CompatSHablePreferenceActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
-		super.onCreate(savedInstanceState);
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
+		if(pref.getBoolean("useBright",false)){
+			setTheme(R.style.AppTheme_Bright);
+			getTheme().applyStyle(R.style.AppTheme_Bright,true);
+		}
+		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.settings_parent);
 		sH("basics", new HandledPreference.OnClickListener(){
 				public void onClick(String a, String b, String c) {
@@ -49,7 +54,16 @@ public class SettingsActivity extends CompatSHablePreferenceActivity {
 	}
 	
 	
-	public abstract static class BaseSettingsActivity extends CompatSHablePreferenceActivity{
+	public abstract static class BaseSettingsActivity extends CompatSHablePreferenceActivity {
+		@Override
+		protected void onCreate(Bundle savedInstanceState) {
+			// TODO: Implement this method
+			if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("useBright",false)){
+				setTheme(R.style.AppTheme_Bright);
+				getTheme().applyStyle(R.style.AppTheme_Bright,true);
+			}
+			super.onCreate(savedInstanceState);
+		}
 		@Override
 		protected void attachBaseContext(Context newBase) {
 			super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));

@@ -19,6 +19,7 @@ import com.nao20010128nao.Wisecraft.misc.rcon.RCon;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import android.preference.PreferenceManager;
 
 public class RCONActivity extends AppCompatActivity {
 	public static WeakReference<RCONActivity> instance=new WeakReference(null);
@@ -47,6 +48,10 @@ public class RCONActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
+		if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("useBright",false)){
+			setTheme(R.style.AppTheme_Bright);
+			getTheme().applyStyle(R.style.AppTheme_Bright,true);
+		}
 		instance = new WeakReference(this);
 		ip = getIntent().getStringExtra("ip");
 		port = getIntent().getIntExtra("port", -1);
