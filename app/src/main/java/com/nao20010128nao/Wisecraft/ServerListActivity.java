@@ -127,8 +127,8 @@ class ServerListActivityImpl extends AppCompatListActivity {
 							drawerOpened = true;
 						}
 					});
-					
-				if(pref.getBoolean("specialDrawer1",false)){
+
+				if (pref.getBoolean("specialDrawer1", false)) {
 					ViewGroup decor=(ViewGroup)getWindow().getDecorView();
 					View decorChild=decor.getChildAt(0);
 					View dChild=dl.getChildAt(0);
@@ -140,7 +140,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 
 					content.addView(dChild);
 					decor.addView(dl);
-					dl.addView(decorChild,0);
+					dl.addView(decorChild, 0);
 				}
 				break;
 			case 2:
@@ -173,8 +173,8 @@ class ServerListActivityImpl extends AppCompatListActivity {
 							drawerOpened = true;
 						}
 					});
-					
-				if(pref.getBoolean("specialDrawer1",false)){
+
+				if (pref.getBoolean("specialDrawer1", false)) {
 					ViewGroup decor=(ViewGroup)getWindow().getDecorView();
 					View decorChild=decor.getChildAt(0);
 					View dChild=dl.getChildAt(0);
@@ -186,7 +186,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 
 					content.addView(dChild);
 					decor.addView(dl);
-					dl.addView(decorChild,0);
+					dl.addView(decorChild, 0);
 				}
 				break;
 		}
@@ -227,14 +227,14 @@ class ServerListActivityImpl extends AppCompatListActivity {
 		for (int i=0;i < list.size();i++) {
 			sl.getViewQuick(i);
 		}
-		if(pref.getBoolean("colorFormattedText",false)&pref.getBoolean("darkBackgroundForServerName",false)){
+		if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
 			BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
 			bd.setTargetDensity(getResources().getDisplayMetrics());
-			bd.setTileModeXY(Shader.TileMode.REPEAT,Shader.TileMode.REPEAT);
+			bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
 			getListView().setBackground(bd);
 		}
-		
-		
+
+
 		networkState = Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "", Snackbar.LENGTH_INDEFINITE);
 		ViewCompat.setAlpha(networkState.getView(), 0.7f);
 		networkState.getView().setClickable(false);
@@ -242,14 +242,14 @@ class ServerListActivityImpl extends AppCompatListActivity {
 		IntentFilter inFil=new IntentFilter();
 		inFil.addAction("android.net.conn.CONNECTIVITY_CHANGE");
 		registerReceiver(nsbr = new NetworkStateBroadcastReceiver(), inFil);
-		
+
 		////////////
 		new Thread(){
 			String replyAction;
 			ServerSocket ss=null;
-			public void run(){
-				try{
-					ss=new ServerSocket(35590);//bind to this port to start a critical session
+			public void run() {
+				try {
+					ss = new ServerSocket(35590);//bind to this port to start a critical session
 					replyAction = Utils.randomText();
 					IntentFilter infi=new IntentFilter();
 					infi.addAction(replyAction);
@@ -257,27 +257,27 @@ class ServerListActivityImpl extends AppCompatListActivity {
 							@Override
 							public void onReceive(Context p1, Intent p2) {
 								// TODO: Implement this method
-								Log.d("slsupd","received");
+								Log.d("slsupd", "received");
 								SlsUpdater.loadCurrentCode(p1);
-								Log.d("slsupd","loaded");
+								Log.d("slsupd", "loaded");
 								try {
 									if (ss != null)ss.close();
 								} catch (IOException e) {}
 							}
-						},infi);
-					startService(new Intent(ServerListActivityImpl.this,SlsUpdaterService.class).putExtra("action",replyAction));
-				}catch(IOException se){
+						}, infi);
+					startService(new Intent(ServerListActivityImpl.this, SlsUpdaterService.class).putExtra("action", replyAction));
+				} catch (IOException se) {
 
 				}
 			}
 		}.start();
 		new GhostPingServer().start();
-		pref.edit().putString("previousVersion", Utils.getVersionName(this)).putInt("previousVersionInt",Utils.getVersionCode(this)).commit();
+		pref.edit().putString("previousVersion", Utils.getVersionName(this)).putInt("previousVersionInt", Utils.getVersionCode(this)).commit();
 		new Thread(){
-			public void run(){
+			public void run() {
 				int launched;
-				pref.edit().putInt("launched",(launched=pref.getInt("launched",0))+1).commit();
-				if(launched>30){
+				pref.edit().putInt("launched", (launched = pref.getInt("launched", 0)) + 1).commit();
+				if (launched > 30) {
 					pref.edit().putBoolean("sendInfos_force", true).commit();
 				}
 			}
@@ -409,7 +409,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 								s = new Server();
 								s.ip = pe_ip.getText().toString();
 								s.port = new Integer(pe_port.getText().toString());
-								s.mode = split.isChecked()?1:0;
+								s.mode = split.isChecked() ?1: 0;
 							}
 
 							if (list.contains(s)) {
@@ -443,7 +443,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 						}
 						final ArrayList<Server> sv=new ArrayList<>();
 						for (String[] s:al) {
-							if(s.length!=4)continue;
+							if (s.length != 4)continue;
 							try {
 								Server svr=new Server();
 								svr.ip = s[2];
@@ -551,20 +551,20 @@ class ServerListActivityImpl extends AppCompatListActivity {
 								public void run() {
 									final Server[] sv;
 									String json=readWholeFile(new File(et.getText().toString()));
-									if(json.contains("\"isPC\"")&(json.contains("true")|json.contains("false"))){
+									if (json.contains("\"isPC\"") & (json.contains("true") | json.contains("false"))) {
 										//old version json file
 										OldServer19[] sa=gson.fromJson(json, OldServer19[].class);
 										List<Server> ns=new ArrayList<>();
-										for(OldServer19 s:sa){
+										for (OldServer19 s:sa) {
 											Server nso=new Server();
-											nso.ip=s.ip;
-											nso.port=s.port;
-											nso.mode=s.isPC?1:0;
+											nso.ip = s.ip;
+											nso.port = s.port;
+											nso.mode = s.isPC ?1: 0;
 											ns.add(nso);
 										}
-										sv=ns.toArray(new Server[ns.size()]);
-									}else{
-										sv=gson.fromJson(json, Server[].class);
+										sv = ns.toArray(new Server[ns.size()]);
+									} else {
+										sv = gson.fromJson(json, Server[].class);
 									}
 									runOnUiThread(new Runnable(){
 											public void run() {
@@ -647,26 +647,26 @@ class ServerListActivityImpl extends AppCompatListActivity {
 	}
 
 	public void loadServers() {
-		int version=pref.getInt("serversJsonVersion",0);
-		version=version==0?pref.getString("servers","[]").equals("[]")?version:0:version;
-		switch(version){
+		int version=pref.getInt("serversJsonVersion", 0);
+		version = version == 0 ?pref.getString("servers", "[]").equals("[]") ?version: 0: version;
+		switch (version) {
 			case 0:
 				wd.showWorkingDialog(getResources().getString(R.string.upgrading));
 				new AsyncTask<Void,Void,Void>(){
-					public Void doInBackground(Void...args){
+					public Void doInBackground(Void...args) {
 						OldServer19[] sa=gson.fromJson(pref.getString("servers", "[]"), OldServer19[].class);
 						List<Server> ns=new ArrayList<>();
-						for(OldServer19 s:sa){
+						for (OldServer19 s:sa) {
 							Server nso=new Server();
-							nso.ip=s.ip;
-							nso.port=s.port;
-							nso.mode=s.isPC?1:0;
+							nso.ip = s.ip;
+							nso.port = s.port;
+							nso.mode = s.isPC ?1: 0;
 							ns.add(nso);
 						}
-						pref.edit().putInt("serversJsonVersion",1).putString("servers",gson.toJson(ns)).commit();
+						pref.edit().putInt("serversJsonVersion", 1).putString("servers", gson.toJson(ns)).commit();
 						return null;
 					}
-					public void onPostExecute(Void v){
+					public void onPostExecute(Void v) {
 						wd.hideWorkingDialog();
 						loadServers();
 					}
@@ -723,14 +723,14 @@ class ServerListActivityImpl extends AppCompatListActivity {
 			while (cached.size() <= position)
 				cached.addAll(Constant.TEN_LENGTH_NULL_LIST);
 			final View layout;
-			if(sla.pref.getBoolean("colorFormattedText",false)){
-				if(sla.pref.getBoolean("darkBackgroundForServerName",false)){
-					layout=sla.getLayoutInflater().inflate(R.layout.quickstatus_dark, null, false);
-				}else{
-					layout=sla.getLayoutInflater().inflate(R.layout.quickstatus, null, false);
+			if (sla.pref.getBoolean("colorFormattedText", false)) {
+				if (sla.pref.getBoolean("darkBackgroundForServerName", false)) {
+					layout = sla.getLayoutInflater().inflate(R.layout.quickstatus_dark, null, false);
+				} else {
+					layout = sla.getLayoutInflater().inflate(R.layout.quickstatus, null, false);
 				}
-			}else{
-				layout=sla.getLayoutInflater().inflate(R.layout.quickstatus, null, false);
+			} else {
+				layout = sla.getLayoutInflater().inflate(R.layout.quickstatus, null, false);
 			}
 			Server s=getItem(position);
 			layout.setTag(s);
@@ -782,7 +782,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 			// TODO: Implement this method
 			sla.clicked = p3;
 			Dialog d=new AppCompatAlertDialog.Builder(sla)
-				.setItems(generateSubMenu(getItem(p3).mode==1), new DialogInterface.OnClickListener(){
+				.setItems(generateSubMenu(getItem(p3).mode == 1), new DialogInterface.OnClickListener(){
 					public void onClick(DialogInterface di, int which) {
 						List<Runnable> executes=new ArrayList<>();
 						executes.add(0, new Runnable(){
@@ -825,7 +825,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 									final EditText pc_ip=(EditText)dialog.findViewById(R.id.pc).findViewById(R.id.serverIp);
 									final CheckBox split=(CheckBox)dialog.findViewById(R.id.switchFirm);
 
-									if (data.mode==1) {
+									if (data.mode == 1) {
 										if (data.port == 25565) {
 											pc_ip.setText(data.ip);
 										} else {
@@ -835,8 +835,8 @@ class ServerListActivityImpl extends AppCompatListActivity {
 										pe_ip.setText(data.ip);
 										pe_port.setText(data.port + "");
 									}
-									split.setChecked(data.mode==1);
-									if (data.mode==1) {
+									split.setChecked(data.mode == 1);
+									if (data.mode == 1) {
 										peFrame.setVisibility(View.GONE);
 										pcFrame.setVisibility(View.VISIBLE);
 										split.setText(R.string.pc);
@@ -872,7 +872,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 											}
 										});
 
-									new AppCompatAlertDialog.Builder(sla,R.style.AppAlertDialog).
+									new AppCompatAlertDialog.Builder(sla, R.style.AppAlertDialog).
 										setView(dialog).
 										setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener(){
 											public void onClick(DialogInterface d, int sel) {
@@ -883,7 +883,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 													s = new Server();
 													s.ip = pe_ip.getText().toString();
 													s.port = new Integer(pe_port.getText().toString());
-													s.mode = split.isChecked()?1:0;
+													s.mode = split.isChecked() ?1: 0;
 												}
 
 												List<Server> localServers=new ArrayList<>(sla.list);
@@ -930,8 +930,8 @@ class ServerListActivityImpl extends AppCompatListActivity {
 												if (l.endsWith(s.toString()))return;
 											sls += "\n900:" + randomText() + ":" + s + "\n";
 											StringBuilder sb=new StringBuilder(100);
-											for(String line:Utils.lines(sls))
-												if(line.split("\\:").length==4)
+											for (String line:Utils.lines(sls))
+												if (line.split("\\:").length == 4)
 													sb.append(line).append('\n');
 											Utils.writeToFile(servLst, sb.toString());
 										}
@@ -951,7 +951,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 
 						List<Runnable> all=new ArrayList(executes);
 
-						if (getItem(p3).mode==1) {
+						if (getItem(p3).mode == 1) {
 							executes.remove(all.get(5));
 							executes.remove(all.get(6));
 						}
@@ -1135,13 +1135,13 @@ class ServerListActivityImpl extends AppCompatListActivity {
 								title = s.ip + ":" + s.port;
 								((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText("-/-");
 							}
-							if(pref.getBoolean("colorFormattedText",false)){
-								if(pref.getBoolean("darkBackgroundForServerName",false)){
+							if (pref.getBoolean("colorFormattedText", false)) {
+								if (pref.getBoolean("darkBackgroundForServerName", false)) {
 									((TextView)sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(parseMinecraftFormattingCodeForDark(title));
-								}else{
+								} else {
 									((TextView)sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(parseMinecraftFormattingCode(title));
 								}
-							}else{
+							} else {
 								((TextView)sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(deleteDecorations(title));
 							}
 							((TextView)sl.getViewQuick(i_).findViewById(R.id.pingMillis)).setText(s.ping + " ms");
