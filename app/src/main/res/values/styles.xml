@@ -12,4 +12,8 @@
 		<item name="colorPrimary">@color/primary</item>
 		<item name="colorAccent">@color/upd_2</item>
 	</style>
+	
+	<style name="AppTheme.Bright" parent="AppTheme">
+		
+	</style>
 </resources>

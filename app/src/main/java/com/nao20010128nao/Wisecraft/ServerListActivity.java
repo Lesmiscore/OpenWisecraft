@@ -1280,6 +1280,7 @@ public class ServerListActivity extends CompatActivityGroup {
 		setContentView(getLocalActivityManager().startActivity("main", new Intent(this, Content.class)).getDecorView());
 	}
 	public static class Content extends ServerListActivityImpl {}
+	public static class BrightContent extends Content {}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
