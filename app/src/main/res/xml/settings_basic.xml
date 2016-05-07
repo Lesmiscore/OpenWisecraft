@@ -66,4 +66,9 @@
 		android:key="showDetailsIfNoDetails"
 		android:defaultValue="false"
 	/>
+	<com.nao20010128nao.Wisecraft.misc.pref.CheckBoxPreference
+		android:title="@string/useBright"
+		android:key="useBright"
+		android:defaultValue="false"
+	/>
 </PreferenceScreen>

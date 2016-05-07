@@ -96,7 +96,7 @@
             android:label="@string/app_name"
             android:name=".ServerListActivity$BrightContent"
 			android:exported="false"
-			android:style="@style/AppTheme.Bright">
+			android:theme="@style/AppTheme.Bright">
         </activity>
 		<activity
             android:label="@string/app_name"

@@ -1271,10 +1271,16 @@ public class ServerListActivity extends CompatActivityGroup {
 	public static WeakReference<ServerListActivity> instance=new WeakReference(null);
 
 	boolean nonLoop=false;
+	SharedPreferences pref;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		instance = new WeakReference(this);
+		pref = PreferenceManager.getDefaultSharedPreferences(this);
+		if(pref.getBoolean("useBright",false)){
+			setTheme(R.style.AppTheme_Bright);
+			getTheme().applyStyle(R.style.AppTheme_Bright,true);
+		}
 		super.onCreate(savedInstanceState);
 		getSupportActionBar().hide();
 		setContentView(getLocalActivityManager().startActivity("main", new Intent(this, Content.class)).getDecorView());
