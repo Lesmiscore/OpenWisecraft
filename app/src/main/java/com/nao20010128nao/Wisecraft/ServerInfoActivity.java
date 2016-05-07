@@ -153,6 +153,10 @@ public class ServerInfoActivity extends ActionBarActivity {
 			bd.setTargetDensity(getResources().getDisplayMetrics());
 			bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
 			getSupportActionBar().setBackgroundDrawable(bd);
+			
+			if (Build.VERSION.SDK_INT >= 21) {
+				getWindow().setStatusBarColor(0xff3a2a1d);
+			}
 		}
 		if (Build.VERSION.SDK_INT >= 21) {
 			ActivityManager.TaskDescription td;
