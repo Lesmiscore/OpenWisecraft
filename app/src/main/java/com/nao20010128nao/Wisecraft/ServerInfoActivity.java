@@ -69,7 +69,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
-		if(pref.getBoolean("useBright",false)){
+		if(pref.getBoolean("useBright",false)&!(pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false))){
 			setTheme(R.style.AppTheme_Bright);
 			getTheme().applyStyle(R.style.AppTheme_Bright,true);
 		}
@@ -160,10 +160,6 @@ public class ServerInfoActivity extends ActionBarActivity {
 			
 			if (Build.VERSION.SDK_INT >= 21) {
 				getWindow().setStatusBarColor(0xff3a2a1d);
-			}
-			if(pref.getBoolean("useBright",false)){//Revert the Theme because status bar looks ugly
-				setTheme(R.style.AppTheme);
-				getTheme().applyStyle(R.style.AppTheme,true);
 			}
 		}
 		if (Build.VERSION.SDK_INT >= 21) {
