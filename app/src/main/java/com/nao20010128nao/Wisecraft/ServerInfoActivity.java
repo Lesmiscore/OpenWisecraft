@@ -350,27 +350,26 @@ public class ServerInfoActivity extends ActionBarActivity {
 			case 0://See the title for all
 				AppCompatAlertDialog.Builder ab=new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog);
 				LinearLayout ll;
+				boolean dark;
 				if(pref.getBoolean("colorFormattedText",false)){
 					if(pref.getBoolean("darkBackgroundForServerName",false)){
-						ll=(LinearLayout)TheApplication.instance.getLayoutInflater().inflate(R.layout.server_info_show_title_dark,null);
-						BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
-						bd.setTargetDensity(getResources().getDisplayMetrics());
-						bd.setTileModeXY(Shader.TileMode.REPEAT,Shader.TileMode.REPEAT);
-						ll.setBackground(bd);
+						dark=true;
 					}else{
-						ll=(LinearLayout)TheApplication.instance.getLayoutInflater().inflate(R.layout.server_info_show_title,null);
-						BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
-						bd.setTargetDensity(getResources().getDisplayMetrics());
-						bd.setTileModeXY(Shader.TileMode.REPEAT,Shader.TileMode.REPEAT);
-						bd.setAlpha(0);
-						ll.setBackground(bd);
+						dark=false;
 					}
 				}else{
-					ll=(LinearLayout)TheApplication.instance.getLayoutInflater().inflate(R.layout.server_info_show_title,null);
+					dark=false;
+				}
+				{
+					if(dark){
+						ll=(LinearLayout)TheApplication.instance.getLayoutInflater().inflate(R.layout.server_info_show_title_dark,null);
+					}else{
+						ll=(LinearLayout)TheApplication.instance.getLayoutInflater().inflate(R.layout.server_info_show_title,null);
+					}
 					BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
 					bd.setTargetDensity(getResources().getDisplayMetrics());
 					bd.setTileModeXY(Shader.TileMode.REPEAT,Shader.TileMode.REPEAT);
-					bd.setAlpha(0);
+					if(!dark)bd.setAlpha(0);
 					ll.setBackground(bd);
 				}
 				TextView serverNameView=(TextView)ll.findViewById(R.id.serverName);
