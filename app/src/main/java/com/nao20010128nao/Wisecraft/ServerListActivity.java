@@ -294,6 +294,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 	}
 	@Override
 	protected void attachBaseContext(Context newBase) {
+		TheApplication.instance.initForActivities();
 		super.attachBaseContext(ContextWrappingExtender.wrap(CalligraphyContextWrapper.wrap(newBase)));
 	}
 	@Override

@@ -32,27 +32,6 @@ public class TheApplication extends Application {
 		super.onCreate();
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
 		instance = this;
-		droidSans = Typeface.createFromAsset(getAssets(), "DroidSans.ttf");
-		latoLight = Typeface.createFromAsset(getAssets(), "lato-light.ttf");
-		icomoon1 = Typeface.createFromAsset(getAssets(), "icomoon.ttf");
-		sysDefault = Typeface.DEFAULT;
-		robotoSlabLight = Typeface.createFromAsset(getAssets(), "RobotoSlab-Light.ttf");
-		
-		fontFilenames = new HashMap<Typeface,String>();
-		fontFilenames.put(droidSans, "DroidSans.ttf");
-		fontFilenames.put(latoLight, "lato-light.ttf");
-		fontFilenames.put(icomoon1, "icomoon.ttf");
-		fontFilenames.put(sysDefault, "");
-		fontFilenames.put(robotoSlabLight, "RobotoSlab-Light.ttf");
-		
-		fontDisplayNames=new HashMap<>();
-		fontDisplayNames.put("droidSans",R.string.font_droidSans);
-		fontDisplayNames.put("latoLight",R.string.font_latoLight);
-		fontDisplayNames.put("icomoon1",R.string.font_icomoon1);
-		fontDisplayNames.put("sysDefault",R.string.font_sysDefault);
-		fontDisplayNames.put("robotoSlabLight",R.string.font_robotoSlabLight);
-
-		CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath(getFontFilename()).setFontAttrId(R.attr.fontPath).build());
 		///////
 		genPassword();
 		pcUserUUIDs=new Gson().fromJson(pref.getString("pcuseruuids","{}"),PCUserUUIDMap.class);
@@ -96,6 +75,30 @@ public class TheApplication extends Application {
 		}
 		return result;
 	}
+	public void initForActivities(){
+		droidSans = Typeface.createFromAsset(getAssets(), "DroidSans.ttf");
+		latoLight = Typeface.createFromAsset(getAssets(), "lato-light.ttf");
+		icomoon1 = Typeface.createFromAsset(getAssets(), "icomoon.ttf");
+		sysDefault = Typeface.DEFAULT;
+		robotoSlabLight = Typeface.createFromAsset(getAssets(), "RobotoSlab-Light.ttf");
+
+		fontFilenames = new HashMap<Typeface,String>();
+		fontFilenames.put(droidSans, "DroidSans.ttf");
+		fontFilenames.put(latoLight, "lato-light.ttf");
+		fontFilenames.put(icomoon1, "icomoon.ttf");
+		fontFilenames.put(sysDefault, "");
+		fontFilenames.put(robotoSlabLight, "RobotoSlab-Light.ttf");
+
+		fontDisplayNames=new HashMap<>();
+		fontDisplayNames.put("droidSans",R.string.font_droidSans);
+		fontDisplayNames.put("latoLight",R.string.font_latoLight);
+		fontDisplayNames.put("icomoon1",R.string.font_icomoon1);
+		fontDisplayNames.put("sysDefault",R.string.font_sysDefault);
+		fontDisplayNames.put("robotoSlabLight",R.string.font_robotoSlabLight);
+
+		CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath(getFontFilename()).setFontAttrId(R.attr.fontPath).build());
+	}
+	
 	private String genPassword() {
 		uuid = pref.getString("uuid", UUID.randomUUID().toString());
 		pref.edit().putString("uuid", uuid).commit();
