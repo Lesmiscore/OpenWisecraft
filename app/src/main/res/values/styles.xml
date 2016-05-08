@@ -25,4 +25,12 @@
 		<item name="windowActionBar">false</item>
 		<item name="windowNoTitle">true</item>
 	</style>
+	
+	<style name="AppTheme.OpenSource" parent="AppTheme.NoActionBar">
+		<item name="android:statusBarColor">@color/upd_1</item>
+		<item name="colorPrimary">@color/upd_2</item>
+	</style>
+	<style name="AppTheme.Bright.OpenSource" parent="AppTheme.Bright.NoActionBar">
+		
+	</style>
 </resources>

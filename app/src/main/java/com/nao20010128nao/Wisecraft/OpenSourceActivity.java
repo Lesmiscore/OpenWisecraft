@@ -13,7 +13,7 @@ public class OpenSourceActivity extends ScrollingActivity
 		// TODO: Implement this method
 		if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("useBright",false)){
 			setTheme(R.style.AppTheme_Bright);
-			getTheme().applyStyle(R.style.AppTheme_Bright_NoActionBar,true);
+			getTheme().applyStyle(R.style.AppTheme_Bright_OpenSource,true);
 		}
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.osl_parent);

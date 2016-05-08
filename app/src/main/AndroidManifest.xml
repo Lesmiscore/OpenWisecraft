@@ -108,7 +108,7 @@
             android:label="@string/osl"
             android:name=".OpenSourceActivity"
 			android:exported="false"
-			android:theme="@style/AppTheme.NoActionBar">
+			android:theme="@style/AppTheme.OpenSource">
         </activity>
 		
 		<service

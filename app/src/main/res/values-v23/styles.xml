@@ -8,4 +8,9 @@
 		<item name="android:colorBackground">#ffffff</item>
 	</style>
 	<color name="white">#ffffff</color>
+	
+	<style name="AppTheme.Bright.OpenSource" parent="AppTheme.Bright.NoActionBar">
+		<item name="android:statusBarColor">@color/upd_2</item>
+		<item name="colorPrimary">@color/upd_2</item>
+	</style>
 </resources>
