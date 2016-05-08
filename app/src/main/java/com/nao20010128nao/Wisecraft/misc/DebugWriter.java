@@ -21,8 +21,9 @@ public class DebugWriter
 		Log.w(tag,getStacktraceAsString(e));
 	}
 	
+	
 
-	private static String getStacktraceAsString(Throwable e) {
+	public static String getStacktraceAsString(Throwable e) {
 		StringWriter sw=new StringWriter();
 		PrintWriter pw=new PrintWriter(sw);
 		e.printStackTrace(pw);
