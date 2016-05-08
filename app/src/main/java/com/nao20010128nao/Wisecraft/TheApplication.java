@@ -14,6 +14,7 @@ import java.lang.reflect.Modifier;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import android.view.LayoutInflater;
 import com.nao20010128nao.Wisecraft.misc.BinaryPrefImpl;
+import android.app.ActivityManager;
 
 public class TheApplication extends Application {
 	public static TheApplication instance;
@@ -116,4 +117,13 @@ public class TheApplication extends Application {
 	public LayoutInflater getLayoutInflater(){
 		return (LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
 	}
+
+	public boolean isServiceRunning(Class clazz){
+		ActivityManager am=(ActivityManager)getSystemService(ACTIVITY_SERVICE);
+		for(ActivityManager.RunningServiceInfo service:am.getRunningServices(Integer.MAX_VALUE))
+			if(service.service.getClassName().equals(clazz.getName()))
+				return true;
+		return false;
+	}
+	
 }
