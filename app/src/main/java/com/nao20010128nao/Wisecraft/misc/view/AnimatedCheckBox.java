@@ -20,6 +20,7 @@ public class AnimatedCheckBox extends AppCompatCheckBox
 		initing=false;
 	}
 
+	/*
 	@Override
 	public void setChecked(boolean checked) {
 		// TODO: Implement this method
@@ -34,4 +35,5 @@ public class AnimatedCheckBox extends AppCompatCheckBox
 			initing=false;
 		}
 	}
+	*/
 }
