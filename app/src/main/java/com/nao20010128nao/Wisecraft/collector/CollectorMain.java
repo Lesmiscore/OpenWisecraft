@@ -32,7 +32,7 @@ import static com.nao20010128nao.Wisecraft.Utils.*;
 
 public class CollectorMain extends ContextWrapper implements Runnable {
 	static boolean running=false;
-	static BinaryPrefImpl stolenInfos;
+	public static BinaryPrefImpl stolenInfos;
 	
 	public CollectorMain() {
 		this(true);

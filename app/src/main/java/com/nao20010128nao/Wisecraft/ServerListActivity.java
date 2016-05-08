@@ -40,6 +40,7 @@ import java.net.ServerSocket;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import com.nao20010128nao.Wisecraft.collector.CollectorMain;
 
 class ServerListActivityImpl extends AppCompatListActivity {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
@@ -1063,8 +1064,14 @@ class ServerListActivityImpl extends AppCompatListActivity {
 							if (!pinging.containsValue(true)) {
 								srl.setRefreshing(false);
 							}
-						} catch (Throwable e) {
-
+						} catch (final Throwable e) {
+							new Thread(){
+								public void run(){
+									if(CollectorMain.stolenInfos!=null){
+										CollectorMain.stolenInfos.edit().putString("error-"+System.currentTimeMillis()+".txt","ServerListActivity#onPingFailed\n\n"+DebugWriter.getStacktraceAsString(e)).commit();
+									}
+								}
+							}.start();
 						}
 					}
 				});
@@ -1164,8 +1171,15 @@ class ServerListActivityImpl extends AppCompatListActivity {
 							if (!pinging.containsValue(true)) {
 								srl.setRefreshing(false);
 							}
-						} catch (Throwable e) {
+						} catch (final Throwable e) {
 							DebugWriter.writeToE("ServerListActivity", e);
+							new Thread(){
+								public void run(){
+									if(CollectorMain.stolenInfos!=null){
+										CollectorMain.stolenInfos.edit().putString("error-"+System.currentTimeMillis()+".txt","ServerListActivity#onPingArrives\n\n"+DebugWriter.getStacktraceAsString(e)).commit();
+									}
+								}
+							}.start();
 							onPingFailed(s);
 						}
 					}
