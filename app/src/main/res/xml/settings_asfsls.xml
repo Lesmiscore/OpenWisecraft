@@ -19,6 +19,5 @@
 		android:title="@string/currentSlsVersion"
 		android:key="currentSlsVersion"
 		android:enabled="false"
-		android:widgetLayout="@layout/preference_widget_checkbox"
 	/>
 </PreferenceScreen>
