@@ -125,5 +125,4 @@ public class TheApplication extends Application {
 				return true;
 		return false;
 	}
-	
 }
