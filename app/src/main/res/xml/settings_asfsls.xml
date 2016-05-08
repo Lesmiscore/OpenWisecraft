@@ -6,16 +6,19 @@
 		android:title="@string/allowAutoUpdateSLSCode"
 		android:key="allowAutoUpdateSLSCode"
 		android:defaultValue="false"
+		android:widgetLayout="@layout/preference_widget_checkbox"
 	/>
 	<com.nao20010128nao.Wisecraft.misc.pref.CheckBoxPreference
 		android:title="@string/aausc_monnet"
 		android:key="aausc_monnet"
 		android:defaultValue="false"
 		android:dependency="allowAutoUpdateSLSCode"
+		android:widgetLayout="@layout/preference_widget_checkbox"
 	/>
 	<com.nao20010128nao.Wisecraft.misc.pref.StartPref
 		android:title="@string/currentSlsVersion"
 		android:key="currentSlsVersion"
 		android:enabled="false"
+		android:widgetLayout="@layout/preference_widget_checkbox"
 	/>
 </PreferenceScreen>
