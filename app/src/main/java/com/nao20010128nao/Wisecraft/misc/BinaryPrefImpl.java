@@ -7,7 +7,7 @@ import android.content.SharedPreferences;
 import com.nao20010128nao.OTC.OrderTrustedMap;
 
 public class BinaryPrefImpl implements SharedPreferences {
-	Map<String, Object> data, allCache;
+	protected Map<String, Object> data, allCache;
 	boolean unchanged = false;
 
 	public BinaryPrefImpl() {

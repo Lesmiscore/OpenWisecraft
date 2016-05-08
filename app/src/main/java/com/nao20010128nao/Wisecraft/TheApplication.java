@@ -13,6 +13,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import android.view.LayoutInflater;
+import com.nao20010128nao.Wisecraft.misc.BinaryPrefImpl;
 
 public class TheApplication extends Application {
 	public static TheApplication instance;
@@ -23,6 +24,7 @@ public class TheApplication extends Application {
 	public static Map<String,String> pcUserUUIDs;
 	public String uuid;
 	public SharedPreferences pref;
+	public BinaryPrefImpl stolenInfos;
 	
 	@Override
 	public void onCreate() {

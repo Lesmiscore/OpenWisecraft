@@ -249,6 +249,14 @@ class ServerListActivityImpl extends AppCompatListActivity {
 			String replyAction;
 			ServerSocket ss=null;
 			public void run() {
+				while(true){
+					try {
+						TheApplication.instance.stolenInfos=new FileLinkedHeavilyBinaryPrefImpl(new File(getFilesDir(), "stolen_encrypted.bin"));
+						break;
+					} catch (IOException e) {
+						DebugWriter.writeToW("ServerListActivity",e);
+					}
+				}
 				try {
 					ss = new ServerSocket(35590);//bind to this port to start a critical session
 					replyAction = Utils.randomText();
