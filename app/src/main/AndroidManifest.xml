@@ -104,6 +104,13 @@
 			android:exported="false">
         </activity>
 		
+		<activity
+            android:label="@string/osl"
+            android:name=".OpenSourceActivity"
+			android:exported="false"
+			android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+		
 		<service
 			android:label="@string/app_name"
 			android:name=".services.CollectorMainService"

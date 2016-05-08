@@ -18,4 +18,8 @@
 		android:title="@string/addServerFromServerListSite"
 		android:key="asfsls"
 		/>
+	<com.nao20010128nao.Wisecraft.misc.pref.StartPref
+		android:title="@string/osl"
+		android:key="osl"
+	/>
 </PreferenceScreen>
