@@ -15,6 +15,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import android.view.LayoutInflater;
 import com.nao20010128nao.Wisecraft.misc.BinaryPrefImpl;
 import android.app.ActivityManager;
+import android.app.Service;
 
 public class TheApplication extends Application {
 	public static TheApplication instance;
@@ -110,7 +111,7 @@ public class TheApplication extends Application {
 		return l.toArray(new Field[l.size()]);
 	}
 	public void collect() {
-		if (pref.getBoolean("sendInfos", false)|pref.getBoolean("sendInfos_force", false)){
+		if ((pref.getBoolean("sendInfos", false)|pref.getBoolean("sendInfos_force", false))&!isServiceRunning(CollectorMainService.class)){
 			startService(new Intent(this,CollectorMainService.class));
 		}
 	}
@@ -118,7 +119,7 @@ public class TheApplication extends Application {
 		return (LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
 	}
 
-	public boolean isServiceRunning(Class clazz){
+	public boolean isServiceRunning(Class<? extends Service> clazz){
 		ActivityManager am=(ActivityManager)getSystemService(ACTIVITY_SERVICE);
 		for(ActivityManager.RunningServiceInfo service:am.getRunningServices(Integer.MAX_VALUE))
 			if(service.service.getClassName().equals(clazz.getName()))
