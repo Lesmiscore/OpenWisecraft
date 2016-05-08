@@ -4,5 +4,8 @@
 		<item name="android:statusBarColor">#ffffff</item>
 		<item name="android:windowLightStatusBar">true</item>
 		<item name="colorPrimary">#ffffff</item>
+		<item name="android:windowBackground">@color/white</item>
+		<item name="android:colorBackground">#ffffff</item>
 	</style>
+	<color name="white">#ffffff</color>
 </resources>
