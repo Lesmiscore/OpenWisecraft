@@ -1,8 +1,8 @@
 package com.nao20010128nao.Wisecraft;
-import com.nao20010128nao.TESTAPP.ScrollingActivity;
+import android.content.Context;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.content.Context;
+import com.nao20010128nao.TESTAPP.ScrollingActivity;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class OpenSourceActivity extends ScrollingActivity
