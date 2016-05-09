@@ -12,7 +12,7 @@ public class OpenSourceActivity extends ScrollingActivity
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("useBright",false)){
-			setTheme(R.style.AppTheme_Bright);
+			setTheme(R.style.AppTheme_Bright_OpenSource);
 			getTheme().applyStyle(R.style.AppTheme_Bright_OpenSource,true);
 		}
 		super.onCreate(savedInstanceState);

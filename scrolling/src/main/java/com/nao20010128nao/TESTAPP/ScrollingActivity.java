@@ -55,6 +55,9 @@ public abstract class ScrollingActivity extends AppCompatActivity {
 			return new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
 		}
 		while(true){
+			if(viewClass==View.class){
+				return new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
+			}
 			Class lp;
 			try {
 				lp = Class.forName(viewClass.getName() + "$LayoutParams");
@@ -68,9 +71,6 @@ public abstract class ScrollingActivity extends AppCompatActivity {
 				
 			}
 			viewClass=viewClass.getSuperclass();
-			if(viewClass==View.class){
-				return new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
-			}
 		}
 	}
 }
