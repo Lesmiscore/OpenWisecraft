@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.io.IOException;
+import android.graphics.Typeface;
 
 public class RawResourceTextView extends AppCompatTextView
 {
@@ -53,5 +54,11 @@ public class RawResourceTextView extends AppCompatTextView
 		} catch (IOException e) {
 			return "";
 		}
+	}
+
+	@Override
+	public void setTypeface(Typeface tf) {
+		// TODO: Implement this method
+		super.setTypeface(tf.MONOSPACE);
 	}
 }
