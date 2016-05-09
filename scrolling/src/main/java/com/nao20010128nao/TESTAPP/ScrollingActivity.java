@@ -13,7 +13,7 @@ public abstract class ScrollingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        super.setContentView(R.layout.activity_scrolling);
+        super.setContentView(getLayoutResId());
         Toolbar toolbar = (Toolbar) super.findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 		content=(FrameLayout)super.findViewById(R.id.content);
@@ -40,6 +40,10 @@ public abstract class ScrollingActivity extends AppCompatActivity {
 	public View findViewById(int id) {
 		// TODO: Implement this method
 		return content.findViewById(id);
+	}
+	
+	protected int getLayoutResId(){
+		return R.layout.activity_scrolling;
 	}
 	
 	private ViewGroup.LayoutParams tryInstantinateLayoutParams(View v){
