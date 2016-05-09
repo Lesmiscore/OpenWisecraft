@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import com.nao20010128nao.TESTAPP.ScrollingActivity;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-import android.support.v7.widget.Toolbar;
-import android.widget.TextView;
 
 public class OpenSourceActivity extends ScrollingActivity
 {
