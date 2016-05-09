@@ -1,15 +1,13 @@
 package com.nao20010128nao.Wisecraft.misc.view;
+import java.io.*;
+
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Typeface;
+import android.os.Handler;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import com.nao20010128nao.Wisecraft.R;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.StringWriter;
-import java.io.IOException;
-import android.graphics.Typeface;
-import android.os.Handler;
 
 public class RawResourceTextView extends AppCompatTextView
 {
