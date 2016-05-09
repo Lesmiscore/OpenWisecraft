@@ -18,7 +18,8 @@
 		android:layout_height="wrap_content"
 		android:textAppearance="?android:attr/textAppearanceSmall"
 		android:layout_width="wrap_content"
-		wisecraft:rawRes="aosp_license"/>
+		wisecraft:rawRes="aosp_license"
+		wisecraft:async="true"/>
 
 	<TextView
 		android:layout_height="wrap_content"
@@ -32,7 +33,8 @@
 		android:layout_height="wrap_content"
 		android:textAppearance="?android:attr/textAppearanceSmall"
 		android:layout_width="wrap_content"
-		wisecraft:rawRes="gson_license"/>
+		wisecraft:rawRes="gson_license"
+		wisecraft:async="true"/>
 
 	<TextView
 		android:layout_height="wrap_content"
@@ -46,7 +48,8 @@
 		android:layout_height="wrap_content"
 		android:textAppearance="?android:attr/textAppearanceSmall"
 		android:layout_width="wrap_content"
-		wisecraft:rawRes="ahc_license"/>
+		wisecraft:rawRes="ahc_license"
+		wisecraft:async="true"/>
 
 	<TextView
 		android:layout_height="wrap_content"
@@ -60,7 +63,8 @@
 		android:layout_height="wrap_content"
 		android:textAppearance="?android:attr/textAppearanceSmall"
 		android:layout_width="wrap_content"
-		wisecraft:rawRes="nanohttpd_license"/>
+		wisecraft:rawRes="nanohttpd_license"
+		wisecraft:async="true"/>
 
 	<TextView
 		android:layout_height="wrap_content"
@@ -74,7 +78,8 @@
 		android:layout_height="wrap_content"
 		android:textAppearance="?android:attr/textAppearanceSmall"
 		android:layout_width="wrap_content"
-		wisecraft:rawRes="jsoup_license"/>
+		wisecraft:rawRes="jsoup_license"
+		wisecraft:async="true"/>
 
 	<TextView
 		android:layout_height="wrap_content"
@@ -88,7 +93,8 @@
 		android:layout_height="wrap_content"
 		android:textAppearance="?android:attr/textAppearanceSmall"
 		android:layout_width="wrap_content"
-		wisecraft:rawRes="calligraphy_license"/>
+		wisecraft:rawRes="calligraphy_license"
+		wisecraft:async="true"/>
 
 </LinearLayout>
 

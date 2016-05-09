@@ -2,5 +2,6 @@
 <resources>
 	<declare-styleable name="RawResourceTextView">
 		<attr name="rawRes" format="string"/>
+		<attr name="async" format="boolean"/>
 	</declare-styleable>
 </resources>

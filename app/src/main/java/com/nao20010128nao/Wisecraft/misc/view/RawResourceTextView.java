@@ -9,9 +9,11 @@ import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.io.IOException;
 import android.graphics.Typeface;
+import android.os.Handler;
 
 public class RawResourceTextView extends AppCompatTextView
 {
+	Handler handler;
 	public RawResourceTextView(android.content.Context context) {
 		super(context);
 	}
@@ -26,16 +28,28 @@ public class RawResourceTextView extends AppCompatTextView
 		loadAttrs(context,attrs);
 	}
 	
-	private void loadAttrs(Context context,AttributeSet attrs){
+	private void loadAttrs(final Context context,AttributeSet attrs){
+		handler=new Handler();
 		TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.RawResourceTextView);
-		String rawRes = array.getString(R.styleable.RawResourceTextView_rawRes);
-		int rawResId;
-		try {
-			rawResId = R.raw.class.getField(rawRes).get(null);
-		} catch (Throwable e) {
-			throw new RuntimeException(e);
-		}
-		setText(readAllData(context.getResources().openRawResource(rawResId)));
+		final String rawRes = array.getString(R.styleable.RawResourceTextView_rawRes);
+		final boolean async=array.getBoolean(R.styleable.RawResourceTextView_async,false);
+		
+		Thread t=new Thread(){
+			public void run(){
+				final int rawResId;
+				try {
+					rawResId = R.raw.class.getField(rawRes).get(null);
+				} catch (Throwable e) {
+					throw new RuntimeException(e);
+				}
+				handler.post(new Runnable(){
+					public void run(){
+						setText(readAllData(context.getResources().openRawResource(rawResId)));
+					}
+				});
+			}
+		};
+		if(async)t.start();else t.run();
 		array.recycle();
 	}
 	private String readAllData(InputStream is){
