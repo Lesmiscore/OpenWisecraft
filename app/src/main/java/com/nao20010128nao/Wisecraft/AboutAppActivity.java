@@ -31,7 +31,7 @@ public class AboutAppActivity extends ScrollingActivity
 				Intent intent=new Intent(Intent.ACTION_VIEW);
 				intent.addCategory(Intent.CATEGORY_DEFAULT);
 				intent.setData(Uri.parse(getResources().getString(R.string.aboutAppTranslationUrl)));
-				startActivity(Intent.createChooser(intent,getResources().getString(R.string.share)));
+				startActivity(Intent.createChooser(intent,getResources().getString(R.string.gotoTranslationPage)));
 			}
 		});
 	}
