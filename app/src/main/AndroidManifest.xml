@@ -110,6 +110,12 @@
 			android:exported="false"
 			android:theme="@style/AppTheme.OpenSource">
         </activity>
+		<activity
+            android:label="@string/aboutApp"
+            android:name=".AboutAppActivity"
+			android:exported="false"
+			android:theme="@style/AppTheme.OpenSource">
+        </activity>
 		
 		<service
 			android:label="@string/app_name"

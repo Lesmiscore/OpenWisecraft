@@ -44,6 +44,11 @@ public class SettingsActivity extends CompatSHablePreferenceActivity {
 					startActivity(new Intent(SettingsActivity.this,OpenSourceActivity.class));
 				}
 			});
+		sH("aboutApp",new HandledPreference.OnClickListener(){
+				public void onClick(String a,String b,String c){
+					startActivity(new Intent(SettingsActivity.this,AboutAppActivity.class));
+				}
+			});
 		findPreference("asfsls").setEnabled(pref.getBoolean("feature_asfsls",false));
 	}
 	@Override
