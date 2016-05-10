@@ -23,7 +23,8 @@
 		style="?android:attr/buttonBarButtonStyle"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
-		android:text="@string/gotoTranslationPage"/>
+		android:text="@string/gotoTranslationPage"
+		android:id="@+id/gotoTranslationPage"/>
 
 </LinearLayout>
 

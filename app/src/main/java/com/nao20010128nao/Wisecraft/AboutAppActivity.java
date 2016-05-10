@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import com.nao20010128nao.TESTAPP.ScrollingActivity;
+import android.content.Intent;
+import android.net.Uri;
 
 public class AboutAppActivity extends ScrollingActivity
 {
@@ -29,6 +31,14 @@ public class AboutAppActivity extends ScrollingActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.about_app);
 		logo=(ImageView)getWindow().getDecorView().findViewById(R.id.pickaxe);
+		findViewById(R.id.gotoTranslationPage).setOnClickListener(new View.OnClickListener(){
+			public void onClick(View v){
+				Intent intent=new Intent(Intent.ACTION_VIEW);
+				intent.addCategory(Intent.CATEGORY_DEFAULT);
+				intent.setData(Uri.parse(getResources().getString(R.string.aboutAppTranslationUrl)));
+				startActivity(Intent.createChooser(intent,getResources().getString(R.string.share)));
+			}
+		});
 	}
 
 	@Override
