@@ -20,6 +20,7 @@ public class AboutAppActivity extends ScrollingActivity
 	ImageView logo;
 	PopupWindow pw;
 	Button twitter,googleplus,youtube;
+	TextView noCm1,noCm2;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
@@ -91,6 +92,13 @@ public class AboutAppActivity extends ScrollingActivity
 						startActivity(Intent.createChooser(intent,getResources().getString(R.string.aboutDeveloper)));
 					}
 				});
+		}
+		{
+			noCm1=(TextView)findViewById(R.id.nonCommercial1);
+			noCm2=(TextView)findViewById(R.id.nonCommercial2);
+			noCm1.setTypeface(icons);noCm2.setTypeface(icons);
+			noCm1.setText(String.valueOf((char)0xe909));
+			noCm2.setText(String.valueOf((char)0xe90a));
 		}
 	}
 
