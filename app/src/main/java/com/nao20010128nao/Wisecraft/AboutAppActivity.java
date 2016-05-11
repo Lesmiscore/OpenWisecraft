@@ -1,20 +1,17 @@
 package com.nao20010128nao.Wisecraft;
+import android.widget.*;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.CoordinatorLayout;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.PopupWindow;
 import com.nao20010128nao.TESTAPP.ScrollingActivity;
-import android.graphics.Typeface;
-import android.widget.Button;
-import android.text.SpannableStringBuilder;
-import android.text.style.ForegroundColorSpan;
 
 public class AboutAppActivity extends ScrollingActivity
 {
