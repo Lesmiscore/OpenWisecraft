@@ -49,6 +49,15 @@ public class AboutAppActivity extends ScrollingActivity
 			twitter.setTypeface(icons);
 			twitter.setTextColor(0xff1da1f2);
 			twitter.setText(String.valueOf((char)0xe906));
+			
+			twitter.setOnClickListener(new View.OnClickListener(){
+					public void onClick(View v){
+						Intent intent=new Intent(Intent.ACTION_VIEW);
+						intent.addCategory(Intent.CATEGORY_DEFAULT);
+						intent.setData(Uri.parse(getResources().getString(R.string.nao20010128naoTwitterLink)));
+						startActivity(Intent.createChooser(intent,getResources().getString(R.string.aboutDeveloper)));
+					}
+				});
 		}
 		{
 			youtube=(Button)findViewById(R.id.youtube);
@@ -59,6 +68,15 @@ public class AboutAppActivity extends ScrollingActivity
 			//youtube.setText(String.valueOf((char)0xe902));
 			//youtube.setText(String.valueOf((char)0xe907));
 			//youtube.setText(String.valueOf((char)0xe908));
+			
+			youtube.setOnClickListener(new View.OnClickListener(){
+					public void onClick(View v){
+						Intent intent=new Intent(Intent.ACTION_VIEW);
+						intent.addCategory(Intent.CATEGORY_DEFAULT);
+						intent.setData(Uri.parse(getResources().getString(R.string.nao20010128naoYouTubeLink)));
+						startActivity(Intent.createChooser(intent,getResources().getString(R.string.aboutDeveloper)));
+					}
+				});
 		}
 		{
 			googleplus=(Button)findViewById(R.id.googleplus);
@@ -67,6 +85,15 @@ public class AboutAppActivity extends ScrollingActivity
 			googleplus.setText(String.valueOf((char)0xe903));
 			//googleplus.setText(String.valueOf((char)0xe904));
 			//googleplus.setText(String.valueOf((char)0xe905));
+			
+			googleplus.setOnClickListener(new View.OnClickListener(){
+					public void onClick(View v){
+						Intent intent=new Intent(Intent.ACTION_VIEW);
+						intent.addCategory(Intent.CATEGORY_DEFAULT);
+						intent.setData(Uri.parse(getResources().getString(R.string.nao20010128naoGooglePlusLink)));
+						startActivity(Intent.createChooser(intent,getResources().getString(R.string.aboutDeveloper)));
+					}
+				});
 		}
 	}
 
