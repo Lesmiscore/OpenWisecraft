@@ -3,7 +3,8 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
-	android:orientation="vertical">
+	android:orientation="vertical"
+	android:layout_margin="5dp">
 
 	<TextView
 		android:layout_height="wrap_content"
@@ -21,12 +22,14 @@
 		android:layout_width="match_parent"
 		android:orientation="horizontal">
 
-		<ImageButton
+		<Button
 			style="?android:attr/buttonBarButtonStyle"
 			android:layout_height="wrap_content"
 			android:layout_width="wrap_content"
 			android:src="@android:drawable/ic_menu_close_clear_cancel"
-			android:layout_weight="1.0"/>
+			android:layout_weight="1.0"
+			android:id="@+id/twitter"
+			android:textSize="28sp"/>
 
 		<View
 			android:background="#cccccc"
@@ -35,12 +38,14 @@
 			android:layout_marginTop="5dp"
 			android:layout_marginBottom="5dp"/>
 
-		<ImageButton
+		<Button
 			style="?android:attr/buttonBarButtonStyle"
 			android:layout_height="wrap_content"
 			android:layout_width="wrap_content"
 			android:src="@android:drawable/ic_menu_close_clear_cancel"
-			android:layout_weight="1.0"/>
+			android:layout_weight="1.0"
+			android:id="@+id/googleplus"
+			android:textSize="28sp"/>
 
 		<View
 			android:background="#cccccc"
@@ -49,12 +54,14 @@
 			android:layout_marginTop="5dp"
 			android:layout_marginBottom="5dp"/>
 
-		<ImageButton
+		<Button
 			style="?android:attr/buttonBarButtonStyle"
 			android:layout_height="wrap_content"
 			android:layout_width="wrap_content"
 			android:src="@android:drawable/ic_menu_close_clear_cancel"
-			android:layout_weight="1.0"/>
+			android:layout_weight="1.0"
+			android:id="@+id/youtube"
+			android:textSize="28sp"/>
 
 	</LinearLayout>
 
