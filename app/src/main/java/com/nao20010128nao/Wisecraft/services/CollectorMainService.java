@@ -2,9 +2,9 @@ package com.nao20010128nao.Wisecraft.services;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import com.nao20010128nao.Wisecraft.collector.CollectorMain;
-import android.util.Log;
 import android.os.StrictMode;
+import android.util.Log;
+import com.nao20010128nao.Wisecraft.collector.CollectorMain;
 
 public class CollectorMainService extends Service
 {
@@ -37,8 +37,7 @@ public class CollectorMainService extends Service
 				super.run();
 				Log.d("cms","end1");
 			}finally{
-				Log.d("cms","end2");
-				System.exit(0);
+				stopSelf();
 			}
 		}
 	}

