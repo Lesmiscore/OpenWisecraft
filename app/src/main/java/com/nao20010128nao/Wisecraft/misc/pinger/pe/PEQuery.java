@@ -6,22 +6,16 @@ import com.nao20010128nao.Wisecraft.misc.pinger.PingHost;
 import com.nao20010128nao.Wisecraft.misc.pinger.Utils;
 import com.nao20010128nao.Wisecraft.misc.DebugWriter;
 
-/**
- * A class that handles Minecraft Query protocol requests
- *
- * @author Ryan McCann
- */
 public class PEQuery implements PingHost{
 	final static byte HANDSHAKE = 9;
 	final static byte STAT = 0;
 
 	String serverAddress = "localhost";
-	int queryPort = 25565; // the default minecraft query port
+	int queryPort = 25565;
 
-	int localPort = 25566; // the local port we're connected to the server on
+	int localPort = 25566;
 
-	private DatagramSocket socket = null; // prevent socket already bound
-											// exception
+	private DatagramSocket socket = null;
 	private int token;
 
 	long lastPing;
@@ -31,24 +25,18 @@ public class PEQuery implements PingHost{
 		queryPort = port;
 	}
 
-	// used to get a session token
 	private void handshake() {
 		Request req = new Request();
 		req.type = HANDSHAKE;
 		req.sessionID = generateSessionID();
 
-		int val = 11 - req.toBytes().length; // should be 11 bytes total
+		int val = 11 - req.toBytes().length;
 		byte[] input = Utils.padArrayEnd(req.toBytes(), val);
 		byte[] result = sendUDP(input);
 
 		token = Integer.parseInt(new String(result).trim());
 	}
 
-	/**
-	 * Use this to get more information, including players, from the server.
-	 *
-	 * @return a <code>QueryResponse</code> object
-	 */
 	public FullStat fullStat() {
 		long t1=System.currentTimeMillis();
 		handshake();
@@ -75,34 +63,26 @@ public class PEQuery implements PingHost{
 		try {
 			while (socket == null) {
 				try {
-					socket = new DatagramSocket(localPort); // create the socket
+					socket = new DatagramSocket(localPort);
 				} catch (BindException e) {
-					++localPort; // increment if port is already in use
+					++localPort;
 				}
 			}
 
-			// create a packet from the input data and send it on the socket
 			InetAddress address = InetAddress.getByName(serverAddress);
 			DatagramPacket packet1 = new DatagramPacket(input, input.length,
 					address, queryPort);
 			socket.send(packet1);
 
-			// receive a response in a new packet
-			byte[] out = new byte[1024 * 100]; // TODO guess at max size
+			byte[] out = new byte[1024 * 100];
 			DatagramPacket packet = new DatagramPacket(out, out.length);
-			socket.setSoTimeout(2500); // one half second timeout
+			socket.setSoTimeout(2500);
 			socket.receive(packet);
 
 			byte[] result=new byte[packet.getLength()];
 			System.arraycopy(packet.getData(),0,result,0,result.length);
 			return result;
-		} catch (SocketException e) {
-			DebugWriter.writeToE("PEQuery",e);
-		} catch (SocketTimeoutException e) {
-			DebugWriter.writeToE("PEQuery",e);
-		} catch (UnknownHostException e) {
-			DebugWriter.writeToE("PEQuery",e);
-		} catch (Exception e) {
+		} catch (Throwable e) {
 			DebugWriter.writeToE("PEQuery",e);
 		}
 
@@ -110,10 +90,6 @@ public class PEQuery implements PingHost{
 	}
 
 	private int generateSessionID() {
-		/*
-		 * Can be anything, so we'll just use 1 for now. Apparently it can be
-		 * omitted altogether. TODO: increment each time, or use a random int
-		 */
 		return 1;
 	}
 
@@ -124,7 +100,6 @@ public class PEQuery implements PingHost{
 
 	@Override
 	public long getLatestPingElapsed() {
-		// TODO: Implement this method
 		return lastPing;
 	}
 }

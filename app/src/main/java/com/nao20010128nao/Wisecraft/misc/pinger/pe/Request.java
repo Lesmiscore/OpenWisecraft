@@ -22,10 +22,8 @@ public class Request {
 
 	public Request(byte type) {
 		this.type = type;
-		// TODO move static type variables to Request
 	}
 
-	// convert the data in this request to a byte array to send to the server
 	public byte[] toBytes() {
 		byteStream.reset();
 
@@ -43,7 +41,7 @@ public class Request {
 
 	private byte[] payloadBytes() {
 		if (type == PEQuery.HANDSHAKE) {
-			return new byte[0]; // return empty byte array
+			return new byte[0];
 		} else {
 			return payload;
 		}
