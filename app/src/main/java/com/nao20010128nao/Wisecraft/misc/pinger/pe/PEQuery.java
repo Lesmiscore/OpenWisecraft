@@ -45,25 +45,6 @@ public class PEQuery implements PingHost{
 	}
 
 	/**
-	 * Use this to get basic status information from the server.
-	 *
-	 * @return a <code>QueryResponse</code> object
-	 */
-	public BasicStat basicStat() {
-		handshake(); // get the session token first
-
-		Request req = new Request(); // create a request
-		req.type = STAT;
-		req.sessionID = generateSessionID();
-		req.setPayload(token);
-		byte[] send = req.toBytes();
-
-		byte[] result = sendUDP(send);
-
-		return new BasicStat(result);
-	}
-
-	/**
 	 * Use this to get more information, including players, from the server.
 	 *
 	 * @return a <code>QueryResponse</code> object
