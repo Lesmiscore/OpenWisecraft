@@ -29,7 +29,7 @@ public class ServerFinder extends AppCompatListActivity {
 	ServerList sl;
 	List<ServerStatus> list;
 	String ip;
-	boolean isPC;
+	int mode;
 	View dialog,dialog2;
 	ServerPingProvider spp;
 	SharedPreferences pref;
@@ -46,7 +46,7 @@ public class ServerFinder extends AppCompatListActivity {
 		setListAdapter(sl = new ServerList());
 		getListView().setOnItemClickListener(sl);
 		ip = getIntent().getStringExtra("ip");
-		isPC = getIntent().getBooleanExtra("ispc", false);
+		mode = getIntent().getIntExtra("mode", 0);
 		new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
 			.setTitle(R.string.serverFinder)
 			.setView(dialog = getLayoutInflater().inflate(R.layout.server_finder_start, null, false))
@@ -72,7 +72,7 @@ public class ServerFinder extends AppCompatListActivity {
 			})
 			.show();
 		if (ip != null)((EditText)dialog.findViewById(R.id.ip)).setText(ip);
-		((CheckBox)dialog.findViewById(R.id.pc)).setChecked(isPC);
+		((CheckBox)dialog.findViewById(R.id.pc)).setChecked(mode==0?false:true);
 		
 		if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
 			BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
@@ -171,7 +171,16 @@ public class ServerFinder extends AppCompatListActivity {
 				}
 			}
 			//if(convertView!=null)return convertView;
-			final View layout=getLayoutInflater().inflate(R.layout.quickstatus, null, false);
+			final View layout;
+			if (pref.getBoolean("colorFormattedText", false)) {
+				if (pref.getBoolean("darkBackgroundForServerName", false)) {
+					layout = getLayoutInflater().inflate(R.layout.quickstatus_dark, null, false);
+				} else {
+					layout = getLayoutInflater().inflate(R.layout.quickstatus, null, false);
+				}
+			} else {
+				layout = getLayoutInflater().inflate(R.layout.quickstatus, null, false);
+			}
 			layout.findViewById(R.id.serverPlayers).setVisibility(View.GONE);
 			ServerStatus s=getItem(position);
 			layout.setTag(s);
