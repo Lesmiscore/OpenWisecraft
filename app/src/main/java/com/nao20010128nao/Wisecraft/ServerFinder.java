@@ -24,6 +24,9 @@ import java.util.List;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import android.content.SharedPreferences;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.Shader;
 public class ServerFinder extends AppCompatListActivity {
 	ServerList sl;
 	List<ServerStatus> list;
@@ -31,10 +34,12 @@ public class ServerFinder extends AppCompatListActivity {
 	boolean isPC;
 	View dialog,dialog2;
 	ServerPingProvider spp;
+	SharedPreferences pref;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
+		pref = PreferenceManager.getDefaultSharedPreferences(this);
 		if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("useBright",false)){
 			setTheme(R.style.AppTheme_Bright);
 			getTheme().applyStyle(R.style.AppTheme_Bright,true);
@@ -70,6 +75,13 @@ public class ServerFinder extends AppCompatListActivity {
 			.show();
 		if (ip != null)((EditText)dialog.findViewById(R.id.ip)).setText(ip);
 		((CheckBox)dialog.findViewById(R.id.pc)).setChecked(isPC);
+		
+		if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
+			BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
+			bd.setTargetDensity(getResources().getDisplayMetrics());
+			bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
+			getListView().setBackground(bd);
+		}
 	}
 	private void startFinding(final String ip, final int startPort, final int endPort, final boolean isPC) {
 		DisplayMetrics dm=getResources().getDisplayMetrics();
@@ -173,21 +185,29 @@ public class ServerFinder extends AppCompatListActivity {
 				if (rep.description == null) {
 					title = s.ip + ":" + s.port;
 				} else {
-					title = deleteDecorations(rep.description.text);
+					title = rep.description.text;
 				}
 			} else if (s.response instanceof Reply) {//PC
 				Reply rep=(Reply)s.response;
 				if (rep.description == null) {
 					title = s.ip + ":" + s.port;
 				} else {
-					title = deleteDecorations(rep.description);
+					title = rep.description;
 				}
 			} else if (s.response instanceof UnconnectedPing.UnconnectedPingResult) {
 				title = ((UnconnectedPing.UnconnectedPingResult)s.response).getServerName();
 			} else {//Unreachable
 				title = s.ip + ":" + s.port;
 			}
-			((TextView)layout.findViewById(R.id.serverName)).setText(deleteDecorations(title));
+			if (pref.getBoolean("colorFormattedText", false)) {
+				if (pref.getBoolean("darkBackgroundForServerName", false)) {
+					((TextView)layout.findViewById(R.id.serverName)).setText(parseMinecraftFormattingCodeForDark(title));
+				} else {
+					((TextView)layout.findViewById(R.id.serverName)).setText(parseMinecraftFormattingCode(title));
+				}
+			} else {
+				((TextView)layout.findViewById(R.id.serverName)).setText(deleteDecorations(title));
+			}
 			((TextView)layout.findViewById(R.id.pingMillis)).setText(s.ping + " ms");
 			((TextView)layout.findViewById(R.id.serverAddress)).setText(s.port + "");
 
