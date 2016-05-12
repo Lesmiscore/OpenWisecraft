@@ -5,6 +5,7 @@ import java.util.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.ServerPingResult;
 import com.nao20010128nao.Wisecraft.misc.pinger.Utils;
 import com.nao20010128nao.OTC.OrderTrustedMap;
+import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
 
 public class FullStat implements ServerPingResult {
 	static byte NULL = 00;
@@ -29,8 +30,8 @@ public class FullStat implements ServerPingResult {
 			dataEnds--;
 
 		for (int i = 2; i < dataEnds; i += 2) {
-			String k = new String(temp[i]);
-			String v = new String(temp[i + 1]);
+			String k = new String(temp[i], CompatCharsets.UTF_8);
+			String v = new String(temp[i + 1], CompatCharsets.UTF_8);
 			if ("".equals(k) | "".equals(v))
 				continue;
 			datas.put(k, v);
@@ -38,7 +39,7 @@ public class FullStat implements ServerPingResult {
 
 		playerList = new ArrayList<String>();
 		for (int i = dataEnds + 2; i < temp.length; i++)
-			playerList.add(new String(temp[i]));
+			playerList.add(new String(temp[i], CompatCharsets.UTF_8));
 	}
 
 	public Map<String, String> getData() {
