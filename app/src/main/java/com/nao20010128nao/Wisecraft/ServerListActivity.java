@@ -616,7 +616,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 				}.start();
 				break;
 			case 6:
-				startActivity(new Intent(this, ServerFinder.class));
+				startActivity(new Intent(this, ServerFinderActivity.class));
 				break;
 			case 7:
 				startActivity(new Intent(this, ServerGetActivity.class));
@@ -948,7 +948,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 							});
 						executes.add(7, new Runnable(){
 								public void run() {
-									sla.startActivity(new Intent(sla, ServerFinder.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port).putExtra("ispc", getItem(p3).mode));
+									sla.startActivity(new Intent(sla, ServerFinderActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port).putExtra("ispc", getItem(p3).mode));
 								}
 							});
 

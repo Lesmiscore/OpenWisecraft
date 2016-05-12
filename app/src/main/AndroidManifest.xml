@@ -78,7 +78,7 @@
 
 		<activity
             android:label="@string/serverFinder"
-            android:name=".ServerFinder"
+            android:name=".ServerFinderActivity"
 			android:exported="false">
         </activity>
 		<activity

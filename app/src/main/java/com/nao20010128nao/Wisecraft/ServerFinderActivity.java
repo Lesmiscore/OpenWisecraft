@@ -25,7 +25,7 @@ import java.util.List;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
-public class ServerFinder extends AppCompatListActivity {
+public class ServerFinderActivity extends AppCompatListActivity {
 	ServerList sl;
 	List<ServerStatus> list;
 	String ip;
@@ -98,7 +98,7 @@ public class ServerFinder extends AppCompatListActivity {
 			public Void doInBackground(Void... l) {
 				final int max=endPort - startPort;
 				
-				int threads=new Integer(PreferenceManager.getDefaultSharedPreferences(ServerFinder.this).getString("parallels", "6"));
+				int threads=new Integer(PreferenceManager.getDefaultSharedPreferences(ServerFinderActivity.this).getString("parallels", "6"));
 				if (isPC) {
 					spp = new PCMultiServerPingProvider(threads);
 				} else {
@@ -158,7 +158,7 @@ public class ServerFinder extends AppCompatListActivity {
 	class ServerList extends AppBaseArrayAdapter<ServerStatus> implements AdapterView.OnItemClickListener {
 		List<View> cached=new ArrayList<>();
 		public ServerList() {
-			super(ServerFinder.this, 0, list = new ArrayList<ServerStatus>());
+			super(ServerFinderActivity.this, 0, list = new ArrayList<ServerStatus>());
 		}
 
 		@Override
@@ -237,7 +237,7 @@ public class ServerFinder extends AppCompatListActivity {
 			// TODO: Implement this method
 			final Server s=getItem(p3);
 			if (s instanceof ServerStatus) {
-				new AppCompatAlertDialog.Builder(ServerFinder.this)
+				new AppCompatAlertDialog.Builder(ServerFinderActivity.this)
 					.setTitle(s.toString())
 					.setItems(R.array.serverFinderMenu,new DialogInterface.OnClickListener(){
 						public void onClick(DialogInterface di,int w){
