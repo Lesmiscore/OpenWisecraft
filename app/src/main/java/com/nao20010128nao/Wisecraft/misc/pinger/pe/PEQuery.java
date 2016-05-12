@@ -6,7 +6,7 @@ import com.nao20010128nao.Wisecraft.misc.pinger.PingHost;
 import com.nao20010128nao.Wisecraft.misc.pinger.Utils;
 import com.nao20010128nao.Wisecraft.misc.DebugWriter;
 
-public class PEQuery implements PingHost{
+public class PEQuery implements PingHost {
 	final static byte HANDSHAKE = 9;
 	final static byte STAT = 0;
 
@@ -19,7 +19,7 @@ public class PEQuery implements PingHost{
 	private int token;
 
 	long lastPing;
-	
+
 	public PEQuery(String address, int port) {
 		serverAddress = address;
 		queryPort = port;
@@ -40,7 +40,7 @@ public class PEQuery implements PingHost{
 	public FullStat fullStat() {
 		long t1=System.currentTimeMillis();
 		handshake();
-		t1=System.currentTimeMillis()-t1;
+		t1 = System.currentTimeMillis() - t1;
 
 		Request req = new Request();
 		req.type = STAT;
@@ -52,10 +52,10 @@ public class PEQuery implements PingHost{
 
 		long t2=System.currentTimeMillis();
 		byte[] result = sendUDP(send);
-		t2=System.currentTimeMillis()-t2;
+		t2 = System.currentTimeMillis() - t2;
 
-		lastPing=t1+t2;
-		
+		lastPing = t1 + t2;
+
 		return new FullStat(result);
 	}
 
@@ -70,8 +70,7 @@ public class PEQuery implements PingHost{
 			}
 
 			InetAddress address = InetAddress.getByName(serverAddress);
-			DatagramPacket packet1 = new DatagramPacket(input, input.length,
-					address, queryPort);
+			DatagramPacket packet1 = new DatagramPacket(input, input.length, address, queryPort);
 			socket.send(packet1);
 
 			byte[] out = new byte[1024 * 100];
@@ -80,10 +79,10 @@ public class PEQuery implements PingHost{
 			socket.receive(packet);
 
 			byte[] result=new byte[packet.getLength()];
-			System.arraycopy(packet.getData(),0,result,0,result.length);
+			System.arraycopy(packet.getData(), 0, result, 0, result.length);
 			return result;
 		} catch (Throwable e) {
-			DebugWriter.writeToE("PEQuery",e);
+			DebugWriter.writeToE("PEQuery", e);
 		}
 
 		return null;
