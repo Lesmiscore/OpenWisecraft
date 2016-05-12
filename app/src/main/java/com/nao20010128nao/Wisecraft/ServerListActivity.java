@@ -948,7 +948,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 							});
 						executes.add(7, new Runnable(){
 								public void run() {
-									sla.startActivity(new Intent(sla, ServerFinderActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port).putExtra("ispc", getItem(p3).mode));
+									sla.startActivity(new Intent(sla, ServerFinderActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port).putExtra("mode", getItem(p3).mode));
 								}
 							});
 
