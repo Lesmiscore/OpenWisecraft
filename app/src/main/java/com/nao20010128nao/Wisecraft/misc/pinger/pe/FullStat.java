@@ -18,7 +18,7 @@ public class FullStat implements ServerPingResult {
 		byte[][] temp = Utils.split(data);
 		byte[] d;
 		int dataEnds = 0;
-		for (int i = 2; i < temp.length; i += 1) {
+		for (int i = 2; i < temp.length; i++) {
 			if ((d = temp[i]).length == 0 ? false : d[0] == 1) {
 				dataEnds = i;
 				break;
