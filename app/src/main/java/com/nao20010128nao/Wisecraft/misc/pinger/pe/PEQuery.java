@@ -12,9 +12,7 @@ public class PEQuery implements PingHost {
 
 	String serverAddress = "localhost";
 	int queryPort = 25565;
-
-	int localPort = 25566;
-
+	
 	private DatagramSocket socket = null;
 	private int token;
 
@@ -61,13 +59,7 @@ public class PEQuery implements PingHost {
 
 	private byte[] sendUDP(byte[] input) {
 		try {
-			while (socket == null) {
-				try {
-					socket = new DatagramSocket(localPort);
-				} catch (BindException e) {
-					++localPort;
-				}
-			}
+			socket = new DatagramSocket();
 
 			InetAddress address = InetAddress.getByName(serverAddress);
 			DatagramPacket packet1 = new DatagramPacket(input, input.length, address, queryPort);
