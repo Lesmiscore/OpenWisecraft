@@ -32,15 +32,23 @@ public class Utils {
 		}
 		return sb.toString();
 	}
-	public static Spannable parseMinecraftFormattingCode(String s){
-		MinecraftFormattingCodeParser mfcp=new MinecraftFormattingCodeParser();
-		mfcp.loadFlags(s,(byte)0);
-		return mfcp.build();
+	public static CharSequence parseMinecraftFormattingCode(String s){
+		try {
+			MinecraftFormattingCodeParser mfcp=new MinecraftFormattingCodeParser();
+			mfcp.loadFlags(s, (byte)0);
+			return mfcp.build();
+		} catch (Throwable e) {
+			return deleteDecorations(s);
+		}
 	}
-	public static Spannable parseMinecraftFormattingCodeForDark(String s){
-		MinecraftFormattingCodeParser mfcp=new MinecraftFormattingCodeParser();
-		mfcp.loadFlags(s,(byte)15);
-		return mfcp.build();
+	public static CharSequence parseMinecraftFormattingCodeForDark(String s){
+		try {
+			MinecraftFormattingCodeParser mfcp=new MinecraftFormattingCodeParser();
+			mfcp.loadFlags(s, (byte)15);
+			return mfcp.build();
+		} catch (Throwable e) {
+			return deleteDecorations(s);
+		}
 	}
 	public static boolean isNullString(String s) {
 		if (s == null) {
