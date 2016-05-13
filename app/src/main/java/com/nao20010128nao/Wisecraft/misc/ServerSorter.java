@@ -23,7 +23,7 @@ public final class ServerSorter implements Comparator<Server>
 					}
 				}
 			}else{
-				return p1.port<p2.port?1:-1;
+				return p1.port>p2.port?1:-1;
 			}
 		}else{
 			return p1.ip.compareTo(p2.ip);
