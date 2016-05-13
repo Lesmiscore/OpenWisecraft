@@ -35,13 +35,21 @@ public class AboutAppActivity extends ScrollingActivity
 		setContentView(R.layout.about_app);
 		logo=(ImageView)getWindow().getDecorView().findViewById(R.id.pickaxe);
 		findViewById(R.id.gotoTranslationPage).setOnClickListener(new View.OnClickListener(){
-			public void onClick(View v){
-				Intent intent=new Intent(Intent.ACTION_VIEW);
-				intent.addCategory(Intent.CATEGORY_DEFAULT);
-				intent.setData(Uri.parse(getResources().getString(R.string.aboutAppTranslationUrl)));
-				startActivity(Intent.createChooser(intent,getResources().getString(R.string.gotoTranslationPage)));
-			}
-		});
+				public void onClick(View v){
+					Intent intent=new Intent(Intent.ACTION_VIEW);
+					intent.addCategory(Intent.CATEGORY_DEFAULT);
+					intent.setData(Uri.parse(getResources().getString(R.string.aboutAppTranslationUrl)));
+					startActivity(Intent.createChooser(intent,getResources().getString(R.string.gotoTranslationPage)));
+				}
+			});
+		findViewById(R.id.gotoBugReport).setOnClickListener(new View.OnClickListener(){
+				public void onClick(View v){
+					Intent intent=new Intent(Intent.ACTION_VIEW);
+					intent.addCategory(Intent.CATEGORY_DEFAULT);
+					intent.setData(Uri.parse(getResources().getString(R.string.bugReportUrl)));
+					startActivity(Intent.createChooser(intent,getResources().getString(R.string.gotoBugReport)));
+				}
+			});
 		{
 			twitter=(Button)findViewById(R.id.twitter);
 			twitter.setTypeface(icons);
