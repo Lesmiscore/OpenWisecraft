@@ -48,7 +48,7 @@
 			android:layout_width="wrap_content"
 			android:ems="10"
 			android:layout_weight="1.0"
-			android:id="@+id/serverIp"
+			android:id="@id/serverIp"
 			android:hint="@string/ex.ip"/>
 
 	</LinearLayout>
