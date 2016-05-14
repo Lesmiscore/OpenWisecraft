@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import android.text.Spannable;
 import com.nao20010128nao.Wisecraft.misc.MinecraftFormattingCodeParser;
+import java.lang.reflect.Array;
 
 public class Utils {
 	public static String deleteDecorations(String decorated) {
@@ -206,5 +207,33 @@ public class Utils {
 			is.close();
 		}
 		return os.toByteArray();
+	}
+	public List<Object> trueValues(List<Object> all, boolean[] balues) {
+		List lst=new ArrayList();
+		for (int i=0;i < balues.length;i++)
+			if (balues[i])
+				lst.add(all.get(i));
+		return lst;
+	}
+	public Object[] trueValues(Object[] all, boolean[] balues) {
+		List lst=new ArrayList();
+		for (int i=0;i < balues.length;i++)
+			if (balues[i])
+				lst.add(all[i]);
+		return lst.toArray();
+	}
+	public <T> List<T>  trueValues(List<T> all, boolean[] balues) {
+		List<T> lst=new ArrayList<T>();
+		for (int i=0;i < balues.length;i++)
+			if (balues[i])
+				lst.add(all.get(i));
+		return lst;
+	}
+	public <T> T[] trueValues(T[] all, boolean[] balues) {
+		List<T> lst=new ArrayList<T>();
+		for (int i=0;i < balues.length;i++)
+			if (balues[i])
+				lst.add(all[i]);
+		return lst.toArray((T[])Array.newInstance(all.getClass().getComponentType(),lst.size()));
 	}
 }
