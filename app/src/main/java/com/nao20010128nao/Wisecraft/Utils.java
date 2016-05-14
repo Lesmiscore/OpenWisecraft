@@ -1,22 +1,19 @@
 package com.nao20010128nao.Wisecraft;
+import com.nao20010128nao.Wisecraft.misc.*;
 import java.io.*;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import com.google.gson.Gson;
-import com.nao20010128nao.Wisecraft.misc.DebugWriter;
-import com.nao20010128nao.Wisecraft.misc.Server;
 import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
 import com.nao20010128nao.Wisecraft.misc.rcon.RCon;
 import com.nao20010128nao.Wisecraft.rcon.RConModified;
 import com.nao20010128nao.Wisecraft.struct.WCH_ServerInfo;
+import java.lang.reflect.Array;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
-import android.text.Spannable;
-import com.nao20010128nao.Wisecraft.misc.MinecraftFormattingCodeParser;
-import java.lang.reflect.Array;
 
 public class Utils {
 	public static String deleteDecorations(String decorated) {

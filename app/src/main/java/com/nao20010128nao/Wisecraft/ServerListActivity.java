@@ -5,7 +5,6 @@ import android.preference.*;
 import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.misc.*;
-import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.provider.*;
 import java.util.*;
 
@@ -23,6 +22,8 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.nao20010128nao.ToolBox.HandledPreference;
 import com.nao20010128nao.Wisecraft.collector.CollectorMain;
+import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
+import com.nao20010128nao.Wisecraft.misc.compat.CompatActivityGroup;
 import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.ContextWrappingExtender;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.Reply;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.Reply19;
@@ -41,7 +42,6 @@ import java.net.ServerSocket;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
-import android.Manifest;
 
 class ServerListActivityImpl extends ServerListActivityBase {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
