@@ -36,7 +36,7 @@ public class RawResourceTextView extends AppCompatTextView
 			public void run(){
 				final int rawResId;
 				try {
-					rawResId = R.raw.class.getField(rawRes).get(null);
+					rawResId = (int)R.raw.class.getField(rawRes).get(null);
 				} catch (Throwable e) {
 					throw new RuntimeException(e);
 				}

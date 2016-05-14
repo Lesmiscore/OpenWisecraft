@@ -216,7 +216,7 @@ public class SlsUpdater extends Thread
 		ByteArrayOutputStream baos=new ByteArrayOutputStream();
 		DataOutputStream dos=new DataOutputStream(baos);
 		dos.writeUTF((String)providerClass.getMethod("getVersion").invoke(prov));
-		dos.writeInt(providerClass.getMethod("getWisecraftMinVersion").invoke(prov));
+		dos.writeInt((int)providerClass.getMethod("getWisecraftMinVersion").invoke(prov));
 		System.out.println(new String(Base64.encodeBase64(baos.toByteArray())).replace("\n","").replace("\r",""));
 	}
 }

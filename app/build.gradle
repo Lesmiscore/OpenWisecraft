@@ -39,4 +39,5 @@ dependencies {
 	compile project(':compat')
 	compile files('libs/otc.jar')
 	compile 'com.android.support:multidex:+'
+	compile files('libs/commons-codec-1.10.jar')
 }

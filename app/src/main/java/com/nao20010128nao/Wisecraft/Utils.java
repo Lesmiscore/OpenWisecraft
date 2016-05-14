@@ -208,20 +208,6 @@ public class Utils {
 		}
 		return os.toByteArray();
 	}
-	public List<Object> trueValues(List<Object> all, boolean[] balues) {
-		List lst=new ArrayList();
-		for (int i=0;i < balues.length;i++)
-			if (balues[i])
-				lst.add(all.get(i));
-		return lst;
-	}
-	public Object[] trueValues(Object[] all, boolean[] balues) {
-		List lst=new ArrayList();
-		for (int i=0;i < balues.length;i++)
-			if (balues[i])
-				lst.add(all[i]);
-		return lst.toArray();
-	}
 	public <T> List<T>  trueValues(List<T> all, boolean[] balues) {
 		List<T> lst=new ArrayList<T>();
 		for (int i=0;i < balues.length;i++)
