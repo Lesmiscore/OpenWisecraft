@@ -9,7 +9,7 @@
 		android:widgetLayout="@layout/preference_widget_checkbox"
 	/>
 	<com.nao20010128nao.Wisecraft.misc.pref.CheckBoxPreference
-		android:title="@string/bringOnlinesToTop"
+		android:title="@string/sort"
 		android:key="feature_bott"
 		android:defaultValue="true"
 		android:widgetLayout="@layout/preference_widget_checkbox"
