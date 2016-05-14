@@ -41,8 +41,9 @@ import java.net.ServerSocket;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import android.Manifest;
 
-class ServerListActivityImpl extends AppCompatListActivity {
+class ServerListActivityImpl extends ServerListActivityBase {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
 
 	static File mcpeServerList=new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt");
@@ -315,6 +316,7 @@ class ServerListActivityImpl extends AppCompatListActivity {
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO: Implement this method
+		if(dispatchActivityResult(requestCode,resultCode,data))return;
 		switch (requestCode) {
 			case 0:
 				switch (resultCode) {
@@ -507,80 +509,94 @@ class ServerListActivityImpl extends AppCompatListActivity {
 				}.start();
 				break;
 			case 3:
-				final AppCompatEditText et_=new AppCompatEditText(this);
-				et_.setTypeface(TheApplication.instance.getLocalizedFont());
-				et_.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/servers.json").toString());
-				new AppCompatAlertDialog.Builder(this, R.style.AppAlertDialog)
-					.setTitle(R.string.export_typepath)
-					.setView(et_)
-					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
-						public void onClick(DialogInterface di, int w) {
-							Toast.makeText(ServerListActivityImpl.this, R.string.exporting, Toast.LENGTH_LONG).show();
-							new AsyncTask<Void,Void,File>(){
-								public File doInBackground(Void... a) {
-									Server[] servs=new Server[list.size()];
-									for (int i=0;i < servs.length;i++) {
-										servs[i] = list.get(i).cloneAsServer();
-									}
-									File f=new File(Environment.getExternalStorageDirectory(), "/Wisecraft");
-									f.mkdirs();
-									if (writeToFile(f = new File(et_.getText().toString()), gson.toJson(servs, Server[].class)))
-										return f;
-									else return null;
+				doAfterRequirePerm(new RequirePermissionResult(){
+					public void onSuccess(){
+						final AppCompatEditText et_=new AppCompatEditText(ServerListActivityImpl.this);
+						et_.setTypeface(TheApplication.instance.getLocalizedFont());
+						et_.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/servers.json").toString());
+						new AppCompatAlertDialog.Builder(ServerListActivityImpl.this, R.style.AppAlertDialog)
+							.setTitle(R.string.export_typepath)
+							.setView(et_)
+							.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
+								public void onClick(DialogInterface di, int w) {
+									Toast.makeText(ServerListActivityImpl.this, R.string.exporting, Toast.LENGTH_LONG).show();
+									new AsyncTask<Void,Void,File>(){
+										public File doInBackground(Void... a) {
+											Server[] servs=new Server[list.size()];
+											for (int i=0;i < servs.length;i++) {
+												servs[i] = list.get(i).cloneAsServer();
+											}
+											File f=new File(Environment.getExternalStorageDirectory(), "/Wisecraft");
+											f.mkdirs();
+											if (writeToFile(f = new File(et_.getText().toString()), gson.toJson(servs, Server[].class)))
+												return f;
+											else return null;
+										}
+										public void onPostExecute(File f) {
+											if (f != null) {
+												Toast.makeText(ServerListActivityImpl.this, getResources().getString(R.string.export_complete).replace("[PATH]", f + ""), Toast.LENGTH_LONG).show();
+											} else {
+												Toast.makeText(ServerListActivityImpl.this, getResources().getString(R.string.export_failed), Toast.LENGTH_LONG).show();
+											}
+										}
+									}.execute();
 								}
-								public void onPostExecute(File f) {
-									if (f != null) {
-										Toast.makeText(ServerListActivityImpl.this, getResources().getString(R.string.export_complete).replace("[PATH]", f + ""), Toast.LENGTH_LONG).show();
-									} else {
-										Toast.makeText(ServerListActivityImpl.this, getResources().getString(R.string.export_failed), Toast.LENGTH_LONG).show();
-									}
-								}
-							}.execute();
-						}
-					})
-					.show();
+							})
+							.show();
+					}
+					public void onFailed(String[] corrupt,String[] denied){
+						Toast.makeText(ServerListActivityImpl.this,R.string.error_msg_noperm_externalStorage,Toast.LENGTH_LONG).show();
+					}
+				},new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE});
 				break;
 			case 4:
-				final AppCompatEditText et=new AppCompatEditText(this);
-				et.setTypeface(TheApplication.instance.getLocalizedFont());
-				et.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/servers.json").toString());
-				new AppCompatAlertDialog.Builder(this, R.style.AppAlertDialog)
-					.setTitle(R.string.import_typepath)
-					.setView(et)
-					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
-						public void onClick(DialogInterface di, int w) {
-							Toast.makeText(ServerListActivityImpl.this, R.string.importing, Toast.LENGTH_LONG).show();
-							new Thread(){
-								public void run() {
-									final Server[] sv;
-									String json=readWholeFile(new File(et.getText().toString()));
-									if (json.contains("\"isPC\"") & (json.contains("true") | json.contains("false"))) {
-										//old version json file
-										OldServer19[] sa=gson.fromJson(json, OldServer19[].class);
-										List<Server> ns=new ArrayList<>();
-										for (OldServer19 s:sa) {
-											Server nso=new Server();
-											nso.ip = s.ip;
-											nso.port = s.port;
-											nso.mode = s.isPC ?1: 0;
-											ns.add(nso);
-										}
-										sv = ns.toArray(new Server[ns.size()]);
-									} else {
-										sv = gson.fromJson(json, Server[].class);
-									}
-									runOnUiThread(new Runnable(){
+				doAfterRequirePerm(new RequirePermissionResult(){
+						public void onSuccess(){
+							final AppCompatEditText et=new AppCompatEditText(ServerListActivityImpl.this);
+							et.setTypeface(TheApplication.instance.getLocalizedFont());
+							et.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/servers.json").toString());
+							new AppCompatAlertDialog.Builder(ServerListActivityImpl.this, R.style.AppAlertDialog)
+								.setTitle(R.string.import_typepath)
+								.setView(et)
+								.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
+									public void onClick(DialogInterface di, int w) {
+										Toast.makeText(ServerListActivityImpl.this, R.string.importing, Toast.LENGTH_LONG).show();
+										new Thread(){
 											public void run() {
-												sl.addAll(sv);
-												saveServers();
-												Toast.makeText(ServerListActivityImpl.this, getResources().getString(R.string.imported).replace("[PATH]", et.getText().toString()), Toast.LENGTH_LONG).show();
+												final Server[] sv;
+												String json=readWholeFile(new File(et.getText().toString()));
+												if (json.contains("\"isPC\"") & (json.contains("true") | json.contains("false"))) {
+													//old version json file
+													OldServer19[] sa=gson.fromJson(json, OldServer19[].class);
+													List<Server> ns=new ArrayList<>();
+													for (OldServer19 s:sa) {
+														Server nso=new Server();
+														nso.ip = s.ip;
+														nso.port = s.port;
+														nso.mode = s.isPC ?1: 0;
+														ns.add(nso);
+													}
+													sv = ns.toArray(new Server[ns.size()]);
+												} else {
+													sv = gson.fromJson(json, Server[].class);
+												}
+												runOnUiThread(new Runnable(){
+														public void run() {
+															sl.addAll(sv);
+															saveServers();
+															Toast.makeText(ServerListActivityImpl.this, getResources().getString(R.string.imported).replace("[PATH]", et.getText().toString()), Toast.LENGTH_LONG).show();
+														}
+													});
 											}
-										});
-								}
-							}.start();
+										}.start();
+									}
+								})
+								.show();
 						}
-					})
-					.show();
+						public void onFailed(String[] corrupt,String[] denied){
+							Toast.makeText(ServerListActivityImpl.this,R.string.error_msg_noperm_externalStorage,Toast.LENGTH_LONG).show();
+						}
+					},new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE});
 				break;
 			case 5:
 				new Thread(){
