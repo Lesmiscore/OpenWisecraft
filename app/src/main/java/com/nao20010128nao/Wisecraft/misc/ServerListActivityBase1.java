@@ -7,10 +7,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.PermissionChecker;
 import android.util.Log;
 import com.nao20010128nao.Wisecraft.Factories;
-import com.nao20010128nao.Wisecraft.misc.compat.AppCompatListActivity;
 import java.security.SecureRandom;
 
-public class ServerListActivityBase1 extends AppCompatListActivity
+//Permission Request Part
+public class ServerListActivityBase1 extends ServerListActivityBase2
 {
 	SecureRandom sr=new SecureRandom();
 	HashMap<Integer,Metadata> permRequire=new HashMap<>();

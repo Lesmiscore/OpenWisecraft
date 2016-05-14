@@ -43,7 +43,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
 
-class ServerListActivityImpl extends ServerListActivityBase1 {
+abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
 
 	static File mcpeServerList=new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt");
@@ -85,7 +85,7 @@ class ServerListActivityImpl extends ServerListActivityBase1 {
 		grandMenu.add(getResources().getString(R.string.update_all));//2
 		grandMenu.add(getResources().getString(R.string.export));//3
 		grandMenu.add(getResources().getString(R.string.imporT));//4
-		grandMenu.add(getResources().getString(R.string.bringOnlinesToTop));//5
+		grandMenu.add(getResources().getString(R.string.sort));//5
 		grandMenu.add(getResources().getString(R.string.serverFinder));//6
 		grandMenu.add(getResources().getString(R.string.addServerFromServerListSite));//7
 		grandMenu.add(getResources().getString(R.string.settings));//8
@@ -585,37 +585,16 @@ class ServerListActivityImpl extends ServerListActivityBase1 {
 					.show();
 				break;
 			case 5:
-				new Thread(){
-					public void run() {
-						final List<Server> sortingServer=Factories.arrayList();
-
-						List<Server> tmpServer=Factories.arrayList(list);
-
-						for (int i=0;i < list.size();i++) {
-							if (list.get(i) instanceof ServerStatus) {
-								//Online
-								sortingServer.add(list.get(i).cloneAsServer());
-
-								tmpServer.remove(list.get(i));
-							}
+				new AppCompatAlertDialog.Builder(this)
+					.setTitle(R.string.sort)
+					.setSingleChoiceItems(R.array.serverSortMenu,-1,new DialogInterface.OnClickListener(){
+						public void onClick(DialogInterface di,int w){
+							SortKind sk=new SortKind[]{SortKind.BRING_ONLINE_SERVERS_TO_TOP,SortKind.IP_AND_PORT,SortKind.ONLINE_AND_OFFLINE}[w];
+							skipSave=true;
+							doSort(list,sk);
 						}
-						sortingServer.addAll(tmpServer);
-
-						skipSave = true;
-						runOnUiThread(new Runnable(){
-								public void run() {
-									finish();
-									instance = new WeakReference(null);
-									new Handler().postDelayed(new Runnable(){
-											public void run() {
-												pref.edit().putString("servers", gson.toJson(sortingServer.toArray(new Server[sortingServer.size()]), Server[].class)).commit();
-												startActivity(new Intent(ServerListActivityImpl.this, ServerListActivity.class));
-											}
-										}, 10);
-								}
-							});
-					}
-				}.start();
+					})
+					.show();
 				break;
 			case 6:
 				startActivity(new Intent(this, ServerFinderActivity.class));
@@ -1303,8 +1282,7 @@ public class ServerListActivity extends CompatActivityGroup {
 		getSupportActionBar().hide();
 		setContentView(getLocalActivityManager().startActivity("main", new Intent(this, Content.class)).getDecorView());
 	}
-	public static class Content extends ServerListActivityImpl {}
-	public static class BrightContent extends Content {}
+	public static class Content extends ServerListActivityImpl {public static void deleteRef(){instance=new WeakReference<>(null);}}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
