@@ -43,7 +43,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
 
-class ServerListActivityImpl extends ServerListActivityBase {
+class ServerListActivityImpl extends ServerListActivityBase1 {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
 
 	static File mcpeServerList=new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt");
