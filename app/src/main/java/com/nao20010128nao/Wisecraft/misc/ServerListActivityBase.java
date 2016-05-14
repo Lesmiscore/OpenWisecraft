@@ -1,13 +1,12 @@
 package com.nao20010128nao.Wisecraft.misc;
-import com.nao20010128nao.Wisecraft.misc.compat.AppCompatListActivity;
-import java.util.HashMap;
-import java.security.SecureRandom;
-import android.support.v4.app.ActivityCompat;
-import java.util.ArrayList;
-import android.content.pm.PackageManager;
-import com.nao20010128nao.Wisecraft.Factories;
+import java.util.*;
+
 import android.content.Intent;
-import java.util.Arrays;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
+import com.nao20010128nao.Wisecraft.Factories;
+import com.nao20010128nao.Wisecraft.misc.compat.AppCompatListActivity;
+import java.security.SecureRandom;
 
 public class ServerListActivityBase extends AppCompatListActivity
 {
