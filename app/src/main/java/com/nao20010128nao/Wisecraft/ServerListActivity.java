@@ -547,7 +547,7 @@ class ServerListActivityImpl extends ServerListActivityBase {
 					public void onFailed(String[] corrupt,String[] denied){
 						Toast.makeText(ServerListActivityImpl.this,R.string.error_msg_noperm_externalStorage,Toast.LENGTH_LONG).show();
 					}
-				},new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE});
+				},new String[]{"android.permission.WRITE_EXTERNAL_STORAGE"});
 				break;
 			case 4:
 				doAfterRequirePerm(new RequirePermissionResult(){
@@ -596,7 +596,7 @@ class ServerListActivityImpl extends ServerListActivityBase {
 						public void onFailed(String[] corrupt,String[] denied){
 							Toast.makeText(ServerListActivityImpl.this,R.string.error_msg_noperm_externalStorage,Toast.LENGTH_LONG).show();
 						}
-					},new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE});
+					},new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE});
 				break;
 			case 5:
 				new Thread(){

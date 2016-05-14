@@ -7,6 +7,8 @@ import android.support.v4.app.ActivityCompat;
 import com.nao20010128nao.Wisecraft.Factories;
 import com.nao20010128nao.Wisecraft.misc.compat.AppCompatListActivity;
 import java.security.SecureRandom;
+import android.util.Log;
+import android.support.v4.content.PermissionChecker;
 
 public class ServerListActivityBase extends AppCompatListActivity
 {
@@ -26,23 +28,24 @@ public class ServerListActivityBase extends AppCompatListActivity
 	
 	
 	public void doAfterRequirePerm(RequirePermissionResult r,String[] perms){
-		int call=Math.abs(sr.nextInt())&0xfffffff0;
+		int call=Math.abs(sr.nextInt())&0xf;
 		while(permRequire.containsKey(call)){
-			call=Math.abs(sr.nextInt())&0xfffffff0;
+			call=Math.abs(sr.nextInt())&0xf;
 		}
 		ArrayList<String> notAllowed=new ArrayList<>();
 		ArrayList<String> unconfirmable=new ArrayList<>();
 		for(String perm:perms)
-			if(ActivityCompat.checkSelfPermission(this,perm)==PackageManager.PERMISSION_DENIED)
-				if(ActivityCompat.shouldShowRequestPermissionRationale(this,perm))
-					notAllowed.add(perm);
-				else
-					unconfirmable.add(perm);
+			if(PermissionChecker.checkSelfPermission(this,perm)!=PermissionChecker.PERMISSION_GRANTED)
+				notAllowed.add(perm);
+		for(String s:notAllowed)Log.d("ServerListActivity","notAllowed:"+s);
+		for(String s:unconfirmable)Log.d("ServerListActivity","unconfirmable:"+s);
 		if(perms.length==unconfirmable.size()){
+			Log.d("ServerListActivity","denied");
 			r.onFailed(perms,Factories.strArray(unconfirmable));
 			return;
 		}
 		if(notAllowed.isEmpty()&unconfirmable.isEmpty()){
+			Log.d("ServerListActivity","nothing to ask");
 			r.onSuccess();
 			return;
 		}
@@ -75,7 +78,7 @@ public class ServerListActivityBase extends AppCompatListActivity
 		
 		ArrayList lst=new ArrayList();
 		for (int i=0;i < grantResults.length;i++)
-			if (grantResults[i]==PackageManager.PERMISSION_DENIED)
+			if (grantResults[i]!=PackageManager.PERMISSION_GRANTED)
 				lst.add(permissions[i]);
 		lst.addAll(Arrays.asList(md.currentlyDenied));
 		
