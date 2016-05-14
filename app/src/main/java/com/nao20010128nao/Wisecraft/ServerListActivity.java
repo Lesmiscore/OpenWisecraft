@@ -1223,7 +1223,7 @@ class ServerListActivityImpl extends ServerListActivityBase {
 		@Override
 		public void onReceive(Context p1, Intent p2) {
 			// TODO: Implement this method
-			Log.d("ServerListActivity  - NSBB", "received");
+			Log.d("ServerListActivity - NSBB", "received");
 			new NetworkStatusCheckWorker().execute();
 		}
 	}
