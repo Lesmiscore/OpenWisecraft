@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/Wisecraft.iml" filepath="$PROJECT_DIR$/Wisecraft.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/compat/compat.iml" filepath="$PROJECT_DIR$/compat/compat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scrolling/scrolling.iml" filepath="$PROJECT_DIR$/scrolling/scrolling.iml" />
       <module fileurl="file://$PROJECT_DIR$/wisecraft-i18n/wisecraft-i18n.iml" filepath="$PROJECT_DIR$/wisecraft-i18n/wisecraft-i18n.iml" />
     </modules>
   </component>

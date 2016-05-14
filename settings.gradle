@@ -1,1 +1,1 @@
-include ':app', ':wisecraft-i18n', ':compat'
+include ':app', ':wisecraft-i18n', ':compat', ':scrolling'
