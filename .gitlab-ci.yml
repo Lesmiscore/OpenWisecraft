@@ -1,6 +1,8 @@
 before_script:
   - cd /builds/nao20010128nao/Wisecraft
   - git submodule update --init --recursive
+  - cd wisecraft-i18n
+  - git pull
   - cd /
   - apt-get --quiet update --yes
   - apt-get --quiet install --yes wget tar unzip openjdk-7-jdk lib32stdc++6 lib32z1
