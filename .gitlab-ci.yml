@@ -11,7 +11,11 @@ before_script:
   - unzip -q gradle.zip
   - export ANDROID_HOME=$PWD/android-sdk-linux
 
+stages:
+ - build
+
 build:
+  stage: build
   script:
     - gradle-2.12/bin/gradle build --info --stacktrace
     - gradle-2.12/bin/gradle tasks --info --stacktrace
