@@ -19,7 +19,7 @@ build:
   stage: build
   script:
     - gradle-2.12/bin/gradle build --info --stacktrace
-    - /builds/nao20010128nao/Wisecraft/gradlew --info --stacktrace
+    - /builds/nao20010128nao/Wisecraft/gradlew build --info --stacktrace
     - ls
     - ls /builds/nao20010128nao/Wisecraft
     - ls /builds/nao20010128nao/Wisecraft/app
