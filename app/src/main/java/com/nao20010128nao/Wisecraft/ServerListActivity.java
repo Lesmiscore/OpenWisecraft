@@ -68,9 +68,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 		public Boolean get(Object key) {
 			// TODO: Implement this method
 			Boolean b= super.get(key);
-			if (b == null) {
+			if (b == null)
 				return false;
-			}
 			return b;
 		}
 	};
