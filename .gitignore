@@ -5,3 +5,4 @@ libs/*/*.so
 app/build/*
 .gradle/
 build/
+local.properties
