@@ -10,7 +10,6 @@ before_script:
   - wget --quiet --output-document=gradle.zip https://services.gradle.org/distributions/gradle-2.12-bin.zip
   - unzip -q gradle.zip
   - export ANDROID_HOME=$PWD/android-sdk-linux
-  - chmod 777 /builds/nao20010128nao/Wisecraft/gradlew
 
 stages:
  - build
@@ -18,9 +17,7 @@ stages:
 build:
   stage: build
   script:
-    - cd /builds/nao20010128nao/Wisecraft
-    - gradle-2.12/bin/gradle build --info --stacktrace
-    - /builds/nao20010128nao/Wisecraft/gradlew build --info --stacktrace
+    - /gradle-2.12/bin/gradle build --info --stacktrace
     - ls /
     - ls /builds/nao20010128nao/Wisecraft
     - ls /builds/nao20010128nao/Wisecraft/app
