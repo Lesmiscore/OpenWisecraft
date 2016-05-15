@@ -38,7 +38,7 @@ dependencies {
 	compile files('libs/mcprox.jar')
 	compile files('libs/mcservlst.jar')
 	compile 'org.nanohttpd:nanohttpd:2.3.0'
-	compile 'org.jsoup:jsoup:1.8.3'
+	compile 'org.jsoup:jsoup:1.9.1'
 	compile 'org.eclipse.mylyn.github:org.eclipse.egit.github.core:3.4.0.201406110918-r'
 	compile project(':wisecraft-i18n') // https://github.com/nao20010128nao/Wisecraft-Multilanguage
 	compile files('libs/httpclient-android-4.3.5.1.jar')
