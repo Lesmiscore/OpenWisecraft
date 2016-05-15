@@ -5,6 +5,8 @@ import com.nao20010128nao.Wisecraft.misc.*;
 import java.util.*;
 
 import android.app.ProgressDialog;
+import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -35,6 +37,7 @@ public class ServerTestActivity extends AppCompatListActivity {
 	String ip;
 	int mode;
 	View dialog;
+	SharedPreferences pref;
 	Map<Integer,Boolean> pinging=new HashMap<Integer,Boolean>(){
 		@Override
 		public Boolean get(Object key) {
@@ -49,7 +52,8 @@ public class ServerTestActivity extends AppCompatListActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
-		if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("useBright",false)){
+		pref=PreferenceManager.getDefaultSharedPreferences(this);
+		if(pref.getBoolean("useBright",false)){
 			setTheme(R.style.AppTheme_Bright);
 			getTheme().applyStyle(R.style.AppTheme_Bright,true);
 		}
@@ -106,6 +110,13 @@ public class ServerTestActivity extends AppCompatListActivity {
 				})
 				.show();
 		}
+
+		if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
+			BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
+			bd.setTargetDensity(getResources().getDisplayMetrics());
+			bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
+			getListView().setBackground(bd);
+		}
 	}
 	@Override
 	protected void attachBaseContext(Context newBase) {
@@ -138,7 +149,16 @@ public class ServerTestActivity extends AppCompatListActivity {
 				}
 			}
 			//if(convertView!=null)return convertView;
-			final View layout=sta.getLayoutInflater().inflate(R.layout.quickstatus, null, false);
+			final View layout;
+			if (sta.pref.getBoolean("colorFormattedText", false)) {
+				if (sta.pref.getBoolean("darkBackgroundForServerName", false)) {
+					layout = sta.getLayoutInflater().inflate(R.layout.quickstatus_dark, null, false);
+				} else {
+					layout = sta.getLayoutInflater().inflate(R.layout.quickstatus, null, false);
+				}
+			} else {
+				layout = sta.getLayoutInflater().inflate(R.layout.quickstatus, null, false);
+			}
 			Server s=getItem(position);
 			layout.setTag(s);
 			sta.spp.putInQueue(s, new ServerPingProvider.PingHandler(){
@@ -161,9 +181,9 @@ public class ServerTestActivity extends AppCompatListActivity {
 										FullStat fs=(FullStat)sv.response;
 										Map<String,String> m=fs.getData();
 										if (m.containsKey("hostname")) {
-											title = deleteDecorations(m.get("hostname"));
+											title = m.get("hostname");
 										} else if (m.containsKey("motd")) {
-											title = deleteDecorations(m.get("motd"));
+											title = m.get("motd");
 										} else {
 											title = sv.ip + ":" + sv.port;
 										}
@@ -172,14 +192,14 @@ public class ServerTestActivity extends AppCompatListActivity {
 										if (rep.description == null) {
 											title = sv.ip + ":" + sv.port;
 										} else {
-											title = deleteDecorations(rep.description.text);
+											title = rep.description.text;
 										}
 									} else if (sv.response instanceof Reply) {//PC
 										Reply rep=(Reply)sv.response;
 										if (rep.description == null) {
 											title = sv.ip + ":" + sv.port;
 										} else {
-											title = deleteDecorations(rep.description);
+											title = rep.description;
 										}
 									} else if (sv.response instanceof SprPair) {//PE?
 										SprPair sp=((SprPair)sv.response);
@@ -189,9 +209,9 @@ public class ServerTestActivity extends AppCompatListActivity {
 											FullStat fs=(FullStat)sp.getA();
 											Map<String,String> m=fs.getData();
 											if (m.containsKey("hostname")) {
-												title = deleteDecorations(m.get("hostname"));
+												title = m.get("hostname");
 											} else if (m.containsKey("motd")) {
-												title = deleteDecorations(m.get("motd"));
+												title = m.get("motd");
 											} else {
 												title = sv.ip + ":" + sv.port;
 											}
@@ -203,7 +223,15 @@ public class ServerTestActivity extends AppCompatListActivity {
 									} else {//Unreachable
 										title = sv.ip + ":" + sv.port;
 									}
-									((TextView)layout.findViewById(R.id.serverName)).setText(deleteDecorations(title));
+									if (sta.pref.getBoolean("colorFormattedText", false)) {
+										if (sta.pref.getBoolean("darkBackgroundForServerName", false)) {
+											((TextView)layout.findViewById(R.id.serverName)).setText(parseMinecraftFormattingCodeForDark(title));
+										} else {
+											((TextView)layout.findViewById(R.id.serverName)).setText(parseMinecraftFormattingCode(title));
+										}
+									} else {
+										((TextView)layout.findViewById(R.id.serverName)).setText(deleteDecorations(title));
+									}
 									((TextView)layout.findViewById(R.id.pingMillis)).setText(sv.ping + " ms");
 									sta.list.set(position, sv);
 									sta.pinging.put(position, false);
