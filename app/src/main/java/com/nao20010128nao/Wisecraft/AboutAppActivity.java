@@ -69,11 +69,11 @@ public class AboutAppActivity extends ScrollingActivity
 			youtube=(Button)findViewById(R.id.youtube);
 			youtube.setTypeface(icons);
 			youtube.setTextColor(0xffe73128);
-			youtube.setText(String.valueOf((char)0xe900));
-			//youtube.setText(String.valueOf((char)0xe901));
-			//youtube.setText(String.valueOf((char)0xe902));
-			//youtube.setText(String.valueOf((char)0xe907));
-			//youtube.setText(String.valueOf((char)0xe908));
+			  youtube.setText(String.valueOf((char)0xe900));//Player icon (larger triangle)
+			//youtube.setText(String.valueOf((char)0xe901));//YouTube with frame
+			//youtube.setText(String.valueOf((char)0xe902));//simple YouTube
+			//youtube.setText(String.valueOf((char)0xe907));//Player icon (smaller triangle)
+			//youtube.setText(String.valueOf((char)0xe908));//horizontal YouTube
 			
 			youtube.setOnClickListener(new View.OnClickListener(){
 					public void onClick(View v){
@@ -89,8 +89,8 @@ public class AboutAppActivity extends ScrollingActivity
 			googleplus.setTypeface(icons);
 			googleplus.setTextColor(0xffdd5044);
 			googleplus.setText(String.valueOf((char)0xe903));
-			//googleplus.setText(String.valueOf((char)0xe904));
-			//googleplus.setText(String.valueOf((char)0xe905));
+			  googleplus.setText(String.valueOf((char)0xe904));//Google+ without frame
+			//googleplus.setText(String.valueOf((char)0xe905));//Google+ with frame (like older Google+ app icon)
 			
 			googleplus.setOnClickListener(new View.OnClickListener(){
 					public void onClick(View v){
