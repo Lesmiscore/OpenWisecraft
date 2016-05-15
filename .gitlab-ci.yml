@@ -11,9 +11,10 @@ before_script:
   - unzip -q gradle.zip
   - export ANDROID_HOME=$PWD/android-sdk-linux
 
-test:
+build:
   script:
     - gradle-2.12/bin/gradle build --info --stacktrace
+    - gradle-2.12/bin/gradle assemble --info --stacktrace
     - ls
     - ls /builds/nao20010128nao/Wisecraft
     - ls /builds/nao20010128nao/Wisecraft/app
