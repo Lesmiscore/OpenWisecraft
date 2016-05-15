@@ -14,7 +14,7 @@ before_script:
 build:
   script:
     - gradle-2.12/bin/gradle build --info --stacktrace
-    - gradle-2.12/bin/gradle assemble --info --stacktrace
+    - gradle-2.12/bin/gradle tasks --info --stacktrace
     - ls
     - ls /builds/nao20010128nao/Wisecraft
     - ls /builds/nao20010128nao/Wisecraft/app
