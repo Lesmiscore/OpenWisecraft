@@ -14,3 +14,5 @@ before_script:
 test:
   script:
     - gradle-2.12/bin/gradle build --info --stacktrace
+    - ls
+    - ls /builds/nao20010128nao/Wisecraft
