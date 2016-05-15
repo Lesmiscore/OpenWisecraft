@@ -23,10 +23,9 @@ build:
     - cd /builds/nao20010128nao/Wisecraft/
     - /gradle-2.12/bin/gradle build --info --stacktrace
     - cd /
-    - mv /builds/nao20010128nao/Wisecraft/app/build/outputs/apk/*.apk /
     - ls /
     - ls /builds/nao20010128nao/Wisecraft/app/build/outputs/apk
   artifacts:
     paths:
-      - app-*.apk
+      - /builds/nao20010128nao/Wisecraft/app/build/outputs/apk/
 
