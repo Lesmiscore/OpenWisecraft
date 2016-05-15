@@ -25,7 +25,7 @@ build:
     - cd /
     - mv /builds/nao20010128nao/Wisecraft/app/build/outputs/apk/*.apk /
     - ls /
-    - ls ls /builds/nao20010128nao/Wisecraft/app/build/outputs/apk
+    - ls /builds/nao20010128nao/Wisecraft/app/build/outputs/apk
   artifacts:
     paths:
       - "*.apk"
