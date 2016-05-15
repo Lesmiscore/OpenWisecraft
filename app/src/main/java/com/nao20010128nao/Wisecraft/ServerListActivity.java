@@ -235,7 +235,12 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 			bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
 			getListView().setBackground(bd);
 		}
+	}
 
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		// TODO: Implement this method
+		super.onPostCreate(savedInstanceState);
 
 		networkState = Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "", Snackbar.LENGTH_INDEFINITE);
 		ViewCompat.setAlpha(networkState.getView(), 0.7f);
@@ -244,7 +249,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 		IntentFilter inFil=new IntentFilter();
 		inFil.addAction("android.net.conn.CONNECTIVITY_CHANGE");
 		registerReceiver(nsbr = new NetworkStateBroadcastReceiver(), inFil);
-
 		////////////
 		new Thread(){
 			String replyAction;
@@ -286,6 +290,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 			}
 		}.start();
 	}
+	
 	@Override
 	protected void attachBaseContext(Context newBase) {
 		TheApplication.instance.initForActivities();
