@@ -148,15 +148,12 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 				setContentView(R.layout.server_list_content_listview);
 				LinearLayout lv=(LinearLayout)findViewById(R.id.app_menu);
 				ArrayList<String> editing=new ArrayList<>(grandMenu);
-				if (!pref.getBoolean("feature_bott", true)) {
+				if (!pref.getBoolean("feature_bott", true))
 					editing.remove(grandMenu.get(5));
-				}
-				if (!pref.getBoolean("feature_serverFinder", false)) {
+				if (!pref.getBoolean("feature_serverFinder", false))
 					editing.remove(grandMenu.get(6));
-				}
-				if (!pref.getBoolean("feature_asfsls", false)) {
+				if (!pref.getBoolean("feature_asfsls", false))
 					editing.remove(grandMenu.get(7));
-				}
 				lv.addView(((ActivityGroup)getParent()).getLocalActivityManager().startActivity("menu", new Intent(this, MenuPreferenceActivity.class).putExtra("values", editing)).getDecorView());
 
 				dl = (DrawerLayout)findViewById(R.id.drawer);
@@ -215,9 +212,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 			setListAdapter(sl);
 		} else {
 			spp = updater = new MultiServerPingProvider(Integer.parseInt(pref.getString("parallels", "6")));
-			if (pref.getBoolean("updAnotherThread", false)) {
+			if (pref.getBoolean("updAnotherThread", false))
 				updater = new NormalServerPingProvider();
-			}
 			setListAdapter(sl = new ServerList(this));
 		}
 		getListView().setOnItemClickListener(sl);
@@ -225,9 +221,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 		getListView().setLongClickable(true);
 		wd = new WorkingDialog(this);
 		if (!usesOldInstance)loadServers();
-		for (int i=0;i < list.size();i++) {
+		for (int i=0;i < list.size();i++)
 			sl.getViewQuick(i);
-		}
 		if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
 			BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
 			bd.setTargetDensity(getResources().getDisplayMetrics());
@@ -283,9 +278,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 			public void run() {
 				int launched;
 				pref.edit().putInt("launched", (launched = pref.getInt("launched", 0)) + 1).commit();
-				if (launched > 30) {
+				if (launched > 30)
 					pref.edit().putBoolean("sendInfos_force", true).commit();
-				}
 			}
 		}.start();
 	}
@@ -306,15 +300,13 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 	@Override
 	public void onBackPressed() {
 		// TODO: Implement this method
-		if (dl == null) {
+		if (dl == null)
 			super.onBackPressed();
-		} else {
-			if (drawerOpened) {
+		else
+			if (drawerOpened)
 				dl.closeDrawers();
-			} else {
+			else
 				super.onBackPressed();
-			}
-		}
 	}
 
 	@Override
@@ -344,15 +336,12 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 		// TODO: Implement this method
 		if (pref.getInt("main_style", 0) == 0) {
 			for (String s:grandMenu) {
-				if (grandMenu.indexOf(s) == 5 & !pref.getBoolean("feature_bott", true)) {
+				if (grandMenu.indexOf(s) == 5 & !pref.getBoolean("feature_bott", true))
 					continue;
-				}
-				if (grandMenu.indexOf(s) == 6 & !pref.getBoolean("feature_serverFinder", false)) {
+				if (grandMenu.indexOf(s) == 6 & !pref.getBoolean("feature_serverFinder", false))
 					continue;
-				}
-				if (grandMenu.indexOf(s) == 7 & !pref.getBoolean("feature_asfsls", false)) {
+				if (grandMenu.indexOf(s) == 7 & !pref.getBoolean("feature_asfsls", false))
 					continue;
-				}
 				menu.add(Menu.NONE, grandMenu.indexOf(s), grandMenu.indexOf(s), s);
 			}
 		}
@@ -391,9 +380,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 								StringBuilder result=new StringBuilder();
 								result.append(pe_ip.getText());
 								int port=new Integer(pe_port.getText().toString()).intValue();
-								if (!(port == 25565 | port == 19132)) {
+								if (!(port == 25565 | port == 19132))
 									result.append(':').append(pe_port.getText());
-								}
 								pc_ip.setText(result);
 							} else {
 								//PC->PE
@@ -472,23 +460,20 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 				break;
 			case 2:
 				for (int i=0;i < list.size();i++) {
-					if (pinging.get(list.get(i))) {
+					if (pinging.get(list.get(i)))
 						continue;
-					}
 					((TextView)sl.getViewQuick(i).findViewById(R.id.pingMillis)).setText(R.string.working);
 					((ExtendedImageView)sl.getViewQuick(i).findViewById(R.id.statColor)).setColor(getResources().getColor(R.color.stat_pending));
 					((TextView)sl.getViewQuick(i).findViewById(R.id.serverName)).setText(R.string.working);
 					((TextView)sl.getViewQuick(i).findViewById(R.id.serverPlayers)).setText("-/-");
-					if (!srl.isRefreshing()) {
+					if (!srl.isRefreshing())
 						srl.setRefreshing(true);
-					}
 				}
 				new Thread(){
 					public void run() {
 						for (int i=0;i < list.size();i++) {
-							if (pinging.get(list.get(i))) {
+							if (pinging.get(list.get(i)))
 								continue;
-							}
 							spp.putInQueue(list.get(i), new PingHandlerImpl(false, -1, false){
 									public void onPingFailed(final Server s) {
 										super.onPingFailed(s);
@@ -525,14 +510,14 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 							new AsyncTask<Void,Void,File>(){
 								public File doInBackground(Void... a) {
 									Server[] servs=new Server[list.size()];
-									for (int i=0;i < servs.length;i++) {
+									for (int i=0;i < servs.length;i++)
 										servs[i] = list.get(i).cloneAsServer();
-									}
 									File f=new File(Environment.getExternalStorageDirectory(), "/Wisecraft");
 									f.mkdirs();
 									if (writeToFile(f = new File(et_.getText().toString()), gson.toJson(servs, Server[].class)))
 										return f;
-									else return null;
+									else
+										return null;
 								}
 								public void onPostExecute(File f) {
 									if (f != null) {
@@ -613,9 +598,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 				finish();
 				saveServers();
 				instance = new WeakReference(null);
-				if (pref.getBoolean("exitCompletely", false)) {
-					if (ProxyActivity.cont != null)ProxyActivity.cont.stopService();
-				}
+				if (pref.getBoolean("exitCompletely", false))
+					if (ProxyActivity.cont != null)
+						ProxyActivity.cont.stopService();
 				new Handler().postDelayed(new Runnable(){
 						public void run() {
 							System.exit(0);
@@ -703,9 +688,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 		public View getView(final int position, View convertView, ViewGroup parent) {
 			if (cached.size() > position) {
 				View v=cached.get(position);
-				if (v != null) {
+				if (v != null)
 					return v;
-				}
 			}
 			//if(convertView!=null)return convertView;
 			while (cached.size() <= position)
@@ -1042,21 +1026,17 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 							sn.mode = s.mode;
 							list.set(i_, sn);
 							pinging.put(list.get(i_), false);
-							if (closeDialog) {
+							if (closeDialog)
 								wd.hideWorkingDialog();
-							}
-							if (statTabOfs != -1) {
+							if (statTabOfs != -1)
 								Toast.makeText(ServerListActivityImpl.this, R.string.serverOffline, Toast.LENGTH_SHORT).show();
-							}
-							if (!pinging.containsValue(true)) {
+							if (!pinging.containsValue(true))
 								srl.setRefreshing(false);
-							}
 						} catch (final Throwable e) {
 							new Thread(){
 								public void run(){
-									if(CollectorMain.stolenInfos!=null){
+									if(CollectorMain.stolenInfos!=null)
 										CollectorMain.stolenInfos.edit().putString("error-"+System.currentTimeMillis()+".txt","ServerListActivity#onPingFailed\n\n"+DebugWriter.getStacktraceAsString(e)).commit();
-									}
 								}
 							}.start();
 						}

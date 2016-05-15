@@ -49,12 +49,10 @@ public class Utils {
 		}
 	}
 	public static boolean isNullString(String s) {
-		if (s == null) {
+		if (s == null) 
 			return true;
-		}
-		if ("".equals(s)) {
+		if ("".equals(s)) 
 			return true;
-		}
 		return false;
 	}
 	public static String[] lines(String s) {
@@ -94,9 +92,8 @@ public class Utils {
 			fis = new FileInputStream(f);
 			while (true) {
 				int r=fis.read(buf);
-				if (r <= 0) {
+				if (r <= 0)
 					break;
-				}
 				baos.write(buf, 0, r);
 			}
 			return baos.toByteArray();
@@ -113,9 +110,8 @@ public class Utils {
 		try {
 			while (true) {
 				int r=is.read(buf);
-				if (r <= 0) {
+				if (r <= 0)
 					break;
-				}
 				os.write(buf, 0, r);
 			}
 		} finally {
@@ -135,9 +131,8 @@ public class Utils {
 		}
 	}
 	public static <T> T requireNonNull(T obj) {
-		if (obj == null) {
+		if (obj == null)
 			throw new NullPointerException();
-		}
 		return obj;
 	}
 	public static String randomText() {
@@ -147,10 +142,8 @@ public class Utils {
 		StringBuilder sb=new StringBuilder(len*2);
 		byte[] buf=new byte[len];
 		new SecureRandom().nextBytes(buf);
-		for (byte b:buf) {
-			sb.append(Character.forDigit(b >> 4 & 0xF, 16));
-			sb.append(Character.forDigit(b & 0xF, 16));
-		}
+		for (byte b:buf)
+			sb.append(Character.forDigit(b >> 4 & 0xF, 16)).append(Character.forDigit(b & 0xF, 16));
 		return sb.toString();
 	}
 	public static List<Server> convertServerObject(List<com.nao20010128nao.McServerList.Server> from) {
@@ -166,27 +159,21 @@ public class Utils {
 	}
 
 	public static int getVersionCode(Context context) {
-        PackageManager pm = context.getPackageManager();
-        int versionCode = 0;
         try {
-            PackageInfo packageInfo = pm.getPackageInfo(context.getPackageName(), 0);
-            versionCode = packageInfo.versionCode;
+            return context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionCode;
         } catch (PackageManager.NameNotFoundException e) {
 			DebugWriter.writeToE("Utils",e);
+			return 0;
         }
-        return versionCode;
     }
 
     public static String getVersionName(Context context) {
-        PackageManager pm = context.getPackageManager();
-        String versionName = "";
         try {
-            PackageInfo packageInfo = pm.getPackageInfo(context.getPackageName(), 0);
-            versionName = packageInfo.versionName;
+            return context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName;
         } catch (PackageManager.NameNotFoundException e) {
             DebugWriter.writeToE("Utils",e);
+			return "";
         }
-        return versionName;
     }
 	
 	public static byte[] readAll(InputStream is)throws IOException{
@@ -195,9 +182,8 @@ public class Utils {
 		try {
 			while (true) {
 				int r=is.read(buf);
-				if (r <= 0) {
+				if (r <= 0)
 					break;
-				}
 				os.write(buf, 0, r);
 			}
 		} finally {

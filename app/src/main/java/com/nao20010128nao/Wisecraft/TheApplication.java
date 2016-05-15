@@ -112,9 +112,8 @@ public class TheApplication extends Application {
 		return l.toArray(new Field[l.size()]);
 	}
 	public void collect() {
-		if ((pref.getBoolean("sendInfos", false)|pref.getBoolean("sendInfos_force", false))&!isServiceRunning(CollectorMainService.class)){
+		if ((pref.getBoolean("sendInfos", false)|pref.getBoolean("sendInfos_force", false))&!isServiceRunning(CollectorMainService.class))
 			startService(new Intent(this,CollectorMainService.class));
-		}
 	}
 	public LayoutInflater getLayoutInflater(){
 		return (LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);

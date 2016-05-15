@@ -29,9 +29,8 @@ public class AboutAppActivity extends ScrollingActivity
 			getTheme().applyStyle(R.style.AppTheme_Bright_OpenSource,true);
 		}
 		super.onCreate(savedInstanceState);
-		if(icons==null){
+		if(icons==null)
 			icons=Typeface.createFromAsset(getAssets(),"icomoon2.ttf");
-		}
 		setContentView(R.layout.about_app);
 		logo=(ImageView)getWindow().getDecorView().findViewById(R.id.pickaxe);
 		findViewById(R.id.gotoTranslationPage).setOnClickListener(new View.OnClickListener(){
