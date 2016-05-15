@@ -26,7 +26,7 @@ build:
     - ls /builds/nao20010128nao/Wisecraft/app/build
     - ls /builds/nao20010128nao/Wisecraft/app/build/outputs
     - ls /builds/nao20010128nao/Wisecraft/app/build/outputs/apk
-    - mv /builds/nao20010128nao/Wisecraft/app/build/outputs/apk/app-release-unsigned.apk .
+    - mv /builds/nao20010128nao/Wisecraft/app/build/outputs/apk/app-release-unsigned.apk /app-release-unsigned.apk
   artifacts:
     paths:
       - "app-release-unsigned.apk"
