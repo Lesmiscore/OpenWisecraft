@@ -11,6 +11,9 @@ before_script:
   - unzip -q gradle.zip
   - export ANDROID_HOME=$PWD/android-sdk-linux
   - java -version
+  - apt-get install openjdk-8-jre
+  - apt-get install openjdk-8-jdk
+  - java -version
 
 stages:
  - build
