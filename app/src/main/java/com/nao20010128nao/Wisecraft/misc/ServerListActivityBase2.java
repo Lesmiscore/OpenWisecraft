@@ -45,7 +45,7 @@ public class ServerListActivityBase2 extends AppCompatListActivity
 		}.start();
 	}
 	
-	public abstract static enum SortKind{
+	public static enum SortKind{
 		BRING_ONLINE_SERVERS_TO_TOP{
 			public List<Server> doSort(List<Server> list){
 				List<Server> backup,online,offline;
