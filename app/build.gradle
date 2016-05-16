@@ -65,4 +65,5 @@ dependencies {
 	compile files('libs/otc.jar')
 	compile 'com.android.support:multidex:+'
 	compile files('libs/commons-codec-1.10.jar')
+	compile 'com.android.support:preference-v7:23.2.1'
 }
