@@ -1020,10 +1020,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 							((TextView)sl.getViewQuick(i_).findViewById(R.id.pingMillis)).setText(R.string.notResponding);
 							((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText("-/-");
 							((TextView)sl.getViewQuick(i_).findViewById(R.id.serverAddress)).setText(s.ip + ":" + s.port);
-							Server sn=new Server();
-							sn.ip = s.ip;
-							sn.port = s.port;
-							sn.mode = s.mode;
+							Server sn=s.cloneAsServer();
 							list.set(i_, sn);
 							pinging.put(list.get(i_), false);
 							if (closeDialog)
