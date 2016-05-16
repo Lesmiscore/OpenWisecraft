@@ -10,6 +10,11 @@ android {
         targetSdkVersion 21
     }
 
+	signingConfigs {
+		release {
+		}
+	}
+	
     buildTypes {
 		release {
             minifyEnabled false
@@ -29,11 +34,6 @@ android {
 	lintOptions {
         abortOnError false
     }
-	
-	signingConfigs {
-		release {
-		}
-	}
 }
 
 dependencies {
