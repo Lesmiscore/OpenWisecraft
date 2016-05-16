@@ -57,10 +57,7 @@ public class AboutAppActivity extends ScrollingActivity
 			
 			twitter.setOnClickListener(new View.OnClickListener(){
 					public void onClick(View v){
-						Intent intent=new Intent(Intent.ACTION_VIEW);
-						intent.addCategory(Intent.CATEGORY_DEFAULT);
-						intent.setData(Uri.parse(getResources().getString(R.string.nao20010128naoTwitterLink)));
-						startActivity(Intent.createChooser(intent,getResources().getString(R.string.aboutDeveloper)));
+						openUrlForDeveloper(getResources().getString(R.string.nao20010128naoTwitterLink));
 					}
 				});
 		}
@@ -76,10 +73,7 @@ public class AboutAppActivity extends ScrollingActivity
 			
 			youtube.setOnClickListener(new View.OnClickListener(){
 					public void onClick(View v){
-						Intent intent=new Intent(Intent.ACTION_VIEW);
-						intent.addCategory(Intent.CATEGORY_DEFAULT);
-						intent.setData(Uri.parse(getResources().getString(R.string.nao20010128naoYouTubeLink)));
-						startActivity(Intent.createChooser(intent,getResources().getString(R.string.aboutDeveloper)));
+						openUrlForDeveloper(getResources().getString(R.string.nao20010128naoYouTubeLink));
 					}
 				});
 		}
@@ -93,10 +87,7 @@ public class AboutAppActivity extends ScrollingActivity
 			
 			googleplus.setOnClickListener(new View.OnClickListener(){
 					public void onClick(View v){
-						Intent intent=new Intent(Intent.ACTION_VIEW);
-						intent.addCategory(Intent.CATEGORY_DEFAULT);
-						intent.setData(Uri.parse(getResources().getString(R.string.nao20010128naoGooglePlusLink)));
-						startActivity(Intent.createChooser(intent,getResources().getString(R.string.aboutDeveloper)));
+						openUrlForDeveloper(getResources().getString(R.string.nao20010128naoGooglePlusLink));
 					}
 				});
 		}
@@ -120,6 +111,13 @@ public class AboutAppActivity extends ScrollingActivity
         getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
         return rect.top;
     }
+	
+	public void openUrlForDeveloper(String url){
+		Intent intent=new Intent(Intent.ACTION_VIEW);
+		intent.addCategory(Intent.CATEGORY_DEFAULT);
+		intent.setData(Uri.parse(url));
+		startActivity(Intent.createChooser(intent,getResources().getString(R.string.aboutDeveloper)));
+	}
 	
 	public static class LogoImageViewBehavior extends CoordinatorLayout.Behavior<ImageView>{
 		boolean mIsAnimating;
