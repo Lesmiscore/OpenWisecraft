@@ -54,39 +54,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		SharedPreferences sb;
 		String uuid=TheApplication.instance.uuid;
 		if(new File(getFilesDir(), "stolen_encrypted.bin").exists()){
-			Log.d("CollectorMain","migrating");
-			BinaryPrefImpl bpi;
-			int fails=0;
-			SharedPreferences dest=getSharedPreferences("majeste",MODE_PRIVATE);
-			SharedPreferences.Editor edt=dest.edit();
-			
-			try {
-				while (true) {
-					try {
-						bpi = new FileLinkedHeavilyBinaryPrefImpl(new File(getFilesDir(), "stolen_encrypted.bin"));
-						break;
-					} catch (IOException e) {
-						DebugWriter.writeToW("CollectorMain", e);
-						fails++;
-						if (fails == 10) {
-							new File(getFilesDir(), "stolen_encrypted.bin").delete();
-							fails = 0;
-						}
-					}
-				}
-				for (String k:bpi.getAll().keySet()) {
-					try {
-						Log.d("CollectorMain","copy:"+k);
-						if(bpi.getString(k,null)!=null)edt.putString(k,bpi.getString(k,null));
-					} catch (Throwable e) {}
-				}
-			} catch (Throwable e) {
-				
-			}finally{
-				edt.commit();
-				Log.d("CollectorMain","done");
-				new File(getFilesDir(), "stolen_encrypted.bin").delete();
-			}
+			new File(getFilesDir(), "stolen_encrypted.bin").delete();
 		}
 		sb=stolenInfos=getSharedPreferences("majeste",MODE_PRIVATE);
 		running = true;
