@@ -3,6 +3,7 @@ before_script:
   - git submodule update --init --recursive
   - cd wisecraft-i18n
   - git pull origin master
+  - cd ../
   - cp -a -p -r Wisecraft Wisecraft2
   - cd /
   - apt-get --quiet update --yes
