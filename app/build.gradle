@@ -21,7 +21,7 @@ android {
             proguardFiles 'proguard-rules.pro'
 			signingConfig signingConfigs.release
         }
-		release_unsigned {
+		unsigned {
             minifyEnabled false
             proguardFiles 'proguard-rules.pro'
         }
