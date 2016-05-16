@@ -3,7 +3,7 @@ before_script:
   - git submodule update --init --recursive
   - cd wisecraft-i18n
   - git pull origin master
-  - cd ../
+  - cd /builds/nao20010128nao/
   - cp -a -p -r Wisecraft Wisecraft2
   - cd /
   - apt-get --quiet update --yes
