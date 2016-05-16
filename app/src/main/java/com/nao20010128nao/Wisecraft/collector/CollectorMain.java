@@ -112,9 +112,10 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 						continue;
 					}
 				}
-				edt.commit();
 			} catch (Throwable e) {
 
+			}finally{
+				edt.commit();
 			}
 		} catch (Throwable e) {
 			DebugWriter.writeToE("CollectorMain",e);
