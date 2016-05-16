@@ -30,7 +30,7 @@ build:
     paths:
       - /builds/nao20010128nao/Wisecraft/app/build/outputs/apk
 
-build:
+unsigned:
   stage: unsigned
   script:
     - cd /builds/nao20010128nao/Wisecraft/
