@@ -98,6 +98,7 @@ public class AboutAppActivity extends ScrollingActivity
 			noCm1.setText(String.valueOf((char)0xe909));
 			noCm2.setText(String.valueOf((char)0xe90a));
 		}
+		getSupportActionBar().setElevation(0f);
 	}
 
 	@Override
