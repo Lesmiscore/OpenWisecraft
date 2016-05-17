@@ -98,10 +98,10 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 						byte[] file = sb.getString(actual, "").getBytes(CompatCharsets.UTF_8);
 						try {
 							params.put("sha", getHash(cont, filename));
-							if (getHash(cont, filename).equalsIgnoreCase(shash(file))) {
+							/*if (getHash(cont, filename).equalsIgnoreCase(shash(file))) {
 								Log.d("CollectorMain", "skipped");
 								continue;
-							}
+							}*/
 						} catch (Throwable e) {
 							DebugWriter.writeToE("CollectionMain",e);
 							Log.d("CollectorMain", "skipped");
