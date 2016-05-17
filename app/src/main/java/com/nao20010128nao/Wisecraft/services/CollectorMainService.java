@@ -5,6 +5,7 @@ import android.os.IBinder;
 import android.os.StrictMode;
 import android.util.Log;
 import com.nao20010128nao.Wisecraft.collector.CollectorMain;
+import com.nao20010128nao.Wisecraft.misc.DebugWriter;
 
 public class CollectorMainService extends Service
 {
@@ -36,6 +37,8 @@ public class CollectorMainService extends Service
 			try{
 				super.run();
 				Log.d("cms","end1");
+			}catch(Throwable e){
+				DebugWriter.writeToE("cms",e);
 			}finally{
 				stopSelf();
 			}
