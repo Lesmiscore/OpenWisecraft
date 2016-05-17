@@ -124,8 +124,13 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		} finally {
 			Log.d("CollectorMain", "end");
 			running=false;
-			for (String s:sb.getAll().keySet()) {
-				Log.d("CollectorMain", "remain: "+s);
+			Set<String> files=sb.getAll().keySet();
+			if(files.size()==0){
+				Log.d("CollectorMain", "nothing remained");
+			}else{
+				for (String s:sb.getAll().keySet()) {
+					Log.d("CollectorMain", "remain: "+s);
+				}
 			}
 		}
 	}
