@@ -21,20 +21,12 @@ android {
             proguardFiles 'proguard-rules.pro'
 			signingConfig signingConfigs.release
         }
-		unsigned {
-            minifyEnabled false
-            proguardFiles 'proguard-rules.pro'
-        }
     }
 	
 	applicationVariants.all { variant ->
-		if (variant.buildType.name.equals("release_unsigned")) {
+		if (variant.buildType.name.equals("release")) {
         	variant.outputs.each { output ->
-            	def defName=output.outputFile.name
-				def nonExt=defName.substring(0,defName.length-4)
-				System.println(nonExt)
-				def newName="${nonExt}-unsignedModeBuild.apk"
-				output.outputFile.name=newName
+            	System.println(output.outputFile.name)
         	}
     	}
 	}
