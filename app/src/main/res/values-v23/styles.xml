@@ -6,11 +6,13 @@
 		<item name="colorPrimary">#ffffff</item>
 		<item name="android:windowBackground">@color/white</item>
 		<item name="android:colorBackground">#ffffff</item>
+		<item name="preferenceTheme">@style/AppTheme.Preference</item>
 	</style>
 	<color name="white">#ffffff</color>
 	
 	<style name="AppTheme.Bright.OpenSource" parent="AppTheme.Bright.NoActionBar">
 		<item name="android:statusBarColor">@color/upd_2</item>
 		<item name="colorPrimary">@color/upd_2</item>
+		<item name="preferenceTheme">@style/AppTheme.Preference</item>
 	</style>
 </resources>
