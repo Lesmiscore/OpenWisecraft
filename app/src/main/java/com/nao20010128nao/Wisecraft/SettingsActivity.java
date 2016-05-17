@@ -64,10 +64,11 @@ public class SettingsActivity extends CompatSHablePreferenceActivity {
 	
 	
 	public abstract static class BaseSettingsActivity extends CompatSHablePreferenceActivity {
+		SharedPreferences pref;
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
 			// TODO: Implement this method
-			if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("useBright",false)){
+			if(pref.getBoolean("useBright",false)){
 				setTheme(R.style.AppTheme_Bright);
 				getTheme().applyStyle(R.style.AppTheme_Bright,true);
 			}
@@ -76,6 +77,7 @@ public class SettingsActivity extends CompatSHablePreferenceActivity {
 		@Override
 		protected void attachBaseContext(Context newBase) {
 			super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+			pref=PreferenceManager.getDefaultSharedPreferences(this);
 		}
 	}
 	public static class Basics extends BaseSettingsActivity {
@@ -84,7 +86,6 @@ public class SettingsActivity extends CompatSHablePreferenceActivity {
 		protected void onCreate(Bundle savedInstanceState) {
 			// TODO: Implement this method
 			super.onCreate(savedInstanceState);
-			final SharedPreferences pref=PreferenceManager.getDefaultSharedPreferences(this);
 			addPreferencesFromResource(R.xml.settings_basic);
 			sH("serverListStyle", new HandledPreference.OnClickListener(){
 					public void onClick(String a, String b, String c) {
@@ -148,7 +149,6 @@ public class SettingsActivity extends CompatSHablePreferenceActivity {
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
 			// TODO: Implement this method
-			final SharedPreferences pref=PreferenceManager.getDefaultSharedPreferences(this);
 			super.onCreate(savedInstanceState);
 			if(!pref.getBoolean("feature_asfsls",false)){
 				finish();
