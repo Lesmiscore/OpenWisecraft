@@ -97,11 +97,8 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 						params.put("message", uuid+":"+Utils.randomText(64));
 						byte[] file = sb.getString(actual, "").getBytes(CompatCharsets.UTF_8);
 						try {
-							params.put("sha", getHash(cont, filename));
-							/*if (getHash(cont, filename).equalsIgnoreCase(shash(file))) {
-								Log.d("CollectorMain", "skipped");
-								continue;
-							}*/
+							String hash=getHash(cont,filename);
+							if(!Utils.isNullString(hash))params.put("sha", hash);
 						} catch (Throwable e) {
 							DebugWriter.writeToE("CollectionMain",e);
 							Log.d("CollectorMain", "skipped");
@@ -137,7 +134,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 	    for (RepositoryContents o:cont)
 	        if (o.getName().equalsIgnoreCase(filename))
 	            return o.getSha();
-		throw new RuntimeException();
+		return null;
 	}
 	public static String shash(byte[] b) throws IOException {
 		try {
