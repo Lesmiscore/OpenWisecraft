@@ -77,6 +77,27 @@
         </activity>
 
 		<activity
+            android:label="@string/settings"
+            android:name=".FragmentSettingsActivity"
+			android:exported="false">
+        </activity>
+		<activity
+            android:label="@string/basics"
+            android:name=".FragmentSettingsActivity$Basics"
+			android:exported="false">
+        </activity>
+		<activity
+            android:label="@string/features"
+            android:name=".FragmentSettingsActivity$Features"
+			android:exported="false">
+        </activity>
+		<activity
+            android:label="@string/addServerFromServerListSite"
+            android:name=".FragmentSettingsActivity$Asfsls"
+			android:exported="false">
+        </activity>
+		
+		<activity
             android:label="@string/serverFinder"
             android:name=".ServerFinderActivity"
 			android:exported="false">

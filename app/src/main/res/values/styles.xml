@@ -4,15 +4,18 @@
 		<item name="colorPrimary">@color/primary</item>
 		<item name="colorAccent">@color/upd_2</item>
 		<item name="android:windowContentOverlay">@null</item>
+		<item name="preferenceTheme">@style/AppTheme.Preference</item>
 	</style>
 	<style name="AppDialog" parent="@style/Theme.AppCompat.Light.Dialog">
 		<item name="colorPrimary">@color/primary</item>
 		<item name="colorAccent">@color/upd_2</item>
 		<item name="android:windowContentOverlay">@null</item>
+		<item name="preferenceTheme">@style/AppTheme.Preference</item>
 	</style>
 	<style name="AppAlertDialog" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
 		<item name="colorPrimary">@color/primary</item>
 		<item name="colorAccent">@color/upd_2</item>
+		<item name="preferenceTheme">@style/AppTheme.Preference</item>
 	</style>
 	
 	<style name="AppTheme.Bright" parent="AppTheme">
@@ -41,4 +44,20 @@
 		<item name="android:textColor">#ffffff</item>
 		<item name="android:textColorPrimary">#ffffff</item>
 	</style>
+	
+	
+	
+	
+	<style name="AppTheme.Preference" parent="@style/PreferenceThemeOverlay">
+        <item name="preferenceScreenStyle">@style/Preference.PreferenceScreen</item>
+        <item name="preferenceFragmentStyle">@style/PreferenceFragment</item>
+        <item name="preferenceCategoryStyle">@style/Preference.Category</item>
+        <item name="preferenceStyle">@style/Preference</item>
+        <item name="preferenceInformationStyle">@style/Preference.Information</item>
+        <item name="checkBoxPreferenceStyle">@style/Preference.CheckBoxPreference</item>
+        <item name="switchPreferenceCompatStyle">@style/Preference.SwitchPreferenceCompat</item>
+        <item name="dialogPreferenceStyle">@style/Preference.DialogPreference</item>
+        <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
+        <item name="preferenceFragmentListStyle">@style/PreferenceFragmentList</item>
+    </style>
 </resources>
