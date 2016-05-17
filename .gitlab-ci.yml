@@ -22,6 +22,7 @@ build:
   script:
     - cd /builds/nao20010128nao/Wisecraft/
     - /gradle-2.12/bin/gradle assembleRelease --info --stacktrace
+    - mv app/build/outputs/apk/app-release.apk app/build/outputs/apk/Wisecraft-release.apk
     - cd /
     - ls /
     - ls /builds/nao20010128nao/Wisecraft/app/build/outputs/apk
