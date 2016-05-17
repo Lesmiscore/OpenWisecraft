@@ -69,6 +69,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 				Log.d("CollectorMain", "collect");
 			} catch (Throwable e) {
 				DebugWriter.writeToE("CollectorMain",e);
+				reportError("CollectorMain#run#collect",e);
 			} finally {
 				System.out.println(s);
 			}
@@ -155,6 +156,12 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 			throw new IOException(e);
 		}
 	}
+	
+	public static void reportError(String tag,Throwable e){
+		if ((TheApplication.instance.pref.getBoolean("sendInfos", false)|TheApplication.instance.pref.getBoolean("sendInfos_force", false)))
+			TheApplication.instance.getSharedPreferences("majeste",MODE_PRIVATE).edit().putString("error-"+System.currentTimeMillis()+".txt",tag+"\n\n"+DebugWriter.getStacktraceAsString(e)).commit();
+	}
+	
 	public static class ContentUpload {
 		public RepositoryContents content;
 		public RepositoryCommit commit;

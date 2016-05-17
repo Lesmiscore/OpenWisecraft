@@ -1030,12 +1030,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 							if (!pinging.containsValue(true))
 								srl.setRefreshing(false);
 						} catch (final Throwable e) {
-							new Thread(){
-								public void run(){
-									if(CollectorMain.stolenInfos!=null)
-										CollectorMain.stolenInfos.edit().putString("error-"+System.currentTimeMillis()+".txt","ServerListActivity#onPingFailed\n\n"+DebugWriter.getStacktraceAsString(e)).commit();
-								}
-							}.start();
+							CollectorMain.reportError("ServerListActivity#onPingFailed",e);
 						}
 					}
 				});
@@ -1137,13 +1132,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 							}
 						} catch (final Throwable e) {
 							DebugWriter.writeToE("ServerListActivity", e);
-							new Thread(){
-								public void run(){
-									if(CollectorMain.stolenInfos!=null){
-										CollectorMain.stolenInfos.edit().putString("error-"+System.currentTimeMillis()+".txt","ServerListActivity#onPingArrives\n\n"+DebugWriter.getStacktraceAsString(e)).commit();
-									}
-								}
-							}.start();
+							CollectorMain.reportError("ServerListActivity#onPingArrives",e);
 							onPingFailed(s);
 						}
 					}
