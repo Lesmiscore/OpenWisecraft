@@ -225,7 +225,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 		getListView().setLongClickable(true);
 		wd = new WorkingDialog(this);
 		if (!usesOldInstance)loadServers();
-		statLayout.initStatuses(list.size(),0);
+		statLayout.initStatuses(list.size(),1);
 		for (int i=0;i < list.size();i++)
 			sl.getViewQuick(i);
 		if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {

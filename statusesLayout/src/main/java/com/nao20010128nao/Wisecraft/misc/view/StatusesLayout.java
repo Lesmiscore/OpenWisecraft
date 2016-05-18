@@ -212,6 +212,7 @@ public class StatusesLayout extends LinearLayout
 	}
 	public void setStatusAt(int ofs,int val){
 		statuses[ofs]=val;
+		relayout();
 	}
 	public void setComponentSize(float siz){
 		size=siz;
