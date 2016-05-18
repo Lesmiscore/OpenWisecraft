@@ -4,15 +4,13 @@ import java.util.*;
 
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 import com.nao20010128nao.ToolBox.HandledPreference;
 import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
-import com.nao20010128nao.Wisecraft.misc.compat.CompatSHablePreferenceActivity;
+import com.nao20010128nao.Wisecraft.misc.pref.SHablePreferenceFragment;
 import java.lang.reflect.Field;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.preference.PreferenceFragmentCompat;
-import com.nao20010128nao.Wisecraft.misc.pref.SHablePreferenceFragment;
 
 public class FragmentSettingsActivity extends AppCompatActivity {
 	int which;
