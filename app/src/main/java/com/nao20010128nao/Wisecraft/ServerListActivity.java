@@ -418,6 +418,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 								Toast.makeText(ServerListActivityImpl.this, R.string.alreadyExists, Toast.LENGTH_LONG).show();
 							} else {
 								sl.add(s);
+								statLayout.addStatuses(1);
 							}
 							saveServers();
 						}
@@ -774,6 +775,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 											public void onClick(DialogInterface di, int i) {
 												sla.sl.remove(sla.list.get(sla.clicked));
 												sla.saveServers();
+												sla.statLayout.removeStatus(sla.clicked);
 											}
 										})
 										.setPositiveButton(android.R.string.no, new DialogInterface.OnClickListener(){

@@ -114,6 +114,18 @@ public class StatusesLayout extends View
 		statuses[ofs]=val;
 		redye();
 	}
+	public void addStatuses(int... values){
+		int[] newStat=new int[statuses.length+values.length];
+		System.arraycopy(statuses,0,newStat,0,statuses.length);
+		System.arraycopy(values,0,newStat,statuses.length+1,values.length);
+		setStatuses(newStat);
+	}
+	public void removeStatus(int ofs){
+		int[] newStat=new int[statuses.length-1];
+		System.arraycopy(statuses,0,newStat,0,ofs-1);
+		System.arraycopy(statuses,ofs+1,newStat,ofs,statuses.length-1-ofs);
+		setStatuses(newStat);
+	}
 	
 	private boolean isInvalid(){
 		return statuses==null|colors==null;
