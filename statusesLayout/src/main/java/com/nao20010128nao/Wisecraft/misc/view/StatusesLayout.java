@@ -44,86 +44,72 @@ public class StatusesLayout extends LinearLayout
 
 	@Override
 	public void addView(View child, int index) {
-		// TODO: Implement this method
-		throw new RuntimeException("addView is not supported");
+		
 	}
 
 	@Override
 	public void addView(View child, ViewGroup.LayoutParams params) {
-		// TODO: Implement this method
-		throw new RuntimeException("addView is not supported");
+		
 	}
 
 	@Override
 	public void addView(View child) {
-		// TODO: Implement this method
-		throw new RuntimeException("addView is not supported");
+		
 	}
 
 	@Override
 	public void addView(View child, int width, int height) {
-		// TODO: Implement this method
-		throw new RuntimeException("addView is not supported");
+		
 	}
 
 	@Override
 	public void addView(View child, int index, ViewGroup.LayoutParams params) {
-		// TODO: Implement this method
-		throw new RuntimeException("addView is not supported");
+		
 	}
 
 	@Override
 	protected boolean addViewInLayout(View child, int index, ViewGroup.LayoutParams params, boolean preventRequestLayout) {
-		// TODO: Implement this method
-		throw new RuntimeException("addViewInLayout is not supported");
+		return false;
 	}
 
 	@Override
 	protected boolean addViewInLayout(View child, int index, ViewGroup.LayoutParams params) {
-		// TODO: Implement this method
-		throw new RuntimeException("addViewInLayout is not supported");
+		return false;
 	}
 
 	@Override
 	public void removeAllViews() {
-		// TODO: Implement this method
-		throw new RuntimeException("removeAllViews is not supported");
+		
 	}
 
 	@Override
 	public void removeAllViewsInLayout() {
-		// TODO: Implement this method
-		throw new RuntimeException("removeAllViewsInLayout is not supported");
+		
 	}
 
 	@Override
 	public void removeViewInLayout(View view) {
-		// TODO: Implement this method
-		throw new RuntimeException("removeAllViewsInLayout is not supported");
+		
 	}
 
 	@Override
 	public void removeViewsInLayout(int start, int count) {
-		// TODO: Implement this method
-		throw new RuntimeException("removeAllViewsInLayout is not supported");
+		
 	}
 
 	@Override
 	public void removeViewAt(int index) {
-		// TODO: Implement this method
-		throw new RuntimeException("removeViewAt is not supported");
+		
 	}
 
 	@Override
 	public void removeViews(int start, int count) {
-		// TODO: Implement this method
-		throw new RuntimeException("removeViews is not supported");
+		
 	}
 
 	@Override
 	public void removeView(View view) {
-		// TODO: Implement this method
-		throw new RuntimeException("removeView is not supported");
+		
 	}
 
 	@Override
