@@ -192,7 +192,19 @@ public class StatusesLayout extends LinearLayout
 		for(int i=0;i<c.length;i++){
 			c[i]=ContextCompat.getColor(ctx,res[i]);
 		}
-		setColorRes(c);
+		setColors(c);
+	}
+	public void initStatuses(int len,int def){
+		int[] statuses=new int[len];
+		Arrays.fill(statuses,def);
+		setStatuses(statuses);
+	}
+	public void setStatuses(int... stat){
+		statuses=Arrays.copyOf(stat,stat.length);
+		relayout();
+	}
+	public void setStatusAt(int ofs,int val){
+		statuses[ofs]=val;
 	}
 	public void setComponentSize(float siz){
 		size=siz;
