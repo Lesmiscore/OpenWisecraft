@@ -42,6 +42,7 @@ import java.net.ServerSocket;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import com.nao20010128nao.Wisecraft.misc.view.StatusesLayout;
 
 abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
@@ -63,6 +64,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 	Snackbar networkState;
 	NetworkStateBroadcastReceiver nsbr;
 	boolean skipSave=false;
+	StatusesLayout statLayout;
 	Map<Server,Boolean> pinging=new HashMap<Server,Boolean>(){
 		@Override
 		public Boolean get(Object key) {
@@ -195,6 +197,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 					execOption(2);
 				}
 			});
+		statLayout=(StatusesLayout)findViewById(R.id.serverStatuses);
+		statLayout.setColorRes(R.color.stat_error,R.color.stat_pending,R.color.stat_ok);
 		boolean usesOldInstance=false;
 		if (instance.get() != null) {
 			list = instance.get().list;
@@ -221,6 +225,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 		getListView().setLongClickable(true);
 		wd = new WorkingDialog(this);
 		if (!usesOldInstance)loadServers();
+		statLayout.initStatuses(list.size(),0);
 		for (int i=0;i < list.size();i++)
 			sl.getViewQuick(i);
 		if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
@@ -712,8 +717,10 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 			((ExtendedImageView)layout.findViewById(R.id.statColor)).setColor(sla.getResources().getColor(R.color.stat_pending));
 			if (s instanceof ServerStatus) {
 				sla.new PingHandlerImpl().onPingArrives((ServerStatus)s);
+				sla.statLayout.setStatusAt(position,2);
 			} else {
 				sla.spp.putInQueue(s, sla.new PingHandlerImpl(false, -1, true));
+				sla.statLayout.setStatusAt(position,1);
 			}
 			cached.set(position, layout);
 			sla.pinging.put(s, true);
@@ -1029,6 +1036,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 								Toast.makeText(ServerListActivityImpl.this, R.string.serverOffline, Toast.LENGTH_SHORT).show();
 							if (!pinging.containsValue(true))
 								srl.setRefreshing(false);
+							statLayout.setStatusAt(i_,0);
 						} catch (final Throwable e) {
 							CollectorMain.reportError("ServerListActivity#onPingFailed",e);
 						}
@@ -1130,6 +1138,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 							if (!pinging.containsValue(true)) {
 								srl.setRefreshing(false);
 							}
+							statLayout.setStatusAt(i_,2);
 						} catch (final Throwable e) {
 							DebugWriter.writeToE("ServerListActivity", e);
 							CollectorMain.reportError("ServerListActivity#onPingArrives",e);

@@ -5,23 +5,36 @@
 	android:layout_width="match_parent"
 	android:id="@+id/drawer">
 
-	<FrameLayout
+	<LinearLayout
 		android:layout_height="match_parent"
-		android:layout_width="match_parent">
+		android:layout_width="match_parent"
+		android:orientation="vertical">
 
-		<com.nao20010128nao.Wisecraft.misc.view.FixedRefreshLayout
-			android:id="@+id/swipelayout"
+		<FrameLayout
+			android:layout_height="match_parent"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent">
+			android:layout_weight="1.0">
 
-			<ListView
-				android:id="@id/android:list"
+			<com.nao20010128nao.Wisecraft.misc.view.FixedRefreshLayout
+				android:id="@+id/swipelayout"
 				android:layout_width="match_parent"
-				android:layout_height="match_parent"/>
+				android:layout_height="match_parent">
 
-		</com.nao20010128nao.Wisecraft.misc.view.FixedRefreshLayout>
+				<ListView
+					android:id="@id/android:list"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"/>
 
-	</FrameLayout>
+			</com.nao20010128nao.Wisecraft.misc.view.FixedRefreshLayout>
+
+		</FrameLayout>
+
+		<com.nao20010128nao.Wisecraft.misc.view.StatusesLayout
+			android:layout_height="10dp"
+			android:layout_width="match_parent"
+			android:id="@+id/serverStatuses"/>
+
+	</LinearLayout>
 
 	<include
 		layout="@layout/server_list_side_drawer"/>
