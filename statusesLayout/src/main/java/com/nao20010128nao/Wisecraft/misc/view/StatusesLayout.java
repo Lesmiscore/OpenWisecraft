@@ -21,12 +21,15 @@ import android.graphics.Paint;
 import java.math.BigInteger;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.List;
+import java.util.ArrayList;
+import java.lang.reflect.InvocationTargetException;
 
 
 public class StatusesLayout extends View
 {
 	int[] colors;
-	int[] statuses;
+	List<Integer> statuses;
 	Context ctx;
 	Paint paint;
 	
@@ -71,7 +74,7 @@ public class StatusesLayout extends View
 		
 		int statRes=ta.getResourceId(R.styleable.StatusesLayout_statuses,0);
 		if(statRes!=0){
-			this.statuses=ctx.getResources().getIntArray(statRes);
+			this.statuses=wrap(ctx.getResources().getIntArray(statRes));
 		}
 
 		
@@ -105,26 +108,22 @@ public class StatusesLayout extends View
 		setStatuses(statuses);
 	}
 	public void setStatuses(int... stat){
-		boolean doRedye=statuses==null?false:stat.length==statuses.length;
-		statuses=Arrays.copyOf(stat,stat.length);
-		if(doRedye) redye();
-		else relayout();
+		statuses=wrap(stat);
+		relayout();
 	}
 	public void setStatusAt(int ofs,int val){
-		statuses[ofs]=val;
+		statuses.set(ofs,val);
 		redye();
 	}
 	public void addStatuses(int... values){
-		int[] newStat=new int[statuses.length+values.length];
-		System.arraycopy(statuses,0,newStat,0,statuses.length);
-		System.arraycopy(values,0,newStat,statuses.length+1,values.length);
-		setStatuses(newStat);
+		statuses.addAll(wrap(values));
+		relayout();
 	}
 	public void removeStatus(int ofs){
-		int[] newStat=new int[statuses.length-1];
-		System.arraycopy(statuses,0,newStat,0,ofs-1);
-		System.arraycopy(statuses,ofs+1,newStat,ofs,statuses.length-1-ofs);
-		setStatuses(newStat);
+		try {
+			ArrayList.class.getMethod("remove", int.class).invoke(statuses, ofs);
+		} catch (Throwable e) {}
+		relayout();
 	}
 	
 	private boolean isInvalid(){
@@ -135,16 +134,23 @@ public class StatusesLayout extends View
 	protected void onDraw(Canvas canvas) {
 		// TODO: Implement this method
 		if(isInvalid())return;
-		if(statuses.length==0){
+		if(statuses.size()==0){
 			if(colors.length==0)return;//nothing to do
 			paint.setColor(colors[0]);
 			canvas.drawRect(0,0,canvas.getWidth(),canvas.getHeight(),paint);
 			return;
 		}
-		float oneComp=BigDecimal.valueOf(getWidth()).divide(BigDecimal.valueOf(statuses.length),10,RoundingMode.DOWN).floatValue();
-		for(int i=0;i<statuses.length;i++){
-			paint.setColor(colors[statuses[i]]);
+		float oneComp=BigDecimal.valueOf(getWidth()).divide(BigDecimal.valueOf(statuses.size()),10,RoundingMode.DOWN).floatValue();
+		for(int i=0;i<statuses.size();i++){
+			paint.setColor(colors[statuses.get(i)]);
 			canvas.drawRect(oneComp*i,0,oneComp*(i+1),canvas.getHeight(),paint);
 		}
+	}
+	
+	
+	private List<Integer> wrap(int[] array){
+		ArrayList<Integer> result=new ArrayList<>(array.length);
+		for(int i:array)result.add(i);
+		return result;
 	}
 }
