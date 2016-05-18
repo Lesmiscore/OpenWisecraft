@@ -199,6 +199,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 			});
 		statLayout=(StatusesLayout)findViewById(R.id.serverStatuses);
 		statLayout.setColorRes(R.color.stat_error,R.color.stat_pending,R.color.stat_ok);
+		statLayout.initStatuses(0,0);
 		boolean usesOldInstance=false;
 		if (instance.get() != null) {
 			list = instance.get().list;
@@ -225,7 +226,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 		getListView().setLongClickable(true);
 		wd = new WorkingDialog(this);
 		if (!usesOldInstance)loadServers();
-		statLayout.initStatuses(list.size(),1);
 		for (int i=0;i < list.size();i++)
 			sl.getViewQuick(i);
 		if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
@@ -418,7 +418,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 								Toast.makeText(ServerListActivityImpl.this, R.string.alreadyExists, Toast.LENGTH_LONG).show();
 							} else {
 								sl.add(s);
-								statLayout.addStatuses(1);
 							}
 							saveServers();
 						}
@@ -957,7 +956,10 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 		@Override
 		public void add(Server object) {
 			// TODO: Implement this method
-			if (!sla.list.contains(object))super.add(object);
+			if (!sla.list.contains(object)){
+				sla.statLayout.addStatuses(1);
+				super.add(object);
+			}
 		}
 
 		@Override
