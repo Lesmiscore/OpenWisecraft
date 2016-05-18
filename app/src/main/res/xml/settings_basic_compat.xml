@@ -71,4 +71,10 @@
 		android:key="useBright"
 		android:defaultValue="false"
 	/>
+	<com.nao20010128nao.Wisecraft.misc.pref.CheckBoxPreference
+		android:title="@string/showStatusesBar"
+		android:key="showStatusesBar"
+		android:defaultValue="false"
+		android:widgetLayout="@layout/preference_widget_checkbox"
+	/>
 </PreferenceScreen>
