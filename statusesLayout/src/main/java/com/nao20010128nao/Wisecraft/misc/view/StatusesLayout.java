@@ -167,7 +167,7 @@ public class StatusesLayout extends LinearLayout
 		try{
 			removeAllViewsInternal();
 			int[] status=this.statuses == null ?new int[0]: this.statuses;
-			ExtendedImageView[] exi=new ExtendedImageView[status.length];
+			ExtendedImageView[] exi=views=new ExtendedImageView[status.length];
 			if (status.length == 0)return;
 			LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams((int)(size == 0 ?ViewGroup.LayoutParams.MATCH_PARENT: size), ViewGroup.LayoutParams.MATCH_PARENT, 1);
 			LinearLayout ll;
@@ -187,12 +187,20 @@ public class StatusesLayout extends LinearLayout
 			relayouting=false;
 		}
 	}
-	
+	private void redye(){
+		if(views==null|colors==null|statuses==null){
+			relayout();
+			return;
+		}
+		for (int i=0;i < statuses.length;i++) {
+			views[i].setColor(colors[statuses[i]]);
+		}
+	}
 	
 	
 	public void setColors(int... color){
 		colors=Arrays.copyOf(color,color.length);
-		relayout();
+		redye();
 	}
 	public void setColorRes(int... res){
 		int[] c=new int[res.length];
@@ -207,12 +215,14 @@ public class StatusesLayout extends LinearLayout
 		setStatuses(statuses);
 	}
 	public void setStatuses(int... stat){
+		boolean doRedye=statuses==null?false:stat.length==statuses.length;
 		statuses=Arrays.copyOf(stat,stat.length);
-		relayout();
+		if(doRedye) redye();
+		else relayout();
 	}
 	public void setStatusAt(int ofs,int val){
 		statuses[ofs]=val;
-		relayout();
+		redye();
 	}
 	public void setComponentSize(float siz){
 		size=siz;
