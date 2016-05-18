@@ -26,6 +26,7 @@ public class StatusesLayout extends LinearLayout
 	Context ctx;
 	LayoutInflater li;
 	float size;
+	boolean relayouting;
 	
 	public StatusesLayout(Context context) {
 		super(context);
@@ -44,72 +45,74 @@ public class StatusesLayout extends LinearLayout
 
 	@Override
 	public void addView(View child, int index) {
-		
+		if(relayouting)super.addView(child,index);
 	}
 
 	@Override
 	public void addView(View child, ViewGroup.LayoutParams params) {
-		
+		if(relayouting)super.addView(child,params);
 	}
 
 	@Override
 	public void addView(View child) {
-		
+		if(relayouting)super.addView(child);
 	}
 
 	@Override
 	public void addView(View child, int width, int height) {
-		
+		if(relayouting)super.addView(child,width,height);
 	}
 
 	@Override
 	public void addView(View child, int index, ViewGroup.LayoutParams params) {
-		
+		if(relayouting)super.addView(child,index,params);
 	}
 
 	@Override
 	protected boolean addViewInLayout(View child, int index, ViewGroup.LayoutParams params, boolean preventRequestLayout) {
+		if(relayouting)return super.addViewInLayout(child,index,params,preventRequestLayout);
 		return false;
 	}
 
 	@Override
 	protected boolean addViewInLayout(View child, int index, ViewGroup.LayoutParams params) {
+		if(relayouting)return super.addViewInLayout(child,index,params);
 		return false;
 	}
 
 	@Override
 	public void removeAllViews() {
-		
+		if(relayouting)super.removeAllViews();
 	}
 
 	@Override
 	public void removeAllViewsInLayout() {
-		
+		if(relayouting)super.removeAllViewsInLayout();
 	}
 
 	@Override
 	public void removeViewInLayout(View view) {
-		
+		if(relayouting)super.removeViewInLayout(view);
 	}
 
 	@Override
 	public void removeViewsInLayout(int start, int count) {
-		
+		if(relayouting)super.removeViewsInLayout(start,count);
 	}
 
 	@Override
 	public void removeViewAt(int index) {
-		
+		if(relayouting)super.removeViewAt(index);
 	}
 
 	@Override
 	public void removeViews(int start, int count) {
-		
+		if(relayouting)super.removeViews(start,count);
 	}
 
 	@Override
 	public void removeView(View view) {
-		
+		if(relayouting)super.removeView(view);
 	}
 
 	@Override
@@ -160,24 +163,28 @@ public class StatusesLayout extends LinearLayout
 	}
 	
 	private void relayout(){
-		removeAllViewsInternal();
-		int[] status=this.statuses==null?new int[0]:this.statuses;
-		ExtendedImageView[] exi=new ExtendedImageView[status.length];
-		if(status.length==0)return;
-		LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams((int)(size==0?ViewGroup.LayoutParams.MATCH_PARENT:size),ViewGroup.LayoutParams.MATCH_PARENT,1);
-		LinearLayout ll;
-		if(size==0){
-			ll=this;
-		}else{
-			View v=li.inflate(R.layout.scrolling_mode_layout,null);
-			addViewInternal(v);
-			ll=(LinearLayout)v.findViewById(R.id.statusesContent);
-		}
-		for(int i=0;i<status.length;i++){
-			exi[i]=new ExtendedImageView(ctx);
-			exi[i].setLayoutParams(lp);
-			exi[i].setColor(colors[status[i]]);
-			ll.addView(exi[i]);
+		relayouting=true;
+		try{
+			removeAllViewsInternal();
+			int[] status=this.statuses == null ?new int[0]: this.statuses;
+			ExtendedImageView[] exi=new ExtendedImageView[status.length];
+			if (status.length == 0)return;
+			LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams((int)(size == 0 ?ViewGroup.LayoutParams.MATCH_PARENT: size), ViewGroup.LayoutParams.MATCH_PARENT, 1);
+			LinearLayout ll;
+			if (size == 0) {
+				ll = this;
+			} else {
+				View v=li.inflate(R.layout.scrolling_mode_layout, this);
+				ll = (LinearLayout)v.findViewById(R.id.statusesContent);
+			}
+			for (int i=0;i < status.length;i++) {
+				exi[i] = new ExtendedImageView(ctx);
+				exi[i].setLayoutParams(lp);
+				exi[i].setColor(colors[status[i]]);
+				ll.addView(exi[i]);
+			}
+		}finally{
+			relayouting=false;
 		}
 	}
 	
