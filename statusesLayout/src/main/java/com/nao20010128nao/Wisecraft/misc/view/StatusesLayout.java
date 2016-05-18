@@ -57,30 +57,6 @@ public class StatusesLayout extends View
 	
 	private void setup(Context ctx,AttributeSet as){
 		setup(ctx);
-		TypedArray ta = ctx.obtainStyledAttributes(as, R.styleable.StatusesLayout);
-		int colDat=ta.getResourceId(R.styleable.StatusesLayout_colors,0);
-		if(colDat!=0){
-			TypedArray array = ctx.getResources().obtainTypedArray(colDat);
-			try {
-				int[] colors = new int[array.length()];
-				for (int i = 0; i < colors.length; ++i) {
-					colors[i] = ContextCompat.getColor(ctx, array.getResourceId(i, 0));
-				}
-				this.colors=colors;
-			} finally {
-				array.recycle();
-			}
-		}
-		
-		int statRes=ta.getResourceId(R.styleable.StatusesLayout_statuses,0);
-		if(statRes!=0){
-			this.statuses=wrap(ctx.getResources().getIntArray(statRes));
-		}
-
-		
-
-		
-		relayout();
 	}
 	
 	private void relayout(){
