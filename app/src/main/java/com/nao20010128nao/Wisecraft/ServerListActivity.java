@@ -471,6 +471,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 					((ExtendedImageView)sl.getViewQuick(i).findViewById(R.id.statColor)).setColor(getResources().getColor(R.color.stat_pending));
 					((TextView)sl.getViewQuick(i).findViewById(R.id.serverName)).setText(R.string.working);
 					((TextView)sl.getViewQuick(i).findViewById(R.id.serverPlayers)).setText("-/-");
+					statLayout.setStatusAt(i,1);
 					if (!srl.isRefreshing())
 						srl.setRefreshing(true);
 				}
@@ -753,6 +754,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 				((TextView)getViewQuick(sla.clicked).findViewById(R.id.serverPlayers)).setText("-/-");
 				sla.wd.showWorkingDialog();
 				sla.pinging.put(sla.list.get(sla.clicked), true);
+				sla.statLayout.setStatusAt(sla.clicked,1);
 			}
 		}
 
@@ -791,6 +793,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 									((TextView)getViewQuick(p3).findViewById(R.id.serverPlayers)).setText("-/-");
 									sla.wd.showWorkingDialog();
 									sla.pinging.put(sla.list.get(p3), true);
+									sla.statLayout.setStatusAt(p3,1);
 								}
 							});
 						executes.add(2, new Runnable(){
