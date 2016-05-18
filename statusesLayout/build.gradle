@@ -1,15 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.0"
+    compileSdkVersion 23
+    buildToolsVersion '23.0.3'
 
     defaultConfig {
-        applicationId "com.nao20010128nao.StatusesLayout"
         minSdkVersion 8
         targetSdkVersion 21
-        versionCode 1
-        versionName "1.0"
     }
     buildTypes {
         release {
