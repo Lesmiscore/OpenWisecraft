@@ -28,7 +28,6 @@ public class StatusesLayout extends View
 	int[] colors;
 	int[] statuses;
 	Context ctx;
-	LayoutInflater li;
 	Paint paint;
 	
 	public StatusesLayout(Context context) {
@@ -49,7 +48,6 @@ public class StatusesLayout extends View
 	
 	private void setup(Context ctx){
 		this.ctx=ctx;
-		li=LayoutInflater.from(ctx);
 		paint=new Paint();
 		paint.setStyle(Paint.Style.FILL);
 	}
