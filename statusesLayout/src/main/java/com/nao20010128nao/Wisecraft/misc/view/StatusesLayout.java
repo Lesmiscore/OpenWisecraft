@@ -116,11 +116,21 @@ public class StatusesLayout extends View
 		statuses[ofs]=val;
 		redye();
 	}
-
+	
+	private boolean isInvalid(){
+		return statuses==null|colors==null;
+	}
 	
 	@Override
 	protected void onDraw(Canvas canvas) {
 		// TODO: Implement this method
+		if(isInvalid())return;
+		if(statuses.length==0){
+			if(colors.length==0)return;//nothing to do
+			paint.setColor(colors[0]);
+			canvas.drawRect(0,0,canvas.getWidth(),canvas.getHeight(),paint);
+			return;
+		}
 		float oneComp=BigDecimal.valueOf(getWidth()).divide(BigDecimal.valueOf(statuses.length),10,RoundingMode.DOWN).floatValue();
 		for(int i=0;i<statuses.length;i++){
 			paint.setColor(colors[statuses[i]]);
