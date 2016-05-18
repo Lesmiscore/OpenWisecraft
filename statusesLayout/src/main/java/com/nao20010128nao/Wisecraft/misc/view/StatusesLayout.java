@@ -16,17 +16,20 @@ import com.nao20010128nao.StatusesLayout.R;
 import android.content.res.TypedArray;
 import android.support.v4.content.res.ResourcesCompat;
 import android.widget.FrameLayout;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import java.math.BigInteger;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 
-public class StatusesLayout extends LinearLayout
+public class StatusesLayout extends View
 {
 	int[] colors;
 	int[] statuses;
-	ExtendedImageView[] views;
 	Context ctx;
 	LayoutInflater li;
-	float size;
-	boolean relayouting;
+	Paint paint;
 	
 	public StatusesLayout(Context context) {
 		super(context);
@@ -43,94 +46,12 @@ public class StatusesLayout extends LinearLayout
 		setup(context,attrs);
 	}
 
-	@Override
-	public void addView(View child, int index) {
-		if(relayouting)super.addView(child,index);
-	}
-
-	@Override
-	public void addView(View child, ViewGroup.LayoutParams params) {
-		if(relayouting)super.addView(child,params);
-	}
-
-	@Override
-	public void addView(View child) {
-		if(relayouting)super.addView(child);
-	}
-
-	@Override
-	public void addView(View child, int width, int height) {
-		if(relayouting)super.addView(child,width,height);
-	}
-
-	@Override
-	public void addView(View child, int index, ViewGroup.LayoutParams params) {
-		if(relayouting)super.addView(child,index,params);
-	}
-
-	@Override
-	protected boolean addViewInLayout(View child, int index, ViewGroup.LayoutParams params, boolean preventRequestLayout) {
-		if(relayouting)return super.addViewInLayout(child,index,params,preventRequestLayout);
-		return false;
-	}
-
-	@Override
-	protected boolean addViewInLayout(View child, int index, ViewGroup.LayoutParams params) {
-		if(relayouting)return super.addViewInLayout(child,index,params);
-		return false;
-	}
-
-	@Override
-	public void removeAllViews() {
-		if(relayouting)super.removeAllViews();
-	}
-
-	@Override
-	public void removeAllViewsInLayout() {
-		if(relayouting)super.removeAllViewsInLayout();
-	}
-
-	@Override
-	public void removeViewInLayout(View view) {
-		if(relayouting)super.removeViewInLayout(view);
-	}
-
-	@Override
-	public void removeViewsInLayout(int start, int count) {
-		if(relayouting)super.removeViewsInLayout(start,count);
-	}
-
-	@Override
-	public void removeViewAt(int index) {
-		if(relayouting)super.removeViewAt(index);
-	}
-
-	@Override
-	public void removeViews(int start, int count) {
-		if(relayouting)super.removeViews(start,count);
-	}
-
-	@Override
-	public void removeView(View view) {
-		if(relayouting)super.removeView(view);
-	}
-
-	@Override
-	public void setOrientation(int orientation) {
-		// TODO: Implement this method
-		super.setOrientation(HORIZONTAL);
-	}
-	
-	private void addViewInternal(View v){
-		super.addView(v);
-	}
-	private void removeAllViewsInternal(){
-		super.removeAllViews();
-	}
 	
 	private void setup(Context ctx){
 		this.ctx=ctx;
 		li=LayoutInflater.from(ctx);
+		paint=new Paint();
+		paint.setStyle(Paint.Style.FILL);
 	}
 	
 	private void setup(Context ctx,AttributeSet as){
@@ -155,7 +76,6 @@ public class StatusesLayout extends LinearLayout
 			this.statuses=ctx.getResources().getIntArray(statRes);
 		}
 
-		size=ta.getDimension(R.styleable.StatusesLayout_componentSize,0);
 		
 
 		
@@ -163,38 +83,10 @@ public class StatusesLayout extends LinearLayout
 	}
 	
 	private void relayout(){
-		relayouting=true;
-		try{
-			removeAllViewsInternal();
-			int[] status=this.statuses == null ?new int[0]: this.statuses;
-			ExtendedImageView[] exi=views=new ExtendedImageView[status.length];
-			if (status.length == 0)return;
-			LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams((int)(size == 0 ?ViewGroup.LayoutParams.MATCH_PARENT: size), ViewGroup.LayoutParams.MATCH_PARENT, 1);
-			LinearLayout ll;
-			if (size == 0) {
-				ll = this;
-			} else {
-				View v=li.inflate(R.layout.scrolling_mode_layout, this);
-				ll = (LinearLayout)v.findViewById(R.id.statusesContent);
-			}
-			for (int i=0;i < status.length;i++) {
-				exi[i] = new ExtendedImageView(ctx);
-				exi[i].setLayoutParams(lp);
-				exi[i].setColor(colors[status[i]]);
-				ll.addView(exi[i]);
-			}
-		}finally{
-			relayouting=false;
-		}
+		invalidate();
 	}
 	private void redye(){
-		if(views==null|colors==null|statuses==null){
-			relayout();
-			return;
-		}
-		for (int i=0;i < statuses.length;i++) {
-			views[i].setColor(colors[statuses[i]]);
-		}
+		relayout();
 	}
 	
 	
@@ -224,33 +116,15 @@ public class StatusesLayout extends LinearLayout
 		statuses[ofs]=val;
 		redye();
 	}
-	public void setComponentSize(float siz){
-		size=siz;
-		relayout();
-	}
+
 	
-	
-	
-	private class ExtendedImageView extends AppCompatImageView
-	{
-		public ExtendedImageView(Context context) {
-			super(context);
-		}
-
-		public ExtendedImageView(Context context, AttributeSet attrs) {
-			super(context,attrs);
-		}
-
-		public ExtendedImageView(Context context, AttributeSet attrs, int defStyleAttr) {
-			super(context,attrs,defStyleAttr);
-		}
-
-		public void setColor(int color){
-			setImageDrawable(new ColorDrawable(color));
-		}
-
-		public void setColorRes(int les){
-			setColor(getResources().getColor(les));
+	@Override
+	protected void onDraw(Canvas canvas) {
+		// TODO: Implement this method
+		float oneComp=BigDecimal.valueOf(getWidth()).divide(BigDecimal.valueOf(statuses.length),10,RoundingMode.DOWN).floatValue();
+		for(int i=0;i<statuses.length;i++){
+			paint.setColor(colors[statuses[i]]);
+			canvas.drawRect(oneComp*i,0,oneComp*(i+1),canvas.getHeight(),paint);
 		}
 	}
 }
