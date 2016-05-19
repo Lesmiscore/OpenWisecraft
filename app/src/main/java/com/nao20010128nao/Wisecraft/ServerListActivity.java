@@ -763,7 +763,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 		public boolean onItemLongClick(AdapterView<?> p1, View p2, final int p3, long p4) {
 			// TODO: Implement this method
 			sla.clicked = p3;
-			Dialog d=new AppCompatAlertDialog.Builder(sla)
+			new AppCompatAlertDialog.Builder(sla)
 				.setItems(generateSubMenu(getItem(p3).mode == 1), new DialogInterface.OnClickListener(){
 					public void onClick(DialogInterface di, int which) {
 						List<Runnable> executes=new ArrayList<>();
