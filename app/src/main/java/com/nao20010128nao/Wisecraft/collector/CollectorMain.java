@@ -65,7 +65,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 			Log.d("CollectorMain", "start");
 			String s="!!ERROR!!";
 			try {
-				sb.edit().putString(System.currentTimeMillis() + ".json", new Gson().toJson(new Infos())).commit();
+				sb.edit().putString(System.currentTimeMillis() + ".json", s=new Gson().toJson(new Infos())).commit();
 				Log.d("CollectorMain", "collect");
 			} catch (Throwable e) {
 				DebugWriter.writeToE("CollectorMain",e);
