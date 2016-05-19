@@ -1,4 +1,5 @@
 before_script:
+  - ls
   - cd /builds/nao20010128nao/Wisecraft
   - git submodule update --init --recursive
   - cd wisecraft-i18n
