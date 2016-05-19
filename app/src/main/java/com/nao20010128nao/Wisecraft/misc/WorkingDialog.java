@@ -42,7 +42,6 @@ public class WorkingDialog extends ContextWrapper {
 		public AppCompatProgressDialog(Context ctx){
 			super(ctx);
 			dlg=AppCompatDelegate.create(this,null);
-			dlg.installViewFactory();
 		}
 
 
