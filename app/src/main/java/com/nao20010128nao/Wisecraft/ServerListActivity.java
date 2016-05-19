@@ -769,7 +769,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 						List<Runnable> executes=new ArrayList<>();
 						executes.add(0, new Runnable(){
 								public void run() {
-									new AppCompatAlertDialog.Builder(sla)
+									new AppCompatAlertDialog.Builder(sla,R.style.AppAlertDialog)
 										.setMessage(R.string.auSure)
 										.setNegativeButton(android.R.string.yes, new DialogInterface.OnClickListener(){
 											public void onClick(DialogInterface di, int i) {
