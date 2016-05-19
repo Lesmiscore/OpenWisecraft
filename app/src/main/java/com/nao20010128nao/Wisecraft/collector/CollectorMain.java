@@ -111,6 +111,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 						edt.remove(actual);
 				    } catch (Throwable e) {
 						DebugWriter.writeToE("CollectorMain",e);
+						if(e.getMessage().contains("\"sha\" wasn't supplied"))edt.remove(actual);
 						continue;
 					}
 				}
