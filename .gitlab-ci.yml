@@ -1,12 +1,10 @@
 before_script:
-  - ls
-  - cd /builds/nao20010128nao/Wisecraft
   - git submodule update --init --recursive
   - cd wisecraft-i18n
   - git pull origin master
   - cd ../statusesLayout
   - git pull origin master
-  - cd /
+  - cd ../
   - apt-get --quiet update --yes
   - apt-get --quiet install --yes wget tar unzip openjdk-7-jdk lib32stdc++6 lib32z1
   - wget --quiet --output-document=android-sdk.tgz https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz
@@ -23,13 +21,12 @@ stages:
 build:
   stage: build
   script:
-    - cd /builds/nao20010128nao/Wisecraft/
     - /gradle-2.12/bin/gradle assembleRelease --info --stacktrace
     - mv app/build/outputs/apk/app-release.apk app/build/outputs/apk/Wisecraft-release.apk
-    - cd /
+    - mv app/build/outputs/apk/*.apk *.apk
     - ls /
     - ls /builds/nao20010128nao/Wisecraft/app/build/outputs/apk
   artifacts:
     paths:
-      - /builds/nao20010128nao/Wisecraft/app/build/outputs/apk
+      - *.apk
 
