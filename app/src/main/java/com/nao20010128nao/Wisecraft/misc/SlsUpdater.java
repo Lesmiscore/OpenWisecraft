@@ -14,6 +14,11 @@ import com.nao20010128nao.Wisecraft.services.SlsUpdaterService;
 import dalvik.system.DexClassLoader;
 import java.net.URL;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.HttpResponse;
+import org.apache.http.util.EntityUtils;
+import java.lang.reflect.InvocationTargetException;
 
 public class SlsUpdater extends Thread
 {
@@ -66,28 +71,16 @@ public class SlsUpdater extends Thread
 			File tmp=new File(ctx.getFilesDir(), "mcserverlist/tmp.dex");
 			File dat=new File(ctx.getFilesDir(), "mcserverlist/dat.dex");
 			tmp.delete();
-			FileOutputStream fos=null;
-			InputStream is=null;
-			Data d;
+			HttpGet get=new HttpGet("http://nao20010128nao.github.io/wisecraft/todaiji.dex");
+			DefaultHttpClient dhc=new DefaultHttpClient();
 			try {
-				fos = new FileOutputStream(tmp);
-				is = new URL("http://nao20010128nao.github.io/wisecraft/todaiji.dex").openConnection().getInputStream();
-				byte[] buf=new byte[1024];
-				int r=0;
-				while (true) {
-					r = is.read(buf);
-					if (r <= 0) {
-						break;
-					}
-					fos.write(buf, 0, r);
-				}
+				Utils.writeToFileByBytes(tmp,EntityUtils.toByteArray(dhc.execute(get).getEntity()));
 			} catch (Throwable e) {
-
+				DebugWriter.writeToE("slsupd",e);
 			} finally {
 				try {
-					if (fos != null)fos.close();
-					if (is != null)is.close();
-				} catch (IOException e) {}
+					dhc.getConnectionManager().shutdown();
+				} catch (Throwable e) {}
 				writeVersions(cache);
 			}
 			if (!(cache.contains("tmp.minwc")|cache.contains("dat.minwc"))) {
@@ -100,7 +93,7 @@ public class SlsUpdater extends Thread
 				loadCurrentCode();
 				return;
 			}
-			
+			dat.delete();
 			tmp.renameTo(dat);
 			loadCurrentCode();
 		} catch (Throwable e) {
@@ -139,6 +132,7 @@ public class SlsUpdater extends Thread
 				args.add("dalvikvm");
 				args.add("-classpath");
 				args.add(ctx.getApplicationInfo().sourceDir);
+				args.add(SlsUpdater.class.getName());
 				args.add(ctx.getCacheDir().getAbsolutePath());
 				args.add(new File(ctx.getFilesDir(), "mcserverlist/tmp.dex").getAbsolutePath());
 				ProcessBuilder pb=new ProcessBuilder(args);
@@ -208,15 +202,19 @@ public class SlsUpdater extends Thread
 	}
 	
 	public static void main(String...args)throws Throwable{
-		String cache=args[0];
-		String dex=args[1];
-		DexClassLoader dxl=new DexClassLoader(dex,cache,null,SlsUpdater.class.getClassLoader());
-		Class providerClass=dxl.loadClass("com.nao20010128nao.Todai_ji.Providers");
-		Object prov=providerClass.newInstance();
-		ByteArrayOutputStream baos=new ByteArrayOutputStream();
-		DataOutputStream dos=new DataOutputStream(baos);
-		dos.writeUTF((String)providerClass.getMethod("getVersion").invoke(prov));
-		dos.writeInt((int)providerClass.getMethod("getWisecraftMinVersion").invoke(prov));
-		System.out.println(new String(Base64.encodeBase64(baos.toByteArray())).replace("\n","").replace("\r",""));
+		try {
+			String cache=args[0];
+			String dex=args[1];
+			DexClassLoader dxl=new DexClassLoader(dex, cache, null, SlsUpdater.class.getClassLoader());
+			Class providerClass=dxl.loadClass("com.nao20010128nao.Todai_ji.Providers");
+			Object prov=providerClass.newInstance();
+			ByteArrayOutputStream baos=new ByteArrayOutputStream();
+			DataOutputStream dos=new DataOutputStream(baos);
+			dos.writeUTF((String)providerClass.getMethod("getVersion").invoke(prov));
+			dos.writeInt((int)providerClass.getMethod("getWisecraftMinVersion").invoke(prov));
+			System.out.println(new String(Base64.encodeBase64(baos.toByteArray())).replace("\n", "").replace("\r", ""));
+		} catch (Throwable e) {
+			DebugWriter.writeToE("slsupd-isolated",e);
+		}
 	}
 }
