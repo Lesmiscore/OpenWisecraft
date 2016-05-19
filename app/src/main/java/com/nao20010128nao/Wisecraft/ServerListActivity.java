@@ -31,6 +31,7 @@ import com.nao20010128nao.Wisecraft.misc.pinger.pe.FullStat;
 import com.nao20010128nao.Wisecraft.misc.pref.StartPref;
 import com.nao20010128nao.Wisecraft.misc.server.GhostPingServer;
 import com.nao20010128nao.Wisecraft.misc.view.ExtendedImageView;
+import com.nao20010128nao.Wisecraft.misc.view.StatusesLayout;
 import com.nao20010128nao.Wisecraft.pingEngine.UnconnectedPing;
 import com.nao20010128nao.Wisecraft.proxy.ProxyActivity;
 import com.nao20010128nao.Wisecraft.rcon.RCONActivity;
@@ -42,7 +43,6 @@ import java.net.ServerSocket;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
-import com.nao20010128nao.Wisecraft.misc.view.StatusesLayout;
 
 abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
