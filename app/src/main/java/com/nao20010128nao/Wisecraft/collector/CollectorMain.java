@@ -204,7 +204,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 				if(colonOfs==-1){
 					data.put(s,null);
 				}else{
-					data.put(s.substring(0,colonOfs-1),s.substring(colonOfs+1));
+					data.put(s.substring(0,colonOfs),s.substring(colonOfs+1));
 				}
 			}
 			return data;
