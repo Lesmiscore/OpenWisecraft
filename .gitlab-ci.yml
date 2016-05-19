@@ -21,7 +21,7 @@ stages:
 build:
   stage: build
   script:
-    - /gradle-2.12/bin/gradle assembleRelease --info --stacktrace
+    - gradle-2.12/bin/gradle assembleRelease --info --stacktrace
     - mv app/build/outputs/apk/app-release.apk app/build/outputs/apk/Wisecraft-release.apk
     - mv app/build/outputs/apk/*.apk *.apk
     - ls /
