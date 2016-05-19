@@ -581,7 +581,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 					.show();
 				break;
 			case 5:
-				new AppCompatAlertDialog.Builder(this)
+				new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
 					.setTitle(R.string.sort)
 					.setSingleChoiceItems(R.array.serverSortMenu,-1,new DialogInterface.OnClickListener(){
 						public void onClick(DialogInterface di,int w){
