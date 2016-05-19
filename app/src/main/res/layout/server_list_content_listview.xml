@@ -8,7 +8,8 @@
 	<LinearLayout
 		android:layout_height="match_parent"
 		android:layout_width="match_parent"
-		android:orientation="vertical">
+		android:orientation="vertical"
+		android:id="@+id/statusWrapper">
 
 		<FrameLayout
 			android:layout_height="match_parent"
@@ -35,7 +36,7 @@
 			android:id="@+id/serverStatuses"/>
 
 	</LinearLayout>
-	
+
 	<include
 		layout="@layout/server_list_side_drawer_listview"/>
 
