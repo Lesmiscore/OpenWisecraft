@@ -12,13 +12,10 @@ import com.nao20010128nao.Wisecraft.ServerGetActivity;
 import com.nao20010128nao.Wisecraft.Utils;
 import com.nao20010128nao.Wisecraft.services.SlsUpdaterService;
 import dalvik.system.DexClassLoader;
-import java.net.URL;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
-import java.lang.reflect.InvocationTargetException;
 
 public class SlsUpdater extends Thread
 {
