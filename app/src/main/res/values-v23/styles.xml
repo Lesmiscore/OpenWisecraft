@@ -15,4 +15,13 @@
 		<item name="colorPrimary">@color/upd_2</item>
 		<item name="preferenceTheme">@style/AppTheme.Preference</item>
 	</style>
+	
+	<style name="AppThemeN.Bright" parent="AppThemeN">
+		<item name="android:statusBarColor">#ffffff</item>
+		<item name="android:windowLightStatusBar">true</item>
+		<item name="android:colorPrimary">#ffffff</item>
+		<item name="android:windowBackground">@color/white</item>
+		<item name="android:colorBackground">#ffffff</item>
+		<item name="preferenceTheme">@style/AppTheme.Preference</item>
+	</style>
 </resources>

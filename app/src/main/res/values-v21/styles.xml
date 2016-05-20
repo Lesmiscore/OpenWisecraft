@@ -18,4 +18,13 @@
 		<item name="colorPrimary">@color/primary</item>
 		<item name="colorAccent">@color/upd_2</item>
 	</style>
+	
+	<style name="AppThemeN" parent="@android:style/Theme.Material.Light">
+		<item name="android:colorPrimary">@color/primary</item>
+		<item name="android:colorAccent">@color/upd_2</item>
+		<item name="preferenceTheme">@style/AppTheme.Preference</item>
+	</style>
+	<style name="AppThemeN.Bright" parent="AppThemeN">
+
+	</style>
 </resources>

@@ -60,44 +60,48 @@
 
 		<activity
             android:label="@string/settings"
-            android:name=".SettingsActivity"
+            android:name=".settings.compat.SettingsActivity"
 			android:exported="false">
         </activity>
 		<activity
             android:label="@string/basics"
-            android:name=".SettingsActivity$Basics"
+            android:name=".settings.compat.SettingsActivity$Basics"
 			android:exported="false">
         </activity>
 		<activity
             android:label="@string/features"
-            android:name=".SettingsActivity$Features"
+            android:name=".settings.compat.SettingsActivity$Features"
 			android:exported="false">
         </activity>
 		<activity
             android:label="@string/addServerFromServerListSite"
-            android:name=".SettingsActivity$Asfsls"
+            android:name=".settings.compat.SettingsActivity$Asfsls"
 			android:exported="false">
         </activity>
-
+		
 		<activity
             android:label="@string/settings"
-            android:name=".FragmentSettingsActivity"
-			android:exported="false">
+            android:name=".settings.system.SettingsActivity"
+			android:exported="false"
+			android:theme="@style/AppThemeN">
         </activity>
 		<activity
             android:label="@string/basics"
-            android:name=".FragmentSettingsActivity$Basics"
-			android:exported="false">
+            android:name=".settings.system.SettingsActivity$Basics"
+			android:exported="false"
+			android:theme="@style/AppThemeN">
         </activity>
 		<activity
             android:label="@string/features"
-            android:name=".FragmentSettingsActivity$Features"
-			android:exported="false">
+            android:name=".settings.system.SettingsActivity$Features"
+			android:exported="false"
+			android:theme="@style/AppThemeN">
         </activity>
 		<activity
             android:label="@string/addServerFromServerListSite"
-            android:name=".FragmentSettingsActivity$Asfsls"
-			android:exported="false">
+            android:name=".settings.system.SettingsActivity$Asfsls"
+			android:exported="false"
+			android:theme="@style/AppThemeN">
         </activity>
 		
 		<activity

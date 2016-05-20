@@ -43,6 +43,8 @@ import java.net.ServerSocket;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
+import com.nao20010128nao.Wisecraft.settings.compat.SettingsActivity;
+import com.nao20010128nao.Wisecraft.settings.SettingsDelegate;
 
 abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
@@ -599,7 +601,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 				startActivity(new Intent(this, ServerGetActivity.class));
 				break;
 			case 8:
-				startActivity(new Intent(this, SettingsActivity.class));
+				SettingsDelegate.openAppSettings(this);
 				break;
 			case 9:
 				finish();

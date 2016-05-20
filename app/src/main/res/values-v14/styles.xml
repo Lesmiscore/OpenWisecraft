@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<style name="AppThemeN" parent="@android:style/Theme.Holo.Light">
+		<item name="preferenceTheme">@style/AppTheme.Preference</item>
+	</style>
+	<style name="AppThemeN.Bright" parent="AppThemeN">
+
+	</style>
+</resources>
