@@ -3,6 +3,7 @@ import android.content.*;
 import com.nao20010128nao.Wisecraft.*;
 import java.util.*;
 
+import android.app.Activity;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
@@ -10,7 +11,6 @@ import com.nao20010128nao.ToolBox.HandledPreference;
 import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import android.app.Activity;
 
 public class SettingsDelegate extends ContextWrapper
 {
