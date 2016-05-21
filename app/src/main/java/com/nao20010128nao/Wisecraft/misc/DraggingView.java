@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 
 public class DraggingView extends LinearLayoutCompat{
 	ViewDragHelper vdh;
-	int ofs;
+	int ofs,tofs;
     float initialMotionY;
     int top;
     int dragRange;
@@ -45,6 +45,9 @@ public class DraggingView extends LinearLayoutCompat{
 	public void setUnmoveableViewOffset(int value){
 		ofs=value;
 	}
+	public void setMoveableViewOffset(int value){
+		tofs=value;
+	}
 
     @Override
     protected void onAttachedToWindow() {
@@ -62,7 +65,7 @@ public class DraggingView extends LinearLayoutCompat{
     public void smoothSlideTo(float offset) {
         final int topBound = getPaddingTop();
         float y = topBound + offset * this.dragRange;
-        if (vdh.smoothSlideViewTo(this.headerView, this.headerView.getLeft(), (int) y)) {
+        if (vdh.smoothSlideViewTo(getChildAt(ofs), getChildAt(ofs).getLeft(), (int) y)) {
             postInvalidateOnAnimation();
         }
     }
@@ -83,7 +86,7 @@ public class DraggingView extends LinearLayoutCompat{
         switch (action) {
             case MotionEvent.ACTION_DOWN: {
                 this.initialMotionY = y;
-                isHeaderViewUnder = this.viewDragHelper.isViewUnder(this.headerView, (int) x, (int) y);
+                isHeaderViewUnder = vdh.isViewUnder(getChildAt(ofs), (int) x, (int) y);
                 break;
             }
         }
@@ -93,13 +96,13 @@ public class DraggingView extends LinearLayoutCompat{
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        this.viewDragHelper.processTouchEvent(event);
+        vdh.processTouchEvent(event);
 
         final int action = event.getActionMasked();
         final float x = event.getX();
         final float y = event.getY();
 
-        boolean isHeaderViewUnder = vdh.isViewUnder(this.headerView, (int) x, (int) y);
+        boolean isHeaderViewUnder = vdh.isViewUnder(getChildAt(ofs), (int) x, (int) y);
         switch (action) {
             case MotionEvent.ACTION_DOWN: {
                 this.initialMotionY = y;
@@ -117,8 +120,8 @@ public class DraggingView extends LinearLayoutCompat{
                             smoothSlideTo(0f);
                         }
                     } else {
-                        float headerViewCenterY = this.headerView.getY() + this.headerView.getHeight() / 2;
-                        ;
+                        float headerViewCenterY = getChildAt(ofs).getY() + getChildAt(ofs).getHeight() / 2;
+                        
                         if (headerViewCenterY >= getHeight() / 2) {
                             smoothSlideTo(1f);
                         } else {
@@ -130,7 +133,7 @@ public class DraggingView extends LinearLayoutCompat{
             }
         }
 
-        return isHeaderViewUnder && isViewHit(this.headerView, (int) y) || isViewHit(this.view, (int) y);
+        return isHeaderViewUnder && isViewHit(getChildAt(ofs), (int) y) || isViewHit(getChildAt(tofs), (int) y);
     }
 
     private boolean isViewHit(View view, int y) {
@@ -153,9 +156,9 @@ public class DraggingView extends LinearLayoutCompat{
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        this.dragRange = getHeight() - this.headerView.getHeight();
-        this.headerView.layout(0, this.top, r, this.top + this.headerView.getMeasuredHeight());
-        this.view.layout(0, this.top + this.headerView.getMeasuredHeight(), r, this.top + b);
+        this.dragRange = getHeight() - getChildAt(ofs).getHeight();
+        getChildAt(ofs).layout(0, this.top, r, this.top + getChildAt(ofs).getMeasuredHeight());
+        getChildAt(tofs).layout(0, this.top + getChildAt(ofs).getMeasuredHeight(), r, this.top + b);
     }
     
 	class DraggingCallback extends ViewDragHelper.Callback {
