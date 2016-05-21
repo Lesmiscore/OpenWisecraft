@@ -136,7 +136,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 			player = new PCUserFaceAdapter();
 			Log.d("ServerInfoActivity", "face on");
 		} else {
-			player = new AppBaseArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
+			player = new PlayerNamesListAdapter();
 			Log.d("ServerInfoActivity", "face off");
 		}
 		infos = new KVListAdapter<>(this);
@@ -446,7 +446,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
 	}
 
-	class PCUserFaceAdapter extends AppBaseArrayAdapter<String> {
+	class PCUserFaceAdapter extends PlayerNamesListAdapter {
 		List<View> cached=new ArrayList<>(Constant.ONE_HUNDRED_LENGTH_NULL_LIST);
 		public PCUserFaceAdapter() {
 			super(ServerInfoActivity.this, R.layout.simple_list_item_with_image, new ArrayList<String>());
@@ -536,6 +536,23 @@ public class ServerInfoActivity extends ActionBarActivity {
 		public int getCount() {
 			// TODO: Implement this method
 			return super.getCount() + 1;
+		}
+	}
+	class PlayerNamesListAdapter extends AppBaseArrayAdapter<String>{
+		public PlayerNamesListAdapter() {
+			super(ServerInfoActivity.this, android.R.layout.simple_list_item_1, new ArrayList<Object>());
+		}
+		public PlayerNamesListAdapter(Context context, int resource, List<String> objects) {
+			super(context, resource, objects);
+		}
+		
+		@Override
+		public String getItem(int position) {
+			// TODO: Implement this method
+			String s=super.getItem(position);
+			if(pref.getBoolean("deleteDecoPlayerName",false))
+				s=deleteDecorations(s);
+			return s;
 		}
 	}
 
