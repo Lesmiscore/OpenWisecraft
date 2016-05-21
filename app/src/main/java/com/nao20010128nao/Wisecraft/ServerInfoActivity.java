@@ -540,7 +540,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 	}
 	class PlayerNamesListAdapter extends AppBaseArrayAdapter<String>{
 		public PlayerNamesListAdapter() {
-			super(ServerInfoActivity.this, android.R.layout.simple_list_item_1, new ArrayList<Object>());
+			super(ServerInfoActivity.this, android.R.layout.simple_list_item_1, new ArrayList<String>());
 		}
 		public PlayerNamesListAdapter(Context context, int resource, List<String> objects) {
 			super(context, resource, objects);
