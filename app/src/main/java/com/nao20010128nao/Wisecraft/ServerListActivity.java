@@ -333,6 +333,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 						((TextView)sl.getViewQuick(clicked).findViewById(R.id.serverPlayers)).setText("-/-");
 						wd.showWorkingDialog();
 						pinging.put(list.get(clicked), true);
+						statLayout.setStatusAt(clicked,1);
 						break;
 				}
 				break;
