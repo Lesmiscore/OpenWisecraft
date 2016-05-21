@@ -13,16 +13,14 @@ public class DraggingView extends LinearLayoutCompat{
 	int ofs;
 	public DraggingView(android.content.Context context) {
 		super(context);
-		setup(context);
 	}
 	public DraggingView(android.content.Context context, android.util.AttributeSet attrs) {
 		super(context,attrs);
-		setup(context);
 	}
 	public DraggingView(android.content.Context context, android.util.AttributeSet attrs, int defStyleAttr) {
 		super(context,attrs,defStyleAttr);
-		setup(context);
 	}
+	
 	private void setup(Context ctx){
 		ServerListActivityBase3 act;
 		if(ctx instanceof ServerListActivityBase3){
@@ -38,6 +36,118 @@ public class DraggingView extends LinearLayoutCompat{
 		ofs=value;
 	}
 
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        setup(getContext());
+    }
+
+    @Override
+    public void computeScroll() {
+        if (vdh.continueSettling(true)) {
+            postInvalidateOnAnimation();
+        }
+    }
+
+    public void smoothSlideTo(float offset) {
+        final int topBound = getPaddingTop();
+        float y = topBound + offset * this.dragRange;
+        if (vdh.smoothSlideViewTo(this.headerView, this.headerView.getLeft(), (int) y)) {
+            postInvalidateOnAnimation();
+        }
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent event) {
+        final int action = event.getActionMasked();
+
+        if (action != MotionEvent.ACTION_DOWN) {
+            vdh.cancel();
+            return super.onInterceptTouchEvent(event);
+        }
+
+        final float x = event.getX();
+        final float y = event.getY();
+        boolean isHeaderViewUnder = false;
+
+        switch (action) {
+            case MotionEvent.ACTION_DOWN: {
+                this.initialMotionY = y;
+                isHeaderViewUnder = this.viewDragHelper.isViewUnder(this.headerView, (int) x, (int) y);
+                break;
+            }
+        }
+
+        return vdh.shouldInterceptTouchEvent(event) || isHeaderViewUnder;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        this.viewDragHelper.processTouchEvent(event);
+
+        final int action = event.getActionMasked();
+        final float x = event.getX();
+        final float y = event.getY();
+
+        boolean isHeaderViewUnder = vdh.isViewUnder(this.headerView, (int) x, (int) y);
+        switch (action) {
+            case MotionEvent.ACTION_DOWN: {
+                this.initialMotionY = y;
+                break;
+            }
+
+            case MotionEvent.ACTION_UP: {
+                if (isHeaderViewUnder) {
+                    final float dy = y - this.initialMotionY;
+                    final int slop = vdh.getTouchSlop();
+                    if (Math.abs(dy) < Math.abs(slop)) {
+                        if (this.dragOffset == 0) {
+                            smoothSlideTo(1f);
+                        } else {
+                            smoothSlideTo(0f);
+                        }
+                    } else {
+                        float headerViewCenterY = this.headerView.getY() + this.headerView.getHeight() / 2;
+                        ;
+                        if (headerViewCenterY >= getHeight() / 2) {
+                            smoothSlideTo(1f);
+                        } else {
+                            smoothSlideTo(0f);
+                        }
+                    }
+                }
+                break;
+            }
+        }
+
+        return isHeaderViewUnder && isViewHit(this.headerView, (int) y) || isViewHit(this.view, (int) y);
+    }
+
+    private boolean isViewHit(View view, int y) {
+        int[] parentLocation = new int[2];
+        this.getLocationOnScreen(parentLocation);
+        int[] viewLocation = new int[2];
+        view.getLocationOnScreen(viewLocation);
+        int screenY = parentLocation[1] + y;
+        return screenY >= viewLocation[1] && screenY < viewLocation[1] + view.getHeight();
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        measureChildren(widthMeasureSpec, heightMeasureSpec);
+        int maxWidth = MeasureSpec.getSize(widthMeasureSpec);
+        int maxHeight = MeasureSpec.getSize(heightMeasureSpec);
+        setMeasuredDimension(resolveSizeAndState(maxWidth, widthMeasureSpec, 0),
+                resolveSizeAndState(maxHeight, heightMeasureSpec, 0));
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        this.dragRange = getHeight() - this.headerView.getHeight();
+        this.headerView.layout(0, this.top, r, this.top + this.headerView.getMeasuredHeight());
+        this.view.layout(0, this.top + this.headerView.getMeasuredHeight(), r, this.top + b);
+    }
+    
 	class DraggingCallback extends ViewDragHelper.Callback {
 		@Override
 		public boolean tryCaptureView(View p1, int p2) {
