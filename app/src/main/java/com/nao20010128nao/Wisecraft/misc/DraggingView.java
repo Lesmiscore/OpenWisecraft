@@ -7,10 +7,20 @@ import android.support.v7.widget.LinearLayoutCompat;
 import android.content.Context;
 import android.util.Log;
 import android.view.ViewGroup;
+import android.content.Context;
+import android.support.v4.widget.ViewDragHelper;
+import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
 
 public class DraggingView extends LinearLayoutCompat{
 	ViewDragHelper vdh;
 	int ofs;
+    float initialMotionY;
+    int top;
+    int dragRange;
+    float dragOffset;
 	public DraggingView(android.content.Context context) {
 		super(context);
 	}
