@@ -6,7 +6,6 @@
 		android:title="@string/allowAutoUpdateSLSCode"
 		android:key="allowAutoUpdateSLSCode"
 		android:defaultValue="false"
-		
 	/>
 	<com.nao20010128nao.Wisecraft.misc.pref.CheckBoxPreference
 		android:title="@string/aausc_monnet"
