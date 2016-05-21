@@ -34,6 +34,7 @@ public class ServerListActivityBase3 extends AppCompatListActivity
 					DraggingView dv=(DraggingView)ll.findViewById(R.id.content);
 					FrameLayout menu=(FrameLayout)getLayoutInflater().inflate(R.layout.content_scrolling,dv);
 					getLayoutInflater().inflate(R.layout.server_list_dragging_title,dv);
+					dv.setMoveableViewOffset(0);
 					dv.setUnmoveableViewOffset(1);
 					getLayoutInflater().inflate(R.layout.server_list_content_nodrawer,ll);
 					menu.setId(MENU_VIEW_ID);
@@ -47,6 +48,7 @@ public class ServerListActivityBase3 extends AppCompatListActivity
 					getLayoutInflater().inflate(R.layout.server_list_dragging_title,dv);
 					FrameLayout menu=(FrameLayout)getLayoutInflater().inflate(R.layout.content_scrolling,dv);
 					dv.setUnmoveableViewOffset(0);
+					dv.setMoveableViewOffset(1);
 					getLayoutInflater().inflate(R.layout.server_list_content_nodrawer,ll);
 					menu.setId(MENU_VIEW_ID);
 					setContentView(ll);
