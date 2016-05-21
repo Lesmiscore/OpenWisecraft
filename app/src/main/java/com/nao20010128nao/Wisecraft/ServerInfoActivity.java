@@ -52,9 +52,9 @@ public class ServerInfoActivity extends ActionBarActivity {
 	FragmentTabHost fth;
 	TabHost.TabSpec playersF,dataF,pluginsF,modsF;
 
-	ArrayAdapter<String> adap,adap3;
-	ArrayAdapter<Map.Entry<String,String>> adap2;
-	ArrayAdapter<Object> adap4;
+	ArrayAdapter<String> player,pluginNames;
+	ArrayAdapter<Map.Entry<String,String>> infos;
+	ArrayAdapter<Object> modInfos;
 
 	List<Bitmap> skinFaceImages;
 	SkinFaceFetcher sff;
@@ -133,15 +133,15 @@ public class ServerInfoActivity extends ActionBarActivity {
 		if (pref.getBoolean("showPcUserFace", false) & localStat.mode == 1) {
 			skinFaceImages = new ArrayList<>();
 			sff = new SkinFaceFetcher();
-			adap = new PCUserFaceAdapter();
+			player = new PCUserFaceAdapter();
 			Log.d("ServerInfoActivity", "face on");
 		} else {
-			adap = new AppBaseArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
+			player = new AppBaseArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
 			Log.d("ServerInfoActivity", "face off");
 		}
-		adap2 = new KVListAdapter<>(this);
-		adap3 = new AppBaseArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
-		adap4 = new ModInfoListAdapter();
+		infos = new KVListAdapter<>(this);
+		pluginNames = new AppBaseArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
+		modInfos = new ModInfoListAdapter();
 
 		nonUpd = getIntent().getBooleanExtra("nonUpd", false);
 
@@ -194,18 +194,18 @@ public class ServerInfoActivity extends ActionBarActivity {
 			} else {
 				title = ip + ":" + port;
 			}
-			adap.clear();
-			CompatArrayAdapter.addAll(adap, sort);
-			adap2.clear();
-			CompatArrayAdapter.addAll(adap2, fs.getData().entrySet());
-			adap3.clear();
+			player.clear();
+			CompatArrayAdapter.addAll(player, sort);
+			infos.clear();
+			CompatArrayAdapter.addAll(infos, fs.getData().entrySet());
+			pluginNames.clear();
 			if (fs.getData().containsKey("plugins")) {
 				String[] data=fs.getData().get("plugins").split("\\: ");
 				if (data.length >= 2) {
 					ArrayList<String> plugins=new ArrayList<>(Arrays.<String>asList(data[1].split("\\; ")));
 					if (pref.getBoolean("sortPluginNames", false))
 						Collections.sort(plugins);
-					CompatArrayAdapter.addAll(adap3, plugins);
+					CompatArrayAdapter.addAll(pluginNames, plugins);
 				}
 			}
 			setTitle(title);
@@ -225,10 +225,10 @@ public class ServerInfoActivity extends ActionBarActivity {
 				}
 				if (pref.getBoolean("sortPlayerNames", true))
 					Collections.sort(sort);
-				adap.clear();
-				CompatArrayAdapter.addAll(adap, sort);
+				player.clear();
+				CompatArrayAdapter.addAll(player, sort);
 			} else {
-				adap.clear();
+				player.clear();
 			}
 
 			if (pref.getBoolean("colorFormattedText", false)) {
@@ -249,17 +249,17 @@ public class ServerInfoActivity extends ActionBarActivity {
 				serverIconObj = new ColorDrawable(Color.TRANSPARENT);
 			}
 
-			adap2.clear();
+			infos.clear();
 			Map<String,String> data=new OrderTrustedMap<>();
 			data.put(getResources().getString(R.string.pc_maxPlayers), rep.players.max + "");
 			data.put(getResources().getString(R.string.pc_nowPlayers), rep.players.online + "");
 			data.put(getResources().getString(R.string.pc_softwareVersion), rep.version.name);
 			data.put(getResources().getString(R.string.pc_protocolVersion), rep.version.protocol + "");
-			CompatArrayAdapter.addAll(adap2, data.entrySet());
+			CompatArrayAdapter.addAll(infos, data.entrySet());
 
 			if (rep.modinfo != null) {
 				addModsTab();
-				CompatArrayAdapter.addAll(adap4, rep.modinfo.modList);
+				CompatArrayAdapter.addAll(modInfos, rep.modinfo.modList);
 				modLoaderTypeName = rep.modinfo.type;
 			}
 		} else if (resp instanceof Reply19) {
@@ -277,10 +277,10 @@ public class ServerInfoActivity extends ActionBarActivity {
 					TheApplication.instance.pcUserUUIDs.put(o.name, o.id);
 				}
 				Collections.sort(sort);
-				adap.clear();
-				CompatArrayAdapter.addAll(adap, sort);
+				player.clear();
+				CompatArrayAdapter.addAll(player, sort);
 			} else {
-				adap.clear();
+				player.clear();
 			}
 
 			if (pref.getBoolean("colorFormattedText", false)) {
@@ -301,17 +301,17 @@ public class ServerInfoActivity extends ActionBarActivity {
 				serverIconObj = new ColorDrawable(Color.TRANSPARENT);
 			}
 
-			adap2.clear();
+			infos.clear();
 			Map<String,String> data=new OrderTrustedMap<>();
 			data.put(getResources().getString(R.string.pc_maxPlayers), rep.players.max + "");
 			data.put(getResources().getString(R.string.pc_nowPlayers), rep.players.online + "");
 			data.put(getResources().getString(R.string.pc_softwareVersion), rep.version.name);
 			data.put(getResources().getString(R.string.pc_protocolVersion), rep.version.protocol + "");
-			CompatArrayAdapter.addAll(adap2, data.entrySet());
+			CompatArrayAdapter.addAll(infos, data.entrySet());
 
 			if (rep.modinfo != null) {
 				addModsTab();
-				CompatArrayAdapter.addAll(adap4, rep.modinfo.modList);
+				CompatArrayAdapter.addAll(modInfos, rep.modinfo.modList);
 				modLoaderTypeName = rep.modinfo.type;
 			}
 		} else if (resp instanceof SprPair) {
@@ -416,7 +416,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 
 	public void setPlayersView(ListView lv) {
 		players = lv;
-		lv.setAdapter(adap);
+		lv.setAdapter(player);
 	}
 	public void setDataView(View lv) {
 		data = (ListView)lv.findViewById(R.id.data);
@@ -426,15 +426,15 @@ public class ServerInfoActivity extends ActionBarActivity {
 			serverIcon.setImageDrawable(serverIconObj);
 			serverName.setText(serverNameStr);
 		}
-		data.setAdapter(adap2);
+		data.setAdapter(infos);
 	}
 	public void setPluginsView(ListView lv) {
 		plugins = lv;
-		lv.setAdapter(adap3);
+		lv.setAdapter(pluginNames);
 	}
 	public void setModsListView(ListView lv) {
 		mods = lv;
-		lv.setAdapter(adap4);
+		lv.setAdapter(modInfos);
 	}
 	public void setModLoaderNameView(TextView lv) {
 		modLoader = lv;
