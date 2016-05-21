@@ -3,7 +3,8 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_height="match_parent"
 	android:layout_width="match_parent"
-	android:orientation="vertical">
+	android:orientation="vertical"
+	android:id="@+id/draggingDecor">
 
 	<com.nao20010128nao.Wisecraft.misc.DraggingView
 		android:layout_width="fill_parent"

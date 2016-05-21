@@ -32,7 +32,7 @@ public class ServerListActivityBase3 extends AppCompatListActivity
 					getSupportActionBar().setElevation(0);
 					LinearLayout ll=(LinearLayout)getLayoutInflater().inflate(R.layout.server_list_dragging,null);
 					DraggingView dv=(DraggingView)ll.findViewById(R.id.content);
-					FrameLayout menu=(FrameLayout)getLayoutInflater().inflate(R.layout.content_scrolling,dv);
+					ViewGroup menu=(ViewGroup)getLayoutInflater().inflate(R.layout.linear_layout_content,null);dv.addView(menu);
 					getLayoutInflater().inflate(R.layout.server_list_dragging_title,dv);
 					dv.setMoveableViewOffset(0);
 					dv.setUnmoveableViewOffset(1);
@@ -46,7 +46,7 @@ public class ServerListActivityBase3 extends AppCompatListActivity
 					LinearLayout ll=(LinearLayout)getLayoutInflater().inflate(R.layout.server_list_dragging,null);
 					DraggingView dv=(DraggingView)ll.findViewById(R.id.content);
 					getLayoutInflater().inflate(R.layout.server_list_dragging_title,dv);
-					FrameLayout menu=(FrameLayout)getLayoutInflater().inflate(R.layout.content_scrolling,dv);
+					ViewGroup menu=(ViewGroup)getLayoutInflater().inflate(R.layout.linear_layout_content,null);dv.addView(menu);
 					dv.setUnmoveableViewOffset(0);
 					dv.setMoveableViewOffset(1);
 					getLayoutInflater().inflate(R.layout.server_list_content_nodrawer,ll);
