@@ -11,7 +11,7 @@ import com.nao20010128nao.Wisecraft.ServerListActivity;
 import com.nao20010128nao.Wisecraft.misc.compat.AppCompatListActivity;
 
 //Server Sort Part
-public class ServerListActivityBase2 extends AppCompatListActivity
+public class ServerListActivityBase2 extends ServerListActivityBase3
 {
 	SharedPreferences pref;
 
