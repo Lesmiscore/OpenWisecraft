@@ -165,7 +165,7 @@ public class DraggingView extends LinearLayoutCompat{
 		@Override
 		public boolean tryCaptureView(View p1, int p2) {
 			// TODO: Implement this method
-			return p1!=getChildAt(ofs);
+			return p1==getChildAt(tofs);
 		}
 	}
 }

@@ -49,7 +49,7 @@ public class ServerListActivityBase3 extends AppCompatListActivity
 					ViewGroup menu=(ViewGroup)getLayoutInflater().inflate(R.layout.linear_layout_content,null);dv.addView(menu);
 					dv.setUnmoveableViewOffset(0);
 					dv.setMoveableViewOffset(1);
-					getLayoutInflater().inflate(R.layout.server_list_content_nodrawer,ll);
+					ll.addView(getLayoutInflater().inflate(R.layout.server_list_content_nodrawer,null),0);
 					menu.setId(MENU_VIEW_ID);
 					setContentView(ll);
 				}
