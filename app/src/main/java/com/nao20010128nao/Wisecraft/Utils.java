@@ -14,6 +14,9 @@ import java.lang.reflect.Array;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
+import android.graphics.Color;
 
 public class Utils {
 	public static String deleteDecorations(String decorated) {
@@ -36,7 +39,10 @@ public class Utils {
 			mfcp.loadFlags(s, (byte)0);
 			return mfcp.build();
 		} catch (Throwable e) {
-			return deleteDecorations(s);
+			SpannableStringBuilder ssb=new SpannableStringBuilder();
+			ssb.append(deleteDecorations(s));
+			ssb.setSpan(new ForegroundColorSpan(Color.BLACK),0,ssb.length()-1,SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+			return ssb;
 		}
 	}
 	public static CharSequence parseMinecraftFormattingCodeForDark(String s){
@@ -45,7 +51,10 @@ public class Utils {
 			mfcp.loadFlags(s, (byte)15);
 			return mfcp.build();
 		} catch (Throwable e) {
-			return deleteDecorations(s);
+			SpannableStringBuilder ssb=new SpannableStringBuilder();
+			ssb.append(deleteDecorations(s));
+			ssb.setSpan(new ForegroundColorSpan(Color.WHITE),0,ssb.length()-1,SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+			return ssb;
 		}
 	}
 	public static boolean isNullString(String s) {
