@@ -11,6 +11,8 @@ import com.nao20010128nao.ToolBox.HandledPreference;
 import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import android.util.*;
+import com.nao20010128nao.Wisecraft.misc.*;
 
 public class SettingsDelegate extends ContextWrapper
 {
@@ -154,7 +156,9 @@ public class SettingsDelegate extends ContextWrapper
 	private void sH(String s,HandledPreference.OnClickListener l){
 		try {
 			act.getClass().getMethod("sH", String.class, HandledPreference.OnClickListener.class).invoke(act, s, l);
-		} catch (IllegalArgumentException e) {} catch (InvocationTargetException e) {} catch (NoSuchMethodException e) {} catch (IllegalAccessException e) {}
+		} catch (Throwable e) {
+			DebugWriter.writeToE("SettingsActivity",e);
+		}
 	}
 	
 	

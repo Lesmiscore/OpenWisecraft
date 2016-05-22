@@ -5,11 +5,11 @@ import krsw.device.locker.AppCompatPreferenceActivity;
 
 public class CompatSHablePreferenceActivity extends AppCompatPreferenceActivity
 {
-	protected void sH(Preference pref, HandledPreference.OnClickListener handler) {
+	public void sH(Preference pref, HandledPreference.OnClickListener handler) {
 		if (!(pref instanceof HandledPreference))return;
 		((HandledPreference)pref).setOnClickListener(handler);
 	}
-	protected void sH(String pref, HandledPreference.OnClickListener handler) {
+	public void sH(String pref, HandledPreference.OnClickListener handler) {
 		sH(findPreference(pref), handler);
 	}
 }

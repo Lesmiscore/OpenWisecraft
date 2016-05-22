@@ -126,7 +126,8 @@ public class MinecraftFormattingCodeParser
 		SpannableStringBuilder ssb=new SpannableStringBuilder();
 		for(int i=0;i<escaped.length;i++){
 			ForegroundColorSpan fcs=new ForegroundColorSpan(TEXT_COLORS[flags[i]&0xF]);
-			ssb.append(escaped[i]+"",fcs,SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+			ssb.append(escaped[i]);
+			ssb.setSpan(fcs,ssb.length()-1,ssb.length(),SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
 			if(0!=(flags[i]&0b00010000)){
 				ssb.setSpan(new StyleSpan(Typeface.BOLD),ssb.length()-1,ssb.length(),SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
 			}
