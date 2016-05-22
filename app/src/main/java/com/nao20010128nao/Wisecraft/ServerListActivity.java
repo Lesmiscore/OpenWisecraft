@@ -9,7 +9,6 @@ import com.nao20010128nao.Wisecraft.provider.*;
 import java.util.*;
 
 import android.app.ActivityGroup;
-import android.app.Dialog;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.ConnectivityManager;
@@ -36,6 +35,7 @@ import com.nao20010128nao.Wisecraft.pingEngine.UnconnectedPing;
 import com.nao20010128nao.Wisecraft.proxy.ProxyActivity;
 import com.nao20010128nao.Wisecraft.rcon.RCONActivity;
 import com.nao20010128nao.Wisecraft.services.SlsUpdaterService;
+import com.nao20010128nao.Wisecraft.settings.SettingsDelegate;
 import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -43,8 +43,6 @@ import java.net.ServerSocket;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
-import com.nao20010128nao.Wisecraft.settings.compat.SettingsActivity;
-import com.nao20010128nao.Wisecraft.settings.SettingsDelegate;
 
 abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
@@ -211,6 +209,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 			spp = instance.get().spp;
 			updater = instance.get().updater;
 			clicked = instance.get().clicked;
+			instance.get().statLayout=statLayout;
+			statLayout.setStatuses(instance.get().statLayout.getStatuses());
 			usesOldInstance = true;
 
 			sl.attachNewActivity(this);
@@ -721,10 +721,10 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 			((TextView)layout.findViewById(R.id.serverAddress)).setText(s.ip + ":" + s.port);
 			((ExtendedImageView)layout.findViewById(R.id.statColor)).setColor(sla.getResources().getColor(R.color.stat_pending));
 			if (s instanceof ServerStatus) {
-				sla.new PingHandlerImpl().onPingArrives((ServerStatus)s);
+				new PingHandlerImpl().onPingArrives((ServerStatus)s);
 				sla.statLayout.setStatusAt(position,2);
 			} else {
-				sla.spp.putInQueue(s, sla.new PingHandlerImpl(false, -1, true));
+				sla.spp.putInQueue(s, new PingHandlerImpl(false, -1, true));
 				sla.statLayout.setStatusAt(position,1);
 			}
 			cached.set(position, layout);
@@ -751,7 +751,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 				bnd.putInt("statListOffset", ofs);
 				sla.startActivityForResult(new Intent(sla, ServerInfoActivity.class).putExtra("statListOffset", ofs).putExtra("object", bnd), 0);
 			} else {
-				sla.updater.putInQueue(s, sla.new PingHandlerImpl(true, 0, true));
+				sla.updater.putInQueue(s, new PingHandlerImpl(true, 0, true));
 				((TextView)getViewQuick(sla.clicked).findViewById(R.id.pingMillis)).setText(R.string.working);
 				((ExtendedImageView)getViewQuick(sla.clicked).findViewById(R.id.statColor)).setColor(sla.getResources().getColor(R.color.stat_pending));
 				((TextView)getViewQuick(sla.clicked).findViewById(R.id.serverName)).setText(R.string.working);
@@ -791,7 +791,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 						executes.add(1, new Runnable(){
 								public void run() {
 									if (sla.pinging.get(getItem(p3)))return;
-									sla.updater.putInQueue(getItem(p3), sla.new PingHandlerImpl(true, -1));
+									sla.updater.putInQueue(getItem(p3), new PingHandlerImpl(true, -1));
 									((TextView)getViewQuick(p3).findViewById(R.id.pingMillis)).setText(R.string.working);
 									((ExtendedImageView)getViewQuick(p3).findViewById(R.id.statColor)).setColor(sla.getResources().getColor(R.color.stat_pending));
 									((TextView)getViewQuick(p3).findViewById(R.id.serverName)).setText(R.string.working);
@@ -1006,7 +1006,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 		}
 	}
 
-	class PingHandlerImpl implements ServerPingProvider.PingHandler {
+	static class PingHandlerImpl implements ServerPingProvider.PingHandler {
 		boolean closeDialog;
 		int statTabOfs;
 		Bundle obj;
@@ -1022,32 +1022,32 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 		public PingHandlerImpl(boolean cd, int os, boolean updSrl, Bundle receive) {
 			closeDialog = cd;
 			statTabOfs = os;
-			if (updSrl)srl.setRefreshing(true);
+			if (updSrl)act().srl.setRefreshing(true);
 			obj = receive;
 		}
 		public void onPingFailed(final Server s) {
-			runOnUiThread(new Runnable(){
+			act().runOnUiThread(new Runnable(){
 					public void run() {
 						try {
-							int i_=list.indexOf(s);
+							int i_=act().list.indexOf(s);
 							if (i_ == -1) {
 								return;
 							}
-							((ExtendedImageView)sl.getViewQuick(i_).findViewById(R.id.statColor)).setColor(getResources().getColor(R.color.stat_error));
-							((TextView)sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(s.ip + ":" + s.port);
-							((TextView)sl.getViewQuick(i_).findViewById(R.id.pingMillis)).setText(R.string.notResponding);
-							((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText("-/-");
-							((TextView)sl.getViewQuick(i_).findViewById(R.id.serverAddress)).setText(s.ip + ":" + s.port);
+							((ExtendedImageView)act().sl.getViewQuick(i_).findViewById(R.id.statColor)).setColor(act().getResources().getColor(R.color.stat_error));
+							((TextView)act().sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(s.ip + ":" + s.port);
+							((TextView)act().sl.getViewQuick(i_).findViewById(R.id.pingMillis)).setText(R.string.notResponding);
+							((TextView)act().sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText("-/-");
+							((TextView)act().sl.getViewQuick(i_).findViewById(R.id.serverAddress)).setText(s.ip + ":" + s.port);
 							Server sn=s.cloneAsServer();
-							list.set(i_, sn);
-							pinging.put(list.get(i_), false);
+							act().list.set(i_, sn);
+							act().pinging.put(act().list.get(i_), false);
 							if (closeDialog)
-								wd.hideWorkingDialog();
+								act().wd.hideWorkingDialog();
 							if (statTabOfs != -1)
-								Toast.makeText(ServerListActivityImpl.this, R.string.serverOffline, Toast.LENGTH_SHORT).show();
-							if (!pinging.containsValue(true))
-								srl.setRefreshing(false);
-							statLayout.setStatusAt(i_,0);
+								Toast.makeText(act(), R.string.serverOffline, Toast.LENGTH_SHORT).show();
+							if (!act().pinging.containsValue(true))
+								act().srl.setRefreshing(false);
+							act().statLayout.setStatusAt(i_,0);
 						} catch (final Throwable e) {
 							CollectorMain.reportError("ServerListActivity#onPingFailed",e);
 						}
@@ -1055,14 +1055,14 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 				});
 		}
 		public void onPingArrives(final ServerStatus s) {
-			runOnUiThread(new Runnable(){
+			act().runOnUiThread(new Runnable(){
 					public void run() {
 						try {
-							int i_=list.indexOf(s);
+							int i_=act().list.indexOf(s);
 							if (i_ == -1) {
 								return;
 							}
-							((ExtendedImageView)sl.getViewQuick(i_).findViewById(R.id.statColor)).setColor(getResources().getColor(R.color.stat_ok));
+							((ExtendedImageView)act().sl.getViewQuick(i_).findViewById(R.id.statColor)).setColor(act().getResources().getColor(R.color.stat_ok));
 							final String title;
 							if (s.response instanceof FullStat) {//PE
 								FullStat fs=(FullStat)s.response;
@@ -1074,7 +1074,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 								} else {
 									title = s.ip + ":" + s.port;
 								}
-								((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText(fs.getData().get("numplayers") + "/" + fs.getData().get("maxplayers"));
+								((TextView)act().sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText(fs.getData().get("numplayers") + "/" + fs.getData().get("maxplayers"));
 							} else if (s.response instanceof Reply19) {//PC 1.9~
 								Reply19 rep=(Reply19)s.response;
 								if (rep.description == null) {
@@ -1082,7 +1082,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 								} else {
 									title = rep.description.text;
 								}
-								((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText(rep.players.online + "/" + rep.players.max);
+								((TextView)act().sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText(rep.players.online + "/" + rep.players.max);
 							} else if (s.response instanceof Reply) {//PC
 								Reply rep=(Reply)s.response;
 								if (rep.description == null) {
@@ -1090,13 +1090,13 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 								} else {
 									title = rep.description;
 								}
-								((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText(rep.players.online + "/" + rep.players.max);
+								((TextView)act().sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText(rep.players.online + "/" + rep.players.max);
 							} else if (s.response instanceof SprPair) {//PE?
 								SprPair sp=((SprPair)s.response);
 								if (sp.getB() instanceof UnconnectedPing.UnconnectedPingResult) {
 									UnconnectedPing.UnconnectedPingResult res=(UnconnectedPing.UnconnectedPingResult)sp.getB();
 									title = res.getServerName();
-									((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText(res.getPlayersCount() + "/" + res.getMaxPlayers());
+									((TextView)act().sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText(res.getPlayersCount() + "/" + res.getMaxPlayers());
 								} else if (sp.getA() instanceof FullStat) {
 									FullStat fs=(FullStat)sp.getA();
 									Map<String,String> m=fs.getData();
@@ -1107,49 +1107,49 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 									} else {
 										title = s.ip + ":" + s.port;
 									}
-									((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText(fs.getData().get("numplayers") + "/" + fs.getData().get("maxplayers"));
+									((TextView)act().sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText(fs.getData().get("numplayers") + "/" + fs.getData().get("maxplayers"));
 								} else {
 									title = s.ip + ":" + s.port;
-									((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText("-/-");
+									((TextView)act().sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText("-/-");
 								}
 							} else if (s.response instanceof UnconnectedPing.UnconnectedPingResult) {//PE
 								UnconnectedPing.UnconnectedPingResult res=(UnconnectedPing.UnconnectedPingResult)s.response;
 								title = res.getServerName();
-								((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText(res.getPlayersCount() + "/" + res.getMaxPlayers());
+								((TextView)act().sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText(res.getPlayersCount() + "/" + res.getMaxPlayers());
 							} else {//Unreachable
 								title = s.ip + ":" + s.port;
-								((TextView)sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText("-/-");
+								((TextView)act().sl.getViewQuick(i_).findViewById(R.id.serverPlayers)).setText("-/-");
 							}
-							if (pref.getBoolean("colorFormattedText", false)) {
-								if (pref.getBoolean("darkBackgroundForServerName", false)) {
-									((TextView)sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(parseMinecraftFormattingCodeForDark(title));
+							if (act().pref.getBoolean("colorFormattedText", false)) {
+								if (act().pref.getBoolean("darkBackgroundForServerName", false)) {
+									((TextView)act().sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(parseMinecraftFormattingCodeForDark(title));
 								} else {
-									((TextView)sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(parseMinecraftFormattingCode(title));
+									((TextView)act().sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(parseMinecraftFormattingCode(title));
 								}
 							} else {
-								((TextView)sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(deleteDecorations(title));
+								((TextView)act().sl.getViewQuick(i_).findViewById(R.id.serverName)).setText(deleteDecorations(title));
 							}
-							((TextView)sl.getViewQuick(i_).findViewById(R.id.pingMillis)).setText(s.ping + " ms");
-							((TextView)sl.getViewQuick(i_).findViewById(R.id.serverAddress)).setText(s.ip + ":" + s.port);
-							list.set(i_, s);
-							pinging.put(list.get(i_), false);
+							((TextView)act().sl.getViewQuick(i_).findViewById(R.id.pingMillis)).setText(s.ping + " ms");
+							((TextView)act().sl.getViewQuick(i_).findViewById(R.id.serverAddress)).setText(s.ip + ":" + s.port);
+							act().list.set(i_, s);
+							act().pinging.put(act().list.get(i_), false);
 							if (statTabOfs != -1) {
 								ServerInfoActivity.stat.add(s);
 								int ofs=ServerInfoActivity.stat.lastIndexOf(s);
-								Intent caller=new Intent(ServerListActivityImpl.this, ServerInfoActivity.class).putExtra("offset", statTabOfs).putExtra("statListOffset", ofs);
+								Intent caller=new Intent(act(), ServerInfoActivity.class).putExtra("offset", statTabOfs).putExtra("statListOffset", ofs);
 								if (obj != null) {
 									caller.putExtra("object", obj);
 								}
-								startActivityForResult(caller, 0);
+								act().startActivityForResult(caller, 0);
 							}
 							if (closeDialog) {
-								wd.hideWorkingDialog();
+								act().wd.hideWorkingDialog();
 							}
 
-							if (!pinging.containsValue(true)) {
-								srl.setRefreshing(false);
+							if (!act().pinging.containsValue(true)) {
+								act().srl.setRefreshing(false);
 							}
-							statLayout.setStatusAt(i_,2);
+							act().statLayout.setStatusAt(i_,2);
 						} catch (final Throwable e) {
 							DebugWriter.writeToE("ServerListActivity", e);
 							CollectorMain.reportError("ServerListActivity#onPingArrives",e);
@@ -1157,6 +1157,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 						}
 					}
 				});
+		}
+		private ServerListActivityImpl act(){
+			return ServerListActivityImpl.instance.get();
 		}
 	}
 	class MenuExecClickListener implements View.OnClickListener {
