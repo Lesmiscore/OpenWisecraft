@@ -4,4 +4,6 @@
 	<dimen name="server_finder_finding_height">64dp</dimen>
 	
 	<dimen name="sysui_height">25dp</dimen>
+	
+	<dimen name="drawer_width">250dp</dimen>
 </resources>
