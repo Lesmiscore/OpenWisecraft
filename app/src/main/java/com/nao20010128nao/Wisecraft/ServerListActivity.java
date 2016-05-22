@@ -49,7 +49,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 
 	static final File mcpeServerList=new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt");
 
-	final List<String> grandMenu=new ArrayList<>();
+	final List<String> appMenu=new ArrayList<>();
 	ServerPingProvider spp,updater;
 	Gson gson=new Gson();
 	SharedPreferences pref;
@@ -81,16 +81,16 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 		super.onCreate(savedInstanceState);
 		getLayoutInflater().inflate(R.layout.hacks, null);//空インフレート
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
-		grandMenu.add(getResources().getString(R.string.add));//0
-		grandMenu.add(getResources().getString(R.string.addFromMCPE));//1
-		grandMenu.add(getResources().getString(R.string.update_all));//2
-		grandMenu.add(getResources().getString(R.string.export));//3
-		grandMenu.add(getResources().getString(R.string.imporT));//4
-		grandMenu.add(getResources().getString(R.string.sort));//5
-		grandMenu.add(getResources().getString(R.string.serverFinder));//6
-		grandMenu.add(getResources().getString(R.string.addServerFromServerListSite));//7
-		grandMenu.add(getResources().getString(R.string.settings));//8
-		grandMenu.add(getResources().getString(R.string.exit));//9
+		appMenu.add(getResources().getString(R.string.add));//0
+		appMenu.add(getResources().getString(R.string.addFromMCPE));//1
+		appMenu.add(getResources().getString(R.string.update_all));//2
+		appMenu.add(getResources().getString(R.string.export));//3
+		appMenu.add(getResources().getString(R.string.imporT));//4
+		appMenu.add(getResources().getString(R.string.sort));//5
+		appMenu.add(getResources().getString(R.string.serverFinder));//6
+		appMenu.add(getResources().getString(R.string.addServerFromServerListSite));//7
+		appMenu.add(getResources().getString(R.string.settings));//8
+		appMenu.add(getResources().getString(R.string.exit));//9
 
 		switch (pref.getInt("main_style", 0)) {
 			case 0:
@@ -99,20 +99,20 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 			case 1:
 				setContentView(R.layout.server_list_content);
 				LinearLayout ll=(LinearLayout)findViewById(R.id.app_menu);
-				for (String s:grandMenu) {
-					if (grandMenu.indexOf(s) == 5 & !pref.getBoolean("feature_bott", true)) {
+				for (String s:appMenu) {
+					if (appMenu.indexOf(s) == 5 & !pref.getBoolean("feature_bott", true)) {
 						continue;
 					}
-					if (grandMenu.indexOf(s) == 6 & !pref.getBoolean("feature_serverFinder", false)) {
+					if (appMenu.indexOf(s) == 6 & !pref.getBoolean("feature_serverFinder", false)) {
 						continue;
 					}
-					if (grandMenu.indexOf(s) == 7 & !pref.getBoolean("feature_asfsls", false)) {
+					if (appMenu.indexOf(s) == 7 & !pref.getBoolean("feature_asfsls", false)) {
 						continue;
 					}
 					Button btn=(Button)getLayoutInflater().inflate(R.layout.server_list_bar_button, null).findViewById(R.id.menu_btn);
 					//((ViewGroup)btn.getParent()).removeView(btn);
 					btn.setText(s);
-					btn.setOnClickListener(new MenuExecClickListener(grandMenu.indexOf(s)));
+					btn.setOnClickListener(new MenuExecClickListener(appMenu.indexOf(s)));
 					ll.addView(btn);
 				}
 				dl = (DrawerLayout)findViewById(R.id.drawer);
@@ -149,13 +149,13 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 			case 2:
 				setContentView(R.layout.server_list_content_listview);
 				LinearLayout lv=(LinearLayout)findViewById(R.id.app_menu);
-				ArrayList<String> editing=new ArrayList<>(grandMenu);
+				ArrayList<String> editing=new ArrayList<>(appMenu);
 				if (!pref.getBoolean("feature_bott", true))
-					editing.remove(grandMenu.get(5));
+					editing.remove(appMenu.get(5));
 				if (!pref.getBoolean("feature_serverFinder", false))
-					editing.remove(grandMenu.get(6));
+					editing.remove(appMenu.get(6));
 				if (!pref.getBoolean("feature_asfsls", false))
-					editing.remove(grandMenu.get(7));
+					editing.remove(appMenu.get(7));
 				lv.addView(((ActivityGroup)getParent()).getLocalActivityManager().startActivity("menu", new Intent(this, MenuPreferenceActivity.class).putExtra("values", editing)).getDecorView());
 
 				dl = (DrawerLayout)findViewById(R.id.drawer);
@@ -344,14 +344,14 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO: Implement this method
 		if (pref.getInt("main_style", 0) == 0) {
-			for (String s:grandMenu) {
-				if (grandMenu.indexOf(s) == 5 & !pref.getBoolean("feature_bott", true))
+			for (String s:appMenu) {
+				if (appMenu.indexOf(s) == 5 & !pref.getBoolean("feature_bott", true))
 					continue;
-				if (grandMenu.indexOf(s) == 6 & !pref.getBoolean("feature_serverFinder", false))
+				if (appMenu.indexOf(s) == 6 & !pref.getBoolean("feature_serverFinder", false))
 					continue;
-				if (grandMenu.indexOf(s) == 7 & !pref.getBoolean("feature_asfsls", false))
+				if (appMenu.indexOf(s) == 7 & !pref.getBoolean("feature_asfsls", false))
 					continue;
-				menu.add(Menu.NONE, grandMenu.indexOf(s), grandMenu.indexOf(s), s);
+				menu.add(Menu.NONE, appMenu.indexOf(s), appMenu.indexOf(s), s);
 			}
 		}
 		return true;
@@ -1252,7 +1252,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 			public void onClick(String var1, String var2, String var3) {
 				// TODO: Implement this method
 				ServerListActivityImpl ins=ServerListActivityImpl.instance.get();
-				ins.execOption(ins.grandMenu.indexOf(var2));
+				ins.execOption(ins.appMenu.indexOf(var2));
 			}
 		}
 	}
