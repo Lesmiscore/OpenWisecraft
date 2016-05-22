@@ -209,8 +209,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 			spp = instance.get().spp;
 			updater = instance.get().updater;
 			clicked = instance.get().clicked;
-			instance.get().statLayout=statLayout;
 			statLayout.setStatuses(instance.get().statLayout.getStatuses());
+			instance.get().statLayout=statLayout;
 			usesOldInstance = true;
 
 			sl.attachNewActivity(this);
