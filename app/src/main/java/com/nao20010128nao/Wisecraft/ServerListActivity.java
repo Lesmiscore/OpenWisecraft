@@ -47,7 +47,7 @@ import static com.nao20010128nao.Wisecraft.Utils.*;
 abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
 
-	static File mcpeServerList=new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt");
+	static final File mcpeServerList=new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt");
 
 	final List<String> grandMenu=new ArrayList<>();
 	ServerPingProvider spp,updater;
