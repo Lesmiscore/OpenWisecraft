@@ -13,6 +13,7 @@ import com.nao20010128nao.Wisecraft.R;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.LinearLayout;
+import android.widget.SlidingDrawer;
 
 //ViewDragHelper support
 public class ServerListActivityBase3 extends AppCompatListActivity
@@ -30,28 +31,12 @@ public class ServerListActivityBase3 extends AppCompatListActivity
 			case 3:
 				{
 					getSupportActionBar().setElevation(0);
-					LinearLayout ll=(LinearLayout)getLayoutInflater().inflate(R.layout.server_list_dragging,null);
-					DraggingView dv=(DraggingView)ll.findViewById(R.id.content);
-					ViewGroup menu=(ViewGroup)getLayoutInflater().inflate(R.layout.linear_layout_content,null);dv.addView(menu);
-					getLayoutInflater().inflate(R.layout.server_list_dragging_title,dv);
-					dv.setMoveableViewOffset(0);
-					dv.setUnmoveableViewOffset(1);
-					getLayoutInflater().inflate(R.layout.server_list_content_nodrawer,ll);
-					menu.setId(MENU_VIEW_ID);
-					setContentView(ll);
+					setContentView(R.layout.server_list_sliding_top);
 				}
 				break;
 			case 4:
 				{
-					LinearLayout ll=(LinearLayout)getLayoutInflater().inflate(R.layout.server_list_dragging,null);
-					DraggingView dv=(DraggingView)ll.findViewById(R.id.content);
-					getLayoutInflater().inflate(R.layout.server_list_dragging_title,dv);
-					ViewGroup menu=(ViewGroup)getLayoutInflater().inflate(R.layout.linear_layout_content,null);dv.addView(menu);
-					dv.setUnmoveableViewOffset(0);
-					dv.setMoveableViewOffset(1);
-					ll.addView(getLayoutInflater().inflate(R.layout.server_list_content_nodrawer,null),0);
-					menu.setId(MENU_VIEW_ID);
-					setContentView(ll);
+					setContentView(R.layout.server_list_sliding_bottom);
 				}
 				break;
 		}
