@@ -191,25 +191,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 					dl.addView(decorChild, 0);
 				}
 				break;
-			case 3:case 4://setContentView is not needed. ServerListActivityBase3 did it already.
-				LinearLayout ll3=(LinearLayout)findViewById(R.id.app_menu);
-				for (String s:grandMenu) {
-					if (grandMenu.indexOf(s) == 5 & !pref.getBoolean("feature_bott", true)) {
-						continue;
-					}
-					if (grandMenu.indexOf(s) == 6 & !pref.getBoolean("feature_serverFinder", false)) {
-						continue;
-					}
-					if (grandMenu.indexOf(s) == 7 & !pref.getBoolean("feature_asfsls", false)) {
-						continue;
-					}
-					Button btn=(Button)getLayoutInflater().inflate(R.layout.server_list_bar_button, null).findViewById(R.id.menu_btn);
-					//((ViewGroup)btn.getParent()).removeView(btn);
-					btn.setText(s);
-					btn.setOnClickListener(new MenuExecClickListener(grandMenu.indexOf(s)));
-					ll3.addView(btn);
-				}
-				break;
 		}
 		srl = (SwipeRefreshLayout)findViewById(R.id.swipelayout);
 		srl.setColorSchemeResources(R.color.upd_1, R.color.upd_2, R.color.upd_3, R.color.upd_4);
