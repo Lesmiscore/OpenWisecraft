@@ -1,11 +1,9 @@
 package com.nao20010128nao.Wisecraft.misc;
+import android.app.*;
+import android.util.*;
+import android.view.*;
 import java.io.*;
-
-import android.app.Activity;
-import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import java.util.Arrays;
+import java.util.*;
 
 public class HirarchyDumper extends Thread
 {

@@ -1,8 +1,8 @@
 package com.nao20010128nao.Wisecraft.misc.pref;
-import android.content.Context;
-import android.util.AttributeSet;
-import android.view.View;
-import android.widget.TextView;
+import android.content.*;
+import android.util.*;
+import android.view.*;
+import android.widget.*;
 
 public class EditTextPreference extends android.preference.EditTextPreference {
 	public EditTextPreference(Context context, AttributeSet attrs, int defStyleAttr) {

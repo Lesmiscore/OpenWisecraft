@@ -1,5 +1,5 @@
 package com.nao20010128nao.Wisecraft.misc;
-import java.util.Comparator;
+import java.util.*;
 
 public final class ServerSorter implements Comparator<Server>
 {

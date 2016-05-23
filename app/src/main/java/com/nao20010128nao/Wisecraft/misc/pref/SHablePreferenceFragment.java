@@ -1,8 +1,6 @@
 package com.nao20010128nao.Wisecraft.misc.pref;
-import android.support.v7.preference.PreferenceFragmentCompat;
-import android.support.v7.preference.Preference;
-import com.nao20010128nao.ToolBox.HandledPreference;
-import com.nao20010128nao.ToolBox.HandledPreferenceCompat;
+import android.support.v7.preference.*;
+import com.nao20010128nao.ToolBox.*;
 
 public abstract class SHablePreferenceFragment extends PreferenceFragmentCompat
 {

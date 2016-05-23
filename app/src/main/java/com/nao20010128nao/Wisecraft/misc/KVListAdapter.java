@@ -1,11 +1,9 @@
 package com.nao20010128nao.Wisecraft.misc;
+import android.content.*;
 import android.view.*;
-
-import android.content.Context;
-import android.widget.TextView;
-import com.nao20010128nao.Wisecraft.R;
-import java.util.ArrayList;
-import java.util.Map;
+import android.widget.*;
+import com.nao20010128nao.Wisecraft.*;
+import java.util.*;
 
 public class KVListAdapter<K,V> extends AppBaseArrayAdapter<Map.Entry<K,V>> {
 	public KVListAdapter(Context ctx) {

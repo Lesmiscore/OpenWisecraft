@@ -1,22 +1,19 @@
 package com.nao20010128nao.Wisecraft;
+import android.content.*;
+import android.content.pm.*;
+import android.graphics.*;
+import android.text.*;
+import android.text.style.*;
+import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+import com.nao20010128nao.Wisecraft.misc.compat.*;
+import com.nao20010128nao.Wisecraft.misc.rcon.*;
+import com.nao20010128nao.Wisecraft.rcon.*;
+import com.nao20010128nao.Wisecraft.struct.*;
 import java.io.*;
-
-import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import com.google.gson.Gson;
-import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
-import com.nao20010128nao.Wisecraft.misc.rcon.RCon;
-import com.nao20010128nao.Wisecraft.rcon.RConModified;
-import com.nao20010128nao.Wisecraft.struct.WCH_ServerInfo;
-import java.lang.reflect.Array;
-import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.List;
-import android.text.SpannableStringBuilder;
-import android.text.style.ForegroundColorSpan;
-import android.graphics.Color;
+import java.lang.reflect.*;
+import java.security.*;
+import java.util.*;
 
 public class Utils {
 	public static String deleteDecorations(String decorated) {

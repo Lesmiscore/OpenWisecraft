@@ -1,14 +1,10 @@
 package com.nao20010128nao.Wisecraft.misc.skin_face;
+import android.graphics.*;
+import android.util.*;
+import com.nao20010128nao.Wisecraft.misc.*;
+import java.io.*;
+import java.net.*;
 import java.util.*;
-
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Log;
-import com.nao20010128nao.Wisecraft.misc.DebugWriter;
-import com.nao20010128nao.Wisecraft.misc.KVP;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 
 public class ImageLoader
 {

@@ -1,19 +1,15 @@
 package com.nao20010128nao.Wisecraft;
+import android.content.*;
+import android.os.*;
+import android.preference.*;
+import android.util.*;
+import android.view.*;
+import android.widget.*;
+import com.nao20010128nao.McServerList.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
+import java.net.*;
 import java.util.*;
-
-import android.content.Context;
-import android.content.DialogInterface;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import com.nao20010128nao.McServerList.ServerAddressFetcher;
-import java.net.URL;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import uk.co.chrisjenx.calligraphy.*;
 
 public class ServerGetActivity extends CompatWebViewActivity {
 	public static List<String> addForServerList;

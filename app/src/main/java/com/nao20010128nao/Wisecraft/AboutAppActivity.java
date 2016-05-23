@@ -1,17 +1,14 @@
 package com.nao20010128nao.Wisecraft;
+import android.content.*;
+import android.graphics.*;
+import android.net.*;
+import android.os.*;
+import android.preference.*;
+import android.support.design.widget.*;
+import android.util.*;
+import android.view.*;
 import android.widget.*;
-
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Rect;
-import android.graphics.Typeface;
-import android.net.Uri;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.design.widget.CoordinatorLayout;
-import android.util.AttributeSet;
-import android.view.View;
-import com.nao20010128nao.TESTAPP.ScrollingActivity;
+import com.nao20010128nao.TESTAPP.*;
 
 public class AboutAppActivity extends ScrollingActivity
 {

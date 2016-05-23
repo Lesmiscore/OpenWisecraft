@@ -1,12 +1,9 @@
 package com.nao20010128nao.Wisecraft.misc;
 import java.io.*;
+import java.security.*;
 import java.util.*;
-
-import java.security.SecureRandom;
-import javax.crypto.Cipher;
-import javax.crypto.CipherInputStream;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
+import javax.crypto.*;
+import javax.crypto.spec.*;
 
 public class EncryptedBinaryPref extends BinaryPrefImpl
 {

@@ -1,7 +1,6 @@
 package com.nao20010128nao.Wisecraft.misc.pref.ui;
-import android.preference.Preference;
-import android.preference.PreferenceActivity;
-import com.nao20010128nao.ToolBox.HandledPreference;
+import android.preference.*;
+import com.nao20010128nao.ToolBox.*;
 
 public abstract class SHablePreferenceActivity extends PreferenceActivity {
 	public void sH(Preference pref, HandledPreference.OnClickListener handler) {

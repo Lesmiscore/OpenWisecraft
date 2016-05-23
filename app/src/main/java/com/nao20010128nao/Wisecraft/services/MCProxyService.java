@@ -1,16 +1,14 @@
 package com.nao20010128nao.Wisecraft.services;
+import android.app.*;
+import android.content.*;
+import android.os.*;
+import android.support.v4.app.*;
+import com.nao20010128nao.MCProxy.*;
+import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.proxy.*;
 import java.io.*;
 import java.net.*;
-
-import android.app.PendingIntent;
-import android.app.Service;
-import android.content.Intent;
-import android.os.IBinder;
-import android.support.v4.app.NotificationCompat;
-import com.nao20010128nao.MCProxy.MultipleUdpConnectionProxy;
-import com.nao20010128nao.Wisecraft.R;
-import com.nao20010128nao.Wisecraft.proxy.ProxyActivity;
-import java.security.SecureRandom;
+import java.security.*;
 
 public class MCProxyService extends Service
 {

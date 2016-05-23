@@ -1,6 +1,5 @@
 package com.nao20010128nao.Wisecraft.provider;
-import com.nao20010128nao.Wisecraft.misc.Server;
-import com.nao20010128nao.Wisecraft.misc.ServerStatus;
+import com.nao20010128nao.Wisecraft.misc.*;
 
 public interface ServerPingProvider {
 	public void putInQueue(Server server, PingHandler handler);

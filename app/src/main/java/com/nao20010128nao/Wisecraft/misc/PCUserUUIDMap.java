@@ -1,5 +1,5 @@
 package com.nao20010128nao.Wisecraft.misc;
-import java.util.HashMap;
+import java.util.*;
 
 public class PCUserUUIDMap extends HashMap<String,String>
 {

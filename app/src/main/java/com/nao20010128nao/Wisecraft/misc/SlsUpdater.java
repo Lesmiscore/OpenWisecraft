@@ -1,21 +1,21 @@
 package com.nao20010128nao.Wisecraft.misc;
 import android.content.*;
+import android.net.*;
+import android.preference.*;
+import android.util.*;
+import com.nao20010128nao.McServerList.*;
+import com.nao20010128nao.McServerList.sites.*;
+import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.services.*;
+import dalvik.system.*;
 import java.io.*;
 import java.util.*;
+import org.apache.commons.codec.binary.*;
+import org.apache.http.client.methods.*;
+import org.apache.http.impl.client.*;
+import org.apache.http.util.*;
 
-import android.net.ConnectivityManager;
-import android.preference.PreferenceManager;
-import android.util.Log;
-import com.nao20010128nao.McServerList.ServerAddressFetcher;
-import com.nao20010128nao.McServerList.sites.ServerListSite;
-import com.nao20010128nao.Wisecraft.ServerGetActivity;
-import com.nao20010128nao.Wisecraft.Utils;
-import com.nao20010128nao.Wisecraft.services.SlsUpdaterService;
-import dalvik.system.DexClassLoader;
 import org.apache.commons.codec.binary.Base64;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 
 public class SlsUpdater extends Thread
 {

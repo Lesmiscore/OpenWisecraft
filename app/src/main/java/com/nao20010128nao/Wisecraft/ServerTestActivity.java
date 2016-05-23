@@ -1,27 +1,21 @@
 package com.nao20010128nao.Wisecraft;
+import android.app.*;
 import android.content.*;
+import android.graphics.*;
+import android.graphics.drawable.*;
+import android.os.*;
+import android.preference.*;
+import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+import com.nao20010128nao.Wisecraft.misc.compat.*;
+import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
+import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
+import com.nao20010128nao.Wisecraft.pingEngine.*;
+import com.nao20010128nao.Wisecraft.provider.*;
+import java.lang.ref.*;
 import java.util.*;
-
-import android.app.ProgressDialog;
-import android.graphics.Shader;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.view.View;
-import android.view.ViewGroup;
-import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
-import com.nao20010128nao.Wisecraft.misc.compat.AppCompatListActivity;
-import com.nao20010128nao.Wisecraft.misc.pinger.pc.Reply;
-import com.nao20010128nao.Wisecraft.misc.pinger.pc.Reply19;
-import com.nao20010128nao.Wisecraft.misc.pinger.pe.FullStat;
-import com.nao20010128nao.Wisecraft.pingEngine.UnconnectedPing;
-import com.nao20010128nao.Wisecraft.provider.NormalServerPingProvider;
-import com.nao20010128nao.Wisecraft.provider.ServerPingProvider;
-import java.lang.ref.WeakReference;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import uk.co.chrisjenx.calligraphy.*;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
 

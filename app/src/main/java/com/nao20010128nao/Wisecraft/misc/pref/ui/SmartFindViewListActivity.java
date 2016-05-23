@@ -1,6 +1,6 @@
 package com.nao20010128nao.Wisecraft.misc.pref.ui;
-import android.app.ListActivity;
-import android.view.View;
+import android.app.*;
+import android.view.*;
 
 public abstract class SmartFindViewListActivity extends ListActivity {
 

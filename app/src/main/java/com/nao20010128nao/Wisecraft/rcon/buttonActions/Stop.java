@@ -1,10 +1,11 @@
 package com.nao20010128nao.Wisecraft.rcon.buttonActions;
-import android.content.DialogInterface;
-import android.view.View;
-import com.nao20010128nao.Wisecraft.Constant;
+import android.content.*;
+import android.view.*;
+import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.misc.compat.*;
+import com.nao20010128nao.Wisecraft.rcon.*;
+
 import com.nao20010128nao.Wisecraft.R;
-import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
-import com.nao20010128nao.Wisecraft.rcon.RCONActivity;
 
 public class Stop extends BaseAction {
 	public Stop(RCONActivity act) {

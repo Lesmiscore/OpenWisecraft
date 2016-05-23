@@ -1,8 +1,7 @@
 package com.nao20010128nao.Wisecraft.misc;
-import android.widget.ListAdapter;
-import android.database.DataSetObserver;
-import android.view.View;
-import android.view.ViewGroup;
+import android.database.*;
+import android.view.*;
+import android.widget.*;
 
 public class ListAdapterWrapper implements ListAdapter
 {

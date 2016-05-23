@@ -1,7 +1,6 @@
 package com.nao20010128nao.Wisecraft.provider;
-import com.nao20010128nao.Wisecraft.misc.Server;
-import java.util.ArrayList;
-import java.util.List;
+import com.nao20010128nao.Wisecraft.misc.*;
+import java.util.*;
 
 public class MultiServerPingProvider implements ServerPingProvider {
 	List<NormalServerPingProvider> objects=new ArrayList<>();

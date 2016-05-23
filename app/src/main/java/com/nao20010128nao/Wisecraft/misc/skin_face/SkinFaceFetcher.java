@@ -1,5 +1,5 @@
 package com.nao20010128nao.Wisecraft.misc.skin_face;
-import android.graphics.Bitmap;
+import android.graphics.*;
 
 public class SkinFaceFetcher
 {

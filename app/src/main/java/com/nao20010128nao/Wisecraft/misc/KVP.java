@@ -1,5 +1,5 @@
 package com.nao20010128nao.Wisecraft.misc;
-import java.util.Map;
+import java.util.*;
 public class KVP<K,V> implements Map.Entry<K,V> {
 	K k;
 	V v;

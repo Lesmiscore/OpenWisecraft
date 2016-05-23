@@ -1,14 +1,11 @@
 package com.nao20010128nao.Wisecraft.misc.pinger.pc;
 
+import android.util.*;
+import com.google.gson.*;
+import com.nao20010128nao.Wisecraft.misc.compat.*;
+import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import java.io.*;
-
-import android.util.Log;
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
-import com.nao20010128nao.Wisecraft.misc.pinger.PingHost;
-import com.nao20010128nao.Wisecraft.misc.pinger.Utils;
-import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
-import java.net.Socket;
+import java.net.*;
 
 public class PCQuery implements PingHost{
 	private Gson gson = new Gson();

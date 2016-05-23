@@ -1,32 +1,24 @@
 package com.nao20010128nao.Wisecraft.collector;
 import android.content.*;
+import android.content.pm.*;
+import android.os.*;
+import android.preference.*;
+import android.util.*;
+import com.google.gson.*;
+import com.google.gson.reflect.*;
+import com.nao20010128nao.OTC.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+import com.nao20010128nao.Wisecraft.misc.compat.*;
+import java.io.*;
+import java.security.*;
 import java.util.*;
+import org.apache.http.client.methods.*;
+import org.apache.http.impl.client.*;
+import org.apache.http.util.*;
 import org.eclipse.egit.github.core.*;
-
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.os.Build;
-import android.os.Environment;
-import android.preference.PreferenceManager;
-import android.util.Base64;
-import android.util.Log;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.nao20010128nao.OTC.OrderTrustedMap;
-import com.nao20010128nao.OTC.OrderTrustedSet;
-import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
-import java.io.File;
-import java.io.IOException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
-import org.eclipse.egit.github.core.client.GitHubClient;
-import org.eclipse.egit.github.core.service.ContentsService;
-import org.eclipse.egit.github.core.service.RepositoryService;
+import org.eclipse.egit.github.core.client.*;
+import org.eclipse.egit.github.core.service.*;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
 

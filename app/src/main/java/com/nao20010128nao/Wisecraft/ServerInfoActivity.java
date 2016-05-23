@@ -1,33 +1,29 @@
 package com.nao20010128nao.Wisecraft;
 
+import android.app.*;
 import android.content.*;
 import android.graphics.*;
 import android.graphics.drawable.*;
 import android.os.*;
+import android.preference.*;
+import android.support.v4.app.*;
+import android.support.v4.view.*;
+import android.support.v7.app.*;
+import android.util.*;
 import android.view.*;
 import android.widget.*;
+import com.google.gson.*;
+import com.nao20010128nao.OTC.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+import com.nao20010128nao.Wisecraft.misc.compat.*;
+import com.nao20010128nao.Wisecraft.misc.pinger.*;
+import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
+import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
 import com.nao20010128nao.Wisecraft.misc.skin_face.*;
+import com.nao20010128nao.Wisecraft.pingEngine.*;
+import java.lang.ref.*;
 import java.util.*;
-
-import android.app.ActivityManager;
-import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentTabHost;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.ActionBarActivity;
-import android.util.Base64;
-import android.util.Log;
-import com.google.gson.Gson;
-import com.nao20010128nao.OTC.OrderTrustedMap;
-import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
-import com.nao20010128nao.Wisecraft.misc.compat.CompatArrayAdapter;
-import com.nao20010128nao.Wisecraft.misc.pinger.ServerPingResult;
-import com.nao20010128nao.Wisecraft.misc.pinger.pc.Reply;
-import com.nao20010128nao.Wisecraft.misc.pinger.pc.Reply19;
-import com.nao20010128nao.Wisecraft.misc.pinger.pe.FullStat;
-import com.nao20010128nao.Wisecraft.pingEngine.UnconnectedPing;
-import java.lang.ref.WeakReference;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import uk.co.chrisjenx.calligraphy.*;
 
 import static com.nao20010128nao.Wisecraft.Utils.*;
 

@@ -1,6 +1,5 @@
 package com.nao20010128nao.Wisecraft.misc.view;
-import android.support.v7.widget.AppCompatCheckBox;
-import android.view.MotionEvent;
+import android.support.v7.widget.*;
 
 public class AnimatedCheckBox extends AppCompatCheckBox
 {

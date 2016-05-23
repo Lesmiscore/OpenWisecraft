@@ -1,11 +1,10 @@
 package com.nao20010128nao.Wisecraft.services;
-import android.app.Service;
-import android.content.Intent;
-import android.os.IBinder;
-import android.os.StrictMode;
-import android.util.Log;
-import com.nao20010128nao.Wisecraft.collector.CollectorMain;
-import com.nao20010128nao.Wisecraft.misc.DebugWriter;
+import android.app.*;
+import android.content.*;
+import android.os.*;
+import android.util.*;
+import com.nao20010128nao.Wisecraft.collector.*;
+import com.nao20010128nao.Wisecraft.misc.*;
 
 public class CollectorMainService extends Service
 {

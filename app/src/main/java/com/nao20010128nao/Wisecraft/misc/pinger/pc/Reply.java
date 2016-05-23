@@ -1,7 +1,7 @@
 package com.nao20010128nao.Wisecraft.misc.pinger.pc;
 
-import com.nao20010128nao.Wisecraft.misc.pinger.ServerPingResult;
-import java.util.List;
+import com.nao20010128nao.Wisecraft.misc.pinger.*;
+import java.util.*;
 
 /**
  * References: http://wiki.vg/Server_List_Ping

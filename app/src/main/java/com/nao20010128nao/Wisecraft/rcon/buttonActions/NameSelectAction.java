@@ -1,16 +1,15 @@
 package com.nao20010128nao.Wisecraft.rcon.buttonActions;
+import android.os.*;
+import android.view.*;
 import android.widget.*;
+import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.misc.*;
+import com.nao20010128nao.Wisecraft.misc.compat.*;
+import com.nao20010128nao.Wisecraft.misc.rcon.*;
+import com.nao20010128nao.Wisecraft.rcon.*;
+import java.io.*;
 
-import android.os.AsyncTask;
-import android.view.LayoutInflater;
-import android.view.View;
 import com.nao20010128nao.Wisecraft.R;
-import com.nao20010128nao.Wisecraft.misc.DebugWriter;
-import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
-import com.nao20010128nao.Wisecraft.misc.compat.CompatArrayAdapter;
-import com.nao20010128nao.Wisecraft.misc.rcon.AuthenticationException;
-import com.nao20010128nao.Wisecraft.rcon.RCONActivity;
-import java.io.IOException;
 
 public abstract class NameSelectAction extends BaseAction {
 	EditText name;

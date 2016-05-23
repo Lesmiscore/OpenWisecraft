@@ -1,7 +1,6 @@
 package com.nao20010128nao.Wisecraft.misc;
-import android.util.Log;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import android.util.*;
+import java.io.*;
 
 public class DebugWriter
 {

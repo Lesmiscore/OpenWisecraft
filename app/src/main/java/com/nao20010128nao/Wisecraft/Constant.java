@@ -1,7 +1,6 @@
 package com.nao20010128nao.Wisecraft;
+import android.content.*;
 import java.util.*;
-
-import android.content.DialogInterface;
 
 public class Constant {
 	public static final int ACTIVITY_RESULT_UPDATE=5;

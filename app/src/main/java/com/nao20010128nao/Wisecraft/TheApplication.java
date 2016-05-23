@@ -1,19 +1,15 @@
 package com.nao20010128nao.Wisecraft;
 import android.app.*;
+import android.content.*;
+import android.graphics.*;
+import android.preference.*;
+import android.view.*;
+import com.google.gson.*;
+import com.nao20010128nao.Wisecraft.misc.*;
+import com.nao20010128nao.Wisecraft.services.*;
+import java.lang.reflect.*;
 import java.util.*;
-
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Typeface;
-import android.preference.PreferenceManager;
-import android.view.LayoutInflater;
-import com.google.gson.Gson;
-import com.nao20010128nao.Wisecraft.misc.BinaryPrefImpl;
-import com.nao20010128nao.Wisecraft.misc.PCUserUUIDMap;
-import com.nao20010128nao.Wisecraft.services.CollectorMainService;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.*;
 
 public class TheApplication extends Application {
 	public static TheApplication instance;

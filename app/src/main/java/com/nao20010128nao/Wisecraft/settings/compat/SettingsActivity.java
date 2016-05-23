@@ -1,13 +1,14 @@
 package com.nao20010128nao.Wisecraft.settings.compat;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
+import android.content.*;
+import android.os.*;
+import android.preference.*;
+import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.misc.compat.*;
+import com.nao20010128nao.Wisecraft.settings.*;
+import uk.co.chrisjenx.calligraphy.*;
+
 import com.nao20010128nao.Wisecraft.R;
-import com.nao20010128nao.Wisecraft.misc.compat.CompatSHablePreferenceActivity;
-import com.nao20010128nao.Wisecraft.settings.SettingsDelegate;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class SettingsActivity extends CompatSHablePreferenceActivity {
 	SettingsDelegate delegate;

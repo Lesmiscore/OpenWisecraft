@@ -1,9 +1,9 @@
 package com.nao20010128nao.Wisecraft.misc.pref;
-import android.content.Context;
-import android.util.AttributeSet;
-import android.view.View;
-import android.widget.TextView;
-import com.nao20010128nao.ToolBox.HandledPreference;
+import android.content.*;
+import android.util.*;
+import android.view.*;
+import android.widget.*;
+import com.nao20010128nao.ToolBox.*;
 
 public class StartPref extends HandledPreference {
 	public static AttributeSet as;

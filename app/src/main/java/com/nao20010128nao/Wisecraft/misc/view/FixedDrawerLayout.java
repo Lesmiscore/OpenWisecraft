@@ -1,8 +1,8 @@
 package com.nao20010128nao.Wisecraft.misc.view;
 
-import android.content.Context;
-import android.support.v4.widget.DrawerLayout;
-import android.util.AttributeSet;
+import android.content.*;
+import android.support.v4.widget.*;
+import android.util.*;
 
 public class FixedDrawerLayout extends DrawerLayout {
 

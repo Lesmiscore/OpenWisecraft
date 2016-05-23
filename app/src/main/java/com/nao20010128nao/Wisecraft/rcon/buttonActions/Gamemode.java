@@ -1,12 +1,14 @@
 package com.nao20010128nao.Wisecraft.rcon.buttonActions;
 
-import android.content.DialogInterface;
-import android.util.Log;
+import android.content.*;
+import android.util.*;
+import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.misc.compat.*;
+import com.nao20010128nao.Wisecraft.misc.rcon.*;
+import com.nao20010128nao.Wisecraft.rcon.*;
+import java.io.*;
+
 import com.nao20010128nao.Wisecraft.R;
-import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
-import com.nao20010128nao.Wisecraft.misc.rcon.AuthenticationException;
-import com.nao20010128nao.Wisecraft.rcon.RCONActivity;
-import java.io.IOException;
 
 public class Gamemode extends NameSelectAction {
 	String player=null;

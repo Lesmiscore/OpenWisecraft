@@ -1,13 +1,12 @@
 package com.nao20010128nao.Wisecraft.misc;
+import android.content.*;
+import android.content.pm.*;
+import android.support.v4.app.*;
+import android.support.v4.content.*;
+import android.util.*;
+import com.nao20010128nao.Wisecraft.*;
+import java.security.*;
 import java.util.*;
-
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.PermissionChecker;
-import android.util.Log;
-import com.nao20010128nao.Wisecraft.Factories;
-import java.security.SecureRandom;
 
 //Permission Request Part
 public class ServerListActivityBase1 extends ServerListActivityBase2

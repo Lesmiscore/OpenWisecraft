@@ -1,13 +1,11 @@
 package com.nao20010128nao.Wisecraft.misc.rcon;
 
+import com.nao20010128nao.Wisecraft.misc.compat.*;
 import java.io.*;
-
-import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
-import java.net.Socket;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.security.SecureRandom;
-import java.util.Arrays;
+import java.net.*;
+import java.nio.*;
+import java.security.*;
+import java.util.*;
 
 public class RCon {
 

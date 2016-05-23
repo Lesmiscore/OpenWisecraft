@@ -1,13 +1,12 @@
 package com.nao20010128nao.Wisecraft.api;
+import android.content.*;
+import android.os.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+import com.nao20010128nao.Wisecraft.misc.compat.*;
+import com.nao20010128nao.Wisecraft.provider.*;
 
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
-import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
-import com.nao20010128nao.Wisecraft.provider.NormalServerPingProvider;
-import com.nao20010128nao.Wisecraft.provider.ServerPingProvider;
+import com.nao20010128nao.Wisecraft.R;
 
 public class RequestedServerInfoActivity extends ApiBaseActivity {
 	ServerPingProvider spp=new NormalServerPingProvider();

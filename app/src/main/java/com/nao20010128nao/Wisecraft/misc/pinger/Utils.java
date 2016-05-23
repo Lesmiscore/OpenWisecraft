@@ -1,10 +1,8 @@
 package com.nao20010128nao.Wisecraft.misc.pinger;
 
 import java.io.*;
-
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.util.ArrayList;
+import java.nio.*;
+import java.util.*;
 
 public class Utils {
 

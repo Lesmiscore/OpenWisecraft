@@ -1,11 +1,9 @@
 package com.nao20010128nao.Wisecraft.misc;
+import android.graphics.*;
+import android.text.*;
 import android.text.style.*;
-
-import android.graphics.Typeface;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.util.Log;
-import com.nao20010128nao.Wisecraft.Utils;
+import android.util.*;
+import com.nao20010128nao.Wisecraft.*;
 
 public class MinecraftFormattingCodeParser
 {

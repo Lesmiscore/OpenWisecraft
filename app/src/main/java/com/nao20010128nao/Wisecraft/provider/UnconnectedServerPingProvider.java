@@ -1,11 +1,10 @@
 package com.nao20010128nao.Wisecraft.provider;
+import android.util.*;
+import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+import com.nao20010128nao.Wisecraft.pingEngine.*;
+import java.io.*;
 import java.util.*;
-
-import android.util.Log;
-import com.nao20010128nao.Wisecraft.Utils;
-import com.nao20010128nao.Wisecraft.pingEngine.UnconnectedPing;
-import java.io.IOException;
 public class UnconnectedServerPingProvider implements ServerPingProvider
 {
 	Queue<Map.Entry<Server,PingHandler>> queue=new LinkedList<>();

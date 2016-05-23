@@ -1,9 +1,8 @@
 package com.nao20010128nao.Wisecraft.misc.pref;
-import android.content.Context;
-import android.util.AttributeSet;
-import android.view.View;
-import android.widget.TextView;
-import android.support.v7.preference.PreferenceViewHolder;
+import android.content.*;
+import android.support.v7.preference.*;
+import android.util.*;
+import android.widget.*;
 
 public class CheckBoxPreferenceCompat extends android.support.v7.preference.CheckBoxPreference {
 	public CheckBoxPreferenceCompat(Context context, AttributeSet attrs, int defStyleAttr) {

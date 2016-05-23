@@ -1,10 +1,9 @@
 package com.nao20010128nao.Wisecraft.misc;
 
+import android.content.*;
+import com.nao20010128nao.OTC.*;
 import java.io.*;
 import java.util.*;
-
-import android.content.SharedPreferences;
-import com.nao20010128nao.OTC.OrderTrustedMap;
 
 public class BinaryPrefImpl implements SharedPreferences {
 	protected Map<String, Object> data, allCache;

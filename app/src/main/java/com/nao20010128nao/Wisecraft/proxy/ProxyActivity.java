@@ -1,24 +1,22 @@
 package com.nao20010128nao.Wisecraft.proxy;
+import android.app.*;
 import android.content.*;
+import android.os.*;
+import android.preference.*;
+import android.support.v7.app.*;
+import android.view.*;
+import android.view.View.*;
+import android.widget.*;
+import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.misc.*;
+import com.nao20010128nao.Wisecraft.misc.compat.*;
+import com.nao20010128nao.Wisecraft.services.*;
 import java.io.*;
+import java.lang.reflect.*;
 import java.net.*;
+import uk.co.chrisjenx.calligraphy.*;
 
-import android.app.Activity;
-import android.app.ActivityManager;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.TextView;
 import com.nao20010128nao.Wisecraft.R;
-import com.nao20010128nao.Wisecraft.misc.DebugWriter;
-import com.nao20010128nao.Wisecraft.misc.Server;
-import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
-import com.nao20010128nao.Wisecraft.services.MCProxyService;
-import java.lang.reflect.InvocationTargetException;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ProxyActivity extends AppCompatActivity {
 	public static ServiceController cont;

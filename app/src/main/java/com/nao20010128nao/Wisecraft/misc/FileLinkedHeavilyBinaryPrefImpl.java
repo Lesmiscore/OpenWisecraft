@@ -1,10 +1,7 @@
 package com.nao20010128nao.Wisecraft.misc;
-import java.io.File;
-import java.io.IOException;
-import java.util.Set;
-import java.util.HashSet;
-import com.nao20010128nao.Wisecraft.Utils;
-import java.util.Map;
+import com.nao20010128nao.Wisecraft.*;
+import java.io.*;
+import java.util.*;
 
 public class FileLinkedHeavilyBinaryPrefImpl extends HeavilyEncryptedBinaryPrefImpl {
 	File fileDir;

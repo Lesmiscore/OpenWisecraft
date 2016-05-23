@@ -1,11 +1,11 @@
 package com.nao20010128nao.Wisecraft.rcon.buttonActions;
+import android.view.*;
 import android.widget.*;
+import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.misc.compat.*;
+import com.nao20010128nao.Wisecraft.rcon.*;
 
-import android.view.LayoutInflater;
-import android.view.View;
 import com.nao20010128nao.Wisecraft.R;
-import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
-import com.nao20010128nao.Wisecraft.rcon.RCONActivity;
 
 public class Tp extends BaseAction {
 	EditText cmd;

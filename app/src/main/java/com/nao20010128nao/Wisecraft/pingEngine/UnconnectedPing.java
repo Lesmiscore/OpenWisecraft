@@ -1,10 +1,8 @@
 package com.nao20010128nao.Wisecraft.pingEngine;
+import android.util.*;
+import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import java.io.*;
 import java.net.*;
-
-import android.util.Log;
-import com.nao20010128nao.Wisecraft.misc.pinger.PingHost;
-import com.nao20010128nao.Wisecraft.misc.pinger.ServerPingResult;
 
 public class UnconnectedPing {
 	public static final byte UCP_PID=0x01;

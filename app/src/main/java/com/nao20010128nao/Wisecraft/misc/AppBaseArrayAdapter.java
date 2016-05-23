@@ -1,8 +1,7 @@
 package com.nao20010128nao.Wisecraft.misc;
-import android.content.Context;
-import android.widget.ArrayAdapter;
-import java.util.Collection;
-import java.util.List;
+import android.content.*;
+import android.widget.*;
+import java.util.*;
 
 public class AppBaseArrayAdapter<T> extends ArrayAdapter<T> {
 	public AppBaseArrayAdapter(Context context, int resource) {

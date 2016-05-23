@@ -1,8 +1,8 @@
 package com.nao20010128nao.Wisecraft.api;
-import android.content.Context;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import android.content.*;
+import android.os.*;
+import android.support.v7.app.*;
+import uk.co.chrisjenx.calligraphy.*;
 
 public abstract class ApiBaseActivity extends AppCompatActivity {
 	@Override

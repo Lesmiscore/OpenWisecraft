@@ -1,25 +1,24 @@
 package com.nao20010128nao.Wisecraft.rcon;
 import android.content.*;
+import android.graphics.*;
+import android.os.*;
+import android.preference.*;
+import android.support.v4.app.*;
+import android.support.v4.widget.*;
+import android.support.v7.app.*;
 import android.view.*;
 import android.widget.*;
+import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+import com.nao20010128nao.Wisecraft.misc.compat.*;
+import com.nao20010128nao.Wisecraft.misc.rcon.*;
 import com.nao20010128nao.Wisecraft.rcon.buttonActions.*;
+import java.io.*;
+import java.lang.ref.*;
 import java.util.*;
+import uk.co.chrisjenx.calligraphy.*;
 
-import android.graphics.Typeface;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentTabHost;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
 import com.nao20010128nao.Wisecraft.R;
-import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
-import com.nao20010128nao.Wisecraft.misc.rcon.IncorrectRequestIdException;
-import com.nao20010128nao.Wisecraft.misc.rcon.RCon;
-import java.io.IOException;
-import java.lang.ref.WeakReference;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class RCONActivity extends AppCompatActivity {
 	public static WeakReference<RCONActivity> instance=new WeakReference(null);

@@ -1,9 +1,8 @@
 package com.nao20010128nao.Wisecraft.misc;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import com.nao20010128nao.Wisecraft.R;
+import android.os.*;
+import android.support.v7.app.*;
+import android.webkit.*;
+import com.nao20010128nao.Wisecraft.*;
 
 public abstract class WebViewActivity extends AppCompatActivity
 {

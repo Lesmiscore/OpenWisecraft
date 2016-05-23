@@ -1,7 +1,6 @@
 package com.nao20010128nao.Wisecraft.misc;
-import android.content.SharedPreferences.Editor;
-import java.util.Set;
-import java.util.HashSet;
+import android.content.SharedPreferences.*;
+import java.util.*;
 
 public class PreferencesEditorWrapper implements Editor {
 	Editor child;

@@ -1,10 +1,8 @@
 package com.nao20010128nao.Wisecraft.misc.view;
-import android.content.Context;
-import android.util.AttributeSet;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.BitmapDrawable;
-import android.os.Build;
-import android.graphics.Shader;
+import android.content.*;
+import android.graphics.*;
+import android.graphics.drawable.*;
+import android.util.*;
 
 public class RepeatingImageView extends ExtendedImageView {
 	public RepeatingImageView(Context context) {

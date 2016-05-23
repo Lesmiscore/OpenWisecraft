@@ -1,14 +1,11 @@
 package com.nao20010128nao.Wisecraft.misc;
+import android.content.*;
+import android.os.*;
+import android.preference.*;
+import com.google.gson.*;
+import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.misc.compat.*;
 import java.util.*;
-
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.os.Handler;
-import android.preference.PreferenceManager;
-import com.google.gson.Gson;
-import com.nao20010128nao.Wisecraft.ServerListActivity;
-import com.nao20010128nao.Wisecraft.misc.compat.AppCompatListActivity;
 
 //Server Sort Part
 public class ServerListActivityBase2 extends AppCompatListActivity

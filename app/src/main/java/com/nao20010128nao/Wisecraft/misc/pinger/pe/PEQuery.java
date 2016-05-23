@@ -1,10 +1,8 @@
 package com.nao20010128nao.Wisecraft.misc.pinger.pe;
 
+import com.nao20010128nao.Wisecraft.misc.*;
+import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import java.net.*;
-
-import com.nao20010128nao.Wisecraft.misc.pinger.PingHost;
-import com.nao20010128nao.Wisecraft.misc.pinger.Utils;
-import com.nao20010128nao.Wisecraft.misc.DebugWriter;
 
 public class PEQuery implements PingHost {
 	final static byte HANDSHAKE = 9;
