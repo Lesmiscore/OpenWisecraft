@@ -24,7 +24,14 @@ public class Server {
 	@Override
 	public String toString() {
 		// TODO: Implement this method
-		return ip + ":" + port;
+		StringBuilder sb=new StringBuilder();
+		if(ip.matches(com.nao20010128nao.Wisecraft.Constant.IPV6_PATTERN)){
+			sb.append('[').append(ip).append(']');//IPv6
+		}else{
+			sb.append(ip);//IPv4
+		}
+		sb.append(':').append(port);
+		return sb.toString();
 	}
 
 	public Server cloneAsServer() {
