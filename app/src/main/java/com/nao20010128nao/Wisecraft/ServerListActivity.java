@@ -100,36 +100,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 					btn.setOnClickListener(new MenuExecClickListener(appMenu.indexOf(s)));
 					ll.addView(btn);
 				}
-				dl = (DrawerLayout)findViewById(R.id.drawer);
-				dl.setDrawerListener(new DrawerLayout.DrawerListener(){
-						public void onDrawerSlide(View v, float slide) {
-
-						}
-						public void onDrawerStateChanged(int state) {
-
-						}
-						public void onDrawerClosed(View v) {
-							drawerOpened = false;
-						}
-						public void onDrawerOpened(View v) {
-							drawerOpened = true;
-						}
-					});
-
-				if (pref.getBoolean("specialDrawer1", false)) {
-					ViewGroup decor=(ViewGroup)getWindow().getDecorView();
-					View decorChild=decor.getChildAt(0);
-					View dChild=dl.getChildAt(0);
-					ViewGroup content=(ViewGroup)dl.getParent();
-
-					dl.removeView(dChild);
-					decor.removeView(decorChild);
-					content.removeView(dl);
-
-					content.addView(dChild);
-					decor.addView(dl);
-					dl.addView(decorChild, 0);
-				}
+				
+				setupDrawer();
 				break;
 			case 2:
 				setContentView(R.layout.server_list_content_listview);
@@ -143,36 +115,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 					editing.remove(appMenu.get(7));
 				lv.addView(((ActivityGroup)getParent()).getLocalActivityManager().startActivity("menu", new Intent(this, MenuPreferenceActivity.class).putExtra("values", editing)).getDecorView());
 
-				dl = (DrawerLayout)findViewById(R.id.drawer);
-				dl.setDrawerListener(new DrawerLayout.DrawerListener(){
-						public void onDrawerSlide(View v, float slide) {
-
-						}
-						public void onDrawerStateChanged(int state) {
-
-						}
-						public void onDrawerClosed(View v) {
-							drawerOpened = false;
-						}
-						public void onDrawerOpened(View v) {
-							drawerOpened = true;
-						}
-					});
-
-				if (pref.getBoolean("specialDrawer1", false)) {
-					ViewGroup decor=(ViewGroup)getWindow().getDecorView();
-					View decorChild=decor.getChildAt(0);
-					View dChild=dl.getChildAt(0);
-					ViewGroup content=(ViewGroup)dl.getParent();
-
-					dl.removeView(dChild);
-					decor.removeView(decorChild);
-					content.removeView(dl);
-
-					content.addView(dChild);
-					decor.addView(dl);
-					dl.addView(decorChild, 0);
-				}
+				setupDrawer();
 				break;
 		}
 		srl = (SwipeRefreshLayout)findViewById(R.id.swipelayout);
@@ -221,6 +164,26 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 			bd.setTargetDensity(getResources().getDisplayMetrics());
 			bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
 			getListView().setBackground(bd);
+		}
+	}
+
+	private void setupDrawer() {
+		dl = (DrawerLayout)findViewById(R.id.drawer);
+		dl.setDrawerListener(new OpenCloseListener());
+
+		if (pref.getBoolean("specialDrawer1", false)) {
+			ViewGroup decor=(ViewGroup)getWindow().getDecorView();
+			View decorChild=decor.getChildAt(0);
+			View dChild=dl.getChildAt(0);
+			ViewGroup content=(ViewGroup)dl.getParent();
+
+			dl.removeView(dChild);
+			decor.removeView(decorChild);
+			content.removeView(dl);
+
+			content.addView(dChild);
+			decor.addView(dl);
+			dl.addView(decorChild, 0);
 		}
 	}
 
@@ -1239,6 +1202,20 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 				ServerListActivityImpl ins=ServerListActivityImpl.instance.get();
 				ins.execOption(ins.appMenu.indexOf(var2));
 			}
+		}
+	}
+	class OpenCloseListener implements DrawerLayout.DrawerListener{
+		public void onDrawerSlide(View v, float slide) {
+
+		}
+		public void onDrawerStateChanged(int state) {
+
+		}
+		public void onDrawerClosed(View v) {
+			drawerOpened = false;
+		}
+		public void onDrawerOpened(View v) {
+			drawerOpened = true;
 		}
 	}
 }
