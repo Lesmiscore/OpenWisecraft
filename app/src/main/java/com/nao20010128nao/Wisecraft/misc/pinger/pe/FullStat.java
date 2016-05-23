@@ -13,8 +13,8 @@ public class FullStat implements ServerPingResult {
 	private ArrayList<String> playerList = new ArrayList<>();
 
 	public FullStat(byte[] data) {
-		data = Utils.trim(data);
-		byte[][] temp = Utils.split(data);
+		data = PingerUtils.trim(data);
+		byte[][] temp = PingerUtils.split(data);
 		byte[] d;
 		int dataEnds = 0;
 		for (int i = 2; i < temp.length; i++) {

@@ -4,7 +4,7 @@ import java.io.*;
 import java.nio.*;
 import java.util.*;
 
-public class Utils {
+public class PingerUtils {
 
 	public static byte PACKET_HANDSHAKE = 0x00, PACKET_STATUSREQUEST = 0x00,
 	PACKET_PING = 0x01;
