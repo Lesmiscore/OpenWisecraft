@@ -59,16 +59,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 	NetworkStateBroadcastReceiver nsbr;
 	boolean skipSave=false;
 	StatusesLayout statLayout;
-	Map<Server,Boolean> pinging=new HashMap<Server,Boolean>(){
-		@Override
-		public Boolean get(Object key) {
-			// TODO: Implement this method
-			Boolean b= super.get(key);
-			if (b == null)
-				return false;
-			return b;
-		}
-	};
+	Map<Server,Boolean> pinging=new NonNullableMap<Server>();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
