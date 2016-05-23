@@ -1,11 +1,10 @@
-package com.nao20010128nao.Wisecraft;
+package com.nao20010128nao.Wisecraft.misc;
 import android.content.*;
 import android.content.pm.*;
 import android.graphics.*;
 import android.text.*;
 import android.text.style.*;
 import com.google.gson.*;
-import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.rcon.*;
 import com.nao20010128nao.Wisecraft.rcon.*;

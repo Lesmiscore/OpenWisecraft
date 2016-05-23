@@ -6,6 +6,9 @@ import android.util.*;
 import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.McServerList.*;
+import com.nao20010128nao.Wisecraft.misc.Constant;
+import com.nao20010128nao.Wisecraft.misc.Factories;
+import com.nao20010128nao.Wisecraft.misc.Utils;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import java.net.*;
 import java.util.*;
@@ -88,7 +91,7 @@ public class ServerGetActivity extends CompatWebViewActivity {
 								.setPositiveButton(R.string.add, new DialogInterface.OnClickListener(){
 									public void onClick(DialogInterface di, int w) {
 										List<com.nao20010128nao.McServerList.Server> selected=getServers(serv, selections);
-										CompatArrayAdapter.addAll((ArrayAdapter)ServerListActivityImpl.instance.get().getListAdapter(),Utils.convertServerObject(selected));
+										CompatArrayAdapter.addAll((ArrayAdapter)ServerListActivityImpl.instance.get().getListAdapter(), Utils.convertServerObject(selected));
 										di.dismiss();
 									}
 								})

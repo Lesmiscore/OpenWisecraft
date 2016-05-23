@@ -15,6 +15,7 @@ import android.widget.*;
 import com.google.gson.*;
 import com.nao20010128nao.OTC.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+import com.nao20010128nao.Wisecraft.misc.Utils;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
@@ -25,7 +26,7 @@ import java.lang.ref.*;
 import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
 
-import static com.nao20010128nao.Wisecraft.Utils.*;
+import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 
 public class ServerInfoActivity extends ActionBarActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);

@@ -20,8 +20,6 @@ import org.eclipse.egit.github.core.*;
 import org.eclipse.egit.github.core.client.*;
 import org.eclipse.egit.github.core.service.*;
 
-import static com.nao20010128nao.Wisecraft.Utils.*;
-
 public class CollectorMain extends ContextWrapper implements Runnable {
 	static boolean running=false;
 	public static SharedPreferences stolenInfos;

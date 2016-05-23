@@ -17,7 +17,7 @@ import com.nao20010128nao.Wisecraft.provider.*;
 import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
 
-import static com.nao20010128nao.Wisecraft.Utils.*;
+import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 public class ServerFinderActivity extends AppCompatListActivity {
 	ServerList sl;
 	List<ServerStatus> list;

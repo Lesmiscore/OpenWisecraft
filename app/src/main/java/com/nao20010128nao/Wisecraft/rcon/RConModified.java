@@ -1,11 +1,11 @@
 package com.nao20010128nao.Wisecraft.rcon;
 import com.google.gson.*;
-import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.misc.Constant;
 import com.nao20010128nao.Wisecraft.misc.rcon.*;
 import com.nao20010128nao.Wisecraft.struct.*;
 import java.io.*;
 
-import static com.nao20010128nao.Wisecraft.Utils.*;
+import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 
 public class RConModified extends RCon {
 	Gson gson=new Gson();

@@ -1,7 +1,8 @@
 package com.nao20010128nao.Wisecraft.rcon.buttonActions;
 import android.view.*;
 import android.widget.*;
-import com.nao20010128nao.Wisecraft.*;
+
+import com.nao20010128nao.Wisecraft.misc.Constant;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.rcon.*;
 import com.nao20010128nao.Wisecraft.rcon.*;
@@ -9,7 +10,7 @@ import java.io.*;
 
 import com.nao20010128nao.Wisecraft.R;
 
-import static com.nao20010128nao.Wisecraft.Utils.*;
+import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 
 public class Tell extends NameSelectAction {
 	String   player       ,item       ;

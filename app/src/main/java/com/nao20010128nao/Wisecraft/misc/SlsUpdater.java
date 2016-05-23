@@ -10,7 +10,7 @@ import com.nao20010128nao.Wisecraft.services.*;
 import dalvik.system.*;
 import java.io.*;
 import java.util.*;
-import org.apache.commons.codec.binary.*;
+
 import org.apache.http.client.methods.*;
 import org.apache.http.impl.client.*;
 import org.apache.http.util.*;

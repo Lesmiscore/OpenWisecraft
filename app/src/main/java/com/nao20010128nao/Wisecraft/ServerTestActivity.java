@@ -17,7 +17,7 @@ import java.lang.ref.*;
 import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
 
-import static com.nao20010128nao.Wisecraft.Utils.*;
+import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 
 public class ServerTestActivity extends AppCompatListActivity {
 	static WeakReference<ServerTestActivity> instance=new WeakReference(null);

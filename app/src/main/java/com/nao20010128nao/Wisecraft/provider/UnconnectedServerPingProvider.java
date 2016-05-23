@@ -1,6 +1,6 @@
 package com.nao20010128nao.Wisecraft.provider;
 import android.util.*;
-import com.nao20010128nao.Wisecraft.*;
+
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.pingEngine.*;
 import java.io.*;

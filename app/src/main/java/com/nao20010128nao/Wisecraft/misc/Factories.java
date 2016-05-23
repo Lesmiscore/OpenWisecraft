@@ -1,4 +1,4 @@
-package com.nao20010128nao.Wisecraft;
+package com.nao20010128nao.Wisecraft.misc;
 import java.util.*;
 
 public class Factories {

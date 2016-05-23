@@ -25,7 +25,7 @@ public class Server {
 	public String toString() {
 		// TODO: Implement this method
 		StringBuilder sb=new StringBuilder();
-		if(ip.matches(com.nao20010128nao.Wisecraft.Constant.IPV6_PATTERN)){
+		if(ip.matches(Constant.IPV6_PATTERN)){
 			sb.append('[').append(ip).append(']');//IPv6
 		}else{
 			sb.append(ip);//IPv4

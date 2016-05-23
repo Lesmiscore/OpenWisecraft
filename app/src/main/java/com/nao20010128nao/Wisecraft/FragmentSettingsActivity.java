@@ -5,6 +5,7 @@ import android.preference.*;
 import android.support.v7.app.*;
 import android.widget.*;
 import com.nao20010128nao.ToolBox.*;
+import com.nao20010128nao.Wisecraft.misc.Factories;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.pref.*;
 import java.lang.reflect.*;

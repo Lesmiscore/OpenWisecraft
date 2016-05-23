@@ -3,14 +3,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import com.nao20010128nao.Wisecraft.Constant;
+import com.nao20010128nao.Wisecraft.misc.Constant;
 import com.nao20010128nao.Wisecraft.R;
 import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
 import com.nao20010128nao.Wisecraft.misc.rcon.AuthenticationException;
 import com.nao20010128nao.Wisecraft.rcon.RCONActivity;
 import java.io.IOException;
 
-import static com.nao20010128nao.Wisecraft.Utils.*;
+import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 
 public class Xp extends NameSelectAction {
 	String   amount       ,player       ;
