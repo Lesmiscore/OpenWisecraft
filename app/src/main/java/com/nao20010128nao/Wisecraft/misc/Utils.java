@@ -13,8 +13,9 @@ import java.io.*;
 import java.lang.reflect.*;
 import java.security.*;
 import java.util.*;
+import com.nao20010128nao.Wisecraft.misc.pinger.*;
 
-public class Utils {
+public class Utils extends PingerUtils{
 	public static String deleteDecorations(String decorated) {
 		StringBuilder sb=new StringBuilder();
 		char[] chars=decorated.toCharArray();
