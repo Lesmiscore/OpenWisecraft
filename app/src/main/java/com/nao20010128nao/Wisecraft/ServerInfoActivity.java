@@ -328,13 +328,22 @@ public class ServerInfoActivity extends ActionBarActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// TODO: Implement this method
+		boolean isDark;
+		if (pref.getBoolean("colorFormattedText", false)) {
+			if (pref.getBoolean("darkBackgroundForServerName", false)) {
+				isDark=true;
+			} else {
+				isDark=false;
+			}
+		} else {
+			isDark=false;
+		}
 		seeTitleButton = menu.add(Menu.NONE, 0, 0, R.string.seeTitle);
-		seeTitleButton.setIcon(R.drawable.ic_menu_view);
+		seeTitleButton.setIcon(isDark?com.nao20010128nao.HoloIcons.R.drawable.ic_action_search_dark:com.nao20010128nao.HoloIcons.R.drawable.ic_action_search_light);
 		MenuItemCompat.setShowAsAction(seeTitleButton, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
 		if (!nonUpd) {
 			updateBtn = menu.add(Menu.NONE, 1, 1, R.string.update);
-			updateBtn.setIcon(R.drawable.ic_menu_refresh);
+			updateBtn.setIcon(isDark?com.nao20010128nao.HoloIcons.R.drawable.ic_action_refresh_dark:com.nao20010128nao.HoloIcons.R.drawable.ic_action_refresh_light);
 			MenuItemCompat.setShowAsAction(updateBtn, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
 		}
 		return true;
