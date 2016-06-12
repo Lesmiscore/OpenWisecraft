@@ -10,47 +10,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e018eed5-f2dc-4345-95af-64168025e885" name="Default" comment="">
-      <change type="MOVED" beforePath="C:\Users\nao\Documents\GitLab\Wisecraft\app\src\main\java\com\nao20010128nao\Wisecraft\Constant.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/misc/Constant.java" />
-      <change type="MOVED" beforePath="C:\Users\nao\Documents\GitLab\Wisecraft\app\src\main\java\com\nao20010128nao\Wisecraft\Factories.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/misc/Factories.java" />
-      <change type="MOVED" beforePath="C:\Users\nao\Documents\GitLab\Wisecraft\app\src\main\java\com\nao20010128nao\Wisecraft\Utils.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/misc/Utils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/Ban.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/Ban.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/BanIp.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/BanIp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/Banlist.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/Banlist.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/Clear.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/Clear.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/collector/CollectorMain.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/collector/CollectorMain.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/DefaultGamemode.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/DefaultGamemode.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/Deop.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/Deop.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/misc/FileLinkedHeavilyBinaryPrefImpl.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/misc/FileLinkedHeavilyBinaryPrefImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/FragmentSettingsActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/FragmentSettingsActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/Give.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/Give.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/misc/HeavilyEncryptedBinaryPrefImpl.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/misc/HeavilyEncryptedBinaryPrefImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/Kick.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/Kick.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/Kill.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/Kill.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/misc/MinecraftFormattingCodeParser.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/misc/MinecraftFormattingCodeParser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/provider/NormalServerPingProvider.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/provider/NormalServerPingProvider.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/provider/PCServerPingProvider.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/provider/PCServerPingProvider.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/Pardon.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/Pardon.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/PardonIp.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/PardonIp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/RConModified.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/RConModified.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/Save_All.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/Save_All.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/Save_Off.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/Save_Off.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/Save_On.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/Save_On.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/misc/Server.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/misc/Server.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/ServerFinderActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/ServerFinderActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/ServerGetActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/ServerGetActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/ServerInfoActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/ServerInfoActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/ServerListActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/ServerListActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/misc/ServerListActivityBase1.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/misc/ServerListActivityBase1.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/ServerTestActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/ServerTestActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/misc/SlsUpdater.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/misc/SlsUpdater.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/Stop.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/Stop.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/Tell.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/Tell.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/Time_Set.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/Time_Set.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/provider/UnconnectedServerPingProvider.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/provider/UnconnectedServerPingProvider.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/Weather.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/Weather.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/Xp.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/rcon/buttonActions/Xp.java" />
-    </list>
+    <list default="true" id="e018eed5-f2dc-4345-95af-64168025e885" name="Default" comment="" />
     <ignored path="Wisecraft.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -158,47 +118,47 @@
       </file>
       <file leaf-file-name="about_app.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/about_app.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
               <folding />
             </state>
           </provider>
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
         </entry>
       </file>
       <file leaf-file-name="server_add_dialog_new.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/server_add_dialog_new.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="50" column="25" selection-start-line="50" selection-start-column="25" selection-end-line="50" selection-end-column="25" />
               <folding />
             </state>
           </provider>
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
         </entry>
       </file>
       <file leaf-file-name="osl_parent.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/osl_parent.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="130" column="61" selection-start-line="130" selection-start-column="61" selection-end-line="130" selection-end-column="61" />
               <folding />
             </state>
           </provider>
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
         </entry>
       </file>
       <file leaf-file-name="build.gradle" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.64850134">
+            <state vertical-scroll-proportion="0.0">
               <caret line="20" column="4" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
               <folding />
             </state>
@@ -220,9 +180,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="491" column="19" selection-start-line="491" selection-start-column="19" selection-end-line="491" selection-end-column="19" />
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -4204,6 +4162,10 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scratches" />
+      <pane id="Scope" />
+      <pane id="ProjectPane" />
+      <pane id="PackagesPane" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -4274,10 +4236,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="ProjectPane" />
-      <pane id="PackagesPane" />
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -4582,24 +4540,24 @@
       <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4417863" sideWeight="0.4440242" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32695374" sideWeight="0.60363084" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32535884" sideWeight="0.60363084" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32854864" sideWeight="0.49394855" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32854864" sideWeight="0.5030257" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32695374" sideWeight="0.39636913" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32695374" sideWeight="0.39636913" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32854864" sideWeight="0.49092284" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20196672" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20196672" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32854864" sideWeight="0.47881997" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32854864" sideWeight="0.4969743" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39872408" sideWeight="0.4969743" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -4624,6 +4582,16 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/scrolling/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="26" column="46" selection-start-line="26" selection-start-column="46" selection-end-line="26" selection-end-column="46" />
+          <folding>
+            <marker date="1463884807810" expanded="true" signature="45:100" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/collector/CollectorMain.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -4817,7 +4785,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="115" column="34" selection-start-line="115" selection-start-column="34" selection-end-line="115" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4825,7 +4792,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="86" column="34" selection-start-line="86" selection-start-column="34" selection-end-line="86" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4833,7 +4799,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="82" column="34" selection-start-line="82" selection-start-column="34" selection-end-line="82" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4855,7 +4820,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="21" column="35" selection-start-line="21" selection-start-column="35" selection-end-line="21" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4941,9 +4905,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="491" column="19" selection-start-line="491" selection-start-column="19" selection-end-line="491" selection-end-column="19" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -4958,14 +4920,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/osl_parent.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="130" column="61" selection-start-line="130" selection-start-column="61" selection-end-line="130" selection-end-column="61" />
           <folding />
         </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nao20010128nao/Wisecraft/misc/view/RawResourceTextView.java">
@@ -4985,30 +4947,30 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/server_add_dialog_new.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="50" column="25" selection-start-line="50" selection-start-column="25" selection-end-line="50" selection-end-column="25" />
           <folding />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/about_app.xml">
       <provider editor-type-id="android-designer">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/about_app.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
           <folding />
         </state>
       </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.64850134">
+        <state vertical-scroll-proportion="0.0">
           <caret line="20" column="4" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
           <folding />
         </state>
