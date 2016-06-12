@@ -24,34 +24,34 @@ public class PCQuery implements PingHost{
 		ByteArrayOutputStream handshake_bytes = new ByteArrayOutputStream();
 		DataOutputStream handshake = new DataOutputStream(handshake_bytes);
 
-		handshake.writeByte(Utils.PACKET_HANDSHAKE);
-		Utils.writeVarInt(handshake, Utils.PROTOCOL_VERSION);
-		Utils.writeVarInt(handshake, host.length());
+		handshake.writeByte(PingerUtils.PACKET_HANDSHAKE);
+		PingerUtils.writeVarInt(handshake, PingerUtils.PROTOCOL_VERSION);
+		PingerUtils.writeVarInt(handshake, host.length());
 		handshake.writeBytes(host);
 		handshake.writeShort(port);
-		Utils.writeVarInt(handshake, Utils.STATUS_HANDSHAKE);
+		PingerUtils.writeVarInt(handshake, PingerUtils.STATUS_HANDSHAKE);
 
-		Utils.writeVarInt(out, handshake_bytes.size());
+		PingerUtils.writeVarInt(out, handshake_bytes.size());
 		out.write(handshake_bytes.toByteArray());
 
 	}
 
 	private void writeRequest(DataOutputStream out) throws IOException {
 		out.writeByte(0x01); // Size of packet
-		out.writeByte(Utils.PACKET_STATUSREQUEST);
+		out.writeByte(PingerUtils.PACKET_STATUSREQUEST);
 	}
 
 	private String getStatJson(DataInputStream in) throws IOException {
-		Utils.readVarInt(in); // Size
-		int id = Utils.readVarInt(in);
+		PingerUtils.readVarInt(in); // Size
+		int id = PingerUtils.readVarInt(in);
 
-		Utils.io(id == -1, "Server prematurely ended stream.");
-		Utils.io(id != Utils.PACKET_STATUSREQUEST,
+		PingerUtils.io(id == -1, "Server prematurely ended stream.");
+		PingerUtils.io(id != PingerUtils.PACKET_STATUSREQUEST,
 				"Server returned invalid packet.");
 
-		int length = Utils.readVarInt(in);
-		Utils.io(length == -1, "Server prematurely ended stream.");
-		Utils.io(length == 0, "Server returned unexpected value.");
+		int length = PingerUtils.readVarInt(in);
+		PingerUtils.io(length == -1, "Server prematurely ended stream.");
+		PingerUtils.io(length == 0, "Server returned unexpected value.");
 
 		byte[] data = new byte[length];
 		in.readFully(data);
@@ -63,13 +63,13 @@ public class PCQuery implements PingHost{
 			throws IOException {
 
 		out.writeByte(0x09);
-		out.writeByte(Utils.PACKET_PING);
+		out.writeByte(PingerUtils.PACKET_PING);
 		out.writeLong(System.currentTimeMillis());
 
-		Utils.readVarInt(in); // Size
-		int id = Utils.readVarInt(in);
-		Utils.io(id == -1, "Server prematurely ended stream.");
-		Utils.io(id != Utils.PACKET_PING, "Server returned invalid packet.");
+		PingerUtils.readVarInt(in); // Size
+		int id = PingerUtils.readVarInt(in);
+		PingerUtils.io(id == -1, "Server prematurely ended stream.");
+		PingerUtils.io(id != PingerUtils.PACKET_PING, "Server returned invalid packet.");
 	}
 
 	// ///////
