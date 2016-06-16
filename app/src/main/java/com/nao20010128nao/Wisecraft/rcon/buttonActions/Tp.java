@@ -6,10 +6,11 @@ import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.rcon.*;
 
 import com.nao20010128nao.Wisecraft.R;
+import android.support.v7.app.AlertDialog;
 
 public class Tp extends BaseAction {
 	EditText cmd;
-	AppCompatAlertDialog dialog;
+	AlertDialog dialog;
 	public Tp(RCONActivity r) {
 		super(r);
 	}
@@ -17,7 +18,7 @@ public class Tp extends BaseAction {
 	@Override
 	public void onClick(View p1) {
 		// TODO: Implement this method
-		dialog = (AppCompatAlertDialog)new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
+		dialog = new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
 			.setView(inflateDialogView())
 			.show();
 	}

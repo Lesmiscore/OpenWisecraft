@@ -11,6 +11,7 @@ import java.io.*;
 import com.nao20010128nao.Wisecraft.R;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
+import android.support.v7.app.AlertDialog;
 
 public class Tell extends NameSelectAction {
 	String   player       ,item       ;
@@ -20,7 +21,7 @@ public class Tell extends NameSelectAction {
 	/*      |             ,           |*/
 
 	Button executeButton;
-	AppCompatAlertDialog dialog;
+	AlertDialog dialog;
 
 	String[] list;
 	String hint;
@@ -33,7 +34,7 @@ public class Tell extends NameSelectAction {
 	@Override
 	public void onClick(View p1) {
 		// TODO: Implement this method
-		dialog = (AppCompatAlertDialog)new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
+		dialog = new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
 			.setView(inflateDialogView())
 			.show();
 	}
