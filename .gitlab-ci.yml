@@ -7,7 +7,6 @@ before_script:
   - cd ../statusesLayout
   - git pull origin master
   - cd ../
-  - rm *.apk
   - apt-get --quiet update --yes
   - apt-get --quiet install --yes wget tar unzip openjdk-7-jdk lib32stdc++6 lib32z1
   - wget --quiet --output-document=android-sdk.tgz https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz
@@ -41,8 +40,8 @@ rcon:
     - gradle-2.12/bin/gradle assembleRelease -p rconApp --info --stacktrace
     - mv rconApp/build/outputs/apk/rconApp-release.apk rconApp/build/outputs/apk/WRcon-release.apk
     - mv rconApp/build/outputs/apk/*.apk .
-    - ls /
-    - ls /builds/nao20010128nao/Wisecraft/rconApp/build/outputs/apk
+    - rm app*.apk
+    - rm Wisecraft*.apk
   artifacts:
     paths:
       - "*.apk"
