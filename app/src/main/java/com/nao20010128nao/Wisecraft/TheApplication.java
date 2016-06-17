@@ -11,7 +11,7 @@ import java.lang.reflect.*;
 import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
 
-public class TheApplication extends Application {
+public class TheApplication extends Application implements com.nao20010128nao.Wisecraft.rcon.Presenter {
 	public static TheApplication instance;
 	public static Typeface latoLight,icomoon1,sysDefault,droidSans,robotoSlabLight;
 	public static Field[] fonts=getFontFields();
@@ -121,5 +121,11 @@ public class TheApplication extends Application {
 			if(service.service.getClassName().equals(clazz.getName()))
 				return true;
 		return false;
+	}
+
+	@Override
+	public int getDialogStyleId() {
+		// TODO: Implement this method
+		return R.style.AppAlertDialog;
 	}
 }

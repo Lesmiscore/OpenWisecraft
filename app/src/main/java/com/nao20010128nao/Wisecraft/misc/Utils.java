@@ -125,17 +125,6 @@ public class Utils extends PingerUtils{
 			os.close();
 		}
 	}
-	public static WCH_ServerInfo getServerInfo(RCon rcon) {
-		if (rcon instanceof RConModified) {
-			return ((RConModified)rcon).getServerInfo();
-		} else {
-			try {
-				return new Gson().fromJson(rcon.send("wisecraft wisecraft info"), WCH_ServerInfo.class);
-			} catch (Throwable e) {
-				return null;
-			}
-		}
-	}
 	public static <T> T requireNonNull(T obj) {
 		if (obj == null)
 			throw new NullPointerException();
