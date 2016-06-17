@@ -18,16 +18,30 @@ before_script:
   - java -version
 
 stages:
-  - build
+  - main
+  - rcon
 
-build:
-  stage: build
+main:
+  stage: main
   script:
-    - gradle-2.12/bin/gradle assembleRelease --info --stacktrace
+    - gradle-2.12/bin/gradle assembleRelease -p app --info --stacktrace
     - mv app/build/outputs/apk/app-release.apk app/build/outputs/apk/Wisecraft-release.apk
     - mv app/build/outputs/apk/*.apk .
     - ls /
     - ls /builds/nao20010128nao/Wisecraft/app/build/outputs/apk
+  artifacts:
+    paths:
+      - "*.apk"
+
+
+rcon:
+  stage: rcon
+  script:
+    - gradle-2.12/bin/gradle assembleRelease -p rconApp --info --stacktrace
+    - mv rconApp/build/outputs/apk/rconApp-release.apk app/build/outputs/apk/WRcon-release.apk
+    - mv rconApp/build/outputs/apk/*.apk .
+    - ls /
+    - ls /builds/nao20010128nao/Wisecraft/rconApp/build/outputs/apk
   artifacts:
     paths:
       - "*.apk"
