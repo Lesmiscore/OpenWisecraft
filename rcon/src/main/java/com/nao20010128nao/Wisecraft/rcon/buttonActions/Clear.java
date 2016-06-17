@@ -8,7 +8,7 @@ import com.nao20010128nao.Wisecraft.misc.rcon.*;
 import com.nao20010128nao.Wisecraft.rcon.*;
 import java.io.*;
 
-import com.nao20010128nao.Wisecraft.R;
+import com.nao20010128nao.Wisecraft.rcon.R;
 
 import static com.nao20010128nao.Wisecraft.misc.RconModule_Utils.*;
 import android.support.v7.app.*;

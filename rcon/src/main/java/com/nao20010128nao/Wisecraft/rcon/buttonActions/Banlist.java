@@ -6,7 +6,7 @@ import com.nao20010128nao.Wisecraft.misc.RconModule_Constant;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.rcon.*;
 
-import com.nao20010128nao.Wisecraft.R;
+import com.nao20010128nao.Wisecraft.rcon.R;
 
 public class Banlist extends BaseAction {
 	public Banlist(RCONActivityBase act) {

@@ -8,7 +8,7 @@ import com.nao20010128nao.Wisecraft.misc.rcon.*;
 import com.nao20010128nao.Wisecraft.rcon.*;
 import java.io.*;
 
-import com.nao20010128nao.Wisecraft.R;
+import com.nao20010128nao.Wisecraft.rcon.R;
 
 public class Gamemode extends NameSelectAction {
 	String player=null;

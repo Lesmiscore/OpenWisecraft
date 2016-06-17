@@ -4,7 +4,7 @@ import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.rcon.*;
 
-import com.nao20010128nao.Wisecraft.R;
+import com.nao20010128nao.Wisecraft.rcon.R;
 
 public class Op extends NameSelectAction {
 	public Op(RCONActivityBase a) {

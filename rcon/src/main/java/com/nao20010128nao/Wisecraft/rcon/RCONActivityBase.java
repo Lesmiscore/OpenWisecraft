@@ -17,7 +17,7 @@ import java.io.*;
 import java.lang.ref.*;
 import java.util.*;
 
-import com.nao20010128nao.Wisecraft.R;
+import com.nao20010128nao.Wisecraft.rcon.R;
 
 public class RCONActivityBase extends AppCompatActivity {
 	public static WeakReference<RCONActivityBase> instance=new WeakReference(null);
