@@ -7,6 +7,7 @@ before_script:
   - cd ../statusesLayout
   - git pull origin master
   - cd ../
+  - rm *.apk
   - apt-get --quiet update --yes
   - apt-get --quiet install --yes wget tar unzip openjdk-7-jdk lib32stdc++6 lib32z1
   - wget --quiet --output-document=android-sdk.tgz https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz
