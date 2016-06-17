@@ -15,10 +15,6 @@
 		<item name="colorAccent">@color/upd_2</item>
 	</style>
 	
-	<style name="AppTheme.Bright" parent="AppTheme">
-		
-	</style>
-	
 	<style name="AppTheme.NoActionBar" parent="AppTheme">
 		<item name="windowActionBar">false</item>
 		<item name="windowNoTitle">true</item>
