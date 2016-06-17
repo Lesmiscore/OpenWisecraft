@@ -38,7 +38,7 @@ rcon:
   stage: rcon
   script:
     - gradle-2.12/bin/gradle assembleRelease -p rconApp --info --stacktrace
-    - mv rconApp/build/outputs/apk/rconApp-release.apk app/build/outputs/apk/WRcon-release.apk
+    - mv rconApp/build/outputs/apk/rconApp-release.apk rconApp/build/outputs/apk/WRcon-release.apk
     - mv rconApp/build/outputs/apk/*.apk .
     - ls /
     - ls /builds/nao20010128nao/Wisecraft/rconApp/build/outputs/apk
