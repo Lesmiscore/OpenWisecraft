@@ -1,9 +1,9 @@
 package com.nao20010128nao.Wisecraft.rcon.buttonActions;
-import android.content.*;
-import android.view.View.*;
-import android.widget.*;
-import com.nao20010128nao.Wisecraft.*;
-import com.nao20010128nao.Wisecraft.rcon.*;
+import android.content.ContextWrapper;
+import android.view.View.OnClickListener;
+import android.widget.EditText;
+import com.nao20010128nao.Wisecraft.rcon.R;
+import com.nao20010128nao.Wisecraft.rcon.RCONActivityBase;
 
 public abstract class BaseAction extends ContextWrapper implements OnClickListener {
 	private RCONActivityBase ra;
