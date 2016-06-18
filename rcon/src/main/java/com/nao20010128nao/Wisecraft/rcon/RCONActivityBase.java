@@ -19,7 +19,7 @@ import java.util.*;
 
 import com.nao20010128nao.Wisecraft.rcon.R;
 
-public class RCONActivityBase extends AppCompatActivity {
+public abstract class RCONActivityBase extends AppCompatActivity {
 	public static WeakReference<RCONActivityBase> instance=new WeakReference(null);
 	static List<String> consoleLogs=new ArrayList<>();
 	static RCon rcon;
