@@ -11,6 +11,9 @@ import android.view.ViewGroup;
 import java.util.List;
 import java.util.Collection;
 import java.util.Arrays;
+import android.widget.TextView;
+import android.view.Menu;
+import android.view.SubMenu;
 
 public class MainActivity extends AppCompatListActivity
 {
@@ -25,6 +28,17 @@ public class MainActivity extends AppCompatListActivity
 		getListView().setOnItemClickListener(sla);
 		getListView().setOnItemLongClickListener(sla);
 	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// TODO: Implement this method
+		SubMenu add=menu.addSubMenu(Menu.NONE,1,0,R.string.add);
+		add.add(Menu.NONE,1,1,R.string.addSingle);
+		add.add(Menu.NONE,1,2,R.string.importFromWc);
+		return true;
+	}
+	
+	
 	class ServerListAdapter extends AppBaseArrayAdapter<Server> implements ListView.OnItemClickListener,ListView.OnItemLongClickListener{
 		public ServerListAdapter(){
 			super(MainActivity.this,0,list=new ArrayList<Server>());
@@ -44,6 +58,8 @@ public class MainActivity extends AppCompatListActivity
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			// TODO: Implement this method
+			if(convertView==null)convertView=getLayoutInflater().inflate(R.layout.main_server_entry,null);
+			((TextView)convertView.findViewById(R.id.serverIp)).setText(getItem(position).toString());
 			return super.getView(position, convertView, parent);
 		}
 		
