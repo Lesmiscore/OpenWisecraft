@@ -7,6 +7,7 @@ import android.widget.ListView;
 import android.widget.AdapterView;
 import android.widget.Adapter;
 import android.view.View;
+import android.view.ViewGroup;
 
 public class MainActivity extends AppCompatListActivity
 {
@@ -34,6 +35,12 @@ public class MainActivity extends AppCompatListActivity
 		public boolean onItemLongClick(AdapterView<?> p1, View p2, int p3, long p4) {
 			// TODO: Implement this method
 			return false;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			// TODO: Implement this method
+			return super.getView(position, convertView, parent);
 		}
 	}
 }
