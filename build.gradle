@@ -1,17 +1,14 @@
-System.println(
-"REM                                                                                                                                                             \r\n" + 
-"REM I8,        8        ,8I  88                                                                ad88              88888888ba                88  88           88  \r\n" + 
-"REM `8b       d8b       d8'  \"\"                                                               d8\"      ,d        88      \"8b               \"\"  88           88  \r\n" + 
-"REM  \"8,     ,8\"8,     ,8\"                                                                    88       88        88      ,8P                   88           88  \r\n" + 
-"REM   Y8     8P Y8     8P    88  ,adPPYba,   ,adPPYba,   ,adPPYba,  8b,dPPYba,  ,adPPYYba,  MM88MMM  MM88MMM     88aaaaaa8P'  88       88  88  88   ,adPPYb,88  \r\n" + 
-"REM   `8b   d8' `8b   d8'    88  I8[    \"\"  a8P_____88  a8\"     \"\"  88P'   \"Y8  \"\"     `Y8    88       88        88\"\"\"\"\"\"8b,  88       88  88  88  a8\"    `Y88  \r\n" + 
-"REM    `8a a8'   `8a a8'     88   `\"Y8ba,   8PP\"\"\"\"\"\"\"  8b          88          ,adPPPPP88    88       88        88      `8b  88       88  88  88  8b       88  \r\n" + 
-"REM     `8a8'     `8a8'      88  aa    ]8I  \"8b,   ,aa  \"8a,   ,aa  88          88,    ,88    88       88,       88      a8P  \"8a,   ,a88  88  88  \"8a,   ,d88  \r\n" + 
-"REM      `8'       `8'       88  `\"YbbdP\"'   `\"Ybbd8\"'   `\"Ybbd8\"'  88          `\"8bbdP\"Y8    88       \"Y888     88888888P\"    `\"YbbdP'Y8  88  88   `\"8bbdP\"Y8  \r\n" + 
-"REM                                                                                                                                                             \r\n" + 
-"REM                                                                                                                                                             \r\n" + 
-""
-)
+println "REM                                                                                                                                                             "
+println "REM I8,        8        ,8I  88                                                                ad88              88888888ba                88  88           88  "
+println "REM `8b       d8b       d8'  \"\"                                                               d8\"      ,d        88      \"8b               \"\"  88           88  "
+println "REM  \"8,     ,8\"8,     ,8\"                                                                    88       88        88      ,8P                   88           88  "
+println "REM   Y8     8P Y8     8P    88  ,adPPYba,   ,adPPYba,   ,adPPYba,  8b,dPPYba,  ,adPPYYba,  MM88MMM  MM88MMM     88aaaaaa8P'  88       88  88  88   ,adPPYb,88  " 
+println "REM   `8b   d8' `8b   d8'    88  I8[    \"\"  a8P_____88  a8\"     \"\"  88P'   \"Y8  \"\"     `Y8    88       88        88\"\"\"\"\"\"8b,  88       88  88  88  a8\"    `Y88  " 
+println "REM    `8a a8'   `8a a8'     88   `\"Y8ba,   8PP\"\"\"\"\"\"\"  8b          88          ,adPPPPP88    88       88        88      `8b  88       88  88  88  8b       88  " 
+println "REM     `8a8'     `8a8'      88  aa    ]8I  \"8b,   ,aa  \"8a,   ,aa  88          88,    ,88    88       88,       88      a8P  \"8a,   ,a88  88  88  \"8a,   ,d88  "
+println "REM      `8'       `8'       88  `\"YbbdP\"'   `\"Ybbd8\"'   `\"Ybbd8\"'  88          `\"8bbdP\"Y8    88       \"Y888     88888888P\"    `\"YbbdP'Y8  88  88   `\"8bbdP\"Y8  " 
+println "REM                                                                                                                                                             "
+println "REM                                                                                                                                                             "
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
