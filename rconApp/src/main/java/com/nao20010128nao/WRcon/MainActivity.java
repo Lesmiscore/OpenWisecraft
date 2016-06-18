@@ -14,6 +14,7 @@ import java.util.Arrays;
 import android.widget.TextView;
 import android.view.Menu;
 import android.view.SubMenu;
+import android.support.v4.view.MenuItemCompat;
 
 public class MainActivity extends AppCompatListActivity
 {
@@ -32,9 +33,10 @@ public class MainActivity extends AppCompatListActivity
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO: Implement this method
-		SubMenu add=menu.addSubMenu(Menu.NONE,1,0,R.string.add);
-		add.add(Menu.NONE,1,1,R.string.addSingle);
-		add.add(Menu.NONE,1,2,R.string.importFromWc);
+		SubMenu add=menu.addSubMenu(Menu.NONE,1,0,R.string.add).setIcon(R.drawable.ic_action_new_light);
+		add.add(Menu.NONE,1,1,R.string.addSingle).setIcon(R.drawable.ic_action_new_light);
+		add.add(Menu.NONE,1,2,R.string.importFromWc).setIcon(R.drawable.ic_action_import_export_light);
+		MenuItemCompat.setShowAsAction(add.getItem(),MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
 		return true;
 	}
 	
