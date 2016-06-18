@@ -8,9 +8,13 @@ import android.widget.AdapterView;
 import android.widget.Adapter;
 import android.view.View;
 import android.view.ViewGroup;
+import java.util.List;
+import java.util.Collection;
+import java.util.Arrays;
 
 public class MainActivity extends AppCompatListActivity
 {
+	List<Server> list;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
@@ -23,7 +27,7 @@ public class MainActivity extends AppCompatListActivity
 	}
 	class ServerListAdapter extends AppBaseArrayAdapter<Server> implements ListView.OnItemClickListener,ListView.OnItemLongClickListener{
 		public ServerListAdapter(){
-			super(MainActivity.this,0,new ArrayList<Server>());
+			super(MainActivity.this,0,list=new ArrayList<Server>());
 		}
 
 		@Override
@@ -41,6 +45,27 @@ public class MainActivity extends AppCompatListActivity
 		public View getView(int position, View convertView, ViewGroup parent) {
 			// TODO: Implement this method
 			return super.getView(position, convertView, parent);
+		}
+		
+
+		@Override
+		public void add(Server object) {
+			// TODO: Implement this method
+			if (!list.contains(object)){
+				super.add(object);
+			}
+		}
+
+		@Override
+		public void addAll(Server[] items) {
+			// TODO: Implement this method
+			addAll(Arrays.asList(items));
+		}
+
+		@Override
+		public void addAll(Collection<? extends Server> collection) {
+			// TODO: Implement this method
+			for (Server s:collection)add(s);
 		}
 	}
 }
