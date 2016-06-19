@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatListActivity
 					.setView(et)
 					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 						public void onClick(DialogInterface di, int w) {
-							Snackbar.make(findViewById(android.R.id.content), R.string.importing, Toast.LENGTH_LONG).show();
+							Snackbar.make(findViewById(android.R.id.content), R.string.importing, Snackbar.LENGTH_LONG).show();
 							new Thread(){
 								public void run() {
 									final Server[] sv;
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatListActivity
 											public void run() {
 												sla.addAll(sv);
 												saveServers();
-												Snackbar.make(findViewById(android.R.id.content), getResources().getString(R.string.imported).replace("[PATH]", et.getText().toString()), Toast.LENGTH_LONG).show();
+												Snackbar.make(findViewById(android.R.id.content), getResources().getString(R.string.imported).replace("[PATH]", et.getText().toString()), Snackbar.LENGTH_LONG).show();
 											}
 										});
 								}
@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatListActivity
 					.setView(et_)
 					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 						public void onClick(DialogInterface di, int w) {
-							Snackbar.make(findViewById(android.R.id.content), R.string.exporting, Toast.LENGTH_LONG).show();
+							Snackbar.make(findViewById(android.R.id.content), R.string.exporting, Snackbar.LENGTH_LONG).show();
 							new AsyncTask<Void,Void,File>(){
 								public File doInBackground(Void... a) {
 									File f=new File(Environment.getExternalStorageDirectory(), "/Wisecraft");
@@ -139,9 +139,9 @@ public class MainActivity extends AppCompatListActivity
 								}
 								public void onPostExecute(File f) {
 									if (f != null) {
-										Snackbar.make(findViewById(android.R.id.content), getResources().getString(R.string.export_complete).replace("[PATH]", f + ""), Toast.LENGTH_LONG).show();
+										Snackbar.make(findViewById(android.R.id.content), getResources().getString(R.string.export_complete).replace("[PATH]", f + ""), Snackbar.LENGTH_LONG).show();
 									} else {
-										Snackbar.make(findViewById(android.R.id.content), getResources().getString(R.string.export_failed), Toast.LENGTH_LONG).show();
+										Snackbar.make(findViewById(android.R.id.content), getResources().getString(R.string.export_failed), Snackbar.LENGTH_LONG).show();
 									}
 								}
 							}.execute();
