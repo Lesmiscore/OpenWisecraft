@@ -28,7 +28,7 @@ public class Gamemode extends NameSelectAction {
 			onClick(null);
 			return;
 		}
-		new AppCompatAlertDialog.Builder(this,((Presenter)getActivity().getApplication()).getDialogStyleId())
+		new AppCompatAlertDialog.Builder(this,getActivity().getPresenter().getDialogStyleId())
 			.setMessage(getResString(R.string.gamemodeAsk).replace("[PLAYER]", player).replace("[MODE]", s))
 			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 				public void onClick(DialogInterface di, int w) {

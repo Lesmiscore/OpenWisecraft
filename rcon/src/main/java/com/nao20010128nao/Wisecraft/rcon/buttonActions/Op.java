@@ -14,7 +14,7 @@ public class Op extends NameSelectAction {
 	@Override
 	public void onSelected(final String s) {
 		// TODO: Implement this method
-		new AppCompatAlertDialog.Builder(this,((Presenter)getActivity().getApplication()).getDialogStyleId())
+		new AppCompatAlertDialog.Builder(this,getActivity().getPresenter().getDialogStyleId())
 			.setMessage(getResString(R.string.giveOpAsk).replace("[PLAYER]", s))
 			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 				public void onClick(DialogInterface di, int w) {

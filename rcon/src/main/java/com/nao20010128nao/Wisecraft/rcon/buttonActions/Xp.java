@@ -35,7 +35,7 @@ public class Xp extends NameSelectAction {
 	@Override
 	public void onClick(View p1) {
 		// TODO: Implement this method
-		dialog = new AppCompatAlertDialog.Builder(this,((Presenter)getActivity().getApplication()).getDialogStyleId())
+		dialog = new AppCompatAlertDialog.Builder(this,getActivity().getPresenter().getDialogStyleId())
 			.setView(inflateDialogView())
 			.show();
 	}

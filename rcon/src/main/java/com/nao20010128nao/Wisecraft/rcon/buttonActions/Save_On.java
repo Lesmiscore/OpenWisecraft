@@ -17,7 +17,7 @@ public class Save_On extends BaseAction {
 	@Override
 	public void onClick(View p1) {
 		// TODO: Implement this method
-		new AppCompatAlertDialog.Builder(this,((Presenter)getActivity().getApplication()).getDialogStyleId())
+		new AppCompatAlertDialog.Builder(this,getActivity().getPresenter().getDialogStyleId())
 			.setMessage(R.string.auSure)
 			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 				public void onClick(DialogInterface di, int w) {
