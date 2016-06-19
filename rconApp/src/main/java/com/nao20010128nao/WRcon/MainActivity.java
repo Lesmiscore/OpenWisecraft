@@ -30,6 +30,7 @@ import java.io.File;
 import android.os.Environment;
 import android.os.AsyncTask;
 import com.nao20010128nao.WRcon.misc.Utils;
+import android.content.Intent;
 
 public class MainActivity extends AppCompatListActivity
 {
@@ -99,7 +100,7 @@ public class MainActivity extends AppCompatListActivity
 					.setView(et)
 					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 						public void onClick(DialogInterface di, int w) {
-							Toast.makeText(MainActivity.this, R.string.importing, Toast.LENGTH_LONG).show();
+							Snackbar.make(findViewById(android.R.id.content), R.string.importing, Toast.LENGTH_LONG).show();
 							new Thread(){
 								public void run() {
 									final Server[] sv;
@@ -109,7 +110,7 @@ public class MainActivity extends AppCompatListActivity
 											public void run() {
 												sla.addAll(sv);
 												saveServers();
-												Toast.makeText(MainActivity.this, getResources().getString(R.string.imported).replace("[PATH]", et.getText().toString()), Toast.LENGTH_LONG).show();
+												Snackbar.make(findViewById(android.R.id.content), getResources().getString(R.string.imported).replace("[PATH]", et.getText().toString()), Toast.LENGTH_LONG).show();
 											}
 										});
 								}
@@ -126,7 +127,7 @@ public class MainActivity extends AppCompatListActivity
 					.setView(et_)
 					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 						public void onClick(DialogInterface di, int w) {
-							Toast.makeText(MainActivity.this, R.string.exporting, Toast.LENGTH_LONG).show();
+							Snackbar.make(findViewById(android.R.id.content), R.string.exporting, Toast.LENGTH_LONG).show();
 							new AsyncTask<Void,Void,File>(){
 								public File doInBackground(Void... a) {
 									File f=new File(Environment.getExternalStorageDirectory(), "/Wisecraft");
@@ -138,9 +139,9 @@ public class MainActivity extends AppCompatListActivity
 								}
 								public void onPostExecute(File f) {
 									if (f != null) {
-										Toast.makeText(MainActivity.this, getResources().getString(R.string.export_complete).replace("[PATH]", f + ""), Toast.LENGTH_LONG).show();
+										Snackbar.make(findViewById(android.R.id.content), getResources().getString(R.string.export_complete).replace("[PATH]", f + ""), Toast.LENGTH_LONG).show();
 									} else {
-										Toast.makeText(MainActivity.this, getResources().getString(R.string.export_failed), Toast.LENGTH_LONG).show();
+										Snackbar.make(findViewById(android.R.id.content), getResources().getString(R.string.export_failed), Toast.LENGTH_LONG).show();
 									}
 								}
 							}.execute();
@@ -179,6 +180,7 @@ public class MainActivity extends AppCompatListActivity
 		@Override
 		public void onItemClick(AdapterView<?> p1, View p2, int p3, long p4) {
 			// TODO: Implement this method
+			startActivity(new Intent(MainActivity.this, RCONActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port));
 		}
 
 		@Override
