@@ -223,6 +223,15 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 	public RCon getRCon() {
 		return rcon;
 	}
+	public Presenter getPresenter(){
+		if(this instanceof Presenter){
+			return (Presenter)this;
+		}else if(getApplication() instanceof Presenter){
+			return (Presenter)getApplication();
+		}else{
+			return null;
+		}
+	}
 
 	private void applyHandlers() {
 		new Stop(this);
@@ -269,7 +278,7 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 								if (!living)return;
 								if (!result) {
 									appendIntoConsole(getResources().getString(R.string.incorrectPassword));
-									Toast.makeText(PasswordAsking.this, R.string.incorrectPassword, Toast.LENGTH_SHORT).show();
+									getPresenter().showSelfMessage(RCONActivityBase.this, R.string.incorrectPassword, Presenter.MESSAGE_SHOW_LENGTH_SHORT);
 									askPassword();
 								} else {
 									appendIntoConsole(getResources().getString(R.string.connected));

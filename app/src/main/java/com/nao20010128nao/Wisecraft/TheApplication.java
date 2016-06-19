@@ -10,6 +10,7 @@ import com.nao20010128nao.Wisecraft.services.*;
 import java.lang.reflect.*;
 import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
+import android.widget.Toast;
 
 public class TheApplication extends Application implements com.nao20010128nao.Wisecraft.rcon.Presenter {
 	public static TheApplication instance;
@@ -127,5 +128,17 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 	public int getDialogStyleId() {
 		// TODO: Implement this method
 		return R.style.AppAlertDialog;
+	}
+	
+	@Override
+	public void showSelfMessage(Activity a, int strRes, int duration) {
+		// TODO: Implement this method
+		Toast.makeText(a,strRes,duration==com.nao20010128nao.Wisecraft.rcon.Presenter.MESSAGE_SHOW_LENGTH_SHORT?Toast.LENGTH_SHORT:Toast.LENGTH_LONG).show();
+	}
+
+	@Override
+	public void showSelfMessage(Activity a, String str, int duration) {
+		// TODO: Implement this method
+		Toast.makeText(a,str,duration==com.nao20010128nao.Wisecraft.rcon.Presenter.MESSAGE_SHOW_LENGTH_SHORT?Toast.LENGTH_SHORT:Toast.LENGTH_LONG).show();
 	}
 }
