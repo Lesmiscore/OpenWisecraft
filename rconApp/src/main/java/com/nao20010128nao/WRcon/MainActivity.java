@@ -21,20 +21,33 @@ import android.content.DialogInterface;
 import android.widget.EditText;
 import android.widget.Toast;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
+import com.google.gson.Gson;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.support.v7.widget.AppCompatEditText;
+import java.io.File;
+import android.os.Environment;
+import android.os.AsyncTask;
+import com.nao20010128nao.WRcon.misc.Utils;
 
 public class MainActivity extends AppCompatListActivity
 {
 	List<Server> list;
 	ServerListAdapter sla;
+	Gson gson=new Gson();
+	SharedPreferences pref;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
+		pref=PreferenceManager.getDefaultSharedPreferences(this);
 		sla=new ServerListAdapter();
 		setListAdapter(sla);
 		getListView().setLongClickable(true);
 		getListView().setOnItemClickListener(sla);
 		getListView().setOnItemLongClickListener(sla);
+		loadServers();
 	}
 
 	@Override
@@ -42,7 +55,8 @@ public class MainActivity extends AppCompatListActivity
 		// TODO: Implement this method
 		SubMenu add=menu.addSubMenu(Menu.NONE,0,1,R.string.add).setIcon(R.drawable.ic_action_new_light);
 		add.add(Menu.NONE,1,1,R.string.addSingle).setIcon(R.drawable.ic_action_new_light);
-		add.add(Menu.NONE,2,1,R.string.importFromWc).setIcon(R.drawable.ic_action_import_export_light);
+		add.add(Menu.NONE,2,1,R.string.imporT).setIcon(R.drawable.ic_action_import_export_light);
+		add.add(Menu.NONE,3,1,R.string.export).setIcon(R.drawable.ic_action_import_export_light);
 		MenuItemCompat.setShowAsAction(add.getItem(),MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
 		return true;
 	}
@@ -71,18 +85,91 @@ public class MainActivity extends AppCompatListActivity
 							sv.ip=ip;
 							sv.port=port;
 							sla.add(sv);
+							saveServers();
 						}
 					})
 					.setNegativeButton(android.R.string.cancel,null)
 					.show();
 				break;
 			case 2:
-				
+				final AppCompatEditText et=new AppCompatEditText(this);
+				et.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/rcon_servers.json").toString());
+				new AppCompatAlertDialog.Builder(this, R.style.AppAlertDialog)
+					.setTitle(R.string.import_typepath)
+					.setView(et)
+					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
+						public void onClick(DialogInterface di, int w) {
+							Toast.makeText(MainActivity.this, R.string.importing, Toast.LENGTH_LONG).show();
+							new Thread(){
+								public void run() {
+									final Server[] sv;
+									String json=Utils.readWholeFile(new File(et.getText().toString()));
+									sv = gson.fromJson(json, Server[].class);
+									runOnUiThread(new Runnable(){
+											public void run() {
+												sla.addAll(sv);
+												saveServers();
+												Toast.makeText(MainActivity.this, getResources().getString(R.string.imported).replace("[PATH]", et.getText().toString()), Toast.LENGTH_LONG).show();
+											}
+										});
+								}
+							}.start();
+						}
+					})
+					.show();
+				break;
+			case 3:
+				final AppCompatEditText et_=new AppCompatEditText(this);
+				et_.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/rcon_servers.json").toString());
+				new AppCompatAlertDialog.Builder(this, R.style.AppAlertDialog)
+					.setTitle(R.string.export_typepath)
+					.setView(et_)
+					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
+						public void onClick(DialogInterface di, int w) {
+							Toast.makeText(MainActivity.this, R.string.exporting, Toast.LENGTH_LONG).show();
+							new AsyncTask<Void,Void,File>(){
+								public File doInBackground(Void... a) {
+									File f=new File(Environment.getExternalStorageDirectory(), "/Wisecraft");
+									f.mkdirs();
+									if (Utils.writeToFile(f = new File(et_.getText().toString()), gson.toJson(list, List.class)))
+										return f;
+									else
+										return null;
+								}
+								public void onPostExecute(File f) {
+									if (f != null) {
+										Toast.makeText(MainActivity.this, getResources().getString(R.string.export_complete).replace("[PATH]", f + ""), Toast.LENGTH_LONG).show();
+									} else {
+										Toast.makeText(MainActivity.this, getResources().getString(R.string.export_failed), Toast.LENGTH_LONG).show();
+									}
+								}
+							}.execute();
+						}
+					})
+					.show();
 				break;
 		}
 		return super.onOptionsItemSelected(item)|true;
 	}
-	
+	public void loadServers() {
+		int version=pref.getInt("serversJsonVersion", 0);
+		switch (version) {
+			case 0:
+				Server[] sa=gson.fromJson(pref.getString("servers", "[]"), Server[].class);
+				sla.clear();
+				sla.addAll(sa);
+				break;
+		}
+	}
+	public void saveServers() {
+		new Thread(){
+			public void run() {
+				String json;
+				pref.edit().putInt("serversJsonVersion",0).putString("servers", json = gson.toJson(list)).commit();
+				Log.d("json", json);
+			}
+		}.start();
+	}
 	
 	class ServerListAdapter extends AppBaseArrayAdapter<Server> implements ListView.OnItemClickListener,ListView.OnItemLongClickListener{
 		public ServerListAdapter(){
