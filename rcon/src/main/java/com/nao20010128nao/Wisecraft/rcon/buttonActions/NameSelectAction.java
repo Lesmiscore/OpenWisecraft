@@ -10,12 +10,13 @@ import com.nao20010128nao.Wisecraft.rcon.*;
 import java.io.*;
 
 import com.nao20010128nao.Wisecraft.rcon.R;
+import android.support.v7.app.AlertDialog;
 
 public abstract class NameSelectAction extends BaseAction {
 	EditText name;
 	ListView online;
 	Button submit;
-	AppCompatAlertDialog dialog;
+	AlertDialog dialog;
 	public NameSelectAction(RCONActivityBase act) {
 		super(act);
 	}
@@ -23,7 +24,7 @@ public abstract class NameSelectAction extends BaseAction {
 	@Override
 	public void onClick(View p1) {
 		// TODO: Implement this method
-		dialog = (AppCompatAlertDialog)new AppCompatAlertDialog.Builder(this,((Presenter)getActivity().getApplication()).getDialogStyleId())
+		dialog = new AppCompatAlertDialog.Builder(this,((Presenter)getActivity().getApplication()).getDialogStyleId())
 			.setView(inflatePlayersView())
 			.show();
 	}
