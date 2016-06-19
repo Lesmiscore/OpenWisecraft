@@ -37,7 +37,7 @@ public class Me extends BaseAction {
 				public void onClick(View p1) {
 					// TODO: Implement this method
 					getActivity().performSend("me " + cmd.getText());
-
+					dialog.dismiss();
 				}
 			});
 		return v;
