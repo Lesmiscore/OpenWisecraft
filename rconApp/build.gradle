@@ -37,6 +37,7 @@ android {
 }
 
 dependencies {
+	compile project(':common')
     compile fileTree(dir: 'libs', include: ['*.jar'])
 	compile project(':rcon')
 	compile project(':HoloIcons')
