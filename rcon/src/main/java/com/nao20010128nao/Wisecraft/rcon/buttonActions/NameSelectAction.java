@@ -64,8 +64,9 @@ public abstract class NameSelectAction extends BaseAction {
 					return onPlayersList();
 				} catch (Throwable e) {
 					DebugWriter.writeToE("RCON-NSA",e);
+					getActivity().getPresenter().showSelfMessage(getActivity(), R.string.rconListError, Presenter.MESSAGE_SHOW_LENGTH_SHORT);
 				}
-				return null;
+				return RconModule_Constant.EMPTY_STRING_ARRAY;
 			}
 			public void onPostExecute(String[] s) {
 				CompatArrayAdapter.addAll(aa,s);
