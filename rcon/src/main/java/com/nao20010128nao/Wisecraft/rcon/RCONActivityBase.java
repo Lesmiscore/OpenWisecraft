@@ -148,8 +148,9 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 					return rcon.list();
 				} catch (Throwable e) {
 					DebugWriter.writeToE("RCON",e);
+					notifyRetriveError();
 				}
-				return null;
+				return RconModule_Constant.EMPTY_STRING_ARRAY;
 			}
 			public void onPostExecute(String[] s) {
 				playersListInternal.clear();
@@ -158,11 +159,17 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 				if (playersCount != null)
 					playersCount.setText(getResources().getString(R.string.indicatePlayers).replace("[PLAYERS]", s.length + ""));
 			}
+			public void notifyRetriveError(){
+				runOnUiThread(new Runnable(){
+					public void run(){
+						getPresenter().showSelfMessage(RCONActivityBase.this,R.string.rconListError,Presenter.MESSAGE_SHOW_LENGTH_LONG);
+					}
+				});
+			}
 		}.execute();
 	}
 	TextView newTextViewForConsole(String s) {
-		TextView tv=new TextView(this);
-		tv.setTypeface(Typeface.MONOSPACE);
+		TextView tv=(TextView)getLayoutInflater().inflate(R.layout.rcon_line_textview,null);
 		tv.setText(s);
 		return tv;
 	}
