@@ -28,6 +28,7 @@ public class RCONActivity extends RCONActivityBase
 					RCONActivity.super.cancelExitActivity();
 				}
 			})
+			.setCancelable(false)
 			.show();
 	}
 }
