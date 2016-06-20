@@ -23,7 +23,11 @@ public class RCONActivity extends RCONActivityBase
 					RCONActivity.super.exitActivity();
 				}
 			})
-			.setPositiveButton(android.R.string.cancel,null)
+			.setPositiveButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
+				public void onClick(DialogInterface di,int w){
+					RCONActivity.super.cancelExitActivity();
+				}
+			})
 			.show();
 	}
 }

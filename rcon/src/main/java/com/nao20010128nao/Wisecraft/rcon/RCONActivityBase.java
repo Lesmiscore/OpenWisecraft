@@ -118,26 +118,12 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 		ok.setOnClickListener(new View.OnClickListener(){
 				public void onClick(View v) {
 					if (rcon != null) {
-						new Thread(){
+						performSend(command.getText().toString());
+						runOnUiThread(new Runnable(){
 							public void run() {
-								try {
-									String s=rcon.send(command.getText().toString());
-									if (s.equals("")) {
-										s = getResources().getString(R.string.emptyResponse);
-									}
-									appendIntoConsole(s);
-									runOnUiThread(new Runnable(){
-											public void run() {
-												command.setText("");
-											}
-										});
-								} catch (IOException e) {
-									DebugWriter.writeToE("RCON",e);
-								} catch (IncorrectRequestIdException e) {
-									DebugWriter.writeToE("RCON",e);
-								}
+								command.setText("");
 							}
-						}.start();
+						});
 					}
 				}
 			});
@@ -201,6 +187,9 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 		rcon = null;
 		living = false;
 	}
+	public void cancelExitActivity(){
+		if(rcon==null)pa.askPassword();
+	}
 	public void performSend(final String cmd) {
 		if (rcon != null) {
 			new Thread(){
@@ -211,10 +200,9 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 							s = getResources().getString(R.string.emptyResponse);
 						}
 						appendIntoConsole(s);
-					} catch (IOException e) {
+					} catch (Throwable e) {
 						DebugWriter.writeToE("RCON",e);
-					} catch (IncorrectRequestIdException e) {
-						DebugWriter.writeToE("RCON",e);
+						appendIntoConsole(getResources().getString(R.string.rconSendError));
 					}
 				}
 			}.start();

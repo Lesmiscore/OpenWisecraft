@@ -171,6 +171,7 @@ public class MainActivity extends AppCompatListActivity
 				Log.d("json", json);
 			}
 		}.start();
+		sla.notifyDataSetChanged();
 	}
 	
 	class ServerListAdapter extends AppBaseArrayAdapter<Server> implements ListView.OnItemClickListener,ListView.OnItemLongClickListener{
@@ -193,8 +194,42 @@ public class MainActivity extends AppCompatListActivity
 						public void onClick(DialogInterface di,int w){
 							switch(w){
 								case 0:
+									new AlertDialog.Builder(MainActivity.this,R.style.AppAlertDialog)
+										.setMessage(R.string.auSure)
+										.setPositiveButton(android.R.string.no,null)
+										.setNegativeButton(android.R.string.yes,new DialogInterface.OnClickListener(){
+											public void onClick(DialogInterface di,int w){
+												sla.remove(server);
+												saveServers();
+											}
+										})
+										.show();
 									break;
 								case 1:
+									final View dialogView=getLayoutInflater().inflate(R.layout.server_add_dialog_new,null);
+									((EditText)dialogView.findViewById(R.id.serverIp)).setText(server.ip);
+									((EditText)dialogView.findViewById(R.id.serverPort)).setText(server.port+"");
+									new AppCompatAlertDialog.Builder(MainActivity.this,R.style.AppAlertDialog)
+										.setView(dialogView)
+										.setTitle(R.string.edit)
+										.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+											public void onClick(DialogInterface di,int w){
+												String ip=((EditText)dialogView.findViewById(R.id.serverIp)).getText().toString();
+												String portStr=((EditText)dialogView.findViewById(R.id.serverPort)).getText().toString();
+												int port;
+												try{
+													port=Integer.valueOf(portStr);
+												}catch(Throwable e){
+													Snackbar.make(findViewById(android.R.id.content),R.string.numError,Snackbar.LENGTH_LONG).show();
+													return;
+												}
+												server.ip=ip;
+												server.port=port;
+												saveServers();
+											}
+										})
+										.setNegativeButton(android.R.string.cancel,null)
+										.show();
 									break;
 							}
 						}
