@@ -22,9 +22,15 @@
             </intent-filter>
         </activity>
 		<activity
-            android:name=".RCONActivity">
-				
+            android:name=".RCONActivity"
+			android:exported="false">
 		</activity>
+		<activity
+            android:label="@string/aboutApp"
+            android:name=".AboutAppActivity"
+			android:exported="false"
+			android:theme="@style/AppTheme.OpenSource">
+        </activity>
     </application>
 
 </manifest>

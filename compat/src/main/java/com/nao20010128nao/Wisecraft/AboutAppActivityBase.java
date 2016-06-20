@@ -105,22 +105,12 @@ public abstract class AboutAppActivityBase extends ScrollingActivity
 	}
 	
 	public void addCard(View v){
-		//final float baseMargin=getResources().getDimension(R.dimen.cardContentMargin);
 		CardView cv=(CardView)getLayoutInflater().inflate(R.layout.about_app_single_card,ll,false);
-		/*ViewGroup.MarginLayoutParams lp=new CardView.MarginLayoutParams(-1,-1);
-		lp.height=lp.width=ViewGroup.LayoutParams.MATCH_PARENT;
-		lp.setMargins((int)baseMargin,(int)baseMargin,(int)baseMargin,(int)baseMargin);
-		v.setLayoutParams(lp);*/
 		cv.addView(v);
 		ll.addView(cv);
 	}
 	public void addCardAt(View v,int ofs){
-		//final float baseMargin=getResources().getDimension(R.dimen.cardContentMargin);
 		CardView cv=(CardView)getLayoutInflater().inflate(R.layout.about_app_single_card,ll,false);
-		/*ViewGroup.MarginLayoutParams lp=new CardView.MarginLayoutParams(-1,-1);
-		lp.height=lp.width=ViewGroup.LayoutParams.MATCH_PARENT;
-		lp.setMargins((int)baseMargin,(int)baseMargin,(int)baseMargin,(int)baseMargin);
-		v.setLayoutParams(lp);*/
 		cv.addView(v);
 		ll.addView(cv,ofs);
 	}
@@ -130,23 +120,12 @@ public abstract class AboutAppActivityBase extends ScrollingActivity
 	public void addCardAt(int v,int ofs){
 		addCardAt(getLayoutInflater().inflate(v,null),ofs);
 	}
-	
-	/*
-	private ViewGroup.LayoutParams resolveLayoutParams(View v){
-		if(v.getLayoutParams()!=null)return v.getLayoutParams();
-		Class current=v.getClass();
-		while(true){
-			if(current==View.class)         return new ViewGroup.LayoutParams(-1,-1);
-			if(current==LinearLayout.class) return new LinearLayout.LayoutParams(-1,-1);
-			if(current==FrameLayout.class)  return new FrameLayout.LayoutParams(-1,-1);
-			try {
-				return (ViewGroup.LayoutParams)Class.forName(current.getName() + "$LayoutParams").getConstructor(int.class, int.class).newInstance(-1, -1);
-			} catch (Throwable e) {
-				current=current.getSuperclass();
-			}
-		}
+	public void removeCardAt(int ofs){
+		ll.removeViewAt(ofs);
 	}
-	*/
+	public void removeAllCards(){
+		ll.removeAllViews();
+	}
 	
 	public static class LogoImageViewBehavior extends CoordinatorLayout.Behavior<ImageView>{
 		boolean mIsAnimating;
