@@ -31,6 +31,7 @@ import android.os.Environment;
 import android.os.AsyncTask;
 import com.nao20010128nao.WRcon.misc.Utils;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 
 public class MainActivity extends AppCompatListActivity
 {
@@ -184,9 +185,22 @@ public class MainActivity extends AppCompatListActivity
 		}
 
 		@Override
-		public boolean onItemLongClick(AdapterView<?> p1, View p2, int p3, long p4) {
+		public boolean onItemLongClick(AdapterView<?> p1, View p2, final int position, long p4) {
 			// TODO: Implement this method
-			return false;
+			final Server server=getItem(position);
+			new AlertDialog.Builder(MainActivity.this)
+				.setItems(R.array.rconAppServerSubMenu,new DialogInterface.OnClickListener(){
+						public void onClick(DialogInterface di,int w){
+							switch(w){
+								case 0:
+									break;
+								case 1:
+									break;
+							}
+						}
+					})
+				.show();
+			return true;
 		}
 
 		@Override

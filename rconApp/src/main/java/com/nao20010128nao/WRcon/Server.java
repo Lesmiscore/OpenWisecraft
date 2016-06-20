@@ -1,6 +1,6 @@
 package com.nao20010128nao.WRcon;
 
-public class Server
+public class Server implements Cloneable
 {
 	public String ip;
 	public int port;
@@ -27,5 +27,12 @@ public class Server
 		// TODO: Implement this method
 		return new StringBuilder().append(ip).append(':').append(port).toString();
 	}
-	
+
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// TODO: Implement this method
+		Server s=new Server();
+		s.ip=ip;s.port=port;
+		return s;
+	}
 }
