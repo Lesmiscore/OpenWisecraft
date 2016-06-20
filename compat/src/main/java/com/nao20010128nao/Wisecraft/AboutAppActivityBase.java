@@ -126,13 +126,4 @@ public abstract class AboutAppActivityBase extends ScrollingActivity
 	public void removeAllCards(){
 		ll.removeAllViews();
 	}
-	
-	public static class LogoImageViewBehavior extends CoordinatorLayout.Behavior<ImageView>{
-		boolean mIsAnimating;
-		AboutAppActivityBase ctx;
-		public LogoImageViewBehavior(Context context, AttributeSet attrs) {
-			super();
-			ctx=(AboutAppActivityBase)context;
-		}
-	}
 }
