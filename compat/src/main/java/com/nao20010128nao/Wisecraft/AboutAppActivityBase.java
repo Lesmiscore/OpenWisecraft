@@ -105,31 +105,23 @@ public abstract class AboutAppActivityBase extends ScrollingActivity
 	}
 	
 	public void addCard(View v){
-		CardView cv=(CardView)getLayoutInflater().inflate(R.layout.about_app_single_card,null);
-		ViewGroup.MarginLayoutParams lp=new CardView.MarginLayoutParams(-1,-1);
+		//final float baseMargin=getResources().getDimension(R.dimen.cardContentMargin);
+		CardView cv=(CardView)getLayoutInflater().inflate(R.layout.about_app_single_card,ll,false);
+		/*ViewGroup.MarginLayoutParams lp=new CardView.MarginLayoutParams(-1,-1);
 		lp.height=lp.width=ViewGroup.LayoutParams.MATCH_PARENT;
-		lp.setMargins((int)getResources().getDimension(R.dimen.cardContentMargin),(int)getResources().getDimension(R.dimen.cardContentMargin),(int)getResources().getDimension(R.dimen.cardContentMargin),(int)getResources().getDimension(R.dimen.cardContentMargin));
-		v.setLayoutParams(lp);
+		lp.setMargins((int)baseMargin,(int)baseMargin,(int)baseMargin,(int)baseMargin);
+		v.setLayoutParams(lp);*/
 		cv.addView(v);
-		lp=new LinearLayout.MarginLayoutParams(-1,-1);
-		lp.height=ViewGroup.LayoutParams.WRAP_CONTENT;
-		lp.width=ViewGroup.LayoutParams.MATCH_PARENT;
-		lp.setMargins((int)getResources().getDimension(R.dimen.cardContentMargin)*2,(int)getResources().getDimension(R.dimen.cardContentMargin),(int)getResources().getDimension(R.dimen.cardContentMargin)*2,(int)getResources().getDimension(R.dimen.cardContentMargin));
-		cv.setLayoutParams(lp);
 		ll.addView(cv);
 	}
 	public void addCardAt(View v,int ofs){
-		CardView cv=(CardView)getLayoutInflater().inflate(R.layout.about_app_single_card,null);
-		ViewGroup.MarginLayoutParams lp=new CardView.MarginLayoutParams(-1,-1);
+		//final float baseMargin=getResources().getDimension(R.dimen.cardContentMargin);
+		CardView cv=(CardView)getLayoutInflater().inflate(R.layout.about_app_single_card,ll,false);
+		/*ViewGroup.MarginLayoutParams lp=new CardView.MarginLayoutParams(-1,-1);
 		lp.height=lp.width=ViewGroup.LayoutParams.MATCH_PARENT;
-		lp.setMargins((int)getResources().getDimension(R.dimen.cardContentMargin),(int)getResources().getDimension(R.dimen.cardContentMargin),(int)getResources().getDimension(R.dimen.cardContentMargin),(int)getResources().getDimension(R.dimen.cardContentMargin));
-		v.setLayoutParams(lp);
+		lp.setMargins((int)baseMargin,(int)baseMargin,(int)baseMargin,(int)baseMargin);
+		v.setLayoutParams(lp);*/
 		cv.addView(v);
-		lp=new LinearLayout.MarginLayoutParams(-1,-1);
-		lp.height=ViewGroup.LayoutParams.WRAP_CONTENT;
-		lp.width=ViewGroup.LayoutParams.MATCH_PARENT;
-		lp.setMargins((int)getResources().getDimension(R.dimen.cardContentMargin)*2,(int)getResources().getDimension(R.dimen.cardContentMargin),(int)getResources().getDimension(R.dimen.cardContentMargin)*2,(int)getResources().getDimension(R.dimen.cardContentMargin));
-		cv.setLayoutParams(lp);
 		ll.addView(cv,ofs);
 	}
 	public void addCard(int v){
@@ -139,6 +131,7 @@ public abstract class AboutAppActivityBase extends ScrollingActivity
 		addCardAt(getLayoutInflater().inflate(v,null),ofs);
 	}
 	
+	/*
 	private ViewGroup.LayoutParams resolveLayoutParams(View v){
 		if(v.getLayoutParams()!=null)return v.getLayoutParams();
 		Class current=v.getClass();
@@ -153,6 +146,7 @@ public abstract class AboutAppActivityBase extends ScrollingActivity
 			}
 		}
 	}
+	*/
 	
 	public static class LogoImageViewBehavior extends CoordinatorLayout.Behavior<ImageView>{
 		boolean mIsAnimating;
