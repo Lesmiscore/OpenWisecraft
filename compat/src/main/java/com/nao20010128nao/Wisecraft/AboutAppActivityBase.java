@@ -65,9 +65,9 @@ public abstract class AboutAppActivityBase extends ScrollingActivity
 			googleplus=(Button)findViewById(R.id.googleplus);
 			googleplus.setTypeface(icons);
 			googleplus.setTextColor(0xffdd5044);
-			googleplus.setText(String.valueOf((char)0xe903));
-			  googleplus.setText(String.valueOf((char)0xe904));//Google+ without frame
-			//googleplus.setText(String.valueOf((char)0xe905));//Google+ with frame (like older Google+ app icon)
+			  googleplus.setText(String.valueOf((char)0xe903));//Google+ without frame
+			//googleplus.setText(String.valueOf((char)0xe904));//Google+ with square frame (like older Google+ app icon)
+			//googleplus.setText(String.valueOf((char)0xe905));//Google+ with round frame (like Google+ app icon at present)
 			
 			googleplus.setOnClickListener(new View.OnClickListener(){
 					public void onClick(View v){
