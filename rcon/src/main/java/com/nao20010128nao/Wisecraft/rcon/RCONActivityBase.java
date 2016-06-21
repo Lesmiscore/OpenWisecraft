@@ -74,7 +74,7 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 				}
 			});
 
-		playersList = new AppBaseArrayAdapter<>(this, android.R.layout.simple_list_item_1, playersListInternal = new ArrayList<>(10));
+		playersList = new AppBaseArrayAdapter<String>(this, android.R.layout.simple_list_item_1, playersListInternal = new ArrayList<>(10));
 
 		consoleF = fth.newTabSpec("console");
 		consoleF.setIndicator(getResources().getString(R.string.console));

@@ -248,7 +248,7 @@ public class MainActivity extends AppCompatListActivity
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			// TODO: Implement this method
-			if(convertView==null)convertView=getLayoutInflater().inflate(R.layout.main_server_entry,null);
+			if(convertView==null)convertView=getLayoutInflater().inflate(R.layout.main_server_entry,parent,false);
 			((TextView)convertView.findViewById(R.id.serverIp)).setText(getItem(position).toString());
 			return convertView;
 		}
