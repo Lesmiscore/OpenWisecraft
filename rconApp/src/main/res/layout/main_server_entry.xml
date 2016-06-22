@@ -24,8 +24,9 @@
 	<ImageView
 		android:layout_height="50dp"
 		android:layout_width="50dp"
-		android:src="@drawable/ic_action_forward_light"
-		android:id="@+id/forward"/>
+		android:src="@drawable/ic_action_next_item_light"
+		android:id="@+id/forward"
+		android:paddingLeft="10dp"/>
 
 </LinearLayout>
 

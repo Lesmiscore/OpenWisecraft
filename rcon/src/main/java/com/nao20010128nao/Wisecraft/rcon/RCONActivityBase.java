@@ -258,13 +258,13 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 		new Me(this);
 		new Banlist(this);
 	}
-	class PasswordAsking extends ContextWrapper {
+	class PasswordAsking extends ContextThemeWrapper {
 		EditText password;
 		public PasswordAsking() {
-			super(RCONActivityBase.this);
+			super(RCONActivityBase.this,getPresenter().getDialogStyleId());
 		}
 		public void askPassword() {
-			new AppCompatAlertDialog.Builder(this,((Presenter)getApplication()).getDialogStyleId())
+			new AppCompatAlertDialog.Builder(this,getPresenter().getDialogStyleId())
 				.setView(inflateDialogView())
 				.setCancelable(false)
 				.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
