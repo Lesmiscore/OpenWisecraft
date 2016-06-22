@@ -8,4 +8,5 @@ public interface Presenter
 	public int getDialogStyleId();
 	public void showSelfMessage(Activity a,int strRes,int duration);
 	public void showSelfMessage(Activity a,String str,int duration);
+	public KeyChain getKeyChain();
 }

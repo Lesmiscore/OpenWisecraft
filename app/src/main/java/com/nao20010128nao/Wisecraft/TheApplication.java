@@ -141,4 +141,10 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		// TODO: Implement this method
 		Toast.makeText(a,str,duration==com.nao20010128nao.Wisecraft.rcon.Presenter.MESSAGE_SHOW_LENGTH_SHORT?Toast.LENGTH_SHORT:Toast.LENGTH_LONG).show();
 	}
+	
+	@Override
+	public KeyChain getKeyChain() {
+		// TODO: Implement this method
+		return null;
+	}
 }

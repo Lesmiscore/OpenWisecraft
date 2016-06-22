@@ -2,6 +2,7 @@ package com.nao20010128nao.WRcon;
 import android.app.Application;
 import android.app.Activity;
 import android.support.design.widget.Snackbar;
+import com.nao20010128nao.Wisecraft.rcon.KeyChain;
 
 public class TheApplication extends Application implements com.nao20010128nao.Wisecraft.rcon.Presenter
 {
@@ -30,5 +31,11 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 	public void showSelfMessage(Activity a, String str, int duration) {
 		// TODO: Implement this method
 		Snackbar.make(a.findViewById(android.R.id.content),str,duration==com.nao20010128nao.Wisecraft.rcon.Presenter.MESSAGE_SHOW_LENGTH_SHORT?Snackbar.LENGTH_SHORT:Snackbar.LENGTH_LONG).show();
+	}
+
+	@Override
+	public KeyChain getKeyChain() {
+		// TODO: Implement this method
+		return null;
 	}
 }
