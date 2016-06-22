@@ -50,10 +50,15 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 		ip = getIntent().getStringExtra("ip");
 		port = getIntent().getIntExtra("port", -1);
 		setContentView(R.layout.rconmain);
-		if (rcon == null) {
-			pa.askPassword();
-		} else {
-			applyHandlers();
+		String password=getIntent().getStringExtra("password");
+		if(password!=null){
+			pa.tryConnectWithDialog(password);
+		}else{
+			if (rcon == null) {
+				pa.askPassword();
+			} else {
+				applyHandlers();
+			}
 		}
 		fth = (FragmentTabHost)findViewById(android.R.id.tabhost);
 		fth.setup(this, getSupportFragmentManager(), R.id.container);
@@ -264,24 +269,7 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 				.setCancelable(false)
 				.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 					public void onClick(DialogInterface di, int whi) {
-						appendIntoConsole(getResources().getString(R.string.connecting));
-						new AsyncTask<Void,Void,Boolean>(){
-							public Boolean doInBackground(Void[] o) {
-								return tryConnect(password.getText() + "");
-							}
-							public void onPostExecute(Boolean result) {
-								if (!living)return;
-								if (!result) {
-									appendIntoConsole(getResources().getString(R.string.incorrectPassword));
-									getPresenter().showSelfMessage(RCONActivityBase.this, R.string.incorrectPassword, Presenter.MESSAGE_SHOW_LENGTH_SHORT);
-									askPassword();
-								} else {
-									appendIntoConsole(getResources().getString(R.string.connected));
-									applyHandlers();
-									refreshPlayers();
-								}
-							}
-						}.execute();
+						tryConnectWithDialog(password.getText().toString());
 					}
 				})
 				.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener(){
@@ -290,6 +278,26 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 					}
 				})
 				.show();
+		}
+		public void tryConnectWithDialog(final String s){
+			appendIntoConsole(getResources().getString(R.string.connecting));
+			new AsyncTask<Void,Void,Boolean>(){
+				public Boolean doInBackground(Void[] o) {
+					return tryConnect(s);
+				}
+				public void onPostExecute(Boolean result) {
+					if (!living)return;
+					if (!result) {
+						appendIntoConsole(getResources().getString(R.string.incorrectPassword));
+						getPresenter().showSelfMessage(RCONActivityBase.this, R.string.incorrectPassword, Presenter.MESSAGE_SHOW_LENGTH_SHORT);
+						askPassword();
+					} else {
+						appendIntoConsole(getResources().getString(R.string.connected));
+						applyHandlers();
+						refreshPlayers();
+					}
+				}
+			}.execute();
 		}
 		View inflateDialogView() {
 			View v=getLayoutInflater().inflate(R.layout.askpassword, null, false);
