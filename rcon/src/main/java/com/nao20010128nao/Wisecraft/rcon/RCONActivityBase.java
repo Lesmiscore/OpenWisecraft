@@ -24,7 +24,7 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 	static List<String> consoleLogs=new ArrayList<>();
 	static RCon rcon;
 
-	PasswordAsking pa=new PasswordAsking();
+	PasswordAsking pa;
 	FragmentTabHost fth;
 	TabHost.TabSpec consoleF,playersF;
 	LinearLayout console;
@@ -47,6 +47,7 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		instance = new WeakReference(this);
+		pa=new PasswordAsking();
 		ip = getIntent().getStringExtra("ip");
 		port = getIntent().getIntExtra("port", -1);
 		setContentView(R.layout.rconmain);
@@ -233,6 +234,9 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 		}
 	}
 
+	protected void onConnectionFailed(){}
+	protected void onConnectionSuccess(){}
+	
 	private void applyHandlers() {
 		new Stop(this);
 		new Op(this);
@@ -291,10 +295,12 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 						appendIntoConsole(getResources().getString(R.string.connected));
 						applyHandlers();
 						refreshPlayers();
+						onConnectionSuccess();
 					} else {
 						appendIntoConsole(getResources().getString(R.string.incorrectPassword));
 						getPresenter().showSelfMessage(RCONActivityBase.this, R.string.incorrectPassword, Presenter.MESSAGE_SHOW_LENGTH_SHORT);
 						askPassword();
+						onConnectionFailed();
 					}
 				}
 			}.execute();
