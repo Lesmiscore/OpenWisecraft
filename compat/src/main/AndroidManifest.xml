@@ -5,6 +5,12 @@
         android:minSdkVersion="8" 
         android:targetSdkVersion="21" />
     <application>
+		<receiver
+			android:name="com.nao20010128nao.Wisecraft.InformationCommunicatorReceiver">
+			<intent-filter>
+				<action android:name="com.nao20010128nao.Wisecraft.DISCLOSURE_REQUEST"/>
+			</intent-filter>
+		</receiver>
     </application>
 </manifest>
 
