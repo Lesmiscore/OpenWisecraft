@@ -11,6 +11,7 @@ import java.lang.reflect.*;
 import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
 import android.widget.Toast;
+import com.nao20010128nao.Wisecraft.rcon.KeyChain;
 
 public class TheApplication extends Application implements com.nao20010128nao.Wisecraft.rcon.Presenter {
 	public static TheApplication instance;
@@ -141,7 +142,7 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		// TODO: Implement this method
 		Toast.makeText(a,str,duration==com.nao20010128nao.Wisecraft.rcon.Presenter.MESSAGE_SHOW_LENGTH_SHORT?Toast.LENGTH_SHORT:Toast.LENGTH_LONG).show();
 	}
-	
+
 	@Override
 	public KeyChain getKeyChain() {
 		// TODO: Implement this method
