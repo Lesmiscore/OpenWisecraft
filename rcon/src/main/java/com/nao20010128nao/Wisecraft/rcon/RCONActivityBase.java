@@ -106,7 +106,7 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 		runOnUiThread(new Runnable(){
 				public void run() {
 					consoleLogs.add(s);
-					console.addView(newTextViewForConsole(s));
+					if(console!=null)console.addView(newTextViewForConsole(s));
 				}
 			});
 	}
@@ -235,7 +235,7 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 	}
 
 	protected void onConnectionFailed(){}
-	protected void onConnectionSuccess(){}
+	protected void onConnectionSuccess(String password){}
 	
 	private void applyHandlers() {
 		new Stop(this);
@@ -295,7 +295,7 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 						appendIntoConsole(getResources().getString(R.string.connected));
 						applyHandlers();
 						refreshPlayers();
-						onConnectionSuccess();
+						onConnectionSuccess(s);
 					} else {
 						appendIntoConsole(getResources().getString(R.string.incorrectPassword));
 						getPresenter().showSelfMessage(RCONActivityBase.this, R.string.incorrectPassword, Presenter.MESSAGE_SHOW_LENGTH_SHORT);
