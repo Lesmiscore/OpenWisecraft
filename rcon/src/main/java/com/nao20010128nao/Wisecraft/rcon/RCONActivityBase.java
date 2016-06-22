@@ -287,14 +287,14 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 				}
 				public void onPostExecute(Boolean result) {
 					if (!living)return;
-					if (!result) {
-						appendIntoConsole(getResources().getString(R.string.incorrectPassword));
-						getPresenter().showSelfMessage(RCONActivityBase.this, R.string.incorrectPassword, Presenter.MESSAGE_SHOW_LENGTH_SHORT);
-						askPassword();
-					} else {
+					if (result) {
 						appendIntoConsole(getResources().getString(R.string.connected));
 						applyHandlers();
 						refreshPlayers();
+					} else {
+						appendIntoConsole(getResources().getString(R.string.incorrectPassword));
+						getPresenter().showSelfMessage(RCONActivityBase.this, R.string.incorrectPassword, Presenter.MESSAGE_SHOW_LENGTH_SHORT);
+						askPassword();
 					}
 				}
 			}.execute();
