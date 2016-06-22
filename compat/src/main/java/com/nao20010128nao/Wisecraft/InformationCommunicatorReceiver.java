@@ -33,7 +33,7 @@ public class InformationCommunicatorReceiver extends BroadcastReceiver
 	}
 	public static boolean startDisclosureRequestIfNeeded(Context ctx,DisclosureResult dr){
 		SharedPreferences sp=PreferenceManager.getDefaultSharedPreferences(ctx);
-		if(sp.contains("uuid"))return false;
+		if(sp.contains("uuid")){dr.nothingToDisclosure();return false;}
 		BroadcastReceiver discloreMan=new InformationCommunicatorReceiver(dr){};
 		IntentFilter infi=new IntentFilter();
 		infi.addAction(ICR_RESULT_ACTION);
@@ -44,5 +44,6 @@ public class InformationCommunicatorReceiver extends BroadcastReceiver
 	public static interface DisclosureResult{
 		public void disclosued();
 		public void disclosureTimeout();
+		public void nothingToDisclosure();
 	}
 }
