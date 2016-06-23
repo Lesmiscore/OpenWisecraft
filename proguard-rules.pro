@@ -65,3 +65,21 @@
 -keep class android.support.** {
   *;
 }
+-keep public class com.nao20010128nao.Wisecraft.TheApplication {
+   public static final android.graphics.Typeface **;
+}
+-keep public class com.nao20010128nao.Wisecraft.misc.Server {
+   *;
+}
+-keep public class com.nao20010128nao.WRcon.misc.Server {
+   *;
+}
+-keep public class com.nao20010128nao.Wisecraft.collector.CollectorMain {
+   *;
+}
+-keep public class com.nao20010128nao.WRcon.collector.CollectorMain {
+   *;
+}
+-keep public class * implements com.nao20010128nao.Wisecraft.misc.pinger.ServerPingResult {
+   *;
+}
