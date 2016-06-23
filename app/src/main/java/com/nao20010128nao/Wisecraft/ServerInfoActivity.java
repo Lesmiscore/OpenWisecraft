@@ -67,8 +67,8 @@ public class ServerInfoActivity extends ActionBarActivity {
 		// TODO: Implement this method
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
 		if(pref.getBoolean("useBright",false)&!(pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false))){
-			setTheme(R.style.AppTheme_Bright);
-			getTheme().applyStyle(R.style.AppTheme_Bright,true);
+			setTheme(R.style.AppTheme_Bright_NoActionBar);
+			getTheme().applyStyle(R.style.AppTheme_Bright_NoActionBar,true);
 		}
 		super.onCreate(savedInstanceState);
 		getWindow().requestFeature(Window.FEATURE_ACTION_MODE_OVERLAY);
@@ -85,7 +85,8 @@ public class ServerInfoActivity extends ActionBarActivity {
 
 		keeping = getIntent().getBundleExtra("object");
 
-		setContentView(R.layout.tabs);
+		setContentView(R.layout.server_info_tabs);
+		setSupportActionBar((android.support.v7.widget.Toolbar)findViewById(R.id.toolbar));
 		fth = (FragmentTabHost)findViewById(android.R.id.tabhost);
 		fth.setup(this, getSupportFragmentManager(), R.id.container);
 
@@ -153,8 +154,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 			BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
 			bd.setTargetDensity(getResources().getDisplayMetrics());
 			bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
-			getSupportActionBar().setBackgroundDrawable(bd);
-			
+			findViewById(R.id.appbar).setBackgroundDrawable(bd);
 			if (Build.VERSION.SDK_INT >= 21) {
 				getWindow().setStatusBarColor(0xff3a2a1d);
 			}
@@ -410,6 +410,18 @@ public class ServerInfoActivity extends ActionBarActivity {
 				pref.edit().putString("pcuseruuids", new Gson().toJson(TheApplication.instance.pcUserUUIDs)).commit();
 			}
 		}.start();
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO: Implement this method
+		super.onResume();
+		if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
+			for (int i = 0; i < fth.getTabWidget().getChildCount(); i++) {
+				TextView tv = (TextView) fth.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
+				tv.setTextColor(Color.WHITE);
+			}
+		}
 	}
 
 	public void addModsTab() {
