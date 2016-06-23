@@ -69,17 +69,23 @@
    public static final android.graphics.Typeface **;
 }
 -keep public class com.nao20010128nao.Wisecraft.misc.Server {
-   *;
+   <fields>;
 }
 -keep public class com.nao20010128nao.WRcon.misc.Server {
-   *;
+   <fields>;
 }
 -keep public class com.nao20010128nao.Wisecraft.collector.CollectorMain {
-   *;
+   <fields>;
 }
 -keep public class com.nao20010128nao.WRcon.collector.CollectorMain {
-   *;
+   <fields>;
 }
 -keep public class * implements com.nao20010128nao.Wisecraft.misc.pinger.ServerPingResult {
    *;
+}
+-keep public class com.nao20010128nao.Wisecraft.collector.CollectorMain$** {
+   <fields>;
+}
+-keep public class com.nao20010128nao.WRcon.collector.CollectorMain$** {
+   <fields>;
 }
