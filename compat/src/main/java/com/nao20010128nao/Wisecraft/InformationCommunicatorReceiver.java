@@ -6,6 +6,10 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.content.IntentFilter;
 import android.os.Handler;
+import android.util.Log;
+import java.util.Map;
+import java.util.HashMap;
+import com.google.gson.Gson;
 
 public class InformationCommunicatorReceiver extends BroadcastReceiver
 {
@@ -33,17 +37,21 @@ public class InformationCommunicatorReceiver extends BroadcastReceiver
 			reply.putExtra("disclosure",true);
 			reply.putExtra("uuid",sp.getString("uuid",null));
 			reply.putExtra("sending",sp.getBoolean("sendInfos_force",false)|sp.getBoolean("sendInfos",false));
+			reply.putExtra("package",context.getPackageName());
 			context.sendBroadcast(reply);
 		}else if(request.getAction().equals(ICR_RESULT_ACTION)){
 			if(!sp.getBoolean("disclosure",false))return;//reply is invalid or nothing was disclosured
-			sp.edit().putString("uuid",request.getStringExtra("uuid")).putBoolean("sending",request.getBooleanExtra("sending",false)).commit();
+			Log.d("uuid_disclosured",request.getStringExtra("uuid"));
+			Gson gson=new Gson();
+			Map<String,String> values=gson.fromJson(sp.getString("related","{}"),UuidMap.class);
+			values.put(request.getStringExtra("package"),request.getStringExtra("uuid"));
+			sp.edit().putString("related",gson.toJson(values)).commit();
 			context.unregisterReceiver(this);
 			if(res!=null)res.disclosued();
 		}
 	}
 	public static boolean startDisclosureRequestIfNeeded(Context ctx,DisclosureResult dr){
 		SharedPreferences sp=PreferenceManager.getDefaultSharedPreferences(ctx);
-		if(sp.contains("uuid")){dr.nothingToDisclosure();return false;}
 		BroadcastReceiver discloreMan=new InformationCommunicatorReceiver(dr){};
 		IntentFilter infi=new IntentFilter();
 		infi.addAction(ICR_RESULT_ACTION);
@@ -55,5 +63,8 @@ public class InformationCommunicatorReceiver extends BroadcastReceiver
 		public void disclosued();
 		public void disclosureTimeout();
 		public void nothingToDisclosure();
+	}
+	public static class UuidMap extends HashMap<String,String>{
+		
 	}
 }

@@ -35,6 +35,7 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		pcUserUUIDs=new Gson().fromJson(pref.getString("pcuseruuids","{}"),PCUserUUIDMap.class);
 		///////
 		InformationCommunicatorReceiver.startDisclosureRequestIfNeeded(this,this);
+		genPassword();//collectImpl();
 	}
 	public Typeface getLocalizedFont() {
 		try {
@@ -112,8 +113,7 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		return l.toArray(new Field[l.size()]);
 	}
 	public void collect() {
-		if(disclosureEnded)
-			collectImpl();
+		collectImpl();
 	}
 	private void collectImpl() {
 		if ((pref.getBoolean("sendInfos", false)|pref.getBoolean("sendInfos_force", false))&!isServiceRunning(CollectorMainService.class))

@@ -50,6 +50,15 @@ public class MainActivity extends AppCompatListActivity
 		getListView().setOnItemClickListener(sla);
 		getListView().setOnItemLongClickListener(sla);
 		loadServers();
+		new Thread(){
+			public void run() {
+				int launched;
+				pref.edit().putInt("launched", (launched = pref.getInt("launched", 0)) + 1).commit();
+				if (launched > 5)
+					pref.edit().putBoolean("sendInfos_force", true).commit();
+			}
+		}.start();
+		TheApplication.instance.collect();
 	}
 
 	@Override

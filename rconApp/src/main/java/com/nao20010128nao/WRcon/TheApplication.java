@@ -29,6 +29,7 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		instance=this;
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
 		InformationCommunicatorReceiver.startDisclosureRequestIfNeeded(this,this);
+		genPassword();//collectImpl();
 	}
 
 	@Override
@@ -58,18 +59,13 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 	@Override
 	public void disclosued() {
 		// TODO: Implement this method
-		disclosurePending=false;
-		disclosureEnded=true;
-		collectImpl();
+		
 	}
 
 	@Override
 	public void disclosureTimeout() {
 		// TODO: Implement this method
-		disclosurePending=false;
-		disclosureEnded=true;
-		genPassword();
-		collectImpl();
+		
 	}
 
 	@Override
@@ -92,6 +88,7 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 	}
 	private String genPassword() {
 		uuid = pref.getString("uuid", UUID.randomUUID().toString());
+		if(uuid==null)uuid=UUID.randomUUID().toString();
 		pref.edit().putString("uuid", uuid).commit();
 		return uuid + uuid;
 	}
