@@ -59,3 +59,6 @@
 }
 -dontwarn android.support.v4.app.**
 -dontwarn com.nao20010128nao.McServerList.sites.**
+-keep class uk.co.chrisjenx.calligraphy.** {
+  *;
+}
