@@ -27,7 +27,9 @@
     public <init>(android.content.Context, android.util.AttributeSet, int);
     public void set*(...);
 }
--keep public class **.R
+-keep public class **.R {
+  public *;
+}
 -keep public class org.jsoup.** {
   public *;
 }
@@ -52,23 +54,23 @@
    public static final android.graphics.Typeface **;
 }
 -keep public class com.nao20010128nao.Wisecraft.misc.Server {
-   <fields>;
+   public <fields>;
 }
 -keep public class com.nao20010128nao.WRcon.misc.Server {
-   <fields>;
+   public <fields>;
 }
 -keep public class com.nao20010128nao.Wisecraft.collector.CollectorMain {
-   <fields>;
+   public <fields>;
 }
 -keep public class com.nao20010128nao.WRcon.collector.CollectorMain {
-   <fields>;
+   public <fields>;
 }
 -keep public class * implements com.nao20010128nao.Wisecraft.misc.pinger.ServerPingResult {
    *;
 }
 -keep public class com.nao20010128nao.Wisecraft.collector.CollectorMain$** {
-   <fields>;
+   public <fields>;
 }
 -keep public class com.nao20010128nao.WRcon.collector.CollectorMain$** {
-   <fields>;
+   public <fields>;
 }
