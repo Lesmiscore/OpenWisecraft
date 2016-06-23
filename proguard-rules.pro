@@ -57,4 +57,5 @@
 -keep class org.apache.** {
   *;
 }
-
+-donotwarn android.support.v4.app.**
+-donotwarn com.nao20010128nao.McServerList.sites.**
