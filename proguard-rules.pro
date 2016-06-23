@@ -54,7 +54,7 @@
 -keep class com.google.gson.stream.** { *; }
 -keep class com.google.gson.examples.android.model.** { *; }
 -dontwarn org.apache.**
--keep * class org.apache.** {
+-keep class org.apache.** {
   *;
 }
 
