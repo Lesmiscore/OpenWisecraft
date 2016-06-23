@@ -31,7 +31,13 @@
 			android:exported="false"
 			android:theme="@style/AppTheme.OpenSource">
         </activity>
+		
+		<service
+			android:label="@string/app_name"
+			android:name=".services.CollectorMainService"
+			android:exported="false"
+			android:process=".cms">
+		</service>
     </application>
-
 </manifest>
 
