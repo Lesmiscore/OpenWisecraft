@@ -53,5 +53,6 @@
 -keep class sun.misc.Unsafe { *; }
 -keep class com.google.gson.stream.** { *; }
 -keep class com.google.gson.examples.android.model.** { *; }
-
+-dontwarn org.apache.**
+-keep org.apache.**
 
