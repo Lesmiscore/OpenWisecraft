@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.content.IntentFilter;
+import android.os.Handler;
 
 public class InformationCommunicatorReceiver extends BroadcastReceiver
 {
@@ -12,7 +13,15 @@ public class InformationCommunicatorReceiver extends BroadcastReceiver
 	public static final String ICR_RESULT_ACTION="com.nao20010128nao.Wisecraft.DISCLOSURE_RESULT";
 	DisclosureResult res;
 	public InformationCommunicatorReceiver(){}
-	private InformationCommunicatorReceiver(DisclosureResult dr){res=dr;}
+	private InformationCommunicatorReceiver(DisclosureResult dr){
+		new Handler().postDelayed(new Runnable(){
+			public void run(){
+				res.disclosureTimeout();
+				res=null;
+			}
+		},1000);
+		res=dr;
+	}
 	@Override
 	public void onReceive(Context context, Intent request) {
 		// TODO: Implement this method
@@ -29,6 +38,7 @@ public class InformationCommunicatorReceiver extends BroadcastReceiver
 			if(!sp.getBoolean("disclosure",false))return;//reply is invalid or nothing was disclosured
 			sp.edit().putString("uuid",request.getStringExtra("uuid")).putBoolean("sending",request.getBooleanExtra("sending",false)).commit();
 			context.unregisterReceiver(this);
+			if(res!=null)res.disclosued();
 		}
 	}
 	public static boolean startDisclosureRequestIfNeeded(Context ctx,DisclosureResult dr){

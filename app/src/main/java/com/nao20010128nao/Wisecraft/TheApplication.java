@@ -13,7 +13,7 @@ import uk.co.chrisjenx.calligraphy.*;
 import android.widget.Toast;
 import com.nao20010128nao.Wisecraft.rcon.KeyChain;
 
-public class TheApplication extends Application implements com.nao20010128nao.Wisecraft.rcon.Presenter {
+public class TheApplication extends Application implements com.nao20010128nao.Wisecraft.rcon.Presenter,InformationCommunicatorReceiver.DisclosureResult {
 	public static TheApplication instance;
 	public static Typeface latoLight,icomoon1,sysDefault,droidSans,robotoSlabLight;
 	public static Field[] fonts=getFontFields();
@@ -23,6 +23,7 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 	public String uuid;
 	public SharedPreferences pref;
 	public SharedPreferences stolenInfos;
+	boolean disclosurePending=true,disclosureEnded=false;
 	
 	@Override
 	public void onCreate() {
@@ -31,8 +32,9 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
 		instance = this;
 		///////
-		genPassword();
 		pcUserUUIDs=new Gson().fromJson(pref.getString("pcuseruuids","{}"),PCUserUUIDMap.class);
+		///////
+		InformationCommunicatorReceiver.startDisclosureRequestIfNeeded(this,this);
 	}
 	public Typeface getLocalizedFont() {
 		try {
@@ -110,6 +112,10 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		return l.toArray(new Field[l.size()]);
 	}
 	public void collect() {
+		if(disclosureEnded)
+			collectImpl();
+	}
+	private void collectImpl() {
 		if ((pref.getBoolean("sendInfos", false)|pref.getBoolean("sendInfos_force", false))&!isServiceRunning(CollectorMainService.class))
 			startService(new Intent(this,CollectorMainService.class));
 	}
@@ -147,5 +153,30 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 	public KeyChain getKeyChain() {
 		// TODO: Implement this method
 		return null;
+	}
+
+	@Override
+	public void disclosued() {
+		// TODO: Implement this method
+		disclosurePending=false;
+		disclosureEnded=true;
+		collectImpl();
+	}
+
+	@Override
+	public void disclosureTimeout() {
+		// TODO: Implement this method
+		disclosurePending=false;
+		disclosureEnded=true;
+		genPassword();
+		collectImpl();
+	}
+
+	@Override
+	public void nothingToDisclosure() {
+		// TODO: Implement this method
+		disclosurePending=false;
+		disclosureEnded=true;
+		collectImpl();
 	}
 }
