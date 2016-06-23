@@ -68,6 +68,9 @@
 -keep public class * implements com.nao20010128nao.Wisecraft.misc.pinger.ServerPingResult {
    *;
 }
+-keep public class com.nao20010128nao.Wisecraft.misc.pinger.** {
+   *;
+}
 -keep public class com.nao20010128nao.Wisecraft.collector.CollectorMain$** {
    public <fields>;
 }
