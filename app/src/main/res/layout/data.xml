@@ -2,45 +2,31 @@
 <LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
-	android:layout_height="35dp"
+	android:minHeight="35dp"
 	android:orientation="horizontal"
-	android:gravity="center">
+	android:gravity="center"
+	android:layout_height="wrap_content">
 
-	<LinearLayout
+	<TextView
 		android:layout_height="match_parent"
+		android:textAppearance="?android:attr/textAppearanceLarge"
 		android:layout_width="match_parent"
-		android:orientation="horizontal"
 		android:layout_weight="1.0"
-		android:gravity="center_vertical"
-		android:layout_marginRight="1dp">
-
-		<android.support.v7.widget.AppCompatTextView
-			android:layout_height="wrap_content"
-			android:textAppearance="?android:attr/textAppearanceLarge"
-			android:layout_width="wrap_content"
-			android:id="@+id/k"/>
-
-	</LinearLayout>
+		android:id="@+id/k"
+		android:gravity="center_vertical"/>
 
 	<View
 		android:background="#CCCCCC"
 		android:layout_height="match_parent"
 		android:layout_width="1dp"/>
-	
-	<LinearLayout
+
+	<TextView
 		android:layout_height="match_parent"
+		android:textAppearance="?android:attr/textAppearanceMedium"
 		android:layout_width="match_parent"
-		android:orientation="horizontal"
 		android:layout_weight="1.0"
-		android:gravity="center_vertical">
-
-		<android.support.v7.widget.AppCompatTextView
-			android:layout_height="wrap_content"
-			android:textAppearance="?android:attr/textAppearanceMedium"
-			android:layout_width="wrap_content"
-			android:id="@+id/v"/>
-
-	</LinearLayout>
+		android:id="@+id/v"
+		android:gravity="center_vertical"/>
 
 </LinearLayout>
 
