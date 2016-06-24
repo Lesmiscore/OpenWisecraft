@@ -580,7 +580,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
-			ListView lv=(ListView) inflater.inflate(R.layout.players_tab, null, false);
+			ListView lv=(ListView) inflater.inflate(R.layout.players_tab, container, false);
 			getParentActivity().setPlayersView(lv);
 			return lv;
 		}
@@ -589,7 +589,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
-			View lv= inflater.inflate(R.layout.data_tab, null, false);
+			View lv= inflater.inflate(R.layout.data_tab, container, false);
 			getParentActivity().setDataView(lv);
 			return lv;
 		}
@@ -599,7 +599,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
 			SharedPreferences pref=PreferenceManager.getDefaultSharedPreferences(getActivity());
-			View lv= inflater.inflate(R.layout.data_tab_pc, null, false);
+			View lv= inflater.inflate(R.layout.data_tab_pc, container, false);
 			getParentActivity().setDataView(lv);
 			if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
 				BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
@@ -614,7 +614,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
-			ListView lv=(ListView) inflater.inflate(R.layout.players_tab, null, false);
+			ListView lv=(ListView) inflater.inflate(R.layout.players_tab, container, false);
 			getParentActivity().setPluginsView(lv);
 			return lv;
 		}
@@ -623,7 +623,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
-			View lv=inflater.inflate(R.layout.mods_tab, null, false);
+			View lv=inflater.inflate(R.layout.mods_tab, container, false);
 			getParentActivity().setModsListView((ListView)lv.findViewById(R.id.players));
 			getParentActivity().setModLoaderNameView((TextView)lv.findViewById(R.id.modLoaderType));
 			return lv;
@@ -633,7 +633,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
-			return inflater.inflate(R.layout.server_info_no_details_fragment, null, false);
+			return inflater.inflate(R.layout.server_info_no_details_fragment, container, false);
 		}
 	}
 }

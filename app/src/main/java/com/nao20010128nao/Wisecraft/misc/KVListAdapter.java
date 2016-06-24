@@ -11,7 +11,7 @@ public class KVListAdapter<K,V> extends AppBaseArrayAdapter<Map.Entry<K,V>> {
 	}
 	public View getView(int pos, View v, ViewGroup ignore) {
 		if (v == null)
-			v = getLayoutInflater().inflate(R.layout.data, null);
+			v = getLayoutInflater().inflate(R.layout.data, ignore,false);
 		((TextView)v.findViewById(R.id.k)).setText(getItem(pos).getKey().toString());
 		((TextView)v.findViewById(R.id.v)).setText(getItem(pos).getValue().toString());
 		return v;
