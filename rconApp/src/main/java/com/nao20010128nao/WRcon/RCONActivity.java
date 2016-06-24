@@ -7,6 +7,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.view.MenuItemCompat;
 import android.content.Intent;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
+import android.graphics.Color;
+import android.text.Spannable;
 
 public class RCONActivity extends RCONActivityBase
 {
@@ -16,7 +20,10 @@ public class RCONActivity extends RCONActivityBase
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
-		setTitle(getIntent().getStringExtra("ip")+":"+getIntent().getIntExtra("port",0));
+		SpannableStringBuilder ssb=new SpannableStringBuilder();
+		ssb.append(getIntent().getStringExtra("ip")+":"+getIntent().getIntExtra("port",0));
+		ssb.setSpan(new ForegroundColorSpan(Color.WHITE),0,ssb.length(),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		setTitle(ssb);
 	}
 
 	@Override
