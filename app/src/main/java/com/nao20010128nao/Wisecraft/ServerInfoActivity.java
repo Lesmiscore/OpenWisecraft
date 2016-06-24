@@ -145,11 +145,11 @@ public class ServerInfoActivity extends ActionBarActivity {
 
 		ip = localStat.ip;
 		port = localStat.port;
-
-		fth.setCurrentTab(getIntent().getIntExtra("offset", 0));
-
+		
 		update(localStat.response);
-
+		
+		fth.setCurrentTab(getIntent().getIntExtra("offset", 0));
+		
 		if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
 			BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
 			bd.setTargetDensity(getResources().getDisplayMetrics());
