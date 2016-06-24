@@ -440,7 +440,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 	}
 	public void setDataView(View lv) {
 		data = (ListView)lv.findViewById(R.id.data);
-		if (localStat.mode == 1) {
+		if (localStat!=null&&localStat.mode == 1) {
 			serverIcon = (ImageView)lv.findViewById(R.id.serverIcon);
 			serverName = (TextView)lv.findViewById(R.id.serverTitle);
 			serverIcon.setImageDrawable(serverIconObj);
