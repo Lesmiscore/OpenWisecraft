@@ -315,7 +315,9 @@ public class ServerInfoActivity extends ActionBarActivity {
 			SprPair p=(SprPair)resp;
 			update(p.getA());
 			update(p.getB());
-		} else if (resp instanceof UnconnectedPing.UnconnectedPingResult) {
+		} else if (resp instanceof UnconnectedPing.UnconnectedPingResult & resp!=localStat.response) {
+			setTitle((((UnconnectedPing.UnconnectedPingResult)resp).getServerName()));
+		} else if (resp instanceof UnconnectedPing.UnconnectedPingResult & resp==localStat.response) {
 			if (pref.getBoolean("showDetailsIfNoDetails", false)) {
 				setTitle((((UnconnectedPing.UnconnectedPingResult)resp).getServerName()));
 			} else {
