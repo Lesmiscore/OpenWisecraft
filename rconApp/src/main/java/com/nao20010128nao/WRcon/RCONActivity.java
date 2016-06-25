@@ -16,6 +16,8 @@ import android.widget.TextView;
 import android.content.res.ColorStateList;
 import android.widget.TabHost;
 import java.util.Arrays;
+import android.graphics.drawable.Drawable;
+import android.support.v4.graphics.drawable.DrawableCompat;
 
 public class RCONActivity extends RCONActivityBase implements TabHost.OnTabChangeListener
 {
@@ -32,6 +34,7 @@ public class RCONActivity extends RCONActivityBase implements TabHost.OnTabChang
 		setTitle(ssb);
 		fth=(FragmentTabHost)findViewById(android.R.id.tabhost);
 		fth.setOnTabChangedListener(this);
+		
 	}
 
 	@Override
@@ -100,5 +103,8 @@ public class RCONActivity extends RCONActivityBase implements TabHost.OnTabChang
 			TextView tv = (TextView) fth.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
 			tv.setTextColor(colors[i]);
 		}
+		Drawable tabUnderline=DrawableCompat.wrap(getResources().getDrawable(R.drawable.abc_tab_indicator_mtrl_alpha));
+		DrawableCompat.setTint(tabUnderline,0xff_ffffff);
+		fth.getTabWidget().getChildAt(selected).setBackground(tabUnderline);
 	}
 }
