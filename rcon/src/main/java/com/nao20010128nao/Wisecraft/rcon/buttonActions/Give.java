@@ -104,7 +104,7 @@ public class Give extends NameSelectAction {
 		executeButton.setOnClickListener(new View.OnClickListener(){
 				public void onClick(View v) {
 					if (isNullString(amount) || isNullString(player) || isNullString(item)) {
-						AppCompatAlertDialog.Builder b=new AppCompatAlertDialog.Builder(Give.this);
+						AppCompatAlertDialog.Builder b=new AppCompatAlertDialog.Builder(Give.this,getActivity().getPresenter().getDialogStyleId());
 						String mes="";
 						if (isNullString(amount)) {
 							mes += getResString(R.string.giveSelectAmount) + "\n";

@@ -91,7 +91,7 @@ public class Xp extends NameSelectAction {
 		executeButton.setOnClickListener(new View.OnClickListener(){
 				public void onClick(View v) {
 					if (isNullString(amount) || isNullString(player)) {
-						AppCompatAlertDialog.Builder b=new AppCompatAlertDialog.Builder(Xp.this);
+						AppCompatAlertDialog.Builder b=new AppCompatAlertDialog.Builder(Xp.this,getActivity().getPresenter().getDialogStyleId());
 						String mes="";
 						if (isNullString(amount)) {
 							mes += getResString(R.string.giveSelectAmount) + "\n";

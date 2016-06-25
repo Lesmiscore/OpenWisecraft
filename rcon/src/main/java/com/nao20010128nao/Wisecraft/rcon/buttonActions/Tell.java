@@ -90,7 +90,7 @@ public class Tell extends NameSelectAction {
 		executeButton.setOnClickListener(new View.OnClickListener(){
 				public void onClick(View v) {
 					if (isNullString(player) || isNullString(item)) {
-						AppCompatAlertDialog.Builder b=new AppCompatAlertDialog.Builder(Tell.this);
+						AppCompatAlertDialog.Builder b=new AppCompatAlertDialog.Builder(Tell.this,getActivity().getPresenter().getDialogStyleId());
 						String mes="";
 						if (isNullString(player)) {
 							mes += getResString(R.string.giveSelectPlayer) + "\n";
