@@ -106,7 +106,7 @@ public class RCONActivity extends RCONActivityBase implements TabHost.OnTabChang
 		for (int i = 0; i < fth.getTabWidget().getChildCount(); i++) {
 			TextView tv = (TextView) fth.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
 			tv.setTextColor(colors[i]);
-			fth.getTabWidget().getChildAt(selected).setBackgroundColor(getResources().getColor(R.color.upd_2));
+			fth.getTabWidget().getChildAt(i).setBackgroundColor(getResources().getColor(R.color.upd_2));
 		}
 		fth.getTabWidget().getChildAt(selected).setBackgroundDrawable(tabUnderlineSelected);
 		Log.d("TabChild",fth.getTabWidget().getChildAt(selected).getClass().getName());
