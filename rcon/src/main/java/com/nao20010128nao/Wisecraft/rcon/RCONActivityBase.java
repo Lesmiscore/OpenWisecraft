@@ -111,11 +111,14 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 		}
 	}
 
-	public void appendIntoConsole(final String s) {
+	public void appendIntoConsole(String s) {
+		final ArrayList<String> lines=new ArrayList<String>(Arrays.asList(RconModule_Utils.lines(s)));
 		runOnUiThread(new Runnable(){
 				public void run() {
-					consoleLogs.add(s);
-					if(console!=null)console.addView(newTextViewForConsole(s));
+					consoleLogs.addAll(lines);
+					if(console!=null)
+						for(String s:lines)
+							console.addView(newTextViewForConsole(s));
 				}
 			});
 	}
