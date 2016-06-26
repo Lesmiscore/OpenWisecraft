@@ -18,6 +18,8 @@ import java.lang.ref.*;
 import java.util.*;
 
 import com.nao20010128nao.Wisecraft.rcon.R;
+import android.content.res.TypedArray;
+import android.support.v7.widget.Toolbar;
 
 public abstract class RCONActivityBase extends AppCompatActivity {
 	public static WeakReference<RCONActivityBase> instance=new WeakReference(null);
@@ -50,7 +52,12 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 		pa=new PasswordAsking();
 		ip = getIntent().getStringExtra("ip");
 		port = getIntent().getIntExtra("port", -1);
-		setContentView(R.layout.rconmain);
+		if(hasActionBarOnTheme()){
+			setContentView(R.layout.rconmain);
+		}else{
+			setContentView(R.layout.rconmain_noactionbar);
+			setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
+		}
 		String password=getIntent().getStringExtra("password");
 		if(password!=null){
 			pa.tryConnectWithDialog(password);
@@ -220,6 +227,12 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 				}
 			}.start();
 		}
+	}
+	private boolean hasActionBarOnTheme(){
+		TypedArray ta=getTheme().obtainStyledAttributes(new int[]{R.attr.windowNoTitle});
+		boolean result=ta.getBoolean(0,false);
+		ta.recycle();
+		return !result;
 	}
 	public RCon getRCon() {
 		return rcon;

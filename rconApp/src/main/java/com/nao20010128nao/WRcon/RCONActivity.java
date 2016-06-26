@@ -7,16 +7,36 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.view.MenuItemCompat;
 import android.content.Intent;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
+import android.graphics.Color;
+import android.text.Spannable;
+import android.support.v4.app.FragmentTabHost;
+import android.widget.TextView;
+import android.content.res.ColorStateList;
+import android.widget.TabHost;
+import java.util.Arrays;
+import android.graphics.drawable.Drawable;
+import android.support.v4.graphics.drawable.DrawableCompat;
+import android.graphics.drawable.StateListDrawable;
+import android.util.Log;
 
-public class RCONActivity extends RCONActivityBase
+public class RCONActivity extends RCONActivityBase implements TabHost.OnTabChangeListener
 {
 	boolean didSuccess=false;
 	String password;
+	FragmentTabHost fth;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
-		setTitle(getIntent().getStringExtra("ip")+":"+getIntent().getIntExtra("port",0));
+		SpannableStringBuilder ssb=new SpannableStringBuilder();
+		ssb.append(getIntent().getStringExtra("ip")+":"+getIntent().getIntExtra("port",0));
+		ssb.setSpan(new ForegroundColorSpan(Color.WHITE),0,ssb.length(),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		setTitle(ssb);
+		fth=(FragmentTabHost)findViewById(android.R.id.tabhost);
+		fth.setOnTabChangedListener(this);
+		
 	}
 
 	@Override
@@ -67,5 +87,28 @@ public class RCONActivity extends RCONActivityBase
 				break;
 		}
 		return true;
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO: Implement this method
+		super.onResume();
+		onTabChanged("");
+	}
+	
+	public void onTabChanged(String a){
+		int selected=fth.getCurrentTab();
+		int[] colors=new int[fth.getTabWidget().getTabCount()];
+		Arrays.fill(colors,0xff_FFb784);
+		colors[selected]=Color.WHITE;
+		Drawable tabUnderlineSelected=DrawableCompat.wrap(getResources().getDrawable(R.drawable.abc_tab_indicator_mtrl_alpha));
+		DrawableCompat.setTint(tabUnderlineSelected,0xff_ffffff);
+		for (int i = 0; i < fth.getTabWidget().getChildCount(); i++) {
+			TextView tv = (TextView) fth.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
+			tv.setTextColor(colors[i]);
+			fth.getTabWidget().getChildAt(i).setBackgroundColor(getResources().getColor(R.color.upd_2));
+		}
+		fth.getTabWidget().getChildAt(selected).setBackgroundDrawable(tabUnderlineSelected);
+		Log.d("TabChild",fth.getTabWidget().getChildAt(selected).getClass().getName());
 	}
 }
