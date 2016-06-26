@@ -20,6 +20,7 @@ import java.util.*;
 import com.nao20010128nao.Wisecraft.rcon.R;
 import android.content.res.TypedArray;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 
 public abstract class RCONActivityBase extends AppCompatActivity {
 	public static WeakReference<RCONActivityBase> instance=new WeakReference(null);
@@ -121,6 +122,8 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 							console.addView(newTextViewForConsole(s));
 				}
 			});
+		for(String l:lines)
+			Log.d("RCON_CONSOLE_LINE",l);
 	}
 	public void setConsoleLayout(LinearLayout lv) {
 		console = lv;
