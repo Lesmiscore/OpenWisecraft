@@ -18,6 +18,8 @@ import android.widget.TabHost;
 import java.util.Arrays;
 import android.graphics.drawable.Drawable;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.graphics.drawable.StateListDrawable;
+import android.util.Log;
 
 public class RCONActivity extends RCONActivityBase implements TabHost.OnTabChangeListener
 {
@@ -97,14 +99,16 @@ public class RCONActivity extends RCONActivityBase implements TabHost.OnTabChang
 	public void onTabChanged(String a){
 		int selected=fth.getCurrentTab();
 		int[] colors=new int[fth.getTabWidget().getTabCount()];
-		Arrays.fill(colors,0xff_cccccc);
+		Arrays.fill(colors,0xff_FFb784);
 		colors[selected]=Color.WHITE;
+		Drawable tabUnderlineSelected=DrawableCompat.wrap(getResources().getDrawable(R.drawable.abc_tab_indicator_mtrl_alpha));
+		DrawableCompat.setTint(tabUnderlineSelected,0xff_ffffff);
 		for (int i = 0; i < fth.getTabWidget().getChildCount(); i++) {
 			TextView tv = (TextView) fth.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
 			tv.setTextColor(colors[i]);
+			fth.getTabWidget().getChildAt(selected).setBackgroundColor(getResources().getColor(R.color.upd_2));
 		}
-		Drawable tabUnderline=DrawableCompat.wrap(getResources().getDrawable(R.drawable.abc_tab_indicator_mtrl_alpha));
-		DrawableCompat.setTint(tabUnderline,0xff_ffffff);
-		fth.getTabWidget().getChildAt(selected).setBackground(tabUnderline);
+		fth.getTabWidget().getChildAt(selected).setBackgroundDrawable(tabUnderlineSelected);
+		Log.d("TabChild",fth.getTabWidget().getChildAt(selected).getClass().getName());
 	}
 }
