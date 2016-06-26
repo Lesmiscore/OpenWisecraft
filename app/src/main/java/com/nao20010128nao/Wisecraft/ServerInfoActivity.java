@@ -481,13 +481,14 @@ public class ServerInfoActivity extends ActionBarActivity {
 			while (cached.size() < position)cached.addAll(Constant.ONE_HUNDRED_LENGTH_NULL_LIST);
 			String playerName=getItem(position);
 			((TextView)convertView.findViewById(android.R.id.text1)).setText(playerName);
+			ImageView iv=(ImageView)convertView.findViewById(R.id.image);
 			if (faces.containsKey(playerName)) {
-				ImageView iv=(ImageView)convertView.findViewById(R.id.image);
 				iv.setVisibility(View.VISIBLE);
 				iv.setImageBitmap(faces.get(playerName));
 				iv.setScaleType(ImageView.ScaleType.FIT_CENTER);
 			} else {
 				sff.requestLoadSkin(playerName, new Handler());
+				iv.setImageBitmap(null);
 			}
 			cached.set(position, convertView);
 			return convertView;
