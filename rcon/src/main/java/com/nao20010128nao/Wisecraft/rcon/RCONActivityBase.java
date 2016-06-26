@@ -58,14 +58,16 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 			setContentView(R.layout.rconmain_noactionbar);
 			setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
 		}
-		String password=getIntent().getStringExtra("password");
-		if(password!=null){
-			pa.tryConnectWithDialog(password);
-		}else{
-			if (rcon == null) {
-				pa.askPassword();
-			} else {
-				applyHandlers();
+		if(!hasPasswordCoded()){
+			String password=getIntent().getStringExtra("password");
+			if(password!=null){
+				pa.tryConnectWithDialog(password);
+			}else{
+				if (rcon == null) {
+					pa.askPassword();
+				} else {
+					applyHandlers();
+				}
 			}
 		}
 		fth = (FragmentTabHost)findViewById(android.R.id.tabhost);
@@ -246,6 +248,9 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 			return null;
 		}
 	}
+	public boolean hasPasswordCoded(){
+		return false;
+	}
 
 	protected void onConnectionFailed(){}
 	protected void onConnectionSuccess(String password){}
@@ -281,6 +286,7 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 			super(RCONActivityBase.this,getPresenter().getDialogStyleId());
 		}
 		public void askPassword() {
+			if(hasPasswordCoded())return;
 			new AppCompatAlertDialog.Builder(this,getPresenter().getDialogStyleId())
 				.setView(inflateDialogView())
 				.setCancelable(false)
