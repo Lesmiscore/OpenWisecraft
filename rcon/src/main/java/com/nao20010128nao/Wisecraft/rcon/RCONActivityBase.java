@@ -207,7 +207,7 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 		}
 	}
 	public void exitActivity() {
-		finish();
+		super.finish();
 		consoleLogs.clear();
 		try {
 			if (rcon != null)
@@ -218,6 +218,10 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 	}
 	public void cancelExitActivity(){
 		if(rcon==null)pa.askPassword();
+	}
+	@Override
+	public void finish() {
+		exitActivity();
 	}
 	public void performSend(final String cmd) {
 		if (rcon != null) {
