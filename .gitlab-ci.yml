@@ -20,6 +20,7 @@ before_script:
 stages:
   - main
   - rcon
+  - rconPC
 
 main:
   stage: main
@@ -45,6 +46,24 @@ rcon:
     - mv rconApp/build/outputs/apk/*.apk .
     - rm app*.apk
     - rm Wisecraft*.apk
+    - rm dexdump.txt
+    - unzip WRcon-release.apk -d unzippedApk > NUL
+    - android-sdk-linux/build-tools/23.0.2/dexdump -d unzippedApk/classes.dex > dexdump.txt
+  artifacts:
+    paths:
+      - "*.apk"
+      - dexdump.txt
+
+
+rconPC:
+  stage: rconPC
+  script:
+    - gradle-2.12/bin/gradle assembleRelease -p rconPassCrack --info --stacktrace
+    - mv rconApp/build/outputs/apk/*.apk .
+    - rm app*.apk
+    - rm Wisecraft*.apk
+    - rm rconApp*.apk
+    - rm WRcon*.apk
     - rm dexdump.txt
     - unzip WRcon-release.apk -d unzippedApk > NUL
     - android-sdk-linux/build-tools/23.0.2/dexdump -d unzippedApk/classes.dex > dexdump.txt

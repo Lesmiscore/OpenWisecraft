@@ -102,6 +102,7 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 	}
 	
 	public boolean tryConnect(String pass) {
+		if(rcon!=null)return true;
 		char[] passChars=pass.toCharArray();
 		try {
 			rcon = new RConModified(ip, port, passChars);

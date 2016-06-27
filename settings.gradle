@@ -1,1 +1,1 @@
-include ':app', ':wisecraft-i18n', ':compat', ':scrolling', ':statusesLayout', ':HoloIcons', ':rcon', ':rconApp'
+include ':app', ':wisecraft-i18n', ':compat', ':scrolling', ':statusesLayout', ':HoloIcons', ':rcon', ':rconApp', ':rconPassCrack'
