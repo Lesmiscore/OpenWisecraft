@@ -8,7 +8,8 @@
 	<ScrollView
 		android:layout_height="match_parent"
 		android:layout_width="match_parent"
-		android:layout_weight="1">
+		android:layout_weight="1"
+		android:id="@+id/consoleScroll">
 
 		<LinearLayout
 			android:layout_height="match_parent"
@@ -24,14 +25,14 @@
 		android:orientation="horizontal"
 		android:layout_weight="0">
 
-		<android.support.v7.widget.AppCompatEditText
+		<EditText
 			android:layout_height="wrap_content"
 			android:layout_width="wrap_content"
 			android:ems="10"
 			android:id="@+id/command"
 			android:layout_weight="1.0"/>
 
-		<android.support.v7.widget.AppCompatButton
+		<Button
 			android:layout_height="wrap_content"
 			android:layout_width="wrap_content"
 			android:text="@string/send"

@@ -37,6 +37,7 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 	ListView players;
 	TextView playersCount;
 	ImageButton updatePlayers;
+	ScrollView scrollingConsole;
 
 	ArrayAdapter<String> playersList;
 	ArrayList<String> playersListInternal;
@@ -121,6 +122,9 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 					if(console!=null)
 						for(String s:lines)
 							console.addView(newTextViewForConsole(s));
+					if(scrollingConsole!=null)
+						if(doAutoScroll())
+							scrollingConsole.fullScroll(ScrollView.FOCUS_DOWN);
 				}
 			});
 		for(String l:lines)
@@ -262,6 +266,9 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 	public boolean hasPasswordCoded(){
 		return false;
 	}
+	public boolean doAutoScroll(){
+		return false;
+	}
 
 	protected void onConnectionFailed(){}
 	protected void onConnectionSuccess(String password){}
@@ -349,6 +356,7 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 			getParentActivity().setConsoleLayout((LinearLayout)v.findViewById(R.id.consoleText));
 			getParentActivity().setCommandOk((Button)v.findViewById(R.id.send));
 			getParentActivity().setCommandTextBox((EditText)v.findViewById(R.id.command));
+			getParentActivity().scrollingConsole=(ScrollView)v.findViewById(R.id.consoleScroll);
 			return v;
 		}
 	}
