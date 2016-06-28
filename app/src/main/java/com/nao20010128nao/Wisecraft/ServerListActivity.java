@@ -157,11 +157,12 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 		}
 		rv.setLongClickable(true);
 		wd = new WorkingDialog(this);
-		if (!usesOldInstance)loadServers();
-		statLayout.initStatuses(list.size(),1);
-		if(!usesOldInstance)
+		if (!usesOldInstance){
+			loadServers();
+			statLayout.initStatuses(list.size(),1);
 			for (int i=0;i < list.size();i++)
 				dryUpdate(list.get(i),false);
+		}
 		if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
 			BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
 			bd.setTargetDensity(getResources().getDisplayMetrics());
