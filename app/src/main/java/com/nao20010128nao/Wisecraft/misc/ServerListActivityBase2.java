@@ -6,9 +6,10 @@ import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import java.util.*;
+import android.support.v7.app.AppCompatActivity;
 
 //Server Sort Part
-public class ServerListActivityBase2 extends AppCompatListActivity
+public class ServerListActivityBase2 extends AppCompatActivity
 {
 	SharedPreferences pref;
 

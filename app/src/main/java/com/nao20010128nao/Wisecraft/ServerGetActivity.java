@@ -91,7 +91,7 @@ public class ServerGetActivity extends CompatWebViewActivity {
 								.setPositiveButton(R.string.add, new DialogInterface.OnClickListener(){
 									public void onClick(DialogInterface di, int w) {
 										List<com.nao20010128nao.McServerList.Server> selected=getServers(serv, selections);
-										CompatArrayAdapter.addAll((ArrayAdapter)ServerListActivityImpl.instance.get().getListAdapter(), Utils.convertServerObject(selected));
+										ServerListActivityImpl.instance.get().sl.addAll(Utils.convertServerObject(selected));
 										di.dismiss();
 									}
 								})
