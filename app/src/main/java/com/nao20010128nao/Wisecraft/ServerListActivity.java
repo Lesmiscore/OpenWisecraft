@@ -739,6 +739,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 						((TextView)layout.findViewById(R.id.serverName)).setText(R.string.working);
 						((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.working);
 						((TextView)layout.findViewById(R.id.serverAddress)).setText(sv.ip + ":" + sv.port);
+						((TextView)layout.findViewById(R.id.serverPlayers)).setText("-/-");
 						((ExtendedImageView)layout.findViewById(R.id.statColor)).setColor(sla.getResources().getColor(R.color.stat_pending));
 					}else{
 						((ExtendedImageView)layout.findViewById(R.id.statColor)).setColor(sla.getResources().getColor(R.color.stat_error));
@@ -750,13 +751,21 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 				}
 			}
 
-			// クリック処理
-			viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+			applyHandlersForViewTree(viewHolder.itemView,
+				new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						onItemClick(null,v,position,Long.MIN_VALUE);
 					}
-				});
+				}
+			,
+				new View.OnLongClickListener() {
+					@Override
+					public boolean onLongClick(View v) {
+						return onItemLongClick(null,v,position,Long.MIN_VALUE);
+					}
+				}
+			);
 		}
 
 		@Override
@@ -1030,6 +1039,19 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 			notifyItemRemoved(ofs);
 		}
 		
+		private void applyHandlersForViewTree(View v,View.OnClickListener click,View.OnLongClickListener longer){
+			if(v!=null){
+				v.setOnClickListener(click);
+				v.setOnLongClickListener(longer);
+				v.setLongClickable(true);
+				if(v instanceof ViewGroup){
+					ViewGroup vg=(ViewGroup)v;
+					for(int i=0;i<vg.getChildCount();i++){
+						applyHandlersForViewTree(vg.getChildAt(i),click,longer);
+					}
+				}
+			}
+		}
 		
 		class OriginalViewHolder extends RecyclerView.ViewHolder{
 			View localView;
