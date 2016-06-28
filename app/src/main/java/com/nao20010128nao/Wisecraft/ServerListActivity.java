@@ -159,8 +159,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 		wd = new WorkingDialog(this);
 		if (!usesOldInstance)loadServers();
 		statLayout.initStatuses(list.size(),1);
-		for (int i=0;i < list.size();i++)
-			dryUpdate(list.get(i),false);
+		if(!usesOldInstance)
+			for (int i=0;i < list.size();i++)
+				dryUpdate(list.get(i),false);
 		if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
 			BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
 			bd.setTargetDensity(getResources().getDisplayMetrics());
@@ -278,9 +279,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 						Bundle obj=data.getBundleExtra("object");
 						updater.putInQueue(list.get(clicked), new PingHandlerImpl(true, data.getIntExtra("offset", 0), true));
 						pinging.put(list.get(clicked), true);
+						statLayout.setStatusAt(clicked, 1);
 						sl.notifyItemChanged(clicked);
 						wd.showWorkingDialog();
-						statLayout.setStatusAt(clicked, 1);
 						break;
 				}
 				break;
@@ -775,6 +776,12 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 		}
 
 		@Override
+		public int getItemViewType(int position) {
+			// TODO: Implement this method
+			return sla.statLayout.getStatusAt(position);
+		}
+
+		@Override
 		public void onItemClick(AdapterView<?> p1, View p2, int p3, long p4) {
 			// TODO: Implement this method
 			Server s=getItem(p3);
@@ -790,9 +797,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 			} else {
 				sla.updater.putInQueue(s, new PingHandlerImpl(true, 0, true));
 				sla.pinging.put(sla.list.get(sla.clicked), true);
+				sla.statLayout.setStatusAt(sla.clicked, 1);
 				sla.sl.notifyItemChanged(sla.clicked);
 				sla.wd.showWorkingDialog();
-				sla.statLayout.setStatusAt(sla.clicked, 1);
 			}
 		}
 
@@ -826,10 +833,10 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 								public void run() {
 									if (sla.pinging.get(getItem(p3)))return;
 									sla.updater.putInQueue(getItem(p3), new PingHandlerImpl(true, -1));
-									sla.sl.notifyItemChanged(p3);
-									sla.wd.showWorkingDialog();
 									sla.pinging.put(sla.list.get(p3), true);
 									sla.statLayout.setStatusAt(p3,1);
+									sla.sl.notifyItemChanged(p3);
+									sla.wd.showWorkingDialog();
 								}
 							});
 						executes.add(2, new Runnable(){
@@ -1095,6 +1102,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 							Server sn=s.cloneAsServer();
 							act().list.set(i_, sn);
 							act().pinging.put(act().list.get(i_), false);
+							act().statLayout.setStatusAt(i_,0);
 							act().sl.notifyItemChanged(i_);
 							if (closeDialog)
 								act().wd.hideWorkingDialog();
@@ -1102,7 +1110,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 								Toast.makeText(act(), R.string.serverOffline, Toast.LENGTH_SHORT).show();
 							if (!act().pinging.containsValue(true))
 								act().srl.setRefreshing(false);
-							act().statLayout.setStatusAt(i_,0);
 						} catch (final Throwable e) {
 							CollectorMain.reportError("ServerListActivity#onPingFailed",e);
 						}
@@ -1119,6 +1126,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 						}
 						act().list.set(i_, s);
 						act().pinging.put(act().list.get(i_), false);
+						act().statLayout.setStatusAt(i_, 2);
 						act().sl.notifyItemChanged(i_);
 						if (statTabOfs != -1) {
 							ServerInfoActivity.stat.add(s);
@@ -1136,7 +1144,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 						if (!act().pinging.containsValue(true)) {
 							act().srl.setRefreshing(false);
 						}
-						act().statLayout.setStatusAt(i_, 2);
 					} catch (final Throwable e) {
 						DebugWriter.writeToE("ServerListActivity", e);
 						CollectorMain.reportError("ServerListActivity#onPingArrives", e);
