@@ -38,7 +38,7 @@ public class Utils extends PingerUtils{
 		} catch (Throwable e) {
 			SpannableStringBuilder ssb=new SpannableStringBuilder();
 			ssb.append(deleteDecorations(s));
-			ssb.setSpan(new ForegroundColorSpan(Color.BLACK),0,ssb.length()-1,SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+			if(ssb.length()!=0)ssb.setSpan(new ForegroundColorSpan(Color.BLACK),0,ssb.length()-1,SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
 			return ssb;
 		}
 	}
@@ -50,7 +50,7 @@ public class Utils extends PingerUtils{
 		} catch (Throwable e) {
 			SpannableStringBuilder ssb=new SpannableStringBuilder();
 			ssb.append(deleteDecorations(s));
-			ssb.setSpan(new ForegroundColorSpan(Color.WHITE),0,ssb.length()-1,SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+			if(ssb.length()!=0)ssb.setSpan(new ForegroundColorSpan(Color.WHITE),0,ssb.length()-1,SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
 			return ssb;
 		}
 	}

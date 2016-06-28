@@ -158,9 +158,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 		rv.setLongClickable(true);
 		wd = new WorkingDialog(this);
 		if (!usesOldInstance)loadServers();
-		statLayout.initStatuses(list.size(),0);
+		statLayout.initStatuses(list.size(),1);
 		for (int i=0;i < list.size();i++)
-			dryUpdate(list.get(i));
+			dryUpdate(list.get(i),false);
 		if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
 			BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
 			bd.setTargetDensity(getResources().getDisplayMetrics());
@@ -621,9 +621,10 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 		}.start();
 	}
 
-	public void dryUpdate(Server s) {
+	public void dryUpdate(Server s,boolean isUpdate) {
 		if (pinging.get(s))return;
-		updater.putInQueue(s, new PingHandlerImpl(true, -1));
+		if(isUpdate)updater.putInQueue(s, new PingHandlerImpl(true, -1));
+		else spp.putInQueue(s, new PingHandlerImpl(true, -1));
 		pinging.put(s, true);
 		sl.notifyItemChanged(list.indexOf(s));
 	}
@@ -733,11 +734,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 					}
 					((TextView) layout.findViewById(R.id.pingMillis)).setText(s.ping + " ms");
 					((TextView) layout.findViewById(R.id.serverAddress)).setText(s.ip + ":" + s.port);
-					
-					sla.statLayout.setStatusAt(position, 2);
 				} else {
-					sla.spp.putInQueue(sv, new PingHandlerImpl(false, -1, true));
-					sla.statLayout.setStatusAt(position, 1);
 					if(sla.pinging.get(sv)){
 						((TextView)layout.findViewById(R.id.serverName)).setText(R.string.working);
 						((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.working);
@@ -751,7 +748,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 						((TextView)layout.findViewById(R.id.serverAddress)).setText(sv.ip + ":" + sv.port);
 					}
 				}
-				sla.pinging.put(sv, true);
 			}
 
 			// クリック処理
@@ -907,7 +903,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 												} else {
 													sla.list.set(ofs, s);
 													sla.sl.notifyDataSetChanged();
-													sla.dryUpdate(s);
+													sla.dryUpdate(s,true);
 												}
 												sla.saveServers();
 											}
