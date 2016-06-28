@@ -131,7 +131,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 			});
 		statLayout=(StatusesLayout)findViewById(R.id.serverStatuses);
 		statLayout.setColorRes(R.color.stat_error,R.color.stat_pending,R.color.stat_ok);
-		statLayout.initStatuses(0,0);
 		if(!pref.getBoolean("showStatusesBar",false))statLayout.setVisibility(View.GONE);
 		boolean usesOldInstance=false;
 		if (instance.get() != null) {
@@ -159,6 +158,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 		rv.setLongClickable(true);
 		wd = new WorkingDialog(this);
 		if (!usesOldInstance)loadServers();
+		statLayout.initStatuses(list.size(),0);
 		for (int i=0;i < list.size();i++)
 			dryUpdate(list.get(i));
 		if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
