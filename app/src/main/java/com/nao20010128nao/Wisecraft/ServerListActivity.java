@@ -661,7 +661,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 		@Override
 		public void onBindViewHolder(OriginalViewHolder viewHolder, final int position) {
 			// データ表示
-			View layout=viewHolder.itemView;
+			final View layout=viewHolder.itemView;
 			if (sla.list != null && sla.list.size() > position && sla.list.get(position) != null) {
 				Server sv=getItem(position);
 				layout.setTag(sv);
@@ -757,14 +757,14 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						onItemClick(null,v,position,Long.MIN_VALUE);
+						onItemClick(null,layout,position,Long.MIN_VALUE);
 					}
 				}
 			,
 				new View.OnLongClickListener() {
 					@Override
 					public boolean onLongClick(View v) {
-						return onItemLongClick(null,v,position,Long.MIN_VALUE);
+						return onItemLongClick(null,layout,position,Long.MIN_VALUE);
 					}
 				}
 			);
