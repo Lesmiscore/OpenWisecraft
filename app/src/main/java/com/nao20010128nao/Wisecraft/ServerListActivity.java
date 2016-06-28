@@ -665,45 +665,19 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 			if (sla.list != null && sla.list.size() > position && sla.list.get(position) != null) {
 				Server sv=getItem(position);
 				layout.setTag(sv);
-				if (sv instanceof ServerStatus) {
-					ServerStatus s=(ServerStatus)sv;
-					((ExtendedImageView) layout.findViewById(R.id.statColor)).setColor(sla.getResources().getColor(R.color.stat_ok));
-					final String title;
-					if (s.response instanceof FullStat) {//PE
-						FullStat fs = (FullStat) s.response;
-						Map<String, String> m = fs.getData();
-						if (m.containsKey("hostname")) {
-							title = m.get("hostname");
-						} else if (m.containsKey("motd")) {
-							title = m.get("motd");
-						} else {
-							title = s.ip + ":" + s.port;
-						}
-						((TextView) layout.findViewById(R.id.serverPlayers)).setText(fs.getData().get("numplayers") + "/" + fs.getData().get("maxplayers"));
-					} else if (s.response instanceof Reply19) {//PC 1.9~
-						Reply19 rep = (Reply19) s.response;
-						if (rep.description == null) {
-							title = s.ip + ":" + s.port;
-						} else {
-							title = rep.description.text;
-						}
-						((TextView) layout.findViewById(R.id.serverPlayers)).setText(rep.players.online + "/" + rep.players.max);
-					} else if (s.response instanceof Reply) {//PC
-						Reply rep = (Reply) s.response;
-						if (rep.description == null) {
-							title = s.ip + ":" + s.port;
-						} else {
-							title = rep.description;
-						}
-						((TextView) layout.findViewById(R.id.serverPlayers)).setText(rep.players.online + "/" + rep.players.max);
-					} else if (s.response instanceof SprPair) {//PE?
-						SprPair sp = ((SprPair) s.response);
-						if (sp.getB() instanceof UnconnectedPing.UnconnectedPingResult) {
-							UnconnectedPing.UnconnectedPingResult res = (UnconnectedPing.UnconnectedPingResult) sp.getB();
-							title = res.getServerName();
-							((TextView) layout.findViewById(R.id.serverPlayers)).setText(res.getPlayersCount() + "/" + res.getMaxPlayers());
-						} else if (sp.getA() instanceof FullStat) {
-							FullStat fs = (FullStat) sp.getA();
+				if(sla.pinging.get(sv)){
+					((TextView)layout.findViewById(R.id.serverName)).setText(R.string.working);
+					((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.working);
+					((TextView)layout.findViewById(R.id.serverAddress)).setText(sv.ip + ":" + sv.port);
+					((TextView)layout.findViewById(R.id.serverPlayers)).setText("-/-");
+					((ExtendedImageView)layout.findViewById(R.id.statColor)).setColor(sla.getResources().getColor(R.color.stat_pending));
+				}else{
+					if (sv instanceof ServerStatus) {
+						ServerStatus s=(ServerStatus)sv;
+						((ExtendedImageView) layout.findViewById(R.id.statColor)).setColor(sla.getResources().getColor(R.color.stat_ok));
+						final String title;
+						if (s.response instanceof FullStat) {//PE
+							FullStat fs = (FullStat) s.response;
 							Map<String, String> m = fs.getData();
 							if (m.containsKey("hostname")) {
 								title = m.get("hostname");
@@ -713,37 +687,63 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 {
 								title = s.ip + ":" + s.port;
 							}
 							((TextView) layout.findViewById(R.id.serverPlayers)).setText(fs.getData().get("numplayers") + "/" + fs.getData().get("maxplayers"));
-						} else {
+						} else if (s.response instanceof Reply19) {//PC 1.9~
+							Reply19 rep = (Reply19) s.response;
+							if (rep.description == null) {
+								title = s.ip + ":" + s.port;
+							} else {
+								title = rep.description.text;
+							}
+							((TextView) layout.findViewById(R.id.serverPlayers)).setText(rep.players.online + "/" + rep.players.max);
+						} else if (s.response instanceof Reply) {//PC
+							Reply rep = (Reply) s.response;
+							if (rep.description == null) {
+								title = s.ip + ":" + s.port;
+							} else {
+								title = rep.description;
+							}
+							((TextView) layout.findViewById(R.id.serverPlayers)).setText(rep.players.online + "/" + rep.players.max);
+						} else if (s.response instanceof SprPair) {//PE?
+							SprPair sp = ((SprPair) s.response);
+							if (sp.getB() instanceof UnconnectedPing.UnconnectedPingResult) {
+								UnconnectedPing.UnconnectedPingResult res = (UnconnectedPing.UnconnectedPingResult) sp.getB();
+								title = res.getServerName();
+								((TextView) layout.findViewById(R.id.serverPlayers)).setText(res.getPlayersCount() + "/" + res.getMaxPlayers());
+							} else if (sp.getA() instanceof FullStat) {
+								FullStat fs = (FullStat) sp.getA();
+								Map<String, String> m = fs.getData();
+								if (m.containsKey("hostname")) {
+									title = m.get("hostname");
+								} else if (m.containsKey("motd")) {
+									title = m.get("motd");
+								} else {
+									title = s.ip + ":" + s.port;
+								}
+								((TextView) layout.findViewById(R.id.serverPlayers)).setText(fs.getData().get("numplayers") + "/" + fs.getData().get("maxplayers"));
+							} else {
+								title = s.ip + ":" + s.port;
+								((TextView) layout.findViewById(R.id.serverPlayers)).setText("-/-");
+							}
+						} else if (s.response instanceof UnconnectedPing.UnconnectedPingResult) {//PE
+							UnconnectedPing.UnconnectedPingResult res = (UnconnectedPing.UnconnectedPingResult) s.response;
+							title = res.getServerName();
+							((TextView) layout.findViewById(R.id.serverPlayers)).setText(res.getPlayersCount() + "/" + res.getMaxPlayers());
+						} else {//Unreachable
 							title = s.ip + ":" + s.port;
 							((TextView) layout.findViewById(R.id.serverPlayers)).setText("-/-");
 						}
-					} else if (s.response instanceof UnconnectedPing.UnconnectedPingResult) {//PE
-						UnconnectedPing.UnconnectedPingResult res = (UnconnectedPing.UnconnectedPingResult) s.response;
-						title = res.getServerName();
-						((TextView) layout.findViewById(R.id.serverPlayers)).setText(res.getPlayersCount() + "/" + res.getMaxPlayers());
-					} else {//Unreachable
-						title = s.ip + ":" + s.port;
-						((TextView) layout.findViewById(R.id.serverPlayers)).setText("-/-");
-					}
-					if (sla.pref.getBoolean("colorFormattedText", false)) {
-						if (sla.pref.getBoolean("darkBackgroundForServerName", false)) {
-							((TextView) layout.findViewById(R.id.serverName)).setText(parseMinecraftFormattingCodeForDark(title));
+						if (sla.pref.getBoolean("colorFormattedText", false)) {
+							if (sla.pref.getBoolean("darkBackgroundForServerName", false)) {
+								((TextView) layout.findViewById(R.id.serverName)).setText(parseMinecraftFormattingCodeForDark(title));
+							} else {
+								((TextView) layout.findViewById(R.id.serverName)).setText(parseMinecraftFormattingCode(title));
+							}
 						} else {
-							((TextView) layout.findViewById(R.id.serverName)).setText(parseMinecraftFormattingCode(title));
+							((TextView) layout.findViewById(R.id.serverName)).setText(deleteDecorations(title));
 						}
+						((TextView) layout.findViewById(R.id.pingMillis)).setText(s.ping + " ms");
+						((TextView) layout.findViewById(R.id.serverAddress)).setText(s.ip + ":" + s.port);
 					} else {
-						((TextView) layout.findViewById(R.id.serverName)).setText(deleteDecorations(title));
-					}
-					((TextView) layout.findViewById(R.id.pingMillis)).setText(s.ping + " ms");
-					((TextView) layout.findViewById(R.id.serverAddress)).setText(s.ip + ":" + s.port);
-				} else {
-					if(sla.pinging.get(sv)){
-						((TextView)layout.findViewById(R.id.serverName)).setText(R.string.working);
-						((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.working);
-						((TextView)layout.findViewById(R.id.serverAddress)).setText(sv.ip + ":" + sv.port);
-						((TextView)layout.findViewById(R.id.serverPlayers)).setText("-/-");
-						((ExtendedImageView)layout.findViewById(R.id.statColor)).setColor(sla.getResources().getColor(R.color.stat_pending));
-					}else{
 						((ExtendedImageView)layout.findViewById(R.id.statColor)).setColor(sla.getResources().getColor(R.color.stat_error));
 						((TextView)layout.findViewById(R.id.serverName)).setText(sv.ip + ":" + sv.port);
 						((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.notResponding);
