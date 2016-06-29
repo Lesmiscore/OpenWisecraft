@@ -538,7 +538,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			case 5:
 				new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
 					.setTitle(R.string.sort)
-					.setSingleChoiceItems(R.array.serverSortMenu,-1,new DialogInterface.OnClickListener(){
+					.setSingleChoiceItems(R.array.serverSortMenu_old,-1,new DialogInterface.OnClickListener(){
 						public void onClick(DialogInterface di,int w){
 							SortKind sk=new SortKind[]{SortKind.BRING_ONLINE_SERVERS_TO_TOP,SortKind.IP_AND_PORT,SortKind.ONLINE_AND_OFFLINE}[w];
 							skipSave=true;
@@ -944,7 +944,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		}
 
 		private String[] generateSubMenu(boolean isPC) {
-			List<String> result=new ArrayList<String>(Arrays.<String>asList(sla.getResources().getStringArray(R.array.serverSubMenu)));
+			List<String> result=new ArrayList<String>(Arrays.<String>asList(sla.getResources().getStringArray(R.array.serverSubMenu_old)));
 			List<String> all=new ArrayList<String>(result);
 			if (isPC) {
 				result.remove(all.get(5));
