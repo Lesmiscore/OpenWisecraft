@@ -28,8 +28,6 @@ main:
     - gradle-2.12/bin/gradle assembleRelease -p app --info --stacktrace
     - mv app/build/outputs/apk/app-release.apk app/build/outputs/apk/Wisecraft-release.apk
     - mv app/build/outputs/apk/*.apk .
-    - ls /
-    - ls /builds/nao20010128nao/Wisecraft/app/build/outputs/apk
     - unzip Wisecraft-release.apk -d unzippedApk > NUL
     - android-sdk-linux/build-tools/23.0.2/dexdump -d unzippedApk/classes.dex > dexdump.txt
   artifacts:
