@@ -39,11 +39,11 @@ android {
 dependencies {
 	compile project(':statusesLayout') // https://github.com/nao20010128nao/StatusesLayout
 	compile project(':wisecraft-i18n') // https://github.com/nao20010128nao/Wisecraft-Multilanguage
+	compile project(':MaterialIcons')  // https://github.com/nao20010128nao/MaterialIcons
 	compile project(':scrolling')
 	compile project(':HoloIcons')
 	compile project(':rcon')
 	compile project(':compat')
-	compile project(':MaterialIcons')
 	
 	compile 'com.android.support:recyclerview-v7:23.4.0'
 	compile 'com.android.support:design:23.4.0'
