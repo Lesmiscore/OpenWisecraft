@@ -23,7 +23,7 @@ public class InformationCommunicatorReceiver extends BroadcastReceiver
 				res.disclosureTimeout();
 				res=null;
 			}
-		},1000);
+		},1000000);
 		res=dr;
 	}
 	@Override
