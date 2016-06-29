@@ -134,7 +134,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		appMenu.add(getResources().getString(R.string.exit));//9
 
 		switch (pref.getInt("main_style", 0)) {
-			case 0:
+			case 0:default:
 				setContentView(R.layout.server_list_content_nodrawer_old);
 				break;
 			case 1:
@@ -347,16 +347,18 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO: Implement this method
-		if (pref.getInt("main_style", 0) == 0) {
-			for (String s:appMenu) {
-				if (appMenu.indexOf(s) == 5 & !pref.getBoolean("feature_bott", true))
-					continue;
-				if (appMenu.indexOf(s) == 6 & !pref.getBoolean("feature_serverFinder", false))
-					continue;
-				if (appMenu.indexOf(s) == 7 & !pref.getBoolean("feature_asfsls", false))
-					continue;
-				menu.add(Menu.NONE, appMenu.indexOf(s), appMenu.indexOf(s), s);
-			}
+		switch(pref.getInt("main_style", 0)){
+			case 0:default:
+				for (String s:appMenu) {
+					if (appMenu.indexOf(s) == 5 & !pref.getBoolean("feature_bott", true))
+						continue;
+					if (appMenu.indexOf(s) == 6 & !pref.getBoolean("feature_serverFinder", false))
+						continue;
+					if (appMenu.indexOf(s) == 7 & !pref.getBoolean("feature_asfsls", false))
+						continue;
+					menu.add(Menu.NONE, appMenu.indexOf(s), appMenu.indexOf(s), s);
+				}
+				break;
 		}
 		return true;
 	}
