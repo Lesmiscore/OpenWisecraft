@@ -1,46 +1,98 @@
 package com.nao20010128nao.Wisecraft.old;
-import android.app.*;
-import android.content.*;
-import android.graphics.*;
-import android.graphics.drawable.*;
-import android.net.*;
-import android.os.*;
-import android.preference.*;
-import android.support.design.widget.*;
-import android.support.v4.view.*;
-import android.support.v4.widget.*;
-import android.support.v7.widget.*;
-import android.util.*;
-import android.view.*;
-import android.widget.*;
-import com.google.gson.*;
-import com.nao20010128nao.ToolBox.*;
-import com.nao20010128nao.Wisecraft.collector.*;
-import com.nao20010128nao.Wisecraft.misc.*;
-import com.nao20010128nao.Wisecraft.misc.compat.*;
-import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
-import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
-import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
-import com.nao20010128nao.Wisecraft.misc.pref.*;
-import com.nao20010128nao.Wisecraft.misc.server.*;
-import com.nao20010128nao.Wisecraft.misc.view.*;
-import com.nao20010128nao.Wisecraft.pingEngine.*;
-import com.nao20010128nao.Wisecraft.provider.*;
-import com.nao20010128nao.Wisecraft.proxy.*;
-import com.nao20010128nao.Wisecraft.rcon.*;
-import com.nao20010128nao.Wisecraft.services.*;
-import com.nao20010128nao.Wisecraft.settings.*;
-import java.io.*;
-import java.lang.ref.*;
-import java.net.*;
-import java.util.*;
-import uk.co.chrisjenx.calligraphy.*;
+import android.app.ActivityGroup;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.ConnectivityManager;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
+import android.preference.PreferenceScreen;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.PermissionChecker;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.AppCompatEditText;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+import com.google.gson.Gson;
+import com.nao20010128nao.ToolBox.HandledPreference;
+import com.nao20010128nao.Wisecraft.R;
+import com.nao20010128nao.Wisecraft.ServerFinderActivity;
+import com.nao20010128nao.Wisecraft.ServerGetActivity;
+import com.nao20010128nao.Wisecraft.ServerInfoActivity;
+import com.nao20010128nao.Wisecraft.ServerTestActivity;
+import com.nao20010128nao.Wisecraft.TheApplication;
+import com.nao20010128nao.Wisecraft.collector.CollectorMain;
+import com.nao20010128nao.Wisecraft.misc.AppBaseArrayAdapter;
+import com.nao20010128nao.Wisecraft.misc.Constant;
+import com.nao20010128nao.Wisecraft.misc.DebugWriter;
+import com.nao20010128nao.Wisecraft.misc.Factories;
+import com.nao20010128nao.Wisecraft.misc.NonNullableMap;
+import com.nao20010128nao.Wisecraft.misc.OldServer19;
+import com.nao20010128nao.Wisecraft.misc.Server;
+import com.nao20010128nao.Wisecraft.misc.ServerListActivityBase2.SortKind;
+import com.nao20010128nao.Wisecraft.misc.ServerListActivityInterface;
+import com.nao20010128nao.Wisecraft.misc.ServerListArrayList;
+import com.nao20010128nao.Wisecraft.misc.ServerStatus;
+import com.nao20010128nao.Wisecraft.misc.SlsUpdater;
+import com.nao20010128nao.Wisecraft.misc.SprPair;
+import com.nao20010128nao.Wisecraft.misc.Utils;
+import com.nao20010128nao.Wisecraft.misc.WorkingDialog;
+import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
+import com.nao20010128nao.Wisecraft.misc.compat.AppCompatListActivity;
+import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.ContextWrappingExtender;
+import com.nao20010128nao.Wisecraft.misc.pinger.pc.Reply;
+import com.nao20010128nao.Wisecraft.misc.pinger.pc.Reply19;
+import com.nao20010128nao.Wisecraft.misc.pinger.pe.FullStat;
+import com.nao20010128nao.Wisecraft.misc.pref.StartPref;
+import com.nao20010128nao.Wisecraft.misc.server.GhostPingServer;
+import com.nao20010128nao.Wisecraft.misc.view.ExtendedImageView;
+import com.nao20010128nao.Wisecraft.misc.view.StatusesLayout;
+import com.nao20010128nao.Wisecraft.pingEngine.UnconnectedPing;
+import com.nao20010128nao.Wisecraft.provider.MultiServerPingProvider;
+import com.nao20010128nao.Wisecraft.provider.NormalServerPingProvider;
+import com.nao20010128nao.Wisecraft.provider.ServerPingProvider;
+import com.nao20010128nao.Wisecraft.proxy.ProxyActivity;
+import com.nao20010128nao.Wisecraft.rcon.RCONActivity;
+import com.nao20010128nao.Wisecraft.services.SlsUpdaterService;
+import com.nao20010128nao.Wisecraft.settings.SettingsDelegate;
+import java.io.File;
+import java.io.IOException;
+import java.lang.ref.WeakReference;
+import java.net.ServerSocket;
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
-import com.nao20010128nao.Wisecraft.R;
-import com.nao20010128nao.Wisecraft.TheApplication;
-import com.nao20010128nao.Wisecraft.misc.ServerListActivityBase2.SortKind;
-import com.nao20010128nao.Wisecraft.*;
+
 
 abstract class ServerListActivityImpl extends ServerListActivityBase1 implements ServerListActivityInterface {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
@@ -1227,6 +1279,129 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		public void onDrawerOpened(View v) {
 			drawerOpened = true;
 		}
+	}
+}
+class ServerListActivityBase1 extends ServerListActivityBase2
+{
+	SecureRandom sr=new SecureRandom();
+	HashMap<Integer,Metadata> permRequire=new HashMap<>();
+	HashMap<Integer,Boolean> permReqResults=new HashMap<Integer,Boolean>(){
+		@Override
+		public Boolean get(Object key) {
+			// TODO: Implement this method
+			Boolean b = super.get(key);
+			if (b == null) {
+				return false;
+			}
+			return b;
+		}
+	};
+
+
+	public void doAfterRequirePerm(RequirePermissionResult r,String[] perms){
+		int call=Math.abs(sr.nextInt())&0xf;
+		while(permRequire.containsKey(call)){
+			call=Math.abs(sr.nextInt())&0xf;
+		}
+		ArrayList<String> notAllowed=new ArrayList<>();
+		ArrayList<String> unconfirmable=new ArrayList<>();
+		for(String perm:perms)
+			if(PermissionChecker.checkSelfPermission(this,perm)!=PermissionChecker.PERMISSION_GRANTED)
+				notAllowed.add(perm);
+		for(String s:notAllowed)Log.d("ServerListActivity","notAllowed:"+s);
+		for(String s:unconfirmable)Log.d("ServerListActivity","unconfirmable:"+s);
+		if(perms.length==unconfirmable.size()){
+			Log.d("ServerListActivity","denied");
+			r.onFailed(perms,Factories.strArray(unconfirmable));
+			return;
+		}
+		if(notAllowed.isEmpty()&unconfirmable.isEmpty()){
+			Log.d("ServerListActivity","nothing to ask");
+			r.onSuccess();
+			return;
+		}
+		Metadata md=new Metadata();
+		md.rpr=r;
+		md.currentlyDenied=Factories.strArray(unconfirmable);
+		permRequire.put(call,md);
+		ActivityCompat.requestPermissions(this,Factories.strArray(notAllowed),call);
+	}
+
+	protected boolean dispatchActivityResult(int request,int result,Intent data){
+		super.onActivityResult(request,result,data);
+		return permReqResults.get(request);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO: Implement this method
+		dispatchActivityResult(requestCode, resultCode, data);
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+		// TODO: Implement this method
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		if(!permRequire.containsKey(requestCode)){
+			return;
+		}
+		Metadata md=permRequire.get(requestCode);
+
+		ArrayList lst=new ArrayList();
+		for (int i=0;i < grantResults.length;i++)
+			if (grantResults[i]!=PackageManager.PERMISSION_GRANTED)
+				lst.add(permissions[i]);
+		lst.addAll(Arrays.asList(md.currentlyDenied));
+
+		if(lst.isEmpty()){
+			md.rpr.onSuccess();
+			permReqResults.put(requestCode,true);
+		}else{
+			md.rpr.onFailed(Factories.strArray(lst),md.currentlyDenied);
+			permReqResults.put(requestCode,false);
+		}
+		permRequire.remove(requestCode);
+	}
+
+	public static interface RequirePermissionResult{
+		public void onSuccess();
+		public void onFailed(String[] corruptPerms,String[] unconfirmable);
+	}
+
+	class Metadata{
+		RequirePermissionResult rpr;
+		String[] currentlyDenied;
+	}
+}
+class ServerListActivityBase2 extends AppCompatListActivity
+{
+	SharedPreferences pref;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO: Implement this method
+		super.onCreate(savedInstanceState);
+		pref=PreferenceManager.getDefaultSharedPreferences(this);
+	}
+
+	public void doSort(final List<Server> sl,final com.nao20010128nao.Wisecraft.misc.ServerListActivityBase2.SortKind sk){
+		new Thread(){
+			public void run(){
+				final List<Server> sortingServer=sk.doSort(sl);
+				runOnUiThread(new Runnable(){
+						public void run() {
+							finish();
+							ServerListActivityImpl.instance.clear();
+							new Handler().postDelayed(new Runnable(){
+									public void run() {
+										pref.edit().putString("servers", new Gson().toJson(sortingServer.toArray(new Server[sortingServer.size()]), Server[].class)).commit();
+										startActivity(new Intent(ServerListActivityBase2.this, ServerListActivity.class));
+									}
+								}, 10);
+						}
+					});
+			}
+		}.start();
 	}
 }
 public class ServerListActivity extends ServerListActivityImpl{
