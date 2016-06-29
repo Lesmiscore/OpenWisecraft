@@ -371,6 +371,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 								Toast.makeText(ServerListActivityImpl.this, R.string.alreadyExists, Toast.LENGTH_LONG).show();
 							} else {
 								sl.add(s);
+								spp.putInQueue(s, new PingHandlerImpl(true, -1));
+								pinging.put(s, true);
 							}
 							saveServers();
 						}
@@ -407,9 +409,16 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 								sv.add(svr);
 							} catch (NumberFormatException e) {}
 						}
+						sv.removeAll(list);
 						runOnUiThread(new Runnable(){
 								public void run() {
-									sl.addAll(sv);
+									if(sv.size()!=0){
+										for(Server s:sv){
+											spp.putInQueue(s, new PingHandlerImpl(true, -1));
+											pinging.put(s, true);
+											sl.add(s);
+										}
+									}
 									saveServers();
 								}
 							});
@@ -638,7 +647,10 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	@Override
 	public void addIntoList(Server s) {
 		// TODO: Implement this method
+		if(list.contains(s))return;
 		sl.add(s);
+		spp.putInQueue(s, new PingHandlerImpl(true, -1));
+		pinging.put(s, true);
 	}
 
 	static class RecycleServerList extends RecyclerView.Adapter<RecycleServerList.OriginalViewHolder> implements AdapterView.OnItemClickListener,AdapterView.OnItemLongClickListener{
@@ -925,8 +937,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 													Toast.makeText(sla, R.string.alreadyExists, Toast.LENGTH_LONG).show();
 												} else {
 													sla.list.set(ofs, s);
-													sla.sl.notifyDataSetChanged();
+													sla.sl.notifyItemChanged(ofs);
 													sla.dryUpdate(s,true);
+													sla.statLayout.setStatusAt(sla.clicked, 1);
 												}
 												sla.saveServers();
 											}
