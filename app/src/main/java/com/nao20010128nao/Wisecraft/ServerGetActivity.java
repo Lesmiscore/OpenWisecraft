@@ -13,6 +13,7 @@ import com.nao20010128nao.Wisecraft.misc.compat.*;
 import java.net.*;
 import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
+import com.nao20010128nao.Wisecraft.misc.ServerListActivityInterface;
 
 public class ServerGetActivity extends CompatWebViewActivity {
 	public static List<String> addForServerList;
@@ -91,7 +92,8 @@ public class ServerGetActivity extends CompatWebViewActivity {
 								.setPositiveButton(R.string.add, new DialogInterface.OnClickListener(){
 									public void onClick(DialogInterface di, int w) {
 										List<com.nao20010128nao.McServerList.Server> selected=getServers(serv, selections);
-										ServerListActivityImpl.instance.get().sl.addAll(Utils.convertServerObject(selected));
+										for(com.nao20010128nao.Wisecraft.misc.Server s:Utils.convertServerObject(selected))
+											((ServerListActivityInterface)ServerListActivity.instance.get().getLocalActivityManager().getActivity("main")).addIntoList(s);
 										di.dismiss();
 									}
 								})
