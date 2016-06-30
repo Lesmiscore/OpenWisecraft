@@ -18,12 +18,14 @@ import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.LinearLayoutManager;
 
-public class ServerTestActivity extends AppCompatListActivity {
-	static WeakReference<ServerTestActivity> instance=new WeakReference(null);
+class ServerTestActivityImpl extends AppCompatListActivity {
+	static WeakReference<ServerTestActivityImpl> instance=new WeakReference(null);
 	
 	ServerPingProvider spp=new NormalServerPingProvider();
-	ServerList sl;
+	RecyclerServerList sl;
 	List<Server> list;
 	int clicked=-1;
 	ProgressDialog waitDialog;
@@ -32,6 +34,7 @@ public class ServerTestActivity extends AppCompatListActivity {
 	int mode;
 	View dialog;
 	SharedPreferences pref;
+	RecyclerView rv;
 	Map<Integer,Boolean> pinging=new HashMap<Integer,Boolean>(){
 		@Override
 		public Boolean get(Object key) {
@@ -58,15 +61,17 @@ public class ServerTestActivity extends AppCompatListActivity {
 			pinging=instance.get().pinging;
 			usesOldInstance=true;
 		}else{
-			sl=new ServerList(this);
+			sl=new RecyclerServerList(this);
 		}
 		instance=new WeakReference(this);
-		setListAdapter(sl);
+		rv=(RecyclerView)findViewById(android.R.id.list);
+		rv.setLayoutManager(new LinearLayoutManager(this));
+		rv.setAdapter(sl);
 		getListView().setOnItemClickListener(sl);
 		ip = getIntent().getStringExtra("ip");
 		port = getIntent().getIntExtra("port", -1);
 		mode = getIntent().getIntExtra("ispc", 0);
-		if(usesOldInstance&sl.getCount()!=0){
+		if(usesOldInstance&sl.getItemCount()!=0){
 			
 		}else{
 			new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
@@ -87,7 +92,26 @@ public class ServerTestActivity extends AppCompatListActivity {
 							s.port = port;
 							s.mode = mode;
 							sl.add(s);
-							sl.getViewQuick(i);
+							spp.putInQueue(s, new ServerPingProvider.PingHandler(){
+									public void onPingFailed(final Server s) {
+										runOnUiThread(new Runnable(){
+												public void run() {
+													int position=list.indexOf(s);
+													list.set(position, s);
+													pinging.put(position, false);
+												}
+											});
+									}
+									public void onPingArrives(final ServerStatus sv) {
+										runOnUiThread(new Runnable(){
+												public void run() {
+													int position=list.indexOf(sv);
+													list.set(position, sv);
+													pinging.put(position, false);
+												}
+											});
+									}
+								});
 						}
 					}
 				})
@@ -124,132 +148,14 @@ public class ServerTestActivity extends AppCompatListActivity {
 		instance=new WeakReference(null);
 	}
 	
-	static class ServerList extends AppBaseArrayAdapter<Server> implements AdapterView.OnItemClickListener {
-		List<View> cached=new ArrayList();
-		ServerTestActivity sta;
+	static class RecyclerServerList extends ListRecyclerViewAdapter<STAVH,Server> implements AdapterView.OnItemClickListener {
+		ServerTestActivityImpl sta;
 		
-		public ServerList(ServerTestActivity parent) {
-			super(parent, 0, parent.list = new ArrayList<Server>());
+		public RecyclerServerList(ServerTestActivityImpl parent) {
+			super(parent.list = new ArrayList<Server>());
 			sta=parent;
 		}
-
-		@Override
-		public View getView(final int position, View convertView, ViewGroup parent) {
-			// TODO: Implement this method
-			if (cached.size() > position) {
-				View v=cached.get(position);
-				if (v != null) {
-					return v;
-				}
-			}
-			//if(convertView!=null)return convertView;
-			final View layout;
-			if (sta.pref.getBoolean("colorFormattedText", false)) {
-				if (sta.pref.getBoolean("darkBackgroundForServerName", false)) {
-					layout = sta.getLayoutInflater().inflate(R.layout.quickstatus_dark, null, false);
-				} else {
-					layout = sta.getLayoutInflater().inflate(R.layout.quickstatus, null, false);
-				}
-			} else {
-				layout = sta.getLayoutInflater().inflate(R.layout.quickstatus, null, false);
-			}
-			Server s=getItem(position);
-			layout.setTag(s);
-			sta.spp.putInQueue(s, new ServerPingProvider.PingHandler(){
-					public void onPingFailed(final Server s) {
-						sta.runOnUiThread(new Runnable(){
-								public void run() {
-									((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(sta.getResources().getColor(R.color.stat_error)));
-									((TextView)layout.findViewById(R.id.serverName)).setText(s.ip + ":" + s.port);
-									((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.notResponding);
-									sta.pinging.put(position, false);
-								}
-							});
-					}
-					public void onPingArrives(final ServerStatus sv) {
-						sta.runOnUiThread(new Runnable(){
-								public void run() {
-									((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(sta.getResources().getColor(R.color.stat_ok)));
-									final String title;
-									if (sv.response instanceof FullStat) {//PE
-										FullStat fs=(FullStat)sv.response;
-										Map<String,String> m=fs.getData();
-										if (m.containsKey("hostname")) {
-											title = m.get("hostname");
-										} else if (m.containsKey("motd")) {
-											title = m.get("motd");
-										} else {
-											title = sv.ip + ":" + sv.port;
-										}
-									} else if (sv.response instanceof Reply19) {//PC 1.9~
-										Reply19 rep=(Reply19)sv.response;
-										if (rep.description == null) {
-											title = sv.ip + ":" + sv.port;
-										} else {
-											title = rep.description.text;
-										}
-									} else if (sv.response instanceof Reply) {//PC
-										Reply rep=(Reply)sv.response;
-										if (rep.description == null) {
-											title = sv.ip + ":" + sv.port;
-										} else {
-											title = rep.description;
-										}
-									} else if (sv.response instanceof SprPair) {//PE?
-										SprPair sp=((SprPair)sv.response);
-										if (sp.getB() instanceof UnconnectedPing.UnconnectedPingResult) {
-											title = ((UnconnectedPing.UnconnectedPingResult)sp.getB()).getServerName();
-										} else if (sp.getA() instanceof FullStat) {
-											FullStat fs=(FullStat)sp.getA();
-											Map<String,String> m=fs.getData();
-											if (m.containsKey("hostname")) {
-												title = m.get("hostname");
-											} else if (m.containsKey("motd")) {
-												title = m.get("motd");
-											} else {
-												title = sv.ip + ":" + sv.port;
-											}
-										} else {
-											title = sv.ip + ":" + sv.port;
-										}
-									} else if (sv.response instanceof UnconnectedPing.UnconnectedPingResult) {
-										title = ((UnconnectedPing.UnconnectedPingResult)sv.response).getServerName();
-									} else {//Unreachable
-										title = sv.ip + ":" + sv.port;
-									}
-									if (sta.pref.getBoolean("colorFormattedText", false)) {
-										if (sta.pref.getBoolean("darkBackgroundForServerName", false)) {
-											((TextView)layout.findViewById(R.id.serverName)).setText(parseMinecraftFormattingCodeForDark(title));
-										} else {
-											((TextView)layout.findViewById(R.id.serverName)).setText(parseMinecraftFormattingCode(title));
-										}
-									} else {
-										((TextView)layout.findViewById(R.id.serverName)).setText(deleteDecorations(title));
-									}
-									((TextView)layout.findViewById(R.id.pingMillis)).setText(sv.ping + " ms");
-									sta.list.set(position, sv);
-									sta.pinging.put(position, false);
-								}
-							});
-					}
-				});
-			((TextView)layout.findViewById(R.id.serverName)).setText(R.string.working);
-			((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.working);
-			((TextView)layout.findViewById(R.id.serverAddress)).setText(s.ip + ":" + s.port);
-			((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(sta.getResources().getColor(R.color.stat_pending)));
-			if (cached.size() <= position) {
-				cached.addAll(Constant.ONE_HUNDRED_LENGTH_NULL_LIST);
-			}
-			cached.set(position, layout);
-			sta.pinging.put(position, true);
-			return layout;
-		}
-		public View getCachedView(int position) {
-			return cached.get(position);
-		}
-		public View getViewQuick(int pos) {
-			return getView(pos, null, null);
-		}
+		
 		@Override
 		public void onItemClick(AdapterView<?> p1, View p2, int p3, long p4) {
 			// TODO: Implement this method
@@ -263,14 +169,172 @@ public class ServerTestActivity extends AppCompatListActivity {
 		}
 
 		@Override
-		public void remove(Server object) {
+		public void onBindViewHolder(ServerTestActivityImpl.STAVH parent,final int offset) {
 			// TODO: Implement this method
-			cached.remove(sta.list.indexOf(object));
-			super.remove(object);
+			View layout=parent.itemView;
+			Server s=getItem(offset);
+			if(sta.pinging.get(s)){
+				((TextView)layout.findViewById(R.id.serverName)).setText(R.string.working);
+				((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.working);
+				((TextView)layout.findViewById(R.id.serverAddress)).setText(s.ip + ":" + s.port);
+				((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(sta.getResources().getColor(R.color.stat_pending)));
+			}else{
+				if(s instanceof ServerStatus){
+					ServerStatus sv=(ServerStatus)s;
+					((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(sta.getResources().getColor(R.color.stat_ok)));
+					final String title;
+					if (sv.response instanceof FullStat) {//PE
+						FullStat fs=(FullStat)sv.response;
+						Map<String,String> m=fs.getData();
+						if (m.containsKey("hostname")) {
+							title = m.get("hostname");
+						} else if (m.containsKey("motd")) {
+							title = m.get("motd");
+						} else {
+							title = sv.ip + ":" + sv.port;
+						}
+					} else if (sv.response instanceof Reply19) {//PC 1.9~
+						Reply19 rep=(Reply19)sv.response;
+						if (rep.description == null) {
+							title = sv.ip + ":" + sv.port;
+						} else {
+							title = rep.description.text;
+						}
+					} else if (sv.response instanceof Reply) {//PC
+						Reply rep=(Reply)sv.response;
+						if (rep.description == null) {
+							title = sv.ip + ":" + sv.port;
+						} else {
+							title = rep.description;
+						}
+					} else if (sv.response instanceof SprPair) {//PE?
+						SprPair sp=((SprPair)sv.response);
+						if (sp.getB() instanceof UnconnectedPing.UnconnectedPingResult) {
+							title = ((UnconnectedPing.UnconnectedPingResult)sp.getB()).getServerName();
+						} else if (sp.getA() instanceof FullStat) {
+							FullStat fs=(FullStat)sp.getA();
+							Map<String,String> m=fs.getData();
+							if (m.containsKey("hostname")) {
+								title = m.get("hostname");
+							} else if (m.containsKey("motd")) {
+								title = m.get("motd");
+							} else {
+								title = sv.ip + ":" + sv.port;
+							}
+						} else {
+							title = sv.ip + ":" + sv.port;
+						}
+					} else if (sv.response instanceof UnconnectedPing.UnconnectedPingResult) {
+						title = ((UnconnectedPing.UnconnectedPingResult)sv.response).getServerName();
+					} else {//Unreachable
+						title = sv.ip + ":" + sv.port;
+					}
+					if (sta.pref.getBoolean("colorFormattedText", false)) {
+						if (sta.pref.getBoolean("darkBackgroundForServerName", false)) {
+							((TextView)layout.findViewById(R.id.serverName)).setText(parseMinecraftFormattingCodeForDark(title));
+						} else {
+							((TextView)layout.findViewById(R.id.serverName)).setText(parseMinecraftFormattingCode(title));
+						}
+					} else {
+						((TextView)layout.findViewById(R.id.serverName)).setText(deleteDecorations(title));
+					}
+					((TextView)layout.findViewById(R.id.pingMillis)).setText(sv.ping + " ms");
+				}else{
+					((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(sta.getResources().getColor(R.color.stat_error)));
+					((TextView)layout.findViewById(R.id.serverName)).setText(s.ip + ":" + s.port);
+					((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.notResponding);
+				}
+			}
+			applyHandlersForViewTree(parent.itemView,new View.OnClickListener(){
+				public void onClick(View v){
+					onItemClick(null,v,offset,Long.MIN_VALUE);
+				}
+			});
+		}
+
+		@Override
+		public ServerTestActivityImpl.STAVH onCreateViewHolder(ViewGroup viewGroup, int type) {
+			// TODO: Implement this method
+			int layout;
+			if (sta.pref.getBoolean("colorFormattedText", false)) {
+				if (sta.pref.getBoolean("darkBackgroundForServerName", false)) {
+					layout = R.layout.quickstatus_dark;
+				} else {
+					layout = R.layout.quickstatus;
+				}
+			} else {
+				layout = R.layout.quickstatus;
+			}
+			return sta.new STAVH(LayoutInflater.from(sta).inflate(layout, viewGroup, false));
 		}
 		
-		public void attachNewActivity(ServerTestActivity newSta){
+		public void attachNewActivity(ServerTestActivityImpl newSta){
 			sta=newSta;
 		}
+	}
+	class STAVH extends RecyclerView.ViewHolder{
+		public STAVH(View v){
+			super(v);
+		}
+		public View findViewById(int resId){
+			return itemView.findViewById(resId);
+		}
+	}
+}
+public class ServerTestActivity extends CompatActivityGroup {
+	public static WeakReference<ServerListActivity> instance=new WeakReference(null);
+
+	boolean nonLoop=false;
+	SharedPreferences pref;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO: Implement this method
+		instance = new WeakReference(this);
+		pref = PreferenceManager.getDefaultSharedPreferences(this);
+		if(pref.getBoolean("useBright",false)){
+			setTheme(R.style.AppTheme_Bright);
+			getTheme().applyStyle(R.style.AppTheme_Bright,true);
+		}
+		super.onCreate(savedInstanceState);
+		getSupportActionBar().hide();
+		if(pref.getBoolean("useOldActivity",false))
+			setContentView(getLocalActivityManager().startActivity("main", new Intent(this, Content$Old.class).putExtras(getIntent())).getDecorView());
+		else
+			setContentView(getLocalActivityManager().startActivity("main", new Intent(this, Content.class).putExtras(getIntent())).getDecorView());
+	}
+	public static class Content extends ServerTestActivityImpl {public static void deleteRef(){instance=new WeakReference<>(null);}}
+	public static class Content$Old extends com.nao20010128nao.Wisecraft.old.ServerTestActivity {public static void deleteRef(){instance=new WeakReference<>(null);}}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// TODO: Implement this method
+		if (nonLoop)
+			return true;
+		nonLoop = true;
+		boolean val= getLocalActivityManager().getActivity("main").onCreateOptionsMenu(menu);
+		nonLoop = false;
+		return val;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO: Implement this method
+		if (nonLoop)
+			return true;
+		nonLoop = true;
+		boolean val= getLocalActivityManager().getActivity("main").onOptionsItemSelected(item);
+		nonLoop = false;
+		return val;
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO: Implement this method
+		((ServerListActivityInterface)getLocalActivityManager().getActivity("main")).onActivityResult(requestCode, resultCode, data);
+	}
+
+	@Override
+	protected void attachBaseContext(Context newBase) {
+		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
 	}
 }

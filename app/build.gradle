@@ -8,6 +8,7 @@ android {
         applicationId 'com.nao20010128nao.Wisecraft'
         minSdkVersion 8
         targetSdkVersion 21
+		multiDexEnabled true
     }
 
 	signingConfigs {

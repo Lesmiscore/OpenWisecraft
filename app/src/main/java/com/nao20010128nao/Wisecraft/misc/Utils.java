@@ -14,6 +14,8 @@ import java.lang.reflect.*;
 import java.security.*;
 import java.util.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
+import android.view.View;
+import android.view.ViewGroup;
 
 public class Utils extends PingerUtils{
 	public static String deleteDecorations(String decorated) {
@@ -186,18 +188,54 @@ public class Utils extends PingerUtils{
 		}
 		return os.toByteArray();
 	}
-	public <T> List<T>  trueValues(List<T> all, boolean[] balues) {
+	public static <T> List<T>  trueValues(List<T> all, boolean[] balues) {
 		List<T> lst=new ArrayList<T>();
 		for (int i=0;i < balues.length;i++)
 			if (balues[i])
 				lst.add(all.get(i));
 		return lst;
 	}
-	public <T> T[] trueValues(T[] all, boolean[] balues) {
+	public static <T> T[] trueValues(T[] all, boolean[] balues) {
 		List<T> lst=new ArrayList<T>();
 		for (int i=0;i < balues.length;i++)
 			if (balues[i])
 				lst.add(all[i]);
 		return lst.toArray((T[])Array.newInstance(all.getClass().getComponentType(),lst.size()));
+	}
+	public static void applyHandlersForViewTree(View v,View.OnClickListener click,View.OnLongClickListener longer){
+		if(v!=null){
+			v.setOnClickListener(click);
+			v.setOnLongClickListener(longer);
+			v.setLongClickable(true);
+			if(v instanceof ViewGroup){
+				ViewGroup vg=(ViewGroup)v;
+				for(int i=0;i<vg.getChildCount();i++){
+					applyHandlersForViewTree(vg.getChildAt(i),click,longer);
+				}
+			}
+		}
+	}
+	public static void applyHandlersForViewTree(View v,View.OnClickListener click){
+		if(v!=null){
+			v.setOnClickListener(click);
+			if(v instanceof ViewGroup){
+				ViewGroup vg=(ViewGroup)v;
+				for(int i=0;i<vg.getChildCount();i++){
+					applyHandlersForViewTree(vg.getChildAt(i),click);
+				}
+			}
+		}
+	}
+	public static void applyHandlersForViewTree(View v,View.OnLongClickListener longer){
+		if(v!=null){
+			v.setOnLongClickListener(longer);
+			v.setLongClickable(true);
+			if(v instanceof ViewGroup){
+				ViewGroup vg=(ViewGroup)v;
+				for(int i=0;i<vg.getChildCount();i++){
+					applyHandlersForViewTree(vg.getChildAt(i),longer);
+				}
+			}
+		}
 	}
 }
