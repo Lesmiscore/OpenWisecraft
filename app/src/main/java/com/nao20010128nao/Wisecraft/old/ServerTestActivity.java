@@ -38,8 +38,9 @@ import java.util.Map;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
+import com.nao20010128nao.Wisecraft.misc.ServerListActivityInterface;
 
-public class ServerTestActivity extends AppCompatListActivity {
+public class ServerTestActivity extends AppCompatListActivity implements ServerListActivityInterface{
 	static WeakReference<ServerTestActivity> instance=new WeakReference(null);
 	
 	ServerPingProvider spp=new NormalServerPingProvider();
@@ -143,6 +144,12 @@ public class ServerTestActivity extends AppCompatListActivity {
 		super.onBackPressed();
 		instance=new WeakReference(null);
 	}
+
+	@Override
+	public void addIntoList(Server s) {
+		// TODO: Implement this method
+	}
+
 	
 	static class ServerList extends AppBaseArrayAdapter<Server> implements AdapterView.OnItemClickListener {
 		List<View> cached=new ArrayList();

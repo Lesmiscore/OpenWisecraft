@@ -21,7 +21,7 @@ import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.LinearLayoutManager;
 
-class ServerTestActivityImpl extends AppCompatListActivity {
+class ServerTestActivityImpl extends AppCompatListActivity implements ServerListActivityInterface{
 	static WeakReference<ServerTestActivityImpl> instance=new WeakReference(null);
 	
 	ServerPingProvider spp=new NormalServerPingProvider();
@@ -147,6 +147,12 @@ class ServerTestActivityImpl extends AppCompatListActivity {
 		super.onBackPressed();
 		instance=new WeakReference(null);
 	}
+
+	@Override
+	public void addIntoList(Server s) {
+		// TODO: Implement this method
+	}
+
 	
 	static class RecyclerServerList extends ListRecyclerViewAdapter<STAVH,Server> implements AdapterView.OnItemClickListener {
 		ServerTestActivityImpl sta;
@@ -282,7 +288,7 @@ class ServerTestActivityImpl extends AppCompatListActivity {
 	}
 }
 public class ServerTestActivity extends CompatActivityGroup {
-	public static WeakReference<ServerListActivity> instance=new WeakReference(null);
+	public static WeakReference<ServerTestActivity> instance=new WeakReference(null);
 
 	boolean nonLoop=false;
 	SharedPreferences pref;

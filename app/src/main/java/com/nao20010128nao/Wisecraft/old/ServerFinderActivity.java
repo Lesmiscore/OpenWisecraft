@@ -40,7 +40,8 @@ import java.util.List;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
-public class ServerFinderActivity extends AppCompatListActivity {
+import com.nao20010128nao.Wisecraft.misc.ServerListActivityInterface;
+public class ServerFinderActivity extends AppCompatListActivity implements ServerListActivityInterface{
 	ServerList sl;
 	List<ServerStatus> list;
 	String ip;
@@ -169,6 +170,12 @@ public class ServerFinderActivity extends AppCompatListActivity {
 			spp.stop();
 		}
 	}
+
+	@Override
+	public void addIntoList(Server s) {
+		// TODO: Implement this method
+	}
+
 	
 	class ServerList extends AppBaseArrayAdapter<ServerStatus> implements AdapterView.OnItemClickListener {
 		List<View> cached=new ArrayList<>();

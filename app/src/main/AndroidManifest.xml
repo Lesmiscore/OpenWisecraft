@@ -140,6 +140,17 @@
         </activity>
 		
 		<activity
+            android:label="@string/serverFinder"
+            android:name=".ServerFinderActivity$Content"
+			android:exported="false">
+        </activity>
+		<activity
+            android:label="@string/serverFinder"
+            android:name=".ServerFinderActivity$Content$Old"
+			android:exported="false">
+        </activity>
+		
+		<activity
             android:label="@string/osl"
             android:name=".OpenSourceActivity"
 			android:exported="false"

@@ -16,9 +16,10 @@ import com.nao20010128nao.Wisecraft.pingEngine.*;
 import com.nao20010128nao.Wisecraft.provider.*;
 import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
+import java.lang.ref.WeakReference;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
-public class ServerFinderActivity extends AppCompatListActivity {
+class ServerFinderActivityImpl extends AppCompatListActivity implements ServerListActivityInterface{
 	ServerList sl;
 	List<ServerStatus> list;
 	String ip;
@@ -91,7 +92,7 @@ public class ServerFinderActivity extends AppCompatListActivity {
 			public Void doInBackground(Void... l) {
 				final int max=endPort - startPort;
 				
-				int threads=new Integer(PreferenceManager.getDefaultSharedPreferences(ServerFinderActivity.this).getString("parallels", "6"));
+				int threads=new Integer(PreferenceManager.getDefaultSharedPreferences(ServerFinderActivityImpl.this).getString("parallels", "6"));
 				if (isPC) {
 					spp = new PCMultiServerPingProvider(threads);
 				} else {
@@ -147,11 +148,17 @@ public class ServerFinderActivity extends AppCompatListActivity {
 			spp.stop();
 		}
 	}
+
+	@Override
+	public void addIntoList(Server s) {
+		// TODO: Implement this method
+	}
+
 	
 	class ServerList extends AppBaseArrayAdapter<ServerStatus> implements AdapterView.OnItemClickListener {
 		List<View> cached=new ArrayList<>();
 		public ServerList() {
-			super(ServerFinderActivity.this, 0, list = new ArrayList<ServerStatus>());
+			super(ServerFinderActivityImpl.this, 0, list = new ArrayList<ServerStatus>());
 		}
 
 		@Override
@@ -230,7 +237,7 @@ public class ServerFinderActivity extends AppCompatListActivity {
 			// TODO: Implement this method
 			final Server s=getItem(p3);
 			if (s instanceof ServerStatus) {
-				new AppCompatAlertDialog.Builder(ServerFinderActivity.this)
+				new AppCompatAlertDialog.Builder(ServerFinderActivityImpl.this)
 					.setTitle(s.toString())
 					.setItems(R.array.serverFinderMenu,new DialogInterface.OnClickListener(){
 						public void onClick(DialogInterface di,int w){
@@ -251,5 +258,62 @@ public class ServerFinderActivity extends AppCompatListActivity {
 			cached.remove(list.indexOf(object));
 			super.remove(object);
 		}
+	}
+}
+public class ServerFinderActivity extends CompatActivityGroup {
+	public static WeakReference<ServerFinderActivity> instance=new WeakReference(null);
+
+	boolean nonLoop=false;
+	SharedPreferences pref;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO: Implement this method
+		instance = new WeakReference(this);
+		pref = PreferenceManager.getDefaultSharedPreferences(this);
+		if(pref.getBoolean("useBright",false)){
+			setTheme(R.style.AppTheme_Bright);
+			getTheme().applyStyle(R.style.AppTheme_Bright,true);
+		}
+		super.onCreate(savedInstanceState);
+		getSupportActionBar().hide();
+		if(pref.getBoolean("useOldActivity",false))
+			setContentView(getLocalActivityManager().startActivity("main", new Intent(this, Content$Old.class).putExtras(getIntent())).getDecorView());
+		else
+			setContentView(getLocalActivityManager().startActivity("main", new Intent(this, Content.class).putExtras(getIntent())).getDecorView());
+	}
+	public static class Content extends ServerFinderActivityImpl {public static void deleteRef(){instance=new WeakReference<>(null);}}
+	public static class Content$Old extends com.nao20010128nao.Wisecraft.old.ServerFinderActivity {public static void deleteRef(){instance=new WeakReference<>(null);}}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// TODO: Implement this method
+		if (nonLoop)
+			return true;
+		nonLoop = true;
+		boolean val= getLocalActivityManager().getActivity("main").onCreateOptionsMenu(menu);
+		nonLoop = false;
+		return val;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO: Implement this method
+		if (nonLoop)
+			return true;
+		nonLoop = true;
+		boolean val= getLocalActivityManager().getActivity("main").onOptionsItemSelected(item);
+		nonLoop = false;
+		return val;
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO: Implement this method
+		((ServerListActivityInterface)getLocalActivityManager().getActivity("main")).onActivityResult(requestCode, resultCode, data);
+	}
+
+	@Override
+	protected void attachBaseContext(Context newBase) {
+		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
 	}
 }
