@@ -68,3 +68,23 @@ rconPC:
       - "rconPassCrack*.apk"
       - dexdump.txt
 
+mainEx:
+  stage: mainEx
+  script:
+    - rm *.apk
+    - rm dexdump.txt
+    - cd MaterialIcons
+    - git remote set-url origin https://github.com/nao20010128nao/MaterialIconsEx.git
+    - git pull origin master
+    - cd ../
+    - gradle-2.12/bin/gradle assembleRelease -p app --info --stacktrace
+    - mv app/build/outputs/apk/app-release.apk app/build/outputs/apk/Wisecraft-release.apk
+    - mv app/build/outputs/apk/*.apk .
+    - unzip Wisecraft-release.apk -d unzippedApk > NUL
+    - android-sdk-linux/build-tools/23.0.2/dexdump -d unzippedApk/classes.dex > dexdump.txt
+  artifacts:
+    paths:
+      - "*.apk"
+      - dexdump.txt
+
+
