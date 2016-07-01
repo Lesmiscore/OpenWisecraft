@@ -309,7 +309,7 @@ public class ServerFinderActivity extends CompatActivityGroup {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO: Implement this method
-		((ServerListActivityInterface)getLocalActivityManager().getActivity("main")).onActivityResult(requestCode, resultCode, data);
+		((ActivityResultInterface)getLocalActivityManager().getActivity("main")).onActivityResult(requestCode, resultCode, data);
 	}
 
 	@Override
