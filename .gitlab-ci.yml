@@ -24,10 +24,15 @@ stages:
   - rcon
   - rconPC
   - mainEx
+  - mainOld
 
 main:
   stage: main
   script:
+    - cd MaterialIcons
+    - git remote set-url origin https://github.com/nao20010128nao/MaterialIconsLight.git
+    - git pull origin master > NUL
+    - cd ../
     - gradle-2.12/bin/gradle assembleRelease -p app --info --stacktrace
     - mv app/build/outputs/apk/app-release.apk app/build/outputs/apk/Wisecraft-release.apk
     - mv app/build/outputs/apk/*.apk .
@@ -76,7 +81,7 @@ mainEx:
     - rm dexdump.txt
     - cd MaterialIcons
     - git remote set-url origin https://github.com/nao20010128nao/MaterialIconsEx.git
-    - git pull origin master > git-pull.txt
+    - git pull origin master > NUL
     - cd ../
     - gradle-2.12/bin/gradle assembleRelease -p app --info --stacktrace
     - mv app/build/outputs/apk/app-release.apk app/build/outputs/apk/Wisecraft-release.apk
@@ -87,6 +92,21 @@ mainEx:
     paths:
       - "*.apk"
       - dexdump.txt
-      - git-pull.txt
+
+
+mainOld:
+  stage: mainOld
+  script:
+    - "rm *.apk"
+    - rm dexdump.txt
+    - gradle-2.12/bin/gradle assembleRelease -p app --info --stacktrace
+    - mv app/build/outputs/apk/app-release.apk app/build/outputs/apk/Wisecraft-release.apk
+    - mv app/build/outputs/apk/*.apk .
+    - unzip Wisecraft-release.apk -d unzippedApk > NUL
+    - android-sdk-linux/build-tools/23.0.2/dexdump -d unzippedApk/classes.dex > dexdump.txt
+  artifacts:
+    paths:
+      - "*.apk"
+      - dexdump.txt
 
 
