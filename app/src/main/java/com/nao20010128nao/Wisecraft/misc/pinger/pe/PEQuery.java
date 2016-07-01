@@ -57,7 +57,8 @@ public class PEQuery implements PingHost {
 
 	private byte[] sendUDP(byte[] input) {
 		try {
-			socket = new DatagramSocket();
+			if(socket==null)
+				socket = new DatagramSocket();
 
 			InetAddress address = InetAddress.getByName(serverAddress);
 			DatagramPacket packet1 = new DatagramPacket(input, input.length, address, queryPort);
