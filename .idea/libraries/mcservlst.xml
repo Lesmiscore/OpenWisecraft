@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="mcservlst">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/libs/mcservlst.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -5,6 +5,7 @@ import android.graphics.*;
 import android.graphics.drawable.*;
 import android.os.*;
 import android.preference.*;
+import android.support.v7.app.AppCompatActivity;
 import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.misc.*;
@@ -21,9 +22,9 @@ import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.LinearLayoutManager;
 
-class ServerTestActivityImpl extends AppCompatListActivity implements ServerListActivityInterface{
+class ServerTestActivityImpl extends AppCompatActivity implements ServerListActivityInterface{
 	static WeakReference<ServerTestActivityImpl> instance=new WeakReference(null);
-	
+
 	ServerPingProvider spp=new NormalServerPingProvider();
 	RecyclerServerList sl;
 	List<Server> list;
@@ -64,15 +65,15 @@ class ServerTestActivityImpl extends AppCompatListActivity implements ServerList
 			sl=new RecyclerServerList(this);
 		}
 		instance=new WeakReference(this);
+        setContentView(R.layout.recycler_view_content);
 		rv=(RecyclerView)findViewById(android.R.id.list);
 		rv.setLayoutManager(new LinearLayoutManager(this));
 		rv.setAdapter(sl);
-		getListView().setOnItemClickListener(sl);
 		ip = getIntent().getStringExtra("ip");
 		port = getIntent().getIntExtra("port", -1);
 		mode = getIntent().getIntExtra("ispc", 0);
 		if(usesOldInstance&sl.getItemCount()!=0){
-			
+
 		}else{
 			new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
 				.setTitle(R.string.testServer)
@@ -92,12 +93,13 @@ class ServerTestActivityImpl extends AppCompatListActivity implements ServerList
 							s.port = port;
 							s.mode = mode;
 							sl.add(s);
+                            final int position=i;
 							spp.putInQueue(s, new ServerPingProvider.PingHandler(){
 									public void onPingFailed(final Server s) {
 										runOnUiThread(new Runnable(){
 												public void run() {
-													int position=list.indexOf(s);
 													list.set(position, s);
+                                                    sl.notifyItemChanged(position);
 													pinging.put(position, false);
 												}
 											});
@@ -105,9 +107,9 @@ class ServerTestActivityImpl extends AppCompatListActivity implements ServerList
 									public void onPingArrives(final ServerStatus sv) {
 										runOnUiThread(new Runnable(){
 												public void run() {
-													int position=list.indexOf(sv);
 													list.set(position, sv);
-													pinging.put(position, false);
+                                                    sl.notifyItemChanged(position);
+                                                    pinging.put(position, false);
 												}
 											});
 									}
@@ -133,7 +135,7 @@ class ServerTestActivityImpl extends AppCompatListActivity implements ServerList
 			BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
 			bd.setTargetDensity(getResources().getDisplayMetrics());
 			bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
-			getListView().setBackground(bd);
+			rv.setBackgroundDrawable(bd);
 		}
 	}
 	@Override
@@ -152,21 +154,21 @@ class ServerTestActivityImpl extends AppCompatListActivity implements ServerList
 	public void addIntoList(Server s) {
 		// TODO: Implement this method
 	}
-	
+
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO: Implement this method
 		super.onActivityResult(requestCode, resultCode, data);
 	}
-	
+
 	static class RecyclerServerList extends ListRecyclerViewAdapter<STAVH,Server> implements AdapterView.OnItemClickListener {
 		ServerTestActivityImpl sta;
-		
+
 		public RecyclerServerList(ServerTestActivityImpl parent) {
 			super(parent.list = new ArrayList<Server>());
 			sta=parent;
 		}
-		
+
 		@Override
 		public void onItemClick(AdapterView<?> p1, View p2, int p3, long p4) {
 			// TODO: Implement this method
@@ -184,10 +186,10 @@ class ServerTestActivityImpl extends AppCompatListActivity implements ServerList
 			// TODO: Implement this method
 			View layout=parent.itemView;
 			Server s=getItem(offset);
-			if(sta.pinging.get(s)){
+            ((TextView)layout.findViewById(R.id.serverAddress)).setText(s.ip + ":" + s.port);
+            if(sta.pinging.get(offset)){
 				((TextView)layout.findViewById(R.id.serverName)).setText(R.string.working);
 				((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.working);
-				((TextView)layout.findViewById(R.id.serverAddress)).setText(s.ip + ":" + s.port);
 				((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(sta.getResources().getColor(R.color.stat_pending)));
 			}else{
 				if(s instanceof ServerStatus){
@@ -204,25 +206,30 @@ class ServerTestActivityImpl extends AppCompatListActivity implements ServerList
 						} else {
 							title = sv.ip + ":" + sv.port;
 						}
-					} else if (sv.response instanceof Reply19) {//PC 1.9~
+                        ((TextView) layout.findViewById(R.id.serverPlayers)).setText(fs.getData().get("numplayers") + "/" + fs.getData().get("maxplayers"));
+                    } else if (sv.response instanceof Reply19) {//PC 1.9~
 						Reply19 rep=(Reply19)sv.response;
 						if (rep.description == null) {
 							title = sv.ip + ":" + sv.port;
 						} else {
 							title = rep.description.text;
 						}
-					} else if (sv.response instanceof Reply) {//PC
+                        ((TextView) layout.findViewById(R.id.serverPlayers)).setText(rep.players.online + "/" + rep.players.max);
+                    } else if (sv.response instanceof Reply) {//PC
 						Reply rep=(Reply)sv.response;
 						if (rep.description == null) {
 							title = sv.ip + ":" + sv.port;
 						} else {
 							title = rep.description;
 						}
-					} else if (sv.response instanceof SprPair) {//PE?
+                        ((TextView) layout.findViewById(R.id.serverPlayers)).setText(rep.players.online + "/" + rep.players.max);
+                    } else if (sv.response instanceof SprPair) {//PE?
 						SprPair sp=((SprPair)sv.response);
 						if (sp.getB() instanceof UnconnectedPing.UnconnectedPingResult) {
-							title = ((UnconnectedPing.UnconnectedPingResult)sp.getB()).getServerName();
-						} else if (sp.getA() instanceof FullStat) {
+                            UnconnectedPing.UnconnectedPingResult res = (UnconnectedPing.UnconnectedPingResult) sp.getB();
+                            title = res.getServerName();
+                            ((TextView) layout.findViewById(R.id.serverPlayers)).setText(res.getPlayersCount() + "/" + res.getMaxPlayers());
+                        } else if (sp.getA() instanceof FullStat) {
 							FullStat fs=(FullStat)sp.getA();
 							Map<String,String> m=fs.getData();
 							if (m.containsKey("hostname")) {
@@ -232,14 +239,19 @@ class ServerTestActivityImpl extends AppCompatListActivity implements ServerList
 							} else {
 								title = sv.ip + ":" + sv.port;
 							}
-						} else {
+                            ((TextView) layout.findViewById(R.id.serverPlayers)).setText(fs.getData().get("numplayers") + "/" + fs.getData().get("maxplayers"));
+                        } else {
 							title = sv.ip + ":" + sv.port;
-						}
+                            ((TextView) layout.findViewById(R.id.serverPlayers)).setText("-/-");
+                        }
 					} else if (sv.response instanceof UnconnectedPing.UnconnectedPingResult) {
-						title = ((UnconnectedPing.UnconnectedPingResult)sv.response).getServerName();
-					} else {//Unreachable
+                        UnconnectedPing.UnconnectedPingResult res = (UnconnectedPing.UnconnectedPingResult) sv.response;
+                        title = res.getServerName();
+                        ((TextView) layout.findViewById(R.id.serverPlayers)).setText(res.getPlayersCount() + "/" + res.getMaxPlayers());
+                    } else {//Unreachable
 						title = sv.ip + ":" + sv.port;
-					}
+                        ((TextView) layout.findViewById(R.id.serverPlayers)).setText("-/-");
+                    }
 					if (sta.pref.getBoolean("colorFormattedText", false)) {
 						if (sta.pref.getBoolean("darkBackgroundForServerName", false)) {
 							((TextView)layout.findViewById(R.id.serverName)).setText(parseMinecraftFormattingCodeForDark(title));
@@ -278,7 +290,7 @@ class ServerTestActivityImpl extends AppCompatListActivity implements ServerList
 			}
 			return sta.new STAVH(LayoutInflater.from(sta).inflate(layout, viewGroup, false));
 		}
-		
+
 		public void attachNewActivity(ServerTestActivityImpl newSta){
 			sta=newSta;
 		}

@@ -3,11 +3,14 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/HoloIcons/HoloIcons.iml" filepath="$PROJECT_DIR$/HoloIcons/HoloIcons.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MaterialIcons/MaterialIcons.iml" filepath="$PROJECT_DIR$/MaterialIcons/MaterialIcons.iml" />
       <module fileurl="file://$PROJECT_DIR$/Wisecraft.iml" filepath="$PROJECT_DIR$/Wisecraft.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aFileChooser/aFileChooser.iml" filepath="$PROJECT_DIR$/aFileChooser/aFileChooser.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/compat/compat.iml" filepath="$PROJECT_DIR$/compat/compat.iml" />
       <module fileurl="file://$PROJECT_DIR$/rcon/rcon.iml" filepath="$PROJECT_DIR$/rcon/rcon.iml" />
       <module fileurl="file://$PROJECT_DIR$/rconApp/rconApp.iml" filepath="$PROJECT_DIR$/rconApp/rconApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rconPassCrack/rconPassCrack.iml" filepath="$PROJECT_DIR$/rconPassCrack/rconPassCrack.iml" />
       <module fileurl="file://$PROJECT_DIR$/scrolling/scrolling.iml" filepath="$PROJECT_DIR$/scrolling/scrolling.iml" />
       <module fileurl="file://$PROJECT_DIR$/statusesLayout/statusesLayout.iml" filepath="$PROJECT_DIR$/statusesLayout/statusesLayout.iml" />
       <module fileurl="file://$PROJECT_DIR$/wisecraft-i18n/wisecraft-i18n.iml" filepath="$PROJECT_DIR$/wisecraft-i18n/wisecraft-i18n.iml" />
