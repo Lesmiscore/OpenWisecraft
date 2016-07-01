@@ -82,7 +82,7 @@ mainEx:
     - "rm *.apk"
     - rm dexdump.txt
     - rm -rf MaterialIcons
-    - git clone origin https://github.com/nao20010128nao/MaterialIconsEx.git > NUL
+    - git clone https://github.com/nao20010128nao/MaterialIconsEx.git > NUL
     - mv MaterialIconsEx MaterialIcons
     - gradle-2.12/bin/gradle assembleRelease -p app --info --stacktrace
     - mv app/build/outputs/apk/app-release.apk app/build/outputs/apk/Wisecraft-release.apk
@@ -101,7 +101,7 @@ mainOld:
     - "rm *.apk"
     - rm dexdump.txt
     - rm -rf MaterialIcons
-    - git clone origin https://github.com/nao20010128nao/MaterialIcons.git > NUL
+    - git clone https://github.com/nao20010128nao/MaterialIcons.git > NUL
     - gradle-2.12/bin/gradle assembleRelease -p app --info --stacktrace
     - mv app/build/outputs/apk/app-release.apk app/build/outputs/apk/Wisecraft-release.apk
     - mv app/build/outputs/apk/*.apk .
