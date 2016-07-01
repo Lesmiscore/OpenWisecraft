@@ -41,6 +41,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 import com.nao20010128nao.Wisecraft.misc.ServerListActivityInterface;
+import android.content.Intent;
 public class ServerFinderActivity extends AppCompatListActivity implements ServerListActivityInterface{
 	ServerList sl;
 	List<ServerStatus> list;
@@ -176,6 +177,11 @@ public class ServerFinderActivity extends AppCompatListActivity implements Serve
 		// TODO: Implement this method
 	}
 
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO: Implement this method
+		super.onActivityResult(requestCode, resultCode, data);
+	}
 	
 	class ServerList extends AppBaseArrayAdapter<ServerStatus> implements AdapterView.OnItemClickListener {
 		List<View> cached=new ArrayList<>();

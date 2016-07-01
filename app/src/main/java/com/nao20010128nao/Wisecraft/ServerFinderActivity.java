@@ -153,7 +153,12 @@ class ServerFinderActivityImpl extends AppCompatListActivity implements ServerLi
 	public void addIntoList(Server s) {
 		// TODO: Implement this method
 	}
-
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO: Implement this method
+		super.onActivityResult(requestCode, resultCode, data);
+	}
 	
 	class ServerList extends AppBaseArrayAdapter<ServerStatus> implements AdapterView.OnItemClickListener {
 		List<View> cached=new ArrayList<>();

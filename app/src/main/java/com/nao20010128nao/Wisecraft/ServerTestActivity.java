@@ -152,7 +152,12 @@ class ServerTestActivityImpl extends AppCompatListActivity implements ServerList
 	public void addIntoList(Server s) {
 		// TODO: Implement this method
 	}
-
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO: Implement this method
+		super.onActivityResult(requestCode, resultCode, data);
+	}
 	
 	static class RecyclerServerList extends ListRecyclerViewAdapter<STAVH,Server> implements AdapterView.OnItemClickListener {
 		ServerTestActivityImpl sta;

@@ -149,7 +149,12 @@ public class ServerTestActivity extends AppCompatListActivity implements ServerL
 	public void addIntoList(Server s) {
 		// TODO: Implement this method
 	}
-
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO: Implement this method
+		super.onActivityResult(requestCode, resultCode, data);
+	}
 	
 	static class ServerList extends AppBaseArrayAdapter<Server> implements AdapterView.OnItemClickListener {
 		List<View> cached=new ArrayList();
