@@ -7,6 +7,8 @@ before_script:
   - cd ../statusesLayout
   - git pull origin master
   - cd ../MaterialIcons
+  - git config --global user.email "nao20010128@gmail.com"
+  - git config --global user.name "nao20010128nao"
   - git pull origin master
   - cd ../
   - apt-get --quiet update --yes
