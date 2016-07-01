@@ -23,6 +23,7 @@ stages:
   - main
   - rcon
   - rconPC
+  - mainEx
 
 main:
   stage: main
@@ -71,7 +72,7 @@ rconPC:
 mainEx:
   stage: mainEx
   script:
-    - rm *.apk
+    - "rm *.apk"
     - rm dexdump.txt
     - cd MaterialIcons
     - git remote set-url origin https://github.com/nao20010128nao/MaterialIconsEx.git
