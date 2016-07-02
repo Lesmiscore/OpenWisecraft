@@ -79,11 +79,7 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 			BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
 			bd.setTargetDensity(getResources().getDisplayMetrics());
 			bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
-<<<<<<< HEAD
-			getListView().setBackgroundDrawable(bd);
-=======
 			rv.setBackgroundDrawable(bd);
->>>>>>> publicVersion-3.0pre
 		}
 	}
 	private void startFinding(final String ip, final int startPort, final int endPort, final boolean isPC) {

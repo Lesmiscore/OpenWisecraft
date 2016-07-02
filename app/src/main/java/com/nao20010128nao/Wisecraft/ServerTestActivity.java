@@ -135,11 +135,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 			BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
 			bd.setTargetDensity(getResources().getDisplayMetrics());
 			bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
-<<<<<<< HEAD
-			getListView().setBackgroundDrawable(bd);
-=======
 			rv.setBackgroundDrawable(bd);
->>>>>>> publicVersion-3.0pre
 		}
 	}
 	@Override
