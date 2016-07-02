@@ -12,6 +12,8 @@ import android.app.ActivityManager;
 import android.app.Service;
 import android.view.LayoutInflater;
 import com.nao20010128nao.WRcon.services.CollectorMainService;
+import android.graphics.drawable.Drawable;
+import android.support.v4.graphics.drawable.DrawableCompat;
 
 public class TheApplication extends Application implements com.nao20010128nao.Wisecraft.rcon.Presenter,InformationCommunicatorReceiver.DisclosureResult
 {
@@ -101,5 +103,11 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 	}
 	public LayoutInflater getLayoutInflater(){
 		return (LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
+	}
+	public Drawable getTintedDrawable(int res,int color){
+		Drawable d=getResources().getDrawable(res);
+		d=DrawableCompat.wrap(d);
+		DrawableCompat.setTint(d,color);
+		return d;
 	}
 }

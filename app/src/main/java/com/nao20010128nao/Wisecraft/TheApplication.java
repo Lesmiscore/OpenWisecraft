@@ -12,6 +12,8 @@ import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
 import android.widget.Toast;
 import com.nao20010128nao.Wisecraft.rcon.KeyChain;
+import android.graphics.drawable.Drawable;
+import android.support.v4.graphics.drawable.DrawableCompat;
 
 public class TheApplication extends Application implements com.nao20010128nao.Wisecraft.rcon.Presenter,InformationCommunicatorReceiver.DisclosureResult {
 	public static TheApplication instance;
@@ -131,6 +133,13 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		return false;
 	}
 
+	public Drawable getTintedDrawable(int res,int color){
+		Drawable d=getResources().getDrawable(res);
+		d=DrawableCompat.wrap(d);
+		DrawableCompat.setTint(d,color);
+		return d;
+	}
+	
 	@Override
 	public int getDialogStyleId() {
 		// TODO: Implement this method
