@@ -476,7 +476,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			// TODO: Implement this method
 			if (convertView == null) {
-				convertView = getLayoutInflater().inflate(R.layout.simple_list_item_with_image, null);
+				convertView = getLayoutInflater().inflate(R.layout.simple_list_item_with_image, parent, false);
 			}
 			while (cached.size() < position)cached.addAll(Constant.ONE_HUNDRED_LENGTH_NULL_LIST);
 			String playerName=getItem(position);
@@ -487,6 +487,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 				iv.setImageBitmap(faces.get(playerName));
 				iv.setScaleType(ImageView.ScaleType.FIT_CENTER);
 			} else {
+				iv.setVisibility(View.GONE);
 				sff.requestLoadSkin(playerName, new Handler());
 				iv.setImageBitmap(null);
 			}
