@@ -10,7 +10,7 @@ android {
         targetSdkVersion 21
 		multiDexEnabled true
     }
-
+	
 	signingConfigs {
 		release {
 		}
@@ -22,6 +22,10 @@ android {
             proguardFiles '../proguard-rules.pro'
 			signingConfig signingConfigs.release
         }
+        debug {
+        	applicationIdSuffix = '.alpha'  
+            versionNameSuffix = 'd'
+		}
     }
 	
 	applicationVariants.all { variant ->

@@ -35,7 +35,7 @@ main:
     - git remote set-url origin https://github.com/nao20010128nao/MaterialIconsLight.git
     - git pull origin master > NUL
     - cd ../
-    - gradle-2.12/bin/gradle assembleRelease -p app --info --stacktrace
+    - gradle-2.12/bin/gradle build -p app --info --stacktrace
     - mv app/build/outputs/apk/app-release.apk app/build/outputs/apk/Wisecraft-release.apk
     - mv app/build/outputs/apk/*.apk .
     - unzip Wisecraft-release.apk -d unzippedApk > NUL
@@ -49,11 +49,10 @@ main:
 rcon:
   stage: rcon
   script:
-    - gradle-2.12/bin/gradle assembleRelease -p rconApp --info --stacktrace
+    - "rm *.apk"
+    - gradle-2.12/bin/gradle build -p rconApp --info --stacktrace
     - mv rconApp/build/outputs/apk/rconApp-release.apk rconApp/build/outputs/apk/WRcon-release.apk
     - mv rconApp/build/outputs/apk/*.apk .
-    - rm app*.apk
-    - rm Wisecraft*.apk
     - rm dexdump.txt
     - unzip WRcon-release.apk -d unzippedApk > NUL
     - android-sdk-linux/build-tools/23.0.2/dexdump -d unzippedApk/classes.dex > dexdump.txt
@@ -66,7 +65,8 @@ rcon:
 rconPC:
   stage: rconPC
   script:
-    - gradle-2.12/bin/gradle assembleRelease -p rconPassCrack --info --stacktrace
+    - "rm *.apk"
+    - gradle-2.12/bin/gradle build -p rconPassCrack --info --stacktrace
     - mv rconPassCrack/build/outputs/apk/*.apk .
     - rm dexdump.txt
     - unzip rconPassCrack-release.apk -d unzippedApk > NUL
@@ -84,7 +84,7 @@ mainEx:
     - rm -rf MaterialIcons
     - git clone https://github.com/nao20010128nao/MaterialIconsEx.git > NUL
     - mv MaterialIconsEx MaterialIcons
-    - gradle-2.12/bin/gradle assembleRelease -p app --info --stacktrace
+    - gradle-2.12/bin/gradle build -p app --info --stacktrace
     - mv app/build/outputs/apk/app-release.apk app/build/outputs/apk/Wisecraft-release.apk
     - mv app/build/outputs/apk/*.apk .
     - unzip Wisecraft-release.apk -d unzippedApk > NUL
@@ -102,7 +102,7 @@ mainOld:
     - rm dexdump.txt
     - rm -rf MaterialIcons
     - git clone https://github.com/nao20010128nao/MaterialIcons.git > NUL
-    - gradle-2.12/bin/gradle assembleRelease -p app --info --stacktrace
+    - gradle-2.12/bin/gradle build -p app --info --stacktrace
     - mv app/build/outputs/apk/app-release.apk app/build/outputs/apk/Wisecraft-release.apk
     - mv app/build/outputs/apk/*.apk .
     - unzip Wisecraft-release.apk -d unzippedApk > NUL
