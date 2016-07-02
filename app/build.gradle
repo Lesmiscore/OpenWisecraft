@@ -26,6 +26,9 @@ android {
         	applicationIdSuffix = '.alpha'  
             versionNameSuffix = 'd'
 		}
+		pre {
+        	versionNameSuffix = ' Pre'
+		}
     }
 	
 	applicationVariants.all { variant ->
