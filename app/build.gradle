@@ -28,6 +28,7 @@ android {
 		}
 		pre {
         	versionNameSuffix = ' Pre'
+			signingConfig signingConfigs.release
 		}
     }
 	
