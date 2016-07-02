@@ -21,6 +21,11 @@ android {
             proguardFiles '../proguard-rules.pro'
 			signingConfig signingConfigs.release
         }
+        pre {
+        	versionNameSuffix = ' Pre'
+			signingConfig signingConfigs.release
+			resValue "string", "app_name_rcon", "WRcon BETA"
+		}
     }
 	
 	applicationVariants.all { variant ->
