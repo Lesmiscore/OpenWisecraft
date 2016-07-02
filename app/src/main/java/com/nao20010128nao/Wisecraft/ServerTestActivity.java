@@ -187,6 +187,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 			View layout=parent.itemView;
 			Server s=getItem(offset);
             ((TextView)layout.findViewById(R.id.serverAddress)).setText(s.ip + ":" + s.port);
+            ((TextView) layout.findViewById(R.id.serverPlayers)).setText("-/-");
             if(sta.pinging.get(offset)){
 				((TextView)layout.findViewById(R.id.serverName)).setText(R.string.working);
 				((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.working);
