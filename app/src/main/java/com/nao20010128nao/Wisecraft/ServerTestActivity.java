@@ -94,6 +94,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 							s.mode = mode;
 							sl.add(s);
                             final int position=i;
+							pinging.put(position, true);
 							spp.putInQueue(s, new ServerPingProvider.PingHandler(){
 									public void onPingFailed(final Server s) {
 										runOnUiThread(new Runnable(){
