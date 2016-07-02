@@ -219,7 +219,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
 			bd.setTargetDensity(getResources().getDisplayMetrics());
 			bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
-			getListView().setBackground(bd);
+			getListView().setBackgroundDrawable(bd);
 		}
 	}
 

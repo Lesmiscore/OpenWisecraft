@@ -25,7 +25,7 @@ public class RepeatingImageView extends ExtendedImageView {
 			d.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
 		}
 		super.setImageDrawable(drawable);
-		super.setBackground(drawable);
+		super.setBackgroundDrawable(drawable);
 	}
 
 	@Override

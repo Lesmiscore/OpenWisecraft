@@ -374,7 +374,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 					bd.setTargetDensity(getResources().getDisplayMetrics());
 					bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
 					if (!dark)bd.setAlpha(0);
-					ll.setBackground(bd);
+					ll.setBackgroundDrawable(bd);
 				}
 				TextView serverNameView=(TextView)ll.findViewById(R.id.serverName);
 				serverNameView.setText(getTitle());
@@ -606,7 +606,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 				BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
 				bd.setTargetDensity(getResources().getDisplayMetrics());
 				bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
-				lv.findViewById(R.id.serverImageAndName).setBackground(bd);
+				lv.findViewById(R.id.serverImageAndName).setBackgroundDrawable(bd);
 			}
 			return lv;
 		}
