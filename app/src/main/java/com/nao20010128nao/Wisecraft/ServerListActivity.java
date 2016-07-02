@@ -775,14 +775,14 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						onItemClick(null,layout,position,Long.MIN_VALUE);
+						onItemClick(null,layout,sla.list.indexOf(layout.getTag()),Long.MIN_VALUE);
 					}
 				}
 			,
 				new View.OnLongClickListener() {
 					@Override
 					public boolean onLongClick(View v) {
-						return onItemLongClick(null,layout,position,Long.MIN_VALUE);
+						return onItemLongClick(null,layout,sla.list.indexOf(layout.getTag()),Long.MIN_VALUE);
 					}
 				}
 			);
@@ -827,6 +827,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			// TODO: Implement this method
 			sla.clicked = p3;
 			new AppCompatAlertDialog.Builder(sla)
+				.setTitle(getItem(p3).toString())
 				.setItems(generateSubMenu(getItem(p3).mode == 1), new DialogInterface.OnClickListener(){
 					public void onClick(DialogInterface di, int which) {
 						List<Runnable> executes=new ArrayList<>();
