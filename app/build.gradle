@@ -8,8 +8,9 @@ android {
         applicationId 'com.nao20010128nao.Wisecraft'
         minSdkVersion 8
         targetSdkVersion 21
+		multiDexEnabled true
     }
-
+	
 	signingConfigs {
 		release {
 		}
@@ -21,6 +22,10 @@ android {
             proguardFiles '../proguard-rules.pro'
 			signingConfig signingConfigs.release
         }
+        debug {
+        	applicationIdSuffix = '.alpha'  
+            versionNameSuffix = 'd'
+		}
     }
 	
 	applicationVariants.all { variant ->
@@ -39,6 +44,7 @@ android {
 dependencies {
 	compile project(':statusesLayout') // https://github.com/nao20010128nao/StatusesLayout
 	compile project(':wisecraft-i18n') // https://github.com/nao20010128nao/Wisecraft-Multilanguage
+	compile project(':MaterialIcons')  // https://github.com/nao20010128nao/MaterialIcons
 	compile project(':scrolling')
 	compile project(':HoloIcons')
 	compile project(':rcon')

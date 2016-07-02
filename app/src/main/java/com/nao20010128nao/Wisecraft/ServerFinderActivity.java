@@ -6,6 +6,9 @@ import android.os.*;
 import android.preference.*;
 import android.support.design.widget.*;
 import android.support.v4.view.*;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
@@ -16,16 +19,18 @@ import com.nao20010128nao.Wisecraft.pingEngine.*;
 import com.nao20010128nao.Wisecraft.provider.*;
 import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
+import java.lang.ref.WeakReference;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
-public class ServerFinderActivity extends AppCompatListActivity {
-	ServerList sl;
+class ServerFinderActivityImpl extends AppCompatActivity implements ServerListActivityInterface{
+	RecyclerServerList sl;
 	List<ServerStatus> list;
 	String ip;
 	int mode;
 	View dialog,dialog2;
 	ServerPingProvider spp;
 	SharedPreferences pref;
+	RecyclerView rv;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +41,11 @@ public class ServerFinderActivity extends AppCompatListActivity {
 			getTheme().applyStyle(R.style.AppTheme_Bright,true);
 		}
 		super.onCreate(savedInstanceState);
-		setListAdapter(sl = new ServerList());
-		getListView().setOnItemClickListener(sl);
+		setContentView(R.layout.recycler_view_content);
+		sl=new RecyclerServerList(this);
+		rv=(RecyclerView)findViewById(android.R.id.list);
+		rv.setLayoutManager(new LinearLayoutManager(this));
+		rv.setAdapter(sl);
 		ip = getIntent().getStringExtra("ip");
 		mode = getIntent().getIntExtra("mode", 0);
 		new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
@@ -71,7 +79,11 @@ public class ServerFinderActivity extends AppCompatListActivity {
 			BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
 			bd.setTargetDensity(getResources().getDisplayMetrics());
 			bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
+<<<<<<< HEAD
 			getListView().setBackgroundDrawable(bd);
+=======
+			rv.setBackgroundDrawable(bd);
+>>>>>>> publicVersion-3.0pre
 		}
 	}
 	private void startFinding(final String ip, final int startPort, final int endPort, final boolean isPC) {
@@ -91,7 +103,7 @@ public class ServerFinderActivity extends AppCompatListActivity {
 			public Void doInBackground(Void... l) {
 				final int max=endPort - startPort;
 				
-				int threads=new Integer(PreferenceManager.getDefaultSharedPreferences(ServerFinderActivity.this).getString("parallels", "6"));
+				int threads=Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(ServerFinderActivityImpl.this).getString("parallels", "6"));
 				if (isPC) {
 					spp = new PCMultiServerPingProvider(threads);
 				} else {
@@ -126,7 +138,7 @@ public class ServerFinderActivity extends AppCompatListActivity {
 							((TextView)dialog2.findViewById(R.id.status)).setText(((ProgressBar)dialog2.findViewById(R.id.perc)).getProgress() + "/" + max);
 							if (((ProgressBar)dialog2.findViewById(R.id.perc)).getProgress() == max) {
 								pw.dismiss();
-								Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content),getResources().getString(R.string.foundServersCount).replace("[NUMBER]",""+sl.getCount()),Snackbar.LENGTH_SHORT).show();
+								Snackbar.make(getWindow().getDecorView(),getResources().getString(R.string.foundServersCount).replace("[NUMBER]",""+sl.getItemCount()),Snackbar.LENGTH_SHORT).show();
 							}
 						}
 					});
@@ -147,35 +159,31 @@ public class ServerFinderActivity extends AppCompatListActivity {
 			spp.stop();
 		}
 	}
+
+	@Override
+	public void addIntoList(Server s) {
+		// TODO: Implement this method
+	}
 	
-	class ServerList extends AppBaseArrayAdapter<ServerStatus> implements AdapterView.OnItemClickListener {
-		List<View> cached=new ArrayList<>();
-		public ServerList() {
-			super(ServerFinderActivity.this, 0, list = new ArrayList<ServerStatus>());
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO: Implement this method
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+
+	class RecyclerServerList extends ListRecyclerViewAdapter<SFAVH,ServerStatus> implements AdapterView.OnItemClickListener {
+		ServerFinderActivityImpl sta;
+
+		public RecyclerServerList(ServerFinderActivityImpl parent) {
+			super(parent.list = new ArrayList<ServerStatus>());
+			sta = parent;
 		}
 
 		@Override
-		public View getView(final int position, View convertView, ViewGroup parent) {
-			// TODO: Implement this method
-			if (cached.size() > position) {
-				View v=cached.get(position);
-				if (v != null) {
-					return v;
-				}
-			}
-			//if(convertView!=null)return convertView;
-			final View layout;
-			if (pref.getBoolean("colorFormattedText", false)) {
-				if (pref.getBoolean("darkBackgroundForServerName", false)) {
-					layout = getLayoutInflater().inflate(R.layout.quickstatus_dark, null, false);
-				} else {
-					layout = getLayoutInflater().inflate(R.layout.quickstatus, null, false);
-				}
-			} else {
-				layout = getLayoutInflater().inflate(R.layout.quickstatus, null, false);
-			}
+		public void onBindViewHolder(SFAVH parent, final int offset) {
+			final View layout=parent.itemView;
 			layout.findViewById(R.id.serverPlayers).setVisibility(View.GONE);
-			ServerStatus s=getItem(position);
+			ServerStatus s=getItem(offset);
 			layout.setTag(s);
 			((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
 
@@ -210,46 +218,113 @@ public class ServerFinderActivity extends AppCompatListActivity {
 			}
 			((TextView)layout.findViewById(R.id.pingMillis)).setText(s.ping + " ms");
 			((TextView)layout.findViewById(R.id.serverAddress)).setText(s.port + "");
-
-			list.set(position, s);
-
-			if (cached.size() <= position) {
-				cached.addAll(Constant.ONE_HUNDRED_LENGTH_NULL_LIST);
-			}
-			cached.set(position, layout);
-			return layout;
-		}
-		public View getCachedView(int position) {
-			return cached.get(position);
-		}
-		public View getViewQuick(int pos) {
-			return getView(pos, null, null);
-		}
-		@Override
-		public void onItemClick(AdapterView<?> p1, View p2, final int p3, long p4) {
-			// TODO: Implement this method
-			final Server s=getItem(p3);
-			if (s instanceof ServerStatus) {
-				new AppCompatAlertDialog.Builder(ServerFinderActivity.this)
-					.setTitle(s.toString())
-					.setItems(R.array.serverFinderMenu,new DialogInterface.OnClickListener(){
-						public void onClick(DialogInterface di,int w){
-							switch(w){
-								case 0:
-									ServerListActivityImpl.instance.get().sl.add(s);
-									break;
-							}
+			applyHandlersForViewTree(parent.itemView,
+					new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							onItemClick(null,layout,offset,Long.MIN_VALUE);
 						}
-					})
-					.show();
-			}
+					}
+			);
 		}
 
 		@Override
-		public void remove(ServerStatus object) {
-			// TODO: Implement this method
-			cached.remove(list.indexOf(object));
-			super.remove(object);
+		public SFAVH onCreateViewHolder(ViewGroup parent, int type) {
+			int layout;
+			if (sta.pref.getBoolean("colorFormattedText", false)) {
+				if (sta.pref.getBoolean("darkBackgroundForServerName", false)) {
+					layout = R.layout.quickstatus_dark;
+				} else {
+					layout = R.layout.quickstatus;
+				}
+			} else {
+				layout = R.layout.quickstatus;
+			}
+			return sta.new SFAVH(LayoutInflater.from(sta).inflate(layout, parent, false));
 		}
+
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			final Server s=getItem(position);
+			if (s instanceof ServerStatus) {
+				new AppCompatAlertDialog.Builder(ServerFinderActivityImpl.this)
+						.setTitle(s.toString())
+						.setItems(R.array.serverFinderMenu,new DialogInterface.OnClickListener(){
+							public void onClick(DialogInterface di,int w){
+								switch(w){
+									case 0:
+										ServerListActivityImpl.instance.get().sl.add(s);
+										break;
+								}
+							}
+						})
+						.show();
+			}
+		}
+	}
+	class SFAVH extends RecyclerView.ViewHolder{
+		public SFAVH(View v){
+			super(v);
+		}
+		public View findViewById(int resId){
+			return itemView.findViewById(resId);
+		}
+	}
+}
+public class ServerFinderActivity extends CompatActivityGroup {
+	public static WeakReference<ServerFinderActivity> instance=new WeakReference(null);
+
+	boolean nonLoop=false;
+	SharedPreferences pref;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO: Implement this method
+		instance = new WeakReference(this);
+		pref = PreferenceManager.getDefaultSharedPreferences(this);
+		if(pref.getBoolean("useBright",false)){
+			setTheme(R.style.AppTheme_Bright);
+			getTheme().applyStyle(R.style.AppTheme_Bright,true);
+		}
+		super.onCreate(savedInstanceState);
+		getSupportActionBar().hide();
+		if(pref.getBoolean("useOldActivity",false))
+			setContentView(getLocalActivityManager().startActivity("main", new Intent(this, Content$Old.class).putExtras(getIntent())).getDecorView());
+		else
+			setContentView(getLocalActivityManager().startActivity("main", new Intent(this, Content.class).putExtras(getIntent())).getDecorView());
+	}
+	public static class Content extends ServerFinderActivityImpl {public static void deleteRef(){instance=new WeakReference<>(null);}}
+	public static class Content$Old extends com.nao20010128nao.Wisecraft.old.ServerFinderActivity {public static void deleteRef(){instance=new WeakReference<>(null);}}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// TODO: Implement this method
+		if (nonLoop)
+			return true;
+		nonLoop = true;
+		boolean val= getLocalActivityManager().getActivity("main").onCreateOptionsMenu(menu);
+		nonLoop = false;
+		return val;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO: Implement this method
+		if (nonLoop)
+			return true;
+		nonLoop = true;
+		boolean val= getLocalActivityManager().getActivity("main").onOptionsItemSelected(item);
+		nonLoop = false;
+		return val;
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO: Implement this method
+		((ActivityResultInterface)getLocalActivityManager().getActivity("main")).onActivityResult(requestCode, resultCode, data);
+	}
+
+	@Override
+	protected void attachBaseContext(Context newBase) {
+		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
 	}
 }

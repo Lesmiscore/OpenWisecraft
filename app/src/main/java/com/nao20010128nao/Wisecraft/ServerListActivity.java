@@ -1066,20 +1066,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			notifyItemRemoved(ofs);
 		}
 		
-		private void applyHandlersForViewTree(View v,View.OnClickListener click,View.OnLongClickListener longer){
-			if(v!=null){
-				v.setOnClickListener(click);
-				v.setOnLongClickListener(longer);
-				v.setLongClickable(true);
-				if(v instanceof ViewGroup){
-					ViewGroup vg=(ViewGroup)v;
-					for(int i=0;i<vg.getChildCount();i++){
-						applyHandlersForViewTree(vg.getChildAt(i),click,longer);
-					}
-				}
-			}
-		}
-		
 		class OriginalViewHolder extends RecyclerView.ViewHolder{
 			View localView;
 			public OriginalViewHolder(View v){
@@ -1334,7 +1320,7 @@ public class ServerListActivity extends CompatActivityGroup {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO: Implement this method
-		((ServerListActivityInterface)getLocalActivityManager().getActivity("main")).onActivityResult(requestCode, resultCode, data);
+		((ActivityResultInterface)getLocalActivityManager().getActivity("main")).onActivityResult(requestCode, resultCode, data);
 	}
 
 	@Override

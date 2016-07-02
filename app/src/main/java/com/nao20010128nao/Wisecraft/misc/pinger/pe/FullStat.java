@@ -6,8 +6,8 @@ import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import java.util.*;
 
 public class FullStat implements ServerPingResult {
-	static byte NULL = 00;
-	static byte SPACE = 20;
+	static byte NULL = '\0';
+	static byte SPACE = ' ';
 
 	private Map<String, String> datas = new OrderTrustedMap<>();
 	private ArrayList<String> playerList = new ArrayList<>();
