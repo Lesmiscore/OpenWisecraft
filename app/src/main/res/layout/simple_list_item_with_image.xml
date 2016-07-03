@@ -6,8 +6,8 @@
 	android:orientation="horizontal">
 
 	<com.nao20010128nao.Wisecraft.misc.view.ExtendedImageView
-		android:layout_height="?android:attr/listPreferredItemHeightSmall"
-		android:layout_width="?android:attr/listPreferredItemHeightSmall"
+		android:layout_height="@dimen/list_height"
+		android:layout_width="@dimen/list_height"
 		android:visibility="gone"
 		android:id="@+id/image"/>
 
