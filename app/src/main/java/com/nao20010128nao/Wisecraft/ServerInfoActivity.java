@@ -162,6 +162,22 @@ public class ServerInfoActivity extends ActionBarActivity {
 			if (Build.VERSION.SDK_INT >= 21) {
 				getWindow().setStatusBarColor(0xff3a2a1d);
 			}
+			fth.setOnTabChangedListener(new TabHost.OnTabChangeListener(){
+					public void onTabChanged(String a){
+						int selected=fth.getCurrentTab();
+						int[] colors=new int[fth.getTabWidget().getTabCount()];
+						Arrays.fill(colors,0xff_493B2F);
+						colors[selected]=Color.WHITE;
+						Drawable tabUnderlineSelected=TheApplication.instance.getTintedDrawable(R.drawable.abc_tab_indicator_mtrl_alpha,0xff_ffffff);
+						for (int i = 0; i < fth.getTabWidget().getChildCount(); i++) {
+							TextView tv = (TextView) fth.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
+							tv.setTextColor(colors[i]);
+							fth.getTabWidget().getChildAt(i).setBackgroundColor(getResources().getColor(R.color.upd_2));
+						}
+						fth.getTabWidget().getChildAt(selected).setBackgroundDrawable(tabUnderlineSelected);
+						Log.d("TabChild",fth.getTabWidget().getChildAt(selected).getClass().getName());
+					}
+				});
 		}
 		if (Build.VERSION.SDK_INT >= 21) {
 			ActivityManager.TaskDescription td;
