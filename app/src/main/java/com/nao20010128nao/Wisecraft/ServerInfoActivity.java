@@ -27,6 +27,9 @@ import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
+import android.text.Spannable;
 
 public class ServerInfoActivity extends ActionBarActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
@@ -60,6 +63,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 	ImageView serverIcon;
 	TextView serverName;
 	Drawable serverIconObj;
+	Bitmap serverIconBmp;
 	CharSequence serverNameStr;
 	String modLoaderTypeName;
 	@Override
@@ -209,7 +213,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 		} else if (resp instanceof Reply) {
 			Reply rep=(Reply)resp;
 			if (rep.description == null) {
-				setTitle(localStat.ip + ":" + localStat.port);
+				setTitle(localStat.toString());
 			} else {
 				setTitle(rep.description);
 			}
@@ -240,8 +244,8 @@ public class ServerInfoActivity extends ActionBarActivity {
 
 			if (rep.favicon != null) {
 				byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
-				Bitmap bmp=BitmapFactory.decodeByteArray(image, 0, image.length);
-				serverIconObj = new BitmapDrawable(bmp);
+				serverIconBmp=BitmapFactory.decodeByteArray(image, 0, image.length);
+				serverIconObj = new BitmapDrawable(serverIconBmp);
 			} else {
 				serverIconObj = new ColorDrawable(Color.TRANSPARENT);
 			}
@@ -262,7 +266,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 		} else if (resp instanceof Reply19) {
 			Reply19 rep=(Reply19)resp;
 			if (rep.description == null) {
-				setTitle(localStat.ip + ":" + localStat.port);
+				setTitle(localStat.toString());
 			} else {
 				setTitle(rep.description.text);
 			}
@@ -273,7 +277,8 @@ public class ServerInfoActivity extends ActionBarActivity {
 					sort.add(o.name);
 					TheApplication.instance.pcUserUUIDs.put(o.name, o.id);
 				}
-				Collections.sort(sort);
+				if (pref.getBoolean("sortPlayerNames", true))
+					Collections.sort(sort);
 				player.clear();
 				CompatArrayAdapter.addAll(player, sort);
 			} else {
@@ -292,8 +297,8 @@ public class ServerInfoActivity extends ActionBarActivity {
 
 			if (rep.favicon != null) {
 				byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
-				Bitmap bmp=BitmapFactory.decodeByteArray(image, 0, image.length);
-				serverIconObj = new BitmapDrawable(bmp);
+				serverIconBmp=BitmapFactory.decodeByteArray(image, 0, image.length);
+				serverIconObj = new BitmapDrawable(serverIconBmp);
 			} else {
 				serverIconObj = new ColorDrawable(Color.TRANSPARENT);
 			}
@@ -392,14 +397,29 @@ public class ServerInfoActivity extends ActionBarActivity {
 	@Override
 	public void setTitle(CharSequence title) {
 		// TODO: Implement this method
-		if (pref.getBoolean("colorFormattedText", false)) {
-			if (pref.getBoolean("darkBackgroundForServerName", false)) {
-				super.setTitle(Utils.parseMinecraftFormattingCodeForDark(title.toString()));
+		if(title==null){
+			if (pref.getBoolean("colorFormattedText", false)) {
+				SpannableStringBuilder ssb=new SpannableStringBuilder();
+				ssb.append(localStat.toString());
+				if (pref.getBoolean("darkBackgroundForServerName", false)) {
+					ssb.setSpan(new ForegroundColorSpan(0xff_ffffff),0,ssb.length()-1,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+				} else {
+					ssb.setSpan(new ForegroundColorSpan(0xff_000000),0,ssb.length()-1,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+				}
+				super.setTitle(ssb);
 			} else {
-				super.setTitle(Utils.parseMinecraftFormattingCode(title.toString()));
+				super.setTitle(localStat.toString());
 			}
-		} else {
-			super.setTitle(Utils.deleteDecorations(title.toString()));
+		}else{
+			if (pref.getBoolean("colorFormattedText", false)) {
+				if (pref.getBoolean("darkBackgroundForServerName", false)) {
+					super.setTitle(Utils.parseMinecraftFormattingCodeForDark(title.toString()));
+				} else {
+					super.setTitle(Utils.parseMinecraftFormattingCode(title.toString()));
+				}
+			} else {
+				super.setTitle(Utils.deleteDecorations(title.toString()));
+			}
 		}
 	}
 
@@ -412,6 +432,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 				pref.edit().putString("pcuseruuids", new Gson().toJson(TheApplication.instance.pcUserUUIDs)).commit();
 			}
 		}.start();
+		if(serverIconBmp!=null)serverIconBmp.recycle();
 	}
 
 	@Override
