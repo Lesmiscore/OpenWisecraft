@@ -134,7 +134,11 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 	}
 
 	public Drawable getTintedDrawable(int res,int color){
-		Drawable d=getResources().getDrawable(res);
+		return getTintedDrawable(res,color,this);
+	}
+	
+	public static Drawable getTintedDrawable(int res,int color,Context ctx){
+		Drawable d=ctx.getResources().getDrawable(res);
 		d=DrawableCompat.wrap(d);
 		DrawableCompat.setTint(d,color);
 		return d;

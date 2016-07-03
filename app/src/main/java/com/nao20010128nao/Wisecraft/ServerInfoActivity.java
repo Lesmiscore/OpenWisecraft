@@ -164,18 +164,19 @@ public class ServerInfoActivity extends ActionBarActivity {
 			}
 			fth.setOnTabChangedListener(new TabHost.OnTabChangeListener(){
 					public void onTabChanged(String a){
+						TabWidget tw=fth.getTabWidget();
 						int selected=fth.getCurrentTab();
-						int[] colors=new int[fth.getTabWidget().getTabCount()];
+						int[] colors=new int[tw.getTabCount()];
 						Arrays.fill(colors,0xff_493B2F);
 						colors[selected]=Color.WHITE;
 						Drawable tabUnderlineSelected=TheApplication.instance.getTintedDrawable(R.drawable.abc_tab_indicator_mtrl_alpha,0xff_ffffff);
-						for (int i = 0; i < fth.getTabWidget().getChildCount(); i++) {
-							TextView tv = (TextView) fth.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
+						for (int i = 0; i < tw.getChildCount(); i++) {
+							TextView tv = (TextView) tw.getChildAt(i).findViewById(android.R.id.title);
 							tv.setTextColor(colors[i]);
-							fth.getTabWidget().getChildAt(i).setBackgroundColor(getResources().getColor(R.color.upd_2));
+							tw.getChildAt(i).setBackgroundColor(getResources().getColor(R.color.upd_2));
 						}
-						fth.getTabWidget().getChildAt(selected).setBackgroundDrawable(tabUnderlineSelected);
-						Log.d("TabChild",fth.getTabWidget().getChildAt(selected).getClass().getName());
+						tw.getChildAt(selected).setBackgroundDrawable(tabUnderlineSelected);
+						Log.d("TabChild",tw.getChildAt(selected).getClass().getName());
 					}
 				});
 		}
