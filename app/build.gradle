@@ -60,6 +60,7 @@ dependencies {
 	compile project(':HoloIcons')
 	compile project(':rcon')
 	compile project(':compat')
+	compile project(':aFileChooser')
 	
 	compile 'com.android.support:recyclerview-v7:23.4.0'
 	compile 'com.android.support:design:23.4.0'
