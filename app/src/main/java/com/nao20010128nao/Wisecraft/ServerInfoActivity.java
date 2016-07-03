@@ -346,7 +346,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 			isDark=false;
 		}
 		seeTitleButton = menu.add(Menu.NONE, 0, 0, R.string.seeTitle);
-		seeTitleButton.setIcon(isDark?com.nao20010128nao.HoloIcons.R.drawable.ic_action_search_dark:com.nao20010128nao.HoloIcons.R.drawable.ic_action_search_light);
+		seeTitleButton.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_open_in_new_black_48dp,isDark?Color.WHITE:0xff_666666));
 		MenuItemCompat.setShowAsAction(seeTitleButton, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
 		if (!nonUpd) {
 			updateBtn = menu.add(Menu.NONE, 1, 1, R.string.update);
