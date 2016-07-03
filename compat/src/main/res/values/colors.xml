@@ -12,4 +12,6 @@
 	
 	<color name="primary">#F5F5F5</color>
 	<color name="accent">@color/upd_2</color>
+	
+	<color name="light_icons_foreground">#666666</color>
 </resources>
