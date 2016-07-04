@@ -180,7 +180,7 @@ public class FileChooserActivity extends AppCompatActivity implements
     private void finishWithResult(File file) {
         if (file != null) {
             Uri uri = Uri.fromFile(file);
-            setResult(RESULT_OK, new Intent().setData(uri));
+            setResult(RESULT_OK, new Intent().setData(uri).putExtra("path",file.toString()));
             finish();
         } else {
             setResult(RESULT_CANCELED);

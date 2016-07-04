@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ipaulpro.afilechooser" >
-
     <application>
 		<activity
 			android:name="com.ipaulpro.afilechooser.FileChooserActivity"
@@ -15,7 +14,12 @@
 			android:exported="false"
 			android:label="@string/choose_dir" >
 		</activity>
+		<activity
+			android:name="com.ipaulpro.afilechooser.FileOpenChooserActivity"
+			android:icon="@drawable/ic_chooser"
+			android:exported="false"
+			android:label="@string/choose_file" >
+		</activity>
     </application>
-
 </manifest>
 

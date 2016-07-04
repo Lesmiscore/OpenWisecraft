@@ -3,9 +3,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.support.v4.view.MenuItemCompat;
+import android.os.Bundle;
+import java.io.File;
 
 public class FileOpenChooserActivity extends FileChooserActivity
 {
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO: Implement this method
+		if(getIntent().hasExtra("path")){
+			File f=new File(getIntent().getStringExtra("path"));
+			if(f.isFile())f=f.getParentFile();
+			getIntent().putExtra("path",f.toString());
+		}
+		super.onCreate(savedInstanceState);
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
