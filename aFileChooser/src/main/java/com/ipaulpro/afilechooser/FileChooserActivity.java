@@ -231,4 +231,12 @@ public class FileChooserActivity extends AppCompatActivity implements
 			finishWithResult(null);
 		}
 	}
+	
+	protected Presenter getPresenter(){
+		if(getApplication() instanceof Presenter){
+			return (Presenter)getApplication();
+		}else{
+			return null;
+		}
+	}
 }

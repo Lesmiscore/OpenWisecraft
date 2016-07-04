@@ -15,7 +15,7 @@ import com.nao20010128nao.Wisecraft.rcon.KeyChain;
 import android.graphics.drawable.Drawable;
 import android.support.v4.graphics.drawable.DrawableCompat;
 
-public class TheApplication extends Application implements com.nao20010128nao.Wisecraft.rcon.Presenter,InformationCommunicatorReceiver.DisclosureResult {
+public class TheApplication extends Application implements com.nao20010128nao.Wisecraft.rcon.Presenter,com.ipaulpro.afilechooser.Presenter,InformationCommunicatorReceiver.DisclosureResult {
 	public static TheApplication instance;
 	public static Typeface latoLight,icomoon1,sysDefault,droidSans,robotoSlabLight;
 	public static Field[] fonts=getFontFields();
@@ -191,5 +191,11 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		disclosurePending=false;
 		disclosureEnded=true;
 		collectImpl();
+	}
+
+	@Override
+	public boolean isLightTheme(Activity a) {
+		// TODO: Implement this method
+		return true;
 	}
 }
