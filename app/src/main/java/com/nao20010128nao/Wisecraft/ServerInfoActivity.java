@@ -31,7 +31,7 @@ import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.text.Spannable;
 
-public class ServerInfoActivity extends ActionBarActivity {
+public class ServerInfoActivity extends ActionBarActivity implements TabHost.OnTabChangeListener {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
 	public static List<ServerStatus> stat=new ArrayList<>();
 	public static Map<String,Bitmap> faces=new HashMap<>();
@@ -162,26 +162,7 @@ public class ServerInfoActivity extends ActionBarActivity {
 			if (Build.VERSION.SDK_INT >= 21) {
 				getWindow().setStatusBarColor(0xff3a2a1d);
 			}
-			fth.setOnTabChangedListener(new TabHost.OnTabChangeListener(){
-					public void onTabChanged(String a){
-						TabWidget tw=fth.getTabWidget();
-						int selected=fth.getCurrentTab();
-						int[] colors=new int[tw.getTabCount()];
-						Arrays.fill(colors,0xff_493B2F);
-						colors[selected]=Color.WHITE;
-						Drawable tabUnderlineSelected=TheApplication.instance.getTintedDrawable(R.drawable.abc_tab_indicator_mtrl_alpha,0xff_ffffff);
-						for (int i = 0; i < tw.getChildCount(); i++) {
-							TextView tv = (TextView) tw.getChildAt(i).findViewById(android.R.id.title);
-							tv.setTextColor(colors[i]);
-							tw.getChildAt(i).setBackgroundColor(0);
-						}
-						tw.getChildAt(selected).setBackgroundDrawable(tabUnderlineSelected);
-						Log.d("TabChild",tw.getChildAt(selected).getClass().getName());
-					}
-					{
-						onTabChanged("");
-					}
-				});
+			fth.setOnTabChangedListener(this);
 		}
 		if (Build.VERSION.SDK_INT >= 21) {
 			ActivityManager.TaskDescription td;
@@ -465,8 +446,25 @@ public class ServerInfoActivity extends ActionBarActivity {
 				tv.setTextColor(Color.WHITE);
 			}
 		}
+		onTabChanged("");
 	}
-
+	
+	public void onTabChanged(String a){
+		TabWidget tw=fth.getTabWidget();
+		int selected=fth.getCurrentTab();
+		int[] colors=new int[tw.getTabCount()];
+		Arrays.fill(colors,0xff_493B2F);
+		colors[selected]=Color.WHITE;
+		Drawable tabUnderlineSelected=TheApplication.instance.getTintedDrawable(R.drawable.abc_tab_indicator_mtrl_alpha,0xff_ffffff);
+		for (int i = 0; i < tw.getChildCount(); i++) {
+			TextView tv = (TextView) tw.getChildAt(i).findViewById(android.R.id.title);
+			tv.setTextColor(colors[i]);
+			tw.getChildAt(i).setBackgroundColor(0);
+		}
+		tw.getChildAt(selected).setBackgroundDrawable(tabUnderlineSelected);
+		Log.d("TabChild",tw.getChildAt(selected).getClass().getName());
+	}
+	
 	public void addModsTab() {
 		if ((!hideMods) | localStat.mode == 1) {
 			modsF = fth.newTabSpec("modsList");
