@@ -22,4 +22,8 @@
     <string name="internal_storage">Internal storage</string>
 	<string name="selectDir">Select this directory</string>
 	<string name="choose_dir">Select a directory</string>
+	
+	<string name="create">Create</string>
+	<string name="add_file">Create a new file</string>
+	<string name="add_dir">Create a new directory</string>
 </resources>

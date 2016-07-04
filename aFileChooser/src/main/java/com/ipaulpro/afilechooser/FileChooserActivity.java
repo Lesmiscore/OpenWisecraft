@@ -36,6 +36,8 @@ import android.widget.Toast;
 
 import java.io.File;
 import android.support.v7.app.*;
+import android.graphics.drawable.Drawable;
+import android.support.v4.graphics.drawable.DrawableCompat;
 
 /**
  * Main Activity that handles the FileListFragments
@@ -238,5 +240,18 @@ public class FileChooserActivity extends AppCompatActivity implements
 		}else{
 			return null;
 		}
+	}
+	
+	
+
+	public Drawable getTintedDrawable(int res,int color){
+		return getTintedDrawable(res,color,this);
+	}
+
+	public static Drawable getTintedDrawable(int res,int color,Context ctx){
+		Drawable d=ctx.getResources().getDrawable(res);
+		d=DrawableCompat.wrap(d);
+		DrawableCompat.setTint(d,color);
+		return d;
 	}
 }
