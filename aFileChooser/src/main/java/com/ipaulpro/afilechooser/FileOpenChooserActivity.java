@@ -24,7 +24,7 @@ public class FileOpenChooserActivity extends FileChooserActivity
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO: Implement this method
 		SubMenu addFile=menu.addSubMenu(0,4,0,R.string.create).setIcon(getPresenter().isLightTheme(this)?R.drawable.ic_action_new_light:R.drawable.ic_action_new_dark);
-		addFile.add(0,5,1,R.string.add_file).setIcon(getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_insert_drive_file_black_48dp,getPresenter().isLightTheme(this)?0xff_666666:0xff_ffffff));
+		addFile.add(0,5,1,R.string.add_file).setIcon(getTintedDrawable(R.drawable.ic_insert_drive_file_black_48dp,getPresenter().isLightTheme(this)?0xff_666666:0xff_ffffff));
 		addFile.add(0,6,2,R.string.add_dir).setIcon(getPresenter().isLightTheme(this)?R.drawable.ic_action_collection_light:R.drawable.ic_action_collection_dark);
 		MenuItemCompat.setShowAsAction(addFile.getItem(),MenuItem.SHOW_AS_ACTION_ALWAYS);
 		return super.onCreateOptionsMenu(menu);
