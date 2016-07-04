@@ -173,10 +173,13 @@ public class ServerInfoActivity extends ActionBarActivity {
 						for (int i = 0; i < tw.getChildCount(); i++) {
 							TextView tv = (TextView) tw.getChildAt(i).findViewById(android.R.id.title);
 							tv.setTextColor(colors[i]);
-							tw.getChildAt(i).setBackgroundColor(getResources().getColor(R.color.upd_2));
+							tw.getChildAt(i).setBackgroundColor(0);
 						}
 						tw.getChildAt(selected).setBackgroundDrawable(tabUnderlineSelected);
 						Log.d("TabChild",tw.getChildAt(selected).getClass().getName());
+					}
+					{
+						onTabChanged("");
 					}
 				});
 		}
