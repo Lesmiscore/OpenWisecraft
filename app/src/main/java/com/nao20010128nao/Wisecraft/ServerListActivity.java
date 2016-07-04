@@ -462,12 +462,22 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				}.start();
 				break;
 			case 3:
-				final AppCompatEditText et_=new AppCompatEditText(ServerListActivityImpl.this);
-				et_.setTypeface(TheApplication.instance.getLocalizedFont());
+				View dialogView_=getLayoutInflater().inflate(R.layout.server_list_imp_exp,null);
+				final EditText et_=(EditText)dialogView_.findViewById(R.id.filePath);
 				et_.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/servers.json").toString());
+				dialogView_.findViewById(R.id.selectFile).setOnClickListener(new View.OnClickListener(){
+					public void onClick(View v){
+						startChooseFile(new File(et_.getText().toString()),new FileChooserResult(){
+							public void onSelected(File f){
+								et_.setText(f.toString());
+							}
+							public void onSelectCancelled(){/*No-op*/}
+						});
+					}
+				});
 				new AppCompatAlertDialog.Builder(ServerListActivityImpl.this, R.style.AppAlertDialog)
 					.setTitle(R.string.export_typepath)
-					.setView(et_)
+					.setView(dialogView_)
 					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 						public void onClick(DialogInterface di, int w) {
 							Toast.makeText(ServerListActivityImpl.this, R.string.exporting, Toast.LENGTH_LONG).show();
@@ -496,12 +506,22 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					.show();
 				break;
 			case 4:
-				final AppCompatEditText et=new AppCompatEditText(ServerListActivityImpl.this);
-				et.setTypeface(TheApplication.instance.getLocalizedFont());
+				View dialogView=getLayoutInflater().inflate(R.layout.server_list_imp_exp,null);
+				final EditText et=(EditText)dialogView.findViewById(R.id.filePath);
 				et.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/servers.json").toString());
+				dialogView.findViewById(R.id.selectFile).setOnClickListener(new View.OnClickListener(){
+						public void onClick(View v){
+							startChooseFile(new File(et.getText().toString()),new FileChooserResult(){
+									public void onSelected(File f){
+										et.setText(f.toString());
+									}
+									public void onSelectCancelled(){/*No-op*/}
+								});
+						}
+					});
 				new AppCompatAlertDialog.Builder(ServerListActivityImpl.this, R.style.AppAlertDialog)
 					.setTitle(R.string.import_typepath)
-					.setView(et)
+					.setView(dialogView)
 					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 						public void onClick(DialogInterface di, int w) {
 							Toast.makeText(ServerListActivityImpl.this, R.string.importing, Toast.LENGTH_LONG).show();
