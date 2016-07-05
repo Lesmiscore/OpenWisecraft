@@ -71,4 +71,18 @@
         <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
         <item name="preferenceFragmentListStyle">@style/PreferenceFragmentList</item>
     </style>
+	
+	
+	
+	<style name="AppButton" parent="@style/Widget.AppCompat.Button.Colored">
+		<item name="android:textColor">#fff</item>
+        <item name="android:gravity">center</item>
+		<item name="colorButtonNormal">@color/upd_2</item>
+		<item name="colorControlNormal">@color/upd_2</item>
+	</style>
+	<style name="AppButton.Inverse">
+		<item name="android:textColor">@color/upd_2</item>
+		<item name="colorButtonNormal">#fff</item>
+		<item name="colorControlNormal">#fff</item>
+	</style>
 </resources>

@@ -445,8 +445,8 @@ public class ServerInfoActivity extends ActionBarActivity implements TabHost.OnT
 				TextView tv = (TextView) fth.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
 				tv.setTextColor(Color.WHITE);
 			}
+			onTabChanged("");
 		}
-		onTabChanged("");
 	}
 	
 	public void onTabChanged(String a){
@@ -502,7 +502,7 @@ public class ServerInfoActivity extends ActionBarActivity implements TabHost.OnT
 
 	@Override
 	protected void attachBaseContext(Context newBase) {
-		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+		super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
 	}
 
 	class PCUserFaceAdapter extends PlayerNamesListAdapter {

@@ -18,7 +18,8 @@
 		android:layout_height="wrap_content"
 		android:layout_width="50dp"
 		android:text="..."
-		android:id="@+id/selectFile"/>
+		android:id="@+id/selectFile"
+		style="@style/AppButton"/>
 
 </LinearLayout>
 

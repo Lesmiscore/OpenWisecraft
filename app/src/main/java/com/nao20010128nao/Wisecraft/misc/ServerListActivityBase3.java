@@ -6,6 +6,8 @@ import java.util.HashMap;
 import android.content.Intent;
 import com.ipaulpro.afilechooser.FileOpenChooserActivity;
 import java.security.SecureRandom;
+import com.ipaulpro.afilechooser.FileChooserActivity;
+import com.ipaulpro.afilechooser.DirectoryChooserActivity;
 
 
 //Wrapper for aFileChooser
@@ -31,7 +33,7 @@ public class ServerListActivityBase3 extends AppCompatActivity
 		}
 	}
 	
-	public void startChooseFile(File startDir,FileChooserResult result){
+	public void startChooseFileForOpen(File startDir,FileChooserResult result){
 		int call=Math.abs(sr.nextInt())&0xf;
 		while(results.containsKey(call)){
 			call=Math.abs(sr.nextInt())&0xf;
@@ -43,6 +45,33 @@ public class ServerListActivityBase3 extends AppCompatActivity
 		results.put(call,Utils.requireNonNull(result));
 		startActivityForResult(intent,call);
 	}
+	
+	public void startChooseFileForSelect(File startDir,FileChooserResult result){
+		int call=Math.abs(sr.nextInt())&0xf;
+		while(results.containsKey(call)){
+			call=Math.abs(sr.nextInt())&0xf;
+		}
+		Intent intent=new Intent(this,FileChooserActivity.class);
+		if(startDir!=null){
+			intent.putExtra("path",startDir.toString());
+		}
+		results.put(call,Utils.requireNonNull(result));
+		startActivityForResult(intent,call);
+	}
+	
+	public void startChooseDirectory(File startDir,FileChooserResult result){
+		int call=Math.abs(sr.nextInt())&0xf;
+		while(results.containsKey(call)){
+			call=Math.abs(sr.nextInt())&0xf;
+		}
+		Intent intent=new Intent(this,DirectoryChooserActivity.class);
+		if(startDir!=null){
+			intent.putExtra("path",startDir.toString());
+		}
+		results.put(call,Utils.requireNonNull(result));
+		startActivityForResult(intent,call);
+	}
+	
 	
 	public static interface FileChooserResult{
 		public void onSelected(File f);

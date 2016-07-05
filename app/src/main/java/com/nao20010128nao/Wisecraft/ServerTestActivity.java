@@ -141,7 +141,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 	}
 	@Override
 	protected void attachBaseContext(Context newBase) {
-		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+		super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
 	}
 
 	@Override
@@ -360,6 +360,6 @@ public class ServerTestActivity extends CompatActivityGroup {
 
 	@Override
 	protected void attachBaseContext(Context newBase) {
-		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+		super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
 	}
 }

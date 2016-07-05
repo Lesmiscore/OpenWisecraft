@@ -3,4 +3,6 @@
 	<bool name="useBrightEnabled">false</bool>
 	
 	<bool name="useNativePreferenceActivity">false</bool>
+	
+	<bool name="isBeta">false</bool>
 </resources>

@@ -27,7 +27,7 @@ public class SettingsActivity extends CompatSHablePreferenceActivity {
 	}
 	@Override
 	protected void attachBaseContext(Context newBase) {
-		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+		super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
 		delegate=new SettingsDelegate(this);
 	}
 	@Override
@@ -53,7 +53,7 @@ public class SettingsActivity extends CompatSHablePreferenceActivity {
 		}
 		@Override
 		protected void attachBaseContext(Context newBase) {
-			super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+			super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
 			pref=PreferenceManager.getDefaultSharedPreferences(this);
 			delegate=new SettingsDelegate(this);
 		}

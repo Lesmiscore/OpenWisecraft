@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.nao20010128nao.Wisecraft.rcon.KeyChain;
 import android.graphics.drawable.Drawable;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import java.lang.ref.WeakReference;
 
 public class TheApplication extends Application implements com.nao20010128nao.Wisecraft.rcon.Presenter,com.ipaulpro.afilechooser.Presenter,InformationCommunicatorReceiver.DisclosureResult {
 	public static TheApplication instance;
@@ -99,7 +100,7 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		fontDisplayNames.put("sysDefault",R.string.font_sysDefault);
 		fontDisplayNames.put("robotoSlabLight",R.string.font_robotoSlabLight);
 
-		CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath(getFontFilename()).setFontAttrId(R.attr.fontPath).build());
+		CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath(getFontFilename()).setFontAttrId(R.attr.fontPath).disablePrivateFactoryInjection().build());
 	}
 	
 	private String genPassword() {
@@ -197,5 +198,26 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 	public boolean isLightTheme(Activity a) {
 		// TODO: Implement this method
 		return true;
+	}
+	
+	public static Context injectContextSpecial(final Context base){
+		final Context calligraphy=CalligraphyContextWrapper.wrap(base);
+		return calligraphy;
+		/*return new ContextWrapper(calligraphy){
+			private long layInfValidUntil=System.currentTimeMillis();
+			private WeakReference<LayoutInflater> cache=new WeakReference<LayoutInflater>(null);
+			public Object getSystemService(String service){
+				if(service.equals(LAYOUT_INFLATER_SERVICE)){
+					if(cache.get()!=null&layInfValidUntil>System.currentTimeMillis()){
+						return cache.get();
+					}
+					LayoutInflater li=(LayoutInflater)base.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+					cache=new WeakReference<LayoutInflater>(li=li.cloneInContext(calligraphy));
+					layInfValidUntil=System.currentTimeMillis()+(60*1000);//valid for one minute
+					return li;
+				}
+				return super.getSystemService(service);
+			}
+		};*/
 	}
 }

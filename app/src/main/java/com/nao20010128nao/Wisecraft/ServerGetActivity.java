@@ -150,6 +150,6 @@ public class ServerGetActivity extends CompatWebViewActivity {
 	
 	@Override
 	protected void attachBaseContext(Context newBase) {
-		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+		super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
 	}
 }

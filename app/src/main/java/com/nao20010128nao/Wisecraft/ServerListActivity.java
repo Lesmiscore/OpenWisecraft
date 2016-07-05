@@ -414,9 +414,11 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 								public void run() {
 									if(sv.size()!=0){
 										for(Server s:sv){
-											spp.putInQueue(s, new PingHandlerImpl(true, -1));
-											pinging.put(s, true);
-											sl.add(s);
+											if(!list.contains(s)){
+												spp.putInQueue(s, new PingHandlerImpl(true, -1));
+												pinging.put(s, true);
+												sl.add(s);
+											}
 										}
 									}
 									saveServers();
@@ -467,7 +469,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				et_.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/servers.json").toString());
 				dialogView_.findViewById(R.id.selectFile).setOnClickListener(new View.OnClickListener(){
 					public void onClick(View v){
-						startChooseFile(new File(et_.getText().toString()),new FileChooserResult(){
+						startChooseFileForOpen(new File(et_.getText().toString()),new FileChooserResult(){
 							public void onSelected(File f){
 								et_.setText(f.toString());
 							}
@@ -511,7 +513,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				et.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/servers.json").toString());
 				dialogView.findViewById(R.id.selectFile).setOnClickListener(new View.OnClickListener(){
 						public void onClick(View v){
-							startChooseFile(new File(et.getText().toString()),new FileChooserResult(){
+							startChooseFileForSelect(new File(et.getText().toString()),new FileChooserResult(){
 									public void onSelected(File f){
 										et.setText(f.toString());
 									}

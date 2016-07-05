@@ -92,7 +92,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		}
 		@Override
 		protected void attachBaseContext(Context newBase) {
-			super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+			super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
 			pref=PreferenceManager.getDefaultSharedPreferences(this);
 		}
 		
