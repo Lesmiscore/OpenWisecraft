@@ -445,8 +445,8 @@ public class ServerInfoActivity extends ActionBarActivity implements TabHost.OnT
 				TextView tv = (TextView) fth.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
 				tv.setTextColor(Color.WHITE);
 			}
+			onTabChanged("");
 		}
-		onTabChanged("");
 	}
 	
 	public void onTabChanged(String a){
