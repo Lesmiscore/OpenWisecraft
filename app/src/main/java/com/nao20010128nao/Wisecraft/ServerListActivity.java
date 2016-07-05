@@ -414,9 +414,11 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 								public void run() {
 									if(sv.size()!=0){
 										for(Server s:sv){
-											spp.putInQueue(s, new PingHandlerImpl(true, -1));
-											pinging.put(s, true);
-											sl.add(s);
+											if(!list.contains(s)){
+												spp.putInQueue(s, new PingHandlerImpl(true, -1));
+												pinging.put(s, true);
+												sl.add(s);
+											}
 										}
 									}
 									saveServers();
