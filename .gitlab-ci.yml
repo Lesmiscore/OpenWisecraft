@@ -37,7 +37,7 @@ main:
     - cd ../
     - gradle-2.12/bin/gradle build -p app --info --stacktrace
     - mv app/build/outputs/apk/*.apk .
-    - unzip Wisecraft-release.apk -d unzippedApk > NUL
+    - unzip app-release.apk -d unzippedApk > NUL
     - android-sdk-linux/build-tools/23.0.2/dexdump -d unzippedApk/classes.dex > dexdump.txt
   artifacts:
     paths:
@@ -52,7 +52,7 @@ rcon:
     - gradle-2.12/bin/gradle build -p rconApp --info --stacktrace
     - mv rconApp/build/outputs/apk/*.apk .
     - rm dexdump.txt
-    - unzip WRcon-release.apk -d unzippedApk > NUL
+    - unzip rconApp-release.apk -d unzippedApk > NUL
     - android-sdk-linux/build-tools/23.0.2/dexdump -d unzippedApk/classes.dex > dexdump.txt
   artifacts:
     paths:
@@ -84,7 +84,7 @@ mainEx:
     - mv MaterialIconsEx MaterialIcons
     - gradle-2.12/bin/gradle build -p app --info --stacktrace
     - mv app/build/outputs/apk/*.apk .
-    - unzip Wisecraft-release.apk -d unzippedApk > NUL
+    - unzip app-release.apk -d unzippedApk > NUL
     - android-sdk-linux/build-tools/23.0.2/dexdump -d unzippedApk/classes.dex > dexdump.txt
   artifacts:
     paths:
@@ -101,7 +101,7 @@ mainOld:
     - git clone https://github.com/nao20010128nao/MaterialIcons.git > NUL
     - gradle-2.12/bin/gradle build -p app --info --stacktrace
     - mv app/build/outputs/apk/*.apk .
-    - unzip Wisecraft-release.apk -d unzippedApk > NUL
+    - unzip app-release.apk -d unzippedApk > NUL
     - android-sdk-linux/build-tools/23.0.2/dexdump -d unzippedApk/classes.dex > dexdump.txt
   artifacts:
     paths:
