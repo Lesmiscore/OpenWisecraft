@@ -80,4 +80,9 @@
 		<item name="colorButtonNormal">@color/upd_2</item>
 		<item name="colorControlNormal">@color/upd_2</item>
 	</style>
+	<style name="AppButton.Inverse">
+		<item name="android:textColor">@color/upd_2</item>
+		<item name="colorButtonNormal">#fff</item>
+		<item name="colorControlNormal">#fff</item>
+	</style>
 </resources>
