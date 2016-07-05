@@ -47,14 +47,4 @@ public class DirectoryChooserActivity extends FileChooserActivity
 			super.onFileSelected(file);
 		}
 	}
-	
-	private void finishWithResult(File file) {
-        if (file != null) {
-            Uri uri = Uri.fromFile(file);
-            setResult(RESULT_OK, new Intent().setData(uri).putExtra(PATH,file.toString()));
-        } else {
-            setResult(RESULT_CANCELED);
-        }
-		finish();
-    }
 }

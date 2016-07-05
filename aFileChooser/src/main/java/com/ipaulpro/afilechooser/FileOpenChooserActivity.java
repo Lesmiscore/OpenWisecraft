@@ -5,6 +5,11 @@ import android.view.SubMenu;
 import android.support.v4.view.MenuItemCompat;
 import android.os.Bundle;
 import java.io.File;
+import android.support.v7.app.AlertDialog;
+import android.view.View;
+import android.content.DialogInterface;
+import android.widget.EditText;
+import java.io.IOException;
 
 public class FileOpenChooserActivity extends FileChooserActivity
 {
@@ -33,6 +38,61 @@ public class FileOpenChooserActivity extends FileChooserActivity
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO: Implement this method
+		switch(item.getItemId()){
+			case 5:
+				View v=getLayoutInflater().inflate(R.layout.add_file,null);
+				final EditText et=(EditText)v.findViewById(R.id.filename);
+				new AlertDialog.Builder(this,getPresenter().getDialogStyleId())
+					.setView(v)
+					.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+						public void onClick(DialogInterface di,int w){
+							boolean succeed;
+							try {
+								succeed=new File(mPath, et.getText().toString()).createNewFile();
+							} catch (IOException e) {
+								succeed=false;
+							}
+							if(!succeed){
+								getPresenter().showSelfMessage(FileOpenChooserActivity.this,R.string.failed_add_file,Presenter.MESSAGE_SHOW_LENGTH_SHORT);
+								return;
+							}
+						}
+					})
+					.setNeutralButton(R.string.open,new DialogInterface.OnClickListener(){
+						public void onClick(DialogInterface di,int w){
+							boolean succeed;
+							File f=new File(mPath, et.getText().toString());
+							try {
+								succeed=f.createNewFile();
+							} catch (IOException e) {
+								succeed=false;
+							}
+							if(!succeed){
+								getPresenter().showSelfMessage(FileOpenChooserActivity.this,R.string.failed_add_file,Presenter.MESSAGE_SHOW_LENGTH_SHORT);
+								return;
+							}
+							finishWithResult(f);
+						}
+					})
+					.show();
+				break;
+			case 6:
+				View v_=getLayoutInflater().inflate(R.layout.add_file,null);
+				final EditText et_=(EditText)v_.findViewById(R.id.filename);
+				new AlertDialog.Builder(this,getPresenter().getDialogStyleId())
+					.setView(v_)
+					.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+						public void onClick(DialogInterface di,int w){
+							boolean succeed=new File(mPath, et_.getText().toString()).mkdirs();
+							if(!succeed){
+								getPresenter().showSelfMessage(FileOpenChooserActivity.this,R.string.failed_add_dir,Presenter.MESSAGE_SHOW_LENGTH_SHORT);
+								return;
+							}
+						}
+					})
+					.show();
+				break;
+		}
 		return super.onOptionsItemSelected(item);
 	}
 }
