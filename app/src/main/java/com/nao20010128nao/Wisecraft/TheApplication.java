@@ -202,7 +202,8 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 	
 	public static Context injectContextSpecial(final Context base){
 		final Context calligraphy=CalligraphyContextWrapper.wrap(base);
-		return new ContextWrapper(calligraphy){
+		return calligraphy;
+		/*return new ContextWrapper(calligraphy){
 			private long layInfValidUntil=System.currentTimeMillis();
 			private WeakReference<LayoutInflater> cache=new WeakReference<LayoutInflater>(null);
 			public Object getSystemService(String service){
@@ -217,6 +218,6 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 				}
 				return super.getSystemService(service);
 			}
-		};
+		};*/
 	}
 }
