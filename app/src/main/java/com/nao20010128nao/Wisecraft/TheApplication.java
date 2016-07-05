@@ -99,7 +99,7 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		fontDisplayNames.put("sysDefault",R.string.font_sysDefault);
 		fontDisplayNames.put("robotoSlabLight",R.string.font_robotoSlabLight);
 
-		CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath(getFontFilename()).setFontAttrId(R.attr.fontPath).build());
+		CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath(getFontFilename()).setFontAttrId(R.attr.fontPath).disablePrivateFactoryInjection().build());
 	}
 	
 	private String genPassword() {
@@ -197,5 +197,19 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 	public boolean isLightTheme(Activity a) {
 		// TODO: Implement this method
 		return true;
+	}
+	
+	public static Context injectContextSpecial(final Context base){
+		final Context calligraphy=CalligraphyContextWrapper.wrap(base);
+		return new ContextWrapper(calligraphy){
+			public Object getSystemService(String service){
+				if(service.equals(LAYOUT_INFLATER_SERVICE)){
+					LayoutInflater li=(LayoutInflater)base.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+					li=li.cloneInContext(calligraphy);
+					return li;
+				}
+				return super.getSystemService(service);
+			}
+		};
 	}
 }

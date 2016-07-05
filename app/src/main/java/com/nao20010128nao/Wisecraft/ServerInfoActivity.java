@@ -502,7 +502,7 @@ public class ServerInfoActivity extends ActionBarActivity implements TabHost.OnT
 
 	@Override
 	protected void attachBaseContext(Context newBase) {
-		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+		super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
 	}
 
 	class PCUserFaceAdapter extends PlayerNamesListAdapter {

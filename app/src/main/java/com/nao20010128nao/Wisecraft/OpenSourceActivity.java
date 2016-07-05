@@ -22,7 +22,7 @@ public class OpenSourceActivity extends ScrollingActivity
 	
 	@Override
 	protected void attachBaseContext(Context newBase) {
-		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+		super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
 	}
 
 	@Override

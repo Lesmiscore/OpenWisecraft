@@ -143,7 +143,7 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 	}
 	@Override
 	protected void attachBaseContext(Context newBase) {
-		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+		super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
 	}
 
 	@Override
@@ -321,6 +321,6 @@ public class ServerFinderActivity extends CompatActivityGroup {
 
 	@Override
 	protected void attachBaseContext(Context newBase) {
-		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+		super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
 	}
 }
