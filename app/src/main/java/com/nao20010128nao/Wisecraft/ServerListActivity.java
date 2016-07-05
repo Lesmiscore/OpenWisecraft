@@ -513,7 +513,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				et.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/servers.json").toString());
 				dialogView.findViewById(R.id.selectFile).setOnClickListener(new View.OnClickListener(){
 						public void onClick(View v){
-							startChooseFileForSelect(new File(et.getText().toString()),new FileChooserResult(){
+							File f=new File(et.getText().toString());
+							if(f.isDirectory())f=f.getParentFile();
+							startChooseFileForSelect(f,new FileChooserResult(){
 									public void onSelected(File f){
 										et.setText(f.toString());
 									}
