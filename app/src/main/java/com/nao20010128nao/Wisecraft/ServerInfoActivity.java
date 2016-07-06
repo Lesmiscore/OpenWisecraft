@@ -35,6 +35,9 @@ public class ServerInfoActivity extends ActionBarActivity implements TabHost.OnT
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
 	public static List<ServerStatus> stat=new ArrayList<>();
 	public static Map<String,Bitmap> faces=new HashMap<>();
+	
+	public static final int DIRT_BRIGHT,DIRT_DARK;
+	
 	SharedPreferences pref;
 
 	ServerStatus localStat;
@@ -160,7 +163,7 @@ public class ServerInfoActivity extends ActionBarActivity implements TabHost.OnT
 			bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
 			findViewById(R.id.appbar).setBackgroundDrawable(bd);
 			if (Build.VERSION.SDK_INT >= 21) {
-				getWindow().setStatusBarColor(0xff3a2a1d);
+				getWindow().setStatusBarColor(DIRT_DARK);
 			}
 			fth.setOnTabChangedListener(this);
 		}
@@ -453,7 +456,7 @@ public class ServerInfoActivity extends ActionBarActivity implements TabHost.OnT
 		TabWidget tw=fth.getTabWidget();
 		int selected=fth.getCurrentTab();
 		int[] colors=new int[tw.getTabCount()];
-		Arrays.fill(colors,0xff_493B2F);
+		Arrays.fill(colors,DIRT_BRIGHT);
 		colors[selected]=Color.WHITE;
 		Drawable tabUnderlineSelected=TheApplication.instance.getTintedDrawable(R.drawable.abc_tab_indicator_mtrl_alpha,0xff_ffffff);
 		for (int i = 0; i < tw.getChildCount(); i++) {
@@ -676,5 +679,17 @@ public class ServerInfoActivity extends ActionBarActivity implements TabHost.OnT
 			// TODO: Implement this method
 			return inflater.inflate(R.layout.server_info_no_details_fragment, container, false);
 		}
+	}
+	
+	
+	static{
+		int base=0xff3a2a1d;
+		float[] hsv=new float[3];
+		Color.RGBToHSV(Color.red(base),Color.green(base),Color.blue(base),hsv);
+		float v=hsv[2];
+		hsv[2]=v+0.15f;//V+15
+		DIRT_BRIGHT=Color.HSVToColor(hsv);
+		hsv[2]=v-0.15f;//V-15
+		DIRT_DARK=Color.HSVToColor(hsv);
 	}
 }
