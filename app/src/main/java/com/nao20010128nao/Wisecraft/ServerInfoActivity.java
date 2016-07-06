@@ -687,9 +687,9 @@ public class ServerInfoActivity extends ActionBarActivity implements TabHost.OnT
 		float[] hsv=new float[3];
 		Color.RGBToHSV(Color.red(base),Color.green(base),Color.blue(base),hsv);
 		float v=hsv[2];
-		hsv[2]=v+0.15f;//V+15
+		hsv[2]=v+0.20f;//V+20
 		DIRT_BRIGHT=Color.HSVToColor(hsv);
-		hsv[2]=v-0.15f;//V-15
+		hsv[2]=v-0.10f;//V-10
 		DIRT_DARK=Color.HSVToColor(hsv);
 	}
 }
