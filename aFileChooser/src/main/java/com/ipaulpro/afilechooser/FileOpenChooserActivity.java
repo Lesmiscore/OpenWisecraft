@@ -44,6 +44,7 @@ public class FileOpenChooserActivity extends FileChooserActivity
 				final EditText et=(EditText)v.findViewById(R.id.filename);
 				new AlertDialog.Builder(this,getPresenter().getDialogStyleId())
 					.setView(v)
+					.setTitle(R.string.add_file)
 					.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
 						public void onClick(DialogInterface di,int w){
 							boolean succeed;
@@ -81,6 +82,7 @@ public class FileOpenChooserActivity extends FileChooserActivity
 				final EditText et_=(EditText)v_.findViewById(R.id.filename);
 				new AlertDialog.Builder(this,getPresenter().getDialogStyleId())
 					.setView(v_)
+					.setTitle(R.string.add_dir)
 					.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
 						public void onClick(DialogInterface di,int w){
 							boolean succeed=new File(mPath, et_.getText().toString()).mkdirs();
