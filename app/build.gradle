@@ -30,14 +30,14 @@ android {
         	versionNameSuffix = ' Pre'
 			signingConfig signingConfigs.release
 			resValue "string", "app_name", "Wisecraft BETA"
-			//resValue "bool", "isBeta", "true"
+			resValue "bool", "isBeta", "true"
 		}
 		debug2 {
         	applicationIdSuffix = '.alpha'  
             versionNameSuffix = ' Pre'
 			signingConfig signingConfigs.release
 			resValue "string", "app_name", "Wisecraft BETA"
-			//resValue "bool", "isBeta", "true"
+			resValue "bool", "isBeta", "true"
 		}
     }
 	
@@ -49,6 +49,17 @@ android {
     	}
 	}
 	
+	dexOptions {
+		//incremental = true;
+		preDexLibraries = false
+		javaMaxHeapSize "4g"
+	}
+
+	packagingOptions {
+		exclude 'META-INF/NOTICE.txt' // will not include NOTICE file
+		exclude 'META-INF/LICENSE.txt' // will not include LICENSE file
+	}
+
 	lintOptions {
         abortOnError false
     }

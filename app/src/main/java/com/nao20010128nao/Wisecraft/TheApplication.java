@@ -15,6 +15,7 @@ import com.nao20010128nao.Wisecraft.rcon.KeyChain;
 import android.graphics.drawable.Drawable;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import java.lang.ref.WeakReference;
+import android.support.multidex.MultiDex;
 
 public class TheApplication extends Application implements com.nao20010128nao.Wisecraft.rcon.Presenter,com.ipaulpro.afilechooser.Presenter,InformationCommunicatorReceiver.DisclosureResult {
 	public static TheApplication instance;
@@ -32,6 +33,7 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 	public void onCreate() {
 		// TODO: Implement this method
 		super.onCreate();
+		MultiDex.install(this);
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
 		instance = this;
 		///////
