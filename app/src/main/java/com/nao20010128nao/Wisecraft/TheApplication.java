@@ -100,7 +100,7 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		fontDisplayNames.put("sysDefault",R.string.font_sysDefault);
 		fontDisplayNames.put("robotoSlabLight",R.string.font_robotoSlabLight);
 
-		CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath(getFontFilename()).setFontAttrId(R.attr.fontPath).disablePrivateFactoryInjection().build());
+		CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath(getFontFilename()).setFontAttrId(R.attr.fontPath).build());
 	}
 	
 	private String genPassword() {
