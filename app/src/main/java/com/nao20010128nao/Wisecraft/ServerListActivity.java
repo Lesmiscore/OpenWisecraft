@@ -137,7 +137,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					switch (event.getAction()) {
 						case MotionEvent.ACTION_MOVE:
 						case MotionEvent.ACTION_UP:
-							rv.scrollToPosition((int)Math.floor(event.getX()/(statLayout.getWidth()/sl.getItemCount())));
+							rv.smoothScrollToPosition((int)Math.floor(event.getX()/(statLayout.getWidth()/sl.getItemCount())));
 							break;
 					}
 					return true;
