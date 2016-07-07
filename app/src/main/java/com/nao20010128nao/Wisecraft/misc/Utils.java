@@ -16,6 +16,8 @@ import java.util.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.support.v7.widget.Toolbar;
 
 public class Utils extends PingerUtils{
 	public static String deleteDecorations(String decorated) {
@@ -237,5 +239,15 @@ public class Utils extends PingerUtils{
 				}
 			}
 		}
+	}
+	public static TextView getActionBarTextView(Toolbar mToolBar) {
+		try {
+			Field f = mToolBar.getClass().getDeclaredField("mTitleTextView");
+			f.setAccessible(true);
+			return (TextView) f.get(mToolBar);
+		} catch (NoSuchFieldException e) {
+		} catch (IllegalAccessException e) {
+		}
+		return null;
 	}
 }
