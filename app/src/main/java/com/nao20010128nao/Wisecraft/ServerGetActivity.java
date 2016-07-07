@@ -90,7 +90,7 @@ public class ServerGetActivity extends CompatWebViewActivity {
 						downloading.dismiss();
 						if (o instanceof List) {
 							//Server list
-							final List<com.nao20010128nao.McServerList.Server> serv=(List)o;
+							final List<com.nao20010128nao.McServerList.Server> serv=(List<com.nao20010128nao.McServerList.Server>)o;
 							String[] servSel=new String[serv.size()];
 							for (int i=0;i < servSel.length;i++) {
 								servSel[i] = serv.get(i).toString();
@@ -130,7 +130,7 @@ public class ServerGetActivity extends CompatWebViewActivity {
 						}
 					}
 					public List<com.nao20010128nao.McServerList.Server> getServers(List<com.nao20010128nao.McServerList.Server> all, boolean[] balues) {
-						List lst=new ArrayList();
+						List<com.nao20010128nao.McServerList.Server> lst=new ArrayList<com.nao20010128nao.McServerList.Server>();
 						for (int i=0;i < balues.length;i++) {
 							if (balues[i]) {
 								lst.add(all.get(i));
