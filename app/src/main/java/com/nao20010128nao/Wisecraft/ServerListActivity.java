@@ -131,18 +131,19 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			});
 		statLayout=(StatusesLayout)findViewById(R.id.serverStatuses);
 		statLayout.setColorRes(R.color.stat_error,R.color.stat_pending,R.color.stat_ok);
-		statLayout.setOnTouchListener(new View.OnTouchListener(){
-				@Override
-				public boolean onTouch(View v,MotionEvent event) {
-					switch (event.getAction()) {
-						case MotionEvent.ACTION_MOVE:
-						case MotionEvent.ACTION_UP:
-							rv.smoothScrollToPosition((int)Math.floor(event.getX()/(statLayout.getWidth()/sl.getItemCount())));
-							break;
+		if(pref.getBoolean("statusBarTouchScroll",false))
+			statLayout.setOnTouchListener(new View.OnTouchListener(){
+					@Override
+					public boolean onTouch(View v,MotionEvent event) {
+						switch (event.getAction()) {
+							case MotionEvent.ACTION_MOVE:
+							case MotionEvent.ACTION_UP:
+								rv.smoothScrollToPosition((int)Math.floor(event.getX()/(statLayout.getWidth()/sl.getItemCount())));
+								break;
+						}
+						return true;
 					}
-					return true;
-				}
-			});
+				});
 		if(!pref.getBoolean("showStatusesBar",false))statLayout.setVisibility(View.GONE);
 		boolean usesOldInstance=false;
 		if (instance.get() != null) {

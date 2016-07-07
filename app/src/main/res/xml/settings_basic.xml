@@ -77,6 +77,12 @@
 		android:defaultValue="false"
 	/>
 	<com.nao20010128nao.Wisecraft.misc.pref.CheckBoxPreference
+		android:title="@string/statusBarTouchScroll"
+		android:key="statusBarTouchScroll"
+		android:defaultValue="false"
+		android:dependency="showStatusesBar"
+	/>
+	<com.nao20010128nao.Wisecraft.misc.pref.CheckBoxPreference
 		android:title="@string/deleteDecoPlayerName"
 		android:key="deleteDecoPlayerName"
 		android:defaultValue="false"
