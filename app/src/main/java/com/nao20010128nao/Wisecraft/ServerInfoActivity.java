@@ -116,7 +116,7 @@ public class ServerInfoActivity extends ActionBarActivity implements TabHost.OnT
 			dataF = fth.newTabSpec("dataList");
 			dataF.setIndicator(getResources().getString(R.string.data));
 			if (localStat.response instanceof UnconnectedPing.UnconnectedPingResult) {
-				fth.addTab(dataF, UcpInfoFragment.class, null);
+				fth.addTab(dataF, UcpDetailsFragment.class, null);
 			} else {
 				switch (localStat.mode) {
 					case 0:fth.addTab(dataF, DataFragmentPE.class, null);break;
@@ -691,9 +691,12 @@ public class ServerInfoActivity extends ActionBarActivity implements TabHost.OnT
 			KVListAdapter<String,String> adap=new KVListAdapter<String,String>(getActivity());
 			lv.setAdapter(adap);
 			OrderTrustedMap<String,String> otm=new OrderTrustedMap<String,String>();
-			otm.put(getString(R.string.ucp_serverName),result.getServerName());
-			otm.put(getString(R.string.ucp_maxPlayers),result.getMaxPlayers()+"");
-			otm.put(getString(R.string.ucp_nowPlayers),result.getPlayersCount()+"");
+			String[] values=result.getRaw().split("\\;");
+			otm.put(getString(R.string.ucp_serverName),      values[1]);
+			otm.put(getString(R.string.ucp_protocolVersion), values[2]);
+			otm.put(getString(R.string.ucp_mcpeVersion),     values[3]);
+			otm.put(getString(R.string.ucp_nowPlayers),      values[4]);
+			otm.put(getString(R.string.ucp_maxPlayers),      values[5]);
 			CompatArrayAdapter.addAll(adap,otm.entrySet());
 		}
 
