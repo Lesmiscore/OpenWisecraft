@@ -14,11 +14,15 @@ import java.net.*;
 import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
 import com.nao20010128nao.Wisecraft.misc.ServerListActivityInterface;
+import android.webkit.WebViewClient;
+import android.webkit.WebView;
+import android.support.design.widget.Snackbar;
 
 public class ServerGetActivity extends CompatWebViewActivity {
 	public static List<String> addForServerList;
 	String domain;
 	String[] serverList;
+	Snackbar downloading;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
@@ -49,6 +53,13 @@ public class ServerGetActivity extends CompatWebViewActivity {
 				}
 			})
 			.show();
+		getWebView().setWebViewClient(new WebViewClient(){
+			public void onPageFinished(WebView wv,String url){
+				setTitle(wv.getTitle());
+				getActionBar().setSubtitle(wv.getUrl());
+			}
+		});
+		downloading=Snackbar.make(findViewById(android.R.id.content),R.string.serverGetFetch,Snackbar.LENGTH_INDEFINITE);
 	}
 
 	@Override
@@ -64,6 +75,7 @@ public class ServerGetActivity extends CompatWebViewActivity {
 		switch (item.getItemId()) {
 			case 0:
 				//List<com.nao20010128nao.McServerList.Server>
+				downloading.show();
 				new AsyncTask<String,Void,Object>(){
 					String url;
 					boolean[] selections;
@@ -75,6 +87,7 @@ public class ServerGetActivity extends CompatWebViewActivity {
 						}
 					}
 					public void onPostExecute(Object o) {
+						downloading.dismiss();
 						if (o instanceof List) {
 							//Server list
 							final List<com.nao20010128nao.McServerList.Server> serv=(List)o;
