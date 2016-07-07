@@ -680,6 +680,29 @@ public class ServerInfoActivity extends ActionBarActivity implements TabHost.OnT
 			return inflater.inflate(R.layout.server_info_no_details_fragment, container, false);
 		}
 	}
+	public static class UcpDetailsFragment extends BaseFragment<ServerInfoActivity> {
+
+		@Override
+		public void onResume() {
+			// TODO: Implement this method
+			super.onResume();
+			UnconnectedPing.UnconnectedPingResult result=(UnconnectedPing.UnconnectedPingResult)getParentActivity().localStat.response;
+			ListView lv=(ListView)getView().findViewById(R.id.data);
+			KVListAdapter<String,String> adap=new KVListAdapter<String,String>(getActivity());
+			lv.setAdapter(adap);
+			OrderTrustedMap<String,String> otm=new OrderTrustedMap<String,String>();
+			otm.put(getString(R.string.ucp_serverName),result.getServerName());
+			otm.put(getString(R.string.ucp_maxPlayers),result.getMaxPlayers()+"");
+			otm.put(getString(R.string.ucp_nowPlayers),result.getPlayersCount()+"");
+			CompatArrayAdapter.addAll(adap,otm.entrySet());
+		}
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+			// TODO: Implement this method
+			return inflater.inflate(R.layout.server_info_ucp_details,container,false);
+		}
+	}
 	
 	
 	static{

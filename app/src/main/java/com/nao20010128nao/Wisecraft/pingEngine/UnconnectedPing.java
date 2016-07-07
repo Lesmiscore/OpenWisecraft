@@ -30,7 +30,7 @@ public class UnconnectedPing {
 			DatagramPacket dp=new DatagramPacket(baos.toByteArray(), baos.size(), InetAddress.getByName(ip), port);
 			ds.send(dp);
 
-			DatagramPacket recDp=new DatagramPacket(new byte[1000], 1000);
+			DatagramPacket recDp=new DatagramPacket(new byte[1500], 1500);
 			ds.receive(recDp);
 			byte[] recvBuf=new byte[recDp.getLength()];
 			System.arraycopy(recDp.getData(), 0, recvBuf, 0, recvBuf.length);
@@ -66,10 +66,10 @@ public class UnconnectedPing {
 			return serverInfos[1];
 		}
 		public int getPlayersCount() {
-			return new Integer(serverInfos[4]);
+			return Integer.valueOf(serverInfos[4]);
 		}
 		public int getMaxPlayers() {
-			return new Integer(serverInfos[5]);
+			return Integer.valueOf(serverInfos[5]);
 		}
 		public String getRaw() {
 			return raw;

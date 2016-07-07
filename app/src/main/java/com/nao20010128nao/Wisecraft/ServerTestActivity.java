@@ -83,9 +83,10 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 						di.dismiss();
 						String nu=((EditText)dialog.findViewById(R.id.pingTimes)).getText().toString();
 						try {
-							times = new Integer(nu);
+							times = Integer.valueOf(nu);
 						} catch (NumberFormatException e) {
 							finish();
+							return;
 						}
 						for (int i=0;i < times;i++) {
 							Server s=new Server();
