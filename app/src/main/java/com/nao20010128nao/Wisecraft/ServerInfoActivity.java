@@ -686,7 +686,12 @@ public class ServerInfoActivity extends ActionBarActivity implements TabHost.OnT
 		public void onResume() {
 			// TODO: Implement this method
 			super.onResume();
-			UnconnectedPing.UnconnectedPingResult result=(UnconnectedPing.UnconnectedPingResult)getParentActivity().localStat.response;
+			UnconnectedPing.UnconnectedPingResult result;
+			if(getParentActivity().localStat.response instanceof UnconnectedPing.UnconnectedPingResult){
+				result=(UnconnectedPing.UnconnectedPingResult)getParentActivity().localStat.response;
+			}else{
+				result=(UnconnectedPing.UnconnectedPingResult)((SprPair)getParentActivity().localStat.response).getA();
+			}
 			ListView lv=(ListView)getView().findViewById(R.id.data);
 			KVListAdapter<String,String> adap=new KVListAdapter<String,String>(getActivity());
 			lv.setAdapter(adap);
