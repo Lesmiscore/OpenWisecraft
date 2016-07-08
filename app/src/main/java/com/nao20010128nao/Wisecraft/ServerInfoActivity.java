@@ -699,7 +699,7 @@ public class ServerInfoActivity extends ActionBarActivity implements TabHost.OnT
 			if(getParentActivity().localStat.response instanceof UnconnectedPing.UnconnectedPingResult){
 				result=(UnconnectedPing.UnconnectedPingResult)getParentActivity().localStat.response;
 			}else{
-				result=(UnconnectedPing.UnconnectedPingResult)((SprPair)getParentActivity().localStat.response).getA();
+				result=(UnconnectedPing.UnconnectedPingResult)((SprPair)getParentActivity().localStat.response).getB();
 			}
 			ListView lv=(ListView)getView().findViewById(R.id.data);
 			KVListAdapter<String,String> adap=new KVListAdapter<String,String>(getActivity());
