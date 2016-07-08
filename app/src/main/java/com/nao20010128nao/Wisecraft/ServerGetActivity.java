@@ -56,7 +56,7 @@ public class ServerGetActivity extends CompatWebViewActivity {
 		getWebView().setWebViewClient(new WebViewClient(){
 			public void onPageFinished(WebView wv,String url){
 				setTitle(wv.getTitle());
-				getActionBar().setSubtitle(wv.getUrl());
+				getSupportActionBar().setSubtitle(wv.getUrl());
 			}
 		});
 		downloading=Snackbar.make(findViewById(android.R.id.content),R.string.serverGetFetch,Snackbar.LENGTH_INDEFINITE);

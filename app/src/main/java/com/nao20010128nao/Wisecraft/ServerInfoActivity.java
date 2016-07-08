@@ -53,7 +53,7 @@ public class ServerInfoActivity extends ActionBarActivity implements TabHost.OnT
 	ListView players,data,plugins,mods;
 	TextView modLoader;
 	FragmentTabHost fth;
-	TabHost.TabSpec playersF,dataF,pluginsF,modsF;
+	TabHost.TabSpec playersF,dataF,pluginsF,modsF,ucpDetailsF;
 
 	ArrayAdapter<String> player,pluginNames;
 	ArrayAdapter<Map.Entry<String,String>> infos;
@@ -326,6 +326,7 @@ public class ServerInfoActivity extends ActionBarActivity implements TabHost.OnT
 			update(p.getB());
 		} else if (resp instanceof UnconnectedPing.UnconnectedPingResult & resp!=localStat.response) {
 			setTitle((((UnconnectedPing.UnconnectedPingResult)resp).getServerName()));
+			addUcpDetailsTab();
 		} else if (resp instanceof UnconnectedPing.UnconnectedPingResult & resp==localStat.response) {
 			if (pref.getBoolean("showDetailsIfNoDetails", false)) {
 				setTitle((((UnconnectedPing.UnconnectedPingResult)resp).getServerName()));
@@ -476,6 +477,14 @@ public class ServerInfoActivity extends ActionBarActivity implements TabHost.OnT
 		}
 	}
 
+	public void addUcpDetailsTab() {
+		if ((!hideMods) | localStat.mode == 1) {
+			ucpDetailsF = fth.newTabSpec("ucpDetails");
+			ucpDetailsF.setIndicator(getResources().getString(R.string.data_ucp));
+			fth.addTab(ucpDetailsF, UcpDetailsFragment.class, null);
+		}
+	}
+	
 	public void setPlayersView(ListView lv) {
 		players = lv;
 		lv.setAdapter(player);
@@ -718,9 +727,9 @@ public class ServerInfoActivity extends ActionBarActivity implements TabHost.OnT
 		float[] hsv=new float[3];
 		Color.RGBToHSV(Color.red(base),Color.green(base),Color.blue(base),hsv);
 		float v=hsv[2];
-		hsv[2]=v+0.20f;//V+20
+		hsv[2]=v+0.25f;//V+20
 		DIRT_BRIGHT=Color.HSVToColor(hsv);
-		hsv[2]=v-0.10f;//V-10
+		hsv[2]=v-0.05f;//V-10
 		DIRT_DARK=Color.HSVToColor(hsv);
 	}
 }
