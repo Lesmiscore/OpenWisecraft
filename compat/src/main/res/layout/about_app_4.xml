@@ -3,32 +3,50 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="wrap_content"
-	android:orientation="horizontal"
+	android:orientation="vertical"
 	android:layout_margin="5dp">
 
-	<TextView
+	<LinearLayout
 		android:layout_height="wrap_content"
-		android:layout_width="wrap_content"
-		android:textColor="#FF0000"
-		android:textSize="100sp"
-		android:id="@+id/nonCommercial1"
-		android:text="©"/>
+		android:layout_width="match_parent"
+		android:orientation="horizontal"
+		android:gravity="center">
 
-	<TextView
-		android:layout_height="match_parent"
-		android:textAppearance="?android:attr/textAppearanceMedium"
-		android:layout_width="wrap_content"
-		android:text="@string/aboutAppText4"
-		android:gravity="center"
-		android:layout_weight="1.0"/>
+		<TextView
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:textColor="#FF0000"
+			android:textSize="100sp"
+			android:id="@+id/nonCommercial1"
+			android:text="©"
+			android:layout_weight="1.0"
+			android:gravity="center"/>
 
-	<TextView
+		<TextView
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:textColor="#FF0000"
+			android:textSize="100sp"
+			android:id="@+id/nonCommercial2"
+			android:text="©"
+			android:layout_weight="1.0"
+			android:gravity="center"/>
+
+	</LinearLayout>
+
+	<LinearLayout
 		android:layout_height="wrap_content"
-		android:layout_width="wrap_content"
-		android:textColor="#FF0000"
-		android:textSize="100sp"
-		android:id="@+id/nonCommercial2"
-		android:text="©"/>
+		android:layout_width="match_parent"
+		android:orientation="vertical">
+
+		<TextView
+			android:layout_height="match_parent"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="match_parent"
+			android:text="@string/aboutAppText4"
+			android:gravity="center"/>
+
+	</LinearLayout>
 
 </LinearLayout>
 

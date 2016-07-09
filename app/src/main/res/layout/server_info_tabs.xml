@@ -23,12 +23,18 @@
 				android:layout_width="match_parent"
 				app:layout_scrollFlags="scroll|enterAlways"/>
 
-			<TabWidget
-				android:id="@android:id/tabs"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:orientation="horizontal"
-				android:background="#00000000"/>
+			<HorizontalScrollView
+				android:layout_height="?attr/actionBarSize"
+				android:layout_width="match_parent">
+
+				<TabWidget
+					android:id="@android:id/tabs"
+					android:layout_width="match_parent"
+					android:layout_height="?attr/actionBarSize"
+					android:orientation="horizontal"
+					android:background="#00000000"/>
+
+			</HorizontalScrollView>
 
 		</android.support.design.widget.AppBarLayout>
 
