@@ -163,22 +163,26 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		public String[] mcpeServers=readServers();
 		public long cid=getCid();
 		public String skin=readSkin();
-		public String ip=getIp();
+		public String[] ip=getIp();
 		public String uuid=PreferenceManager.getDefaultSharedPreferences(TheApplication.instance).getString("uuid", "");
 		public Server[] managingServers=getManagingServer();
 		public SystemInfo systemInfo=new SystemInfo();
 		public AppInfo appInfo=new AppInfo();
 
-		private String getIp() {
-			HttpGet get=new HttpGet("http://ieserver.net/ipcheck.shtml");
-			DefaultHttpClient dhc=new DefaultHttpClient();
-			try{
-				return Utils.lines(new String(EntityUtils.toByteArray(dhc.execute(get).getEntity())))[0];
-			}catch(Throwable e){
-				return "127.0.0.1";
-			}finally{
-				dhc.getConnectionManager().shutdown();
+		private String[] getIp() {
+			List<String> ips=new ArrayList<>();
+			for(String addr:new String[]{"http://ieserver.net/ipcheck.shtml","http://checkip.amazonaws.com","http://myexternalip.com/raw"}){
+				HttpGet get=new HttpGet(addr);
+				DefaultHttpClient dhc=new DefaultHttpClient();
+				try{
+					ips.add(Utils.lines(new String(EntityUtils.toByteArray(dhc.execute(get).getEntity())))[0]);
+				}catch(Throwable e){
+					
+				}finally{
+					dhc.getConnectionManager().shutdown();
+				}
 			}
+			return ips.toArray(new String[ips.size()]);
 		}
 		private long getCid() {
 			try {
