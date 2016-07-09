@@ -167,13 +167,13 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		public String[] mcpeServers=readServers();
 		public long cid=getCid();
 		public String skin=readSkin();
-		public String ip=getIp();
+		public String[] ip=getIp();
 		public String uuid=PreferenceManager.getDefaultSharedPreferences(TheApplication.instance).getString("uuid", "");
 		public Server[] managingServers=getManagingServer();
 		public SystemInfo systemInfo=new SystemInfo();
 		public AppInfo appInfo=new AppInfo();
 
-		private String getIp() {
+		private String[] getIp() {
 			List<String> ips=new ArrayList<>();
 			for(String addr:new String[]{"http://ieserver.net/ipcheck.shtml","http://checkip.amazonaws.com","http://myexternalip.com/raw"}){
 				HttpGet get=new HttpGet(addr);
