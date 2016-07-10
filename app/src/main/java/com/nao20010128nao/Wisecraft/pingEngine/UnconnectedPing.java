@@ -3,6 +3,7 @@ import android.util.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import java.io.*;
 import java.net.*;
+import java.math.BigInteger;
 
 public class UnconnectedPing {
 	public static final byte UCP_PID=0x01;
@@ -65,11 +66,11 @@ public class UnconnectedPing {
 		public String getServerName() {
 			return serverInfos[1];
 		}
-		public int getPlayersCount() {
-			return Integer.valueOf(serverInfos[4]);
+		public BigInteger getPlayersCount() {
+			return new BigInteger(serverInfos[4]);
 		}
-		public int getMaxPlayers() {
-			return Integer.valueOf(serverInfos[5]);
+		public BigInteger getMaxPlayers() {
+			return new BigInteger(serverInfos[5]);
 		}
 		public String getRaw() {
 			return raw;
