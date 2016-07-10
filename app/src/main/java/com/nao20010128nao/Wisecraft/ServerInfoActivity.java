@@ -522,8 +522,12 @@ public class ServerInfoActivity extends AppCompatActivity implements TabHost.OnT
 			
 			lv.setAdapter(player);
 			
-			if (resp instanceof FullStat) {
-				FullStat fs=(FullStat)resp;
+			if (resp instanceof FullStat|resp instanceof SprPair) {
+				FullStat fs=null;
+				if(resp instanceof FullStat)
+					fs=(FullStat)resp;
+				else if(resp instanceof SprPair)
+					fs=(FullStat)((SprPair)resp).getA();
 				final ArrayList<String> sort=new ArrayList<>(fs.getPlayerList());
 				if (pref.getBoolean("sortPlayerNames", true))
 					Collections.sort(sort);
@@ -585,8 +589,12 @@ public class ServerInfoActivity extends AppCompatActivity implements TabHost.OnT
 			String ip=localStat.ip;
 			int port=localStat.port;
 			
-			if (resp instanceof FullStat) {
-				FullStat fs=(FullStat)resp;
+			if (resp instanceof FullStat|resp instanceof SprPair) {
+				FullStat fs=null;
+				if(resp instanceof FullStat)
+					fs=(FullStat)resp;
+				else if(resp instanceof SprPair)
+					fs=(FullStat)((SprPair)resp).getA();
 				infos.clear();
 				CompatArrayAdapter.addAll(infos, fs.getData().entrySet());
 			} 
@@ -709,8 +717,12 @@ public class ServerInfoActivity extends AppCompatActivity implements TabHost.OnT
 			ServerPingResult resp=localStat.response;
 			String ip=localStat.ip;
 			int port=localStat.port;
-			if (resp instanceof FullStat) {
-				FullStat fs=(FullStat)resp;
+			if (resp instanceof FullStat|resp instanceof SprPair) {
+				FullStat fs=null;
+				if(resp instanceof FullStat)
+					fs=(FullStat)resp;
+				else if(resp instanceof SprPair)
+					fs=(FullStat)((SprPair)resp).getA();
 				pluginNames.clear();
 				if (fs.getData().containsKey("plugins")) {
 					String[] data=fs.getData().get("plugins").split("\\: ");
