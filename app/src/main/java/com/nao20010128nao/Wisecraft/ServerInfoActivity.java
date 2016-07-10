@@ -499,9 +499,9 @@ public class ServerInfoActivity extends AppCompatActivity implements TabHost.OnT
 		ListView lv;
 		ArrayAdapter<String> player;
 		@Override
-		public void onCreate(Bundle savedInstanceState) {
+		public void onResume() {
 			// TODO: Implement this method
-			super.onCreate(savedInstanceState);
+			super.onResume();
 			lv=(ListView)getView();
 			
 			
@@ -573,9 +573,9 @@ public class ServerInfoActivity extends AppCompatActivity implements TabHost.OnT
 		ListView data;
 		KVListAdapter<String,String> infos;
 		@Override
-		public void onCreate(Bundle savedInstanceState) {
+		public void onResume() {
 			// TODO: Implement this method
-			super.onCreate(savedInstanceState);
+			super.onResume();
 			data=(ListView)getView().findViewById(R.id.data);
 			
 			infos = new KVListAdapter<>(getParentActivity());
@@ -607,9 +607,9 @@ public class ServerInfoActivity extends AppCompatActivity implements TabHost.OnT
 		CharSequence serverNameStr;
 		KVListAdapter<String,String> infos;
 		@Override
-		public void onCreate(Bundle savedInstanceState) {
+		public void onResume() {
 			// TODO: Implement this method
-			super.onCreate(savedInstanceState);
+			super.onResume();
 			serverIcon = (ImageView)getView().findViewById(R.id.serverIcon);
 			serverName = (TextView)getView().findViewById(R.id.serverTitle);
 			data=(ListView)getView().findViewById(R.id.data);
@@ -697,9 +697,9 @@ public class ServerInfoActivity extends AppCompatActivity implements TabHost.OnT
 		ArrayAdapter<String> pluginNames;
 		ListView lv;
 		@Override
-		public void onCreate(Bundle savedInstanceState) {
+		public void onResume() {
 			// TODO: Implement this method
-			super.onCreate(savedInstanceState);
+			super.onResume();
 			lv=(ListView)getView();
 			
 			
@@ -736,9 +736,9 @@ public class ServerInfoActivity extends AppCompatActivity implements TabHost.OnT
 		ArrayAdapter<Object> modInfos;
 		ListView mods;
 		@Override
-		public void onCreate(Bundle savedInstanceState) {
+		public void onResume() {
 			// TODO: Implement this method
-			super.onCreate(savedInstanceState);
+			super.onResume();
 			mods=(ListView)getView().findViewById(R.id.players);
 			modLoader=(TextView)getView().findViewById(R.id.modLoaderType);
 			
