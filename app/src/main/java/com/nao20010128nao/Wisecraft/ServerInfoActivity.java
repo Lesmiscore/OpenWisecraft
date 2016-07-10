@@ -50,25 +50,16 @@ public class ServerInfoActivity extends AppCompatActivity implements TabHost.OnT
 	MenuItem updateBtn,seeTitleButton;
 
 	List<Thread> t=new ArrayList<>();
-	ListView players,data,plugins,mods;
-	TextView modLoader;
 	FragmentTabHost fth;
 	TabHost.TabSpec playersF,dataF,pluginsF,modsF,ucpDetailsF;
-
-	ArrayAdapter<String> player,pluginNames;
-	ArrayAdapter<Map.Entry<String,String>> infos;
-	ArrayAdapter<Object> modInfos;
 
 	List<Bitmap> skinFaceImages;
 	SkinFaceFetcher sff;
 
 	/*Only for PC servers*/
-	ImageView serverIcon;
-	TextView serverName;
 	Drawable serverIconObj;
 	Bitmap serverIconBmp;
 	CharSequence serverNameStr;
-	String modLoaderTypeName;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
@@ -135,19 +126,6 @@ public class ServerInfoActivity extends AppCompatActivity implements TabHost.OnT
 			}
 		}
 
-		if (pref.getBoolean("showPcUserFace", false) & localStat.mode == 1) {
-			skinFaceImages = new ArrayList<>();
-			sff = new SkinFaceFetcher();
-			player = new PCUserFaceAdapter();
-			Log.d("ServerInfoActivity", "face on");
-		} else {
-			player = new PlayerNamesListAdapter();
-			Log.d("ServerInfoActivity", "face off");
-		}
-		infos = new KVListAdapter<>(this);
-		pluginNames = new AppBaseArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
-		modInfos = new ModInfoListAdapter();
-
 		nonUpd = getIntent().getBooleanExtra("nonUpd", false);
 
 		ip = localStat.ip;
@@ -167,29 +145,10 @@ public class ServerInfoActivity extends AppCompatActivity implements TabHost.OnT
 			}
 			fth.setOnTabChangedListener(this);
 		}
-		if (Build.VERSION.SDK_INT >= 21) {
-			ActivityManager.TaskDescription td;
-			switch (localStat.mode) {
-				case 1:
-					if (serverIconObj instanceof BitmapDrawable) {
-						td = new ActivityManager.TaskDescription(getTitle().toString(), ((BitmapDrawable)serverIconObj).getBitmap(), getResources().getColor(R.color.primary));
-					} else {
-						td = new ActivityManager.TaskDescription(getTitle().toString(), ((BitmapDrawable)getResources().getDrawable(R.drawable.ic_launcher)).getBitmap(), getResources().getColor(R.color.primary));
-					}
-					break;
-				default:
-					td = new ActivityManager.TaskDescription(getTitle().toString(), ((BitmapDrawable)getResources().getDrawable(R.drawable.ic_launcher)).getBitmap(), getResources().getColor(R.color.primary));
-					break;
-			}
-			setTaskDescription(td);
-		}
 	}
 	public synchronized void update(final ServerPingResult resp) {
 		if (resp instanceof FullStat) {
 			FullStat fs=(FullStat)resp;
-			final ArrayList<String> sort=new ArrayList<>(fs.getPlayerList());
-			if (pref.getBoolean("sortPlayerNames", true))
-				Collections.sort(sort);
 			final String title;
 			Map<String,String> m=fs.getData();
 			if (m.containsKey("hostname")) {
@@ -199,20 +158,6 @@ public class ServerInfoActivity extends AppCompatActivity implements TabHost.OnT
 			} else {
 				title = ip + ":" + port;
 			}
-			player.clear();
-			CompatArrayAdapter.addAll(player, sort);
-			infos.clear();
-			CompatArrayAdapter.addAll(infos, fs.getData().entrySet());
-			pluginNames.clear();
-			if (fs.getData().containsKey("plugins")) {
-				String[] data=fs.getData().get("plugins").split("\\: ");
-				if (data.length >= 2) {
-					ArrayList<String> plugins=new ArrayList<>(Arrays.<String>asList(data[1].split("\\; ")));
-					if (pref.getBoolean("sortPluginNames", false))
-						Collections.sort(plugins);
-					CompatArrayAdapter.addAll(pluginNames, plugins);
-				}
-			}
 			setTitle(title);
 		} else if (resp instanceof Reply) {
 			Reply rep=(Reply)resp;
@@ -221,104 +166,12 @@ public class ServerInfoActivity extends AppCompatActivity implements TabHost.OnT
 			} else {
 				setTitle(rep.description);
 			}
-
-			if (rep.players.sample != null) {
-				final ArrayList<String> sort=new ArrayList<>();
-				for (Reply.Player o:rep.players.sample) {
-					sort.add(o.name);
-					TheApplication.instance.pcUserUUIDs.put(o.name, o.id);
-				}
-				if (pref.getBoolean("sortPlayerNames", true))
-					Collections.sort(sort);
-				player.clear();
-				CompatArrayAdapter.addAll(player, sort);
-			} else {
-				player.clear();
-			}
-
-			if (pref.getBoolean("colorFormattedText", false)) {
-				if (pref.getBoolean("darkBackgroundForServerName", false)) {
-					serverNameStr = Utils.parseMinecraftFormattingCodeForDark(rep.description);
-				} else {
-					serverNameStr = Utils.parseMinecraftFormattingCode(rep.description);
-				}
-			} else {
-				serverNameStr = Utils.deleteDecorations(rep.description);
-			}
-
-			if (rep.favicon != null) {
-				byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
-				serverIconBmp=BitmapFactory.decodeByteArray(image, 0, image.length);
-				serverIconObj = new BitmapDrawable(serverIconBmp);
-			} else {
-				serverIconObj = new ColorDrawable(Color.TRANSPARENT);
-			}
-
-			infos.clear();
-			Map<String,String> data=new OrderTrustedMap<>();
-			data.put(getResources().getString(R.string.pc_maxPlayers), rep.players.max + "");
-			data.put(getResources().getString(R.string.pc_nowPlayers), rep.players.online + "");
-			data.put(getResources().getString(R.string.pc_softwareVersion), rep.version.name);
-			data.put(getResources().getString(R.string.pc_protocolVersion), rep.version.protocol + "");
-			CompatArrayAdapter.addAll(infos, data.entrySet());
-
-			if (rep.modinfo != null) {
-				addModsTab();
-				CompatArrayAdapter.addAll(modInfos, rep.modinfo.modList);
-				modLoaderTypeName = rep.modinfo.type;
-			}
 		} else if (resp instanceof Reply19) {
 			Reply19 rep=(Reply19)resp;
 			if (rep.description == null) {
 				setTitle(localStat.toString());
 			} else {
 				setTitle(rep.description.text);
-			}
-
-			if (rep.players.sample != null) {
-				final ArrayList<String> sort=new ArrayList<>();
-				for (Reply19.Player o:rep.players.sample) {
-					sort.add(o.name);
-					TheApplication.instance.pcUserUUIDs.put(o.name, o.id);
-				}
-				if (pref.getBoolean("sortPlayerNames", true))
-					Collections.sort(sort);
-				player.clear();
-				CompatArrayAdapter.addAll(player, sort);
-			} else {
-				player.clear();
-			}
-
-			if (pref.getBoolean("colorFormattedText", false)) {
-				if (pref.getBoolean("darkBackgroundForServerName", false)) {
-					serverNameStr = Utils.parseMinecraftFormattingCodeForDark(rep.description.text);
-				} else {
-					serverNameStr = Utils.parseMinecraftFormattingCode(rep.description.text);
-				}
-			} else {
-				serverNameStr = Utils.deleteDecorations(rep.description.text);
-			}
-
-			if (rep.favicon != null) {
-				byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
-				serverIconBmp=BitmapFactory.decodeByteArray(image, 0, image.length);
-				serverIconObj = new BitmapDrawable(serverIconBmp);
-			} else {
-				serverIconObj = new ColorDrawable(Color.TRANSPARENT);
-			}
-
-			infos.clear();
-			Map<String,String> data=new OrderTrustedMap<>();
-			data.put(getResources().getString(R.string.pc_maxPlayers), rep.players.max + "");
-			data.put(getResources().getString(R.string.pc_nowPlayers), rep.players.online + "");
-			data.put(getResources().getString(R.string.pc_softwareVersion), rep.version.name);
-			data.put(getResources().getString(R.string.pc_protocolVersion), rep.version.protocol + "");
-			CompatArrayAdapter.addAll(infos, data.entrySet());
-
-			if (rep.modinfo != null) {
-				addModsTab();
-				CompatArrayAdapter.addAll(modInfos, rep.modinfo.modList);
-				modLoaderTypeName = rep.modinfo.type;
 			}
 		} else if (resp instanceof SprPair) {
 			SprPair p=(SprPair)resp;
@@ -335,6 +188,46 @@ public class ServerInfoActivity extends AppCompatActivity implements TabHost.OnT
 				Toast.makeText(this, R.string.ucpInfoError, Toast.LENGTH_SHORT).show();
 				return;
 			}
+		}
+		
+		
+		updateTaskDesc(resp);
+	}
+	public void updateTaskDesc(ServerPingResult resp){
+		if (Build.VERSION.SDK_INT >= 21) {
+			if (resp instanceof Reply) {
+				Reply rep=(Reply)resp;
+				if (rep.favicon != null) {
+					byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
+					serverIconBmp=BitmapFactory.decodeByteArray(image, 0, image.length);
+					serverIconObj = new BitmapDrawable(serverIconBmp);
+				} else {
+					serverIconObj = new ColorDrawable(Color.TRANSPARENT);
+				}
+			} else if (resp instanceof Reply19) {
+				Reply19 rep=(Reply19)resp;
+				if (rep.favicon != null) {
+					byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
+					serverIconBmp=BitmapFactory.decodeByteArray(image, 0, image.length);
+					serverIconObj = new BitmapDrawable(serverIconBmp);
+				} else {
+					serverIconObj = new ColorDrawable(Color.TRANSPARENT);
+				}
+			}
+			ActivityManager.TaskDescription td;
+			switch (localStat.mode) {
+				case 1:
+					if (serverIconBmp!=null) {
+						td = new ActivityManager.TaskDescription(getTitle().toString(), serverIconBmp, getResources().getColor(R.color.upd_2));
+					} else {
+						td = new ActivityManager.TaskDescription(getTitle().toString(), ((BitmapDrawable)getResources().getDrawable(R.drawable.ic_launcher)).getBitmap(), getResources().getColor(R.color.upd_2));
+					}
+					break;
+				default:
+					td = new ActivityManager.TaskDescription(getTitle().toString(), ((BitmapDrawable)getResources().getDrawable(R.drawable.ic_launcher)).getBitmap(), getResources().getColor(R.color.upd_2));
+					break;
+			}
+			setTaskDescription(td);
 		}
 	}
 
@@ -484,33 +377,6 @@ public class ServerInfoActivity extends AppCompatActivity implements TabHost.OnT
 			fth.addTab(ucpDetailsF, UcpDetailsFragment.class, null);
 		}
 	}
-	
-	public void setPlayersView(ListView lv) {
-		players = lv;
-		lv.setAdapter(player);
-	}
-	public void setDataView(View lv) {
-		data = (ListView)lv.findViewById(R.id.data);
-		if (localStat!=null&&localStat.mode == 1) {
-			serverIcon = (ImageView)lv.findViewById(R.id.serverIcon);
-			serverName = (TextView)lv.findViewById(R.id.serverTitle);
-			serverIcon.setImageDrawable(serverIconObj);
-			serverName.setText(serverNameStr);
-		}
-		data.setAdapter(infos);
-	}
-	public void setPluginsView(ListView lv) {
-		plugins = lv;
-		lv.setAdapter(pluginNames);
-	}
-	public void setModsListView(ListView lv) {
-		mods = lv;
-		lv.setAdapter(modInfos);
-	}
-	public void setModLoaderNameView(TextView lv) {
-		modLoader = lv;
-		modLoader.setText(modLoaderTypeName);
-	}
 
 	@Override
 	protected void attachBaseContext(Context newBase) {
@@ -630,55 +496,268 @@ public class ServerInfoActivity extends AppCompatActivity implements TabHost.OnT
 	}
 
 	public static class PlayersFragment extends BaseFragment<ServerInfoActivity> {
+		ListView lv;
+		ArrayAdapter<String> player;
+		@Override
+		public void onCreate(Bundle savedInstanceState) {
+			// TODO: Implement this method
+			super.onCreate(savedInstanceState);
+			ServerStatus localStat=getParentActivity().localStat;
+			ServerPingResult resp=localStat.response;
+			String ip=localStat.ip;
+			int port=localStat.port;
+			
+			if (pref.getBoolean("showPcUserFace", false) & localStat.mode == 1) {
+				getParentActivity().skinFaceImages = new ArrayList<>();
+				getParentActivity().sff = new SkinFaceFetcher();
+				player = getParentActivity().new PCUserFaceAdapter();
+				Log.d("ServerInfoActivity", "face on");
+			} else {
+				player = getParentActivity().new PlayerNamesListAdapter();
+				Log.d("ServerInfoActivity", "face off");
+			}
+			
+			lv.setAdapter(player);
+			
+			if (resp instanceof FullStat) {
+				FullStat fs=(FullStat)resp;
+				final ArrayList<String> sort=new ArrayList<>(fs.getPlayerList());
+				if (pref.getBoolean("sortPlayerNames", true))
+					Collections.sort(sort);
+				player.clear();
+				CompatArrayAdapter.addAll(player, sort);
+			} else if (resp instanceof Reply) {
+				Reply rep=(Reply)resp;
+				if (rep.players.sample != null) {
+					final ArrayList<String> sort=new ArrayList<>();
+					for (Reply.Player o:rep.players.sample) {
+						sort.add(o.name);
+						TheApplication.instance.pcUserUUIDs.put(o.name, o.id);
+					}
+					if (pref.getBoolean("sortPlayerNames", true))
+						Collections.sort(sort);
+					player.clear();
+					CompatArrayAdapter.addAll(player, sort);
+				} else {
+					player.clear();
+				}
+			} else if (resp instanceof Reply19) {
+				Reply19 rep=(Reply19)resp;
+				if (rep.players.sample != null) {
+					final ArrayList<String> sort=new ArrayList<>();
+					for (Reply19.Player o:rep.players.sample) {
+						sort.add(o.name);
+						TheApplication.instance.pcUserUUIDs.put(o.name, o.id);
+					}
+					if (pref.getBoolean("sortPlayerNames", true))
+						Collections.sort(sort);
+					player.clear();
+					CompatArrayAdapter.addAll(player, sort);
+				} else {
+					player.clear();
+				}
+			}
+		}
+		
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
-			ListView lv=(ListView) inflater.inflate(R.layout.players_tab, container, false);
-			getParentActivity().setPlayersView(lv);
-			return lv;
+			return this.lv=(ListView) inflater.inflate(R.layout.players_tab, container, false);
 		}
 	}
 	public static class DataFragmentPE extends BaseFragment<ServerInfoActivity> {
+		View lv;
+		ListView data;
+		KVListAdapter<String,String> infos;
+		@Override
+		public void onCreate(Bundle savedInstanceState) {
+			// TODO: Implement this method
+			super.onCreate(savedInstanceState);
+			infos = new KVListAdapter<>(getParentActivity());
+			data.setAdapter(infos);
+			ServerStatus localStat=getParentActivity().localStat;
+			ServerPingResult resp=localStat.response;
+			String ip=localStat.ip;
+			int port=localStat.port;
+			
+			if (resp instanceof FullStat) {
+				FullStat fs=(FullStat)resp;
+				infos.clear();
+				CompatArrayAdapter.addAll(infos, fs.getData().entrySet());
+			} 
+		}
+		
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
-			View lv= inflater.inflate(R.layout.data_tab, container, false);
-			getParentActivity().setDataView(lv);
+			View lv=this.lv=inflater.inflate(R.layout.data_tab, container, false);
+			data=(ListView)lv.findViewById(R.id.data);
 			return lv;
 		}
 	}
 	public static class DataFragmentPC extends BaseFragment<ServerInfoActivity> {
+		ImageView serverIcon;
+		TextView serverName;
+		Drawable serverIconObj;
+		Bitmap serverIconBmp;
+		ListView data;
+		CharSequence serverNameStr;
+		KVListAdapter<String,String> infos;
+		@Override
+		public void onCreate(Bundle savedInstanceState) {
+			// TODO: Implement this method
+			super.onCreate(savedInstanceState);
+			infos = new KVListAdapter<>(getParentActivity());
+			data.setAdapter(infos);
+			ServerStatus localStat=getParentActivity().localStat;
+			ServerPingResult resp=localStat.response;
+			String ip=localStat.ip;
+			int port=localStat.port;
+			if (resp instanceof Reply) {
+				Reply rep=(Reply)resp;
+				if (pref.getBoolean("colorFormattedText", false)) {
+					if (pref.getBoolean("darkBackgroundForServerName", false)) {
+						serverNameStr = Utils.parseMinecraftFormattingCodeForDark(rep.description);
+					} else {
+						serverNameStr = Utils.parseMinecraftFormattingCode(rep.description);
+					}
+				} else {
+					serverNameStr = Utils.deleteDecorations(rep.description);
+				}
+				
+				infos.clear();
+				Map<String,String> data=new OrderTrustedMap<>();
+				data.put(getResources().getString(R.string.pc_maxPlayers), rep.players.max + "");
+				data.put(getResources().getString(R.string.pc_nowPlayers), rep.players.online + "");
+				data.put(getResources().getString(R.string.pc_softwareVersion), rep.version.name);
+				data.put(getResources().getString(R.string.pc_protocolVersion), rep.version.protocol + "");
+				CompatArrayAdapter.addAll(infos, data.entrySet());
+				
+				if (rep.favicon != null) {
+					byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
+					serverIconBmp=BitmapFactory.decodeByteArray(image, 0, image.length);
+					serverIconObj = new BitmapDrawable(serverIconBmp);
+				} else {
+					serverIconObj = new ColorDrawable(Color.TRANSPARENT);
+				}
+			} else if (resp instanceof Reply19) {
+				Reply19 rep=(Reply19)resp;
+				if (pref.getBoolean("colorFormattedText", false)) {
+					if (pref.getBoolean("darkBackgroundForServerName", false)) {
+						serverNameStr = Utils.parseMinecraftFormattingCodeForDark(rep.description.text);
+					} else {
+						serverNameStr = Utils.parseMinecraftFormattingCode(rep.description.text);
+					}
+				} else {
+					serverNameStr = Utils.deleteDecorations(rep.description.text);
+				}
+				
+				infos.clear();
+				Map<String,String> data=new OrderTrustedMap<>();
+				data.put(getResources().getString(R.string.pc_maxPlayers), rep.players.max + "");
+				data.put(getResources().getString(R.string.pc_nowPlayers), rep.players.online + "");
+				data.put(getResources().getString(R.string.pc_softwareVersion), rep.version.name);
+				data.put(getResources().getString(R.string.pc_protocolVersion), rep.version.protocol + "");
+				CompatArrayAdapter.addAll(infos, data.entrySet());
+				
+				if (rep.favicon != null) {
+					byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
+					serverIconBmp=BitmapFactory.decodeByteArray(image, 0, image.length);
+					serverIconObj = new BitmapDrawable(serverIconBmp);
+				} else {
+					serverIconObj = new ColorDrawable(Color.TRANSPARENT);
+				}
+			}
+			serverName.setText(serverNameStr);
+			serverIcon.setImageDrawable(serverIconObj);
+		}
+		
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
-			SharedPreferences pref=PreferenceManager.getDefaultSharedPreferences(getActivity());
 			View lv= inflater.inflate(R.layout.data_tab_pc, container, false);
-			getParentActivity().setDataView(lv);
 			if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
 				BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
 				bd.setTargetDensity(getResources().getDisplayMetrics());
 				bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
 				lv.findViewById(R.id.serverImageAndName).setBackgroundDrawable(bd);
 			}
+			serverIcon = (ImageView)lv.findViewById(R.id.serverIcon);
+			serverName = (TextView)lv.findViewById(R.id.serverTitle);
+			data=(ListView)lv.findViewById(R.id.data);
 			return lv;
 		}
 	}
 	public static class PluginsFragment extends BaseFragment<ServerInfoActivity> {
+		ArrayAdapter<String> pluginNames;
+		ListView lv;
+		@Override
+		public void onCreate(Bundle savedInstanceState) {
+			// TODO: Implement this method
+			super.onCreate(savedInstanceState);
+			pluginNames = new AppBaseArrayAdapter<String>(getParentActivity(), android.R.layout.simple_list_item_1, new ArrayList<String>());
+			lv.setAdapter(pluginNames);
+			ServerStatus localStat=getParentActivity().localStat;
+			ServerPingResult resp=localStat.response;
+			String ip=localStat.ip;
+			int port=localStat.port;
+			if (resp instanceof FullStat) {
+				FullStat fs=(FullStat)resp;
+				pluginNames.clear();
+				if (fs.getData().containsKey("plugins")) {
+					String[] data=fs.getData().get("plugins").split("\\: ");
+					if (data.length >= 2) {
+						ArrayList<String> plugins=new ArrayList<>(Arrays.<String>asList(data[1].split("\\; ")));
+						if (pref.getBoolean("sortPluginNames", false))
+							Collections.sort(plugins);
+						CompatArrayAdapter.addAll(pluginNames, plugins);
+					}
+				}
+			}
+		}
+		
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
-			ListView lv=(ListView) inflater.inflate(R.layout.players_tab, container, false);
-			getParentActivity().setPluginsView(lv);
-			return lv;
+			return this.lv=(ListView) inflater.inflate(R.layout.players_tab, container, false);
 		}
 	}
 	public static class ModsFragment extends BaseFragment<ServerInfoActivity> {
+		String modLoaderTypeName;
+		TextView modLoader;
+		ArrayAdapter<Object> modInfos;
+		ListView mods;
+		@Override
+		public void onCreate(Bundle savedInstanceState) {
+			// TODO: Implement this method
+			super.onCreate(savedInstanceState);
+			modInfos = getParentActivity().new ModInfoListAdapter();
+			mods.setAdapter(modInfos);
+			ServerStatus localStat=getParentActivity().localStat;
+			ServerPingResult resp=localStat.response;
+			String ip=localStat.ip;
+			int port=localStat.port;
+			if (resp instanceof Reply) {
+				Reply rep=(Reply)resp;
+				if (rep.modinfo != null) {
+					CompatArrayAdapter.addAll(modInfos, rep.modinfo.modList);
+					modLoaderTypeName = rep.modinfo.type;
+				}
+			} else if (resp instanceof Reply19) {
+				Reply19 rep=(Reply19)resp;
+				if (rep.modinfo != null) {
+					CompatArrayAdapter.addAll(modInfos, rep.modinfo.modList);
+					modLoaderTypeName = rep.modinfo.type;
+				}
+			}
+		}
+		
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
 			View lv=inflater.inflate(R.layout.mods_tab, container, false);
-			getParentActivity().setModsListView((ListView)lv.findViewById(R.id.players));
-			getParentActivity().setModLoaderNameView((TextView)lv.findViewById(R.id.modLoaderType));
+			mods=(ListView)lv.findViewById(R.id.players);
+			modLoader=(TextView)lv.findViewById(R.id.modLoaderType);
 			return lv;
 		}
 	}
