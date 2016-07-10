@@ -31,7 +31,7 @@ import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.text.Spannable;
 
-public class ServerInfoActivity extends ActionBarActivity implements TabHost.OnTabChangeListener {
+public class ServerInfoActivity extends AppCompatActivity implements TabHost.OnTabChangeListener {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
 	public static List<ServerStatus> stat=new ArrayList<>();
 	public static Map<String,Bitmap> faces=new HashMap<>();
