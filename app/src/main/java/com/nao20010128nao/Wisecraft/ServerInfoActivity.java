@@ -502,6 +502,9 @@ public class ServerInfoActivity extends AppCompatActivity implements TabHost.OnT
 		public void onCreate(Bundle savedInstanceState) {
 			// TODO: Implement this method
 			super.onCreate(savedInstanceState);
+			lv=(ListView)getView();
+			
+			
 			ServerStatus localStat=getParentActivity().localStat;
 			ServerPingResult resp=localStat.response;
 			String ip=localStat.ip;
@@ -562,7 +565,7 @@ public class ServerInfoActivity extends AppCompatActivity implements TabHost.OnT
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
-			return this.lv=(ListView) inflater.inflate(R.layout.players_tab, container, false);
+			return inflater.inflate(R.layout.players_tab, container, false);
 		}
 	}
 	public static class DataFragmentPE extends BaseFragment<ServerInfoActivity> {
@@ -573,6 +576,8 @@ public class ServerInfoActivity extends AppCompatActivity implements TabHost.OnT
 		public void onCreate(Bundle savedInstanceState) {
 			// TODO: Implement this method
 			super.onCreate(savedInstanceState);
+			data=(ListView)getView().findViewById(R.id.data);
+			
 			infos = new KVListAdapter<>(getParentActivity());
 			data.setAdapter(infos);
 			ServerStatus localStat=getParentActivity().localStat;
@@ -590,9 +595,7 @@ public class ServerInfoActivity extends AppCompatActivity implements TabHost.OnT
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
-			View lv=this.lv=inflater.inflate(R.layout.data_tab, container, false);
-			data=(ListView)lv.findViewById(R.id.data);
-			return lv;
+			return this.lv=inflater.inflate(R.layout.data_tab, container, false);
 		}
 	}
 	public static class DataFragmentPC extends BaseFragment<ServerInfoActivity> {
@@ -607,6 +610,11 @@ public class ServerInfoActivity extends AppCompatActivity implements TabHost.OnT
 		public void onCreate(Bundle savedInstanceState) {
 			// TODO: Implement this method
 			super.onCreate(savedInstanceState);
+			serverIcon = (ImageView)getView().findViewById(R.id.serverIcon);
+			serverName = (TextView)getView().findViewById(R.id.serverTitle);
+			data=(ListView)getView().findViewById(R.id.data);
+			
+			
 			infos = new KVListAdapter<>(getParentActivity());
 			data.setAdapter(infos);
 			ServerStatus localStat=getParentActivity().localStat;
@@ -682,9 +690,6 @@ public class ServerInfoActivity extends AppCompatActivity implements TabHost.OnT
 				bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
 				lv.findViewById(R.id.serverImageAndName).setBackgroundDrawable(bd);
 			}
-			serverIcon = (ImageView)lv.findViewById(R.id.serverIcon);
-			serverName = (TextView)lv.findViewById(R.id.serverTitle);
-			data=(ListView)lv.findViewById(R.id.data);
 			return lv;
 		}
 	}
@@ -695,6 +700,9 @@ public class ServerInfoActivity extends AppCompatActivity implements TabHost.OnT
 		public void onCreate(Bundle savedInstanceState) {
 			// TODO: Implement this method
 			super.onCreate(savedInstanceState);
+			lv=(ListView)getView();
+			
+			
 			pluginNames = new AppBaseArrayAdapter<String>(getParentActivity(), android.R.layout.simple_list_item_1, new ArrayList<String>());
 			lv.setAdapter(pluginNames);
 			ServerStatus localStat=getParentActivity().localStat;
@@ -719,7 +727,7 @@ public class ServerInfoActivity extends AppCompatActivity implements TabHost.OnT
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
-			return this.lv=(ListView) inflater.inflate(R.layout.players_tab, container, false);
+			return lv=(ListView) inflater.inflate(R.layout.players_tab, container, false);
 		}
 	}
 	public static class ModsFragment extends BaseFragment<ServerInfoActivity> {
@@ -731,6 +739,10 @@ public class ServerInfoActivity extends AppCompatActivity implements TabHost.OnT
 		public void onCreate(Bundle savedInstanceState) {
 			// TODO: Implement this method
 			super.onCreate(savedInstanceState);
+			mods=(ListView)getView().findViewById(R.id.players);
+			modLoader=(TextView)getView().findViewById(R.id.modLoaderType);
+			
+			
 			modInfos = getParentActivity().new ModInfoListAdapter();
 			mods.setAdapter(modInfos);
 			ServerStatus localStat=getParentActivity().localStat;
@@ -755,10 +767,7 @@ public class ServerInfoActivity extends AppCompatActivity implements TabHost.OnT
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
-			View lv=inflater.inflate(R.layout.mods_tab, container, false);
-			mods=(ListView)lv.findViewById(R.id.players);
-			modLoader=(TextView)lv.findViewById(R.id.modLoaderType);
-			return lv;
+			return inflater.inflate(R.layout.mods_tab, container, false);
 		}
 	}
 	public static class UcpInfoFragment extends BaseFragment<ServerInfoActivity> {
