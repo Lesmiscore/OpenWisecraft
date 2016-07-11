@@ -30,8 +30,9 @@ import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.text.Spannable;
+import com.astuetz.PagerSlidingTabStrip;
 
-public class ServerInfoActivity extends AppCompatActivity implements TabHost.OnTabChangeListener {
+public class ServerInfoActivity extends AppCompatActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
 	public static List<ServerStatus> stat=new ArrayList<>();
 	public static Map<String,Bitmap> faces=new HashMap<>();
@@ -50,8 +51,8 @@ public class ServerInfoActivity extends AppCompatActivity implements TabHost.OnT
 	MenuItem updateBtn,seeTitleButton;
 
 	List<Thread> t=new ArrayList<>();
-	FragmentTabHost fth;
-	TabHost.TabSpec playersF,dataF,pluginsF,modsF,ucpDetailsF;
+	InternalPagerAdapter adapter;
+	ViewPager tabs;
 
 	List<Bitmap> skinFaceImages;
 	SkinFaceFetcher sff;
@@ -85,8 +86,10 @@ public class ServerInfoActivity extends AppCompatActivity implements TabHost.OnT
 
 		setContentView(R.layout.server_info_tabs);
 		setSupportActionBar((android.support.v7.widget.Toolbar)findViewById(R.id.toolbar));
-		fth = (FragmentTabHost)findViewById(android.R.id.tabhost);
-		fth.setup(this, getSupportFragmentManager(), R.id.container);
+		tabs = (ViewPager)findViewById(R.id.pager);
+		tabs.setAdapter(adapter=new InternalPagerAdapter());
+		PagerSlidingTabStrip psts=(PagerSlidingTabStrip)findViewById(R.id.tabs);
+		psts.setViewPager(tabs);
 
 		hideData   = getIntent().getBooleanExtra("nonDetails", false);
 		hidePlayer = getIntent().getBooleanExtra("nonPlayers", false);
@@ -94,35 +97,29 @@ public class ServerInfoActivity extends AppCompatActivity implements TabHost.OnT
 		hideMods = getIntent().getBooleanExtra("nonMods", false);
 
 		if (!hidePlayer) {
-			playersF = fth.newTabSpec("playersList");
-			playersF.setIndicator(getResources().getString(R.string.players));
 			if (localStat.response instanceof UnconnectedPing.UnconnectedPingResult) {
-				fth.addTab(playersF, UcpInfoFragment.class, null);
+				adapter.addTab(UcpInfoFragment.class, getResources().getString(R.string.players));
 			} else {
-				fth.addTab(playersF, PlayersFragment.class, null);
+				adapter.addTab(PlayersFragment.class, getResources().getString(R.string.players));
 			}
 		}
 
 		if (!hideData) {
-			dataF = fth.newTabSpec("dataList");
-			dataF.setIndicator(getResources().getString(R.string.data));
 			if (localStat.response instanceof UnconnectedPing.UnconnectedPingResult) {
-				fth.addTab(dataF, UcpDetailsFragment.class, null);
+				adapter.addTab(UcpDetailsFragment.class, getResources().getString(R.string.data));
 			} else {
 				switch (localStat.mode) {
-					case 0:fth.addTab(dataF, DataFragmentPE.class, null);break;
-					case 1:fth.addTab(dataF, DataFragmentPC.class, null);break;
+					case 0:adapter.addTab(DataFragmentPE.class, getResources().getString(R.string.data));break;
+					case 1:adapter.addTab(DataFragmentPC.class, getResources().getString(R.string.data));break;
 				}
 			}
 		}
 
 		if (!(hidePlugins | localStat.mode == 1)) {
-			pluginsF = fth.newTabSpec("pluginsList");
-			pluginsF.setIndicator(getResources().getString(R.string.plugins));
 			if (localStat.response instanceof UnconnectedPing.UnconnectedPingResult) {
-				fth.addTab(pluginsF, UcpInfoFragment.class, null);
+				adapter.addTab(UcpInfoFragment.class, getResources().getString(R.string.plugins));
 			} else {
-				fth.addTab(pluginsF, PluginsFragment.class, null);
+				adapter.addTab(PluginsFragment.class, getResources().getString(R.string.plugins));
 			}
 		}
 
@@ -133,7 +130,7 @@ public class ServerInfoActivity extends AppCompatActivity implements TabHost.OnT
 		
 		update(localStat.response);
 		
-		fth.setCurrentTab(getIntent().getIntExtra("offset", 0));
+		tabs.setCurrentItem(getIntent().getIntExtra("offset", 0));
 		
 		if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
 			BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
@@ -143,7 +140,8 @@ public class ServerInfoActivity extends AppCompatActivity implements TabHost.OnT
 			if (Build.VERSION.SDK_INT >= 21) {
 				getWindow().setStatusBarColor(DIRT_DARK);
 			}
-			fth.setOnTabChangedListener(this);
+			psts.setIndicatorColor(Color.WHITE);
+			psts.setTextColor(Color.WHITE);
 		}
 	}
 	public synchronized void update(final ServerPingResult resp) {
@@ -259,7 +257,7 @@ public class ServerInfoActivity extends AppCompatActivity implements TabHost.OnT
 		// TODO: Implement this method
 		switch (item.getItemId()) {
 			case 1://Update
-				setResultInstead(Constant.ACTIVITY_RESULT_UPDATE, new Intent().putExtra("offset", fth.getCurrentTab()));
+				setResultInstead(Constant.ACTIVITY_RESULT_UPDATE, new Intent().putExtra("offset", tabs.getCurrentItem()));
 				finish();//ServerListActivity updates the stat
 				return true;
 			case 0://See the title for all
@@ -337,44 +335,17 @@ public class ServerInfoActivity extends AppCompatActivity implements TabHost.OnT
 	protected void onResume() {
 		// TODO: Implement this method
 		super.onResume();
-		if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
-			for (int i = 0; i < fth.getTabWidget().getChildCount(); i++) {
-				TextView tv = (TextView) fth.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
-				tv.setTextColor(Color.WHITE);
-			}
-			onTabChanged("");
-		}
-	}
-	
-	public void onTabChanged(String a){
-		TabWidget tw=fth.getTabWidget();
-		int selected=fth.getCurrentTab();
-		int[] colors=new int[tw.getTabCount()];
-		Arrays.fill(colors,DIRT_BRIGHT);
-		colors[selected]=Color.WHITE;
-		Drawable tabUnderlineSelected=TheApplication.instance.getTintedDrawable(R.drawable.abc_tab_indicator_mtrl_alpha,0xff_ffffff);
-		for (int i = 0; i < tw.getChildCount(); i++) {
-			TextView tv = (TextView) tw.getChildAt(i).findViewById(android.R.id.title);
-			tv.setTextColor(colors[i]);
-			tw.getChildAt(i).setBackgroundColor(0);
-		}
-		tw.getChildAt(selected).setBackgroundDrawable(tabUnderlineSelected);
-		Log.d("TabChild",tw.getChildAt(selected).getClass().getName());
 	}
 	
 	public void addModsTab() {
 		if ((!hideMods) | localStat.mode == 1) {
-			modsF = fth.newTabSpec("modsList");
-			modsF.setIndicator(getResources().getString(R.string.mods));
-			fth.addTab(modsF, ModsFragment.class, null);
+			adapter.addTab(ModsFragment.class, getResources().getString(R.string.mods));
 		}
 	}
 
 	public void addUcpDetailsTab() {
 		if ((!hideMods) | localStat.mode == 1) {
-			ucpDetailsF = fth.newTabSpec("ucpDetails");
-			ucpDetailsF.setIndicator(getResources().getString(R.string.data_ucp));
-			fth.addTab(ucpDetailsF, UcpDetailsFragment.class, null);
+			adapter.addTab(UcpDetailsFragment.class, getResources().getString(R.string.data_ucp));
 		}
 	}
 
@@ -495,6 +466,42 @@ public class ServerInfoActivity extends AppCompatActivity implements TabHost.OnT
 		}
 	}
 
+	
+	class InternalPagerAdapter extends FragmentPagerAdapter{
+		List<Map.Entry<Class,String>> pages=new ArrayList<>();
+		
+		public InternalPagerAdapter(){
+			super(getSupportFragmentManager());
+		}
+
+		public void addTab(Class<? extends BaseFragment<ServerInfoActivity>> clat,String title){
+			pages.add(new KVP<Class,String>(clat,title));
+			notifyDataSetChanged();
+		}
+		
+		@Override
+		public int getCount() {
+			// TODO: Implement this method
+			return pages.size();
+		}
+
+		@Override
+		public android.support.v4.app.Fragment getItem(int p1) {
+			// TODO: Implement this method
+			try {
+				return (android.support.v4.app.Fragment)pages.get(p1).getKey().newInstance();
+			} catch (InstantiationException|IllegalAccessException e) {
+				return null;
+			}
+		}
+
+		@Override
+		public CharSequence getPageTitle(int position) {
+			// TODO: Implement this method
+			return pages.get(position).getValue();
+		}
+	}
+	
 	public static class PlayersFragment extends BaseFragment<ServerInfoActivity> {
 		ListView lv;
 		ArrayAdapter<String> player;
