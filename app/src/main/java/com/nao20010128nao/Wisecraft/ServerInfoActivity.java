@@ -146,6 +146,7 @@ public class ServerInfoActivity extends AppCompatActivity {
 			psts.setIndicatorColor(getResources().getColor(R.color.upd_2));
 			psts.setTextColor(getResources().getColor(R.color.upd_2));
 		}
+		psts.setShouldExpand(true);
 	}
 	public synchronized void update(final ServerPingResult resp) {
 		if (resp instanceof FullStat) {
