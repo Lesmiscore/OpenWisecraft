@@ -31,13 +31,15 @@ import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.text.Spannable;
 import com.astuetz.PagerSlidingTabStrip;
+import android.content.res.ColorStateList;
+import java.math.BigDecimal;
 
 public class ServerInfoActivity extends AppCompatActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
 	public static List<ServerStatus> stat=new ArrayList<>();
 	public static Map<String,Bitmap> faces=new HashMap<>();
 	
-	public static final int DIRT_BRIGHT,DIRT_DARK;
+	public static final int DIRT_BRIGHT,DIRT_DARK,PALE_PRIMARY;
 	
 	SharedPreferences pref;
 
@@ -140,11 +142,31 @@ public class ServerInfoActivity extends AppCompatActivity {
 			if (Build.VERSION.SDK_INT >= 21) {
 				getWindow().setStatusBarColor(DIRT_DARK);
 			}
+			ColorStateList csl=new ColorStateList(new int[][]{
+													  new int[]{ },
+													  new int[]{~android.R.attr.state_selected},
+													  new int[]{ android.R.attr.state_selected}
+												  },
+												  new int[]{
+													  DIRT_BRIGHT,
+													  DIRT_BRIGHT,
+													  Color.WHITE
+												  });
 			psts.setIndicatorColor(Color.WHITE);
-			psts.setTextColor(Color.WHITE);
-		}else if(!(pref.getBoolean("colorFormattedText", false) | pref.getBoolean("darkBackgroundForServerName", false))){
+			psts.setTextColor(csl);
+		}else{
+			ColorStateList csl=new ColorStateList(new int[][]{
+													  new int[]{ },
+													  new int[]{~android.R.attr.state_selected},
+													  new int[]{ android.R.attr.state_selected}
+												  },
+												  new int[]{
+													  PALE_PRIMARY,
+													  PALE_PRIMARY,
+													  getResources().getColor(R.color.upd_2)
+												  });
 			psts.setIndicatorColor(getResources().getColor(R.color.upd_2));
-			psts.setTextColor(getResources().getColor(R.color.upd_2));
+			psts.setTextColor(csl);
 		}
 	}
 	public synchronized void update(final ServerPingResult resp) {
@@ -841,5 +863,13 @@ public class ServerInfoActivity extends AppCompatActivity {
 		DIRT_BRIGHT=Color.HSVToColor(hsv);
 		hsv[2]=v-0.05f;//V-10
 		DIRT_DARK=Color.HSVToColor(hsv);
+		
+		int palePrimary=TheApplication.instance.getResources().getColor(R.color.upd_2);
+		int r=Color.red(palePrimary);
+		int g=Color.green(palePrimary);
+		int b=Color.blue(palePrimary);
+		int a=new BigDecimal(0xff).multiply(new BigDecimal("0.3")).intValue();
+		
+		PALE_PRIMARY=Color.argb(a,r,g,b);
 	}
 }
