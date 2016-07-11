@@ -84,7 +84,7 @@ public class ServerInfoActivity extends AppCompatActivity {
 
 		keeping = getIntent().getBundleExtra("object");
 
-		setContentView(R.layout.server_info_tabs);
+		setContentView(R.layout.server_info_pager);
 		setSupportActionBar((android.support.v7.widget.Toolbar)findViewById(R.id.toolbar));
 		tabs = (ViewPager)findViewById(R.id.pager);
 		tabs.setAdapter(adapter=new InternalPagerAdapter());
@@ -490,7 +490,7 @@ public class ServerInfoActivity extends AppCompatActivity {
 			// TODO: Implement this method
 			try {
 				return (android.support.v4.app.Fragment)pages.get(p1).getKey().newInstance();
-			} catch (InstantiationException|IllegalAccessException e) {
+			} catch (Throwable e) {
 				return null;
 			}
 		}
