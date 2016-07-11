@@ -142,6 +142,9 @@ public class ServerInfoActivity extends AppCompatActivity {
 			}
 			psts.setIndicatorColor(Color.WHITE);
 			psts.setTextColor(Color.WHITE);
+		}else if(!(pref.getBoolean("colorFormattedText", false) | pref.getBoolean("darkBackgroundForServerName", false))){
+			psts.setIndicatorColor(getResources().getColor(R.color.upd_2));
+			psts.setTextColor(getResources().getColor(R.color.upd_2));
 		}
 	}
 	public synchronized void update(final ServerPingResult resp) {
