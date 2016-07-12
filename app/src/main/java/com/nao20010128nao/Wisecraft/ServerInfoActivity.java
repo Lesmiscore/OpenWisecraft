@@ -256,7 +256,7 @@ public class ServerInfoActivity extends AppCompatActivity {
 		MenuItemCompat.setShowAsAction(seeTitleButton, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
 		if (!nonUpd) {
 			updateBtn = menu.add(Menu.NONE, 1, 1, R.string.update);
-			updateBtn.setIcon(isDark?com.nao20010128nao.HoloIcons.R.drawable.ic_action_refresh_dark:com.nao20010128nao.HoloIcons.R.drawable.ic_action_refresh_light);
+			updateBtn.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_refresh_black_48dp,isDark?Color.WHITE:color/*0xff_666666*/));
 			MenuItemCompat.setShowAsAction(updateBtn, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
 		}
 		return true;
