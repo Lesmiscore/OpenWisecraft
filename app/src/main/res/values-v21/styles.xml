@@ -1,24 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme" parent="@style/Theme.AppCompat.Light">
-		<item name="android:colorPrimary">@color/primary</item>
-		<item name="android:colorAccent">@color/upd_2</item>
-		<item name="colorPrimary">@color/primary</item>
-		<item name="colorAccent">@color/upd_2</item>
-	</style>
-	<style name="AppDialog" parent="@style/Theme.AppCompat.Light.Dialog">
-		<item name="android:colorPrimary">@color/primary</item>
-		<item name="android:colorAccent">@color/upd_2</item>
-		<item name="colorPrimary">@color/primary</item>
-		<item name="colorAccent">@color/upd_2</item>
-	</style>
-	<style name="AppAlertDialog" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
-		<item name="android:colorPrimary">@color/primary</item>
-		<item name="android:colorAccent">@color/upd_2</item>
-		<item name="colorPrimary">@color/primary</item>
-		<item name="colorAccent">@color/upd_2</item>
-	</style>
-	
 	<style name="AppThemeN" parent="@android:style/Theme.Material.Light">
 		<item name="android:colorPrimary">@color/primary</item>
 		<item name="android:colorAccent">@color/upd_2</item>
