@@ -1,23 +1,24 @@
 package com.nao20010128nao.Wisecraft.misc;
-import android.content.*;
-import android.content.pm.*;
-import android.graphics.*;
-import android.text.*;
-import android.text.style.*;
-import com.google.gson.*;
-import com.nao20010128nao.Wisecraft.misc.compat.*;
-import com.nao20010128nao.Wisecraft.misc.rcon.*;
-import com.nao20010128nao.Wisecraft.rcon.*;
-import com.nao20010128nao.Wisecraft.struct.*;
 import java.io.*;
-import java.lang.reflect.*;
-import java.security.*;
-import java.util.*;
-import com.nao20010128nao.Wisecraft.misc.pinger.*;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.support.v7.widget.Toolbar;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.support.v7.widget.Toolbar;
+import com.nao20010128nao.Wisecraft.R;
+import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
+import com.nao20010128nao.Wisecraft.misc.pinger.PingerUtils;
+import java.lang.reflect.Array;
+import java.lang.reflect.Field;
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Utils extends PingerUtils{
 	public static String deleteDecorations(String decorated) {
@@ -247,6 +248,16 @@ public class Utils extends PingerUtils{
 			return (TextView) f.get(mToolBar);
 		} catch (NoSuchFieldException e) {
 		} catch (IllegalAccessException e) {
+		}
+		return null;
+	}
+	public static android.support.v7.widget.Toolbar getToolbar(Activity decor){
+		int[] ids=new int[]{R.id.appbar,R.id.toolbar,R.id.toolbar_layout,R.id.action_bar};
+		for(int id:ids){
+			View v=decor.getWindow().getDecorView().findViewById(id);
+			if(v instanceof android.support.v7.widget.Toolbar){
+				return (android.support.v7.widget.Toolbar)v;
+			}
 		}
 		return null;
 	}

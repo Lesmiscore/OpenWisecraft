@@ -81,6 +81,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		switch (pref.getInt("main_style", 0)) {
 			case 0:
 				setContentView(R.layout.server_list_content_nodrawer);
+				Utils.getToolbar(this).setNavigationIcon(TheApplication.instance.getTintedDrawable(R.drawable.abc_action_bar_item_background_material,getResources().getColor(R.color.upd_2)));
 				break;
 			case 1:
 				setContentView(R.layout.server_list_content);
@@ -95,7 +96,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					if (appMenu.indexOf(s) == 7 & !pref.getBoolean("feature_asfsls", false)) {
 						continue;
 					}
-					Button btn=(Button)getLayoutInflater().inflate(R.layout.server_list_bar_button, null).findViewById(R.id.menu_btn);
+					Button btn=(Button)getLayoutInflater().inflate(R.layout.server_list_bar_button, ll,false).findViewById(R.id.menu_btn);
 					//((ViewGroup)btn.getParent()).removeView(btn);
 					btn.setText(s);
 					btn.setOnClickListener(new MenuExecClickListener(appMenu.indexOf(s)));
