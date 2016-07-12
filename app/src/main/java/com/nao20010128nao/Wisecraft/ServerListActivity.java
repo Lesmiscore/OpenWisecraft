@@ -81,7 +81,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		switch (pref.getInt("main_style", 0)) {
 			case 0:
 				setContentView(R.layout.server_list_content_nodrawer);
-				Utils.getToolbar(this).setNavigationIcon(TheApplication.instance.getTintedDrawable(R.drawable.abc_action_bar_item_background_material,getResources().getColor(R.color.upd_2)));
+				Utils.getToolbar(this).setOverflowIcon(TheApplication.instance.getTintedDrawable(R.drawable.abc_action_bar_item_background_material,getResources().getColor(R.color.upd_2)));
 				break;
 			case 1:
 				setContentView(R.layout.server_list_content);

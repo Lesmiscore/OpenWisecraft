@@ -60,7 +60,7 @@ public class ServerGetActivity extends CompatWebViewActivity {
 			}
 		});
 		downloading=Snackbar.make(findViewById(android.R.id.content),R.string.serverGetFetch,Snackbar.LENGTH_INDEFINITE);
-		Utils.getToolbar(this).setNavigationIcon(TheApplication.instance.getTintedDrawable(R.drawable.abc_action_bar_item_background_material,getResources().getColor(R.color.upd_2)));
+		Utils.getToolbar(this).setOverflowIcon(TheApplication.instance.getTintedDrawable(R.drawable.abc_action_bar_item_background_material,getResources().getColor(R.color.upd_2)));
 	}
 
 	@Override
