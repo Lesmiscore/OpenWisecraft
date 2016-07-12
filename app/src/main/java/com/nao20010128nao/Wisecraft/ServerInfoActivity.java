@@ -250,8 +250,9 @@ public class ServerInfoActivity extends AppCompatActivity {
 		} else {
 			isDark=false;
 		}
+		int color=getResources().getColor(R.color.upd_2);
 		seeTitleButton = menu.add(Menu.NONE, 0, 0, R.string.seeTitle);
-		seeTitleButton.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_open_in_new_black_48dp,isDark?Color.WHITE:0xff_666666));
+		seeTitleButton.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_open_in_new_black_48dp,isDark?Color.WHITE:color/*0xff_666666*/));
 		MenuItemCompat.setShowAsAction(seeTitleButton, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
 		if (!nonUpd) {
 			updateBtn = menu.add(Menu.NONE, 1, 1, R.string.update);
