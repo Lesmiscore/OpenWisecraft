@@ -132,8 +132,6 @@ public class ServerInfoActivity extends AppCompatActivity {
 		
 		update(localStat.response);
 		
-		tabs.setCurrentItem(getIntent().getIntExtra("offset", 0));
-		
 		if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
 			BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
 			bd.setTargetDensity(getResources().getDisplayMetrics());
@@ -142,32 +140,17 @@ public class ServerInfoActivity extends AppCompatActivity {
 			if (Build.VERSION.SDK_INT >= 21) {
 				getWindow().setStatusBarColor(DIRT_DARK);
 			}
-			ColorStateList csl=new ColorStateList(new int[][]{
-													  new int[]{ },
-													  new int[]{ android.R.attr.state_pressed},
-													  new int[]{ android.R.attr.state_selected}
-												  },
-												  new int[]{
-													  DIRT_BRIGHT,
-													  Color.WHITE,
-													  Color.WHITE
-												  });
 			psts.setIndicatorColor(Color.WHITE);
-			psts.setTextColor(csl);
+			psts.setTextColor(Color.WHITE);
+			psts.setOnPageChangeListener(new ColorUpdater(Color.WHITE,DIRT_BRIGHT,tabs,psts));
 		}else{
-			ColorStateList csl=new ColorStateList(new int[][]{
-													  new int[]{ },
-													  new int[]{ android.R.attr.state_pressed},
-													  new int[]{ android.R.attr.state_selected}
-												  },
-												  new int[]{
-													  PALE_PRIMARY,
-													  getResources().getColor(R.color.upd_2),
-													  getResources().getColor(R.color.upd_2)
-												  });
 			psts.setIndicatorColor(getResources().getColor(R.color.upd_2));
-			psts.setTextColor(csl);
+			psts.setTextColor(getResources().getColor(R.color.upd_2));
+			psts.setOnPageChangeListener(new ColorUpdater(getResources().getColor(R.color.upd_2),PALE_PRIMARY,tabs,psts));
 		}
+		
+		tabs.setCurrentItem(getIntent().getIntExtra("offset", 0));
+		
 	}
 	public synchronized void update(final ServerPingResult resp) {
 		if (resp instanceof FullStat) {
@@ -379,6 +362,37 @@ public class ServerInfoActivity extends AppCompatActivity {
 		super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
 	}
 
+	static class ColorUpdater implements ViewPager.OnPageChangeListener{
+		int selected,unselected;
+		ViewPager pager;
+		PagerSlidingTabStrip pagerSlider;
+		public ColorUpdater(int selected,int unselected,ViewPager vp,PagerSlidingTabStrip psts){
+			this.selected=selected;
+			this.unselected=unselected;
+			pager=vp;
+			pagerSlider=psts;
+		}
+		
+		public void onPageSelected(int pos){
+			int[] colors=new int[pager.getAdapter().getCount()];
+			Arrays.fill(colors,unselected);
+			colors[pos]=selected;
+			for(int i=0;i<colors.length;i++){
+				((TextView)((ViewGroup)pagerSlider.getChildAt(0)).getChildAt(i)).setTextColor(colors[i]);
+			}
+		}
+
+		@Override
+		public void onPageScrollStateChanged(int p1) {
+			// TODO: Implement this method
+		}
+
+		@Override
+		public void onPageScrolled(int p1, float p2, int p3) {
+			// TODO: Implement this method
+		}
+	}
+	
 	class PCUserFaceAdapter extends PlayerNamesListAdapter {
 		List<View> cached=new ArrayList<>(Constant.ONE_HUNDRED_LENGTH_NULL_LIST);
 		public PCUserFaceAdapter() {
