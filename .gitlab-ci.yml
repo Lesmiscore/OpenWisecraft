@@ -1,4 +1,4 @@
-image: java:openjdk-8-jdk
+image: maven:3-jdk-8
 
 before_script:
   - git config --global user.email "nao20010128@gmail.com"
