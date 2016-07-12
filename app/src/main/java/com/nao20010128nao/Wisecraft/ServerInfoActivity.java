@@ -144,12 +144,12 @@ public class ServerInfoActivity extends AppCompatActivity {
 			}
 			ColorStateList csl=new ColorStateList(new int[][]{
 													  new int[]{ },
-													  new int[]{~android.R.attr.state_selected},
+													  //new int[]{~android.R.attr.state_selected},
 													  new int[]{ android.R.attr.state_selected}
 												  },
 												  new int[]{
 													  DIRT_BRIGHT,
-													  DIRT_BRIGHT,
+													  //DIRT_BRIGHT,
 													  Color.WHITE
 												  });
 			psts.setIndicatorColor(Color.WHITE);
@@ -157,12 +157,12 @@ public class ServerInfoActivity extends AppCompatActivity {
 		}else{
 			ColorStateList csl=new ColorStateList(new int[][]{
 													  new int[]{ },
-													  new int[]{~android.R.attr.state_selected},
+													  //new int[]{~android.R.attr.state_selected},
 													  new int[]{ android.R.attr.state_selected}
 												  },
 												  new int[]{
 													  PALE_PRIMARY,
-													  PALE_PRIMARY,
+													  //PALE_PRIMARY,
 													  getResources().getColor(R.color.upd_2)
 												  });
 			psts.setIndicatorColor(getResources().getColor(R.color.upd_2));
