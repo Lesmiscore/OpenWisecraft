@@ -149,8 +149,9 @@ public class ServerInfoActivity extends AppCompatActivity {
 			psts.setOnPageChangeListener(new ColorUpdater(getResources().getColor(R.color.upd_2),PALE_PRIMARY,tabs,psts));
 		}
 		
-		tabs.setCurrentItem(getIntent().getIntExtra("offset", 0));
-		
+		int offset=getIntent().getIntExtra("offset", 0);
+		if(adapter.getCount()>=2&offset==0)tabs.setCurrentItem(1);
+		tabs.setCurrentItem(offset);
 	}
 	public synchronized void update(final ServerPingResult resp) {
 		if (resp instanceof FullStat) {
