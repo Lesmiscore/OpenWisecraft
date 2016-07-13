@@ -26,6 +26,21 @@ public class WorkingDialog extends ContextWrapper {
 			public void onBackPressed() {
 				/* no-op */
 			}
+
+			@Override
+			public void setTitle(CharSequence title) {
+				/* no-op */
+			}
+
+			@Override
+			public void setTitle(int titleId) {
+				/* no-op */
+			}
+
+			@Override
+			public void setCustomTitle(View customTitleView) {
+				/* no-op */
+			}
 		};
 		waitDialog.setIndeterminate(true);
 		waitDialog.setMessage(message);
