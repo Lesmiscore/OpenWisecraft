@@ -5,13 +5,13 @@ import android.view.*;
 import java.io.*;
 import java.util.*;
 
-public class HirarchyDumper extends Thread
+public class HierarchyDumper extends Thread
 {
 	View parent;
-	public HirarchyDumper(Activity a){
+	public HierarchyDumper(Activity a){
 		this(a.getWindow().getDecorView());
 	}
-	public HirarchyDumper(View v){
+	public HierarchyDumper(View v){
 		parent=v;
 	}
 	private void dumpSingle(View v,Writer w,int indent)throws IOException{
@@ -44,6 +44,6 @@ public class HirarchyDumper extends Thread
 		try {
 			dumpSingle(parent, sw, 0);
 		} catch (IOException e) {}
-		Log.i("HirarchyDumper",sw.toString());
+		Log.i("HierarchyDumper",sw.toString());
 	}
 }

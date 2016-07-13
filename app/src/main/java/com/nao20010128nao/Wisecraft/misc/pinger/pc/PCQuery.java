@@ -1,5 +1,6 @@
 package com.nao20010128nao.Wisecraft.misc.pinger.pc;
 
+import android.annotation.TargetApi;
 import android.util.*;
 import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
@@ -41,6 +42,7 @@ public class PCQuery implements PingHost{
 		out.writeByte(PingerUtils.PACKET_STATUSREQUEST);
 	}
 
+	@TargetApi(9)
 	private String getStatJson(DataInputStream in) throws IOException {
 		PingerUtils.readVarInt(in); // Size
 		int id = PingerUtils.readVarInt(in);

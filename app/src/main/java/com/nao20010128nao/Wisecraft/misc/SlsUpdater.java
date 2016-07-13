@@ -114,14 +114,14 @@ public class SlsUpdater extends Thread
 				String data=br.readLine();
 				br.close();
 				DataInputStream dis=new DataInputStream(new ByteArrayInputStream(Base64.decodeBase64(data.getBytes())));
-				cache.edit().putString("dat.vcode",dis.readUTF()).putInt("dat.minwc",dis.readInt()).apply();
+				cache.edit().putString("dat.vcode",dis.readUTF()).putInt("dat.minwc",dis.readInt()).commit();
 				Log.i("slsupd","data-dat:"+data);
 			} catch (Throwable e) {
-				cache.edit().remove("dat.vcode").remove("dat.minwc").apply();
+				cache.edit().remove("dat.vcode").remove("dat.minwc").commit();
 				DebugWriter.writeToE("slsupd",e);
 			}
 		}else{
-			cache.edit().remove("dat.vcode").remove("dat.minwc").apply();
+			cache.edit().remove("dat.vcode").remove("dat.minwc").commit();
 		}
 		if(new File(ctx.getFilesDir(),"mcserverlist/tmp.dex").exists()){
 			try {
@@ -139,14 +139,14 @@ public class SlsUpdater extends Thread
 				String data=br.readLine();
 				br.close();
 				DataInputStream dis=new DataInputStream(new ByteArrayInputStream(Base64.decodeBase64(data.getBytes())));
-				cache.edit().putString("tmp.vcode",dis.readUTF()).putInt("tmp.minwc",dis.readInt()).apply();
+				cache.edit().putString("tmp.vcode",dis.readUTF()).putInt("tmp.minwc",dis.readInt()).commit();
 				Log.i("slsupd","data-tmp:"+data);
 			} catch (Throwable e) {
-				cache.edit().remove("tmp.vcode").remove("tmp.minwc").apply();
+				cache.edit().remove("tmp.vcode").remove("tmp.minwc").commit();
 				DebugWriter.writeToE("slsupd",e);
 			}
 		}else{
-			cache.edit().remove("tmp.vcode").remove("tmp.minwc").apply();
+			cache.edit().remove("tmp.vcode").remove("tmp.minwc").commit();
 		}
 	}
 	public void loadCurrentCode(){

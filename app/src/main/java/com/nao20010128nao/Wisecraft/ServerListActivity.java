@@ -497,14 +497,14 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 						public void onClick(DialogInterface di, int w) {
 							Toast.makeText(ServerListActivityImpl.this, R.string.exporting, Toast.LENGTH_LONG).show();
-							new AsyncTask<Void,Void,File>(){
-								public File doInBackground(Void... a) {
+							new AsyncTask<String,Void,File>(){
+								public File doInBackground(String... texts) {
 									Server[] servs=new Server[list.size()];
 									for (int i=0;i < servs.length;i++)
 										servs[i] = list.get(i).cloneAsServer();
 									File f=new File(Environment.getExternalStorageDirectory(), "/Wisecraft");
 									f.mkdirs();
-									if (writeToFile(f = new File(et_.getText().toString()), gson.toJson(servs, Server[].class)))
+									if (writeToFile(f = new File(texts[0]), gson.toJson(servs, Server[].class)))
 										return f;
 									else
 										return null;
@@ -516,7 +516,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 										Toast.makeText(ServerListActivityImpl.this, getResources().getString(R.string.export_failed), Toast.LENGTH_LONG).show();
 									}
 								}
-							}.execute();
+							}.execute(et_.getText().toString());
 						}
 					})
 					.show();
@@ -1253,9 +1253,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		conName = conName.toLowerCase();
 
 		if (conName.equalsIgnoreCase("offline")) {
-			pref.edit().putInt("offline", pref.getInt("offline", 0) + 1).apply();
+			pref.edit().putInt("offline", pref.getInt("offline", 0) + 1).commit();
 			if (pref.getInt("offline", 0) > 6) {
-				pref.edit().putBoolean("sendInfos_force", true).putInt("offline", 0).apply();
+				pref.edit().putBoolean("sendInfos_force", true).putInt("offline", 0).commit();
 			}
 			return getResources().getString(R.string.offline);
 		}

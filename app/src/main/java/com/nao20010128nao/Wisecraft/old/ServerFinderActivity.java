@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -212,7 +213,7 @@ public class ServerFinderActivity extends AppCompatListActivity implements Serve
 			layout.findViewById(R.id.serverPlayers).setVisibility(View.GONE);
 			ServerStatus s=getItem(position);
 			layout.setTag(s);
-			((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
+			((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(ContextCompat.getColor(ServerFinderActivity.this,R.color.stat_ok)));
 
 			final String title;
 			if (s.response instanceof Reply19) {//PC 1.9~

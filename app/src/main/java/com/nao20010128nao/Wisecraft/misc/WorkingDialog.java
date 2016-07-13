@@ -21,7 +21,12 @@ public class WorkingDialog extends ContextWrapper {
 		if (waitDialog != null) {
 			hideWorkingDialog();
 		}
-		waitDialog = new AppCompatProgressDialog(this);
+		waitDialog = new AppCompatProgressDialog(this){
+			@Override
+			public void onBackPressed() {
+				/* no-op */
+			}
+		};
 		waitDialog.setIndeterminate(true);
 		waitDialog.setMessage(message);
 		waitDialog.setCancelable(false);

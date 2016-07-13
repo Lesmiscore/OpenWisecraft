@@ -18,7 +18,8 @@ public class CollectorMainService extends Service
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		// TODO: Implement this method
 		Log.d("cms","start");
-		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitAll().build());
+		if(Build.VERSION.SDK_INT>8)
+			StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitAll().build());
 		ExecWorker ew=new ExecWorker();
 		new Thread(ew).start();
 		//ew.run();

@@ -1,5 +1,7 @@
 package com.nao20010128nao.Wisecraft.misc.pinger.pe;
 
+import android.annotation.TargetApi;
+
 import com.nao20010128nao.OTC.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
@@ -12,6 +14,7 @@ public class FullStat implements ServerPingResult {
 	private Map<String, String> datas = new OrderTrustedMap<>();
 	private ArrayList<String> playerList = new ArrayList<>();
 
+	@TargetApi(9)
 	public FullStat(byte[] data) {
 		data = PingerUtils.trim(data);
 		byte[][] temp = PingerUtils.split(data);

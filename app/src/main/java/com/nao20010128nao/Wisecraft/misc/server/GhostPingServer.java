@@ -1,4 +1,5 @@
 package com.nao20010128nao.Wisecraft.misc.server;
+import android.annotation.TargetApi;
 import android.os.*;
 import android.preference.*;
 import android.util.*;
@@ -24,6 +25,10 @@ public class GhostPingServer extends Thread {
 	static byte[] MAGIC = {(byte) 0xFE, (byte) 0xFD};
 	public void runImpl()throws IOException {
 		// TODO: Implement this method
+		/*if(Build.VERSION.SDK_INT<9){
+			Log.d("ghost_query", "the system is too old to start GhostPingServer");
+			return;
+		}*/
 		while (serv == null) {
 			try {
 				serv   = new DatagramSocket(localPort);
@@ -62,6 +67,7 @@ public class GhostPingServer extends Thread {
 		} catch (IOException e) {}
 	}
 
+	@TargetApi(9)
 	private void check(DatagramPacket p)throws IOException {
 		byte d[]=p.getData();
 		dump(p);

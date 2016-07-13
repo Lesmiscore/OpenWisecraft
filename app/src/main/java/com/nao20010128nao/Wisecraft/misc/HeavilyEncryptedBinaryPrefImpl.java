@@ -95,7 +95,7 @@ public class HeavilyEncryptedBinaryPrefImpl extends BinaryPrefImpl
 			
 			return readAllFromStreamRaw(dis, close);
 		} catch (Throwable e) {
-			throw new IOException(e);
+			throw new RuntimeException(e);
 		} finally {
 			if(fis!=null&close)fis.close();
 		}

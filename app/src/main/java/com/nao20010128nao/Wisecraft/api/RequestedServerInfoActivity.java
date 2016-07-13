@@ -10,7 +10,7 @@ import com.nao20010128nao.Wisecraft.R;
 
 public class RequestedServerInfoActivity extends ApiBaseActivity {
 	ServerPingProvider spp=new NormalServerPingProvider();
-	Server reqested;
+	Server requested;
 	WorkingDialog wd;
 	Intent si=new Intent();
 	@Override
@@ -26,11 +26,11 @@ public class RequestedServerInfoActivity extends ApiBaseActivity {
 
 		Server s=new Server();
 		s.ip = getIntent().getStringExtra(ApiActions.SERVER_INFO_IP);
-		s.port = getIntent().getIntExtra(ApiActions.SERVER_INFO_PORT, 19132);
 		s.mode = getIntent().getBooleanExtra(ApiActions.SERVER_INFO_ISPC, false)?1:0;
-		reqested = s.cloneAsServer();
+		s.port = getIntent().getIntExtra(ApiActions.SERVER_INFO_PORT, s.mode==0?19132:25565);
+		requested = s.cloneAsServer();
 		wd.showWorkingDialog();
-		spp.putInQueue(reqested, new PingHandlingImpl());
+		spp.putInQueue(requested, new PingHandlingImpl());
 	}
 
 	@Override
@@ -41,7 +41,7 @@ public class RequestedServerInfoActivity extends ApiBaseActivity {
 				switch (resultCode) {
 					case Constant.ACTIVITY_RESULT_UPDATE:
 						wd.showWorkingDialog();
-						spp.putInQueue(reqested, new PingHandlingImpl(data.getIntExtra("offset",0)));
+						spp.putInQueue(requested, new PingHandlingImpl(data.getIntExtra("offset",0)));
 						break;
 					default:
 						finish();

@@ -1,4 +1,7 @@
 package com.nao20010128nao.Wisecraft.misc;
+import android.annotation.TargetApi;
+import android.os.Build;
+
 import java.io.*;
 import java.security.*;
 import java.util.*;
@@ -69,6 +72,7 @@ public class EncryptedBinaryPref extends BinaryPrefImpl
 		return readAllFromStream(new FileInputStream(f), true);
 	}
 
+	@TargetApi(Build.VERSION_CODES.GINGERBREAD)
 	private static Map<String, ?> readAllFromStream(InputStream fis,
 													boolean close) throws IOException {
 		try {
@@ -81,7 +85,7 @@ public class EncryptedBinaryPref extends BinaryPrefImpl
 					 new IvParameterSpec(PREF_IV));
 			return readAllFromStreamRaw(new CipherInputStream(dis, cip), close);
 		} catch (Throwable e) {
-			throw new IOException(e);
+			throw new RuntimeException(e);
 		} finally {
 			if(fis!=null&close)fis.close();
 		}

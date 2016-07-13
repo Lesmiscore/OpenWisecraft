@@ -1,4 +1,5 @@
 package com.nao20010128nao.Wisecraft.misc.pref;
+import android.annotation.TargetApi;
 import android.content.*;
 import android.util.*;
 import android.view.*;
@@ -9,6 +10,7 @@ public class EditTextPreference extends android.preference.EditTextPreference {
         super(context, attrs, defStyleAttr);
     }
 
+    @TargetApi(21)
     public EditTextPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }

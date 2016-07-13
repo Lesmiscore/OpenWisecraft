@@ -1,4 +1,5 @@
 package com.nao20010128nao.Wisecraft.collector;
+import android.annotation.TargetApi;
 import android.content.*;
 import android.content.pm.*;
 import android.os.*;
@@ -39,6 +40,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 	}
 	
 	@Override
+	@TargetApi(9)
 	public void run() {
 		// TODO: Implement this method
 		SharedPreferences sb;
@@ -133,6 +135,8 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 	            return o.getSha();
 		return null;
 	}
+
+	@TargetApi(9)
 	public static String shash(byte[] b) throws IOException {
 		try {
 			MessageDigest md = MessageDigest.getInstance("SHA");

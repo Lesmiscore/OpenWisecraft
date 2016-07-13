@@ -1,5 +1,7 @@
 package com.nao20010128nao.Wisecraft.misc;
 import android.content.SharedPreferences.*;
+import android.os.Build;
+
 import java.util.*;
 
 public class PreferencesEditorWrapper implements Editor {
@@ -19,7 +21,8 @@ public class PreferencesEditorWrapper implements Editor {
 	@Override
 	public Editor putStringSet(String key, Set<String> values) {
 		// TODO 自動生成されたメソッド・スタブ
-		child.putStringSet(key,new HashSet<>(values));
+		if(Build.VERSION.SDK_INT>10)
+			child.putStringSet(key,new HashSet<>(values));
 		return this;
 	}
 
