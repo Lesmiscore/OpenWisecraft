@@ -78,6 +78,7 @@ dependencies {
 	compile 'org.jsoup:jsoup:1.9.1'
 	compile 'org.eclipse.mylyn.github:org.eclipse.egit.github.core:3.4.0.201406110918-r'
 	compile 'com.jpardogo.materialtabstrip:library:+'
+	compile 'com.google.firebase:firebase-core:+'
 	
 	compile files('libs/fsb.jar')
 	compile files('libs/mcprox.jar')
