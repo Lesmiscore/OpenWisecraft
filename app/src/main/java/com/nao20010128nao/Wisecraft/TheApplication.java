@@ -4,6 +4,8 @@ import android.content.*;
 import android.graphics.*;
 import android.preference.*;
 import android.view.*;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.services.*;
@@ -27,6 +29,7 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 	public String uuid;
 	public SharedPreferences pref;
 	public SharedPreferences stolenInfos;
+	public FirebaseAnalytics firebase;
 	boolean disclosurePending=true,disclosureEnded=false;
 	
 	@Override
@@ -36,6 +39,7 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		MultiDex.install(this);
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
 		instance = this;
+		firebase=FirebaseAnalytics.getInstance(this);
 		///////
 		pcUserUUIDs=new Gson().fromJson(pref.getString("pcuseruuids","{}"),PCUserUUIDMap.class);
 		///////

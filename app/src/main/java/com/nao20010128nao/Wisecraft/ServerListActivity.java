@@ -1326,6 +1326,9 @@ public class ServerListActivity extends CompatActivityGroup {
 		}
 		super.onCreate(savedInstanceState);
 		getSupportActionBar().hide();
+		Bundle log=new Bundle();
+		log.putString("class",getClass().getName());
+		TheApplication.instance.firebase.logEvent("launch",log);
 		if(pref.getBoolean("useOldActivity",false))
 			setContentView(getLocalActivityManager().startActivity("main", new Intent(this, Content$Old.class)).getDecorView());
 		else
