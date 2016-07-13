@@ -508,38 +508,9 @@ public class ServerInfoActivity extends AppCompatActivity {
 	}
 
 	
-	class InternalPagerAdapter extends FragmentPagerAdapter{
-		List<Map.Entry<Class,String>> pages=new ArrayList<>();
-		
+	class InternalPagerAdapter extends UsefulPagerAdapter{
 		public InternalPagerAdapter(){
 			super(getSupportFragmentManager());
-		}
-
-		public void addTab(Class<? extends BaseFragment<ServerInfoActivity>> clat,String title){
-			pages.add(new KVP<Class,String>(clat,title));
-			notifyDataSetChanged();
-		}
-		
-		@Override
-		public int getCount() {
-			// TODO: Implement this method
-			return pages.size();
-		}
-
-		@Override
-		public android.support.v4.app.Fragment getItem(int p1) {
-			// TODO: Implement this method
-			try {
-				return (android.support.v4.app.Fragment)pages.get(p1).getKey().newInstance();
-			} catch (Throwable e) {
-				return null;
-			}
-		}
-
-		@Override
-		public CharSequence getPageTitle(int position) {
-			// TODO: Implement this method
-			return pages.get(position).getValue();
 		}
 	}
 	
