@@ -5,6 +5,8 @@ import android.support.v4.view.ViewPager;
 import com.nao20010128nao.Wisecraft.misc.UsefulPagerAdapter;
 import com.astuetz.PagerSlidingTabStrip;
 import com.nao20010128nao.Wisecraft.misc.PstsTabColorUpdater;
+import com.nao20010128nao.Wisecraft.R;
+import com.nao20010128nao.Wisecraft.ServerInfoActivity;
 
 public class SettingsImportExportActivity extends AppCompatActivity
 {
@@ -21,9 +23,13 @@ public class SettingsImportExportActivity extends AppCompatActivity
 		
 			psts.setIndicatorColor(getResources().getColor(R.color.upd_2));
 			psts.setTextColor(getResources().getColor(R.color.upd_2));
-			psts.setOnPageChangeListener(new PstsTabColorUpdater(getResources().getColor(R.color.upd_2),PALE_PRIMARY,tabs,psts));
+			psts.setOnPageChangeListener(new PstsTabColorUpdater(getResources().getColor(R.color.upd_2),ServerInfoActivity.PALE_PRIMARY,tabs,psts));
 		
 
+			
+			
+			
+			
 		int offset=getIntent().getIntExtra("offset", 0);
 		if(adapter.getCount()>=2&offset==0)tabs.setCurrentItem(1);
 		tabs.setCurrentItem(offset);
