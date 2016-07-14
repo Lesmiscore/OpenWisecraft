@@ -609,7 +609,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 						ProxyActivity.cont.stopService();
 				new Handler().postDelayed(new Runnable(){
 						public void run() {
-							System.exit(0);
+							//System.exit(0);
 						}
 					}, 150 * 2);
 				break;

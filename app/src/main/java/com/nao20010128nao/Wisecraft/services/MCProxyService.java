@@ -74,7 +74,7 @@ public class MCProxyService extends Service
 								proxyThread.interrupt();
 								stopSelf();
 								interrupt();
-								System.exit(0);
+								//System.exit(0);
 								break;
 							case 1://info
 								ByteArrayOutputStream baos=new ByteArrayOutputStream();
