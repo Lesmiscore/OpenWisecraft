@@ -34,6 +34,7 @@ import android.text.Spannable;
 import com.astuetz.PagerSlidingTabStrip;
 import android.content.res.ColorStateList;
 import java.math.BigDecimal;
+import android.support.v7.graphics.Palette;
 
 public class ServerInfoActivity extends AppCompatActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
@@ -203,12 +204,14 @@ public class ServerInfoActivity extends AppCompatActivity {
 	}
 	public void updateTaskDesc(ServerPingResult resp){
 		if (Build.VERSION.SDK_INT >= 21) {
+			int color=getResources().getColor(R.color.upd_2);
 			if (resp instanceof Reply) {
 				Reply rep=(Reply)resp;
 				if (rep.favicon != null) {
 					byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
 					serverIconBmp=BitmapFactory.decodeByteArray(image, 0, image.length);
 					serverIconObj = new BitmapDrawable(serverIconBmp);
+					color=Palette.generate(serverIconBmp).getLightVibrantColor(color);
 				} else {
 					serverIconObj = new ColorDrawable(Color.TRANSPARENT);
 				}
@@ -218,6 +221,7 @@ public class ServerInfoActivity extends AppCompatActivity {
 					byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
 					serverIconBmp=BitmapFactory.decodeByteArray(image, 0, image.length);
 					serverIconObj = new BitmapDrawable(serverIconBmp);
+					color=Palette.generate(serverIconBmp).getLightVibrantColor(color);
 				} else {
 					serverIconObj = new ColorDrawable(Color.TRANSPARENT);
 				}
@@ -226,13 +230,13 @@ public class ServerInfoActivity extends AppCompatActivity {
 			switch (localStat.mode) {
 				case 1:
 					if (serverIconBmp!=null) {
-						td = new ActivityManager.TaskDescription(getTitle().toString(), serverIconBmp, getResources().getColor(R.color.upd_2));
+						td = new ActivityManager.TaskDescription(getTitle().toString(), serverIconBmp, color);
 					} else {
-						td = new ActivityManager.TaskDescription(getTitle().toString(), ((BitmapDrawable)getResources().getDrawable(R.drawable.ic_launcher)).getBitmap(), getResources().getColor(R.color.upd_2));
+						td = new ActivityManager.TaskDescription(getTitle().toString(), ((BitmapDrawable)getResources().getDrawable(R.drawable.ic_launcher)).getBitmap(), color);
 					}
 					break;
 				default:
-					td = new ActivityManager.TaskDescription(getTitle().toString(), ((BitmapDrawable)getResources().getDrawable(R.drawable.ic_launcher)).getBitmap(), getResources().getColor(R.color.upd_2));
+					td = new ActivityManager.TaskDescription(getTitle().toString(), ((BitmapDrawable)getResources().getDrawable(R.drawable.ic_launcher)).getBitmap(), color);
 					break;
 			}
 			setTaskDescription(td);
