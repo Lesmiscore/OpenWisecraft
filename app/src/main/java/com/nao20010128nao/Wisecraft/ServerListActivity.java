@@ -638,7 +638,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
 	public void loadServers() {
 		int version=pref.getInt("serversJsonVersion", 0);
-		version = version == 0 ?pref.getString("servers", "[]").equals("[]") ?version: 0: version;
+		version = version == 0 ?(pref.getString("servers", "[]").equals("[]") ?version: 1): version;
 		switch (version) {
 			case 0:
 				wd.showWorkingDialog(getResources().getString(R.string.upgrading));
