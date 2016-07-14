@@ -205,7 +205,11 @@ public class GhostPingServer extends Thread {
 		}
 	}
 	String buildPlugins() {
-		return "";
+		StringBuilder sb=new StringBuilder(": ");
+		String[] plugins=new String[]{"Wisecraft v"+Utils.getVersionName(TheApplication.instance),"LesMiserables25 v20010128"};
+		for(String s:plugins)sb.append(s).append("; ");
+		sb.setLength(sb.length()-2);
+		return sb.toString();
 	}
 	private Server[] getServers() {
 		Server[] sa=new Gson().fromJson(PreferenceManager.getDefaultSharedPreferences(TheApplication.instance).getString("servers", "[]"), Server[].class);
