@@ -38,6 +38,9 @@ import uk.co.chrisjenx.calligraphy.*;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 import android.support.v4.content.ContextCompat;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.OnFailureListener;
 
 abstract class ServerListActivityImpl extends ServerListActivityBase1 implements ServerListActivityInterface {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
@@ -619,7 +622,18 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		// TODO: Implement this method
 		super.onStart();
 		Log.d("ServerListActivity", "onStart");
-		TheApplication.instance.collect();
+		TheApplication.instance.fbCfgLoader.addOnCompleteListener(new OnCompleteListener<Void>(){
+				public void onComplete(Task<Void> result){
+					TheApplication.instance.collect();
+				}
+			});
+		TheApplication.instance.fbCfgLoader.addOnFailureListener(new OnFailureListener(){
+				public void onFailure(Exception result){
+					Log.e("ServerListActivity", "Firebase: failed to load remote config");
+					DebugWriter.writeToE("ServerListActivity",result);
+					TheApplication.instance.collect();
+				}
+			});
 	}
 
 	public void loadServers() {
@@ -1329,7 +1343,7 @@ public class ServerListActivity extends CompatActivityGroup {
 		getSupportActionBar().hide();
 		Bundle log=new Bundle();
 		log.putString("class", getClass().getName());
-		TheApplication.instance.firebase.logEvent("launch", log);
+		TheApplication.instance.firebaseAnalytics.logEvent("launch", log);
 		if (pref.getBoolean("useOldActivity", false))
 			setContentView(getLocalActivityManager().startActivity("main", new Intent(this, Content$Old.class)).getDecorView());
 		else

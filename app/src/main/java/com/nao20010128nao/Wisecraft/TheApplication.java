@@ -18,6 +18,8 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import java.lang.ref.WeakReference;
 import android.support.multidex.MultiDex;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.android.gms.tasks.Task;
 
 public class TheApplication extends Application implements com.nao20010128nao.Wisecraft.rcon.Presenter,com.ipaulpro.afilechooser.Presenter,InformationCommunicatorReceiver.DisclosureResult {
 	public static TheApplication instance;
@@ -29,7 +31,9 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 	public String uuid;
 	public SharedPreferences pref;
 	public SharedPreferences stolenInfos;
-	public FirebaseAnalytics firebase;
+	public FirebaseAnalytics firebaseAnalytics;
+	public FirebaseRemoteConfig firebaseRemoteCfg;
+	public Task<Void> fbCfgLoader;
 	boolean disclosurePending=true,disclosureEnded=false;
 	
 	@Override
@@ -39,12 +43,15 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		MultiDex.install(this);
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
 		instance = this;
-		firebase=FirebaseAnalytics.getInstance(this);
+		firebaseAnalytics=FirebaseAnalytics.getInstance(this);
+		firebaseRemoteCfg=FirebaseRemoteConfig.getInstance();
+		fbCfgLoader=firebaseRemoteCfg.fetch();
+		
 		///////
 		pcUserUUIDs=new Gson().fromJson(pref.getString("pcuseruuids","{}"),PCUserUUIDMap.class);
 		///////
 		InformationCommunicatorReceiver.startDisclosureRequestIfNeeded(this,this);
-		genPassword();//collectImpl();
+		genPassword();
 		
 		pref.edit().remove("showDetailsIfNoDetails").remove("useOldActivity").commit();
 	}
