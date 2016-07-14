@@ -21,6 +21,7 @@ import uk.co.chrisjenx.calligraphy.*;
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v4.content.ContextCompat;
 
 class ServerTestActivityImpl extends AppCompatActivity implements ServerListActivityInterface{
 	static WeakReference<ServerTestActivityImpl> instance=new WeakReference(null);
@@ -193,11 +194,11 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
             if(sta.pinging.get(offset)){
 				((TextView)layout.findViewById(R.id.serverName)).setText(R.string.working);
 				((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.working);
-				((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(sta.getResources().getColor(R.color.stat_pending)));
+				((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(ContextCompat.getColor(sta,R.color.stat_pending)));
 			}else{
 				if(s instanceof ServerStatus){
 					ServerStatus sv=(ServerStatus)s;
-					((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(sta.getResources().getColor(R.color.stat_ok)));
+					((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(ContextCompat.getColor(sta,R.color.stat_ok)));
 					final String title;
 					if (sv.response instanceof FullStat) {//PE
 						FullStat fs=(FullStat)sv.response;
@@ -266,7 +267,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 					}
 					((TextView)layout.findViewById(R.id.pingMillis)).setText(sv.ping + " ms");
 				}else{
-					((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(sta.getResources().getColor(R.color.stat_error)));
+					((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(ContextCompat.getColor(sta,R.color.stat_error)));
 					((TextView)layout.findViewById(R.id.serverName)).setText(s.ip + ":" + s.port);
 					((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.notResponding);
 				}

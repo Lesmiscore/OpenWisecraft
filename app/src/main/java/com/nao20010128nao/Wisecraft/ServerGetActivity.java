@@ -17,6 +17,7 @@ import com.nao20010128nao.Wisecraft.misc.ServerListActivityInterface;
 import android.webkit.WebViewClient;
 import android.webkit.WebView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 
 public class ServerGetActivity extends CompatWebViewActivity {
 	public static List<String> addForServerList;
@@ -60,7 +61,7 @@ public class ServerGetActivity extends CompatWebViewActivity {
 			}
 		});
 		downloading=Snackbar.make(findViewById(android.R.id.content),R.string.serverGetFetch,Snackbar.LENGTH_INDEFINITE);
-		Utils.getToolbar(this).setOverflowIcon(TheApplication.instance.getTintedDrawable(R.drawable.abc_ic_menu_moreoverflow_mtrl_alpha,getResources().getColor(R.color.upd_2)));
+		Utils.getToolbar(this).setOverflowIcon(TheApplication.instance.getTintedDrawable(R.drawable.abc_ic_menu_moreoverflow_mtrl_alpha,ContextCompat.getColor(this,R.color.upd_2)));
 	}
 
 	@Override

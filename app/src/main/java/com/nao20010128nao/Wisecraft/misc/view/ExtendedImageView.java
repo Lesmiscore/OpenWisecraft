@@ -3,6 +3,7 @@ import android.content.*;
 import android.graphics.drawable.*;
 import android.support.v7.widget.*;
 import android.util.*;
+import android.support.v4.content.ContextCompat;
 
 public class ExtendedImageView extends AppCompatImageView
 {
@@ -23,6 +24,6 @@ public class ExtendedImageView extends AppCompatImageView
 	}
 	
 	public void setColorRes(int les){
-		setColor(getResources().getColor(les));
+		setColor(ContextCompat.getColor(getContext(),les));
 	}
 }

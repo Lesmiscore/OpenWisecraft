@@ -22,6 +22,7 @@ import uk.co.chrisjenx.calligraphy.*;
 import java.lang.ref.WeakReference;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
+import android.support.v4.content.ContextCompat;
 class ServerFinderActivityImpl extends AppCompatActivity implements ServerListActivityInterface{
 	RecyclerServerList sl;
 	List<ServerStatus> list;
@@ -181,7 +182,7 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 			layout.findViewById(R.id.serverPlayers).setVisibility(View.GONE);
 			ServerStatus s=getItem(offset);
 			layout.setTag(s);
-			((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(getResources().getColor(R.color.stat_ok)));
+			((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(ContextCompat.getColor(sta,R.color.stat_ok)));
 
 			final String title;
 			if (s.response instanceof Reply19) {//PC 1.9~

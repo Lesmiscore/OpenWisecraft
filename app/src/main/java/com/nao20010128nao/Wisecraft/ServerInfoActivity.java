@@ -146,9 +146,9 @@ public class ServerInfoActivity extends AppCompatActivity {
 			psts.setTextColor(Color.WHITE);
 			psts.setOnPageChangeListener(new ColorUpdater(Color.WHITE,DIRT_BRIGHT,tabs,psts));
 		}else{
-			psts.setIndicatorColor(getResources().getColor(R.color.upd_2));
-			psts.setTextColor(getResources().getColor(R.color.upd_2));
-			psts.setOnPageChangeListener(new ColorUpdater(getResources().getColor(R.color.upd_2),PALE_PRIMARY,tabs,psts));
+			psts.setIndicatorColor(ContextCompat.getColor(this,R.color.upd_2));
+			psts.setTextColor(ContextCompat.getColor(this,R.color.upd_2));
+			psts.setOnPageChangeListener(new ColorUpdater(ContextCompat.getColor(this,R.color.upd_2),PALE_PRIMARY,tabs,psts));
 		}
 		
 		int offset=getIntent().getIntExtra("offset", 0);
@@ -204,7 +204,7 @@ public class ServerInfoActivity extends AppCompatActivity {
 	}
 	public void updateTaskDesc(ServerPingResult resp){
 		if (Build.VERSION.SDK_INT >= 21) {
-			int color=getResources().getColor(R.color.upd_2);
+			int color=ContextCompat.getColor(this,R.color.upd_2);
 			if (resp instanceof Reply) {
 				Reply rep=(Reply)resp;
 				if (rep.favicon != null) {
@@ -865,7 +865,7 @@ public class ServerInfoActivity extends AppCompatActivity {
 		hsv[2]=v-0.05f;//V-10
 		DIRT_DARK=Color.HSVToColor(hsv);
 		
-		int palePrimary=TheApplication.instance.getResources().getColor(R.color.upd_2);
+		int palePrimary=ContextCompat.getColor(TheApplication.instance,R.color.upd_2);
 		int r=Color.red(palePrimary);
 		int g=Color.green(palePrimary);
 		int b=Color.blue(palePrimary);

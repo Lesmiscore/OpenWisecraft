@@ -37,6 +37,7 @@ import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
+import android.support.v4.content.ContextCompat;
 
 abstract class ServerListActivityImpl extends ServerListActivityBase1 implements ServerListActivityInterface {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
@@ -81,7 +82,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		switch (pref.getInt("main_style", 0)) {
 			case 0:
 				setContentView(R.layout.server_list_content_nodrawer);
-				Utils.getToolbar(this).setOverflowIcon(TheApplication.instance.getTintedDrawable(R.drawable.abc_ic_menu_moreoverflow_mtrl_alpha,getResources().getColor(R.color.upd_2)));
+				Utils.getToolbar(this).setOverflowIcon(TheApplication.instance.getTintedDrawable(R.drawable.abc_ic_menu_moreoverflow_mtrl_alpha,ContextCompat.getColor(this,R.color.upd_2)));
 				break;
 			case 1:
 				setContentView(R.layout.server_list_content);
@@ -726,11 +727,11 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.working);
 					((TextView)layout.findViewById(R.id.serverAddress)).setText(sv.ip + ":" + sv.port);
 					((TextView)layout.findViewById(R.id.serverPlayers)).setText("-/-");
-					((ExtendedImageView)layout.findViewById(R.id.statColor)).setColor(sla.getResources().getColor(R.color.stat_pending));
+					((ExtendedImageView)layout.findViewById(R.id.statColor)).setColor(ContextCompat.getColor(sla,R.color.stat_pending));
 				}else{
 					if (sv instanceof ServerStatus) {
 						ServerStatus s=(ServerStatus)sv;
-						((ExtendedImageView) layout.findViewById(R.id.statColor)).setColor(sla.getResources().getColor(R.color.stat_ok));
+						((ExtendedImageView) layout.findViewById(R.id.statColor)).setColor(ContextCompat.getColor(sla,R.color.stat_ok));
 						final String title;
 						if (s.response instanceof FullStat) {//PE
 							FullStat fs = (FullStat) s.response;
@@ -800,7 +801,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 						((TextView) layout.findViewById(R.id.pingMillis)).setText(s.ping + " ms");
 						((TextView) layout.findViewById(R.id.serverAddress)).setText(s.ip + ":" + s.port);
 					} else {
-						((ExtendedImageView)layout.findViewById(R.id.statColor)).setColor(sla.getResources().getColor(R.color.stat_error));
+						((ExtendedImageView)layout.findViewById(R.id.statColor)).setColor(ContextCompat.getColor(sla,R.color.stat_error));
 						((TextView)layout.findViewById(R.id.serverName)).setText(sv.ip + ":" + sv.port);
 						((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.notResponding);
 						((TextView)layout.findViewById(R.id.serverPlayers)).setText("-/-");

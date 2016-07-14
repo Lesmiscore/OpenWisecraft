@@ -11,6 +11,7 @@ import com.nao20010128nao.Wisecraft.misc.BaseFragment;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.LayoutInflater;
+import android.support.v4.content.ContextCompat;
 
 public class SettingsImportExportActivity extends AppCompatActivity
 {
@@ -25,9 +26,9 @@ public class SettingsImportExportActivity extends AppCompatActivity
 		PagerSlidingTabStrip psts=(PagerSlidingTabStrip)findViewById(R.id.tabs);
 		psts.setViewPager(tabs);
 		
-			psts.setIndicatorColor(getResources().getColor(R.color.upd_2));
-			psts.setTextColor(getResources().getColor(R.color.upd_2));
-			psts.setOnPageChangeListener(new PstsTabColorUpdater(getResources().getColor(R.color.upd_2),ServerInfoActivity.PALE_PRIMARY,tabs,psts));
+		psts.setIndicatorColor(ContextCompat.getColor(this,R.color.upd_2));
+		psts.setTextColor(ContextCompat.getColor(this,R.color.upd_2));
+		psts.setOnPageChangeListener(new PstsTabColorUpdater(ContextCompat.getColor(this,R.color.upd_2),ServerInfoActivity.PALE_PRIMARY,tabs,psts));
 		
 		
 		
