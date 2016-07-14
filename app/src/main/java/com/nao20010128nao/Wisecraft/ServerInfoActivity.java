@@ -530,7 +530,7 @@ public class ServerInfoActivity extends AppCompatActivity {
 			String ip=localStat.ip;
 			int port=localStat.port;
 			
-			if (pref.getBoolean("showPcUserFace", false) & localStat.mode == 1) {
+			if (pref.getBoolean("showPcUserFace", false) & localStat.mode == 1 & canInflateSkinFaceList()) {
 				getParentActivity().skinFaceImages = new ArrayList<>();
 				getParentActivity().sff = new SkinFaceFetcher();
 				player = getParentActivity().new PCUserFaceAdapter();
@@ -590,6 +590,15 @@ public class ServerInfoActivity extends AppCompatActivity {
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
 			return inflater.inflate(R.layout.players_tab, container, false);
+		}
+		
+		public boolean canInflateSkinFaceList(){
+			try{
+				LayoutInflater.from(getParentActivity()).inflate(R.layout.simple_list_item_with_image, null, false);
+				return true;
+			}catch(Throwable e){
+				return false;
+			}
 		}
 	}
 	public static class DataFragmentPE extends BaseFragment<ServerInfoActivity> {
