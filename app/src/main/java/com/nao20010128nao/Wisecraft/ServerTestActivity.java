@@ -23,7 +23,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v4.content.ContextCompat;
 
-class ServerTestActivityImpl extends AppCompatActivity implements ServerListActivityInterface{
+class ServerTestActivityImpl extends AppCompatActivity implements ServerListActivityInterface {
 	static WeakReference<ServerTestActivityImpl> instance=new WeakReference(null);
 
 	ServerPingProvider spp=new NormalServerPingProvider();
@@ -51,32 +51,32 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
-		pref=PreferenceManager.getDefaultSharedPreferences(this);
-		if(pref.getBoolean("useBright",false)){
+		pref = PreferenceManager.getDefaultSharedPreferences(this);
+		if (pref.getBoolean("useBright", false)) {
 			setTheme(R.style.AppTheme_Bright);
-			getTheme().applyStyle(R.style.AppTheme_Bright,true);
+			getTheme().applyStyle(R.style.AppTheme_Bright, true);
 		}
 		super.onCreate(savedInstanceState);
 		boolean usesOldInstance=false;
-		if(instance.get()!=null){
-			sl=instance.get().sl;
-			pinging=instance.get().pinging;
-			usesOldInstance=true;
-		}else{
-			sl=new RecyclerServerList(this);
+		if (instance.get() != null) {
+			sl = instance.get().sl;
+			pinging = instance.get().pinging;
+			usesOldInstance = true;
+		} else {
+			sl = new RecyclerServerList(this);
 		}
-		instance=new WeakReference(this);
+		instance = new WeakReference(this);
         setContentView(R.layout.recycler_view_content);
-		rv=(RecyclerView)findViewById(android.R.id.list);
+		rv = (RecyclerView)findViewById(android.R.id.list);
 		rv.setLayoutManager(new LinearLayoutManager(this));
 		rv.setAdapter(sl);
 		ip = getIntent().getStringExtra("ip");
 		port = getIntent().getIntExtra("port", -1);
 		mode = getIntent().getIntExtra("ispc", 0);
-		if(usesOldInstance&sl.getItemCount()!=0){
+		if (usesOldInstance & sl.getItemCount() != 0) {
 
-		}else{
-			new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
+		} else {
+			new AppCompatAlertDialog.Builder(this, R.style.AppAlertDialog)
 				.setTitle(R.string.testServer)
 				.setView(dialog = getLayoutInflater().inflate(R.layout.test_server_dialog, null, false))
 				.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
@@ -150,7 +150,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 	public void onBackPressed() {
 		// TODO: Implement this method
 		super.onBackPressed();
-		instance=new WeakReference(null);
+		instance = new WeakReference(null);
 	}
 
 	@Override
@@ -169,7 +169,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 
 		public RecyclerServerList(ServerTestActivityImpl parent) {
 			super(parent.list = new ArrayList<Server>());
-			sta=parent;
+			sta = parent;
 		}
 
 		@Override
@@ -180,25 +180,25 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 			if (s instanceof ServerStatus) {
 				ServerInfoActivity.stat.add((ServerStatus)s);
 				int ofs=ServerInfoActivity.stat.indexOf(s);
-				sta.startActivityForResult(new Intent(sta, ServerInfoActivity.class).putExtra("nonUpd", true).putExtra("statListOffset",ofs), 0);
+				sta.startActivityForResult(new Intent(sta, ServerInfoActivity.class).putExtra("nonUpd", true).putExtra("statListOffset", ofs), 0);
 			}
 		}
 
 		@Override
-		public void onBindViewHolder(ServerTestActivityImpl.STAVH parent,final int offset) {
+		public void onBindViewHolder(ServerTestActivityImpl.STAVH parent, final int offset) {
 			// TODO: Implement this method
 			View layout=parent.itemView;
 			Server s=getItem(offset);
             ((TextView)layout.findViewById(R.id.serverAddress)).setText(s.ip + ":" + s.port);
             ((TextView) layout.findViewById(R.id.serverPlayers)).setText("-/-");
-            if(sta.pinging.get(offset)){
+            if (sta.pinging.get(offset)) {
 				((TextView)layout.findViewById(R.id.serverName)).setText(R.string.working);
 				((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.working);
-				((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(ContextCompat.getColor(sta,R.color.stat_pending)));
-			}else{
-				if(s instanceof ServerStatus){
+				((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(ContextCompat.getColor(sta, R.color.stat_pending)));
+			} else {
+				if (s instanceof ServerStatus) {
 					ServerStatus sv=(ServerStatus)s;
-					((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(ContextCompat.getColor(sta,R.color.stat_ok)));
+					((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(ContextCompat.getColor(sta, R.color.stat_ok)));
 					final String title;
 					if (sv.response instanceof FullStat) {//PE
 						FullStat fs=(FullStat)sv.response;
@@ -266,17 +266,17 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 						((TextView)layout.findViewById(R.id.serverName)).setText(deleteDecorations(title));
 					}
 					((TextView)layout.findViewById(R.id.pingMillis)).setText(sv.ping + " ms");
-				}else{
-					((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(ContextCompat.getColor(sta,R.color.stat_error)));
+				} else {
+					((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(ContextCompat.getColor(sta, R.color.stat_error)));
 					((TextView)layout.findViewById(R.id.serverName)).setText(s.ip + ":" + s.port);
 					((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.notResponding);
 				}
 			}
-			applyHandlersForViewTree(parent.itemView,new View.OnClickListener(){
-				public void onClick(View v){
-					onItemClick(null,v,offset,Long.MIN_VALUE);
-				}
-			});
+			applyHandlersForViewTree(parent.itemView, new View.OnClickListener(){
+					public void onClick(View v) {
+						onItemClick(null, v, offset, Long.MIN_VALUE);
+					}
+				});
 		}
 
 		@Override
@@ -295,15 +295,15 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 			return sta.new STAVH(LayoutInflater.from(sta).inflate(layout, viewGroup, false));
 		}
 
-		public void attachNewActivity(ServerTestActivityImpl newSta){
-			sta=newSta;
+		public void attachNewActivity(ServerTestActivityImpl newSta) {
+			sta = newSta;
 		}
 	}
-	class STAVH extends RecyclerView.ViewHolder{
-		public STAVH(View v){
+	class STAVH extends RecyclerView.ViewHolder {
+		public STAVH(View v) {
 			super(v);
 		}
-		public View findViewById(int resId){
+		public View findViewById(int resId) {
 			return itemView.findViewById(resId);
 		}
 	}
@@ -318,20 +318,20 @@ public class ServerTestActivity extends CompatActivityGroup {
 		// TODO: Implement this method
 		instance = new WeakReference(this);
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
-		if(pref.getBoolean("useBright",false)){
+		if (pref.getBoolean("useBright", false)) {
 			setTheme(R.style.AppTheme_Bright);
-			getTheme().applyStyle(R.style.AppTheme_Bright,true);
+			getTheme().applyStyle(R.style.AppTheme_Bright, true);
 		}
 		super.onCreate(savedInstanceState);
 		getSupportActionBar().hide();
-		if(pref.getBoolean("useOldActivity",false))
+		if (pref.getBoolean("useOldActivity", false))
 			setContentView(getLocalActivityManager().startActivity("main", new Intent(this, Content$Old.class).putExtras(getIntent())).getDecorView());
 		else
 			setContentView(getLocalActivityManager().startActivity("main", new Intent(this, Content.class).putExtras(getIntent())).getDecorView());
 	}
-	public static class Content extends ServerTestActivityImpl {public static void deleteRef(){instance=new WeakReference<>(null);}}
-	public static class Content$Old extends com.nao20010128nao.Wisecraft.old.ServerTestActivity {public static void deleteRef(){instance=new WeakReference<>(null);}}
-	
+	public static class Content extends ServerTestActivityImpl {public static void deleteRef() {instance = new WeakReference<>(null);}}
+	public static class Content$Old extends com.nao20010128nao.Wisecraft.old.ServerTestActivity {public static void deleteRef() {instance = new WeakReference<>(null);}}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO: Implement this method

@@ -27,13 +27,13 @@ public class ServerGetActivity extends CompatWebViewActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
-		if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("useBright",false)){
+		if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("useBright", false)) {
 			setTheme(R.style.AppTheme_Bright);
-			getTheme().applyStyle(R.style.AppTheme_Bright,true);
+			getTheme().applyStyle(R.style.AppTheme_Bright, true);
 		}
 		super.onCreate(savedInstanceState);
-		serverList=createServerListDomains();
-		new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
+		serverList = createServerListDomains();
+		new AppCompatAlertDialog.Builder(this, R.style.AppAlertDialog)
 			.setSingleChoiceItems(serverList, -1, new DialogInterface.OnClickListener(){
 				public void onClick(DialogInterface di, int w) {
 					di.dismiss();
@@ -55,13 +55,13 @@ public class ServerGetActivity extends CompatWebViewActivity {
 			})
 			.show();
 		getWebView().setWebViewClient(new WebViewClient(){
-			public void onPageFinished(WebView wv,String url){
-				setTitle(wv.getTitle());
-				getSupportActionBar().setSubtitle(wv.getUrl());
-			}
-		});
-		downloading=Snackbar.make(findViewById(android.R.id.content),R.string.serverGetFetch,Snackbar.LENGTH_INDEFINITE);
-		Utils.getToolbar(this).setOverflowIcon(TheApplication.instance.getTintedDrawable(R.drawable.abc_ic_menu_moreoverflow_mtrl_alpha,ContextCompat.getColor(this,R.color.upd_2)));
+				public void onPageFinished(WebView wv, String url) {
+					setTitle(wv.getTitle());
+					getSupportActionBar().setSubtitle(wv.getUrl());
+				}
+			});
+		downloading = Snackbar.make(findViewById(android.R.id.content), R.string.serverGetFetch, Snackbar.LENGTH_INDEFINITE);
+		Utils.getToolbar(this).setOverflowIcon(TheApplication.instance.getTintedDrawable(R.drawable.abc_ic_menu_moreoverflow_mtrl_alpha, ContextCompat.getColor(this, R.color.upd_2)));
 	}
 
 	@Override
@@ -97,7 +97,7 @@ public class ServerGetActivity extends CompatWebViewActivity {
 							for (int i=0;i < servSel.length;i++) {
 								servSel[i] = serv.get(i).toString();
 							}
-							new AppCompatAlertDialog.Builder(ServerGetActivity.this,R.style.AppAlertDialog)
+							new AppCompatAlertDialog.Builder(ServerGetActivity.this, R.style.AppAlertDialog)
 								.setTitle(R.string.selectServers)
 								.setMultiChoiceItems(servSel, selections = new boolean[servSel.length], new DialogInterface.OnMultiChoiceClickListener(){
 									public void onClick(DialogInterface di, int w, boolean c) {
@@ -107,7 +107,7 @@ public class ServerGetActivity extends CompatWebViewActivity {
 								.setPositiveButton(R.string.add, new DialogInterface.OnClickListener(){
 									public void onClick(DialogInterface di, int w) {
 										List<com.nao20010128nao.McServerList.Server> selected=getServers(serv, selections);
-										for(com.nao20010128nao.Wisecraft.misc.Server s:Utils.convertServerObject(selected))
+										for (com.nao20010128nao.Wisecraft.misc.Server s:Utils.convertServerObject(selected))
 											((ServerListActivityInterface)ServerListActivity.instance.get().getLocalActivityManager().getActivity("main")).addIntoList(s);
 										di.dismiss();
 									}
@@ -155,14 +155,14 @@ public class ServerGetActivity extends CompatWebViewActivity {
 			finish();
 		}
 	}
-	
-	public String[] createServerListDomains(){
+
+	public String[] createServerListDomains() {
 		List<String> result=new ArrayList<>();
 		result.addAll(Arrays.asList(getResources().getStringArray(R.array.serverListSites)));
-		if(addForServerList!=null)result.addAll(addForServerList);
+		if (addForServerList != null)result.addAll(addForServerList);
 		return Factories.strArray(result);
 	}
-	
+
 	@Override
 	protected void attachBaseContext(Context newBase) {
 		super.attachBaseContext(TheApplication.injectContextSpecial(newBase));

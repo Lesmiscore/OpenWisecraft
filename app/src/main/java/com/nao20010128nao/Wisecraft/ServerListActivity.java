@@ -82,7 +82,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		switch (pref.getInt("main_style", 0)) {
 			case 0:
 				setContentView(R.layout.server_list_content_nodrawer);
-				Utils.getToolbar(this).setOverflowIcon(TheApplication.instance.getTintedDrawable(R.drawable.abc_ic_menu_moreoverflow_mtrl_alpha,ContextCompat.getColor(this,R.color.upd_2)));
+				Utils.getToolbar(this).setOverflowIcon(TheApplication.instance.getTintedDrawable(R.drawable.abc_ic_menu_moreoverflow_mtrl_alpha, ContextCompat.getColor(this, R.color.upd_2)));
 				break;
 			case 1:
 				setContentView(R.layout.server_list_content);
@@ -97,13 +97,13 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					if (appMenu.indexOf(s) == 7 & !pref.getBoolean("feature_asfsls", false)) {
 						continue;
 					}
-					Button btn=(Button)getLayoutInflater().inflate(R.layout.server_list_bar_button, ll,false).findViewById(R.id.menu_btn);
+					Button btn=(Button)getLayoutInflater().inflate(R.layout.server_list_bar_button, ll, false).findViewById(R.id.menu_btn);
 					//((ViewGroup)btn.getParent()).removeView(btn);
 					btn.setText(s);
 					btn.setOnClickListener(new MenuExecClickListener(appMenu.indexOf(s)));
 					ll.addView(btn);
 				}
-				
+
 				setupDrawer();
 				break;
 			case 2:
@@ -121,9 +121,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				setupDrawer();
 				break;
 		}
-		rv=(RecyclerView)findViewById(android.R.id.list);
+		rv = (RecyclerView)findViewById(android.R.id.list);
 		rv.setLayoutManager(new LinearLayoutManager(this));
-		
+
 		srl = (SwipeRefreshLayout)findViewById(R.id.swipelayout);
 		srl.setColorSchemeResources(R.color.upd_1, R.color.upd_2, R.color.upd_3, R.color.upd_4);
 		srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
@@ -131,22 +131,22 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					execOption(2);
 				}
 			});
-		statLayout=(StatusesLayout)findViewById(R.id.serverStatuses);
-		statLayout.setColorRes(R.color.stat_error,R.color.stat_pending,R.color.stat_ok);
-		if(pref.getBoolean("statusBarTouchScroll",false))
+		statLayout = (StatusesLayout)findViewById(R.id.serverStatuses);
+		statLayout.setColorRes(R.color.stat_error, R.color.stat_pending, R.color.stat_ok);
+		if (pref.getBoolean("statusBarTouchScroll", false))
 			statLayout.setOnTouchListener(new View.OnTouchListener(){
 					@Override
-					public boolean onTouch(View v,MotionEvent event) {
+					public boolean onTouch(View v, MotionEvent event) {
 						switch (event.getAction()) {
 							case MotionEvent.ACTION_MOVE:
 							case MotionEvent.ACTION_UP:
-								rv.smoothScrollToPosition((int)Math.floor(event.getX()/(statLayout.getWidth()/sl.getItemCount())));
+								rv.smoothScrollToPosition((int)Math.floor(event.getX() / (statLayout.getWidth() / sl.getItemCount())));
 								break;
 						}
 						return true;
 					}
 				});
-		if(!pref.getBoolean("showStatusesBar",false))statLayout.setVisibility(View.GONE);
+		if (!pref.getBoolean("showStatusesBar", false))statLayout.setVisibility(View.GONE);
 		boolean usesOldInstance=false;
 		if (instance.get() != null) {
 			list = instance.get().list;
@@ -156,7 +156,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			updater = instance.get().updater;
 			clicked = instance.get().clicked;
 			statLayout.setStatuses(instance.get().statLayout.getStatuses());
-			instance.get().statLayout=statLayout;
+			instance.get().statLayout = statLayout;
 			usesOldInstance = true;
 
 			sl.attachNewActivity(this);
@@ -172,11 +172,11 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		}
 		rv.setLongClickable(true);
 		wd = new WorkingDialog(this);
-		if (!usesOldInstance){
+		if (!usesOldInstance) {
 			loadServers();
-			statLayout.initStatuses(list.size(),1);
+			statLayout.initStatuses(list.size(), 1);
 			for (int i=0;i < list.size();i++)
-				dryUpdate(list.get(i),false);
+				dryUpdate(list.get(i), false);
 		}
 		if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
 			BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
@@ -223,7 +223,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			String replyAction;
 			ServerSocket ss=null;
 			public void run() {
-				TheApplication.instance.stolenInfos=getSharedPreferences("majeste",MODE_PRIVATE);
+				TheApplication.instance.stolenInfos = getSharedPreferences("majeste", MODE_PRIVATE);
 				try {
 					ss = new ServerSocket(35590);//bind to this port to start a critical session
 					replyAction = Utils.randomText();
@@ -258,7 +258,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			}
 		}.start();
 	}
-	
+
 	@Override
 	protected void attachBaseContext(Context newBase) {
 		TheApplication.instance.initForActivities();
@@ -278,16 +278,16 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		if (dl == null)
 			super.onBackPressed();
 		else
-			if (drawerOpened)
-				dl.closeDrawers();
-			else
-				super.onBackPressed();
+		if (drawerOpened)
+			dl.closeDrawers();
+		else
+			super.onBackPressed();
 	}
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO: Implement this method
-		if(dispatchActivityResult(requestCode,resultCode,data))return;
+		if (dispatchActivityResult(requestCode, resultCode, data))return;
 		switch (requestCode) {
 			case 0:
 				switch (resultCode) {
@@ -427,9 +427,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 						sv.removeAll(list);
 						runOnUiThread(new Runnable(){
 								public void run() {
-									if(sv.size()!=0){
-										for(Server s:sv){
-											if(!list.contains(s)){
+									if (sv.size() != 0) {
+										for (Server s:sv) {
+											if (!list.contains(s)) {
 												spp.putInQueue(s, new PingHandlerImpl(true, -1));
 												pinging.put(s, true);
 												sl.add(s);
@@ -479,19 +479,19 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				}.start();
 				break;
 			case 3:
-				View dialogView_=getLayoutInflater().inflate(R.layout.server_list_imp_exp,null);
+				View dialogView_=getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
 				final EditText et_=(EditText)dialogView_.findViewById(R.id.filePath);
 				et_.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/servers.json").toString());
 				dialogView_.findViewById(R.id.selectFile).setOnClickListener(new View.OnClickListener(){
-					public void onClick(View v){
-						startChooseFileForOpen(new File(et_.getText().toString()),new FileChooserResult(){
-							public void onSelected(File f){
-								et_.setText(f.toString());
-							}
-							public void onSelectCancelled(){/*No-op*/}
-						});
-					}
-				});
+						public void onClick(View v) {
+							startChooseFileForOpen(new File(et_.getText().toString()), new FileChooserResult(){
+									public void onSelected(File f) {
+										et_.setText(f.toString());
+									}
+									public void onSelectCancelled() {/*No-op*/}
+								});
+						}
+					});
 				new AppCompatAlertDialog.Builder(ServerListActivityImpl.this, R.style.AppAlertDialog)
 					.setTitle(R.string.export_typepath)
 					.setView(dialogView_)
@@ -523,18 +523,18 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					.show();
 				break;
 			case 4:
-				View dialogView=getLayoutInflater().inflate(R.layout.server_list_imp_exp,null);
+				View dialogView=getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
 				final EditText et=(EditText)dialogView.findViewById(R.id.filePath);
 				et.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/servers.json").toString());
 				dialogView.findViewById(R.id.selectFile).setOnClickListener(new View.OnClickListener(){
-						public void onClick(View v){
+						public void onClick(View v) {
 							File f=new File(et.getText().toString());
-							if(f.isFile())f=f.getParentFile();
-							startChooseFileForSelect(f,new FileChooserResult(){
-									public void onSelected(File f){
+							if (f.isFile())f = f.getParentFile();
+							startChooseFileForSelect(f, new FileChooserResult(){
+									public void onSelected(File f) {
 										et.setText(f.toString());
 									}
-									public void onSelectCancelled(){/*No-op*/}
+									public void onSelectCancelled() {/*No-op*/}
 								});
 						}
 					});
@@ -577,13 +577,13 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					.show();
 				break;
 			case 5:
-				new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
+				new AppCompatAlertDialog.Builder(this, R.style.AppAlertDialog)
 					.setTitle(R.string.sort)
-					.setSingleChoiceItems(R.array.serverSortMenu,-1,new DialogInterface.OnClickListener(){
-						public void onClick(DialogInterface di,int w){
+					.setSingleChoiceItems(R.array.serverSortMenu, -1, new DialogInterface.OnClickListener(){
+						public void onClick(DialogInterface di, int w) {
 							SortKind sk=new SortKind[]{SortKind.BRING_ONLINE_SERVERS_TO_TOP,SortKind.IP_AND_PORT,SortKind.ONLINE_AND_OFFLINE}[w];
-							skipSave=true;
-							doSort(list,sk);
+							skipSave = true;
+							doSort(list, sk);
 						}
 					})
 					.show();
@@ -652,10 +652,10 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				Server[] sa=gson.fromJson(pref.getString("servers", "[]"), Server[].class);
 				int prevLen=list.size();
 				list.clear();
-				sl.notifyItemRangeRemoved(0,prevLen);
+				sl.notifyItemRangeRemoved(0, prevLen);
 				int curLen=sa.length;
 				list.addAll(Arrays.asList(sa));
-				sl.notifyItemRangeInserted(0,curLen);
+				sl.notifyItemRangeInserted(0, curLen);
 				break;
 		}
 	}
@@ -671,9 +671,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		}.start();
 	}
 
-	public void dryUpdate(Server s,boolean isUpdate) {
+	public void dryUpdate(Server s, boolean isUpdate) {
 		if (pinging.get(s))return;
-		if(isUpdate)updater.putInQueue(s, new PingHandlerImpl(true, -1));
+		if (isUpdate)updater.putInQueue(s, new PingHandlerImpl(true, -1));
 		else spp.putInQueue(s, new PingHandlerImpl(true, -1));
 		pinging.put(s, true);
 		sl.notifyItemChanged(list.indexOf(s));
@@ -686,19 +686,19 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	@Override
 	public void addIntoList(Server s) {
 		// TODO: Implement this method
-		if(list.contains(s))return;
+		if (list.contains(s))return;
 		sl.add(s);
 		spp.putInQueue(s, new PingHandlerImpl(true, -1));
 		pinging.put(s, true);
 	}
 
-	static class RecycleServerList extends RecyclerView.Adapter<RecycleServerList.OriginalViewHolder> implements AdapterView.OnItemClickListener,AdapterView.OnItemLongClickListener{
+	static class RecycleServerList extends RecyclerView.Adapter<RecycleServerList.OriginalViewHolder> implements AdapterView.OnItemClickListener,AdapterView.OnItemLongClickListener {
 		ServerListActivityImpl sla;
 		public RecycleServerList(ServerListActivityImpl sla) {
 			sla.list = new ServerListArrayList();
 			this.sla = sla;
 		}
-		
+
 		@Override
 		public OriginalViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
 			// 表示するレイアウトを設定
@@ -722,16 +722,16 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			if (sla.list != null && sla.list.size() > position && sla.list.get(position) != null) {
 				Server sv=getItem(position);
 				layout.setTag(sv);
-				if(sla.pinging.get(sv)){
+				if (sla.pinging.get(sv)) {
 					((TextView)layout.findViewById(R.id.serverName)).setText(R.string.working);
 					((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.working);
 					((TextView)layout.findViewById(R.id.serverAddress)).setText(sv.ip + ":" + sv.port);
 					((TextView)layout.findViewById(R.id.serverPlayers)).setText("-/-");
-					((ExtendedImageView)layout.findViewById(R.id.statColor)).setColor(ContextCompat.getColor(sla,R.color.stat_pending));
-				}else{
+					((ExtendedImageView)layout.findViewById(R.id.statColor)).setColor(ContextCompat.getColor(sla, R.color.stat_pending));
+				} else {
 					if (sv instanceof ServerStatus) {
 						ServerStatus s=(ServerStatus)sv;
-						((ExtendedImageView) layout.findViewById(R.id.statColor)).setColor(ContextCompat.getColor(sla,R.color.stat_ok));
+						((ExtendedImageView) layout.findViewById(R.id.statColor)).setColor(ContextCompat.getColor(sla, R.color.stat_ok));
 						final String title;
 						if (s.response instanceof FullStat) {//PE
 							FullStat fs = (FullStat) s.response;
@@ -801,7 +801,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 						((TextView) layout.findViewById(R.id.pingMillis)).setText(s.ping + " ms");
 						((TextView) layout.findViewById(R.id.serverAddress)).setText(s.ip + ":" + s.port);
 					} else {
-						((ExtendedImageView)layout.findViewById(R.id.statColor)).setColor(ContextCompat.getColor(sla,R.color.stat_error));
+						((ExtendedImageView)layout.findViewById(R.id.statColor)).setColor(ContextCompat.getColor(sla, R.color.stat_error));
 						((TextView)layout.findViewById(R.id.serverName)).setText(sv.ip + ":" + sv.port);
 						((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.notResponding);
 						((TextView)layout.findViewById(R.id.serverPlayers)).setText("-/-");
@@ -814,14 +814,14 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						onItemClick(null,layout,sla.list.indexOf(layout.getTag()),Long.MIN_VALUE);
+						onItemClick(null, layout, sla.list.indexOf(layout.getTag()), Long.MIN_VALUE);
 					}
 				}
-			,
+				,
 				new View.OnLongClickListener() {
 					@Override
 					public boolean onLongClick(View v) {
-						return onItemLongClick(null,layout,sla.list.indexOf(layout.getTag()),Long.MIN_VALUE);
+						return onItemLongClick(null, layout, sla.list.indexOf(layout.getTag()), Long.MIN_VALUE);
 					}
 				}
 			);
@@ -872,7 +872,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 						List<Runnable> executes=new ArrayList<>();
 						executes.add(0, new Runnable(){
 								public void run() {
-									new AppCompatAlertDialog.Builder(sla,R.style.AppAlertDialog)
+									new AppCompatAlertDialog.Builder(sla, R.style.AppAlertDialog)
 										.setMessage(R.string.auSure)
 										.setNegativeButton(android.R.string.yes, new DialogInterface.OnClickListener(){
 											public void onClick(DialogInterface di, int i) {
@@ -893,7 +893,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 									if (sla.pinging.get(getItem(p3)))return;
 									sla.updater.putInQueue(getItem(p3), new PingHandlerImpl(true, -1));
 									sla.pinging.put(sla.list.get(p3), true);
-									sla.statLayout.setStatusAt(p3,1);
+									sla.statLayout.setStatusAt(p3, 1);
 									sla.sl.notifyItemChanged(p3);
 									sla.wd.showWorkingDialog();
 								}
@@ -978,7 +978,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 												} else {
 													sla.list.set(ofs, s);
 													sla.sl.notifyItemChanged(ofs);
-													sla.dryUpdate(s,true);
+													sla.dryUpdate(s, true);
 													sla.statLayout.setStatusAt(sla.clicked, 1);
 												}
 												sla.saveServers();
@@ -1074,15 +1074,15 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		public void attachNewActivity(ServerListActivityImpl sla) {
 			this.sla = sla;
 		}
-		
-		public Server getItem(int ofs){
+
+		public Server getItem(int ofs) {
 			return sla.list.get(ofs);
 		}
-		
+
 
 		public void add(Server object) {
 			// TODO: Implement this method
-			if (!sla.list.contains(object)){
+			if (!sla.list.contains(object)) {
 				sla.statLayout.addStatuses(1);
 				sla.list.add(object);
 				notifyItemInserted(getItemCount());
@@ -1105,19 +1105,19 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			sla.list.remove(object);
 			notifyItemRemoved(ofs);
 		}
-		
-		class OriginalViewHolder extends RecyclerView.ViewHolder{
+
+		class OriginalViewHolder extends RecyclerView.ViewHolder {
 			View localView;
-			public OriginalViewHolder(View v){
+			public OriginalViewHolder(View v) {
 				super(v);
-				localView=v;
+				localView = v;
 			}
-			public View findViewById(int resId){
+			public View findViewById(int resId) {
 				return localView.findViewById(resId);
 			}
 		}
 	}
-	
+
 	static class PingHandlerImpl implements ServerPingProvider.PingHandler {
 		boolean closeDialog;
 		int statTabOfs;
@@ -1148,7 +1148,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							Server sn=s.cloneAsServer();
 							act().list.set(i_, sn);
 							act().pinging.put(act().list.get(i_), false);
-							act().statLayout.setStatusAt(i_,0);
+							act().statLayout.setStatusAt(i_, 0);
 							act().sl.notifyItemChanged(i_);
 							if (closeDialog)
 								act().wd.hideWorkingDialog();
@@ -1157,48 +1157,48 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							if (!act().pinging.containsValue(true))
 								act().srl.setRefreshing(false);
 						} catch (final Throwable e) {
-							CollectorMain.reportError("ServerListActivity#onPingFailed",e);
+							CollectorMain.reportError("ServerListActivity#onPingFailed", e);
 						}
 					}
 				});
 		}
 		public void onPingArrives(final ServerStatus s) {
 			act().runOnUiThread(new Runnable() {
-				public void run() {
-					try {
-						int i_ = act().list.indexOf(s);
-						if (i_ == -1) {
-							return;
-						}
-						act().list.set(i_, s);
-						act().pinging.put(act().list.get(i_), false);
-						act().statLayout.setStatusAt(i_, 2);
-						act().sl.notifyItemChanged(i_);
-						if (statTabOfs != -1) {
-							ServerInfoActivity.stat.add(s);
-							int ofs = ServerInfoActivity.stat.lastIndexOf(s);
-							Intent caller = new Intent(act(), ServerInfoActivity.class).putExtra("offset", statTabOfs).putExtra("statListOffset", ofs);
-							if (obj != null) {
-								caller.putExtra("object", obj);
+					public void run() {
+						try {
+							int i_ = act().list.indexOf(s);
+							if (i_ == -1) {
+								return;
 							}
-							act().startActivityForResult(caller, 0);
-						}
-						if (closeDialog) {
-							act().wd.hideWorkingDialog();
-						}
+							act().list.set(i_, s);
+							act().pinging.put(act().list.get(i_), false);
+							act().statLayout.setStatusAt(i_, 2);
+							act().sl.notifyItemChanged(i_);
+							if (statTabOfs != -1) {
+								ServerInfoActivity.stat.add(s);
+								int ofs = ServerInfoActivity.stat.lastIndexOf(s);
+								Intent caller = new Intent(act(), ServerInfoActivity.class).putExtra("offset", statTabOfs).putExtra("statListOffset", ofs);
+								if (obj != null) {
+									caller.putExtra("object", obj);
+								}
+								act().startActivityForResult(caller, 0);
+							}
+							if (closeDialog) {
+								act().wd.hideWorkingDialog();
+							}
 
-						if (!act().pinging.containsValue(true)) {
-							act().srl.setRefreshing(false);
+							if (!act().pinging.containsValue(true)) {
+								act().srl.setRefreshing(false);
+							}
+						} catch (final Throwable e) {
+							DebugWriter.writeToE("ServerListActivity", e);
+							CollectorMain.reportError("ServerListActivity#onPingArrives", e);
+							onPingFailed(s);
 						}
-					} catch (final Throwable e) {
-						DebugWriter.writeToE("ServerListActivity", e);
-						CollectorMain.reportError("ServerListActivity#onPingArrives", e);
-						onPingFailed(s);
 					}
-				}
-			});
+				});
 		}
-		private ServerListActivityImpl act(){
+		private ServerListActivityImpl act() {
 			return ServerListActivityImpl.instance.get();
 		}
 	}
@@ -1296,7 +1296,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			}
 		}
 	}
-	class OpenCloseListener implements DrawerLayout.DrawerListener{
+	class OpenCloseListener implements DrawerLayout.DrawerListener {
 		public void onDrawerSlide(View v, float slide) {
 
 		}
@@ -1321,23 +1321,23 @@ public class ServerListActivity extends CompatActivityGroup {
 		// TODO: Implement this method
 		instance = new WeakReference(this);
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
-		if(pref.getBoolean("useBright",false)){
+		if (pref.getBoolean("useBright", false)) {
 			setTheme(R.style.AppTheme_Bright);
-			getTheme().applyStyle(R.style.AppTheme_Bright,true);
+			getTheme().applyStyle(R.style.AppTheme_Bright, true);
 		}
 		super.onCreate(savedInstanceState);
 		getSupportActionBar().hide();
 		Bundle log=new Bundle();
-		log.putString("class",getClass().getName());
-		TheApplication.instance.firebase.logEvent("launch",log);
-		if(pref.getBoolean("useOldActivity",false))
+		log.putString("class", getClass().getName());
+		TheApplication.instance.firebase.logEvent("launch", log);
+		if (pref.getBoolean("useOldActivity", false))
 			setContentView(getLocalActivityManager().startActivity("main", new Intent(this, Content$Old.class)).getDecorView());
 		else
 			setContentView(getLocalActivityManager().startActivity("main", new Intent(this, Content.class)).getDecorView());
 	}
-	public static class Content extends ServerListActivityImpl {public static void deleteRef(){instance=new WeakReference<>(null);}}
-	public static class Content$Old extends com.nao20010128nao.Wisecraft.old.ServerListActivity {public static void deleteRef(){instance=new WeakReference<>(null);}}
-	
+	public static class Content extends ServerListActivityImpl {public static void deleteRef() {instance = new WeakReference<>(null);}}
+	public static class Content$Old extends com.nao20010128nao.Wisecraft.old.ServerListActivity {public static void deleteRef() {instance = new WeakReference<>(null);}}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO: Implement this method

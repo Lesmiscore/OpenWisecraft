@@ -40,9 +40,9 @@ public class ServerInfoActivity extends AppCompatActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
 	public static List<ServerStatus> stat=new ArrayList<>();
 	public static Map<String,Bitmap> faces=new HashMap<>();
-	
+
 	public static final int DIRT_BRIGHT,DIRT_DARK,PALE_PRIMARY;
-	
+
 	SharedPreferences pref;
 
 	ServerStatus localStat;
@@ -69,14 +69,14 @@ public class ServerInfoActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
-		if(pref.getBoolean("useBright",false)&!(pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false))){
+		if (pref.getBoolean("useBright", false) & !(pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false))) {
 			setTheme(R.style.AppTheme_Bright_NoActionBar);
-			getTheme().applyStyle(R.style.AppTheme_Bright_NoActionBar,true);
+			getTheme().applyStyle(R.style.AppTheme_Bright_NoActionBar, true);
 		}
 		super.onCreate(savedInstanceState);
 		getWindow().requestFeature(Window.FEATURE_ACTION_MODE_OVERLAY);
 		instance = new WeakReference(this);
-		
+
 		int statOfs=getIntent().getIntExtra("statListOffset", -1);
 
 		if (stat.size() > statOfs & statOfs != -1)localStat = stat.get(statOfs);
@@ -91,7 +91,7 @@ public class ServerInfoActivity extends AppCompatActivity {
 		setContentView(R.layout.server_info_pager);
 		setSupportActionBar((android.support.v7.widget.Toolbar)findViewById(R.id.toolbar));
 		tabs = (ViewPager)findViewById(R.id.pager);
-		tabs.setAdapter(adapter=new InternalPagerAdapter());
+		tabs.setAdapter(adapter = new InternalPagerAdapter());
 		PagerSlidingTabStrip psts=(PagerSlidingTabStrip)findViewById(R.id.tabs);
 		psts.setViewPager(tabs);
 
@@ -131,9 +131,9 @@ public class ServerInfoActivity extends AppCompatActivity {
 
 		ip = localStat.ip;
 		port = localStat.port;
-		
+
 		update(localStat.response);
-		
+
 		if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
 			BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
 			bd.setTargetDensity(getResources().getDisplayMetrics());
@@ -144,15 +144,15 @@ public class ServerInfoActivity extends AppCompatActivity {
 			}
 			psts.setIndicatorColor(Color.WHITE);
 			psts.setTextColor(Color.WHITE);
-			psts.setOnPageChangeListener(new ColorUpdater(Color.WHITE,DIRT_BRIGHT,tabs,psts));
-		}else{
-			psts.setIndicatorColor(ContextCompat.getColor(this,R.color.upd_2));
-			psts.setTextColor(ContextCompat.getColor(this,R.color.upd_2));
-			psts.setOnPageChangeListener(new ColorUpdater(ContextCompat.getColor(this,R.color.upd_2),PALE_PRIMARY,tabs,psts));
+			psts.setOnPageChangeListener(new ColorUpdater(Color.WHITE, DIRT_BRIGHT, tabs, psts));
+		} else {
+			psts.setIndicatorColor(ContextCompat.getColor(this, R.color.upd_2));
+			psts.setTextColor(ContextCompat.getColor(this, R.color.upd_2));
+			psts.setOnPageChangeListener(new ColorUpdater(ContextCompat.getColor(this, R.color.upd_2), PALE_PRIMARY, tabs, psts));
 		}
-		
+
 		int offset=getIntent().getIntExtra("offset", 0);
-		if(adapter.getCount()>=2&offset==0)tabs.setCurrentItem(1);
+		if (adapter.getCount() >= 2 & offset == 0)tabs.setCurrentItem(1);
 		tabs.setCurrentItem(offset);
 	}
 	public synchronized void update(final ServerPingResult resp) {
@@ -186,10 +186,10 @@ public class ServerInfoActivity extends AppCompatActivity {
 			SprPair p=(SprPair)resp;
 			update(p.getA());
 			update(p.getB());
-		} else if (resp instanceof UnconnectedPing.UnconnectedPingResult & resp!=localStat.response) {
+		} else if (resp instanceof UnconnectedPing.UnconnectedPingResult & resp != localStat.response) {
 			setTitle((((UnconnectedPing.UnconnectedPingResult)resp).getServerName()));
 			addUcpDetailsTab();
-		} else if (resp instanceof UnconnectedPing.UnconnectedPingResult & resp==localStat.response) {
+		} else if (resp instanceof UnconnectedPing.UnconnectedPingResult & resp == localStat.response) {
 			if (pref.getBoolean("showDetailsIfNoDetails", false)) {
 				setTitle((((UnconnectedPing.UnconnectedPingResult)resp).getServerName()));
 			} else {
@@ -198,20 +198,20 @@ public class ServerInfoActivity extends AppCompatActivity {
 				return;
 			}
 		}
-		
-		
+
+
 		updateTaskDesc(resp);
 	}
-	public void updateTaskDesc(ServerPingResult resp){
+	public void updateTaskDesc(ServerPingResult resp) {
 		if (Build.VERSION.SDK_INT >= 21) {
-			int color=ContextCompat.getColor(this,R.color.upd_2);
+			int color=ContextCompat.getColor(this, R.color.upd_2);
 			if (resp instanceof Reply) {
 				Reply rep=(Reply)resp;
 				if (rep.favicon != null) {
 					byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
-					serverIconBmp=BitmapFactory.decodeByteArray(image, 0, image.length);
+					serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
 					serverIconObj = new BitmapDrawable(serverIconBmp);
-					color=Palette.generate(serverIconBmp).getLightVibrantColor(color);
+					color = Palette.generate(serverIconBmp).getLightVibrantColor(color);
 				} else {
 					serverIconObj = new ColorDrawable(Color.TRANSPARENT);
 				}
@@ -219,9 +219,9 @@ public class ServerInfoActivity extends AppCompatActivity {
 				Reply19 rep=(Reply19)resp;
 				if (rep.favicon != null) {
 					byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
-					serverIconBmp=BitmapFactory.decodeByteArray(image, 0, image.length);
+					serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
 					serverIconObj = new BitmapDrawable(serverIconBmp);
-					color=Palette.generate(serverIconBmp).getLightVibrantColor(color);
+					color = Palette.generate(serverIconBmp).getLightVibrantColor(color);
 				} else {
 					serverIconObj = new ColorDrawable(Color.TRANSPARENT);
 				}
@@ -229,7 +229,7 @@ public class ServerInfoActivity extends AppCompatActivity {
 			ActivityManager.TaskDescription td;
 			switch (localStat.mode) {
 				case 1:
-					if (serverIconBmp!=null) {
+					if (serverIconBmp != null) {
 						td = new ActivityManager.TaskDescription(getTitle().toString(), serverIconBmp, color);
 					} else {
 						td = new ActivityManager.TaskDescription(getTitle().toString(), ((BitmapDrawable)getResources().getDrawable(R.drawable.ic_launcher)).getBitmap(), color);
@@ -248,20 +248,20 @@ public class ServerInfoActivity extends AppCompatActivity {
 		boolean isDark;
 		if (pref.getBoolean("colorFormattedText", false)) {
 			if (pref.getBoolean("darkBackgroundForServerName", false)) {
-				isDark=true;
+				isDark = true;
 			} else {
-				isDark=false;
+				isDark = false;
 			}
 		} else {
-			isDark=false;
+			isDark = false;
 		}
-		int color= ContextCompat.getColor(this,R.color.upd_2);
+		int color= ContextCompat.getColor(this, R.color.upd_2);
 		seeTitleButton = menu.add(Menu.NONE, 0, 0, R.string.seeTitle);
-		seeTitleButton.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_open_in_new_black_48dp,isDark?Color.WHITE:color/*0xff_666666*/));
+		seeTitleButton.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_open_in_new_black_48dp, isDark ?Color.WHITE: color));
 		MenuItemCompat.setShowAsAction(seeTitleButton, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
 		if (!nonUpd) {
 			updateBtn = menu.add(Menu.NONE, 1, 1, R.string.update);
-			updateBtn.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_refresh_black_48dp,isDark?Color.WHITE:color/*0xff_666666*/));
+			updateBtn.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_refresh_black_48dp, isDark ?Color.WHITE: color));
 			MenuItemCompat.setShowAsAction(updateBtn, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
 		}
 		return true;
@@ -308,20 +308,20 @@ public class ServerInfoActivity extends AppCompatActivity {
 	@Override
 	public void setTitle(CharSequence title) {
 		// TODO: Implement this method
-		if(title==null){
+		if (title == null) {
 			if (pref.getBoolean("colorFormattedText", false)) {
 				SpannableStringBuilder ssb=new SpannableStringBuilder();
 				ssb.append(localStat.toString());
 				if (pref.getBoolean("darkBackgroundForServerName", false)) {
-					ssb.setSpan(new ForegroundColorSpan(0xff_ffffff),0,ssb.length()-1,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+					ssb.setSpan(new ForegroundColorSpan(0xff_ffffff), 0, ssb.length() - 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 				} else {
-					ssb.setSpan(new ForegroundColorSpan(0xff_000000),0,ssb.length()-1,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+					ssb.setSpan(new ForegroundColorSpan(0xff_000000), 0, ssb.length() - 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 				}
 				super.setTitle(ssb);
 			} else {
 				super.setTitle(localStat.toString());
 			}
-		}else{
+		} else {
 			if (pref.getBoolean("colorFormattedText", false)) {
 				if (pref.getBoolean("darkBackgroundForServerName", false)) {
 					super.setTitle(Utils.parseMinecraftFormattingCodeForDark(title.toString()));
@@ -343,7 +343,7 @@ public class ServerInfoActivity extends AppCompatActivity {
 				pref.edit().putString("pcuseruuids", new Gson().toJson(TheApplication.instance.pcUserUUIDs)).commit();
 			}
 		}.start();
-		if(serverIconBmp!=null)serverIconBmp.recycle();
+		if (serverIconBmp != null)serverIconBmp.recycle();
 	}
 
 	@Override
@@ -351,7 +351,7 @@ public class ServerInfoActivity extends AppCompatActivity {
 		// TODO: Implement this method
 		super.onResume();
 	}
-	
+
 	public void addModsTab() {
 		if ((!hideMods) | localStat.mode == 1) {
 			adapter.addTab(ModsFragment.class, getResources().getString(R.string.mods));
@@ -369,22 +369,22 @@ public class ServerInfoActivity extends AppCompatActivity {
 		super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
 	}
 
-	static class ColorUpdater implements ViewPager.OnPageChangeListener{
+	static class ColorUpdater implements ViewPager.OnPageChangeListener {
 		int selected,unselected;
 		ViewPager pager;
 		PagerSlidingTabStrip pagerSlider;
-		public ColorUpdater(int selected,int unselected,ViewPager vp,PagerSlidingTabStrip psts){
-			this.selected=selected;
-			this.unselected=unselected;
-			pager=vp;
-			pagerSlider=psts;
+		public ColorUpdater(int selected, int unselected, ViewPager vp, PagerSlidingTabStrip psts) {
+			this.selected = selected;
+			this.unselected = unselected;
+			pager = vp;
+			pagerSlider = psts;
 		}
-		
-		public void onPageSelected(int pos){
+
+		public void onPageSelected(int pos) {
 			int[] colors=new int[pager.getAdapter().getCount()];
-			Arrays.fill(colors,unselected);
-			colors[pos]=selected;
-			for(int i=0;i<colors.length;i++){
+			Arrays.fill(colors, unselected);
+			colors[pos] = selected;
+			for (int i=0;i < colors.length;i++) {
 				((TextView)((ViewGroup)pagerSlider.getChildAt(0)).getChildAt(i)).setTextColor(colors[i]);
 			}
 		}
@@ -399,7 +399,7 @@ public class ServerInfoActivity extends AppCompatActivity {
 			// TODO: Implement this method
 		}
 	}
-	
+
 	class PCUserFaceAdapter extends PlayerNamesListAdapter {
 		List<View> cached=new ArrayList<>(Constant.ONE_HUNDRED_LENGTH_NULL_LIST);
 		public PCUserFaceAdapter() {
@@ -494,31 +494,31 @@ public class ServerInfoActivity extends AppCompatActivity {
 			return super.getCount() + 1;
 		}
 	}
-	class PlayerNamesListAdapter extends AppBaseArrayAdapter<String>{
+	class PlayerNamesListAdapter extends AppBaseArrayAdapter<String> {
 		public PlayerNamesListAdapter() {
 			super(ServerInfoActivity.this, android.R.layout.simple_list_item_1, new ArrayList<String>());
 		}
 		public PlayerNamesListAdapter(Context context, int resource, List<String> objects) {
 			super(context, resource, objects);
 		}
-		
+
 		@Override
 		public String getItem(int position) {
 			// TODO: Implement this method
 			String s=super.getItem(position);
-			if(pref.getBoolean("deleteDecoPlayerName",false))
-				s=deleteDecorations(s);
+			if (pref.getBoolean("deleteDecoPlayerName", false))
+				s = deleteDecorations(s);
 			return s;
 		}
 	}
 
-	
-	class InternalPagerAdapter extends UsefulPagerAdapter{
-		public InternalPagerAdapter(){
+
+	class InternalPagerAdapter extends UsefulPagerAdapter {
+		public InternalPagerAdapter() {
 			super(getSupportFragmentManager());
 		}
 	}
-	
+
 	public static class PlayersFragment extends BaseFragment<ServerInfoActivity> {
 		ListView lv;
 		ArrayAdapter<String> player;
@@ -526,14 +526,14 @@ public class ServerInfoActivity extends AppCompatActivity {
 		public void onResume() {
 			// TODO: Implement this method
 			super.onResume();
-			lv=(ListView)getView();
-			
-			
+			lv = (ListView)getView();
+
+
 			ServerStatus localStat=getParentActivity().localStat;
 			ServerPingResult resp=localStat.response;
 			String ip=localStat.ip;
 			int port=localStat.port;
-			
+
 			if (pref.getBoolean("showPcUserFace", false) & localStat.mode == 1 & canInflateSkinFaceList()) {
 				getParentActivity().skinFaceImages = new ArrayList<>();
 				getParentActivity().sff = new SkinFaceFetcher();
@@ -543,15 +543,15 @@ public class ServerInfoActivity extends AppCompatActivity {
 				player = getParentActivity().new PlayerNamesListAdapter();
 				Log.d("ServerInfoActivity", "face off");
 			}
-			
+
 			lv.setAdapter(player);
-			
-			if (resp instanceof FullStat|resp instanceof SprPair) {
+
+			if (resp instanceof FullStat | resp instanceof SprPair) {
 				FullStat fs=null;
-				if(resp instanceof FullStat)
-					fs=(FullStat)resp;
-				else if(resp instanceof SprPair)
-					fs=(FullStat)((SprPair)resp).getA();
+				if (resp instanceof FullStat)
+					fs = (FullStat)resp;
+				else if (resp instanceof SprPair)
+					fs = (FullStat)((SprPair)resp).getA();
 				final ArrayList<String> sort=new ArrayList<>(fs.getPlayerList());
 				if (pref.getBoolean("sortPlayerNames", true))
 					Collections.sort(sort);
@@ -589,18 +589,18 @@ public class ServerInfoActivity extends AppCompatActivity {
 				}
 			}
 		}
-		
+
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
 			return inflater.inflate(R.layout.players_tab, container, false);
 		}
-		
-		public boolean canInflateSkinFaceList(){
-			try{
+
+		public boolean canInflateSkinFaceList() {
+			try {
 				LayoutInflater.from(getParentActivity()).inflate(R.layout.simple_list_item_with_image, null, false);
 				return true;
-			}catch(Throwable e){
+			} catch (Throwable e) {
 				return false;
 			}
 		}
@@ -613,30 +613,30 @@ public class ServerInfoActivity extends AppCompatActivity {
 		public void onResume() {
 			// TODO: Implement this method
 			super.onResume();
-			data=(ListView)getView().findViewById(R.id.data);
-			
+			data = (ListView)getView().findViewById(R.id.data);
+
 			infos = new KVListAdapter<>(getParentActivity());
 			data.setAdapter(infos);
 			ServerStatus localStat=getParentActivity().localStat;
 			ServerPingResult resp=localStat.response;
 			String ip=localStat.ip;
 			int port=localStat.port;
-			
-			if (resp instanceof FullStat|resp instanceof SprPair) {
+
+			if (resp instanceof FullStat | resp instanceof SprPair) {
 				FullStat fs=null;
-				if(resp instanceof FullStat)
-					fs=(FullStat)resp;
-				else if(resp instanceof SprPair)
-					fs=(FullStat)((SprPair)resp).getA();
+				if (resp instanceof FullStat)
+					fs = (FullStat)resp;
+				else if (resp instanceof SprPair)
+					fs = (FullStat)((SprPair)resp).getA();
 				infos.clear();
 				CompatArrayAdapter.addAll(infos, fs.getData().entrySet());
 			} 
 		}
-		
+
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
-			return this.lv=inflater.inflate(R.layout.data_tab, container, false);
+			return this.lv = inflater.inflate(R.layout.data_tab, container, false);
 		}
 	}
 	public static class DataFragmentPC extends BaseFragment<ServerInfoActivity> {
@@ -653,9 +653,9 @@ public class ServerInfoActivity extends AppCompatActivity {
 			super.onResume();
 			serverIcon = (ImageView)getView().findViewById(R.id.serverIcon);
 			serverName = (TextView)getView().findViewById(R.id.serverTitle);
-			data=(ListView)getView().findViewById(R.id.data);
-			
-			
+			data = (ListView)getView().findViewById(R.id.data);
+
+
 			infos = new KVListAdapter<>(getParentActivity());
 			data.setAdapter(infos);
 			ServerStatus localStat=getParentActivity().localStat;
@@ -673,7 +673,7 @@ public class ServerInfoActivity extends AppCompatActivity {
 				} else {
 					serverNameStr = Utils.deleteDecorations(rep.description);
 				}
-				
+
 				infos.clear();
 				Map<String,String> data=new OrderTrustedMap<>();
 				data.put(getResources().getString(R.string.pc_maxPlayers), rep.players.max + "");
@@ -681,10 +681,10 @@ public class ServerInfoActivity extends AppCompatActivity {
 				data.put(getResources().getString(R.string.pc_softwareVersion), rep.version.name);
 				data.put(getResources().getString(R.string.pc_protocolVersion), rep.version.protocol + "");
 				CompatArrayAdapter.addAll(infos, data.entrySet());
-				
+
 				if (rep.favicon != null) {
 					byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
-					serverIconBmp=BitmapFactory.decodeByteArray(image, 0, image.length);
+					serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
 					serverIconObj = new BitmapDrawable(serverIconBmp);
 				} else {
 					serverIconObj = new ColorDrawable(Color.TRANSPARENT);
@@ -700,7 +700,7 @@ public class ServerInfoActivity extends AppCompatActivity {
 				} else {
 					serverNameStr = Utils.deleteDecorations(rep.description.text);
 				}
-				
+
 				infos.clear();
 				Map<String,String> data=new OrderTrustedMap<>();
 				data.put(getResources().getString(R.string.pc_maxPlayers), rep.players.max + "");
@@ -708,10 +708,10 @@ public class ServerInfoActivity extends AppCompatActivity {
 				data.put(getResources().getString(R.string.pc_softwareVersion), rep.version.name);
 				data.put(getResources().getString(R.string.pc_protocolVersion), rep.version.protocol + "");
 				CompatArrayAdapter.addAll(infos, data.entrySet());
-				
+
 				if (rep.favicon != null) {
 					byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
-					serverIconBmp=BitmapFactory.decodeByteArray(image, 0, image.length);
+					serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
 					serverIconObj = new BitmapDrawable(serverIconBmp);
 				} else {
 					serverIconObj = new ColorDrawable(Color.TRANSPARENT);
@@ -720,7 +720,7 @@ public class ServerInfoActivity extends AppCompatActivity {
 			serverName.setText(serverNameStr);
 			serverIcon.setImageDrawable(serverIconObj);
 		}
-		
+
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
@@ -741,21 +741,21 @@ public class ServerInfoActivity extends AppCompatActivity {
 		public void onResume() {
 			// TODO: Implement this method
 			super.onResume();
-			lv=(ListView)getView();
-			
-			
+			lv = (ListView)getView();
+
+
 			pluginNames = new AppBaseArrayAdapter<String>(getParentActivity(), android.R.layout.simple_list_item_1, new ArrayList<String>());
 			lv.setAdapter(pluginNames);
 			ServerStatus localStat=getParentActivity().localStat;
 			ServerPingResult resp=localStat.response;
 			String ip=localStat.ip;
 			int port=localStat.port;
-			if (resp instanceof FullStat|resp instanceof SprPair) {
+			if (resp instanceof FullStat | resp instanceof SprPair) {
 				FullStat fs=null;
-				if(resp instanceof FullStat)
-					fs=(FullStat)resp;
-				else if(resp instanceof SprPair)
-					fs=(FullStat)((SprPair)resp).getA();
+				if (resp instanceof FullStat)
+					fs = (FullStat)resp;
+				else if (resp instanceof SprPair)
+					fs = (FullStat)((SprPair)resp).getA();
 				pluginNames.clear();
 				if (fs.getData().containsKey("plugins")) {
 					String[] data=fs.getData().get("plugins").split("\\: ");
@@ -768,11 +768,11 @@ public class ServerInfoActivity extends AppCompatActivity {
 				}
 			}
 		}
-		
+
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
-			return lv=(ListView) inflater.inflate(R.layout.players_tab, container, false);
+			return lv = (ListView) inflater.inflate(R.layout.players_tab, container, false);
 		}
 	}
 	public static class ModsFragment extends BaseFragment<ServerInfoActivity> {
@@ -784,10 +784,10 @@ public class ServerInfoActivity extends AppCompatActivity {
 		public void onResume() {
 			// TODO: Implement this method
 			super.onResume();
-			mods=(ListView)getView().findViewById(R.id.players);
-			modLoader=(TextView)getView().findViewById(R.id.modLoaderType);
-			
-			
+			mods = (ListView)getView().findViewById(R.id.players);
+			modLoader = (TextView)getView().findViewById(R.id.modLoaderType);
+
+
 			modInfos = getParentActivity().new ModInfoListAdapter();
 			mods.setAdapter(modInfos);
 			ServerStatus localStat=getParentActivity().localStat;
@@ -808,7 +808,7 @@ public class ServerInfoActivity extends AppCompatActivity {
 				}
 			}
 		}
-		
+
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
@@ -829,10 +829,10 @@ public class ServerInfoActivity extends AppCompatActivity {
 			// TODO: Implement this method
 			super.onResume();
 			UnconnectedPing.UnconnectedPingResult result;
-			if(getParentActivity().localStat.response instanceof UnconnectedPing.UnconnectedPingResult){
-				result=(UnconnectedPing.UnconnectedPingResult)getParentActivity().localStat.response;
-			}else{
-				result=(UnconnectedPing.UnconnectedPingResult)((SprPair)getParentActivity().localStat.response).getB();
+			if (getParentActivity().localStat.response instanceof UnconnectedPing.UnconnectedPingResult) {
+				result = (UnconnectedPing.UnconnectedPingResult)getParentActivity().localStat.response;
+			} else {
+				result = (UnconnectedPing.UnconnectedPingResult)((SprPair)getParentActivity().localStat.response).getB();
 			}
 			ListView lv=(ListView)getView().findViewById(R.id.data);
 			KVListAdapter<String,String> adap=new KVListAdapter<String,String>(getActivity());
@@ -844,33 +844,33 @@ public class ServerInfoActivity extends AppCompatActivity {
 			otm.put(getString(R.string.ucp_mcpeVersion),     values[3]);
 			otm.put(getString(R.string.ucp_nowPlayers),      values[4]);
 			otm.put(getString(R.string.ucp_maxPlayers),      values[5]);
-			CompatArrayAdapter.addAll(adap,otm.entrySet());
+			CompatArrayAdapter.addAll(adap, otm.entrySet());
 		}
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
-			return inflater.inflate(R.layout.server_info_ucp_details,container,false);
+			return inflater.inflate(R.layout.server_info_ucp_details, container, false);
 		}
 	}
-	
-	
+
+
 	static{
 		int base=0xff3a2a1d;
 		float[] hsv=new float[3];
-		Color.RGBToHSV(Color.red(base),Color.green(base),Color.blue(base),hsv);
+		Color.RGBToHSV(Color.red(base), Color.green(base), Color.blue(base), hsv);
 		float v=hsv[2];
-		hsv[2]=v+0.25f;//V+20
-		DIRT_BRIGHT=Color.HSVToColor(hsv);
-		hsv[2]=v-0.05f;//V-10
-		DIRT_DARK=Color.HSVToColor(hsv);
-		
-		int palePrimary=ContextCompat.getColor(TheApplication.instance,R.color.upd_2);
+		hsv[2] = v + 0.25f;//V+20
+		DIRT_BRIGHT = Color.HSVToColor(hsv);
+		hsv[2] = v - 0.05f;//V-10
+		DIRT_DARK = Color.HSVToColor(hsv);
+
+		int palePrimary=ContextCompat.getColor(TheApplication.instance, R.color.upd_2);
 		int r=Color.red(palePrimary);
 		int g=Color.green(palePrimary);
 		int b=Color.blue(palePrimary);
 		int a=new BigDecimal(0xff).multiply(new BigDecimal("0.3")).intValue();
-		
-		PALE_PRIMARY=Color.argb(a,r,g,b);
+
+		PALE_PRIMARY = Color.argb(a, r, g, b);
 	}
 }

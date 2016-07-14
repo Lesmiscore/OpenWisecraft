@@ -5,25 +5,24 @@ import android.support.v7.widget.*;
 import android.util.*;
 import android.support.v4.content.ContextCompat;
 
-public class ExtendedImageView extends AppCompatImageView
-{
+public class ExtendedImageView extends AppCompatImageView {
 	public ExtendedImageView(Context context) {
 		super(context);
 	}
 
     public ExtendedImageView(Context context, AttributeSet attrs) {
-		super(context,attrs);
+		super(context, attrs);
 	}
 
     public ExtendedImageView(Context context, AttributeSet attrs, int defStyleAttr) {
-		super(context,attrs,defStyleAttr);
+		super(context, attrs, defStyleAttr);
 	}
-	
-	public void setColor(int color){
+
+	public void setColor(int color) {
 		setImageDrawable(new ColorDrawable(color));
 	}
-	
-	public void setColorRes(int les){
-		setColor(ContextCompat.getColor(getContext(),les));
+
+	public void setColorRes(int les) {
+		setColor(ContextCompat.getColor(getContext(), les));
 	}
 }
