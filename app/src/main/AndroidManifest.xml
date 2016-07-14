@@ -10,9 +10,8 @@
 	android:versionCode="26"
     android:versionName="2.3.1" -->
     <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="21"
-		tools:overrideLibrary="com.astuetz.pagerslidingtabstrip,com.google.firebase.firebase_core,com.google.android.gms.measurement,com.google.android.gms,com.google.firebase,com.google.android.gms.tasks,com.google.android.gms.measurement.impl,com.google.firebase.iid,com.google.android.gms.base,com.google.firebase.storage" />
+        android:minSdkVersion="17"
+        android:targetSdkVersion="21"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
