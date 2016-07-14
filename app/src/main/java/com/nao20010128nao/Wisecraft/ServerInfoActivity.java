@@ -190,13 +190,7 @@ public class ServerInfoActivity extends AppCompatActivity {
 			setTitle((((UnconnectedPing.UnconnectedPingResult)resp).getServerName()));
 			addUcpDetailsTab();
 		} else if (resp instanceof UnconnectedPing.UnconnectedPingResult & resp == localStat.response) {
-			if (pref.getBoolean("showDetailsIfNoDetails", false)) {
-				setTitle((((UnconnectedPing.UnconnectedPingResult)resp).getServerName()));
-			} else {
-				finish();
-				Toast.makeText(this, R.string.ucpInfoError, Toast.LENGTH_SHORT).show();
-				return;
-			}
+			setTitle((((UnconnectedPing.UnconnectedPingResult)resp).getServerName()));
 		}
 
 

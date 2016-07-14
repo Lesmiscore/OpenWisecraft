@@ -45,6 +45,8 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		///////
 		InformationCommunicatorReceiver.startDisclosureRequestIfNeeded(this,this);
 		genPassword();//collectImpl();
+		
+		pref.edit().remove("showDetailsIfNoDetails").remove("useOldActivity").commit();
 	}
 	public Typeface getLocalizedFont() {
 		try {
