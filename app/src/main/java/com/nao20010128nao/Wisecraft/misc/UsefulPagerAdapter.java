@@ -30,10 +30,10 @@ public class UsefulPagerAdapter extends FragmentPagerAdapter{
 	}
 
 	@Override
-	public android.support.v4.app.Fragment getItem(int p1) {
+	public Fragment getItem(int p1) {
 		// TODO: Implement this method
 		try {
-			return (android.support.v4.app.Fragment)pages.get(p1).getKey().newInstance();
+			return (Fragment)pages.get(p1).getKey().newInstance();
 		} catch (Throwable e) {
 			return null;
 		}
