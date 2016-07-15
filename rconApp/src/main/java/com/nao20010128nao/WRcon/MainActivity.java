@@ -62,6 +62,9 @@ public class MainActivity extends AppCompatListActivity
 					pref.edit().putBoolean("sendInfos_force", true).commit();
 			}
 		}.start();
+		Bundle log=new Bundle();
+		log.putString("class", getClass().getName());
+		TheApplication.instance.firebaseAnalytics.logEvent("launch", log);
 		TheApplication.instance.fbCfgLoader.addOnCompleteListener(new OnCompleteListener<Void>(){
 				public void onComplete(Task<Void> result){
 					TheApplication.instance.collect();
@@ -213,7 +216,12 @@ public class MainActivity extends AppCompatListActivity
 		@Override
 		public void onItemClick(AdapterView<?> p1, View p2, int p3, long p4) {
 			// TODO: Implement this method
-			startActivity(new Intent(MainActivity.this, RCONActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port));
+			Intent launcher;
+			startActivity(launcher=new Intent(MainActivity.this, RCONActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port));
+			Bundle log=new Bundle();
+			log.putString("class", getClass().getName());
+			log.putAll(launcher.getExtras());
+			TheApplication.instance.firebaseAnalytics.logEvent("selectServer", log);
 		}
 
 		@Override
