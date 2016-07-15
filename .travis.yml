@@ -1,0 +1,20 @@
+language: android
+sudo: required
+before_script:
+  - 'chmod a+x ./gradlew'
+script:
+  - './gradlew build'
+notifications:
+  email: false
+android:
+  components:
+    - platform-tools
+    - tools
+    - android-19
+    - android-23
+    - build-tools-23.0.2
+    - build-tools-23.0.3
+    - extra-android-m2repository
+    - extra-google-m2repository
+  licences:
+    - 'android-sdk-license-.+'
