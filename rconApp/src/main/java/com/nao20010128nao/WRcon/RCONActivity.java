@@ -20,6 +20,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.graphics.drawable.StateListDrawable;
 import android.util.Log;
+import java.math.BigDecimal;
 
 public class RCONActivity extends RCONActivityBase implements TabHost.OnTabChangeListener
 {
@@ -99,7 +100,7 @@ public class RCONActivity extends RCONActivityBase implements TabHost.OnTabChang
 	public void onTabChanged(String a){
 		int selected=fth.getCurrentTab();
 		int[] colors=new int[fth.getTabWidget().getTabCount()];
-		Arrays.fill(colors,0xff_FFb784);
+		Arrays.fill(colors,Color.argb(new BigDecimal(0xff).multiply(new BigDecimal("0.3")).intValue(),0xff,0xff,0xff));
 		colors[selected]=Color.WHITE;
 		Drawable tabUnderlineSelected=DrawableCompat.wrap(getResources().getDrawable(R.drawable.abc_tab_indicator_mtrl_alpha));
 		DrawableCompat.setTint(tabUnderlineSelected,0xff_ffffff);
