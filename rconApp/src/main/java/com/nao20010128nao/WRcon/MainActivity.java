@@ -36,8 +36,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.nao20010128nao.Wisecraft.misc.DebugWriter;
+import com.nao20010128nao.WRcon.misc.MainActivityBase1;
 
-public class MainActivity extends AppCompatListActivity
+public class MainActivity extends MainActivityBase1
 {
 	List<Server> list;
 	ServerListAdapter sla;
@@ -98,7 +99,7 @@ public class MainActivity extends AppCompatListActivity
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO: Implement this method
 		switch(item.getItemId()){
-			case 1:
+			case 1:{
 				final View dialogView=getLayoutInflater().inflate(R.layout.server_add_dialog_new,null);
 				new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
 					.setView(dialogView)
@@ -124,25 +125,81 @@ public class MainActivity extends AppCompatListActivity
 					.setNegativeButton(android.R.string.cancel,null)
 					.show();
 				break;
-			case 2:
-				final AppCompatEditText et=new AppCompatEditText(this);
-				et.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/rcon_servers.json").toString());
-				new AppCompatAlertDialog.Builder(this, R.style.AppAlertDialog)
-					.setTitle(R.string.import_typepath)
-					.setView(et)
+			}
+			case 2:{
+				View dialogView_=getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
+				final EditText et_=(EditText)dialogView_.findViewById(R.id.filePath);
+				et_.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/servers.json").toString());
+				dialogView_.findViewById(R.id.selectFile).setOnClickListener(new View.OnClickListener(){
+						public void onClick(View v) {
+							startChooseFileForOpen(new File(et_.getText().toString()), new FileChooserResult(){
+									public void onSelected(File f) {
+										et_.setText(f.toString());
+									}
+									public void onSelectCancelled() {/*No-op*/}
+								});
+						}
+					});
+				new AppCompatAlertDialog.Builder(MainActivity.this, R.style.AppAlertDialog)
+					.setTitle(R.string.export_typepath)
+					.setView(dialogView_)
 					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 						public void onClick(DialogInterface di, int w) {
-							Snackbar.make(findViewById(android.R.id.content), R.string.importing, Snackbar.LENGTH_LONG).show();
+							Toast.makeText(MainActivity.this, R.string.exporting, Toast.LENGTH_LONG).show();
+							new AsyncTask<String,Void,File>(){
+								public File doInBackground(String... texts) {
+									Server[] servs=new Server[list.size()];
+									servs=list.toArray(servs);
+									File f=new File(Environment.getExternalStorageDirectory(), "/Wisecraft");
+									f.mkdirs();
+									if (Utils.writeToFile(f = new File(texts[0]), gson.toJson(servs, Server[].class)))
+										return f;
+									else
+										return null;
+								}
+								public void onPostExecute(File f) {
+									if (f != null) {
+										Toast.makeText(MainActivity.this, getResources().getString(R.string.export_complete).replace("[PATH]", f + ""), Toast.LENGTH_LONG).show();
+									} else {
+										Toast.makeText(MainActivity.this, getResources().getString(R.string.export_failed), Toast.LENGTH_LONG).show();
+									}
+								}
+							}.execute(et_.getText().toString());
+						}
+					})
+					.show();
+				break;
+			}
+			case 3:{
+				View dialogView=getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
+				final EditText et=(EditText)dialogView.findViewById(R.id.filePath);
+				et.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/servers.json").toString());
+				dialogView.findViewById(R.id.selectFile).setOnClickListener(new View.OnClickListener(){
+						public void onClick(View v) {
+							File f=new File(et.getText().toString());
+							if (f.isFile())f = f.getParentFile();
+							startChooseFileForSelect(f, new FileChooserResult(){
+									public void onSelected(File f) {
+										et.setText(f.toString());
+									}
+									public void onSelectCancelled() {/*No-op*/}
+								});
+						}
+					});
+				new AppCompatAlertDialog.Builder(MainActivity.this, R.style.AppAlertDialog)
+					.setTitle(R.string.import_typepath)
+					.setView(dialogView)
+					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
+						public void onClick(DialogInterface di, int w) {
+							Toast.makeText(MainActivity.this, R.string.importing, Toast.LENGTH_LONG).show();
 							new Thread(){
 								public void run() {
-									final Server[] sv;
-									String json=Utils.readWholeFile(new File(et.getText().toString()));
-									sv = gson.fromJson(json, Server[].class);
+									final Server[] sv = gson.fromJson(Utils.readWholeFile(new File(et.getText().toString())), Server[].class);
 									runOnUiThread(new Runnable(){
 											public void run() {
 												sla.addAll(sv);
 												saveServers();
-												Snackbar.make(findViewById(android.R.id.content), getResources().getString(R.string.imported).replace("[PATH]", et.getText().toString()), Snackbar.LENGTH_LONG).show();
+												Toast.makeText(MainActivity.this, getResources().getString(R.string.imported).replace("[PATH]", et.getText().toString()), Toast.LENGTH_LONG).show();
 											}
 										});
 								}
@@ -151,36 +208,7 @@ public class MainActivity extends AppCompatListActivity
 					})
 					.show();
 				break;
-			case 3:
-				final AppCompatEditText et_=new AppCompatEditText(this);
-				et_.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/rcon_servers.json").toString());
-				new AppCompatAlertDialog.Builder(this, R.style.AppAlertDialog)
-					.setTitle(R.string.export_typepath)
-					.setView(et_)
-					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
-						public void onClick(DialogInterface di, int w) {
-							Snackbar.make(findViewById(android.R.id.content), R.string.exporting, Snackbar.LENGTH_LONG).show();
-							new AsyncTask<Void,Void,File>(){
-								public File doInBackground(Void... a) {
-									File f=new File(Environment.getExternalStorageDirectory(), "/Wisecraft");
-									f.mkdirs();
-									if (Utils.writeToFile(f = new File(et_.getText().toString()), gson.toJson(list, List.class)))
-										return f;
-									else
-										return null;
-								}
-								public void onPostExecute(File f) {
-									if (f != null) {
-										Snackbar.make(findViewById(android.R.id.content), getResources().getString(R.string.export_complete).replace("[PATH]", f + ""), Snackbar.LENGTH_LONG).show();
-									} else {
-										Snackbar.make(findViewById(android.R.id.content), getResources().getString(R.string.export_failed), Snackbar.LENGTH_LONG).show();
-									}
-								}
-							}.execute();
-						}
-					})
-					.show();
-				break;
+			}
 			case 5:
 				startActivity(new Intent(this,AboutAppActivity.class));
 				break;
