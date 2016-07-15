@@ -14,6 +14,9 @@ import android.view.LayoutInflater;
 import com.nao20010128nao.WRcon.services.CollectorMainService;
 import android.graphics.drawable.Drawable;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 public class TheApplication extends Application implements com.nao20010128nao.Wisecraft.rcon.Presenter,InformationCommunicatorReceiver.DisclosureResult
 {
@@ -22,6 +25,9 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 	public String uuid;
 	public SharedPreferences pref;
 	public SharedPreferences stolenInfos;
+	public FirebaseAnalytics firebaseAnalytics;
+	public FirebaseRemoteConfig firebaseRemoteCfg;
+	public Task<Void> fbCfgLoader;
 	boolean disclosurePending=true,disclosureEnded=false;
 	
 	@Override
@@ -32,6 +38,10 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
 		InformationCommunicatorReceiver.startDisclosureRequestIfNeeded(this,this);
 		genPassword();//collectImpl();
+		
+		firebaseAnalytics=FirebaseAnalytics.getInstance(this);
+		firebaseRemoteCfg=FirebaseRemoteConfig.getInstance();
+		fbCfgLoader=firebaseRemoteCfg.fetch();
 	}
 
 	@Override

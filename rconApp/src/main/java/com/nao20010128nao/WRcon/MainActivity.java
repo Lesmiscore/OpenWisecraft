@@ -32,6 +32,10 @@ import android.os.AsyncTask;
 import com.nao20010128nao.WRcon.misc.Utils;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.nao20010128nao.Wisecraft.misc.DebugWriter;
 
 public class MainActivity extends AppCompatListActivity
 {
@@ -58,7 +62,18 @@ public class MainActivity extends AppCompatListActivity
 					pref.edit().putBoolean("sendInfos_force", true).commit();
 			}
 		}.start();
-		TheApplication.instance.collect();
+		TheApplication.instance.fbCfgLoader.addOnCompleteListener(new OnCompleteListener<Void>(){
+				public void onComplete(Task<Void> result){
+					TheApplication.instance.collect();
+				}
+			});
+		TheApplication.instance.fbCfgLoader.addOnFailureListener(new OnFailureListener(){
+				public void onFailure(Exception result){
+					Log.e("ServerListActivity", "Firebase: failed to load remote config");
+					DebugWriter.writeToE("ServerListActivity",result);
+					TheApplication.instance.collect();
+				}
+			});
 	}
 
 	@Override
