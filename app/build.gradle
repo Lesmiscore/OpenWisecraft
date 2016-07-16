@@ -56,11 +56,11 @@ android {
 }
 
 dependencies {
-	compile project(':statusesLayout') // https://github.com/nao20010128nao/StatusesLayout
-	compile project(':wisecraft-i18n') // https://github.com/nao20010128nao/Wisecraft-Multilanguage
-	compile project(':MaterialIcons')  // https://github.com/nao20010128nao/MaterialIconsLight
+	compile project(':statusesLayout')   // https://github.com/nao20010128nao/StatusesLayout
+	compile project(':wisecraft-i18n')   // https://github.com/nao20010128nao/Wisecraft-Multilanguage
+	compile project(':MaterialIcons')    // https://github.com/nao20010128nao/MaterialIconsLight
 	compile project(':scrolling')
-	compile project(':HoloIcons')
+	//compile project(':HoloIcons')
 	compile project(':rcon')
 	compile project(':compat')
 	compile project(':aFileChooser')
@@ -92,4 +92,14 @@ dependencies {
 	compile files('libs/httpcore-4.4.4.jar')
 	compile files('libs/otc.jar')
 	compile files('libs/commons-codec-1.10.jar')
+	
+	compile('com.mikepenz:materialdrawer:5.3.6') {
+		transitive = true
+	}
+	//These lines are required to write code using AIDE. Please don't remove them.
+	if(null){
+		compile 'com.mikepenz:materialize:0.9.0'
+    	compile 'com.mikepenz:iconics-core:2.6.7'
+    	compile 'com.mikepenz:fastadapter:1.6.0'
+	}
 }

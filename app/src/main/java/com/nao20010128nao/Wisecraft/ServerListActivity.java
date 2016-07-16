@@ -41,13 +41,17 @@ import android.support.v4.content.ContextCompat;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 abstract class ServerListActivityImpl extends ServerListActivityBase1 implements ServerListActivityInterface {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
 
 	static final File mcpeServerList=new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt");
 
-	final List<String> appMenu=new ArrayList<>();
+	final List<Map.Entry<Integer,Integer>> appMenu=new ArrayList<>();
 	ServerPingProvider spp,updater;
 	Gson gson=new Gson();
 	SharedPreferences pref;
@@ -65,64 +69,59 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	StatusesLayout statLayout;
 	Map<Server,Boolean> pinging=new NonNullableMap<Server>();
 	RecyclerView rv;
+	Drawer drawer;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		getLayoutInflater().inflate(R.layout.hacks, null);//空インフレート
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
-		appMenu.add(getResources().getString(R.string.add));//0
-		appMenu.add(getResources().getString(R.string.addFromMCPE));//1
-		appMenu.add(getResources().getString(R.string.update_all));//2
-		appMenu.add(getResources().getString(R.string.export));//3
-		appMenu.add(getResources().getString(R.string.imporT));//4
-		appMenu.add(getResources().getString(R.string.sort));//5
-		appMenu.add(getResources().getString(R.string.serverFinder));//6
-		appMenu.add(getResources().getString(R.string.addServerFromServerListSite));//7
-		appMenu.add(getResources().getString(R.string.settings));//8
-		appMenu.add(getResources().getString(R.string.exit));//9
+		appMenu.add(new KVP<Integer,Integer>(R.string.add,R.drawable.ic_add_black_48dp));//0
+		appMenu.add(new KVP<Integer,Integer>(R.string.addFromMCPE,R.drawable.ic_add_black_48dp));//1
+		appMenu.add(new KVP<Integer,Integer>(R.string.update_all,R.drawable.ic_refresh_black_48dp));//2
+		appMenu.add(new KVP<Integer,Integer>(R.string.export,R.drawable.ic_file_upload_black_48dp));//3
+		appMenu.add(new KVP<Integer,Integer>(R.string.imporT,R.drawable.ic_file_download_black_48dp));//4
+		appMenu.add(new KVP<Integer,Integer>(R.string.sort,R.drawable.ic_compare_arrows_black_48dp));//5
+		appMenu.add(new KVP<Integer,Integer>(R.string.serverFinder,R.drawable.ic_search_black_48dp));//6
+		appMenu.add(new KVP<Integer,Integer>(R.string.addServerFromServerListSite,R.drawable.ic_language_black_48dp));//7
+		appMenu.add(new KVP<Integer,Integer>(R.string.settings,R.drawable.ic_settings_black_48dp));//8
+		appMenu.add(new KVP<Integer,Integer>(R.string.exit,R.drawable.ic_close_black_48dp));//9
 
-		switch (pref.getInt("main_style", 0)) {
-			case 0:
-				setContentView(R.layout.server_list_content_nodrawer);
-				Utils.getToolbar(this).setOverflowIcon(TheApplication.instance.getTintedDrawable(R.drawable.abc_ic_menu_moreoverflow_mtrl_alpha, ContextCompat.getColor(this, R.color.upd_2)));
-				break;
-			case 1:
-				setContentView(R.layout.server_list_content);
-				LinearLayout ll=(LinearLayout)findViewById(R.id.app_menu);
-				for (String s:appMenu) {
-					if (appMenu.indexOf(s) == 5 & !pref.getBoolean("feature_bott", true)) {
-						continue;
-					}
-					if (appMenu.indexOf(s) == 6 & !pref.getBoolean("feature_serverFinder", false)) {
-						continue;
-					}
-					if (appMenu.indexOf(s) == 7 & !pref.getBoolean("feature_asfsls", false)) {
-						continue;
-					}
-					Button btn=(Button)getLayoutInflater().inflate(R.layout.server_list_bar_button, ll, false).findViewById(R.id.menu_btn);
-					//((ViewGroup)btn.getParent()).removeView(btn);
-					btn.setText(s);
-					btn.setOnClickListener(new MenuExecClickListener(appMenu.indexOf(s)));
-					ll.addView(btn);
+		{
+			setContentView(R.layout.server_list_content_toolbar);
+			setSupportActionBar(Utils.getToolbar(this));
+			DrawerBuilder bld=new DrawerBuilder()
+				.withActivity(this)
+				.withToolbar(Utils.getToolbar(this))
+				.withDrawerWidthRes(R.dimen.drawer_width)
+				.withDrawerLayout(R.layout.drawer_single_for_builder);
+			for (Map.Entry<Integer,Integer> s:appMenu) {
+				if (appMenu.indexOf(s) == 5 & !pref.getBoolean("feature_bott", true)) {
+					continue;
 				}
+				if (appMenu.indexOf(s) == 6 & !pref.getBoolean("feature_serverFinder", false)) {
+					continue;
+				}
+				if (appMenu.indexOf(s) == 7 & !pref.getBoolean("feature_asfsls", false)) {
+					continue;
+				}
+				PrimaryDrawerItem pdi=new LineWrappingPrimaryDrawerItem();
+				pdi.withName(s.getKey()).withIcon(s.getValue());
+				pdi.withSetSelected(false).withIdentifier(appMenu.indexOf(s));
+				pdi.withIconColorRes(R.color.upd_2).withIconTinted(true);
+				bld.addDrawerItems(pdi.withIconTintingEnabled(true));
+			}
+			bld.withSelectedItem(-1).withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener(){
+					@Override
+					public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+						execOption((int)((PrimaryDrawerItem)drawerItem).getIdentifier());
+						drawer.deselect();
+						return false;
+					}
+				});
 
-				setupDrawer();
-				break;
-			case 2:
-				setContentView(R.layout.server_list_content_listview);
-				LinearLayout lv=(LinearLayout)findViewById(R.id.app_menu);
-				ArrayList<String> editing=new ArrayList<>(appMenu);
-				if (!pref.getBoolean("feature_bott", true))
-					editing.remove(appMenu.get(5));
-				if (!pref.getBoolean("feature_serverFinder", false))
-					editing.remove(appMenu.get(6));
-				if (!pref.getBoolean("feature_asfsls", false))
-					editing.remove(appMenu.get(7));
-				lv.addView(((ActivityGroup)getParent()).getLocalActivityManager().startActivity("menu", new Intent(this, MenuPreferenceActivity.class).putExtra("values", editing)).getDecorView());
-
-				setupDrawer();
-				break;
+			drawer=bld.build();
+			setupDrawer();
 		}
 		rv = (RecyclerView)findViewById(android.R.id.list);
 		rv.setLayoutManager(new LinearLayoutManager(this));
@@ -191,9 +190,10 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
 	private void setupDrawer() {
 		dl = (DrawerLayout)findViewById(R.id.drawer);
+		if(dl==null)dl=drawer.getDrawerLayout();
 		dl.setDrawerListener(new OpenCloseListener());
 
-		if (pref.getBoolean("specialDrawer1", false)) {
+		if (false/*pref.getBoolean("specialDrawer1", false)*/) {
 			ViewGroup decor=(ViewGroup)getWindow().getDecorView();
 			View decorChild=decor.getChildAt(0);
 			View dChild=dl.getChildAt(0);
@@ -305,23 +305,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				}
 				break;
 		}
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// TODO: Implement this method
-		if (pref.getInt("main_style", 0) == 0) {
-			for (String s:appMenu) {
-				if (appMenu.indexOf(s) == 5 & !pref.getBoolean("feature_bott", true))
-					continue;
-				if (appMenu.indexOf(s) == 6 & !pref.getBoolean("feature_serverFinder", false))
-					continue;
-				if (appMenu.indexOf(s) == 7 & !pref.getBoolean("feature_asfsls", false))
-					continue;
-				menu.add(Menu.NONE, appMenu.indexOf(s), appMenu.indexOf(s), s);
-			}
-		}
-		return true;
 	}
 
 	@Override
@@ -1374,7 +1357,6 @@ public class ServerListActivity extends CompatActivityGroup {
 			getTheme().applyStyle(R.style.AppTheme_Bright, true);
 		}
 		super.onCreate(savedInstanceState);
-		getSupportActionBar().hide();
 		Bundle log=new Bundle();
 		log.putString("class", getClass().getName());
 		TheApplication.instance.firebaseAnalytics.logEvent("launch", log);
