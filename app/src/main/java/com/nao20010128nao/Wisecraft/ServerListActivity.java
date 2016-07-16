@@ -105,7 +105,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				if (appMenu.indexOf(s) == 7 & !pref.getBoolean("feature_asfsls", false)) {
 					continue;
 				}
-				PrimaryDrawerItem pdi=new PrimaryDrawerItem();
+				PrimaryDrawerItem pdi=new LineWrappingPrimaryDrawerItem();
 				pdi.withName(s);
 				pdi.withSetSelected(false).withIdentifier(appMenu.indexOf(s));
 				bld.addDrawerItems(pdi);
