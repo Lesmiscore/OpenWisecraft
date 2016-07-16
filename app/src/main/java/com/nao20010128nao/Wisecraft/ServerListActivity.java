@@ -41,6 +41,10 @@ import android.support.v4.content.ContextCompat;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 abstract class ServerListActivityImpl extends ServerListActivityBase1 implements ServerListActivityInterface {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
@@ -65,6 +69,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	StatusesLayout statLayout;
 	Map<Server,Boolean> pinging=new NonNullableMap<Server>();
 	RecyclerView rv;
+	Drawer drawer;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
@@ -82,47 +87,36 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		appMenu.add(getResources().getString(R.string.settings));//8
 		appMenu.add(getResources().getString(R.string.exit));//9
 
-		switch (pref.getInt("main_style", 0)) {
-			case 0:
-				setContentView(R.layout.server_list_content_nodrawer);
-				Utils.getToolbar(this).setOverflowIcon(TheApplication.instance.getTintedDrawable(R.drawable.abc_ic_menu_moreoverflow_mtrl_alpha, ContextCompat.getColor(this, R.color.upd_2)));
-				break;
-			case 1:
-				setContentView(R.layout.server_list_content);
-				LinearLayout ll=(LinearLayout)findViewById(R.id.app_menu);
-				for (String s:appMenu) {
-					if (appMenu.indexOf(s) == 5 & !pref.getBoolean("feature_bott", true)) {
-						continue;
-					}
-					if (appMenu.indexOf(s) == 6 & !pref.getBoolean("feature_serverFinder", false)) {
-						continue;
-					}
-					if (appMenu.indexOf(s) == 7 & !pref.getBoolean("feature_asfsls", false)) {
-						continue;
-					}
-					Button btn=(Button)getLayoutInflater().inflate(R.layout.server_list_bar_button, ll, false).findViewById(R.id.menu_btn);
-					//((ViewGroup)btn.getParent()).removeView(btn);
-					btn.setText(s);
-					btn.setOnClickListener(new MenuExecClickListener(appMenu.indexOf(s)));
-					ll.addView(btn);
+		{
+			setContentView(R.layout.server_list_content_nodrawer);
+			DrawerBuilder bld=new DrawerBuilder()
+				.withActivity(this)
+				.withDrawerLayout(R.layout.drawer_single_for_builder);
+			for (String s:appMenu) {
+				if (appMenu.indexOf(s) == 5 & !pref.getBoolean("feature_bott", true)) {
+					continue;
 				}
+				if (appMenu.indexOf(s) == 6 & !pref.getBoolean("feature_serverFinder", false)) {
+					continue;
+				}
+				if (appMenu.indexOf(s) == 7 & !pref.getBoolean("feature_asfsls", false)) {
+					continue;
+				}
+				PrimaryDrawerItem pdi=new PrimaryDrawerItem();
+				pdi.withName(s);
+				pdi.withSetSelected(false).withIdentifier(appMenu.indexOf(s));
+				bld.addDrawerItems(pdi);
+			}
+			bld.withSelectedItem(-1).withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener(){
+					@Override
+					public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+						execOption((int)((PrimaryDrawerItem)drawerItem).getIdentifier());
+						return true;
+					}
+				});
 
-				setupDrawer();
-				break;
-			case 2:
-				setContentView(R.layout.server_list_content_listview);
-				LinearLayout lv=(LinearLayout)findViewById(R.id.app_menu);
-				ArrayList<String> editing=new ArrayList<>(appMenu);
-				if (!pref.getBoolean("feature_bott", true))
-					editing.remove(appMenu.get(5));
-				if (!pref.getBoolean("feature_serverFinder", false))
-					editing.remove(appMenu.get(6));
-				if (!pref.getBoolean("feature_asfsls", false))
-					editing.remove(appMenu.get(7));
-				lv.addView(((ActivityGroup)getParent()).getLocalActivityManager().startActivity("menu", new Intent(this, MenuPreferenceActivity.class).putExtra("values", editing)).getDecorView());
-
-				setupDrawer();
-				break;
+			drawer=bld.build();
+			setupDrawer();
 		}
 		rv = (RecyclerView)findViewById(android.R.id.list);
 		rv.setLayoutManager(new LinearLayoutManager(this));
@@ -191,9 +185,10 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
 	private void setupDrawer() {
 		dl = (DrawerLayout)findViewById(R.id.drawer);
+		if(dl==null)dl=drawer.getDrawerLayout();
 		dl.setDrawerListener(new OpenCloseListener());
 
-		if (pref.getBoolean("specialDrawer1", false)) {
+		if (false/*pref.getBoolean("specialDrawer1", false)*/) {
 			ViewGroup decor=(ViewGroup)getWindow().getDecorView();
 			View decorChild=decor.getChildAt(0);
 			View dChild=dl.getChildAt(0);
