@@ -83,7 +83,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		appMenu.add(new KVP<Integer,Integer>(R.string.imporT,R.drawable.ic_file_download_black_48dp));//4
 		appMenu.add(new KVP<Integer,Integer>(R.string.sort,R.drawable.ic_compare_arrows_black_48dp));//5
 		appMenu.add(new KVP<Integer,Integer>(R.string.serverFinder,R.drawable.ic_search_black_48dp));//6
-		appMenu.add(new KVP<Integer,Integer>(R.string.addServerFromServerListSite,R.drawable.ic_https_black_48dp));//7
+		appMenu.add(new KVP<Integer,Integer>(R.string.addServerFromServerListSite,R.drawable.ic_language_black_48dp));//7
 		appMenu.add(new KVP<Integer,Integer>(R.string.settings,R.drawable.ic_settings_black_48dp));//8
 		appMenu.add(new KVP<Integer,Integer>(R.string.exit,R.drawable.ic_close_black_48dp));//9
 
