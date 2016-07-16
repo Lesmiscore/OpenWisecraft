@@ -88,9 +88,11 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		appMenu.add(getResources().getString(R.string.exit));//9
 
 		{
-			setContentView(R.layout.server_list_content_nodrawer);
+			setContentView(R.layout.server_list_content_toolbar);
+			setSupportActionBar(Utils.getToolbar(this));
 			DrawerBuilder bld=new DrawerBuilder()
 				.withActivity(this)
+				.withToolbar(Utils.getToolbar(this))
 				.withDrawerLayout(R.layout.drawer_single_for_builder);
 			for (String s:appMenu) {
 				if (appMenu.indexOf(s) == 5 & !pref.getBoolean("feature_bott", true)) {
@@ -111,7 +113,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					@Override
 					public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
 						execOption((int)((PrimaryDrawerItem)drawerItem).getIdentifier());
-						return true;
+						drawer.deselect();
+						return false;
 					}
 				});
 
