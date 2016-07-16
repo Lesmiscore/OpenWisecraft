@@ -106,7 +106,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					continue;
 				}
 				PrimaryDrawerItem pdi=new LineWrappingPrimaryDrawerItem();
-				pdi.withName(s.getKey()).withIconRes(s.getValue());
+				pdi.withName(s.getKey()).withIcon(s.getValue());
 				pdi.withSetSelected(false).withIdentifier(appMenu.indexOf(s));
 				pdi.withIconColorRes(R.color.upd_2).withIconTinted(true);
 				bld.addDrawerItems(pdi.withIconTintingEnabled(true));
