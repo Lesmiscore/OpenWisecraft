@@ -1372,7 +1372,6 @@ public class ServerListActivity extends CompatActivityGroup {
 			getTheme().applyStyle(R.style.AppTheme_Bright, true);
 		}
 		super.onCreate(savedInstanceState);
-		getSupportActionBar().hide();
 		Bundle log=new Bundle();
 		log.putString("class", getClass().getName());
 		TheApplication.instance.firebaseAnalytics.logEvent("launch", log);
