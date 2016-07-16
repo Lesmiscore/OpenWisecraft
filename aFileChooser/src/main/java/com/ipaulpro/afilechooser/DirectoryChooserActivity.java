@@ -20,7 +20,7 @@ public class DirectoryChooserActivity extends FileChooserActivity
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO: Implement this method
-		MenuItem select=menu.add(Menu.NONE,0,0,R.string.selectDir).setIcon(getPresenter().isLightTheme(this)?R.drawable.ic_action_accept_light:R.drawable.ic_action_accept_dark);
+		MenuItem select=menu.add(Menu.NONE,0,0,R.string.selectDir).setIcon(getTintedDrawable(R.drawable.ic_check_black_48dp,getPresenter().isLightTheme(this)?0xff_666666:0xff_ffffff));
 		MenuItemCompat.setShowAsAction(select,MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
 		return super.onCreateOptionsMenu(menu);
 	}

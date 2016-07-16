@@ -51,7 +51,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
 	static final File mcpeServerList=new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt");
 
-	final List<String> appMenu=new ArrayList<>();
+	final List<Map.Entry<Integer,Integer>> appMenu=new ArrayList<>();
 	ServerPingProvider spp,updater;
 	Gson gson=new Gson();
 	SharedPreferences pref;
@@ -76,16 +76,16 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		super.onCreate(savedInstanceState);
 		getLayoutInflater().inflate(R.layout.hacks, null);//空インフレート
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
-		appMenu.add(getResources().getString(R.string.add));//0
-		appMenu.add(getResources().getString(R.string.addFromMCPE));//1
-		appMenu.add(getResources().getString(R.string.update_all));//2
-		appMenu.add(getResources().getString(R.string.export));//3
-		appMenu.add(getResources().getString(R.string.imporT));//4
-		appMenu.add(getResources().getString(R.string.sort));//5
-		appMenu.add(getResources().getString(R.string.serverFinder));//6
-		appMenu.add(getResources().getString(R.string.addServerFromServerListSite));//7
-		appMenu.add(getResources().getString(R.string.settings));//8
-		appMenu.add(getResources().getString(R.string.exit));//9
+		appMenu.add(new KVP<Integer,Integer>(R.string.add,R.drawable.ic_add_black_48dp));//0
+		appMenu.add(new KVP<Integer,Integer>(R.string.addFromMCPE,R.drawable.ic_add_black_48dp));//1
+		appMenu.add(new KVP<Integer,Integer>(R.string.update_all,R.drawable.ic_refresh_black_48dp));//2
+		appMenu.add(new KVP<Integer,Integer>(R.string.export,R.drawable.ic_file_upload_black_48dp));//3
+		appMenu.add(new KVP<Integer,Integer>(R.string.imporT,R.drawable.ic_file_download_black_48dp));//4
+		appMenu.add(new KVP<Integer,Integer>(R.string.sort,R.drawable.ic_compare_arrows_black_48dp));//5
+		appMenu.add(new KVP<Integer,Integer>(R.string.serverFinder,R.drawable.ic_search_black_48dp));//6
+		appMenu.add(new KVP<Integer,Integer>(R.string.addServerFromServerListSite,R.drawable.ic_https_black_48dp));//7
+		appMenu.add(new KVP<Integer,Integer>(R.string.settings,R.drawable.ic_settings_black_48dp));//8
+		appMenu.add(new KVP<Integer,Integer>(R.string.exit,R.drawable.ic_close_black_48dp));//9
 
 		{
 			setContentView(R.layout.server_list_content_toolbar);
@@ -95,7 +95,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				.withToolbar(Utils.getToolbar(this))
 				.withDrawerWidthRes(R.dimen.drawer_width)
 				.withDrawerLayout(R.layout.drawer_single_for_builder);
-			for (String s:appMenu) {
+			for (Map.Entry<Integer,Integer> s:appMenu) {
 				if (appMenu.indexOf(s) == 5 & !pref.getBoolean("feature_bott", true)) {
 					continue;
 				}
@@ -106,9 +106,10 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					continue;
 				}
 				PrimaryDrawerItem pdi=new LineWrappingPrimaryDrawerItem();
-				pdi.withName(s);
+				pdi.withName(s.getKey()).withIconColorRes(s.getValue());
 				pdi.withSetSelected(false).withIdentifier(appMenu.indexOf(s));
-				bld.addDrawerItems(pdi);
+				pdi.withIconColorRes(R.color.upd_2).withIconTinted(true);
+				bld.addDrawerItems(pdi.withIconTintingEnabled(true));
 			}
 			bld.withSelectedItem(-1).withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener(){
 					@Override
