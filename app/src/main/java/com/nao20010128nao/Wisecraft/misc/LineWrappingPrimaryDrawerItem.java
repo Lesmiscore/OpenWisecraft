@@ -2,6 +2,7 @@ package com.nao20010128nao.Wisecraft.misc;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.nao20010128nao.Wisecraft.R;
 
+/*Fix patch for Wisecraft to wrap lines.*/
 public class LineWrappingPrimaryDrawerItem extends PrimaryDrawerItem
 {
 	@Override
