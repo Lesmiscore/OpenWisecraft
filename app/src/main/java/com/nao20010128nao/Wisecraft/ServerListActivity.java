@@ -307,23 +307,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// TODO: Implement this method
-		if (pref.getInt("main_style", 0) == 0) {
-			for (String s:appMenu) {
-				if (appMenu.indexOf(s) == 5 & !pref.getBoolean("feature_bott", true))
-					continue;
-				if (appMenu.indexOf(s) == 6 & !pref.getBoolean("feature_serverFinder", false))
-					continue;
-				if (appMenu.indexOf(s) == 7 & !pref.getBoolean("feature_asfsls", false))
-					continue;
-				menu.add(Menu.NONE, appMenu.indexOf(s), appMenu.indexOf(s), s);
-			}
-		}
-		return true;
-	}
-
-	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		return execOption(item.getItemId());
 	}
