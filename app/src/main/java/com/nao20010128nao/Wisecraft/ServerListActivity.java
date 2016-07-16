@@ -93,6 +93,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			DrawerBuilder bld=new DrawerBuilder()
 				.withActivity(this)
 				.withToolbar(Utils.getToolbar(this))
+				.withDrawerWidthRes(R.dimen.drawer_width)
 				.withDrawerLayout(R.layout.drawer_single_for_builder);
 			for (String s:appMenu) {
 				if (appMenu.indexOf(s) == 5 & !pref.getBoolean("feature_bott", true)) {
