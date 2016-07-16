@@ -92,4 +92,8 @@ dependencies {
 	compile files('libs/httpcore-4.4.4.jar')
 	compile files('libs/otc.jar')
 	compile files('libs/commons-codec-1.10.jar')
+	
+	compile('com.mikepenz:materialdrawer:5.3.6@aar') {
+		transitive = true
+	}
 }
