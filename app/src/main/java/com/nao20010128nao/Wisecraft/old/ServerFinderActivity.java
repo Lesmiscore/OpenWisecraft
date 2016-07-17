@@ -203,7 +203,7 @@ public class ServerFinderActivity extends AppCompatListActivity implements Serve
 			final View layout;
 			if (pref.getBoolean("colorFormattedText", false)) {
 				if (pref.getBoolean("darkBackgroundForServerName", false)) {
-					layout = getLayoutInflater().inflate(R.layout.quickstatus_dark, null, false);
+					layout = getLayoutInflater().inflate(R.layout.quickstatus/*_dark*/, null, false);
 				} else {
 					layout = getLayoutInflater().inflate(R.layout.quickstatus, null, false);
 				}

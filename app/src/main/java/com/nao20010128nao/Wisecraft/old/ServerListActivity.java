@@ -719,7 +719,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			final View layout;
 			if (sla.pref.getBoolean("colorFormattedText", false)) {
 				if (sla.pref.getBoolean("darkBackgroundForServerName", false)) {
-					layout = sla.getLayoutInflater().inflate(R.layout.quickstatus_dark, null, false);
+					layout = sla.getLayoutInflater().inflate(R.layout.quickstatus/*_dark*/, null, false);
 				} else {
 					layout = sla.getLayoutInflater().inflate(R.layout.quickstatus, null, false);
 				}

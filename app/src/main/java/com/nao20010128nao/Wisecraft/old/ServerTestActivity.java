@@ -178,7 +178,7 @@ public class ServerTestActivity extends AppCompatListActivity implements ServerL
 			final View layout;
 			if (sta.pref.getBoolean("colorFormattedText", false)) {
 				if (sta.pref.getBoolean("darkBackgroundForServerName", false)) {
-					layout = sta.getLayoutInflater().inflate(R.layout.quickstatus_dark, null, false);
+					layout = sta.getLayoutInflater().inflate(R.layout.quickstatus/*_dark*/, null, false);
 				} else {
 					layout = sta.getLayoutInflater().inflate(R.layout.quickstatus, null, false);
 				}

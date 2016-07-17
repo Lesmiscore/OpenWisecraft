@@ -191,6 +191,15 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 			Server s=getItem(offset);
             ((TextView)layout.findViewById(R.id.serverAddress)).setText(s.ip + ":" + s.port);
             ((TextView) layout.findViewById(R.id.serverPlayers)).setText("-/-");
+			if (sta.pref.getBoolean("colorFormattedText", false)) {
+				if (sta.pref.getBoolean("darkBackgroundForServerName", false)) {
+					parent.setDarkness(true);
+				} else {
+					parent.setDarkness(false);
+				}
+			} else {
+				parent.setDarkness(false);
+			}
             if (sta.pinging.get(offset)) {
 				((TextView)layout.findViewById(R.id.serverName)).setText(R.string.working);
 				((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.working);
@@ -282,17 +291,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 		@Override
 		public ServerTestActivityImpl.STAVH onCreateViewHolder(ViewGroup viewGroup, int type) {
 			// TODO: Implement this method
-			int layout;
-			if (sta.pref.getBoolean("colorFormattedText", false)) {
-				if (sta.pref.getBoolean("darkBackgroundForServerName", false)) {
-					layout = R.layout.quickstatus_dark;
-				} else {
-					layout = R.layout.quickstatus;
-				}
-			} else {
-				layout = R.layout.quickstatus;
-			}
-			return sta.new STAVH(LayoutInflater.from(sta).inflate(layout, viewGroup, false));
+			return sta.new STAVH(LayoutInflater.from(sta).inflate(R.layout.quickstatus, viewGroup, false));
 		}
 
 		public void attachNewActivity(ServerTestActivityImpl newSta) {
@@ -305,6 +304,12 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 		}
 		public View findViewById(int resId) {
 			return itemView.findViewById(resId);
+		}
+		public STAVH setDarkness(boolean dark){
+			int color=dark?0xff_ffffff:0xff_000000;
+			for(int i:new int[]{R.id.serverPlayers,R.id.serverAddress,R.id.pingMillis,R.id.serverName})
+				findViewById(i).setBackground(new ColorDrawable(color));
+			return this;
 		}
 	}
 }
