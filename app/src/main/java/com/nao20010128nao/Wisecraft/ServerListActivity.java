@@ -699,17 +699,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		@Override
 		public OriginalViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
 			// 表示するレイアウトを設定
-			int layout;
-			if (sla.pref.getBoolean("colorFormattedText", false)) {
-				if (sla.pref.getBoolean("darkBackgroundForServerName", false)) {
-					layout = R.layout.quickstatus_dark;
-				} else {
-					layout = R.layout.quickstatus;
-				}
-			} else {
-				layout = R.layout.quickstatus;
-			}
-			return new OriginalViewHolder(LayoutInflater.from(sla).inflate(layout, viewGroup, false));
+			return new OriginalViewHolder(LayoutInflater.from(sla).inflate(R.layout.quickstatus, viewGroup, false));
 		}
 
 		@Override
@@ -718,6 +708,15 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			if (sla.list != null && sla.list.size() > position && sla.list.get(position) != null) {
 				Server sv=getItem(position);
 				viewHolder.itemView.setTag(sv);
+				if (sla.pref.getBoolean("colorFormattedText", false)) {
+					if (sla.pref.getBoolean("darkBackgroundForServerName", false)) {
+						viewHolder.setDarkness(true);
+					} else {
+						viewHolder.setDarkness(false);
+					}
+				} else {
+					viewHolder.setDarkness(false);
+				}
 				if (sla.pinging.get(sv)) {
 					viewHolder
 						.setServerName(sla.getResources().getString(R.string.working))
@@ -1144,6 +1143,12 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			}
 			public OriginalViewHolder setServerName(CharSequence s){
 				((TextView)findViewById(R.id.serverName)).setText(s);
+				return this;
+			}
+			public OriginalViewHolder setDarkness(boolean dark){
+				int color=dark?0xff_ffffff:0xff_000000;
+				for(int i:new int[]{R.id.serverPlayers,R.id.serverAddress,R.id.pingMillis,R.id.serverName})
+					findViewById(i).setBackground(new ColorDrawable(color));
 				return this;
 			}
 		}
