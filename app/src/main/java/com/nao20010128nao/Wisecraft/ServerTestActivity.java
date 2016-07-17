@@ -308,7 +308,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 		public STAVH setDarkness(boolean dark){
 			int color=dark?0xff_ffffff:0xff_000000;
 			for(int i:new int[]{R.id.serverPlayers,R.id.serverAddress,R.id.pingMillis,R.id.serverName})
-				findViewById(i).setBackground(new ColorDrawable(color));
+				((TextView)findViewById(i)).setTextColor(color);
 			return this;
 		}
 	}
