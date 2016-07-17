@@ -70,6 +70,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	Map<Server,Boolean> pinging=new NonNullableMap<Server>();
 	RecyclerView rv;
 	Drawer drawer;
+	int newVersionAnnounce=0;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
@@ -251,6 +252,12 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			}
 		}.start();
 		new GhostPingServer().start();
+		int prevVersion=pref.getInt("previousVersionInt",Utils.getVersionCode(this));
+		if(prevVersion<30){
+			if(pref.getInt("announcedFor",0)!=30){
+				newVersionAnnounce=1;
+			}
+		}
 		pref.edit().putString("previousVersion", Utils.getVersionName(this)).putInt("previousVersionInt", Utils.getVersionCode(this)).commit();
 		new Thread(){
 			public void run() {
@@ -261,7 +268,41 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			}
 		}.start();
 	}
+	
+	@Override
+	protected void onStart() {
+		// TODO: Implement this method
+		super.onStart();
+		Log.d("ServerListActivity", "onStart");
+		TheApplication.instance.fbCfgLoader.addOnCompleteListener(new OnCompleteListener<Void>(){
+				public void onComplete(Task<Void> result){
+					TheApplication.instance.collect();
+				}
+			});
+		TheApplication.instance.fbCfgLoader.addOnFailureListener(new OnFailureListener(){
+				public void onFailure(Exception result){
+					Log.e("ServerListActivity", "Firebase: failed to load remote config");
+					DebugWriter.writeToE("ServerListActivity",result);
+					TheApplication.instance.collect();
+				}
+			});
+	}
 
+	@Override
+	protected void onResume() {
+		// TODO: Implement this method
+		super.onResume();
+		if(newVersionAnnounce!=0){
+			pref.edit().putInt("announcedFor",30).commit();
+			new AppCompatAlertDialog.Builder(this)
+				.setTitle(R.string.newVersionAnnounceTitle_30)
+				.setMessage(R.string.newVersionAnnounceContent_30)
+				.setCancelable(false)
+				.setPositiveButton(android.R.string.ok,null)
+				.show();
+		}
+	}
+	
 	@Override
 	protected void attachBaseContext(Context newBase) {
 		TheApplication.instance.initForActivities();
@@ -598,25 +639,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				break;
 		}
 		return true;
-	}
-
-	@Override
-	protected void onStart() {
-		// TODO: Implement this method
-		super.onStart();
-		Log.d("ServerListActivity", "onStart");
-		TheApplication.instance.fbCfgLoader.addOnCompleteListener(new OnCompleteListener<Void>(){
-				public void onComplete(Task<Void> result){
-					TheApplication.instance.collect();
-				}
-			});
-		TheApplication.instance.fbCfgLoader.addOnFailureListener(new OnFailureListener(){
-				public void onFailure(Exception result){
-					Log.e("ServerListActivity", "Firebase: failed to load remote config");
-					DebugWriter.writeToE("ServerListActivity",result);
-					TheApplication.instance.collect();
-				}
-			});
 	}
 
 	public void loadServers() {
