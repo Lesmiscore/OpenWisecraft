@@ -27,10 +27,7 @@ public class ServerListActivityBase2 extends ServerListActivityBase3
 				runOnUiThread(new Runnable(){
 						public void run() {
 							finish();
-							if(pref.getBoolean("useOldActivity",false))
-								ServerListActivity.Content$Old.deleteRef();
-							else
-								ServerListActivity.Content.deleteRef();
+							ServerListActivity.Content.deleteRef();
 							new Handler().postDelayed(new Runnable(){
 									public void run() {
 										pref.edit().putString("servers", new Gson().toJson(sortingServer.toArray(new Server[sortingServer.size()]), Server[].class)).commit();
