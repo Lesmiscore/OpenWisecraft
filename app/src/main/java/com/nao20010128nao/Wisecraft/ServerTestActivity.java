@@ -324,14 +324,10 @@ public class ServerTestActivity extends CompatActivityGroup {
 		}
 		super.onCreate(savedInstanceState);
 		getSupportActionBar().hide();
-		if (pref.getBoolean("useOldActivity", false))
-			setContentView(getLocalActivityManager().startActivity("main", new Intent(this, Content$Old.class).putExtras(getIntent())).getDecorView());
-		else
-			setContentView(getLocalActivityManager().startActivity("main", new Intent(this, Content.class).putExtras(getIntent())).getDecorView());
+		setContentView(getLocalActivityManager().startActivity("main", new Intent(this, Content.class).putExtras(getIntent())).getDecorView());
 	}
 	public static class Content extends ServerTestActivityImpl {public static void deleteRef() {instance = new WeakReference<>(null);}}
-	public static class Content$Old extends com.nao20010128nao.Wisecraft.old.ServerTestActivity {public static void deleteRef() {instance = new WeakReference<>(null);}}
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO: Implement this method

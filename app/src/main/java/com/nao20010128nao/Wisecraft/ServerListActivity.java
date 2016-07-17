@@ -1360,14 +1360,10 @@ public class ServerListActivity extends CompatActivityGroup {
 		Bundle log=new Bundle();
 		log.putString("class", getClass().getName());
 		TheApplication.instance.firebaseAnalytics.logEvent("launch", log);
-		if (pref.getBoolean("useOldActivity", false))
-			setContentView(getLocalActivityManager().startActivity("main", new Intent(this, Content$Old.class)).getDecorView());
-		else
-			setContentView(getLocalActivityManager().startActivity("main", new Intent(this, Content.class)).getDecorView());
+		setContentView(getLocalActivityManager().startActivity("main", new Intent(this, Content.class)).getDecorView());
 	}
 	public static class Content extends ServerListActivityImpl {public static void deleteRef() {instance = new WeakReference<>(null);}}
-	public static class Content$Old extends com.nao20010128nao.Wisecraft.old.ServerListActivity {public static void deleteRef() {instance = new WeakReference<>(null);}}
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO: Implement this method
