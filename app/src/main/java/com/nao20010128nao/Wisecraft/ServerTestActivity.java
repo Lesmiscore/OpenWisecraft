@@ -61,6 +61,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 		if (instance.get() != null) {
 			sl = instance.get().sl;
 			pinging = instance.get().pinging;
+			list = instance.get().list;
 			usesOldInstance = true;
 		} else {
 			sl = new RecyclerServerList(this);
