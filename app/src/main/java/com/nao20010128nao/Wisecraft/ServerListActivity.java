@@ -45,6 +45,7 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import android.content.res.Configuration;
 
 abstract class ServerListActivityImpl extends ServerListActivityBase1 implements ServerListActivityInterface {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
@@ -125,7 +126,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			setupDrawer();
 		}
 		rv = (RecyclerView)findViewById(android.R.id.list);
-		rv.setLayoutManager(new LinearLayoutManager(this));
+		GridLayoutManager glm=new GridLayoutManager(this,calculateRows());
+		
+		rv.setLayoutManager(glm);
 
 		srl = (SwipeRefreshLayout)findViewById(R.id.swipelayout);
 		srl.setColorSchemeResources(R.color.upd_1, R.color.upd_2, R.color.upd_3, R.color.upd_4);
@@ -711,6 +714,20 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		pinging.put(s, true);
 	}
 
+	public int calculateRows(){
+		int base=getResources().getDimensionPixelSize(R.dimen.panel_base_size);
+		int width;Configuration cfg=getResources().getConfiguration();
+		Point point=Utils.getRealSize(this);
+		switch(cfg.orientation){
+			case Configuration.ORIENTATION_LANDSCAPE :width=Math.max(point.x,point.y);break;
+			case Configuration.ORIENTATION_PORTRAIT  :width=Math.min(point.x,point.y);break;
+			case Configuration.ORIENTATION_SQUARE    :width=point.x;                  break;
+			case Configuration.ORIENTATION_UNDEFINED :width=base;                     break;
+			default                                  :width=base;                     break;
+		}
+		return (int)Math.max(1,((double)width)/((double)base));
+	}
+	
 	static class RecycleServerList extends RecyclerView.Adapter<RecycleServerList.OriginalViewHolder> implements AdapterView.OnItemClickListener,AdapterView.OnItemLongClickListener {
 		ServerListActivityImpl sla;
 		public RecycleServerList(ServerListActivityImpl sla) {
@@ -721,7 +738,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		@Override
 		public OriginalViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
 			// 表示するレイアウトを設定
-			return new OriginalViewHolder(LayoutInflater.from(sla).inflate(R.layout.quickstatus, viewGroup, false));
+			return new OriginalViewHolder(LayoutInflater.from(sla).inflate(R.layout.quickstatus_grid, viewGroup, false));
 		}
 
 		@Override
@@ -743,7 +760,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					viewHolder
 						.setServerName(sla.getResources().getString(R.string.working))
 						.setPingMillis(sla.getResources().getString(R.string.working))
-						.setServerAddress(sv).setServerPlayers("-/-")
+						.setServer(sv).setServerPlayers("-/-")
 						.setStatColor(ContextCompat.getColor(sla, R.color.stat_pending));
 				} else {
 					if (sv instanceof ServerStatus) {
@@ -817,13 +834,13 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 						}
 						viewHolder
 							.setPingMillis(s.ping)
-							.setServerAddress(s);
+							.setServer(s);
 					} else {
 						viewHolder
 							.setStatColor(ContextCompat.getColor(sla, R.color.stat_error))
 							.setServerName(sv.ip + ":" + sv.port)
 							.setPingMillis(sla.getResources().getString(R.string.notResponding))
-							.setServerPlayers("-/-").setServerAddress(sv);
+							.setServerPlayers("-/-").setServer(sv);
 					}
 				}
 			}
@@ -1171,6 +1188,21 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				int color=dark?0xff_ffffff:0xff_000000;
 				for(int i:new int[]{R.id.serverPlayers,R.id.serverAddress,R.id.pingMillis,R.id.serverName})
 					((TextView)findViewById(i)).setTextColor(color);
+				View target=findViewById(R.id.target);
+				if(target!=null)((TextView)target).setTextColor(color);
+				return this;
+			}
+			public OriginalViewHolder setTarget(int mode){
+				return setTarget(mode==0?"PE":"PC");
+			}
+			public OriginalViewHolder setTarget(String target){
+				View view=findViewById(R.id.target);
+				if(view!=null)((TextView)view).setText(target);
+				return this;
+			}
+			public OriginalViewHolder setServer(Server server){
+				setServerAddress(server);
+				setTarget(server.mode);
 				return this;
 			}
 		}

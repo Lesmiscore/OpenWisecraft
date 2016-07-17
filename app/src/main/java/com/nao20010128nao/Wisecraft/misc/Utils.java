@@ -19,6 +19,12 @@ import java.lang.reflect.Field;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
+import android.view.Display;
+import android.graphics.Point;
+import android.annotation.SuppressLint;
+import android.os.Build;
+import java.lang.reflect.Method;
+import android.view.WindowManager;
 
 public class Utils extends PingerUtils{
 	public static String deleteDecorations(String decorated) {
@@ -261,4 +267,38 @@ public class Utils extends PingerUtils{
 		}
 		return null;
 	}
+	public static Point getDisplaySize(Context activity){
+        Display display = ((WindowManager)activity.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        Point point = new Point();
+        display.getSize(point);
+        return point;
+    }
+    @SuppressLint("NewApi")
+    public static Point getRealSize(Context activity) {
+
+        Display display = ((WindowManager)activity.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        Point point = new Point(0, 0);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            // Android 4.2~
+            display.getRealSize(point);
+            return point;
+
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            // Android 3.2~
+            try {
+                Method getRawWidth = Display.class.getMethod("getRawWidth");
+                Method getRawHeight = Display.class.getMethod("getRawHeight");
+                int width = (Integer) getRawWidth.invoke(display);
+                int height = (Integer) getRawHeight.invoke(display);
+                point.set(width, height);
+                return point;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return point;
+    }
 }
