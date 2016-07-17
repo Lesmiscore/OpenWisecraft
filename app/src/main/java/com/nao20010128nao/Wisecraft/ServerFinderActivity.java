@@ -179,6 +179,15 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 		@Override
 		public void onBindViewHolder(SFAVH parent, final int offset) {
 			final View layout=parent.itemView;
+			if (sta.pref.getBoolean("colorFormattedText", false)) {
+				if (sta.pref.getBoolean("darkBackgroundForServerName", false)) {
+					parent.setDarkness(true);
+				} else {
+					parent.setDarkness(false);
+				}
+			} else {
+				parent.setDarkness(false);
+			}
 			layout.findViewById(R.id.serverPlayers).setVisibility(View.GONE);
 			ServerStatus s=getItem(offset);
 			layout.setTag(s);
@@ -227,17 +236,7 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 
 		@Override
 		public SFAVH onCreateViewHolder(ViewGroup parent, int type) {
-			int layout;
-			if (sta.pref.getBoolean("colorFormattedText", false)) {
-				if (sta.pref.getBoolean("darkBackgroundForServerName", false)) {
-					layout = R.layout.quickstatus_dark;
-				} else {
-					layout = R.layout.quickstatus;
-				}
-			} else {
-				layout = R.layout.quickstatus;
-			}
-			return sta.new SFAVH(LayoutInflater.from(sta).inflate(layout, parent, false));
+			return sta.new SFAVH(LayoutInflater.from(sta).inflate(R.layout.quickstatus, parent, false));
 		}
 
 		@Override
@@ -265,6 +264,12 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 		}
 		public View findViewById(int resId) {
 			return itemView.findViewById(resId);
+		}
+		public SFAVH setDarkness(boolean dark){
+			int color=dark?0xff_ffffff:0xff_000000;
+			for(int i:new int[]{R.id.serverPlayers,R.id.serverAddress,R.id.pingMillis,R.id.serverName})
+				findViewById(i).setBackground(new ColorDrawable(color));
+			return this;
 		}
 	}
 }
