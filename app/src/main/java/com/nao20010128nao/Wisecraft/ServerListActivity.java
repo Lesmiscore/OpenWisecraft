@@ -126,9 +126,15 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			setupDrawer();
 		}
 		rv = (RecyclerView)findViewById(android.R.id.list);
-		GridLayoutManager glm=new GridLayoutManager(this,calculateRows());
-		
-		rv.setLayoutManager(glm);
+		switch(pref.getInt("serverListStyle2",0)){
+			case 0:default:
+				rv.setLayoutManager(new LinearLayoutManager(this));
+				break;
+			case 1:
+				GridLayoutManager glm=new GridLayoutManager(this,calculateRows());
+				rv.setLayoutManager(glm);
+				break;
+		}
 
 		srl = (SwipeRefreshLayout)findViewById(R.id.swipelayout);
 		srl.setColorSchemeResources(R.color.upd_1, R.color.upd_2, R.color.upd_3, R.color.upd_4);
@@ -738,7 +744,12 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		@Override
 		public OriginalViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
 			// 表示するレイアウトを設定
-			return new OriginalViewHolder(LayoutInflater.from(sla).inflate(R.layout.quickstatus_grid, viewGroup, false));
+			switch(sla.pref.getInt("serverListStyle2",0)){
+				case 0:default:
+					return new OriginalViewHolder(LayoutInflater.from(sla).inflate(R.layout.quickstatus, viewGroup, false));
+				case 1:
+					return new OriginalViewHolder(LayoutInflater.from(sla).inflate(R.layout.quickstatus_grid, viewGroup, false));
+			}
 		}
 
 		@Override
