@@ -734,6 +734,44 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		return (int)Math.max(1,((double)width)/((double)base));
 	}
 	
+	public Intent nextServerIntent(int present){
+		if(present==list.size())return null;
+		int nextShallBe=-1;
+		for(int i=present+1;i<list.size();i++){
+			if(list.get(i) instanceof ServerStatus){
+				nextShallBe=i;
+			}
+		}
+		if(nextShallBe==-1){
+			return null;
+		}
+		ServerStatus nextServer=(ServerStatus)list.get(nextShallBe);
+		ServerInfoActivity.stat.add(nextServer);
+		int ofs=ServerInfoActivity.stat.indexOf(nextServer);
+		Bundle bnd=new Bundle();
+		bnd.putInt("statListOffset", ofs);
+		return new Intent(this, ServerInfoActivity.class).putExtra("statListOffset", ofs).putExtra("object", bnd);
+	}
+	
+	public Intent prevServerIntent(int present){
+		if(present==0)return null;
+		int prevShallBe=-1;
+		for(int i=present-1;i>0;i--){
+			if(list.get(i) instanceof ServerStatus){
+				prevShallBe=i;
+			}
+		}
+		if(prevShallBe==-1){
+			return null;
+		}
+		ServerStatus prevServer=(ServerStatus)list.get(prevShallBe);
+		ServerInfoActivity.stat.add(prevServer);
+		int ofs=ServerInfoActivity.stat.indexOf(prevServer);
+		Bundle bnd=new Bundle();
+		bnd.putInt("statListOffset", ofs);
+		return new Intent(this, ServerInfoActivity.class).putExtra("statListOffset", ofs).putExtra("object", bnd);
+	}
+
 	static class RecycleServerList extends RecyclerView.Adapter<RecycleServerList.OriginalViewHolder> implements AdapterView.OnItemClickListener,AdapterView.OnItemLongClickListener {
 		ServerListActivityImpl sla;
 		public RecycleServerList(ServerListActivityImpl sla) {

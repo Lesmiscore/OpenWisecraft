@@ -35,6 +35,7 @@ import com.astuetz.PagerSlidingTabStrip;
 import android.content.res.ColorStateList;
 import java.math.BigDecimal;
 import android.support.v7.graphics.Palette;
+import com.nao20010128nao.Wisecraft.misc.view.OverScrollViewPager;
 
 public class ServerInfoActivity extends AppCompatActivity {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
@@ -94,6 +95,30 @@ public class ServerInfoActivity extends AppCompatActivity {
 		tabs.setAdapter(adapter = new InternalPagerAdapter());
 		PagerSlidingTabStrip psts=(PagerSlidingTabStrip)findViewById(R.id.tabs);
 		psts.setViewPager(tabs);
+		
+		{
+			OverScrollViewPager osvp=(OverScrollViewPager)tabs;
+			osvp.setOnSwipeOutListener(new OverScrollViewPager.OnSwipeOutListener(){
+				public void onSwipeOutAtEnd(){
+					//go to next server
+					int present=getIntent().getIntExtra("statListOffset",-1);
+					if(present==-1)return;
+					Intent launcher=ServerListActivityImpl.instance.get().nextServerIntent(present);
+					if(launcher==null)return;
+					finish();
+					ServerListActivityImpl.instance.get().startActivityForResult(launcher,0);
+				}
+				public void onSwipeOutAtStart(){
+					//go to previous server
+					int present=getIntent().getIntExtra("statListOffset",-1);
+					if(present==-1)return;
+					Intent launcher=ServerListActivityImpl.instance.get().prevServerIntent(present);
+					if(launcher==null)return;
+					finish();
+					ServerListActivityImpl.instance.get().startActivityForResult(launcher,0);
+				}
+			});
+		}
 
 		hideData   = getIntent().getBooleanExtra("nonDetails", false);
 		hidePlayer = getIntent().getBooleanExtra("nonPlayers", false);
