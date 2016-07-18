@@ -740,6 +740,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		for(int i=present+1;i<list.size();i++){
 			if(list.get(i) instanceof ServerStatus){
 				nextShallBe=i;
+				break;
 			}
 		}
 		if(nextShallBe==-1){
@@ -747,7 +748,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		}
 		ServerStatus nextServer=(ServerStatus)list.get(nextShallBe);
 		ServerInfoActivity.stat.add(nextServer);
-		int ofs=ServerInfoActivity.stat.indexOf(nextServer);
+		int ofs=ServerInfoActivity.stat.size()-1;
 		Bundle bnd=new Bundle();
 		bnd.putInt("statListOffset", ofs);
 		return new Intent(this, ServerInfoActivity.class).putExtra("statListOffset", ofs).putExtra("object", bnd);
@@ -759,6 +760,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		for(int i=present-1;i>0;i--){
 			if(list.get(i) instanceof ServerStatus){
 				prevShallBe=i;
+				break;
 			}
 		}
 		if(prevShallBe==-1){
@@ -766,7 +768,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		}
 		ServerStatus prevServer=(ServerStatus)list.get(prevShallBe);
 		ServerInfoActivity.stat.add(prevServer);
-		int ofs=ServerInfoActivity.stat.indexOf(prevServer);
+		int ofs=ServerInfoActivity.stat.size()-1;
 		Bundle bnd=new Bundle();
 		bnd.putInt("statListOffset", ofs);
 		return new Intent(this, ServerInfoActivity.class).putExtra("statListOffset", ofs).putExtra("object", bnd);

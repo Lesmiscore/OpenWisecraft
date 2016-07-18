@@ -103,19 +103,27 @@ public class ServerInfoActivity extends AppCompatActivity {
 					//go to next server
 					int present=getIntent().getIntExtra("statListOffset",-1);
 					if(present==-1)return;
-					Intent launcher=ServerListActivityImpl.instance.get().nextServerIntent(present);
+					final Intent launcher=ServerListActivityImpl.instance.get().nextServerIntent(present);
 					if(launcher==null)return;
 					finish();
-					ServerListActivityImpl.instance.get().startActivityForResult(launcher,0);
+					new Handler().post(new Runnable(){
+							public void run(){
+								ServerListActivityImpl.instance.get().startActivityForResult(launcher,0);
+							}
+						});
 				}
 				public void onSwipeOutAtStart(){
 					//go to previous server
 					int present=getIntent().getIntExtra("statListOffset",-1);
 					if(present==-1)return;
-					Intent launcher=ServerListActivityImpl.instance.get().prevServerIntent(present);
+					final Intent launcher=ServerListActivityImpl.instance.get().prevServerIntent(present);
 					if(launcher==null)return;
 					finish();
-					ServerListActivityImpl.instance.get().startActivityForResult(launcher,0);
+					new Handler().post(new Runnable(){
+							public void run(){
+								ServerListActivityImpl.instance.get().startActivityForResult(launcher,0);
+							}
+						});
 				}
 			});
 		}
