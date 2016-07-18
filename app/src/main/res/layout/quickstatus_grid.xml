@@ -26,7 +26,8 @@
 				android:lines="1"
 				android:maxLines="1"
 				android:layout_weight="1.0"
-				android:scrollHorizontally="true"/>
+				android:scrollHorizontally="true"
+				android:singleLine="true"/>
 
 			<TextView
 				android:layout_height="match_parent"
