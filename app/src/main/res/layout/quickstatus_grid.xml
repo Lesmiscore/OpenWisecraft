@@ -55,10 +55,10 @@
 		<com.nao20010128nao.Wisecraft.misc.view.WrapTextView
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceMedium"
-			android:layout_width="wrap_content"
+			android:layout_width="match_parent"
 			android:text="-/-"
 			android:id="@+id/serverPlayers"
-			android:layout_gravity="right"/>
+			android:gravity="right"/>
 
 	</LinearLayout>
 
