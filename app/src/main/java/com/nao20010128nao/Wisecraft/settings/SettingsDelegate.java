@@ -100,7 +100,7 @@ public class SettingsDelegate extends ContextWrapper
 								})
 								.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
 									public void onClick(DialogInterface di,int w){
-										pref.edit().putInt("main_style",which).commit();
+										pref.edit().putInt("serverListStyle2",which).commit();
 									}
 								})
 								.setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
