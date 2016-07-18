@@ -737,7 +737,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	public Intent nextServerIntent(int present){
 		if(present==list.size())return null;
 		int nextShallBe=-1;
-		for(int i=present+1;i<list.size();i++){
+		for(int i=present;i<list.size();i++){
 			if(list.get(i) instanceof ServerStatus){
 				nextShallBe=i;
 				break;
@@ -757,7 +757,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	public Intent prevServerIntent(int present){
 		if(present==0)return null;
 		int prevShallBe=-1;
-		for(int i=present-1;i>0;i--){
+		for(int i=present;i>0;i--){
 			if(list.get(i) instanceof ServerStatus){
 				prevShallBe=i;
 				break;
