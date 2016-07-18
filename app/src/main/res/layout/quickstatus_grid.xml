@@ -17,7 +17,7 @@
 			android:layout_width="match_parent"
 			android:orientation="horizontal">
 
-			<com.nao20010128nao.Wisecraft.misc.view.WrapTextView
+			<TextView
 				android:layout_height="wrap_content"
 				android:textAppearance="?android:attr/textAppearanceLarge"
 				android:layout_width="match_parent"
@@ -25,7 +25,8 @@
 				android:id="@+id/serverName"
 				android:lines="1"
 				android:maxLines="1"
-				android:layout_weight="1.0"/>
+				android:layout_weight="1.0"
+				android:scrollHorizontally="true"/>
 
 			<TextView
 				android:layout_height="match_parent"
@@ -52,13 +53,14 @@
 			android:id="@+id/pingMillis"
 			android:layout_gravity="right"/>
 
-		<com.nao20010128nao.Wisecraft.misc.view.WrapTextView
+		<TextView
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceMedium"
 			android:layout_width="match_parent"
 			android:text="-/-"
 			android:id="@+id/serverPlayers"
-			android:gravity="right"/>
+			android:gravity="right"
+			android:scrollHorizontally="true"/>
 
 	</LinearLayout>
 
