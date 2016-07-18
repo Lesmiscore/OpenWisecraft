@@ -96,7 +96,7 @@ public class ServerInfoActivity extends AppCompatActivity {
 		PagerSlidingTabStrip psts=(PagerSlidingTabStrip)findViewById(R.id.tabs);
 		psts.setViewPager(tabs);
 		
-		{
+		if(false){
 			OverScrollViewPager osvp=(OverScrollViewPager)tabs;
 			osvp.setOnSwipeOutListener(new OverScrollViewPager.OnSwipeOutListener(){
 				public void onSwipeOutAtEnd(){
