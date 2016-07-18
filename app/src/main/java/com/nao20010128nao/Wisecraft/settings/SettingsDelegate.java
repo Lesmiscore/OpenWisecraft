@@ -93,7 +93,7 @@ public class SettingsDelegate extends ContextWrapper
 						public void onClick(String a, String b, String c) {
 							new AppCompatAlertDialog.Builder(act,R.style.AppAlertDialog)
 								.setTitle(R.string.serverListStyle)
-								.setSingleChoiceItems(getResources().getStringArray(R.array.serverListStyles),pref.getInt("main_style",0),new DialogInterface.OnClickListener(){
+								.setSingleChoiceItems(getResources().getStringArray(R.array.serverListStyles),pref.getInt("serverListStyle2",0),new DialogInterface.OnClickListener(){
 									public void onClick(DialogInterface di,int w){
 										which=w;
 									}
