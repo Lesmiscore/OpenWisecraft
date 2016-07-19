@@ -48,7 +48,6 @@ dependencies {
 	compile files('../app/libs/httpcore-4.4.4.jar')
 	
 	compile project(':rcon')
-	compile project(':HoloIcons')
 	compile project(':compat')
 	compile project(':scrolling')
 	compile project(':MaterialIcons')

@@ -85,12 +85,12 @@ public class MainActivity extends MainActivityBase1
 		// TODO: Implement this method
 		SubMenu add=menu.addSubMenu(Menu.NONE,0,1,R.string.add).setIcon(R.drawable.ic_action_new_dark);
 		add.add(Menu.NONE,1,1,R.string.addSingle).setIcon(R.drawable.ic_action_new_light);
-		add.add(Menu.NONE,2,1,R.string.imporT).setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_file_download_black_48dp,getResources().getColor(R.color.light_icons_foreground)));
-		add.add(Menu.NONE,3,1,R.string.export).setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_file_upload_black_48dp  ,getResources().getColor(R.color.light_icons_foreground)));
+		add.add(Menu.NONE,2,1,R.string.imporT).setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_file_download_black_48dp  ,getResources().getColor(R.color.light_icons_foreground)));
+		add.add(Menu.NONE,3,1,R.string.export).setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_file_upload_black_48dp    ,getResources().getColor(R.color.light_icons_foreground)));
 		MenuItemCompat.setShowAsAction(add.getItem(),MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
 		
 		SubMenu misc=menu.addSubMenu(Menu.NONE,4,1,R.string.other).setIcon(R.drawable.abc_ic_menu_moreoverflow_mtrl_alpha);
-		misc.add(Menu.NONE,5,1,R.string.aboutApp).setIcon(R.drawable.ic_action_about_light);
+		misc.add(Menu.NONE,5,1,R.string.aboutApp).setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_info_outline_black_48dp,getResources().getColor(R.color.light_icons_foreground)));
 		MenuItemCompat.setShowAsAction(misc.getItem(),MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
 		return true;
 	}
