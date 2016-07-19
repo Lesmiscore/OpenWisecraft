@@ -40,13 +40,6 @@ android {
 			resValue "string", "app_name", "Wisecraft BETA"
 			//resValue "bool", "isBeta", "true"
 		}
-		debugProguard {
-        	applicationIdSuffix = '.alpha'  
-            versionNameSuffix = ' Pre'
-			signingConfig signingConfigs.release
-			resValue "string", "app_name", "Wisecraft BETA"
-			minifyEnabled true
-		}
     }
 	
 	applicationVariants.all { variant ->
