@@ -131,7 +131,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				rv.setLayoutManager(new LinearLayoutManager(this));
 				break;
 			case 1:
-				GridLayoutManager glm=new GridLayoutManager(this,calculateRows());
+				GridLayoutManager glm=new GridLayoutManager(this,calculateRows(this));
 				rv.setLayoutManager(glm);
 				break;
 		}
@@ -714,20 +714,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		spp.putInQueue(s, new PingHandlerImpl(true, -1));
 		pinging.put(s, true);
 	}
-
-	public int calculateRows(){
-		int base=getResources().getDimensionPixelSize(R.dimen.panel_base_size);
-		int width;Configuration cfg=getResources().getConfiguration();
-		Point point=Utils.getRealSize(this);
-		switch(cfg.orientation){
-			case Configuration.ORIENTATION_LANDSCAPE :width=Math.max(point.x,point.y);break;
-			case Configuration.ORIENTATION_PORTRAIT  :width=Math.min(point.x,point.y);break;
-			case Configuration.ORIENTATION_SQUARE    :width=point.x;                  break;
-			case Configuration.ORIENTATION_UNDEFINED :width=base;                     break;
-			default                                  :width=base;                     break;
-		}
-		return (int)Math.max(1,((double)width)/((double)base));
-	}
 	
 	public Intent nextServerIntent(int present){
 		if(present==list.size())return null;
@@ -781,9 +767,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			// 表示するレイアウトを設定
 			switch(sla.pref.getInt("serverListStyle2",0)){
 				case 0:default:
-					return new OriginalViewHolder(LayoutInflater.from(sla).inflate(R.layout.quickstatus, viewGroup, false));
+					return new OriginalViewHolder(sla,false,viewGroup);
 				case 1:
-					return new OriginalViewHolder(LayoutInflater.from(sla).inflate(R.layout.quickstatus_grid, viewGroup, false));
+					return new OriginalViewHolder(sla,true,viewGroup);
 			}
 		}
 
@@ -1187,69 +1173,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			notifyItemRemoved(ofs);
 		}
 
-		class OriginalViewHolder extends RecyclerView.ViewHolder {
-			public OriginalViewHolder(View v) {
-				super(v);
-			}
-			public View findViewById(int resId) {
-				return itemView.findViewById(resId);
-			}
-			public OriginalViewHolder setStatColor(int color){
-				((ExtendedImageView)findViewById(R.id.statColor)).setColor(color);
-				return this;
-			}
-			public OriginalViewHolder setServerPlayers(String s){
-				((TextView)findViewById(R.id.serverPlayers)).setText(s);
-				return this;
-			}
-			public OriginalViewHolder setServerPlayers(int s){
-				((TextView)findViewById(R.id.serverPlayers)).setText(s);
-				return this;
-			}
-			public OriginalViewHolder setServerPlayers(Number count,Number max){
-				return setServerPlayers(count+"/"+max);
-			}
-			public OriginalViewHolder setServerPlayers(String count,String max){
-				return setServerPlayers(count+"/"+max);
-			}
-			public OriginalViewHolder setServerAddress(String s){
-				((TextView)findViewById(R.id.serverAddress)).setText(s);
-				return this;
-			}
-			public OriginalViewHolder setServerAddress(Server s){
-				return setServerAddress(s.toString());
-			}
-			public OriginalViewHolder setPingMillis(String s){
-				((TextView)findViewById(R.id.pingMillis)).setText(s);
-				return this;
-			}
-			public OriginalViewHolder setPingMillis(long s){
-				return setPingMillis(s+" ms");
-			}
-			public OriginalViewHolder setServerName(CharSequence s){
-				((TextView)findViewById(R.id.serverName)).setText(s);
-				return this;
-			}
-			public OriginalViewHolder setDarkness(boolean dark){
-				int color=dark?0xff_ffffff:0xff_000000;
-				for(int i:new int[]{R.id.serverPlayers,R.id.serverAddress,R.id.pingMillis,R.id.serverName})
-					((TextView)findViewById(i)).setTextColor(color);
-				View target=findViewById(R.id.target);
-				if(target!=null)((TextView)target).setTextColor(color);
-				return this;
-			}
-			public OriginalViewHolder setTarget(int mode){
-				return setTarget(mode==0?"PE":"PC");
-			}
-			public OriginalViewHolder setTarget(String target){
-				View view=findViewById(R.id.target);
-				if(view!=null)((TextView)view).setText(target);
-				return this;
-			}
-			public OriginalViewHolder setServer(Server server){
-				setServerAddress(server);
-				setTarget(server.mode);
-				return this;
+		class OriginalViewHolder extends ServerStatusWrapperViewHolder {
+			public OriginalViewHolder(Context context,boolean isGrid,ViewGroup parent) {
+				super(context,isGrid,parent);
 			}
 		}
 	}

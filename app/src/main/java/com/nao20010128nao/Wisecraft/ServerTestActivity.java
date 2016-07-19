@@ -22,6 +22,7 @@ import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.GridLayoutManager;
 
 class ServerTestActivityImpl extends AppCompatActivity implements ServerListActivityInterface {
 	static WeakReference<ServerTestActivityImpl> instance=new WeakReference(null);
@@ -69,7 +70,15 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 		instance = new WeakReference(this);
         setContentView(R.layout.recycler_view_content);
 		rv = (RecyclerView)findViewById(android.R.id.list);
-		rv.setLayoutManager(new LinearLayoutManager(this));
+		switch(pref.getInt("serverListStyle2",0)){
+			case 0:default:
+				rv.setLayoutManager(new LinearLayoutManager(this));
+				break;
+			case 1:
+				GridLayoutManager glm=new GridLayoutManager(this,calculateRows(this));
+				rv.setLayoutManager(glm);
+				break;
+		}
 		rv.setAdapter(sl);
 		ip = getIntent().getStringExtra("ip");
 		port = getIntent().getIntExtra("port", -1);
@@ -165,7 +174,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
-	static class RecyclerServerList extends ListRecyclerViewAdapter<STAVH,Server> implements AdapterView.OnItemClickListener {
+	static class RecyclerServerList extends ListRecyclerViewAdapter<ServerStatusWrapperViewHolder,Server> implements AdapterView.OnItemClickListener {
 		ServerTestActivityImpl sta;
 
 		public RecyclerServerList(ServerTestActivityImpl parent) {
@@ -186,7 +195,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 		}
 
 		@Override
-		public void onBindViewHolder(ServerTestActivityImpl.STAVH parent, final int offset) {
+		public void onBindViewHolder(ServerStatusWrapperViewHolder parent, final int offset) {
 			// TODO: Implement this method
 			View layout=parent.itemView;
 			Server s=getItem(offset);
@@ -290,27 +299,18 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 		}
 
 		@Override
-		public ServerTestActivityImpl.STAVH onCreateViewHolder(ViewGroup viewGroup, int type) {
+		public ServerStatusWrapperViewHolder onCreateViewHolder(ViewGroup viewGroup, int type) {
 			// TODO: Implement this method
-			return sta.new STAVH(LayoutInflater.from(sta).inflate(R.layout.quickstatus, viewGroup, false));
+			switch(sta.pref.getInt("serverListStyle2",0)){
+				case 0:default:
+					return new ServerStatusWrapperViewHolder(sta,false,viewGroup);
+				case 1:
+					return new ServerStatusWrapperViewHolder(sta,true,viewGroup);
+			}
 		}
 
 		public void attachNewActivity(ServerTestActivityImpl newSta) {
 			sta = newSta;
-		}
-	}
-	class STAVH extends RecyclerView.ViewHolder {
-		public STAVH(View v) {
-			super(v);
-		}
-		public View findViewById(int resId) {
-			return itemView.findViewById(resId);
-		}
-		public STAVH setDarkness(boolean dark){
-			int color=dark?0xff_ffffff:0xff_000000;
-			for(int i:new int[]{R.id.serverPlayers,R.id.serverAddress,R.id.pingMillis,R.id.serverName})
-				((TextView)findViewById(i)).setTextColor(color);
-			return this;
 		}
 	}
 }

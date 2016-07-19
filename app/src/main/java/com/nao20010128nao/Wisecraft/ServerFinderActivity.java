@@ -23,6 +23,7 @@ import java.lang.ref.WeakReference;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.GridLayoutManager;
 class ServerFinderActivityImpl extends AppCompatActivity implements ServerListActivityInterface {
 	RecyclerServerList sl;
 	List<ServerStatus> list;
@@ -45,7 +46,15 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 		setContentView(R.layout.recycler_view_content);
 		sl = new RecyclerServerList(this);
 		rv = (RecyclerView)findViewById(android.R.id.list);
-		rv.setLayoutManager(new LinearLayoutManager(this));
+		switch(pref.getInt("serverListStyle2",0)){
+			case 0:default:
+				rv.setLayoutManager(new LinearLayoutManager(this));
+				break;
+			case 1:
+				GridLayoutManager glm=new GridLayoutManager(this,calculateRows(this));
+				rv.setLayoutManager(glm);
+				break;
+		}
 		rv.setAdapter(sl);
 		ip = getIntent().getStringExtra("ip");
 		mode = getIntent().getIntExtra("mode", 0);
@@ -168,7 +177,7 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
-	class RecyclerServerList extends ListRecyclerViewAdapter<SFAVH,ServerStatus> implements AdapterView.OnItemClickListener {
+	class RecyclerServerList extends ListRecyclerViewAdapter<ServerStatusWrapperViewHolder,ServerStatus> implements AdapterView.OnItemClickListener {
 		ServerFinderActivityImpl sta;
 
 		public RecyclerServerList(ServerFinderActivityImpl parent) {
@@ -177,7 +186,7 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 		}
 
 		@Override
-		public void onBindViewHolder(SFAVH parent, final int offset) {
+		public void onBindViewHolder(ServerStatusWrapperViewHolder parent, final int offset) {
 			final View layout=parent.itemView;
 			if (sta.pref.getBoolean("colorFormattedText", false)) {
 				if (sta.pref.getBoolean("darkBackgroundForServerName", false)) {
@@ -235,8 +244,13 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 		}
 
 		@Override
-		public SFAVH onCreateViewHolder(ViewGroup parent, int type) {
-			return sta.new SFAVH(LayoutInflater.from(sta).inflate(R.layout.quickstatus, parent, false));
+		public ServerStatusWrapperViewHolder onCreateViewHolder(ViewGroup parent, int type) {
+			switch(sta.pref.getInt("serverListStyle2",0)){
+				case 0:default:
+					return new ServerStatusWrapperViewHolder(sta,false,parent);
+				case 1:
+					return new ServerStatusWrapperViewHolder(sta,true,parent);
+			}
 		}
 
 		@Override
@@ -256,20 +270,6 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 					})
 					.show();
 			}
-		}
-	}
-	class SFAVH extends RecyclerView.ViewHolder {
-		public SFAVH(View v) {
-			super(v);
-		}
-		public View findViewById(int resId) {
-			return itemView.findViewById(resId);
-		}
-		public SFAVH setDarkness(boolean dark){
-			int color=dark?0xff_ffffff:0xff_000000;
-			for(int i:new int[]{R.id.serverPlayers,R.id.serverAddress,R.id.pingMillis,R.id.serverName})
-				((TextView)findViewById(i)).setTextColor(color);
-			return this;
 		}
 	}
 }

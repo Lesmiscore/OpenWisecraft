@@ -25,6 +25,7 @@ import android.annotation.SuppressLint;
 import android.os.Build;
 import java.lang.reflect.Method;
 import android.view.WindowManager;
+import android.content.res.Configuration;
 
 public class Utils extends PingerUtils{
 	public static String deleteDecorations(String decorated) {
@@ -301,4 +302,17 @@ public class Utils extends PingerUtils{
 
         return point;
     }
+	public static int calculateRows(Context c){
+		int base=c.getResources().getDimensionPixelSize(R.dimen.panel_base_size);
+		int width;Configuration cfg=c.getResources().getConfiguration();
+		Point point=getRealSize(c);
+		switch(cfg.orientation){
+			case Configuration.ORIENTATION_LANDSCAPE :width=Math.max(point.x,point.y);break;
+			case Configuration.ORIENTATION_PORTRAIT  :width=Math.min(point.x,point.y);break;
+			case Configuration.ORIENTATION_SQUARE    :width=point.x;                  break;
+			case Configuration.ORIENTATION_UNDEFINED :width=base;                     break;
+			default                                  :width=base;                     break;
+		}
+		return (int)Math.max(1,((double)width)/((double)base));
+	}
 }
