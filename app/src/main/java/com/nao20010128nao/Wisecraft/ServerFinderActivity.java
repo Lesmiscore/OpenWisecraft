@@ -187,22 +187,21 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 		}
 
 		@Override
-		public void onBindViewHolder(ServerStatusWrapperViewHolder parent, final int offset) {
-			final View layout=parent.itemView;
+		public void onBindViewHolder(ServerStatusWrapperViewHolder viewHolder, final int offset) {
 			if (sta.pref.getBoolean("colorFormattedText", false)) {
 				if (sta.pref.getBoolean("darkBackgroundForServerName", false)) {
-					parent.setDarkness(true);
+					viewHolder.setDarkness(true);
 				} else {
-					parent.setDarkness(false);
+					viewHolder.setDarkness(false);
 				}
 			} else {
-				parent.setDarkness(false);
+				viewHolder.setDarkness(false);
 			}
-			layout.findViewById(R.id.serverPlayers).setVisibility(View.GONE);
+			viewHolder.itemView.findViewById(R.id.serverPlayers).setVisibility(View.GONE);
 			ServerStatus s=getItem(offset);
-			layout.setTag(s);
-			((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(ContextCompat.getColor(sta, R.color.stat_ok)));
-
+			viewHolder.itemView.setTag(s);
+			viewHolder.setStatColor(ContextCompat.getColor(sta, R.color.stat_ok));
+			
 			final String title;
 			if (s.response instanceof Reply19) {//PC 1.9~
 				Reply19 rep=(Reply19)s.response;
@@ -223,22 +222,23 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 			} else {//Unreachable
 				title = s.ip + ":" + s.port;
 			}
-			if (pref.getBoolean("colorFormattedText", false)) {
-				if (pref.getBoolean("darkBackgroundForServerName", false)) {
-					((TextView)layout.findViewById(R.id.serverName)).setText(parseMinecraftFormattingCodeForDark(title));
+			if (sta.pref.getBoolean("colorFormattedText", false)) {
+				if (sta.pref.getBoolean("darkBackgroundForServerName", false)) {
+					viewHolder.setServerName(parseMinecraftFormattingCodeForDark(title));
 				} else {
-					((TextView)layout.findViewById(R.id.serverName)).setText(parseMinecraftFormattingCode(title));
+					viewHolder.setServerName(parseMinecraftFormattingCode(title));
 				}
 			} else {
-				((TextView)layout.findViewById(R.id.serverName)).setText(deleteDecorations(title));
+				viewHolder.setServerName(deleteDecorations(title));
 			}
-			((TextView)layout.findViewById(R.id.pingMillis)).setText(s.ping + " ms");
-			((TextView)layout.findViewById(R.id.serverAddress)).setText(s.port + "");
-			applyHandlersForViewTree(parent.itemView,
+			viewHolder
+				.setPingMillis(s.ping)
+				.setServerAddress(s.port + "");
+			applyHandlersForViewTree(viewHolder.itemView,
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						onItemClick(null, layout, offset, Long.MIN_VALUE);
+						onItemClick(null, v, offset, Long.MIN_VALUE);
 					}
 				}
 			);

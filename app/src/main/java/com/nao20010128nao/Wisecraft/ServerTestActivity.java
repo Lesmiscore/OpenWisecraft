@@ -196,29 +196,28 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 		}
 
 		@Override
-		public void onBindViewHolder(ServerStatusWrapperViewHolder parent, final int offset) {
+		public void onBindViewHolder(ServerStatusWrapperViewHolder viewHolder, final int offset) {
 			// TODO: Implement this method
-			View layout=parent.itemView;
 			Server s=getItem(offset);
-            ((TextView)layout.findViewById(R.id.serverAddress)).setText(s.ip + ":" + s.port);
-            ((TextView) layout.findViewById(R.id.serverPlayers)).setText("-/-");
+			viewHolder.setServer(s).setServerPlayers("-/-");
 			if (sta.pref.getBoolean("colorFormattedText", false)) {
 				if (sta.pref.getBoolean("darkBackgroundForServerName", false)) {
-					parent.setDarkness(true);
+					viewHolder.setDarkness(true);
 				} else {
-					parent.setDarkness(false);
+					viewHolder.setDarkness(false);
 				}
 			} else {
-				parent.setDarkness(false);
+				viewHolder.setDarkness(false);
 			}
             if (sta.pinging.get(offset)) {
-				((TextView)layout.findViewById(R.id.serverName)).setText(R.string.working);
-				((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.working);
-				((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(ContextCompat.getColor(sta, R.color.stat_pending)));
+				viewHolder
+					.setServerName(sta.getResources().getString(R.string.working))
+					.setPingMillis(sta.getResources().getString(R.string.working))
+					.setStatColor(ContextCompat.getColor(sta, R.color.stat_pending));
 			} else {
 				if (s instanceof ServerStatus) {
 					ServerStatus sv=(ServerStatus)s;
-					((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(ContextCompat.getColor(sta, R.color.stat_ok)));
+					viewHolder.setStatColor(ContextCompat.getColor(sta, R.color.stat_ok));
 					final String title;
 					if (sv.response instanceof FullStat) {//PE
 						FullStat fs=(FullStat)sv.response;
@@ -230,7 +229,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 						} else {
 							title = sv.ip + ":" + sv.port;
 						}
-                        ((TextView) layout.findViewById(R.id.serverPlayers)).setText(fs.getData().get("numplayers") + "/" + fs.getData().get("maxplayers"));
+                        viewHolder.setServerPlayers(fs.getData().get("numplayers"), fs.getData().get("maxplayers"));
                     } else if (sv.response instanceof Reply19) {//PC 1.9~
 						Reply19 rep=(Reply19)sv.response;
 						if (rep.description == null) {
@@ -238,7 +237,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 						} else {
 							title = rep.description.text;
 						}
-                        ((TextView) layout.findViewById(R.id.serverPlayers)).setText(rep.players.online + "/" + rep.players.max);
+                        viewHolder.setServerPlayers(rep.players.online, rep.players.max);
                     } else if (sv.response instanceof Reply) {//PC
 						Reply rep=(Reply)sv.response;
 						if (rep.description == null) {
@@ -246,13 +245,13 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 						} else {
 							title = rep.description;
 						}
-                        ((TextView) layout.findViewById(R.id.serverPlayers)).setText(rep.players.online + "/" + rep.players.max);
+                        viewHolder.setServerPlayers(rep.players.online, rep.players.max);
                     } else if (sv.response instanceof SprPair) {//PE?
 						SprPair sp=((SprPair)sv.response);
 						if (sp.getB() instanceof UnconnectedPing.UnconnectedPingResult) {
                             UnconnectedPing.UnconnectedPingResult res = (UnconnectedPing.UnconnectedPingResult) sp.getB();
                             title = res.getServerName();
-                            ((TextView) layout.findViewById(R.id.serverPlayers)).setText(res.getPlayersCount() + "/" + res.getMaxPlayers());
+                            viewHolder.setServerPlayers(res.getPlayersCount(), res.getMaxPlayers());
                         } else if (sp.getA() instanceof FullStat) {
 							FullStat fs=(FullStat)sp.getA();
 							Map<String,String> m=fs.getData();
@@ -263,36 +262,39 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 							} else {
 								title = sv.ip + ":" + sv.port;
 							}
-                            ((TextView) layout.findViewById(R.id.serverPlayers)).setText(fs.getData().get("numplayers") + "/" + fs.getData().get("maxplayers"));
+                            viewHolder.setServerPlayers(fs.getData().get("numplayers"), fs.getData().get("maxplayers"));
                         } else {
 							title = sv.ip + ":" + sv.port;
-                            ((TextView) layout.findViewById(R.id.serverPlayers)).setText("-/-");
+                            viewHolder.setServerPlayers("-/-");
                         }
 					} else if (sv.response instanceof UnconnectedPing.UnconnectedPingResult) {
                         UnconnectedPing.UnconnectedPingResult res = (UnconnectedPing.UnconnectedPingResult) sv.response;
                         title = res.getServerName();
-                        ((TextView) layout.findViewById(R.id.serverPlayers)).setText(res.getPlayersCount() + "/" + res.getMaxPlayers());
+                        viewHolder.setServerPlayers(res.getPlayersCount(), res.getMaxPlayers());
                     } else {//Unreachable
 						title = sv.ip + ":" + sv.port;
-                        ((TextView) layout.findViewById(R.id.serverPlayers)).setText("-/-");
+                        viewHolder.setServerPlayers("-/-");
                     }
 					if (sta.pref.getBoolean("colorFormattedText", false)) {
 						if (sta.pref.getBoolean("darkBackgroundForServerName", false)) {
-							((TextView)layout.findViewById(R.id.serverName)).setText(parseMinecraftFormattingCodeForDark(title));
+							viewHolder.setServerName(parseMinecraftFormattingCodeForDark(title));
 						} else {
-							((TextView)layout.findViewById(R.id.serverName)).setText(parseMinecraftFormattingCode(title));
+							viewHolder.setServerName(parseMinecraftFormattingCode(title));
 						}
 					} else {
-						((TextView)layout.findViewById(R.id.serverName)).setText(deleteDecorations(title));
+						viewHolder.setServerName(deleteDecorations(title));
 					}
-					((TextView)layout.findViewById(R.id.pingMillis)).setText(sv.ping + " ms");
+					viewHolder
+						.setPingMillis(sv.ping);
 				} else {
-					((ImageView)layout.findViewById(R.id.statColor)).setImageDrawable(new ColorDrawable(ContextCompat.getColor(sta, R.color.stat_error)));
-					((TextView)layout.findViewById(R.id.serverName)).setText(s.ip + ":" + s.port);
-					((TextView)layout.findViewById(R.id.pingMillis)).setText(R.string.notResponding);
+					viewHolder
+						.setStatColor(ContextCompat.getColor(sta, R.color.stat_error))
+						.setServerName(s)
+						.setPingMillis(sta.getResources().getString(R.string.notResponding))
+						.setServerPlayers("-/-");
 				}
 			}
-			applyHandlersForViewTree(parent.itemView, new View.OnClickListener(){
+			applyHandlersForViewTree(viewHolder.itemView, new View.OnClickListener(){
 					public void onClick(View v) {
 						onItemClick(null, v, offset, Long.MIN_VALUE);
 					}

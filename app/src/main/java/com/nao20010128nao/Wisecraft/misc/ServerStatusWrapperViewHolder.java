@@ -69,4 +69,10 @@ public class ServerStatusWrapperViewHolder extends FindableViewHolder
 		setTarget(server.mode);
 		return this;
 	}
+	
+	
+	//ATTENTION: Don't add this method to setServer(Server) because this is used for a unexpected mode
+	public ServerStatusWrapperViewHolder setServerName(Server s){
+		return setServerName(s.toString());
+	}
 }
