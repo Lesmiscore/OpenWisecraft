@@ -265,7 +265,8 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 						public void onClick(DialogInterface di, int w) {
 							switch (w) {
 								case 0:
-									ServerListActivityImpl.instance.get().sl.add(s);
+									ServerListActivityImpl.instance.get().sl.add(s.cloneAsServer());
+									ServerListActivityImpl.instance.get().dryUpdate(s,true);
 									break;
 							}
 						}
