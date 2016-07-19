@@ -85,5 +85,6 @@
 -keepnames class org.ietf.jgss.** { *; }
 -dontwarn org.apache.**
 -dontwarn org.w3c.dom.**
+-dontwarn android.**
 
 -keepattributes InnerClasses,EnclosingMethod
