@@ -99,6 +99,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 							finish();
 							return;
 						}
+						setTitle(ip+":"+port+" x "+times);
 						for (int i=0;i < times;i++) {
 							Server s=new Server();
 							s.ip = ip;
