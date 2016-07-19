@@ -356,12 +356,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				break;
 		}
 	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		return execOption(item.getItemId());
-	}
-
+	
 	public boolean execOption(int item) {
 		// TODO: Implement this method
 		if (dl != null)dl.closeDrawers();
@@ -1343,17 +1338,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			return ServerListActivityImpl.instance.get();
 		}
 	}
-	class MenuExecClickListener implements View.OnClickListener {
-		int o;
-		public MenuExecClickListener(int d) {
-			o = d;
-		}
-		@Override
-		public void onClick(View p1) {
-			// TODO: Implement this method
-			execOption(o);
-		}
-	}
 	class NetworkStatusCheckWorker extends AsyncTask<Void,String,String> {
 		@Override
 		protected String doInBackground(Void[] p1) {
@@ -1407,36 +1391,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		return null;
 	}
 
-	public static class MenuPreferenceActivity extends PreferenceActivity {
-		@Override
-		protected void onCreate(Bundle savedInstanceState) {
-			// TODO: Implement this method
-			super.onCreate(savedInstanceState);
-			addPreferencesFromResource(R.xml.pref_blank);
-
-			List<String> values=getIntent().getStringArrayListExtra("values");
-			PreferenceScreen scr=getPreferenceScreen();
-			for (String s:values) {
-				StartPref p=new StartPref(this);
-				p.setTitle(s);
-				p.setOnClickListener(new PrefHandler());
-				scr.addPreference(p);
-			}
-		}
-		@Override
-		protected void attachBaseContext(Context newBase) {
-			super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-		}
-
-		class PrefHandler implements HandledPreference.OnClickListener {
-			@Override
-			public void onClick(String var1, String var2, String var3) {
-				// TODO: Implement this method
-				ServerListActivityImpl ins=ServerListActivityImpl.instance.get();
-				ins.execOption(ins.appMenu.indexOf(var2));
-			}
-		}
-	}
 	class OpenCloseListener implements DrawerLayout.DrawerListener {
 		public void onDrawerSlide(View v, float slide) {
 
