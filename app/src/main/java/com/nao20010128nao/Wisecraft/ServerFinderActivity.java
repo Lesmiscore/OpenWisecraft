@@ -233,6 +233,7 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 			}
 			viewHolder
 				.setPingMillis(s.ping)
+				.setServer(s)
 				.setServerAddress(s.port + "");
 			applyHandlersForViewTree(viewHolder.itemView,
 				new View.OnClickListener() {
