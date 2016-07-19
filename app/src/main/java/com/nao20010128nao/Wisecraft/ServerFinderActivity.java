@@ -67,7 +67,7 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 					int startPort=new Integer(((EditText)dialog.findViewById(R.id.startPort)).getText().toString());
 					int endPort=new Integer(((EditText)dialog.findViewById(R.id.endPort)).getText().toString());
 					boolean isPC=((CheckBox)dialog.findViewById(R.id.pc)).isChecked();
-					startFinding(ip, startPort, endPort, isPC);
+					startFinding(ip, Math.min(startPort,endPort), Math.max(startPort,endPort), isPC);
 				}
 			})
 			.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener(){
@@ -105,6 +105,7 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 
 		pw.showAtLocation(getWindow().getDecorView().findViewById(android.R.id.content), Gravity.CENTER, 0, 0);
 		;
+		setTitle(ip+":("+startPort+"~"+endPort+")");
 		new AsyncTask<Void,ServerStatus,Void>(){
 			public Void doInBackground(Void... l) {
 				final int max=endPort - startPort;
