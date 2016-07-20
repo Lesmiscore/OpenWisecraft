@@ -7,6 +7,10 @@ import com.nao20010128nao.Wisecraft.misc.WorkingDialog;
 import android.view.View;
 import java.util.regex.Pattern;
 import org.apache.commons.validator.EmailValidator;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.firebase.auth.AuthResult;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.OnFailureListener;
 
 public class SigninActivity extends AppCompatActivity
 {
@@ -37,6 +41,19 @@ public class SigninActivity extends AppCompatActivity
 					return;
 				}
 				wd.showWorkingDialog(getResources().getString(R.string.signingin));
+				auth.signInWithEmailAndPassword(email.getText().toString(),password.getText().toString())
+					.addOnCompleteListener(SigninActivity.this,new OnCompleteListener<AuthResult>(){
+						public void onComplete(Task<AuthResult> task){
+							wd.hideWorkingDialog();
+							setResult(RESULT_OK);
+							finish();
+						}
+					})
+					.addOnFailureListener(SigninActivity.this,new OnFailureListener(){
+						public void onFailure(Exception err){
+							wd.hideWorkingDialog();
+						}
+					});
 			}
 		});
 	}
