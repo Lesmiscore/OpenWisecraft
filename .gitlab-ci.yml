@@ -6,10 +6,13 @@ before_script:
   - git submodule update --init --recursive
   - cd wisecraft-i18n
   - git pull origin master > NUL
+  - git checkout master > NUL
   - cd ../statusesLayout
   - git pull origin master > NUL
+  - git checkout master > NUL
   - cd ../MaterialIcons
   - git pull origin master > NUL
+  - git checkout master > NUL
   - cd ../
   - apt-get --quiet update --yes
   - apt-get --quiet install --yes --force-yes wget tar unzip openjdk-7-jdk lib32stdc++6 lib32z1
