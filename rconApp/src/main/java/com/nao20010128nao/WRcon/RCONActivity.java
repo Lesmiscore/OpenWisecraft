@@ -71,7 +71,7 @@ public class RCONActivity extends RCONActivityBase implements TabHost.OnTabChang
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO: Implement this method
 		if(!didSuccess)return super.onCreateOptionsMenu(menu);
-		MenuItem reconnect=menu.add(Menu.NONE,0,0,R.string.reconnect).setIcon(R.drawable.ic_action_replay_dark);
+		MenuItem reconnect=menu.add(Menu.NONE,0,0,R.string.reconnect).setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_refresh_black_48dp,Color.WHITE));
 		MenuItemCompat.setShowAsAction(reconnect,MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		return true;
 	}
