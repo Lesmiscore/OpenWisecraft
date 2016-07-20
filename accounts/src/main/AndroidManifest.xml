@@ -3,7 +3,14 @@
     package="com.nao20010128nao.Wisecraft.accounts" >
 
     <application>
-        
+        <activity
+			android:label="@string/signin"
+			android:name=".SigninActivity"
+			android:exported="false"/>
+		<activity
+			android:label="@string/register"
+			android:name=".RegisterActivity"
+			android:exported="false"/>
     </application>
 
 </manifest>
