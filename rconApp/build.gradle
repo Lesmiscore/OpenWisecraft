@@ -53,6 +53,7 @@ dependencies {
 	compile project(':MaterialIcons')
 	compile project(':aFileChooser')
 	compile project(':accounts')
+	compile project(':wisecraft-i18n')
 	
 	compile 'com.android.support:design:23.4.0'
 	compile 'com.android.support:support-v4:23.4.0'

@@ -19,5 +19,7 @@ android {
 }
 
 dependencies {
+	compile 'com.android.support:appcompat-v7:+'
 	compile 'com.google.firebase:firebase-auth:9.+'
+	compile project(':wisecraft-i18n')
 }
