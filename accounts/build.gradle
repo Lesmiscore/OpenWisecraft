@@ -20,6 +20,10 @@ android {
 
 dependencies {
 	compile 'com.android.support:appcompat-v7:+'
+	
 	compile 'com.google.firebase:firebase-auth:9.+'
+	compile 'commons-validator:commons-validator:+'
+	
 	compile project(':wisecraft-i18n')
+	compile project(':compat')
 }

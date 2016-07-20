@@ -6,45 +6,88 @@
 	android:orientation="vertical">
 
 	<LinearLayout
-		android:layout_height="wrap_content"
+		android:layout_height="match_parent"
 		android:layout_width="match_parent"
-		android:orientation="horizontal"
-		android:layout_marginBottom="10dp">
+		android:orientation="vertical"
+		android:layout_weight="1.0">
 
-		<TextView
-			android:layout_height="match_parent"
-			android:textAppearance="?android:attr/textAppearanceLarge"
-			android:layout_width="wrap_content"
-			android:text="@string/username_is"
-			android:gravity="center"/>
-
-		<EditText
+		<LinearLayout
 			android:layout_height="wrap_content"
 			android:layout_width="match_parent"
-			android:ems="10"
-			android:id="@+id/username"/>
+			android:orientation="horizontal"
+			android:layout_marginBottom="10dp">
 
-	</LinearLayout>
+			<TextView
+				android:layout_height="match_parent"
+				android:textAppearance="?android:attr/textAppearanceLarge"
+				android:layout_width="wrap_content"
+				android:text="@string/email_is"
+				android:gravity="center"/>
 
-	<LinearLayout
-		android:layout_height="wrap_content"
-		android:layout_width="match_parent"
-		android:orientation="horizontal"
-		android:layout_marginBottom="10dp">
+			<EditText
+				android:layout_height="wrap_content"
+				android:layout_width="match_parent"
+				android:ems="10"
+				android:id="@+id/email"/>
 
-		<TextView
-			android:layout_height="match_parent"
-			android:textAppearance="?android:attr/textAppearanceLarge"
-			android:layout_width="wrap_content"
-			android:text="@string/password_is"
-			android:gravity="center"/>
+		</LinearLayout>
 
-		<EditText
+		<LinearLayout
 			android:layout_height="wrap_content"
 			android:layout_width="match_parent"
-			android:ems="10"
-			android:id="@+id/password"
-			android:inputType="textPassword"/>
+			android:orientation="horizontal"
+			android:layout_marginBottom="15dp">
+
+			<TextView
+				android:layout_height="match_parent"
+				android:textAppearance="?android:attr/textAppearanceLarge"
+				android:layout_width="wrap_content"
+				android:text="@string/password_is"
+				android:gravity="center"/>
+
+			<EditText
+				android:layout_height="wrap_content"
+				android:layout_width="match_parent"
+				android:ems="10"
+				android:id="@+id/password"
+				android:inputType="textPassword"/>
+
+		</LinearLayout>
+
+		<Button
+			style="?android:attr/buttonBarButtonStyle"
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:text="@string/signin"
+			android:id="@+id/signin"/>
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="match_parent"
+			android:text="@string/or"
+			android:gravity="center"/>
+
+		<Button
+			style="?android:attr/buttonBarButtonStyle"
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:text="@string/signin_anonymous"
+			android:id="@+id/signinAnon"/>
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="match_parent"
+			android:text="@string/or"
+			android:gravity="center"/>
+
+		<Button
+			style="?android:attr/buttonBarButtonStyle"
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:text="@string/new_acc"
+			android:id="@+id/newAccount"/>
 
 	</LinearLayout>
 
@@ -52,7 +95,8 @@
 		style="?android:attr/buttonBarButtonStyle"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
-		android:text="@string/signin"/>
+		android:text="@string/not_now"
+		android:id="@+id/close"/>
 
 </LinearLayout>
 

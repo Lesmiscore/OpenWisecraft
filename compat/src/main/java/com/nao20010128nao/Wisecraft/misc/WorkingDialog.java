@@ -8,6 +8,7 @@ import android.view.*;
 import com.nao20010128nao.Wisecraft.*;
 
 import android.support.v7.app.ActionBar;
+import com.nao20010128nao.Wisecraft.misc.compat.R;
 
 public class WorkingDialog extends ContextWrapper {
 	ProgressDialog waitDialog;
