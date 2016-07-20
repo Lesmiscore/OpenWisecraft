@@ -37,6 +37,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.nao20010128nao.Wisecraft.misc.DebugWriter;
 import com.nao20010128nao.WRcon.misc.MainActivityBase1;
+import android.widget.ImageView;
 
 public class MainActivity extends MainActivityBase1
 {
@@ -309,6 +310,7 @@ public class MainActivity extends MainActivityBase1
 		public View getView(int position, View convertView, ViewGroup parent) {
 			// TODO: Implement this method
 			if(convertView==null)convertView=getLayoutInflater().inflate(R.layout.main_server_entry,parent,false);
+			((ImageView)convertView.findViewById(R.id.forward)).setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_chevron_right_black_48dp,0xff_666666));
 			((TextView)convertView.findViewById(R.id.serverIp)).setText(getItem(position).toString());
 			return convertView;
 		}
