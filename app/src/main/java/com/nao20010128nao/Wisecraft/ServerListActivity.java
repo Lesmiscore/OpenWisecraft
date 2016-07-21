@@ -760,7 +760,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		pinging.put(s, true);
 	}
 	
-	static class RecycleServerList extends RecyclerView.Adapter<RecycleServerList.OriginalViewHolder> implements AdapterView.OnItemClickListener,AdapterView.OnItemLongClickListener {
+	static class RecycleServerList extends RecyclerView.Adapter<ServerStatusWrapperViewHolder> implements AdapterView.OnItemClickListener,AdapterView.OnItemLongClickListener {
 		ServerListActivityImpl sla;
 		public RecycleServerList(ServerListActivityImpl sla) {
 			sla.list = new ServerListArrayList();
@@ -768,18 +768,18 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		}
 
 		@Override
-		public OriginalViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+		public ServerStatusWrapperViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
 			// 表示するレイアウトを設定
 			switch(sla.pref.getInt("serverListStyle2",0)){
 				case 0:default:
-					return new OriginalViewHolder(sla,false,viewGroup);
+					return new ServerStatusWrapperViewHolder(sla,false,viewGroup);
 				case 1:
-					return new OriginalViewHolder(sla,true,viewGroup);
+					return new ServerStatusWrapperViewHolder(sla,true,viewGroup);
 			}
 		}
 
 		@Override
-		public void onBindViewHolder(final OriginalViewHolder viewHolder, final int position) {
+		public void onBindViewHolder(final ServerStatusWrapperViewHolder viewHolder, final int position) {
 			// データ表示
 			if (sla.list != null && sla.list.size() > position && sla.list.get(position) != null) {
 				Server sv=getItem(position);
@@ -1176,12 +1176,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			int ofs=sla.list.indexOf(object);
 			sla.list.remove(object);
 			notifyItemRemoved(ofs);
-		}
-
-		class OriginalViewHolder extends ServerStatusWrapperViewHolder {
-			public OriginalViewHolder(Context context,boolean isGrid,ViewGroup parent) {
-				super(context,isGrid,parent);
-			}
 		}
 	}
 
