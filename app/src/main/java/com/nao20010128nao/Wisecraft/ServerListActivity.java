@@ -222,7 +222,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	}
 
 	private void setupDrawer() {
-		dl = (DrawerLayout)findViewById(R.id.drawer);
+		View drawerId=findViewById(R.id.drawer);
+		if(!(drawerId instanceof DrawerLayout))return;
+		dl = (DrawerLayout)drawerId;
 		if(dl==null)dl=drawer.getDrawerLayout();
 		if(dl!=null)dl.setDrawerListener(new OpenCloseListener());
 
