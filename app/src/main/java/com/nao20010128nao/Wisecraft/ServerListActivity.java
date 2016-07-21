@@ -356,10 +356,13 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		if (dl == null)
 			super.onBackPressed();
 		else
-		if (drawerOpened)
-			dl.closeDrawers();
-		else
-			super.onBackPressed();
+			if (drawerOpened)
+				if(drawer==null)
+					dl.closeDrawers();
+				else 
+					drawer.closeDrawer();
+			else
+				super.onBackPressed();
 	}
 
 	@Override
