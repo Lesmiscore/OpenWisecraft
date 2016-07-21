@@ -137,7 +137,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					sideMenu=drawer.getMiniDrawer();
 					sideMenu.withOnMiniDrawerItemClickListener(new MiniDrawer.OnMiniDrawerItemClickListener(){
 							public boolean onItemClick(View p1, int p2, IDrawerItem p3, int p4){
-								execOption((int)((MiniDrawerItem)p3).getIdentifier());
 								sideMenu.getAdapter().deselect();//cf. MiniDrawer#updateItem(long)
 								return false;
 							}
