@@ -11,7 +11,7 @@ import com.ipaulpro.afilechooser.DirectoryChooserActivity;
 
 
 //Wrapper for aFileChooser
-public class ServerListActivityBase3 extends AppCompatActivity
+public abstract class ServerListActivityBase3 extends AppCompatActivity
 {
 	SecureRandom sr=new SecureRandom();
 	Map<Integer,FileChooserResult> results=new HashMap<>();

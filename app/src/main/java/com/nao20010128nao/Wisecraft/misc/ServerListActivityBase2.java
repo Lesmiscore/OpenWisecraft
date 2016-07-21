@@ -9,7 +9,7 @@ import java.util.*;
 import android.support.v7.app.AppCompatActivity;
 
 //Server Sort Part
-public class ServerListActivityBase2 extends ServerListActivityBase3
+public abstract class ServerListActivityBase2 extends ServerListActivityBase3
 {
 	SharedPreferences pref;
 

@@ -9,7 +9,7 @@ import java.security.*;
 import java.util.*;
 
 //Permission Request Part
-public class ServerListActivityBase1 extends ServerListActivityBase2
+public abstract class ServerListActivityBase1 extends ServerListActivityBase2
 {
 	SecureRandom sr=new SecureRandom();
 	HashMap<Integer,Metadata> permRequire=new HashMap<>();
