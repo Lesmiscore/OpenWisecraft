@@ -469,7 +469,7 @@ public class ServerInfoActivity extends AppCompatActivity {
 			} else {
 				position--;
 			}
-			View v=getLayoutInflater().inflate(R.layout.mod_info_content, null);
+			View v=getLayoutInflater().inflate(R.layout.mod_info_content, parent, false);
 			Object o=getItem(position);
 			if (o instanceof Reply.ModListContent) {
 				Reply.ModListContent mlc=(Reply.ModListContent)o;
