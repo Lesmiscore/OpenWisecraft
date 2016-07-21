@@ -93,14 +93,14 @@ dependencies {
 	compile files('libs/otc.jar')
 	compile files('libs/commons-codec-1.10.jar')
 	
-	compile('com.mikepenz:materialdrawer:5.3.6') {
+	compile('com.mikepenz:materialdrawer:+') {
 		transitive = true
 	}
-	compile 'com.mikepenz:crossfader:1.3.7'
+	compile 'com.mikepenz:crossfader:+'
 	//These lines are required to write code using AIDE. Please don't remove them.
 	if(null){
-		compile 'com.mikepenz:materialize:0.9.0'
-    	compile 'com.mikepenz:iconics-core:2.6.7'
-    	compile 'com.mikepenz:fastadapter:1.6.0'
+		compile 'com.mikepenz:materialize:+'
+    	compile 'com.mikepenz:iconics-core:+'
+    	compile 'com.mikepenz:fastadapter:'
 	}
 }
