@@ -302,10 +302,29 @@ public class Utils extends PingerUtils{
 
         return point;
     }
+	public static Point getViewSize(View View){
+        Point point = new Point(0, 0);
+        point.set(View.getWidth(), View.getHeight());        
+
+        return point;
+    }
 	public static int calculateRows(Context c){
 		int base=c.getResources().getDimensionPixelSize(R.dimen.panel_base_size);
 		int width;Configuration cfg=c.getResources().getConfiguration();
 		Point point=getRealSize(c);
+		switch(cfg.orientation){
+			case Configuration.ORIENTATION_LANDSCAPE :width=Math.max(point.x,point.y);break;
+			case Configuration.ORIENTATION_PORTRAIT  :width=Math.min(point.x,point.y);break;
+			case Configuration.ORIENTATION_SQUARE    :width=point.x;                  break;
+			case Configuration.ORIENTATION_UNDEFINED :width=base;                     break;
+			default                                  :width=base;                     break;
+		}
+		return (int)Math.max(1,((double)width)/((double)base));
+	}
+	public static int calculateRows(Context c,View v){
+		int base=c.getResources().getDimensionPixelSize(R.dimen.panel_base_size);
+		int width;Configuration cfg=c.getResources().getConfiguration();
+		Point point=getViewSize(v);
 		switch(cfg.orientation){
 			case Configuration.ORIENTATION_LANDSCAPE :width=Math.max(point.x,point.y);break;
 			case Configuration.ORIENTATION_PORTRAIT  :width=Math.min(point.x,point.y);break;
