@@ -48,6 +48,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import android.content.res.Configuration;
 import com.mikepenz.materialdrawer.MiniDrawer;
 import com.mikepenz.crossfader.Crossfader;
+import com.mikepenz.materialdrawer.model.MiniDrawerItem;
 
 abstract class ServerListActivityImpl extends ServerListActivityBase1 implements ServerListActivityInterface {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
@@ -75,6 +76,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	Drawer drawer;
 	int newVersionAnnounce=0;
 	Crossfader crossFader;
+	MiniDrawer sideMenu;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
@@ -132,7 +134,15 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					break;
 				case 1:
 					drawer=bld.buildView();
-					View minidrawer=drawer.getMiniDrawer().build(this);
+					sideMenu=drawer.getMiniDrawer();
+					sideMenu.withOnMiniDrawerItemClickListener(new MiniDrawer.OnMiniDrawerItemClickListener(){
+							public boolean onItemClick(View p1, int p2, IDrawerItem p3, int p4){
+								execOption((int)((MiniDrawerItem)p3).getIdentifier());
+								sideMenu.getAdapter().deselect();//cf. MiniDrawer#updateItem(long)
+								return false;
+							}
+						});
+					View minidrawer=sideMenu.build(this);
 					crossFader=new Crossfader()
 						.withContent(findViewById(android.R.id.content))
 						.withFirst(drawer.getSlider(),getResources().getDimensionPixelSize(R.dimen.drawer_width))

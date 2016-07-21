@@ -26,6 +26,7 @@ import android.os.Build;
 import java.lang.reflect.Method;
 import android.view.WindowManager;
 import android.content.res.Configuration;
+import java.lang.reflect.InvocationTargetException;
 
 public class Utils extends PingerUtils{
 	public static String deleteDecorations(String decorated) {
@@ -333,5 +334,21 @@ public class Utils extends PingerUtils{
 			default                                  :width=base;                     break;
 		}
 		return (int)Math.max(1,((double)width)/((double)base));
+	}
+	public static Object tryExecuteMethod(Object object,String methodName,Class[] signature,Object[] parameter){
+		Class objClass;
+		if(object instanceof Class){
+			objClass=(Class)object;
+		}else{
+			objClass=object.getClass();
+		}
+		try {
+			return objClass.getMethod(methodName, signature).invoke(object instanceof Class ?null: object, parameter);
+		} catch (Throwable e) {
+			return null;
+		}
+	}
+	public static Object tryExecuteMethod(Object object,String methodName){
+		return tryExecuteMethod(object,methodName);
 	}
 }
