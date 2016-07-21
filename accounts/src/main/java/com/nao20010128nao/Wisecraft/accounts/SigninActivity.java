@@ -95,6 +95,21 @@ public class SigninActivity extends AppCompatActivity
 				}
 			});
 	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO: Implement this method
+		super.onActivityResult(requestCode, resultCode, data);
+		switch(requestCode){
+			case 0://register
+				if(resultCode==RESULT_OK){
+					finish();
+					return;
+				}
+				break;
+		}
+	}
+	
 	public boolean validateEmail(String mail){
 		return EmailValidator.getInstance().isValid(mail);
 	}
