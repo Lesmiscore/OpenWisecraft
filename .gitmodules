@@ -7,3 +7,6 @@
 [submodule "MaterialIcons"]
 	path = MaterialIcons
 	url = https://github.com/nao20010128nao/MaterialIconsLight
+[submodule "calligraphy"]
+	path = calligraphy
+	url = https://github.com/nao20010128nao/Calligraphy-Wisecraft

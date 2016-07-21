@@ -65,6 +65,7 @@ dependencies {
 	compile project(':compat')
 	compile project(':aFileChooser')
 	compile project(':accounts')
+	compile project(':calligraphy')
 	
 	compile 'com.android.support:recyclerview-v7:23.4.0'
 	compile 'com.android.support:design:23.4.0'
@@ -76,7 +77,6 @@ dependencies {
 	compile 'com.android.support:palette-v7:23.4.0'
 	
 	compile 'com.google.code.gson:gson:2.7'
-	compile 'uk.co.chrisjenx:calligraphy:2.1.0'
 	compile 'org.nanohttpd:nanohttpd:2.3.0'
 	compile 'org.jsoup:jsoup:1.9.1'
 	compile 'org.eclipse.mylyn.github:org.eclipse.egit.github.core:3.4.0.201406110918-r'
