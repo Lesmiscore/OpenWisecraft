@@ -15,7 +15,7 @@ import com.nao20010128nao.Wisecraft.misc.DebugWriter;
 
 public class RegisterActivity extends AppCompatActivity
 {
-	EditText email,password;
+	EditText email,password,pw_again;
 	FirebaseAuth auth;
 	WorkingDialog wd;
 	Snackbar snackbar;
@@ -33,14 +33,19 @@ public class RegisterActivity extends AppCompatActivity
 		}
 		email=(EditText)findViewById(R.id.email);
 		password=(EditText)findViewById(R.id.password);
+		pw_again=(EditText)findViewById(R.id.password_again);
 		findViewById(R.id.register).setOnClickListener(new View.OnClickListener(){
 				public void onClick(View v){
 					if(!validateEmail(email.getText().toString())){
-						//invalid email
+						snackbar.setText(R.string.invalidEmail).show();
+						return;
+					}
+					if(!password.getText().toString().equals(pw_again.getText().toString())){
+						snackbar.setText(R.string.mismatchPassword).show();
 						return;
 					}
 					if(!validatePassword(password.getText().toString())){
-						//invalid password
+						snackbar.setText(R.string.invalidPassword).show();
 						return;
 					}
 					wd.showWorkingDialog(getResources().getString(R.string.registering));

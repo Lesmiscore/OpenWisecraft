@@ -38,11 +38,11 @@ public class SigninActivity extends AppCompatActivity
 		findViewById(R.id.signin).setOnClickListener(new View.OnClickListener(){
 				public void onClick(View v){
 					if(!validateEmail(email.getText().toString())){
-						//invalid email
+						snackbar.setText(R.string.invalidEmail).show();
 						return;
 					}
 					if(!validatePassword(password.getText().toString())){
-						//invalid password
+						snackbar.setText(R.string.invalidPassword).show();
 						return;
 					}
 					wd.showWorkingDialog(getResources().getString(R.string.signingin));

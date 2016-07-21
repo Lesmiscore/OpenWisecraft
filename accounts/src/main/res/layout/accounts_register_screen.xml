@@ -54,6 +54,28 @@
 
 		</LinearLayout>
 
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:orientation="horizontal"
+			android:layout_marginBottom="15dp">
+
+			<TextView
+				android:layout_height="match_parent"
+				android:textAppearance="?android:attr/textAppearanceLarge"
+				android:layout_width="wrap_content"
+				android:text="@string/password_again"
+				android:gravity="center"/>
+
+			<EditText
+				android:layout_height="wrap_content"
+				android:layout_width="match_parent"
+				android:ems="10"
+				android:id="@+id/password_again"
+				android:inputType="textPassword"/>
+
+		</LinearLayout>
+
 		<Button
 			style="?android:attr/buttonBarButtonStyle"
 			android:layout_height="wrap_content"
