@@ -46,6 +46,8 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import android.content.res.Configuration;
+import com.mikepenz.materialdrawer.MiniDrawer;
+import com.mikepenz.crossfader.Crossfader;
 
 abstract class ServerListActivityImpl extends ServerListActivityBase1 implements ServerListActivityInterface {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
@@ -72,6 +74,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	RecyclerView rv;
 	Drawer drawer;
 	int newVersionAnnounce=0;
+	Crossfader crossFader;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
@@ -91,6 +94,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
 		{
 			setContentView(R.layout.server_list_content_toolbar);
+			
 			setSupportActionBar(Utils.getToolbar(this));
 			DrawerBuilder bld=new DrawerBuilder()
 				.withActivity(this)
@@ -122,7 +126,26 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					}
 				});
 
-			drawer=bld.build();
+			switch(getResources().getInteger(R.integer.server_list_layout_mode)){
+				case 0:
+					drawer=bld.build();
+					break;
+				case 1:
+					drawer=bld.buildView();
+					View minidrawer=drawer.getMiniDrawer().build(this);
+					crossFader=new Crossfader()
+						.withContent(findViewById(android.R.id.content))
+						.withFirst(drawer.getSlider(),getResources().getDimensionPixelSize(R.dimen.drawer_width))
+						.withSecond(minidrawer,getResources().getDimensionPixelSize(R.dimen.minidrawer_width))
+						.withSavedInstance(savedInstanceState)
+						.build();
+					break;
+				case 2:
+					drawer=bld.buildView();
+					((FrameLayout)findViewById(R.id.drawer)).addView(drawer.getSlider());
+					break;
+			}
+			
 			setupDrawer();
 		}
 		rv = (RecyclerView)findViewById(android.R.id.list);
@@ -201,7 +224,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	private void setupDrawer() {
 		dl = (DrawerLayout)findViewById(R.id.drawer);
 		if(dl==null)dl=drawer.getDrawerLayout();
-		dl.setDrawerListener(new OpenCloseListener());
+		if(dl!=null)dl.setDrawerListener(new OpenCloseListener());
 
 		if (false/*pref.getBoolean("specialDrawer1", false)*/) {
 			ViewGroup decor=(ViewGroup)getWindow().getDecorView();
@@ -337,6 +360,14 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			super.onBackPressed();
 	}
 
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		// TODO: Implement this method
+		outState=drawer.saveInstanceState(outState);
+		if(crossFader!=null)outState=crossFader.saveInstanceState(outState);
+		super.onSaveInstanceState(outState);
+	}
+	
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO: Implement this method

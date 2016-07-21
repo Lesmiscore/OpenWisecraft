@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<dimen name="drawer_width">@dimen/side_stable_drawer_width</dimen>
+</resources>

@@ -96,6 +96,7 @@ dependencies {
 	compile('com.mikepenz:materialdrawer:5.3.6') {
 		transitive = true
 	}
+	compile 'com.mikepenz:crossfader:1.3.7'
 	//These lines are required to write code using AIDE. Please don't remove them.
 	if(null){
 		compile 'com.mikepenz:materialize:0.9.0'

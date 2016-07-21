@@ -9,4 +9,8 @@
 	
 	<!--<dimen name="nx5_shorter">360dp</dimen>-->
 	<dimen name="panel_base_size">150dp</dimen>
+	
+	<dimen name="side_stable_drawer_width">190dp</dimen><!--less than 1/3 of the screen-->
+	
+	<dimen name="minidrawer_width">72dp</dimen>
 </resources>

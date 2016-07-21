@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- 
+		0 will be default(RecyclerView with drawer) For phones
+		1 will attatch a mini drawer(RecyclerView with mini drawer and drawer) For medium tablets
+		2 will have no drawer(RecyclerView and the content of drawer in 0) For big tablets
+		-->
+	<integer name="server_list_layout_mode">0</integer>
+</resources>
