@@ -51,7 +51,7 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 				rv.setLayoutManager(new LinearLayoutManager(this));
 				break;
 			case 1:
-				GridLayoutManager glm=new GridLayoutManager(this,calculateRows(this));
+				GridLayoutManager glm=new GridLayoutManager(this,Math.max(1,calculateRows(this)));
 				rv.setLayoutManager(glm);
 				break;
 		}
@@ -167,6 +167,15 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 		}
 	}
 
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+		// TODO: Implement this method
+		super.onWindowFocusChanged(hasFocus);
+		if(rv.getLayoutManager() instanceof GridLayoutManager){
+			((GridLayoutManager)rv.getLayoutManager()).setSpanCount(Math.max(1,calculateRows(this,rv)));
+		}
+	}
+	
 	@Override
 	public void addIntoList(Server s) {
 		// TODO: Implement this method
