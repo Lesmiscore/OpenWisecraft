@@ -32,6 +32,25 @@ public class ServerGetActivity extends CompatWebViewActivity {
 			getTheme().applyStyle(R.style.AppTheme_Bright, true);
 		}
 		super.onCreate(savedInstanceState);
+		if(!Utils.isOnline(this)){
+			new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
+				.setMessage(R.string.offline)
+				.setTitle(R.string.error)
+				.setOnCancelListener(new DialogInterface.OnCancelListener(){
+					public void onCancel(DialogInterface di) {
+						finish();
+						Log.d("SGA", "cancel");
+					}
+				})
+				.setOnDismissListener(new DialogInterface.OnDismissListener(){
+					public void onDismiss(DialogInterface di) {
+						//finish();
+						Log.d("SGA", "dismiss");
+					}
+				})
+				.show();
+			return;
+		}
 		serverList = createServerListDomains();
 		new AppCompatAlertDialog.Builder(this, R.style.AppAlertDialog)
 			.setSingleChoiceItems(serverList, -1, new DialogInterface.OnClickListener(){

@@ -27,6 +27,8 @@ import java.lang.reflect.Method;
 import android.view.WindowManager;
 import android.content.res.Configuration;
 import java.lang.reflect.InvocationTargetException;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 public class Utils extends PingerUtils{
 	public static String deleteDecorations(String decorated) {
@@ -350,5 +352,10 @@ public class Utils extends PingerUtils{
 	}
 	public static Object tryExecuteMethod(Object object,String methodName){
 		return tryExecuteMethod(object,methodName);
+	}
+	public static boolean isOnline(Context ctx){
+		ConnectivityManager cm=(ConnectivityManager)ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        return (networkInfo != null && networkInfo.isConnected());
 	}
 }
