@@ -5,6 +5,7 @@
 		<item name="colorAccent">@color/upd_2</item>
 		<item name="android:windowContentOverlay">@null</item>
 		<item name="preferenceTheme">@style/AppTheme.Preference</item>
+		<item name="colorControlNormal">@color/upd_2</item>
 	</style>
 	<style name="AppDialog" parent="@style/Theme.AppCompat.Light.Dialog">
 		<item name="colorPrimary">@color/primary</item>
