@@ -163,7 +163,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				rv.setLayoutManager(new LinearLayoutManager(this));
 				break;
 			case 1:
-				GridLayoutManager glm=new GridLayoutManager(this,Math.max(1,calculateRows(this)));
+				GridLayoutManager glm=new GridLayoutManager(this,calculateRows(this));
 				rv.setLayoutManager(glm);
 				break;
 		}
@@ -407,7 +407,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		// TODO: Implement this method
 		super.onWindowFocusChanged(hasFocus);
 		if(rv.getLayoutManager() instanceof GridLayoutManager){
-			((GridLayoutManager)rv.getLayoutManager()).setSpanCount(Math.max(1,calculateRows(this,rv)));
+			((GridLayoutManager)rv.getLayoutManager()).setSpanCount(calculateRows(this,rv));
 		}
 	}
 	
