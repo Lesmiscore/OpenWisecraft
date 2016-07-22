@@ -53,6 +53,10 @@ android {
 	lintOptions {
         abortOnError false
     }
+    
+    configurations {
+        all*.exclude group: 'com.android.support', module: 'appcompat-v7'
+    }
 }
 
 dependencies {
@@ -66,6 +70,7 @@ dependencies {
 	compile project(':aFileChooser')
 	compile project(':accounts')
 	compile project(':calligraphy')
+	compile project(':appcompat-v7')
 	
 	compile 'com.android.support:recyclerview-v7:23.4.0'
 	compile 'com.android.support:design:23.4.0'
