@@ -161,6 +161,10 @@ public class SettingsDelegate extends ContextWrapper
 	
 	
 	public static void openAppSettings(Activity a){
+		if("".equals(new StringBuilder().toString())){//must be true
+			a.startActivity(new Intent(a,FragmentSettingsActivity.class));
+			return;
+		}
 		if(a.getResources().getBoolean(R.bool.useNativePreferenceActivity))
 			a.startActivity(new Intent(a,com.nao20010128nao.Wisecraft.settings.system.SettingsActivity.class));
 		else
