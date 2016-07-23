@@ -10,12 +10,13 @@ import android.view.View;
 public class ServerStatusWrapperViewHolder extends FindableViewHolder
 {
 	public static final int[] COLORED_TEXTVIEWS=new int[]{R.id.serverPlayers,R.id.serverAddress,R.id.pingMillis,R.id.serverName,R.id.target};
+	public static final int[] ALL_VIEWS=new int[]{R.id.serverPlayers,R.id.serverAddress,R.id.pingMillis,R.id.serverName,R.id.target,R.id.statColor};
 	
 	PreloadedViews preload;
 	
 	public ServerStatusWrapperViewHolder(Context context,boolean isGrid,ViewGroup parent){
 		super(LayoutInflater.from(context).inflate(isGrid?R.layout.quickstatus_grid:R.layout.quickstatus,parent,false));
-		preload=new PreloadedViews((ViewGroup)itemView,COLORED_TEXTVIEWS);
+		preload=new PreloadedViews((ViewGroup)itemView,ALL_VIEWS);
 	}
 	public ServerStatusWrapperViewHolder setStatColor(int color){
 		((ExtendedImageView)preload.getView(R.id.statColor)).setColor(color);
