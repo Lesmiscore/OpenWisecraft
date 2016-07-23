@@ -3,6 +3,7 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/MaterialIcons" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/calligraphy" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/statusesLayout" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/wisecraft-i18n" vcs="Git" />
   </component>
