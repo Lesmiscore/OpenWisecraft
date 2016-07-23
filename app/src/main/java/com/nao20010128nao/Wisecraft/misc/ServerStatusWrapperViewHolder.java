@@ -11,19 +11,22 @@ public class ServerStatusWrapperViewHolder extends FindableViewHolder
 {
 	public static final int[] COLORED_TEXTVIEWS=new int[]{R.id.serverPlayers,R.id.serverAddress,R.id.pingMillis,R.id.serverName,R.id.target};
 	
+	PreloadedViews preload;
+	
 	public ServerStatusWrapperViewHolder(Context context,boolean isGrid,ViewGroup parent){
 		super(LayoutInflater.from(context).inflate(isGrid?R.layout.quickstatus_grid:R.layout.quickstatus,parent,false));
+		preload=new PreloadedViews((ViewGroup)itemView,COLORED_TEXTVIEWS);
 	}
 	public ServerStatusWrapperViewHolder setStatColor(int color){
-		((ExtendedImageView)findViewById(R.id.statColor)).setColor(color);
+		((ExtendedImageView)preload.getView(R.id.statColor)).setColor(color);
 		return this;
 	}
 	public ServerStatusWrapperViewHolder setServerPlayers(String s){
-		((TextView)findViewById(R.id.serverPlayers)).setText(s);
+		((TextView)preload.getView(R.id.serverPlayers)).setText(s);
 		return this;
 	}
 	public ServerStatusWrapperViewHolder setServerPlayers(int s){
-		((TextView)findViewById(R.id.serverPlayers)).setText(s);
+		((TextView)preload.getView(R.id.serverPlayers)).setText(s);
 		return this;
 	}
 	public ServerStatusWrapperViewHolder setServerPlayers(Number count,Number max){
@@ -33,35 +36,35 @@ public class ServerStatusWrapperViewHolder extends FindableViewHolder
 		return setServerPlayers(count+"/"+max);
 	}
 	public ServerStatusWrapperViewHolder setServerAddress(String s){
-		((TextView)findViewById(R.id.serverAddress)).setText(s);
+		((TextView)preload.getView(R.id.serverAddress)).setText(s);
 		return this;
 	}
 	public ServerStatusWrapperViewHolder setServerAddress(Server s){
 		return setServerAddress(s.toString());
 	}
 	public ServerStatusWrapperViewHolder setPingMillis(String s){
-		((TextView)findViewById(R.id.pingMillis)).setText(s);
+		((TextView)preload.getView(R.id.pingMillis)).setText(s);
 		return this;
 	}
 	public ServerStatusWrapperViewHolder setPingMillis(long s){
 		return setPingMillis(s+" ms");
 	}
 	public ServerStatusWrapperViewHolder setServerName(CharSequence s){
-		((TextView)findViewById(R.id.serverName)).setText(s);
+		((TextView)preload.getView(R.id.serverName)).setText(s);
 		return this;
 	}
 	public ServerStatusWrapperViewHolder setDarkness(boolean dark){
 		int color=dark?0xff_ffffff:0xff_000000;
 		for(int i:COLORED_TEXTVIEWS)
 			if(findViewById(i)!=null)
-				((TextView)findViewById(i)).setTextColor(color);
+				((TextView)preload.getView(i)).setTextColor(color);
 		return this;
 	}
 	public ServerStatusWrapperViewHolder setTarget(int mode){
 		return setTarget(mode==0?"PE":"PC");
 	}
 	public ServerStatusWrapperViewHolder setTarget(String target){
-		View view=findViewById(R.id.target);
+		View view=preload.getView(R.id.target);
 		if(view!=null)((TextView)view).setText(target);
 		return this;
 	}
