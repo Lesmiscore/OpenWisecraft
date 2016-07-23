@@ -10,6 +10,3 @@
 [submodule "calligraphy"]
 	path = calligraphy
 	url = https://github.com/nao20010128nao/Calligraphy-Wisecraft
-[submodule "appcompat-v7"]
-	path = appcompat-v7
-	url = https://github.com/nao20010128nao/AppCompat-V7
