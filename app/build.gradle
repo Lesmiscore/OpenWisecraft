@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 24
@@ -105,3 +104,5 @@ dependencies {
     	compile 'com.mikepenz:fastadapter:'
 	}
 }
+
+apply plugin: 'com.google.gms.google-services'
