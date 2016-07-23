@@ -4,6 +4,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 import android.support.v7.preference.PreferenceViewHolder;
+import com.nao20010128nao.Wisecraft.R;
 
 public class EditTextPreferenceCompat extends android.support.v7.preference.EditTextPreference {
 	public EditTextPreferenceCompat(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -27,5 +28,6 @@ public class EditTextPreferenceCompat extends android.support.v7.preference.Edit
 		// TODO: Implement this method
 		super.onBindViewHolder(holder);
 		((TextView)holder.findViewById(android.R.id.title)).setSingleLine(false);
+		((TextView)holder.findViewById(android.R.id.title)).setTextAppearance(getContext(),R.style.TextAppearance_AppCompat_Medium);
 	}
 }

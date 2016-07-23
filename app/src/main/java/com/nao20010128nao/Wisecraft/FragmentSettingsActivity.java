@@ -54,7 +54,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			super.onBackPressed();
 			return;
 		}
-		FragmentManager.BackStackEntry bse=sfm.getBackStackEntryAt(sfm.getBackStackEntryCount()-1);
+		FragmentManager.BackStackEntry bse=sfm.getBackStackEntryAt(sfm.getBackStackEntryCount()-2);
 		sfm
 			.beginTransaction()
 			.replace(android.R.id.content,Fragment.instantiate(this,FRAGMENT_CLASSES.get(bse.getName()).getName()))

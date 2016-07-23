@@ -18,5 +18,6 @@ public class StartPrefCompat extends HandledPreferenceCompat {
 		// TODO: Implement this method
 		super.onBindViewHolder(holder);
 		((TextView)holder.findViewById(android.R.id.title)).setSingleLine(false);
+		((TextView)holder.findViewById(android.R.id.title)).setTextAppearance(getContext(),R.style.TextAppearance_AppCompat_Medium);
 	}
 }
