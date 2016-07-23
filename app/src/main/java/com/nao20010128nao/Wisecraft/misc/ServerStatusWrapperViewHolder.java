@@ -9,6 +9,8 @@ import android.view.View;
 
 public class ServerStatusWrapperViewHolder extends FindableViewHolder
 {
+	public static final int[] COLORED_TEXTVIEWS=new int[]{R.id.serverPlayers,R.id.serverAddress,R.id.pingMillis,R.id.serverName,R.id.target};
+	
 	public ServerStatusWrapperViewHolder(Context context,boolean isGrid,ViewGroup parent){
 		super(LayoutInflater.from(context).inflate(isGrid?R.layout.quickstatus_grid:R.layout.quickstatus,parent,false));
 	}
@@ -50,10 +52,9 @@ public class ServerStatusWrapperViewHolder extends FindableViewHolder
 	}
 	public ServerStatusWrapperViewHolder setDarkness(boolean dark){
 		int color=dark?0xff_ffffff:0xff_000000;
-		for(int i:new int[]{R.id.serverPlayers,R.id.serverAddress,R.id.pingMillis,R.id.serverName})
-			((TextView)findViewById(i)).setTextColor(color);
-		View target=findViewById(R.id.target);
-		if(target!=null)((TextView)target).setTextColor(color);
+		for(int i:COLORED_TEXTVIEWS)
+			if(findViewById(i)!=null)
+				((TextView)findViewById(i)).setTextColor(color);
 		return this;
 	}
 	public ServerStatusWrapperViewHolder setTarget(int mode){
