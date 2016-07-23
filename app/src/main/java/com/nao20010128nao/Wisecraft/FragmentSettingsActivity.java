@@ -125,6 +125,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		public void onResume() {
 			// TODO: Implement this method
 			super.onResume();
+			getActivity().setTitle(R.string.settings);
 			findPreference("asfsls").setEnabled(pref.getBoolean("feature_asfsls",false));
 		}
 	}
@@ -196,6 +197,13 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 				});
 			findPreference("useBright").setEnabled(getResources().getBoolean(R.bool.useBrightEnabled));
 		}
+
+		@Override
+		public void onResume() {
+			// TODO: Implement this method
+			super.onResume();
+			getActivity().setTitle(R.string.basics);
+		}
 	}
 
 
@@ -205,6 +213,13 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		public void onCreatePreferences(Bundle p1, String p2) {
 			// TODO: Implement this method
 			addPreferencesFromResource(R.xml.settings_features_compat);
+		}
+
+		@Override
+		public void onResume() {
+			// TODO: Implement this method
+			super.onResume();
+			getActivity().setTitle(R.string.features);
 		}
 	}
 
@@ -217,6 +232,13 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			addPreferencesFromResource(R.xml.settings_asfsls_compat);
 			SharedPreferences slsVersCache=getContext().getSharedPreferences("sls_vers_cache", 0);
 			findPreference("currentSlsVersion").setSummary(slsVersCache.getString("dat.vcode",getResources().getString(R.string.unknown)));
+		}
+
+		@Override
+		public void onResume() {
+			// TODO: Implement this method
+			super.onResume();
+			getActivity().setTitle(R.string.addServerFromServerListSite);
 		}
 	}
 }
