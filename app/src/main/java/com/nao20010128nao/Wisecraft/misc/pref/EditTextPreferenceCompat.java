@@ -31,13 +31,18 @@ public class EditTextPreferenceCompat extends android.support.v7.preference.Edit
 	public void onBindViewHolder(PreferenceViewHolder holder) {
 		// TODO: Implement this method
 		super.onBindViewHolder(holder);
-		((TextView)holder.findViewById(android.R.id.title)).setSingleLine(false);
-		((TextView)holder.findViewById(android.R.id.title)).setTextAppearance(getContext(),R.style.AppPreferenceTextAppearance);
+		PreferenceUtils.onBindViewHolder(this,holder);
 	}
 
 	@Override
 	public void setTextColor(int color) {
 		// TODO: Implement this method
 		this.color=color;
+	}
+	
+	@Override
+	public int getTextColor() {
+		// TODO: Implement this method
+		return color;
 	}
 }

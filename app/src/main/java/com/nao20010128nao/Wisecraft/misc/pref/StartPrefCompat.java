@@ -22,8 +22,7 @@ public class StartPrefCompat extends HandledPreferenceCompat implements SetTextC
 	public void onBindViewHolder(PreferenceViewHolder holder) {
 		// TODO: Implement this method
 		super.onBindViewHolder(holder);
-		((TextView)holder.findViewById(android.R.id.title)).setSingleLine(false);
-		((TextView)holder.findViewById(android.R.id.title)).setTextAppearance(getContext(),R.style.AppPreferenceTextAppearance);
+		PreferenceUtils.onBindViewHolder(this,holder);
 	}
 
 	@Override
@@ -31,4 +30,10 @@ public class StartPrefCompat extends HandledPreferenceCompat implements SetTextC
 		// TODO: Implement this method
 		this.color=color;
 	}
+
+	@Override
+	public int getTextColor() {
+		// TODO: Implement this method
+		return color;
+	}	
 }
