@@ -10,4 +10,6 @@
 	
 	<color name="color888">#888888</color>
     <color name="black">#000000</color>
+	
+	<string name="parallels_default">6</string>
 </resources>

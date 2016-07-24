@@ -7,7 +7,7 @@
 		android:title="@string/pingThreads"
 		android:inputType="number" 
 		android:maxLength="3"
-		android:defaultValue="6"
+		android:defaultValue="@string/parallels_default"
 	/>
 	<com.nao20010128nao.Wisecraft.misc.pref.CheckBoxPreferenceCompat
 		android:title="@string/updAnotherThread"

@@ -21,6 +21,12 @@ import com.nao20010128nao.Wisecraft.misc.pref.SHablePreferenceFragment;
 import java.lang.reflect.Field;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
+import android.view.View;
+import android.widget.EditText;
+import com.nao20010128nao.Wisecraft.misc.pref.PreferenceUtils;
+import com.nao20010128nao.Wisecraft.misc.Treatment;
+import android.text.InputType;
 
 public class FragmentSettingsActivity extends AppCompatActivity {
 	public static final Map<String,Class<? extends BaseFragment>> FRAGMENT_CLASSES=new HashMap<String,Class<? extends BaseFragment>>(){{
@@ -224,10 +230,18 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		public void onDisplayPreferenceDialog(Preference preference) {
 			// TODO: Implement this method
 			if(preference.getKey().equals("parallels")){
+				/*
 				EditTextPreferenceDialogFragmentCompat etpdf=EditTextPreferenceDialogFragmentCompat.newInstance(preference.getKey());
 				etpdf.setTargetFragment(this,0);
 				etpdf.setStyle(DialogFragment.STYLE_NORMAL,R.style.AppAlertDialog);
 				etpdf.show(getFragmentManager(),PARALLELS_DIALOG_FRAGMENT_TAG);
+				*/
+				//I'll show a EditText dialog with AlertDialog.Builder because the text color of buttons can't be changed
+				PreferenceUtils.showEditTextDialog(getActivity(),preference,getString(R.string.parallels_default),new Treatment<View>(){
+					public void process(View v){
+						((EditText)v.findViewById(android.R.id.edit)).setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_VARIATION_NORMAL);
+					}
+				});
 				return;
 			}
 			super.onDisplayPreferenceDialog(preference);
