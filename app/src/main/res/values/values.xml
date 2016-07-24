@@ -6,4 +6,7 @@
 		2 will have no drawer(RecyclerView and the content of drawer in 0) For big tablets
 		-->
 	<integer name="server_list_layout_mode">0</integer>
+	
+	
+	<color name="color888">#888</color>
 </resources>
