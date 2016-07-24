@@ -1,22 +1,26 @@
 package com.nao20010128nao.Wisecraft;
 import android.content.*;
-import android.os.*;
-import android.preference.*;
-import android.support.v7.app.*;
-import android.widget.*;
-import com.nao20010128nao.ToolBox.*;
-import com.nao20010128nao.Wisecraft.misc.Factories;
-import com.nao20010128nao.Wisecraft.misc.compat.*;
-import com.nao20010128nao.Wisecraft.misc.pref.*;
-import java.lang.reflect.*;
 import java.util.*;
-import uk.co.chrisjenx.calligraphy.*;
+
+import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import com.nao20010128nao.Wisecraft.misc.SetTextColor;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.DialogPreference;
+import android.support.v7.preference.EditTextPreferenceDialogFragmentCompat;
+import android.support.v7.preference.Preference;
+import android.view.LayoutInflater;
+import android.widget.Toast;
+import com.nao20010128nao.ToolBox.HandledPreference;
+import com.nao20010128nao.Wisecraft.misc.Factories;
+import com.nao20010128nao.Wisecraft.misc.SetTextColor;
+import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
+import com.nao20010128nao.Wisecraft.misc.pref.SHablePreferenceFragment;
+import java.lang.reflect.Field;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import android.support.v4.app.DialogFragment;
 
 public class FragmentSettingsActivity extends AppCompatActivity {
 	public static final Map<String,Class<? extends BaseFragment>> FRAGMENT_CLASSES=new HashMap<String,Class<? extends BaseFragment>>(){{
@@ -25,6 +29,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			put("features",Features.class);
 			put("asfsls",Asfsls.class);
 	}};
+	public static final String DIALOG_FRAGMENT_TAG_PREFIX="settings@com.nao20010128nao.Wisecraft#";
 	
 	int which;
 	SharedPreferences pref;
@@ -41,7 +46,6 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			.beginTransaction()
 			.replace(android.R.id.content,new HubPrefFragment())
 			.addToBackStack("root")
-			.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
 			.commit();
 	}
 	@Override
@@ -153,6 +157,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 
 
 	public static class Basics extends BaseFragment {
+		public static final String PARALLELS_DIALOG_FRAGMENT_TAG=DIALOG_FRAGMENT_TAG_PREFIX+"parallels-dialog";
 		int which;
 		@Override
 		public void onCreatePreferences(Bundle p1, String p2) {
@@ -213,6 +218,19 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			// TODO: Implement this method
 			super.onResume();
 			getActivity().setTitle(R.string.basics);
+		}
+		
+		@Override
+		public void onDisplayPreferenceDialog(Preference preference) {
+			// TODO: Implement this method
+			if(preference.getKey().equals("parallels")){
+				EditTextPreferenceDialogFragmentCompat etpdf=EditTextPreferenceDialogFragmentCompat.newInstance(preference.getKey());
+				etpdf.setTargetFragment(this,0);
+				etpdf.setStyle(DialogFragment.STYLE_NORMAL,R.style.AppAlertDialog);
+				etpdf.show(getFragmentManager(),PARALLELS_DIALOG_FRAGMENT_TAG);
+				return;
+			}
+			super.onDisplayPreferenceDialog(preference);
 		}
 	}
 
