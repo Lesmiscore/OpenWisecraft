@@ -15,6 +15,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import com.nao20010128nao.Wisecraft.misc.SetTextColor;
+import android.support.v4.content.ContextCompat;
 
 public class FragmentSettingsActivity extends AppCompatActivity {
 	public static final Map<String,Class<? extends BaseFragment>> FRAGMENT_CLASSES=new HashMap<String,Class<? extends BaseFragment>>(){{
@@ -115,6 +117,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 					}
 				});
 			findPreference("asfsls").setEnabled(pref.getBoolean("feature_asfsls",false));
+			((SetTextColor)findPreference("settingsAttention")).setTextColor(ContextCompat.getColor(this,R.color.color888));
 		}
 		@Override
 		public void onResume() {
