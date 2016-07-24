@@ -8,6 +8,6 @@
 	<integer name="server_list_layout_mode">0</integer>
 	
 	
-	<color name="color888">#888</color>
-    <color name="black">#000</color>
+	<color name="color888">#888888</color>
+    <color name="black">#000000</color>
 </resources>

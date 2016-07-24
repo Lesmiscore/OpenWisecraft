@@ -51,8 +51,8 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 	public void onBackPressed() {
 		// TODO: Implement this method
 		FragmentManager sfm=getSupportFragmentManager();
-		if(sfm.getBackStackEntryCount()<=1){
-			super.onBackPressed();
+		if(sfm.getBackStackEntryCount()<2){
+			finish();
 			return;
 		}
 		sfm.popBackStack();

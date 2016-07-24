@@ -5,8 +5,12 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 import com.nao20010128nao.ToolBox.HandledPreferenceCompat;
 import com.nao20010128nao.Wisecraft.R;
+import com.nao20010128nao.Wisecraft.misc.SetTextColor;
+import android.graphics.Color;
 
-public class StartPrefCompat extends HandledPreferenceCompat {
+public class StartPrefCompat extends HandledPreferenceCompat implements SetTextColor{
+	int color=Color.BLACK;
+	
 	public StartPrefCompat(Context c, AttributeSet attrs) {
 		super(c, StartPref.as = attrs);
 	}
@@ -20,5 +24,11 @@ public class StartPrefCompat extends HandledPreferenceCompat {
 		super.onBindViewHolder(holder);
 		((TextView)holder.findViewById(android.R.id.title)).setSingleLine(false);
 		((TextView)holder.findViewById(android.R.id.title)).setTextAppearance(getContext(),R.style.AppPreferenceTextAppearance);
+	}
+
+	@Override
+	public void setTextColor(int color) {
+		// TODO: Implement this method
+		this.color=color;
 	}
 }

@@ -88,6 +88,6 @@
 	</style>
 	
 	<style name="AppPreferenceTextAppearance" parent="TextAppearance.AppCompat.Medium">
-		<item name="android:textColor">@color/apta_tc</item>
+		<item name="android:textColor">#000</item>
 	</style>
 </resources>
