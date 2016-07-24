@@ -22,7 +22,7 @@ public class StartPrefCompat extends HandledPreferenceCompat implements SetTextC
 	public void onBindViewHolder(PreferenceViewHolder holder) {
 		// TODO: Implement this method
 		super.onBindViewHolder(holder);
-		PreferenceUtils.onBindViewHolder(this,holder);
+		PreferenceUtils.onBindViewHolder(getContext(),this,holder);
 	}
 
 	@Override

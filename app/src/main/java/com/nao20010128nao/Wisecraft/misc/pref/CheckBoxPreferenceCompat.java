@@ -30,7 +30,7 @@ public class CheckBoxPreferenceCompat extends android.support.v7.preference.Chec
 	public void onBindViewHolder(PreferenceViewHolder holder) {
 		// TODO: Implement this method
 		super.onBindViewHolder(holder);
-		PreferenceUtils.onBindViewHolder(this,holder);
+		PreferenceUtils.onBindViewHolder(getContext(),this,holder);
 	}
 
 	@Override
