@@ -14,5 +14,5 @@
 	
 	<dimen name="minidrawer_width">72dp</dimen>
 	
-	<dimen name="settings_pref_height">48dp</dimen>
+	<dimen name="settings_pref_height">55dp</dimen>
 </resources>
