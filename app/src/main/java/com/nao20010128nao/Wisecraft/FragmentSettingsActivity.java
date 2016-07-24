@@ -51,15 +51,11 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 	public void onBackPressed() {
 		// TODO: Implement this method
 		FragmentManager sfm=getSupportFragmentManager();
-		if(sfm.getBackStackEntryCount()==0){
+		if(sfm.getBackStackEntryCount()<=0){
 			super.onBackPressed();
 			return;
 		}
-		FragmentManager.BackStackEntry bse=sfm.getBackStackEntryAt(sfm.getBackStackEntryCount()-2);
-		sfm
-			.beginTransaction()
-			.replace(android.R.id.content,Fragment.instantiate(this,FRAGMENT_CLASSES.get(bse.getName()).getName()))
-			.commit();
+		sfm.popBackStack();
 	}
 	
 	
