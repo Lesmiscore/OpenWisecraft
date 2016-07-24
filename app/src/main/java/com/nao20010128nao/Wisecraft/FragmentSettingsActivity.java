@@ -117,7 +117,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 					}
 				});
 			findPreference("asfsls").setEnabled(pref.getBoolean("feature_asfsls",false));
-			((SetTextColor)findPreference("settingsAttention")).setTextColor(ContextCompat.getColor(this,R.color.color888));
+			((SetTextColor)findPreference("settingsAttention")).setTextColor(ContextCompat.getColor(getContext(),R.color.color888));
 		}
 		@Override
 		public void onResume() {
