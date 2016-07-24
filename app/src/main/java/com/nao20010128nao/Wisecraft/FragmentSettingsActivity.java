@@ -143,6 +143,12 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			// TODO: Implement this method
 			return super.getLayoutInflater(savedInstanceState).cloneInContext(getActivity());
 		}
+
+		@Override
+		public Context getContext() {
+			// TODO: Implement this method
+			return CalligraphyContextWrapper.wrap(super.getContext());
+		}
 	}
 
 
