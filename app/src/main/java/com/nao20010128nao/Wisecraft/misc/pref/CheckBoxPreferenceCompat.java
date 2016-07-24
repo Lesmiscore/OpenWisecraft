@@ -26,7 +26,6 @@ public class CheckBoxPreferenceCompat extends android.support.v7.preference.Chec
 		// TODO: Implement this method
 		super.onBindViewHolder(holder);
 		((TextView)holder.findViewById(android.R.id.title)).setSingleLine(false);
-		((TextView)holder.findViewById(android.R.id.title)).setTextAppearance(getContext(),R.style.TextAppearance_AppCompat_Medium);
-		((TextView)holder.findViewById(android.R.id.title)).setTextColor(0xff_000000);
+		((TextView)holder.findViewById(android.R.id.title)).setTextAppearance(getContext(),R.style.AppPreferenceTextAppearance);
 	}
 }
