@@ -27,6 +27,7 @@ import android.widget.EditText;
 import com.nao20010128nao.Wisecraft.misc.pref.PreferenceUtils;
 import com.nao20010128nao.Wisecraft.misc.Treatment;
 import android.text.InputType;
+import android.text.InputFilter;
 
 public class FragmentSettingsActivity extends AppCompatActivity {
 	public static final Map<String,Class<? extends BaseFragment>> FRAGMENT_CLASSES=new HashMap<String,Class<? extends BaseFragment>>(){{
@@ -239,7 +240,11 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 				//I'll show a EditText dialog with AlertDialog.Builder because the text color of buttons can't be changed
 				PreferenceUtils.showEditTextDialog(getActivity(),preference,getString(R.string.parallels_default),new Treatment<View>(){
 					public void process(View v){
-						((EditText)v.findViewById(android.R.id.edit)).setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_VARIATION_NORMAL);
+						EditText et=(EditText)v.findViewById(android.R.id.edit);
+						et.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_VARIATION_NORMAL);
+						ArrayList<InputFilter> ifs=new ArrayList<InputFilter>(Arrays.<InputFilter>asList(et.getFilters()));
+						ifs.add(new InputFilter.LengthFilter(3));
+						et.setFilters(ifs.toArray(new InputFilter[ifs.size()]));
 					}
 				});
 				return;
