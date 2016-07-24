@@ -1,9 +1,10 @@
 package com.nao20010128nao.Wisecraft.misc.pref;
-import android.content.*;
-import android.support.v7.preference.*;
-import android.util.*;
-import android.widget.*;
-import com.nao20010128nao.ToolBox.*;
+import android.content.Context;
+import android.support.v7.preference.PreferenceViewHolder;
+import android.util.AttributeSet;
+import android.widget.TextView;
+import com.nao20010128nao.ToolBox.HandledPreferenceCompat;
+import com.nao20010128nao.Wisecraft.R;
 
 public class StartPrefCompat extends HandledPreferenceCompat {
 	public StartPrefCompat(Context c, AttributeSet attrs) {
