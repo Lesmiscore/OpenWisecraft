@@ -14,6 +14,7 @@ import uk.co.chrisjenx.calligraphy.*;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 
 public class FragmentSettingsActivity extends AppCompatActivity {
 	public static final Map<String,Class<? extends BaseFragment>> FRAGMENT_CLASSES=new HashMap<String,Class<? extends BaseFragment>>(){{
@@ -58,8 +59,6 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		sfm
 			.beginTransaction()
 			.replace(android.R.id.content,Fragment.instantiate(this,FRAGMENT_CLASSES.get(bse.getName()).getName()))
-			.addToBackStack(bse.getName())
-			.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
 			.commit();
 	}
 	
@@ -138,6 +137,12 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			// TODO: Implement this method
 			pref=PreferenceManager.getDefaultSharedPreferences(getContext());
 			super.onCreate(savedInstanceState);
+		}
+
+		@Override
+		public LayoutInflater getLayoutInflater(Bundle savedInstanceState) {
+			// TODO: Implement this method
+			return super.getLayoutInflater(savedInstanceState).cloneInContext(getActivity());
 		}
 	}
 

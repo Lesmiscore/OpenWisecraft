@@ -19,5 +19,6 @@ public class StartPrefCompat extends HandledPreferenceCompat {
 		super.onBindViewHolder(holder);
 		((TextView)holder.findViewById(android.R.id.title)).setSingleLine(false);
 		((TextView)holder.findViewById(android.R.id.title)).setTextAppearance(getContext(),R.style.TextAppearance_AppCompat_Medium);
+		((TextView)holder.findViewById(android.R.id.title)).setTextColor(0xff_000000);
 	}
 }
