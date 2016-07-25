@@ -9,6 +9,8 @@ import android.util.*;
 import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.TESTAPP.*;
+import android.support.v7.widget.Toolbar;
+import com.nao20010128nao.Wisecraft.misc.Utils;
 
 public class AboutAppActivity extends AboutAppActivityBase
 {
@@ -22,6 +24,7 @@ public class AboutAppActivity extends AboutAppActivityBase
 			getTheme().applyStyle(R.style.AppTheme_Bright_OpenSource,true);
 		}
 		super.onCreate(savedInstanceState);
+		Utils.getActionBarTextView(Utils.getToolbar(this)).setTextColor(Color.WHITE);
 		//34
 		addCardAt(R.layout.about_app_2,0);//234
 		addCardAt(R.layout.about_app_1,0);//1234

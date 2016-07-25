@@ -4,6 +4,8 @@ import android.os.*;
 import android.preference.*;
 import com.nao20010128nao.TESTAPP.*;
 import uk.co.chrisjenx.calligraphy.*;
+import android.graphics.Color;
+import com.nao20010128nao.Wisecraft.misc.Utils;
 
 public class OpenSourceActivity extends ScrollingActivity
 {
@@ -18,6 +20,7 @@ public class OpenSourceActivity extends ScrollingActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.osl_parent);
 		getSupportActionBar().setElevation(0f);
+		Utils.getActionBarTextView(Utils.getToolbar(this)).setTextColor(Color.WHITE);
 	}
 	
 	@Override
