@@ -203,13 +203,17 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		}
 		private OrderTrustedMap<String,String> readSettings() {
 			OrderTrustedMap<String,String> data=new OrderTrustedMap<>();
-			for(String s:Utils.lines(Utils.readWholeFile(new File(Environment.getExternalStorageDirectory(), "games/com.mojang/minecraftpe/options.txt")))) {
-				int colonOfs=s.indexOf(':');
-				if(colonOfs==-1){
-					data.put(s,null);
-				}else{
-					data.put(s.substring(0,colonOfs),s.substring(colonOfs+1));
+			try{
+				for(String s:Utils.lines(Utils.readWholeFile(new File(Environment.getExternalStorageDirectory(), "games/com.mojang/minecraftpe/options.txt")))) {
+					int colonOfs=s.indexOf(':');
+					if(colonOfs==-1){
+						data.put(s,null);
+					}else{
+						data.put(s.substring(0,colonOfs),s.substring(colonOfs+1));
+					}
 				}
+			}catch(Throwable e){
+				
 			}
 			return data;
 		}
