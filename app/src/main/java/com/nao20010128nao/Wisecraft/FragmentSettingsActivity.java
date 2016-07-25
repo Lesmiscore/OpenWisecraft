@@ -40,6 +40,16 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 	
 	int which;
 	SharedPreferences pref;
+	boolean requireRestart=false;
+	List<String> nonRestartKeys=Collections.unmodifiableList(Arrays.asList(new String[]{
+		"showPcUserFace",
+		"selectFont",
+		"sendInfos",
+		"exitCompletely",
+		"useBright",
+		"allowAutoUpdateSLSCode",
+		"aausc_monnet"
+	}));
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
@@ -49,6 +59,12 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			getTheme().applyStyle(R.style.AppTheme_Bright,true);
 		}
 		super.onCreate(savedInstanceState);
+		pref.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener(){
+				public void onSharedPreferenceChanged(SharedPreferences pref,String key){
+					if(nonRestartKeys.contains(key))return;
+					requireRestart=true;
+				}
+			});
 		getSupportFragmentManager()
 			.beginTransaction()
 			.replace(android.R.id.content,new HubPrefFragment())
@@ -69,6 +85,16 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			return;
 		}
 		sfm.popBackStack();
+	}
+
+	@Override
+	public void finish() {
+		// TODO: Implement this method
+		if(requireRestart){
+			ServerListActivityImpl.instance.get().finish();
+			startActivity(new Intent(this,ServerListActivity.class));
+		}
+		super.finish();
 	}
 	
 	
