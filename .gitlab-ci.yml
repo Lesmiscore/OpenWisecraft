@@ -31,16 +31,10 @@ stages:
   - main
   - rcon
   - rconPC
-  - mainEx
-  - mainOld
 
 main:
   stage: main
   script:
-    - cd MaterialIcons
-    - git remote set-url origin https://github.com/nao20010128nao/MaterialIconsLight.git
-    - git pull origin master > NUL
-    - cd ../
     - gradle-2.12/bin/gradle build -p app --info --stacktrace
     - mv app/build/outputs/apk/*.apk .
     - unzip app-release.apk -d unzippedApk > NUL
@@ -55,9 +49,9 @@ rcon:
   stage: rcon
   script:
     - "rm *.apk"
+    - rm dexdump.txt
     - gradle-2.12/bin/gradle build -p rconApp --info --stacktrace
     - mv rconApp/build/outputs/apk/*.apk .
-    - rm dexdump.txt
     - unzip rconApp-release.apk -d unzippedApk > NUL
     - android-sdk-linux/build-tools/23.0.2/dexdump -d unzippedApk/classes.dex > dexdump.txt
   artifacts:
@@ -70,48 +64,14 @@ rconPC:
   stage: rconPC
   script:
     - "rm *.apk"
+    - rm dexdump.txt
     - gradle-2.12/bin/gradle build -p rconPassCrack --info --stacktrace
     - mv rconPassCrack/build/outputs/apk/*.apk .
-    - rm dexdump.txt
     - unzip rconPassCrack-release.apk -d unzippedApk > NUL
     - android-sdk-linux/build-tools/23.0.2/dexdump -d unzippedApk/classes.dex > dexdump.txt
   artifacts:
     paths:
       - "rconPassCrack*.apk"
-      - dexdump.txt
-
-mainEx:
-  stage: mainEx
-  script:
-    - "rm *.apk"
-    - rm dexdump.txt
-    - rm -rf MaterialIcons
-    - git clone https://github.com/nao20010128nao/MaterialIconsEx.git > NUL
-    - mv MaterialIconsEx MaterialIcons
-    - gradle-2.12/bin/gradle build -p app --info --stacktrace
-    - mv app/build/outputs/apk/*.apk .
-    - unzip app-release.apk -d unzippedApk > NUL
-    - android-sdk-linux/build-tools/23.0.2/dexdump -d unzippedApk/classes.dex > dexdump.txt
-  artifacts:
-    paths:
-      - "*.apk"
-      - dexdump.txt
-
-
-mainOld:
-  stage: mainOld
-  script:
-    - "rm *.apk"
-    - rm dexdump.txt
-    - rm -rf MaterialIcons
-    - git clone https://github.com/nao20010128nao/MaterialIcons.git > NUL
-    - gradle-2.12/bin/gradle build -p app --info --stacktrace
-    - mv app/build/outputs/apk/*.apk .
-    - unzip app-release.apk -d unzippedApk > NUL
-    - android-sdk-linux/build-tools/23.0.2/dexdump -d unzippedApk/classes.dex > dexdump.txt
-  artifacts:
-    paths:
-      - "*.apk"
       - dexdump.txt
 
 
