@@ -24,7 +24,7 @@ public class AboutAppActivity extends AboutAppActivityBase
 			getTheme().applyStyle(R.style.AppTheme_Bright_OpenSource,true);
 		}
 		super.onCreate(savedInstanceState);
-		Utils.getActionBarTextView(Utils.getToolbar(this)).setTextColor(Color.WHITE);
+		Utils.getActionBarTextView(this).setTextColor(Color.WHITE);
 		//34
 		addCardAt(R.layout.about_app_2,0);//234
 		addCardAt(R.layout.about_app_1,0);//1234

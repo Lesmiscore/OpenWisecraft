@@ -20,7 +20,7 @@ public class OpenSourceActivity extends ScrollingActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.osl_parent);
 		getSupportActionBar().setElevation(0f);
-		Utils.getActionBarTextView(Utils.getToolbar(this)).setTextColor(Color.WHITE);
+		Utils.getActionBarTextView(this).setTextColor(Color.WHITE);
 	}
 	
 	@Override

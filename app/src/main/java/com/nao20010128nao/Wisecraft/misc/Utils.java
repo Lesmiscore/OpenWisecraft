@@ -358,4 +358,7 @@ public class Utils extends PingerUtils{
 		NetworkInfo networkInfo = cm.getActiveNetworkInfo();
         return (networkInfo != null && networkInfo.isConnected());
 	}
+	public static TextView getActionBarTextView(Activity a) {
+		return getActionBarTextView(getToolbar(a));
+	}
 }
