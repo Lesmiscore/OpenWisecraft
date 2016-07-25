@@ -789,7 +789,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			switch(sla.pref.getInt("serverListStyle2",0)){
 				case 0:default:
 					return new ServerStatusWrapperViewHolder(sla,false,viewGroup);
-				case 1:
+				case 1:case 2:
 					return new ServerStatusWrapperViewHolder(sla,true,viewGroup);
 			}
 		}

@@ -324,7 +324,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 			switch(sta.pref.getInt("serverListStyle2",0)){
 				case 0:default:
 					return new ServerStatusWrapperViewHolder(sta,false,viewGroup);
-				case 1:
+				case 1:case 2:
 					return new ServerStatusWrapperViewHolder(sta,true,viewGroup);
 			}
 		}

@@ -267,7 +267,7 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 			switch(sta.pref.getInt("serverListStyle2",0)){
 				case 0:default:
 					return new ServerStatusWrapperViewHolder(sta,false,parent);
-				case 1:
+				case 1:case 2:
 					return new ServerStatusWrapperViewHolder(sta,true,parent);
 			}
 		}
