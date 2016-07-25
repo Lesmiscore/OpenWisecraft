@@ -163,7 +163,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				rv.setLayoutManager(new LinearLayoutManager(this));
 				break;
 			case 1:
-				GridLayoutManager glm=new GridLayoutManager(this,calculateRows(this));
+				StaggeredGridLayoutManager glm=new StaggeredGridLayoutManager(calculateRows(this),StaggeredGridLayoutManager.VERTICAL);
 				rv.setLayoutManager(glm);
 				break;
 		}
@@ -406,8 +406,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	public void onWindowFocusChanged(boolean hasFocus) {
 		// TODO: Implement this method
 		super.onWindowFocusChanged(hasFocus);
-		if(rv.getLayoutManager() instanceof GridLayoutManager){
-			((GridLayoutManager)rv.getLayoutManager()).setSpanCount(calculateRows(this,rv));
+		if(rv.getLayoutManager() instanceof StaggeredGridLayoutManager){
+			((StaggeredGridLayoutManager)rv.getLayoutManager()).setSpanCount(calculateRows(this,rv));
 		}
 	}
 	

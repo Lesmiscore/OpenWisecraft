@@ -23,6 +23,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 
 class ServerTestActivityImpl extends AppCompatActivity implements ServerListActivityInterface {
 	static WeakReference<ServerTestActivityImpl> instance=new WeakReference(null);
@@ -75,7 +76,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 				rv.setLayoutManager(new LinearLayoutManager(this));
 				break;
 			case 1:
-				GridLayoutManager glm=new GridLayoutManager(this,calculateRows(this));
+				StaggeredGridLayoutManager glm=new StaggeredGridLayoutManager(calculateRows(this),StaggeredGridLayoutManager.VERTICAL);
 				rv.setLayoutManager(glm);
 				break;
 		}
@@ -168,8 +169,8 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 	public void onWindowFocusChanged(boolean hasFocus) {
 		// TODO: Implement this method
 		super.onWindowFocusChanged(hasFocus);
-		if(rv.getLayoutManager() instanceof GridLayoutManager){
-			((GridLayoutManager)rv.getLayoutManager()).setSpanCount(calculateRows(this,rv));
+		if(rv.getLayoutManager() instanceof StaggeredGridLayoutManager){
+			((StaggeredGridLayoutManager)rv.getLayoutManager()).setSpanCount(calculateRows(this,rv));
 		}
 	}
 	
