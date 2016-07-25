@@ -1,18 +1,43 @@
 package com.nao20010128nao.Wisecraft;
 import android.content.*;
-import android.os.*;
-import android.preference.*;
-import android.support.v7.app.*;
-import android.widget.*;
-import com.nao20010128nao.ToolBox.*;
-import com.nao20010128nao.Wisecraft.misc.Factories;
-import com.nao20010128nao.Wisecraft.misc.compat.*;
-import com.nao20010128nao.Wisecraft.misc.pref.*;
-import java.lang.reflect.*;
 import java.util.*;
-import uk.co.chrisjenx.calligraphy.*;
+
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.DialogPreference;
+import android.support.v7.preference.EditTextPreferenceDialogFragmentCompat;
+import android.support.v7.preference.Preference;
+import android.view.LayoutInflater;
+import android.widget.Toast;
+import com.nao20010128nao.ToolBox.HandledPreference;
+import com.nao20010128nao.Wisecraft.misc.Factories;
+import com.nao20010128nao.Wisecraft.misc.SetTextColor;
+import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
+import com.nao20010128nao.Wisecraft.misc.pref.SHablePreferenceFragment;
+import java.lang.reflect.Field;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
+import android.view.View;
+import android.widget.EditText;
+import com.nao20010128nao.Wisecraft.misc.pref.PreferenceUtils;
+import com.nao20010128nao.Wisecraft.misc.Treatment;
+import android.text.InputType;
+import android.text.InputFilter;
 
 public class FragmentSettingsActivity extends AppCompatActivity {
+	public static final Map<String,Class<? extends BaseFragment>> FRAGMENT_CLASSES=new HashMap<String,Class<? extends BaseFragment>>(){{
+			put("root",HubPrefFragment.class);
+			put("basics",Basics.class);
+			put("features",Features.class);
+			put("asfsls",Asfsls.class);
+	}};
+	public static final String DIALOG_FRAGMENT_TAG_PREFIX="settings@com.nao20010128nao.Wisecraft#";
+	
 	int which;
 	SharedPreferences pref;
 	@Override
@@ -24,14 +49,30 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			getTheme().applyStyle(R.style.AppTheme_Bright,true);
 		}
 		super.onCreate(savedInstanceState);
-		getSupportFragmentManager().beginTransaction().replace(android.R.id.content,new HubPrefFragment()).commit();
+		getSupportFragmentManager()
+			.beginTransaction()
+			.replace(android.R.id.content,new HubPrefFragment())
+			.addToBackStack("root")
+			.commit();
 	}
 	@Override
 	protected void attachBaseContext(Context newBase) {
 		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
 	}
+
+	@Override
+	public void onBackPressed() {
+		// TODO: Implement this method
+		FragmentManager sfm=getSupportFragmentManager();
+		if(sfm.getBackStackEntryCount()<2){
+			finish();
+			return;
+		}
+		sfm.popBackStack();
+	}
 	
-	public static class HubPrefFragment extends SHablePreferenceFragment {
+	
+	public static class HubPrefFragment extends BaseFragment {
 		SharedPreferences pref;
 		@Override
 		public void onCreatePreferences(Bundle p1, String p2) {
@@ -46,17 +87,34 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			super.onCreate(savedInstanceState);
 			sH("basics", new HandledPreference.OnClickListener(){
 					public void onClick(String a, String b, String c) {
-						startActivity(new Intent(getContext(),Basics.class));
+						getActivity().getSupportFragmentManager()
+							.beginTransaction()
+							.replace(android.R.id.content,new Basics())
+							.addToBackStack("basics")
+							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+							.commit();
 					}
 				});
 			sH("features", new HandledPreference.OnClickListener(){
 					public void onClick(String a, String b, String c) {
-						startActivity(new Intent(getContext(),Features.class));
+						getActivity()
+							.getSupportFragmentManager()
+							.beginTransaction()
+							.replace(android.R.id.content,new Features())
+							.addToBackStack("features")
+							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+							.commit();
 					}
 				});
 			sH("asfsls",new HandledPreference.OnClickListener(){
 					public void onClick(String a,String b,String c){
-						startActivity(new Intent(getContext(),Asfsls.class));
+						getActivity()
+							.getSupportFragmentManager()
+							.beginTransaction()
+							.replace(android.R.id.content,new Asfsls())
+							.addToBackStack("asfsls")
+							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+							.commit();
 					}
 				});
 			sH("osl",new HandledPreference.OnClickListener(){
@@ -70,142 +128,166 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 					}
 				});
 			findPreference("asfsls").setEnabled(pref.getBoolean("feature_asfsls",false));
+			((SetTextColor)findPreference("settingsAttention")).setTextColor(ContextCompat.getColor(getContext(),R.color.color888));
 		}
 		@Override
 		public void onResume() {
 			// TODO: Implement this method
 			super.onResume();
+			getActivity().setTitle(R.string.settings);
 			findPreference("asfsls").setEnabled(pref.getBoolean("feature_asfsls",false));
 		}
 	}
 
-	public abstract static class BaseFragmentSettingsActivity extends AppCompatActivity {
-		SharedPreferences pref;
+	
+	public abstract static class BaseFragment extends SHablePreferenceFragment {
+		protected SharedPreferences pref;
 		@Override
-		protected void onCreate(Bundle savedInstanceState) {
+		public void onCreate(Bundle savedInstanceState) {
 			// TODO: Implement this method
-			if(pref.getBoolean("useBright",false)){
-				setTheme(R.style.AppTheme_Bright);
-				getTheme().applyStyle(R.style.AppTheme_Bright,true);
-			}
+			pref=PreferenceManager.getDefaultSharedPreferences(getContext());
 			super.onCreate(savedInstanceState);
 		}
+
 		@Override
-		protected void attachBaseContext(Context newBase) {
-			super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
-			pref=PreferenceManager.getDefaultSharedPreferences(this);
+		public LayoutInflater getLayoutInflater(Bundle savedInstanceState) {
+			// TODO: Implement this method
+			return super.getLayoutInflater(savedInstanceState).cloneInContext(getActivity());
+		}
+
+		@Override
+		public Context getContext() {
+			// TODO: Implement this method
+			return CalligraphyContextWrapper.wrap(super.getContext());
+		}
+	}
+
+
+	public static class Basics extends BaseFragment {
+		public static final String PARALLELS_DIALOG_FRAGMENT_TAG=DIALOG_FRAGMENT_TAG_PREFIX+"parallels-dialog";
+		int which;
+		@Override
+		public void onCreatePreferences(Bundle p1, String p2) {
+			// TODO: Implement this method
+			addPreferencesFromResource(R.xml.settings_basic_compat);
+			sH("serverListStyle", new HandledPreference.OnClickListener(){
+					public void onClick(String a, String b, String c) {
+						new AppCompatAlertDialog.Builder(getContext(),R.style.AppAlertDialog)
+							.setTitle(R.string.serverListStyle)
+							.setSingleChoiceItems(getResources().getStringArray(R.array.serverListStyles),pref.getInt("serverListStyle2",0),new DialogInterface.OnClickListener(){
+								public void onClick(DialogInterface di,int w){
+									which=w;
+								}
+							})
+							.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+								public void onClick(DialogInterface di,int w){
+									pref.edit().putInt("serverListStyle2",which).commit();
+								}
+							})
+							.setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
+								public void onClick(DialogInterface di,int w){
+
+								}
+							})
+							.show();
+					}
+				});
+			sH("selectFont",new HandledPreference.OnClickListener(){
+					public void onClick(String a,String b,String c){
+						String[] choice=getFontChoices();
+						String[] display=TheApplication.instance.getDisplayFontNames(choice);
+						final List<String> choiceList=Arrays.<String>asList(choice);
+						new AppCompatAlertDialog.Builder(getContext(),R.style.AppAlertDialog)
+							.setSingleChoiceItems(display, choiceList.indexOf(TheApplication.instance.getFontFieldName())
+							, new DialogInterface.OnClickListener(){
+								public void onClick(DialogInterface di, int w) {
+									di.cancel();
+									TheApplication.instance.setFontFieldName(choiceList.get(w));
+									Toast.makeText(getContext(),R.string.saved_fonts,Toast.LENGTH_LONG).show();
+								}
+							})
+							.show();
+					}
+					String[] getFontChoices() {
+						List<String> l=new ArrayList();
+						for (Field f:TheApplication.fonts) {
+							l.add(f.getName());
+						}
+						l.remove("icomoon1");
+						return Factories.strArray(l);
+					}
+				});
+			findPreference("useBright").setEnabled(getResources().getBoolean(R.bool.useBrightEnabled));
+		}
+
+		@Override
+		public void onResume() {
+			// TODO: Implement this method
+			super.onResume();
+			getActivity().setTitle(R.string.basics);
 		}
 		
-		public abstract static class BaseFragment extends SHablePreferenceFragment {
-			protected SharedPreferences pref;
-			@Override
-			public void onCreate(Bundle savedInstanceState) {
-				// TODO: Implement this method
-				pref=PreferenceManager.getDefaultSharedPreferences(getContext());
-				super.onCreate(savedInstanceState);
-			}
-		}
-	}
-	public static class Basics extends BaseFragmentSettingsActivity {
+		/*
 		@Override
-		protected void onCreate(Bundle savedInstanceState) {
+		public void onDisplayPreferenceDialog(Preference preference) {
 			// TODO: Implement this method
-			super.onCreate(savedInstanceState);
-			getSupportFragmentManager().beginTransaction().replace(android.R.id.content,new Content()).commit();
-		}
-		public static class Content extends BaseFragment {
-			int which;
-			@Override
-			public void onCreatePreferences(Bundle p1, String p2) {
-				// TODO: Implement this method
-				addPreferencesFromResource(R.xml.settings_basic_compat);
-				sH("serverListStyle", new HandledPreference.OnClickListener(){
-						public void onClick(String a, String b, String c) {
-							new AppCompatAlertDialog.Builder(getContext(),R.style.AppAlertDialog)
-								.setTitle(R.string.serverListStyle)
-								.setSingleChoiceItems(getResources().getStringArray(R.array.serverListStyles),pref.getInt("main_style",0),new DialogInterface.OnClickListener(){
-									public void onClick(DialogInterface di,int w){
-										which=w;
-									}
-								})
-								.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
-									public void onClick(DialogInterface di,int w){
-										pref.edit().putInt("main_style",which).commit();
-									}
-								})
-								.setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
-									public void onClick(DialogInterface di,int w){
-
-									}
-								})
-								.show();
-						}
-					});
-				sH("selectFont",new HandledPreference.OnClickListener(){
-						public void onClick(String a,String b,String c){
-							String[] choice=getFontChoices();
-							String[] display=TheApplication.instance.getDisplayFontNames(choice);
-							final List<String> choiceList=Arrays.<String>asList(choice);
-							new AppCompatAlertDialog.Builder(getContext(),R.style.AppAlertDialog)
-								.setSingleChoiceItems(display, choiceList.indexOf(TheApplication.instance.getFontFieldName())
-								, new DialogInterface.OnClickListener(){
-									public void onClick(DialogInterface di, int w) {
-										di.cancel();
-										TheApplication.instance.setFontFieldName(choiceList.get(w));
-										Toast.makeText(getContext(),R.string.saved_fonts,Toast.LENGTH_LONG).show();
-									}
-								})
-								.show();
-						}
-						String[] getFontChoices() {
-							List<String> l=new ArrayList();
-							for (Field f:TheApplication.fonts) {
-								l.add(f.getName());
-							}
-							l.remove("icomoon1");
-							return Factories.strArray(l);
-						}
-					});
-				findPreference("useBright").setEnabled(getResources().getBoolean(R.bool.useBrightEnabled));
-			}
-		}
-	}
-	public static class Features extends BaseFragmentSettingsActivity {
-		@Override
-		protected void onCreate(Bundle savedInstanceState) {
-			// TODO: Implement this method
-			super.onCreate(savedInstanceState);
-			getSupportFragmentManager().beginTransaction().replace(android.R.id.content,new Content()).commit();
-		}
-		public static class Content extends BaseFragment {
-			int which;
-			@Override
-			public void onCreatePreferences(Bundle p1, String p2) {
-				// TODO: Implement this method
-				addPreferencesFromResource(R.xml.settings_features_compat);
-			}
-		}
-	}
-	public static class Asfsls extends BaseFragmentSettingsActivity {
-		@Override
-		protected void onCreate(Bundle savedInstanceState) {
-			// TODO: Implement this method
-			super.onCreate(savedInstanceState);
-			if(!pref.getBoolean("feature_asfsls",false)){
-				finish();
+			if(preference.getKey().equals("parallels")){
+				/*
+				EditTextPreferenceDialogFragmentCompat etpdf=EditTextPreferenceDialogFragmentCompat.newInstance(preference.getKey());
+				etpdf.setTargetFragment(this,0);
+				etpdf.setStyle(DialogFragment.STYLE_NORMAL,R.style.AppAlertDialog);
+				etpdf.show(getFragmentManager(),PARALLELS_DIALOG_FRAGMENT_TAG);
+				/
+				//I'll show a EditText dialog with AlertDialog.Builder because the text color of buttons can't be changed
+				PreferenceUtils.showEditTextDialog(getActivity(),preference,getString(R.string.parallels_default),new Treatment<View>(){
+					public void process(View v){
+						EditText et=(EditText)v.findViewById(android.R.id.edit);
+						et.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_VARIATION_NORMAL);
+						ArrayList<InputFilter> ifs=new ArrayList<InputFilter>(Arrays.<InputFilter>asList(et.getFilters()));
+						ifs.add(new InputFilter.LengthFilter(3));
+						et.setFilters(ifs.toArray(new InputFilter[ifs.size()]));
+					}
+				});
 				return;
 			}
-			getSupportFragmentManager().beginTransaction().replace(android.R.id.content,new Content()).commit();
+			super.onDisplayPreferenceDialog(preference);
 		}
-		public static class Content extends BaseFragment {
-			int which;
-			@Override
-			public void onCreatePreferences(Bundle p1, String p2) {
-				// TODO: Implement this method
-				addPreferencesFromResource(R.xml.settings_asfsls_compat);
-				SharedPreferences slsVersCache=getContext().getSharedPreferences("sls_vers_cache", 0);
-				findPreference("currentSlsVersion").setSummary(slsVersCache.getString("dat.vcode",getResources().getString(R.string.unknown)));
-			}
+		*/
+	}
+
+
+	public static class Features extends BaseFragment {
+		int which;
+		@Override
+		public void onCreatePreferences(Bundle p1, String p2) {
+			// TODO: Implement this method
+			addPreferencesFromResource(R.xml.settings_features_compat);
+		}
+
+		@Override
+		public void onResume() {
+			// TODO: Implement this method
+			super.onResume();
+			getActivity().setTitle(R.string.features);
+		}
+	}
+
+
+	public static class Asfsls extends BaseFragment {
+		int which;
+		@Override
+		public void onCreatePreferences(Bundle p1, String p2) {
+			// TODO: Implement this method
+			addPreferencesFromResource(R.xml.settings_asfsls_compat);
+			SharedPreferences slsVersCache=getContext().getSharedPreferences("sls_vers_cache", 0);
+			findPreference("currentSlsVersion").setSummary(slsVersCache.getString("dat.vcode",getResources().getString(R.string.unknown)));
+		}
+
+		@Override
+		public void onResume() {
+			// TODO: Implement this method
+			super.onResume();
+			getActivity().setTitle(R.string.addServerFromServerListSite);
 		}
 	}
 }
