@@ -227,6 +227,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			getActivity().setTitle(R.string.basics);
 		}
 		
+		/*
 		@Override
 		public void onDisplayPreferenceDialog(Preference preference) {
 			// TODO: Implement this method
@@ -236,7 +237,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 				etpdf.setTargetFragment(this,0);
 				etpdf.setStyle(DialogFragment.STYLE_NORMAL,R.style.AppAlertDialog);
 				etpdf.show(getFragmentManager(),PARALLELS_DIALOG_FRAGMENT_TAG);
-				*/
+				/
 				//I'll show a EditText dialog with AlertDialog.Builder because the text color of buttons can't be changed
 				PreferenceUtils.showEditTextDialog(getActivity(),preference,getString(R.string.parallels_default),new Treatment<View>(){
 					public void process(View v){
@@ -251,6 +252,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			}
 			super.onDisplayPreferenceDialog(preference);
 		}
+		*/
 	}
 
 
