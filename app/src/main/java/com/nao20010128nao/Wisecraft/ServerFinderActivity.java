@@ -52,8 +52,12 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 				rv.setLayoutManager(new LinearLayoutManager(this));
 				break;
 			case 1:
-				StaggeredGridLayoutManager glm=new StaggeredGridLayoutManager(calculateRows(this),StaggeredGridLayoutManager.VERTICAL);
+				GridLayoutManager glm=new GridLayoutManager(this,calculateRows(this));
 				rv.setLayoutManager(glm);
+				break;
+			case 2:
+				StaggeredGridLayoutManager sglm=new StaggeredGridLayoutManager(calculateRows(this),StaggeredGridLayoutManager.VERTICAL);
+				rv.setLayoutManager(sglm);
 				break;
 		}
 		rv.setAdapter(sl);
@@ -174,6 +178,9 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 		super.onWindowFocusChanged(hasFocus);
 		if(rv.getLayoutManager() instanceof StaggeredGridLayoutManager){
 			((StaggeredGridLayoutManager)rv.getLayoutManager()).setSpanCount(calculateRows(this,rv));
+		}
+		if(rv.getLayoutManager() instanceof GridLayoutManager){
+			((GridLayoutManager)rv.getLayoutManager()).setSpanCount(calculateRows(this,rv));
 		}
 	}
 	
