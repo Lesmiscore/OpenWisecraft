@@ -14,6 +14,7 @@
 		<item name="android:statusBarColor">@color/upd_2</item>
 		<item name="colorPrimary">@color/upd_2</item>
 		<item name="preferenceTheme">@style/AppTheme.Preference</item>
+		<item name="actionBarStyle">@style/WhiteTextActionBar</item>
 	</style>
 	
 	<style name="AppThemeN.Bright" parent="AppThemeN">
