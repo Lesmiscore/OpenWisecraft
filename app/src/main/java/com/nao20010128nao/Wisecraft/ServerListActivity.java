@@ -80,9 +80,13 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
+		pref = PreferenceManager.getDefaultSharedPreferences(this);
+		if (pref.getBoolean("useBright", false)) {
+			setTheme(R.style.AppTheme_Bright);
+			getTheme().applyStyle(R.style.AppTheme_Bright_NoActionBar, true);
+		}
 		super.onCreate(savedInstanceState);
 		getLayoutInflater().inflate(R.layout.hacks, null);//空インフレート
-		pref = PreferenceManager.getDefaultSharedPreferences(this);
 		appMenu.add(new KVP<Integer,Integer>(R.string.add,R.drawable.ic_add_black_48dp));//0
 		appMenu.add(new KVP<Integer,Integer>(R.string.addFromMCPE,R.drawable.ic_add_black_48dp));//1
 		appMenu.add(new KVP<Integer,Integer>(R.string.update_all,R.drawable.ic_refresh_black_48dp));//2
@@ -1359,7 +1363,7 @@ public class ServerListActivity extends CompatActivityGroup {
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
 		if (pref.getBoolean("useBright", false)) {
 			setTheme(R.style.AppTheme_Bright);
-			getTheme().applyStyle(R.style.AppTheme_Bright, true);
+			getTheme().applyStyle(R.style.AppTheme_Bright_NoActionBar, true);
 		}
 		super.onCreate(savedInstanceState);
 		Bundle log=new Bundle();
