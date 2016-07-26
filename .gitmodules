@@ -10,3 +10,6 @@
 [submodule "calligraphy"]
 	path = calligraphy
 	url = https://github.com/nao20010128nao/Calligraphy-Wisecraft
+[submodule "psts"]
+	path = psts
+	url = https://github.com/nao20010128nao/Wisecraft-PagerSlidingTabStrip

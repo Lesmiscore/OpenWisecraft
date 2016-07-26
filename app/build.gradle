@@ -68,6 +68,7 @@ dependencies {
 	compile project(':statusesLayout')   // https://github.com/nao20010128nao/StatusesLayout
 	compile project(':wisecraft-i18n')   // https://github.com/nao20010128nao/Wisecraft-Multilanguage
 	compile project(':MaterialIcons')    // https://github.com/nao20010128nao/MaterialIconsLight
+	compile project(':psts')             // https://github.com/nao20010128nao/Wisecraft-PagerSlidingTabStrip
 	compile project(':scrolling')
 	compile project(':rcon')
 	compile project(':compat')
@@ -90,7 +91,7 @@ dependencies {
 	compile 'org.nanohttpd:nanohttpd:2.3.0'
 	compile 'org.jsoup:jsoup:1.9.1'
 	compile 'org.eclipse.mylyn.github:org.eclipse.egit.github.core:3.4.0.201406110918-r'
-	compile 'com.jpardogo.materialtabstrip:library:+'
+	//compile 'com.jpardogo.materialtabstrip:library:+'
 	compile 'com.google.firebase:firebase-core:9.+'
 	compile 'com.google.firebase:firebase-storage:9.+'
 	compile 'com.google.firebase:firebase-config:9.+'
@@ -111,6 +112,6 @@ dependencies {
 	if(null){
 		compile 'com.mikepenz:materialize:+'
     	compile 'com.mikepenz:iconics-core:+'
-    	compile 'com.mikepenz:fastadapter:'
+    	compile 'com.mikepenz:fastadapter:+'
 	}
 }
