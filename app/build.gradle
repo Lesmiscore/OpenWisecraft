@@ -57,7 +57,7 @@ android {
 	
 	
 	
-	if(System.getProperty("os.name").toLowerCase().startsWith("windows")){
+	if(!System.getProperty("os.name").toLowerCase().startsWith("windows")){
 		def revisionHash = ["sh",  "-c",  "cd ${project.rootDir} ; git rev-parse --short HEAD"].execute().in.text.trim()
 		println "Git Revision is:"+revisionHash
 	}

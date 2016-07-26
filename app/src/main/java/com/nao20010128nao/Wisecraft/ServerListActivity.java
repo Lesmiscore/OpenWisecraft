@@ -82,7 +82,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		// TODO: Implement this method
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
 		if (pref.getBoolean("useBright", false)) {
-			setTheme(R.style.AppTheme_Bright);
+			setTheme(R.style.AppTheme_Bright_NoActionBar);
 			getTheme().applyStyle(R.style.AppTheme_Bright_NoActionBar, true);
 		}
 		super.onCreate(savedInstanceState);
