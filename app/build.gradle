@@ -69,13 +69,11 @@ dependencies {
 	compile project(':wisecraft-i18n')   // https://github.com/nao20010128nao/Wisecraft-Multilanguage
 	compile project(':MaterialIcons')    // https://github.com/nao20010128nao/MaterialIconsLight
 	compile project(':scrolling')
-	//compile project(':HoloIcons')
 	compile project(':rcon')
 	compile project(':compat')
 	compile project(':aFileChooser')
 	compile project(':accounts')
 	compile project(':calligraphy')
-	//compile project(':appcompat-v7')
 	
 	compile 'com.android.support:recyclerview-v7:24.0.0'
 	compile 'com.android.support:design:24.0.0'
