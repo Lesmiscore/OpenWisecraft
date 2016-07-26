@@ -23,9 +23,10 @@
 			android:layout_height="?attr/actionBarSize"
 			android:background="#00000000"
 			app:pstsIndicatorHeight="3dp"
-			app:pstsShouldExpand="true"
+			app:pstsShouldExpand="@bool/shouldExpandTab"
 			android:paddingLeft="10dp"
-			android:paddingRight="10dp"/>
+			android:paddingRight="10dp"
+			android:gravity="center"/>
 
 	</android.support.design.widget.AppBarLayout>
 
