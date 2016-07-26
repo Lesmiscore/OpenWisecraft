@@ -24,6 +24,7 @@
 			android:background="#00000000"
 			app:pstsIndicatorHeight="3dp"
 			app:pstsShouldExpand="@bool/shouldExpandTab"
+			app:pstsPaddingMiddle="@bool/padMiddle"
 			android:paddingLeft="10dp"
 			android:paddingRight="10dp"
 			android:gravity="center"/>
