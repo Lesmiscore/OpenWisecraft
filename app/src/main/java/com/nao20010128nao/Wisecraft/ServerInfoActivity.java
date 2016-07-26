@@ -341,12 +341,6 @@ public class ServerInfoActivity extends AppCompatActivity {
 		if (serverIconBmp != null)serverIconBmp.recycle();
 	}
 
-	@Override
-	protected void onResume() {
-		// TODO: Implement this method
-		super.onResume();
-	}
-
 	public void addModsTab() {
 		if ((!hideMods) | localStat.mode == 1) {
 			adapter.addTab(ModsFragment.class, getResources().getString(R.string.mods));
