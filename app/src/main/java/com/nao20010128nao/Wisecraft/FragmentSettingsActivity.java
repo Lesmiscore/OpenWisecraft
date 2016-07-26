@@ -171,7 +171,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			// TODO: Implement this method
-			pref=PreferenceManager.getDefaultSharedPreferences(getContext());
+			pref=getPreferenceManager().getSharedPreferences();
 			super.onCreate(savedInstanceState);
 		}
 
