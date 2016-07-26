@@ -526,9 +526,6 @@ public class ServerInfoActivity extends AppCompatActivity {
 
 			ServerStatus localStat=getParentActivity().localStat;
 			ServerPingResult resp=localStat.response;
-			String ip=localStat.ip;
-			int port=localStat.port;
-
 			if (pref.getBoolean("showPcUserFace", false) & localStat.mode == 1 & canInflateSkinFaceList()) {
 				getParentActivity().skinFaceImages = new ArrayList<>();
 				getParentActivity().sff = new SkinFaceFetcher();
@@ -614,9 +611,6 @@ public class ServerInfoActivity extends AppCompatActivity {
 			data.setAdapter(infos);
 			ServerStatus localStat=getParentActivity().localStat;
 			ServerPingResult resp=localStat.response;
-			String ip=localStat.ip;
-			int port=localStat.port;
-
 			if (resp instanceof FullStat | resp instanceof SprPair) {
 				FullStat fs=null;
 				if (resp instanceof FullStat)
@@ -655,8 +649,6 @@ public class ServerInfoActivity extends AppCompatActivity {
 			data.setAdapter(infos);
 			ServerStatus localStat=getParentActivity().localStat;
 			ServerPingResult resp=localStat.response;
-			String ip=localStat.ip;
-			int port=localStat.port;
 			if (resp instanceof Reply) {
 				Reply rep=(Reply)resp;
 				if (pref.getBoolean("colorFormattedText", false)) {
@@ -743,8 +735,6 @@ public class ServerInfoActivity extends AppCompatActivity {
 			lv.setAdapter(pluginNames);
 			ServerStatus localStat=getParentActivity().localStat;
 			ServerPingResult resp=localStat.response;
-			String ip=localStat.ip;
-			int port=localStat.port;
 			if (resp instanceof FullStat | resp instanceof SprPair) {
 				FullStat fs=null;
 				if (resp instanceof FullStat)
@@ -787,8 +777,6 @@ public class ServerInfoActivity extends AppCompatActivity {
 			mods.setAdapter(modInfos);
 			ServerStatus localStat=getParentActivity().localStat;
 			ServerPingResult resp=localStat.response;
-			String ip=localStat.ip;
-			int port=localStat.port;
 			if (resp instanceof Reply) {
 				Reply rep=(Reply)resp;
 				if (rep.modinfo != null) {
