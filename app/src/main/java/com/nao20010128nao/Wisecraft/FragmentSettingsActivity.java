@@ -28,6 +28,7 @@ import com.nao20010128nao.Wisecraft.misc.pref.PreferenceUtils;
 import com.nao20010128nao.Wisecraft.misc.Treatment;
 import android.text.InputType;
 import android.text.InputFilter;
+import android.view.ViewGroup;
 
 public class FragmentSettingsActivity extends AppCompatActivity {
 	public static final Map<String,Class<? extends BaseFragment>> FRAGMENT_CLASSES=new HashMap<String,Class<? extends BaseFragment>>(){{
@@ -185,6 +186,12 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		public Context getContext() {
 			// TODO: Implement this method
 			return CalligraphyContextWrapper.wrap(super.getContext());
+		}
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+			// TODO: Implement this method
+			return super.onCreateView(getActivity().getLayoutInflater(), container, savedInstanceState);
 		}
 	}
 
