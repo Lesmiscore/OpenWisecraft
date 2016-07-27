@@ -50,7 +50,6 @@
 	<style name="AppTheme.Toolbar" parent="AppTheme">
 		<item name="colorControlNormal">@color/upd_2</item>
 		<item name="android:textColorSecondary">@color/upd_2</item>
-		<item name="textColorSecondary">@color/upd_2</item>
 	</style>
 	
 	<style name="AppThemeN" parent="@android:style/Theme.Light">
