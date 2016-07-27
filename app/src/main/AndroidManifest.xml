@@ -3,7 +3,7 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
     package="com.nao20010128nao.Wisecraft"
-    android:versionCode="31"
+    android:versionCode="32"
     android:versionName="3.0" >
     <!--
 	latest:
