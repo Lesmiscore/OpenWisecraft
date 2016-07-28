@@ -214,10 +214,7 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 			} else {
 				viewHolder.setDarkness(false);
 			}
-			viewHolder.itemView.findViewById(R.id.serverPlayers).setVisibility(View.GONE);
 			ServerStatus s=getItem(offset);
-			viewHolder.itemView.setTag(s);
-			viewHolder.setStatColor(ContextCompat.getColor(sta, R.color.stat_ok));
 			
 			final String title;
 			if (s.response instanceof Reply19) {//PC 1.9~
@@ -249,6 +246,9 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 				viewHolder.setServerName(deleteDecorations(title));
 			}
 			viewHolder
+				.setStatColor(ContextCompat.getColor(sta, R.color.stat_ok))
+				.hideServerPlayers()
+				.setTag(s)
 				.setPingMillis(s.ping)
 				.setServer(s)
 				.setServerAddress(s.port + "");

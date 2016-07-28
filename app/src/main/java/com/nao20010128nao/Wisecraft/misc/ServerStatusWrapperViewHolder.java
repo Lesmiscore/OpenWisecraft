@@ -80,4 +80,18 @@ public class ServerStatusWrapperViewHolder extends FindableViewHolder
 	public ServerStatusWrapperViewHolder setServerName(Server s){
 		return setServerName(s.toString());
 	}
+	
+	public ServerStatusWrapperViewHolder hideServerPlayers(){
+		preload.getView(R.id.serverPlayers).setVisibility(View.GONE);
+		return this;
+	}
+	
+	public ServerStatusWrapperViewHolder setTag(Object o){
+		itemView.setTag(o);
+		return this;
+	}
+	
+	public Object getTag(){
+		return itemView.getTag();
+	}
 }
