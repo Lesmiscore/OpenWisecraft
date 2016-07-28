@@ -25,6 +25,7 @@
 			app:pstsIndicatorHeight="3dp"
 			app:pstsShouldExpand="@bool/shouldExpandTab"
 			app:pstsPaddingMiddle="@bool/padMiddle"
+			app:pstsTabTextStyle="coded"
 			android:paddingLeft="10dp"
 			android:paddingRight="10dp"
 			android:gravity="center"/>
