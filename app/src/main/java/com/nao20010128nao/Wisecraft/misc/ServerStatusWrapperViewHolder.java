@@ -30,6 +30,9 @@ public class ServerStatusWrapperViewHolder extends FindableViewHolder
 		((TextView)preload.getView(R.id.serverPlayers)).setText(s);
 		return this;
 	}
+	public ServerStatusWrapperViewHolder setServerPlayers(){
+		return setServerPlayers("-/-");
+	}
 	public ServerStatusWrapperViewHolder setServerPlayers(Number count,Number max){
 		return setServerPlayers(count+"/"+max);
 	}

@@ -282,7 +282,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
                             viewHolder.setServerPlayers(fs.getData().get("numplayers"), fs.getData().get("maxplayers"));
                         } else {
 							title = sv.ip + ":" + sv.port;
-                            viewHolder.setServerPlayers("-/-");
+                            viewHolder.setServerPlayers();
                         }
 					} else if (sv.response instanceof UnconnectedPing.UnconnectedPingResult) {
                         UnconnectedPing.UnconnectedPingResult res = (UnconnectedPing.UnconnectedPingResult) sv.response;
@@ -290,7 +290,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
                         viewHolder.setServerPlayers(res.getPlayersCount(), res.getMaxPlayers());
                     } else {//Unreachable
 						title = sv.ip + ":" + sv.port;
-                        viewHolder.setServerPlayers("-/-");
+                        viewHolder.setServerPlayers();
                     }
 					if (sta.pref.getBoolean("colorFormattedText", false)) {
 						if (sta.pref.getBoolean("darkBackgroundForServerName", false)) {
@@ -308,7 +308,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 						.setStatColor(ContextCompat.getColor(sta, R.color.stat_error))
 						.setServerName(s)
 						.setPingMillis(sta.getResources().getString(R.string.notResponding))
-						.setServerPlayers("-/-");
+						.setServerPlayers();
 				}
 			}
 			applyHandlersForViewTree(viewHolder.itemView, new View.OnClickListener(){

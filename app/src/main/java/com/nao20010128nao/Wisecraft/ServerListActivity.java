@@ -817,7 +817,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					viewHolder
 						.setServerName(sla.getResources().getString(R.string.working))
 						.setPingMillis(sla.getResources().getString(R.string.working))
-						.setServer(sv).setServerPlayers("-/-")
+						.setServer(sv).setServerPlayers()
 						.setStatColor(ContextCompat.getColor(sla, R.color.stat_pending));
 				} else {
 					if (sv instanceof ServerStatus) {
@@ -870,7 +870,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 								viewHolder.setServerPlayers(fs.getData().get("numplayers"), fs.getData().get("maxplayers"));
 							} else {
 								title = s.ip + ":" + s.port;
-								viewHolder.setServerPlayers("-/-");
+								viewHolder.setServerPlayers();
 							}
 						} else if (s.response instanceof UnconnectedPing.UnconnectedPingResult) {//PE
 							UnconnectedPing.UnconnectedPingResult res = (UnconnectedPing.UnconnectedPingResult) s.response;
@@ -878,7 +878,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							viewHolder.setServerPlayers(res.getPlayersCount(), res.getMaxPlayers());
 						} else {//Unreachable
 							title = s.ip + ":" + s.port;
-							viewHolder.setServerPlayers("-/-");
+							viewHolder.setServerPlayers();
 						}
 						if (sla.pref.getBoolean("colorFormattedText", false)) {
 							if (sla.pref.getBoolean("darkBackgroundForServerName", false)) {
