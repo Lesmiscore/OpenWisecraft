@@ -132,7 +132,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					}
 				});
 
-			switch(getResources().getInteger(R.integer.server_list_layout_mode)){
+			switch(getResources().getInteger(R.integer.server_list_layout_mode)*0){
 				case 0:
 					drawer=bld.build();
 					break;
