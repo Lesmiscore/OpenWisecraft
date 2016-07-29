@@ -1,11 +1,9 @@
 package com.nao20010128nao.Wisecraft.misc;
-import android.content.Context;
-import android.view.ViewGroup;
-import android.view.LayoutInflater;
-import com.nao20010128nao.Wisecraft.R;
-import com.nao20010128nao.Wisecraft.misc.view.ExtendedImageView;
-import android.widget.TextView;
-import android.view.View;
+import android.content.*;
+import android.view.*;
+import android.widget.*;
+import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.misc.view.*;
 
 public class ServerStatusWrapperViewHolder extends FindableViewHolder
 {

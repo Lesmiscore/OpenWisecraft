@@ -5,7 +5,9 @@ import android.graphics.*;
 import android.graphics.drawable.*;
 import android.os.*;
 import android.preference.*;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.content.*;
+import android.support.v7.app.*;
+import android.support.v7.widget.*;
 import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.misc.*;
@@ -16,14 +18,8 @@ import com.nao20010128nao.Wisecraft.pingEngine.*;
 import com.nao20010128nao.Wisecraft.provider.*;
 import java.lang.ref.*;
 import java.util.*;
-import uk.co.chrisjenx.calligraphy.*;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 
 class ServerTestActivityImpl extends AppCompatActivity implements ServerListActivityInterface {
 	static WeakReference<ServerTestActivityImpl> instance=new WeakReference(null);

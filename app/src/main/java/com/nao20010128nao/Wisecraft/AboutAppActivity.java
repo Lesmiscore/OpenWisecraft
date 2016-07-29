@@ -4,13 +4,8 @@ import android.graphics.*;
 import android.net.*;
 import android.os.*;
 import android.preference.*;
-import android.support.design.widget.*;
-import android.util.*;
 import android.view.*;
-import android.widget.*;
-import com.nao20010128nao.TESTAPP.*;
-import android.support.v7.widget.Toolbar;
-import com.nao20010128nao.Wisecraft.misc.Utils;
+import com.nao20010128nao.Wisecraft.misc.*;
 
 public class AboutAppActivity extends AboutAppActivityBase
 {

@@ -2,22 +2,15 @@ package com.nao20010128nao.Wisecraft;
 import android.content.*;
 import android.os.*;
 import android.preference.*;
+import android.support.design.widget.*;
 import android.util.*;
 import android.view.*;
-import android.widget.*;
+import android.webkit.*;
 import com.nao20010128nao.McServerList.*;
-import com.nao20010128nao.Wisecraft.misc.Constant;
-import com.nao20010128nao.Wisecraft.misc.Factories;
-import com.nao20010128nao.Wisecraft.misc.Utils;
+import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import java.net.*;
 import java.util.*;
-import uk.co.chrisjenx.calligraphy.*;
-import com.nao20010128nao.Wisecraft.misc.ServerListActivityInterface;
-import android.webkit.WebViewClient;
-import android.webkit.WebView;
-import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
 
 public class ServerGetActivity extends CompatWebViewActivity {
 	public static List<String> addForServerList;

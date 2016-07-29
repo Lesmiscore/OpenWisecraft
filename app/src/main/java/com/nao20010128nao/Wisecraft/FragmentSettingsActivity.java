@@ -1,34 +1,19 @@
 package com.nao20010128nao.Wisecraft;
 import android.content.*;
+import android.os.*;
+import android.preference.*;
+import android.support.v4.app.*;
+import android.support.v4.content.*;
+import android.support.v7.app.*;
+import android.view.*;
+import android.widget.*;
+import com.nao20010128nao.ToolBox.*;
+import com.nao20010128nao.Wisecraft.misc.*;
+import com.nao20010128nao.Wisecraft.misc.compat.*;
+import com.nao20010128nao.Wisecraft.misc.pref.*;
+import java.lang.reflect.*;
 import java.util.*;
-
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.preference.DialogPreference;
-import android.support.v7.preference.EditTextPreferenceDialogFragmentCompat;
-import android.support.v7.preference.Preference;
-import android.view.LayoutInflater;
-import android.widget.Toast;
-import com.nao20010128nao.ToolBox.HandledPreference;
-import com.nao20010128nao.Wisecraft.misc.Factories;
-import com.nao20010128nao.Wisecraft.misc.SetTextColor;
-import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
-import com.nao20010128nao.Wisecraft.misc.pref.SHablePreferenceFragment;
-import java.lang.reflect.Field;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
-import android.view.View;
-import android.widget.EditText;
-import com.nao20010128nao.Wisecraft.misc.pref.PreferenceUtils;
-import com.nao20010128nao.Wisecraft.misc.Treatment;
-import android.text.InputType;
-import android.text.InputFilter;
-import android.view.ViewGroup;
+import uk.co.chrisjenx.calligraphy.*;
 
 public class FragmentSettingsActivity extends AppCompatActivity {
 	public static final Map<String,Class<? extends BaseFragment>> FRAGMENT_CLASSES=new HashMap<String,Class<? extends BaseFragment>>(){{

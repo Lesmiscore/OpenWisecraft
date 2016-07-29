@@ -2,24 +2,22 @@ package com.nao20010128nao.Wisecraft;
 import android.app.*;
 import android.content.*;
 import android.graphics.*;
+import android.graphics.drawable.*;
 import android.preference.*;
+import android.support.multidex.*;
+import android.support.v4.graphics.drawable.*;
 import android.view.*;
-
-import com.google.firebase.analytics.FirebaseAnalytics;
+import android.widget.*;
+import com.google.android.gms.tasks.*;
+import com.google.firebase.analytics.*;
+import com.google.firebase.remoteconfig.*;
 import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+import com.nao20010128nao.Wisecraft.rcon.*;
 import com.nao20010128nao.Wisecraft.services.*;
 import java.lang.reflect.*;
 import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
-import android.widget.Toast;
-import com.nao20010128nao.Wisecraft.rcon.KeyChain;
-import android.graphics.drawable.Drawable;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import java.lang.ref.WeakReference;
-import android.support.multidex.MultiDex;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
-import com.google.android.gms.tasks.Task;
 
 public class TheApplication extends Application implements com.nao20010128nao.Wisecraft.rcon.Presenter,com.ipaulpro.afilechooser.Presenter,InformationCommunicatorReceiver.DisclosureResult {
 	public static TheApplication instance;
