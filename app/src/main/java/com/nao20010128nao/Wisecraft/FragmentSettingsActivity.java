@@ -59,7 +59,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 	}
 	@Override
 	protected void attachBaseContext(Context newBase) {
-		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+		super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
 	}
 
 	@Override
@@ -170,7 +170,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		@Override
 		public Context getContext() {
 			// TODO: Implement this method
-			return CalligraphyContextWrapper.wrap(super.getContext());
+			return TheApplication.injectContextSpecial(super.getContext());
 		}
 
 		@Override

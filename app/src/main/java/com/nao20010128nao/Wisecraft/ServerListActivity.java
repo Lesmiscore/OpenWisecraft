@@ -348,7 +348,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	@Override
 	protected void attachBaseContext(Context newBase) {
 		TheApplication.instance.initForActivities();
-		super.attachBaseContext(ContextWrappingExtender.wrap(CalligraphyContextWrapper.wrap(newBase)));
+		super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
 	}
 	@Override
 	protected void onDestroy() {
@@ -1394,6 +1394,6 @@ public class ServerListActivity extends CompatActivityGroup {
 
 	@Override
 	protected void attachBaseContext(Context newBase) {
-		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+		super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
 	}
 }
