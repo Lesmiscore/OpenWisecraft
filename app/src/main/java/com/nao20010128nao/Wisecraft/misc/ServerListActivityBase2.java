@@ -1,103 +1,83 @@
 package com.nao20010128nao.Wisecraft.misc;
 import android.content.*;
-import android.content.pm.*;
-import android.support.v4.app.*;
-import android.support.v4.content.*;
-import android.util.*;
-
-import java.security.*;
+import android.os.*;
+import android.preference.*;
+import com.google.gson.*;
+import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.misc.compat.*;
 import java.util.*;
+import android.support.v7.app.AppCompatActivity;
 
-//Permission Request Part
+//Server Sort Part
 public abstract class ServerListActivityBase2 extends ServerListActivityBase3
 {
-	SecureRandom sr=new SecureRandom();
-	HashMap<Integer,Metadata> permRequire=new HashMap<>();
-	HashMap<Integer,Boolean> permReqResults=new HashMap<Integer,Boolean>(){
-		@Override
-		public Boolean get(Object key) {
-			// TODO: Implement this method
-			Boolean b = super.get(key);
-			if (b == null) {
-				return false;
+	SharedPreferences pref;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO: Implement this method
+		super.onCreate(savedInstanceState);
+		pref=PreferenceManager.getDefaultSharedPreferences(this);
+	}
+	
+	public void doSort(final List<Server> sl,final SortKind sk){
+		new Thread(){
+			public void run(){
+				final List<Server> sortingServer=sk.doSort(sl);
+				runOnUiThread(new Runnable(){
+						public void run() {
+							finish();
+							ServerListActivity.Content.deleteRef();
+							new Handler().postDelayed(new Runnable(){
+									public void run() {
+										pref.edit().putString("servers", new Gson().toJson(sortingServer.toArray(new Server[sortingServer.size()]), Server[].class)).commit();
+										startActivity(new Intent(ServerListActivityBase2.this, ServerListActivity.class));
+									}
+								}, 10);
+						}
+					});
 			}
-			return b;
-		}
-	};
-	
-	
-	public void doAfterRequirePerm(RequirePermissionResult r,String[] perms){
-		int call=Math.abs(sr.nextInt())&0xf;
-		while(permRequire.containsKey(call)){
-			call=Math.abs(sr.nextInt())&0xf;
-		}
-		ArrayList<String> notAllowed=new ArrayList<>();
-		ArrayList<String> unconfirmable=new ArrayList<>();
-		for(String perm:perms)
-			if(PermissionChecker.checkSelfPermission(this,perm)!=PermissionChecker.PERMISSION_GRANTED)
-				notAllowed.add(perm);
-		for(String s:notAllowed)Log.d("ServerListActivity","notAllowed:"+s);
-		for(String s:unconfirmable)Log.d("ServerListActivity","unconfirmable:"+s);
-		if(perms.length==unconfirmable.size()){
-			Log.d("ServerListActivity","denied");
-			r.onFailed(perms,Factories.strArray(unconfirmable));
-			return;
-		}
-		if(notAllowed.isEmpty()&unconfirmable.isEmpty()){
-			Log.d("ServerListActivity","nothing to ask");
-			r.onSuccess();
-			return;
-		}
-		Metadata md=new Metadata();
-		md.rpr=r;
-		md.currentlyDenied=Factories.strArray(unconfirmable);
-		permRequire.put(call,md);
-		ActivityCompat.requestPermissions(this,Factories.strArray(notAllowed),call);
+		}.start();
 	}
 	
-	protected boolean dispatchActivityResult(int request,int result,Intent data){
-		super.onActivityResult(request,result,data);
-		return permReqResults.get(request);
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO: Implement this method
-		dispatchActivityResult(requestCode, resultCode, data);
-	}
-
-	@Override
-	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-		// TODO: Implement this method
-		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-		if(!permRequire.containsKey(requestCode)){
-			return;
-		}
-		Metadata md=permRequire.get(requestCode);
-		
-		ArrayList lst=new ArrayList();
-		for (int i=0;i < grantResults.length;i++)
-			if (grantResults[i]!=PackageManager.PERMISSION_GRANTED)
-				lst.add(permissions[i]);
-		lst.addAll(Arrays.asList(md.currentlyDenied));
-		
-		if(lst.isEmpty()){
-			md.rpr.onSuccess();
-			permReqResults.put(requestCode,true);
-		}else{
-			md.rpr.onFailed(Factories.strArray(lst),md.currentlyDenied);
-			permReqResults.put(requestCode,false);
-		}
-		permRequire.remove(requestCode);
-	}
-	
-	public static interface RequirePermissionResult{
-		public void onSuccess();
-		public void onFailed(String[] corruptPerms,String[] unconfirmable);
-	}
-	
-	class Metadata{
-		RequirePermissionResult rpr;
-		String[] currentlyDenied;
+	public static enum SortKind{
+		BRING_ONLINE_SERVERS_TO_TOP{
+			public List<Server> doSort(List<Server> list){
+				List<Server> backup,online,offline;
+				backup=new ArrayList<>(list);
+				online=new ArrayList<>();
+				offline=new ArrayList<>(backup);
+				for(Server s:list)if(s instanceof ServerStatus)online.add(s);
+				offline.removeAll(online);
+				backup.clear();
+				backup.addAll(online);
+				backup.addAll(offline);
+				return backup;
+			}
+		},
+		IP_AND_PORT{
+			public List<Server> doSort(List<Server> list){
+				List<Server> l=new ArrayList<>(list);
+				Collections.sort(l,ServerSorter.INSTANCE);
+				return l;
+			}
+		},
+		ONLINE_AND_OFFLINE{
+			public List<Server> doSort(List<Server> list){
+				List<Server> backup,online,offline;
+				backup=new ArrayList<>(list);
+				online=new ArrayList<>();
+				offline=new ArrayList<>(backup);
+				for(Server s:list)if(s instanceof ServerStatus)online.add(s);
+				offline.removeAll(online);
+				online=IP_AND_PORT.doSort(online);
+				offline=IP_AND_PORT.doSort(offline);
+				backup.clear();
+				backup.addAll(online);
+				backup.addAll(offline);
+				return backup;
+			}
+		};
+		public abstract List<Server> doSort(List<Server> list);
 	}
 }

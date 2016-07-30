@@ -1,83 +1,80 @@
 package com.nao20010128nao.Wisecraft.misc;
-import android.content.*;
-import android.os.*;
-import android.preference.*;
-import com.google.gson.*;
-import com.nao20010128nao.Wisecraft.*;
-import com.nao20010128nao.Wisecraft.misc.compat.*;
-import java.util.*;
 import android.support.v7.app.AppCompatActivity;
+import java.util.Map;
+import java.io.File;
+import java.util.HashMap;
+import android.content.Intent;
+import com.ipaulpro.afilechooser.FileOpenChooserActivity;
+import java.security.SecureRandom;
+import com.ipaulpro.afilechooser.FileChooserActivity;
+import com.ipaulpro.afilechooser.DirectoryChooserActivity;
 
-//Server Sort Part
-public abstract class ServerListActivityBase3 extends ServerListActivityBase4
+
+//Wrapper for aFileChooser
+public abstract class ServerListActivityBase3 extends AppCompatActivity
 {
-	SharedPreferences pref;
+	SecureRandom sr=new SecureRandom();
+	Map<Integer,FileChooserResult> results=new HashMap<>();
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO: Implement this method
-		super.onCreate(savedInstanceState);
-		pref=PreferenceManager.getDefaultSharedPreferences(this);
+		super.onActivityResult(requestCode, resultCode, data);
+		if(results.containsKey(requestCode)){
+			switch(resultCode){
+				case RESULT_OK:
+					results.get(requestCode).onSelected(new File(data.getStringExtra("path")));
+					break;
+				case RESULT_CANCELED:
+					results.get(requestCode).onSelectCancelled();
+					break;
+			}
+			results.remove(requestCode);
+		}
 	}
 	
-	public void doSort(final List<Server> sl,final SortKind sk){
-		new Thread(){
-			public void run(){
-				final List<Server> sortingServer=sk.doSort(sl);
-				runOnUiThread(new Runnable(){
-						public void run() {
-							finish();
-							ServerListActivity.Content.deleteRef();
-							new Handler().postDelayed(new Runnable(){
-									public void run() {
-										pref.edit().putString("servers", new Gson().toJson(sortingServer.toArray(new Server[sortingServer.size()]), Server[].class)).commit();
-										startActivity(new Intent(ServerListActivityBase3.this, ServerListActivity.class));
-									}
-								}, 10);
-						}
-					});
-			}
-		}.start();
+	public void startChooseFileForOpen(File startDir,FileChooserResult result){
+		int call=Math.abs(sr.nextInt())&0xf;
+		while(results.containsKey(call)){
+			call=Math.abs(sr.nextInt())&0xf;
+		}
+		Intent intent=new Intent(this,FileOpenChooserActivity.class);
+		if(startDir!=null){
+			intent.putExtra("path",startDir.toString());
+		}
+		results.put(call,Utils.requireNonNull(result));
+		startActivityForResult(intent,call);
 	}
 	
-	public static enum SortKind{
-		BRING_ONLINE_SERVERS_TO_TOP{
-			public List<Server> doSort(List<Server> list){
-				List<Server> backup,online,offline;
-				backup=new ArrayList<>(list);
-				online=new ArrayList<>();
-				offline=new ArrayList<>(backup);
-				for(Server s:list)if(s instanceof ServerStatus)online.add(s);
-				offline.removeAll(online);
-				backup.clear();
-				backup.addAll(online);
-				backup.addAll(offline);
-				return backup;
-			}
-		},
-		IP_AND_PORT{
-			public List<Server> doSort(List<Server> list){
-				List<Server> l=new ArrayList<>(list);
-				Collections.sort(l,ServerSorter.INSTANCE);
-				return l;
-			}
-		},
-		ONLINE_AND_OFFLINE{
-			public List<Server> doSort(List<Server> list){
-				List<Server> backup,online,offline;
-				backup=new ArrayList<>(list);
-				online=new ArrayList<>();
-				offline=new ArrayList<>(backup);
-				for(Server s:list)if(s instanceof ServerStatus)online.add(s);
-				offline.removeAll(online);
-				online=IP_AND_PORT.doSort(online);
-				offline=IP_AND_PORT.doSort(offline);
-				backup.clear();
-				backup.addAll(online);
-				backup.addAll(offline);
-				return backup;
-			}
-		};
-		public abstract List<Server> doSort(List<Server> list);
+	public void startChooseFileForSelect(File startDir,FileChooserResult result){
+		int call=Math.abs(sr.nextInt())&0xf;
+		while(results.containsKey(call)){
+			call=Math.abs(sr.nextInt())&0xf;
+		}
+		Intent intent=new Intent(this,FileChooserActivity.class);
+		if(startDir!=null){
+			intent.putExtra("path",startDir.toString());
+		}
+		results.put(call,Utils.requireNonNull(result));
+		startActivityForResult(intent,call);
+	}
+	
+	public void startChooseDirectory(File startDir,FileChooserResult result){
+		int call=Math.abs(sr.nextInt())&0xf;
+		while(results.containsKey(call)){
+			call=Math.abs(sr.nextInt())&0xf;
+		}
+		Intent intent=new Intent(this,DirectoryChooserActivity.class);
+		if(startDir!=null){
+			intent.putExtra("path",startDir.toString());
+		}
+		results.put(call,Utils.requireNonNull(result));
+		startActivityForResult(intent,call);
+	}
+	
+	
+	public static interface FileChooserResult{
+		public void onSelected(File f);
+		public void onSelectCancelled();
 	}
 }
