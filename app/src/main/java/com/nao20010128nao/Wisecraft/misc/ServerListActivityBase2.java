@@ -11,15 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 //Server Sort Part
 public abstract class ServerListActivityBase2 extends ServerListActivityBase3
 {
-	SharedPreferences pref;
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
-		super.onCreate(savedInstanceState);
-		pref=PreferenceManager.getDefaultSharedPreferences(this);
-	}
-	
 	public void doSort(final List<Server> sl,final SortKind sk){
 		new Thread(){
 			public void run(){
