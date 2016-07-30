@@ -52,7 +52,7 @@ import com.nao20010128nao.Wisecraft.misc.Factories;
 import com.nao20010128nao.Wisecraft.misc.NonNullableMap;
 import com.nao20010128nao.Wisecraft.misc.OldServer19;
 import com.nao20010128nao.Wisecraft.misc.Server;
-import com.nao20010128nao.Wisecraft.misc.ServerListActivityBase2.SortKind;
+import com.nao20010128nao.Wisecraft.misc.ServerListActivityBase3.SortKind;
 import com.nao20010128nao.Wisecraft.misc.ServerListActivityInterface;
 import com.nao20010128nao.Wisecraft.misc.ServerListArrayList;
 import com.nao20010128nao.Wisecraft.misc.ServerStatus;
@@ -1387,7 +1387,7 @@ class ServerListActivityBase2 extends AppCompatListActivity
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
 	}
 
-	public void doSort(final List<Server> sl,final com.nao20010128nao.Wisecraft.misc.ServerListActivityBase2.SortKind sk){
+	public void doSort(final List<Server> sl,final com.nao20010128nao.Wisecraft.misc.ServerListActivityBase3.SortKind sk){
 		new Thread(){
 			public void run(){
 				final List<Server> sortingServer=sk.doSort(sl);
