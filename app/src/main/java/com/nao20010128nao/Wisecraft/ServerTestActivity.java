@@ -225,8 +225,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 				viewHolder.setDarkness(false);
 			}
             if (sta.pinging.get(offset)) {
-				viewHolder
-					.pending(s,sta);
+				viewHolder.pending(s,sta);
 			} else {
 				if (s instanceof ServerStatus) {
 					ServerStatus sv=(ServerStatus)s;
@@ -300,11 +299,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 					viewHolder
 						.setPingMillis(sv.ping);
 				} else {
-					viewHolder
-						.setStatColor(ContextCompat.getColor(sta, R.color.stat_error))
-						.setServerName(s)
-						.setPingMillis(sta.getResources().getString(R.string.notResponding))
-						.setServerPlayers();
+					viewHolder.offline(s,sta);
 				}
 			}
 			applyHandlersForViewTree(viewHolder.itemView, new View.OnClickListener(){
