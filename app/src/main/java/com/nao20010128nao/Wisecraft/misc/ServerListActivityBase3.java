@@ -1,13 +1,9 @@
 package com.nao20010128nao.Wisecraft.misc;
-import android.support.v7.app.AppCompatActivity;
-import java.util.Map;
-import java.io.File;
-import java.util.HashMap;
-import android.content.Intent;
-import com.ipaulpro.afilechooser.FileOpenChooserActivity;
-import java.security.SecureRandom;
-import com.ipaulpro.afilechooser.FileChooserActivity;
-import com.ipaulpro.afilechooser.DirectoryChooserActivity;
+import android.content.*;
+import com.ipaulpro.afilechooser.*;
+import java.io.*;
+import java.security.*;
+import java.util.*;
 
 
 //Wrapper for aFileChooser

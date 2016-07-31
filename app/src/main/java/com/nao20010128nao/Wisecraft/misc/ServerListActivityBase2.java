@@ -1,12 +1,9 @@
 package com.nao20010128nao.Wisecraft.misc;
 import android.content.*;
 import android.os.*;
-import android.preference.*;
 import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.*;
-import com.nao20010128nao.Wisecraft.misc.compat.*;
 import java.util.*;
-import android.support.v7.app.AppCompatActivity;
 
 //Server Sort Part
 public abstract class ServerListActivityBase2 extends ServerListActivityBase3

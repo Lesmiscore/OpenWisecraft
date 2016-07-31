@@ -4,7 +4,6 @@ import android.content.pm.*;
 import android.support.v4.app.*;
 import android.support.v4.content.*;
 import android.util.*;
-
 import java.security.*;
 import java.util.*;
 
