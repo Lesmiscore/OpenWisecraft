@@ -55,15 +55,9 @@ public abstract class ServerListActivityBase1 extends ServerListActivityBase2
 		ActivityCompat.requestPermissions(this,Factories.strArray(notAllowed),call);
 	}
 	
-	protected boolean dispatchActivityResult(int request,int result,Intent data){
-		super.onActivityResult(request,result,data);
+	public boolean dispatchActivityResult(int request,int result,Intent data){
+		if(super.dispatchActivityResult(request,result,data))return true;
 		return permReqResults.get(request);
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO: Implement this method
-		dispatchActivityResult(requestCode, resultCode, data);
 	}
 
 	@Override

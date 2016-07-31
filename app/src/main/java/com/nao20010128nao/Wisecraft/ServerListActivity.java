@@ -209,9 +209,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	}
 	
 	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+	public boolean dispatchActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO: Implement this method
-		if (dispatchActivityResult(requestCode, resultCode, data))return;
+		if (super.dispatchActivityResult(requestCode, resultCode, data))return true;
 		switch (requestCode) {
 			case 0:
 				switch (resultCode) {
@@ -224,8 +224,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 						wd.showWorkingDialog();
 						break;
 				}
-				break;
+				return true;
 		}
+		return false;
 	}
 
 	public boolean execOption(int item) {

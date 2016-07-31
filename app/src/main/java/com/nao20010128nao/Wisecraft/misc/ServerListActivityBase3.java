@@ -17,9 +17,8 @@ public abstract class ServerListActivityBase3 extends ServerListActivityBase4
 	Map<Integer,FileChooserResult> results=new HashMap<>();
 
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	public boolean dispatchActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO: Implement this method
-		super.onActivityResult(requestCode, resultCode, data);
 		if(results.containsKey(requestCode)){
 			switch(resultCode){
 				case RESULT_OK:
@@ -30,7 +29,9 @@ public abstract class ServerListActivityBase3 extends ServerListActivityBase4
 					break;
 			}
 			results.remove(requestCode);
+			return true;
 		}
+		return false;
 	}
 	
 	public void startChooseFileForOpen(File startDir,FileChooserResult result){

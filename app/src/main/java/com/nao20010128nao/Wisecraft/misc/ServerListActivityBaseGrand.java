@@ -15,4 +15,17 @@ public abstract class ServerListActivityBaseGrand extends AppCompatActivity
 		super.attachBaseContext(newBase);
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
 	}
+
+	@Override
+	protected final void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO: Implement this method
+		super.onActivityResult(requestCode, resultCode, data);
+		dispatchActivityResult(requestCode, resultCode, data);
+	}
+	
+	protected final void callSuperOnActivityResult(int requestCode, int resultCode, Intent data){
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+	
+	public abstract boolean dispatchActivityResult(int requestCode, int resultCode, Intent data);
 }

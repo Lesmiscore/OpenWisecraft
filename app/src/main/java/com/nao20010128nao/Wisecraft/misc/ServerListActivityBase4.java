@@ -265,5 +265,4 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBaseGran
 			new NetworkStatusCheckWorker().execute();
 		}
 	}
-	
 }
