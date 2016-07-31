@@ -1,10 +1,11 @@
 package com.nao20010128nao.Wisecraft.collector;
-import android.annotation.TargetApi;
+import android.annotation.*;
 import android.content.*;
 import android.content.pm.*;
 import android.os.*;
 import android.preference.*;
 import android.util.*;
+import com.google.firebase.remoteconfig.*;
 import com.google.gson.*;
 import com.google.gson.reflect.*;
 import com.nao20010128nao.OTC.*;
@@ -20,7 +21,6 @@ import org.apache.http.util.*;
 import org.eclipse.egit.github.core.*;
 import org.eclipse.egit.github.core.client.*;
 import org.eclipse.egit.github.core.service.*;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 
 public class CollectorMain extends ContextWrapper implements Runnable {
 	static boolean running=false;

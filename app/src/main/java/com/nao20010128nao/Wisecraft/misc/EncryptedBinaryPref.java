@@ -1,7 +1,6 @@
 package com.nao20010128nao.Wisecraft.misc;
-import android.annotation.TargetApi;
-import android.os.Build;
-
+import android.annotation.*;
+import android.os.*;
 import java.io.*;
 import java.security.*;
 import java.util.*;

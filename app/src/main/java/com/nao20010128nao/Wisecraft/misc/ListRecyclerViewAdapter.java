@@ -1,8 +1,7 @@
 package com.nao20010128nao.Wisecraft.misc;
-import android.support.v7.widget.RecyclerView;
-import java.util.List;
-import java.util.Collection;
-import android.view.ViewGroup;
+import android.support.v7.widget.*;
+import android.view.*;
+import java.util.*;
 public abstract class ListRecyclerViewAdapter<VH extends RecyclerView.ViewHolder,LType> extends RecyclerView.Adapter<VH>
 {
 	List<LType> list;

@@ -1,6 +1,6 @@
 package com.nao20010128nao.Wisecraft.misc;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
+import android.support.v7.widget.*;
+import android.view.*;
 
 public class FindableViewHolder extends RecyclerView.ViewHolder
 {

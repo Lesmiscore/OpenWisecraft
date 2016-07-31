@@ -1,11 +1,6 @@
 package com.nao20010128nao.Wisecraft.misc;
-import android.support.v4.app.FragmentPagerAdapter;
-import java.util.List;
-import android.support.v4.app.Fragment;
-import java.util.Map;
-import java.util.ArrayList;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.*;
+import java.util.*;
 
 public class UsefulPagerAdapter extends FragmentPagerAdapter{
 	List<Map.Entry<Class,String>> pages=new ArrayList<>();

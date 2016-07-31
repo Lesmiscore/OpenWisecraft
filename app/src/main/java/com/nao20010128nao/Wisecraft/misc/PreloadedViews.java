@@ -1,13 +1,7 @@
 package com.nao20010128nao.Wisecraft.misc;
-import java.util.HashMap;
-import java.lang.ref.WeakReference;
-import android.view.View;
-import android.view.ViewGroup;
-import java.util.Map;
-import java.util.Collections;
-import java.util.Set;
-import java.util.Map.Entry;
-import java.util.Collection;
+import android.view.*;
+import java.lang.ref.*;
+import java.util.*;
 
 public class PreloadedViews extends HashMap<Integer,WeakReference<View>>
 {

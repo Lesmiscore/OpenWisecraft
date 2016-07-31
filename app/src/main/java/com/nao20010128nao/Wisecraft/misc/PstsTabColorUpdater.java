@@ -1,9 +1,9 @@
 package com.nao20010128nao.Wisecraft.misc;
-import android.support.v4.view.ViewPager;
-import com.astuetz.PagerSlidingTabStrip;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import java.util.Arrays;
+import android.support.v4.view.*;
+import android.view.*;
+import android.widget.*;
+import com.astuetz.*;
+import java.util.*;
 
 public class PstsTabColorUpdater implements ViewPager.OnPageChangeListener{
 	int selected,unselected;
