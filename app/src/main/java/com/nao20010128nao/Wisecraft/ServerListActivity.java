@@ -487,7 +487,13 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 						public void onClick(DialogInterface di, int w) {
 							SortKind sk=new SortKind[]{SortKind.BRING_ONLINE_SERVERS_TO_TOP,SortKind.IP_AND_PORT,SortKind.ONLINE_AND_OFFLINE}[w];
 							skipSave = true;
-							doSort(list, sk);
+							doSort(list, sk,new SortFinishedCallback(){
+									public void onSortFinished(List<Server> data){
+										list.clear();
+										list.addAll(data);
+										sl.notifyItemRangeChanged(0,list.size()-1);
+									}
+								});
 						}
 					})
 					.show();

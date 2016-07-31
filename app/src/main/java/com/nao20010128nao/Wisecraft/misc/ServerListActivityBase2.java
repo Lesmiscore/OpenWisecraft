@@ -8,18 +8,16 @@ import java.util.*;
 //Server Sort Part
 public abstract class ServerListActivityBase2 extends ServerListActivityBase3
 {
-	public void doSort(final List<Server> sl,final SortKind sk){
+	public void doSort(final List<Server> sl,final SortKind sk,final SortFinishedCallback sfc){
 		new Thread(){
 			public void run(){
 				final List<Server> sortingServer=sk.doSort(sl);
 				runOnUiThread(new Runnable(){
 						public void run() {
 							finish();
-							ServerListActivity.Content.deleteRef();
 							new Handler().postDelayed(new Runnable(){
 									public void run() {
-										pref.edit().putString("servers", new Gson().toJson(sortingServer.toArray(new Server[sortingServer.size()]), Server[].class)).commit();
-										startActivity(new Intent(ServerListActivityBase2.this, ServerListActivity.class));
+										sfc.onSortFinished(sortingServer);
 									}
 								}, 10);
 						}
@@ -67,5 +65,9 @@ public abstract class ServerListActivityBase2 extends ServerListActivityBase3
 			}
 		};
 		public abstract List<Server> doSort(List<Server> list);
+	}
+	
+	public static interface SortFinishedCallback{
+		public void onSortFinished(List<Server> result);
 	}
 }
