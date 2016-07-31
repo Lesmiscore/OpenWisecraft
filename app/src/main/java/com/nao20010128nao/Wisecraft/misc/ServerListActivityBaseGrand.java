@@ -5,7 +5,7 @@ import android.preference.*;
 import android.support.v7.app.*;
 
 //Only most common things
-public class ServerListActivityBaseGrand extends AppCompatActivity
+public abstract class ServerListActivityBaseGrand extends AppCompatActivity
 {
 	protected SharedPreferences pref;
 
