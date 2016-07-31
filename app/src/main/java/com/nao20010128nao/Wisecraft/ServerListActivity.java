@@ -14,7 +14,6 @@ import android.util.*;
 import android.view.*;
 import android.widget.*;
 import com.google.gson.*;
-import com.mikepenz.crossfader.*;
 import com.mikepenz.materialdrawer.*;
 import com.mikepenz.materialdrawer.model.*;
 import com.mikepenz.materialdrawer.model.interfaces.*;
@@ -56,10 +55,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	boolean skipSave=false;
 	StatusesLayout statLayout;
 	Map<Server,Boolean> pinging=new NonNullableMap<Server>();
-	RecyclerView rv;
-	Drawer drawer;
-	Crossfader crossFader;
-	MiniDrawer sideMenu;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
@@ -77,14 +73,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		appMenu.add(new KVP<Integer,Integer>(R.string.exit,R.drawable.ic_close_black_48dp));//9
 
 		{
-			setContentView(R.layout.server_list_content_toolbar);
-			
-			setSupportActionBar(Utils.getToolbar(this));
-			DrawerBuilder bld=new DrawerBuilder()
-				.withActivity(this)
-				.withToolbar(Utils.getToolbar(this))
-				.withDrawerWidthRes(R.dimen.drawer_width)
-				.withDrawerLayout(R.layout.drawer_single_for_builder);
 			for (Map.Entry<Integer,Integer> s:appMenu) {
 				if (appMenu.indexOf(s) == 5 & !pref.getBoolean("feature_bott", true)) {
 					continue;
@@ -99,9 +87,10 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				pdi.withName(s.getKey()).withIcon(s.getValue());
 				pdi.withSetSelected(false).withIdentifier(appMenu.indexOf(s));
 				pdi.withIconColorRes(R.color.upd_2).withIconTinted(true);
-				bld.addDrawerItems(pdi.withIconTintingEnabled(true));
+				drawer.addItem(pdi.withIconTintingEnabled(true));
 			}
-			bld.withSelectedItem(-1).withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener(){
+			drawer.deselect();
+			drawer.setOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener(){
 					@Override
 					public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
 						execOption((int)((PrimaryDrawerItem)drawerItem).getIdentifier());
@@ -110,48 +99,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					}
 				});
 
-			switch(getResources().getInteger(R.integer.server_list_layout_mode)*0){
-				case 0:
-					drawer=bld.build();
-					break;
-				case 1:
-					drawer=bld.buildView();
-					sideMenu=drawer.getMiniDrawer();
-					sideMenu.withOnMiniDrawerItemClickListener(new MiniDrawer.OnMiniDrawerItemClickListener(){
-							public boolean onItemClick(View p1, int p2, IDrawerItem p3, int p4){
-								sideMenu.getAdapter().deselect();//cf. MiniDrawer#updateItem(long)
-								return false;
-							}
-						});
-					View minidrawer=sideMenu.build(this);
-					crossFader=new Crossfader()
-						.withContent(findViewById(android.R.id.content))
-						.withFirst(drawer.getSlider(),getResources().getDimensionPixelSize(R.dimen.drawer_width))
-						.withSecond(minidrawer,getResources().getDimensionPixelSize(R.dimen.minidrawer_width))
-						.withSavedInstance(savedInstanceState)
-						.build();
-					break;
-				case 2:
-					drawer=bld.buildView();
-					((FrameLayout)findViewById(R.id.drawer)).addView(drawer.getSlider());
-					break;
-			}
-			
 			setupDrawer();
-		}
-		rv = (RecyclerView)findViewById(android.R.id.list);
-		switch(pref.getInt("serverListStyle2",0)){
-			case 0:default:
-				rv.setLayoutManager(new LinearLayoutManager(this));
-				break;
-			case 1:
-				GridLayoutManager glm=new GridLayoutManager(this,calculateRows(this));
-				rv.setLayoutManager(glm);
-				break;
-			case 2:
-				StaggeredGridLayoutManager sglm=new StaggeredGridLayoutManager(calculateRows(this),StaggeredGridLayoutManager.VERTICAL);
-				rv.setLayoutManager(sglm);
-				break;
 		}
 
 		srl = (SwipeRefreshLayout)findViewById(R.id.swipelayout);
