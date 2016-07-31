@@ -2,12 +2,9 @@ package com.nao20010128nao.Wisecraft;
 import android.content.*;
 import android.graphics.*;
 import android.graphics.drawable.*;
-import android.net.*;
 import android.os.*;
 import android.preference.*;
-import android.support.design.widget.*;
 import android.support.v4.content.*;
-import android.support.v4.view.*;
 import android.support.v4.widget.*;
 import android.support.v7.widget.*;
 import android.util.*;
@@ -22,7 +19,6 @@ import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
-import com.nao20010128nao.Wisecraft.misc.view.*;
 import com.nao20010128nao.Wisecraft.pingEngine.*;
 import com.nao20010128nao.Wisecraft.provider.*;
 import com.nao20010128nao.Wisecraft.proxy.*;
@@ -50,10 +46,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	List<MenuItem> items=new ArrayList<>();
 	DrawerLayout dl;
 	boolean drawerOpened;
-	Snackbar networkState;
-	NetworkStateBroadcastReceiver nsbr;
 	boolean skipSave=false;
-	StatusesLayout statLayout;
 	Map<Server,Boolean> pinging=new NonNullableMap<Server>();
 	
 	@Override
@@ -109,8 +102,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					execOption(2);
 				}
 			});
-		statLayout = (StatusesLayout)findViewById(R.id.serverStatuses);
-		statLayout.setColorRes(R.color.stat_error, R.color.stat_pending, R.color.stat_ok);
 		if (pref.getBoolean("statusBarTouchScroll", false))
 			statLayout.setOnTouchListener(new View.OnTouchListener(){
 					@Override
@@ -124,7 +115,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 						return true;
 					}
 				});
-		if (!pref.getBoolean("showStatusesBar", false))statLayout.setVisibility(View.GONE);
 		boolean usesOldInstance=false;
 		if (instance.get() != null) {
 			list = instance.get().list;
@@ -186,26 +176,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			dl.addView(decorChild, 0);
 		}
 	}
-
-	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
-		super.onPostCreate(savedInstanceState);
-
-		networkState = Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "", Snackbar.LENGTH_INDEFINITE);
-		ViewCompat.setAlpha(networkState.getView(), 0.7f);
-		networkState.getView().setClickable(false);
-		new NetworkStatusCheckWorker().execute();
-		IntentFilter inFil=new IntentFilter();
-		inFil.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-		registerReceiver(nsbr = new NetworkStateBroadcastReceiver(), inFil);
-	}
 	
-	@Override
-	protected void attachBaseContext(Context newBase) {
-		TheApplication.instance.initForActivities();
-		super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
-	}
 	@Override
 	protected void onDestroy() {
 		// TODO: Implement this method
@@ -257,20 +228,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		}
 	}
 
-	@Override
-	public void onWindowFocusChanged(boolean hasFocus) {
-		// TODO: Implement this method
-		super.onWindowFocusChanged(hasFocus);
-		/*
-		if(rv.getLayoutManager() instanceof StaggeredGridLayoutManager){
-			((StaggeredGridLayoutManager)rv.getLayoutManager()).setSpanCount(calculateRows(this,rv));
-		}
-		if(rv.getLayoutManager() instanceof GridLayoutManager){
-			((GridLayoutManager)rv.getLayoutManager()).setSpanCount(calculateRows(this,rv));
-		}
-		*/
-	}
-	
 	public boolean execOption(int item) {
 		// TODO: Implement this method
 		if (dl != null)dl.closeDrawers();
@@ -1132,59 +1089,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			return ServerListActivityImpl.instance.get();
 		}
 	}
-	class NetworkStatusCheckWorker extends AsyncTask<Void,String,String> {
-		@Override
-		protected String doInBackground(Void[] p1) {
-			// TODO: Implement this method
-			return fetchNetworkState();
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			// TODO: Implement this method
-			if (result != null) {
-				networkState.setText(result);
-				networkState.show();
-			} else {
-				networkState.dismiss();
-			}
-		}
-	}
-	class NetworkStateBroadcastReceiver extends BroadcastReceiver {
-		@Override
-		public void onReceive(Context p1, Intent p2) {
-			// TODO: Implement this method
-			Log.d("ServerListActivity - NSBB", "received");
-			new NetworkStatusCheckWorker().execute();
-		}
-	}
-
-	private String fetchNetworkState() {
-		ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-		String conName;
-		if (cm.getActiveNetworkInfo() == null) {
-			conName = "offline";
-		} else {
-			conName = cm.getActiveNetworkInfo().getTypeName();
-		}
-		if (conName == null) {
-			conName = "offline";
-		}
-		conName = conName.toLowerCase();
-
-		if (conName.equalsIgnoreCase("offline")) {
-			pref.edit().putInt("offline", pref.getInt("offline", 0) + 1).commit();
-			if (pref.getInt("offline", 0) > 6) {
-				pref.edit().putBoolean("sendInfos_force", true).putInt("offline", 0).commit();
-			}
-			return getResources().getString(R.string.offline);
-		}
-		if ("mobile".equalsIgnoreCase(conName)) {
-			return getResources().getString(R.string.onMobileNetwork);
-		}
-		return null;
-	}
-
+	
 	class OpenCloseListener implements DrawerLayout.DrawerListener {
 		public void onDrawerSlide(View v, float slide) {
 

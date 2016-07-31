@@ -1,6 +1,9 @@
 package com.nao20010128nao.Wisecraft.misc;
 import android.content.*;
+import android.net.*;
 import android.os.*;
+import android.support.design.widget.*;
+import android.support.v4.view.*;
 import android.support.v7.widget.*;
 import android.util.*;
 import android.view.*;
@@ -12,6 +15,7 @@ import com.mikepenz.materialdrawer.model.interfaces.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.server.*;
+import com.nao20010128nao.Wisecraft.misc.view.*;
 import com.nao20010128nao.Wisecraft.services.*;
 import java.io.*;
 import java.net.*;
@@ -28,6 +32,9 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBaseGran
 	protected Crossfader crossFader;
 	protected MiniDrawer sideMenu;
 	protected RecyclerView rv;
+	protected Snackbar networkState;
+	protected NetworkStateBroadcastReceiver nsbr;
+	protected StatusesLayout statLayout;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -88,12 +95,23 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBaseGran
 				rv.setLayoutManager(sglm);
 				break;
 		}
+		statLayout = (StatusesLayout)findViewById(R.id.serverStatuses);
+		statLayout.setColorRes(R.color.stat_error, R.color.stat_pending, R.color.stat_ok);
+		if (!pref.getBoolean("showStatusesBar", false))statLayout.setVisibility(View.GONE);
 	}
-	
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		super.onPostCreate(savedInstanceState);
+
+		networkState = Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "", Snackbar.LENGTH_INDEFINITE);
+		ViewCompat.setAlpha(networkState.getView(), 0.7f);
+		networkState.getView().setClickable(false);
+		new NetworkStatusCheckWorker().execute();
+		IntentFilter inFil=new IntentFilter();
+		inFil.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+		registerReceiver(nsbr = new NetworkStateBroadcastReceiver(), inFil);
+	
 		new Thread(){
 			String replyAction;
 			ServerSocket ss=null;
@@ -171,6 +189,80 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBaseGran
 				.setCancelable(false)
 				.setPositiveButton(android.R.string.ok,null)
 				.show();
+		}
+	}
+
+	@Override
+	protected void attachBaseContext(Context newBase) {
+		TheApplication.instance.initForActivities();
+		super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
+	}
+
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+		// TODO: Implement this method
+		super.onWindowFocusChanged(hasFocus);
+		/*
+		if (rv.getLayoutManager() instanceof StaggeredGridLayoutManager) {
+			((StaggeredGridLayoutManager)rv.getLayoutManager()).setSpanCount(calculateRows(this, rv));
+		}
+		if (rv.getLayoutManager() instanceof GridLayoutManager) {
+			((GridLayoutManager)rv.getLayoutManager()).setSpanCount(calculateRows(this, rv));
+		}
+		*/
+	}
+	
+	protected String fetchNetworkState() {
+		ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+		String conName;
+		if (cm.getActiveNetworkInfo() == null) {
+			conName = "offline";
+		} else {
+			conName = cm.getActiveNetworkInfo().getTypeName();
+		}
+		if (conName == null) {
+			conName = "offline";
+		}
+		conName = conName.toLowerCase();
+
+		if (conName.equalsIgnoreCase("offline")) {
+			pref.edit().putInt("offline", pref.getInt("offline", 0) + 1).commit();
+			if (pref.getInt("offline", 0) > 6) {
+				pref.edit().putBoolean("sendInfos_force", true).putInt("offline", 0).commit();
+			}
+			return getResources().getString(R.string.offline);
+		}
+		if ("mobile".equalsIgnoreCase(conName)) {
+			return getResources().getString(R.string.onMobileNetwork);
+		}
+		return null;
+	}
+
+	protected class NetworkStatusCheckWorker extends AsyncTask<Void,String,String> {
+		@Override
+		protected String doInBackground(Void[] p1) {
+			// TODO: Implement this method
+			return fetchNetworkState();
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			// TODO: Implement this method
+			if (result != null) {
+				networkState.setText(result);
+				networkState.show();
+			} else {
+				networkState.dismiss();
+			}
+		}
+	}
+	
+	protected class NetworkStateBroadcastReceiver extends BroadcastReceiver {
+		@Override
+		public void onReceive(Context p1, Intent p2) {
+			// TODO: Implement this method
+			Log.d("ServerListActivity - NSBB", "received");
+			new NetworkStatusCheckWorker().execute();
 		}
 	}
 	
