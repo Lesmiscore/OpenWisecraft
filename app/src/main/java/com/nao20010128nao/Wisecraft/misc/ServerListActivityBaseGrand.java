@@ -17,7 +17,7 @@ public abstract class ServerListActivityBaseGrand extends AppCompatActivity
 	}
 
 	@Override
-	protected final void onActivityResult(int requestCode, int resultCode, Intent data) {
+	public final void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO: Implement this method
 		super.onActivityResult(requestCode, resultCode, data);
 		dispatchActivityResult(requestCode, resultCode, data);
