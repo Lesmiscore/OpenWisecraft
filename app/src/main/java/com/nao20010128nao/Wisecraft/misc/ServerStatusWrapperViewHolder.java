@@ -4,6 +4,7 @@ import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.view.*;
+import android.support.v4.content.*;
 
 public class ServerStatusWrapperViewHolder extends FindableViewHolder
 {
@@ -94,5 +95,19 @@ public class ServerStatusWrapperViewHolder extends FindableViewHolder
 	
 	public Object getTag(){
 		return itemView.getTag();
+	}
+	
+	public ServerStatusWrapperViewHolder pending(Server sv,Context sla){
+		return setServerName(sla.getResources().getString(R.string.working))
+			.setPingMillis(sla.getResources().getString(R.string.working))
+			.setServer(sv).setServerPlayers()
+			.setStatColor(ContextCompat.getColor(sla, R.color.stat_pending));
+	}
+	
+	public ServerStatusWrapperViewHolder offline(Server sv,Context sla){
+		return setStatColor(ContextCompat.getColor(sla, R.color.stat_error))
+			.setServerName(sv.ip + ":" + sv.port)
+			.setPingMillis(sla.getResources().getString(R.string.notResponding))
+			.setServerPlayers("-/-").setServer(sv);
 	}
 }

@@ -226,9 +226,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 			}
             if (sta.pinging.get(offset)) {
 				viewHolder
-					.setServerName(sta.getResources().getString(R.string.working))
-					.setPingMillis(sta.getResources().getString(R.string.working))
-					.setStatColor(ContextCompat.getColor(sta, R.color.stat_pending));
+					.pending(s,sta);
 			} else {
 				if (s instanceof ServerStatus) {
 					ServerStatus sv=(ServerStatus)s;

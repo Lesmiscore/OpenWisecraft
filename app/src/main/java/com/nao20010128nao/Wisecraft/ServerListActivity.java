@@ -633,11 +633,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					viewHolder.setDarkness(false);
 				}
 				if (sla.pinging.get(sv)) {
-					viewHolder
-						.setServerName(sla.getResources().getString(R.string.working))
-						.setPingMillis(sla.getResources().getString(R.string.working))
-						.setServer(sv).setServerPlayers()
-						.setStatColor(ContextCompat.getColor(sla, R.color.stat_pending));
+					viewHolder.pending(sv,sla);
 				} else {
 					if (sv instanceof ServerStatus) {
 						ServerStatus s=(ServerStatus)sv;
@@ -712,11 +708,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							.setPingMillis(s.ping)
 							.setServer(s);
 					} else {
-						viewHolder
-							.setStatColor(ContextCompat.getColor(sla, R.color.stat_error))
-							.setServerName(sv.ip + ":" + sv.port)
-							.setPingMillis(sla.getResources().getString(R.string.notResponding))
-							.setServerPlayers("-/-").setServer(sv);
+						viewHolder.offline(sv,sla);
 					}
 				}
 			}
