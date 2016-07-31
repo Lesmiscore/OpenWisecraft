@@ -1,34 +1,27 @@
 package com.nao20010128nao.Wisecraft.misc;
+import android.annotation.*;
+import android.app.*;
+import android.content.*;
+import android.content.pm.*;
+import android.content.res.*;
+import android.graphics.*;
+import android.net.*;
+import android.os.*;
+import android.support.v7.widget.*;
+import android.text.*;
+import android.text.style.*;
+import android.view.*;
+import android.widget.*;
+import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.misc.compat.*;
+import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import java.io.*;
+import java.lang.reflect.*;
+import java.security.*;
+import java.util.*;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.support.v7.widget.Toolbar;
-import android.text.SpannableStringBuilder;
-import android.text.style.ForegroundColorSpan;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 import com.nao20010128nao.Wisecraft.R;
-import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
-import com.nao20010128nao.Wisecraft.misc.pinger.PingerUtils;
-import java.lang.reflect.Array;
-import java.lang.reflect.Field;
-import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.List;
-import android.view.Display;
-import android.graphics.Point;
-import android.annotation.SuppressLint;
-import android.os.Build;
-import java.lang.reflect.Method;
-import android.view.WindowManager;
-import android.content.res.Configuration;
-import java.lang.reflect.InvocationTargetException;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 
 public class Utils extends PingerUtils{
 	public static String deleteDecorations(String decorated) {
@@ -360,5 +353,41 @@ public class Utils extends PingerUtils{
 	}
 	public static TextView getActionBarTextView(Activity a) {
 		return getActionBarTextView(getToolbar(a));
+	}
+	public static Server makeServerFromBundle(Bundle bnd){
+		String ip=bnd.getString(Server.class.getName()+".ip");
+		int port=bnd.getInt(Server.class.getName()+".port");
+		int mode=bnd.getInt(Server.class.getName()+".mode");
+		Server s=new Server();
+		s.ip=ip;
+		s.port=port;
+		s.mode=mode;
+		return s;
+	}
+	public static Server[] makeServersFromBundle(Bundle bnd){
+		Parcelable[] data=bnd.getParcelableArray(Server.class.getName()+"#servers");
+		Server[] servers=new Server[data.length];
+		for(int i=0;i<data.length;i++)servers[i]=makeServerFromBundle((Bundle)data[i]);
+		return servers;
+	}
+	public static void putServerIntoBundle(Bundle bnd,Server s){
+		bnd.putString(Server.class.getName()+".ip",s.ip);
+		bnd.putInt(Server.class.getName()+".port",s.port);
+		bnd.putInt(Server.class.getName()+".mode",s.mode);
+	}
+	public static Bundle putServerIntoBundle(Server s){
+		Bundle bnd=new Bundle();
+		putServerIntoBundle(bnd,s);
+		return bnd;
+	}
+	public static void putServersIntoBundle(Bundle bnd,Server[] s){
+		Bundle[] data=new Bundle[s.length];
+		for(int i=0;i<s.length;i++)data[i]=putServerIntoBundle(s[i]);
+		bnd.putParcelableArray(Server.class.getName()+"#servers",data);
+	}
+	public static Bundle putServersIntoBundle(Server[] s){
+		Bundle bnd=new Bundle();
+		putServersIntoBundle(bnd,s);
+		return bnd;
 	}
 }
