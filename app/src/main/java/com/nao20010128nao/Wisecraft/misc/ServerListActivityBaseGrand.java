@@ -10,9 +10,9 @@ public class ServerListActivityBaseGrand extends AppCompatActivity
 	protected SharedPreferences pref;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void attachBaseContext(Context newBase) {
 		// TODO: Implement this method
+		super.attachBaseContext(newBase);
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
-		super.onCreate(savedInstanceState);
 	}
 }
