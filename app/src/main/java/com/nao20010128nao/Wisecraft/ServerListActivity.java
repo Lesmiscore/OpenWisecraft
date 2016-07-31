@@ -483,7 +483,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			case 5:
 				new AppCompatAlertDialog.Builder(this, R.style.AppAlertDialog)
 					.setTitle(R.string.sort)
-					.setSingleChoiceItems(R.array.serverSortMenu, -1, new DialogInterface.OnClickListener(){
+					.setItems(R.array.serverSortMenu, new DialogInterface.OnClickListener(){
 						public void onClick(DialogInterface di, int w) {
 							SortKind sk=new SortKind[]{SortKind.BRING_ONLINE_SERVERS_TO_TOP,SortKind.IP_AND_PORT,SortKind.ONLINE_AND_OFFLINE}[w];
 							skipSave = true;
@@ -494,11 +494,30 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 										sl.notifyItemRangeChanged(0,list.size()-1);
 										new Thread(){
 											public void run(){
-												
+												List<Server> lList=new ArrayList<>(list);
+												final int[] datas=new int[list.size()];
+												for(int i=0;i<datas.length;i++){
+													Server s=lList.get(i);
+													if(pinging.get(s)){
+														datas[i]=1;
+													}else{
+														if(s instanceof ServerStatus){
+															datas[i]=2;
+														}else{
+															datas[i]=0;
+														}
+													}
+												}
+												runOnUiThread(new Runnable(){
+													public void run(){
+														statLayout.setStatuses(datas);
+													}
+												});
 											}
 										}.start();
 									}
 								});
+							di.dismiss();
 						}
 					})
 					.show();
