@@ -14,12 +14,7 @@ public abstract class ServerListActivityBase2 extends ServerListActivityBase3
 				final List<Server> sortingServer=sk.doSort(sl);
 				runOnUiThread(new Runnable(){
 						public void run() {
-							finish();
-							new Handler().postDelayed(new Runnable(){
-									public void run() {
-										sfc.onSortFinished(sortingServer);
-									}
-								}, 10);
+							sfc.onSortFinished(sortingServer);
 						}
 					});
 			}

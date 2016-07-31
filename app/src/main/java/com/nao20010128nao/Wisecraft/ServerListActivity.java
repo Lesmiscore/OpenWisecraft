@@ -492,6 +492,11 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 										list.clear();
 										list.addAll(data);
 										sl.notifyItemRangeChanged(0,list.size()-1);
+										new Thread(){
+											public void run(){
+												
+											}
+										}.start();
 									}
 								});
 						}
