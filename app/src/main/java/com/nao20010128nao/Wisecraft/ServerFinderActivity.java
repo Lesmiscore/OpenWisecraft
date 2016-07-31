@@ -218,21 +218,21 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 			if (s.response instanceof Reply19) {//PC 1.9~
 				Reply19 rep=(Reply19)s.response;
 				if (rep.description == null) {
-					title = s.ip + ":" + s.port;
+					title = s.toString();
 				} else {
 					title = rep.description.text;
 				}
 			} else if (s.response instanceof Reply) {//PC
 				Reply rep=(Reply)s.response;
 				if (rep.description == null) {
-					title = s.ip + ":" + s.port;
+					title = s.toString();
 				} else {
 					title = rep.description;
 				}
 			} else if (s.response instanceof UnconnectedPing.UnconnectedPingResult) {
 				title = ((UnconnectedPing.UnconnectedPingResult)s.response).getServerName();
 			} else {//Unreachable
-				title = s.ip + ":" + s.port;
+				title = s.toString();
 			}
 			if (sta.pref.getBoolean("colorFormattedText", false)) {
 				if (sta.pref.getBoolean("darkBackgroundForServerName", false)) {

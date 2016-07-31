@@ -647,13 +647,13 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							} else if (m.containsKey("motd")) {
 								title = m.get("motd");
 							} else {
-								title = s.ip + ":" + s.port;
+								title = s.toString();
 							}
 							viewHolder.setServerPlayers(fs.getData().get("numplayers"), fs.getData().get("maxplayers"));
 						} else if (s.response instanceof Reply19) {//PC 1.9~
 							Reply19 rep = (Reply19) s.response;
 							if (rep.description == null) {
-								title = s.ip + ":" + s.port;
+								title = s.toString();
 							} else {
 								title = rep.description.text;
 							}
@@ -661,7 +661,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 						} else if (s.response instanceof Reply) {//PC
 							Reply rep = (Reply) s.response;
 							if (rep.description == null) {
-								title = s.ip + ":" + s.port;
+								title = s.toString();
 							} else {
 								title = rep.description;
 							}
@@ -680,11 +680,11 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 								} else if (m.containsKey("motd")) {
 									title = m.get("motd");
 								} else {
-									title = s.ip + ":" + s.port;
+									title = s.toString();
 								}
 								viewHolder.setServerPlayers(fs.getData().get("numplayers"), fs.getData().get("maxplayers"));
 							} else {
-								title = s.ip + ":" + s.port;
+								title = s.toString();
 								viewHolder.setServerPlayers();
 							}
 						} else if (s.response instanceof UnconnectedPing.UnconnectedPingResult) {//PE
@@ -692,7 +692,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							title = res.getServerName();
 							viewHolder.setServerPlayers(res.getPlayersCount(), res.getMaxPlayers());
 						} else {//Unreachable
-							title = s.ip + ":" + s.port;
+							title = s.toString();
 							viewHolder.setServerPlayers();
 						}
 						if (sla.pref.getBoolean("colorFormattedText", false)) {

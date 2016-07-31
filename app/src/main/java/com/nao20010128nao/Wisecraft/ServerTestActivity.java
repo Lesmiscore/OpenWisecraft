@@ -239,13 +239,13 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 						} else if (m.containsKey("motd")) {
 							title = m.get("motd");
 						} else {
-							title = sv.ip + ":" + sv.port;
+							title = sv.toString();
 						}
                         viewHolder.setServerPlayers(fs.getData().get("numplayers"), fs.getData().get("maxplayers"));
                     } else if (sv.response instanceof Reply19) {//PC 1.9~
 						Reply19 rep=(Reply19)sv.response;
 						if (rep.description == null) {
-							title = sv.ip + ":" + sv.port;
+							title = sv.toString();
 						} else {
 							title = rep.description.text;
 						}
@@ -253,7 +253,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
                     } else if (sv.response instanceof Reply) {//PC
 						Reply rep=(Reply)sv.response;
 						if (rep.description == null) {
-							title = sv.ip + ":" + sv.port;
+							title = sv.toString();
 						} else {
 							title = rep.description;
 						}
@@ -272,11 +272,11 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 							} else if (m.containsKey("motd")) {
 								title = m.get("motd");
 							} else {
-								title = sv.ip + ":" + sv.port;
+								title = sv.toString();
 							}
                             viewHolder.setServerPlayers(fs.getData().get("numplayers"), fs.getData().get("maxplayers"));
                         } else {
-							title = sv.ip + ":" + sv.port;
+							title = sv.toString();
                             viewHolder.setServerPlayers();
                         }
 					} else if (sv.response instanceof UnconnectedPing.UnconnectedPingResult) {
@@ -284,7 +284,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
                         title = res.getServerName();
                         viewHolder.setServerPlayers(res.getPlayersCount(), res.getMaxPlayers());
                     } else {//Unreachable
-						title = sv.ip + ":" + sv.port;
+						title = sv.toString();
                         viewHolder.setServerPlayers();
                     }
 					if (sta.pref.getBoolean("colorFormattedText", false)) {
