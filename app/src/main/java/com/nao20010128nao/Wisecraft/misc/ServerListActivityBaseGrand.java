@@ -23,9 +23,5 @@ public abstract class ServerListActivityBaseGrand extends AppCompatActivity
 		dispatchActivityResult(requestCode, resultCode, data);
 	}
 	
-	protected final void callSuperOnActivityResult(int requestCode, int resultCode, Intent data){
-		super.onActivityResult(requestCode, resultCode, data);
-	}
-	
 	public abstract boolean dispatchActivityResult(int requestCode, int resultCode, Intent data);
 }
