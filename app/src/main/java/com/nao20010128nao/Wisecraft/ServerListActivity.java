@@ -256,7 +256,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 								split.setText(R.string.pc);
 								StringBuilder result=new StringBuilder();
 								result.append(pe_ip.getText());
-								int port=new Integer(pe_port.getText().toString()).intValue();
+								int port=Integer.valueOf(pe_port.getText().toString()).intValue();
 								if (!(port == 25565 | port == 19132))
 									result.append(':').append(pe_port.getText());
 								pc_ip.setText(result);
@@ -282,7 +282,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							} else {
 								s = new Server();
 								s.ip = pe_ip.getText().toString();
-								s.port = new Integer(pe_port.getText().toString());
+								s.port = Integer.valueOf(pe_port.getText().toString());
 								s.mode = split.isChecked() ?1: 0;
 							}
 
@@ -323,7 +323,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							try {
 								Server svr=new Server();
 								svr.ip = s[2];
-								svr.port = new Integer(s[3]);
+								svr.port = Integer.valueOf(s[3]);
 								svr.mode = 0;
 								sv.add(svr);
 							} catch (NumberFormatException e) {}
@@ -511,6 +511,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 												runOnUiThread(new Runnable(){
 													public void run(){
 														statLayout.setStatuses(datas);
+														saveServers();
 													}
 												});
 											}
@@ -861,7 +862,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 													split.setText(R.string.pc);
 													StringBuilder result=new StringBuilder();
 													result.append(pe_ip.getText());
-													int port=new Integer(pe_port.getText().toString()).intValue();
+													int port=Integer.valueOf(pe_port.getText().toString()).intValue();
 													if (!(port == 25565 | port == 19132)) {
 														result.append(':').append(pe_port.getText());
 													}
@@ -888,7 +889,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 												} else {
 													s = new Server();
 													s.ip = pe_ip.getText().toString();
-													s.port = new Integer(pe_port.getText().toString());
+													s.port = Integer.valueOf(pe_port.getText().toString());
 													s.mode = split.isChecked() ?1: 0;
 												}
 
