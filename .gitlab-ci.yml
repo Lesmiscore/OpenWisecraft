@@ -3,7 +3,7 @@ image: maven:3-jdk-8
 before_script:
   - apt-get --quiet update --yes
   - apt-get --quiet upgrade --yes
-  - apt-get --quiet install --yes --force-yes wget tar unzip openjdk-7-jdk lib32stdc++6 lib32z1
+  - apt-get --quiet install --yes --force-yes wget tar unzip lib32stdc++6 lib32z1
   - git config --global user.email "nao20010128@gmail.com"
   - git config --global user.name "nao20010128nao"
   - git submodule update --init --recursive
