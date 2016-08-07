@@ -1131,6 +1131,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		}
 	}
 }
+/*
 public class ServerListActivity extends CompatActivityGroup {
 	public static WeakReference<ServerListActivity> instance=new WeakReference(null);
 
@@ -1186,3 +1187,16 @@ public class ServerListActivity extends CompatActivityGroup {
 		super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
 	}
 }
+*/
+
+public class ServerListActivity extends ServerListActivityImpl {
+	public static WeakReference<ServerListActivity> instance=new WeakReference(null);
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO: Implement this method
+		super.onCreate(savedInstanceState);
+		instance = new WeakReference(this);
+	}
+}
+
