@@ -495,6 +495,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 									public void onSortFinished(List<Server> data){
 										list.clear();
 										list.addAll(data);
+										saveServers();
 										sl.notifyItemRangeChanged(0,list.size()-1);
 										rv.smoothScrollToPosition(0);
 										new Thread(){
@@ -516,7 +517,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 												runOnUiThread(new Runnable(){
 													public void run(){
 														statLayout.setStatuses(datas);
-														saveServers();
 													}
 												});
 											}
