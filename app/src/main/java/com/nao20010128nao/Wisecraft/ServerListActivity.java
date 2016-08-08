@@ -53,6 +53,10 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
+		if (pref.getBoolean("useBright", false)) {
+			setTheme(R.style.AppTheme_Bright_NoActionBar);
+			getTheme().applyStyle(R.style.AppTheme_Bright_NoActionBar, true);
+		}
 		super.onCreate(savedInstanceState);
 		getLayoutInflater().inflate(R.layout.hacks, null);//空インフレート
 		appMenu.add(new KVP<Integer,Integer>(R.string.add,R.drawable.ic_add_black_48dp));//0
