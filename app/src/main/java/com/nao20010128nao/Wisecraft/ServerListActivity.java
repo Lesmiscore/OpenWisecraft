@@ -53,10 +53,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
-		if (pref.getBoolean("useBright", false)) {
-			setTheme(R.style.AppTheme_Bright_NoActionBar);
-			getTheme().applyStyle(R.style.AppTheme_Bright_NoActionBar, true);
-		}
 		super.onCreate(savedInstanceState);
 		getLayoutInflater().inflate(R.layout.hacks, null);//空インフレート
 		appMenu.add(new KVP<Integer,Integer>(R.string.add,R.drawable.ic_add_black_48dp));//0
@@ -1135,64 +1131,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		}
 	}
 }
-/*
-public class ServerListActivity extends CompatActivityGroup {
-	public static WeakReference<ServerListActivity> instance=new WeakReference(null);
-
-	boolean nonLoop=false;
-	SharedPreferences pref;
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
-		instance = new WeakReference(this);
-		pref = PreferenceManager.getDefaultSharedPreferences(this);
-		if (pref.getBoolean("useBright", false)) {
-			setTheme(R.style.AppTheme_Bright_NoActionBar);
-			getTheme().applyStyle(R.style.AppTheme_Bright_NoActionBar, true);
-		}
-		super.onCreate(savedInstanceState);
-		Bundle log=new Bundle();
-		log.putString("class", getClass().getName());
-		TheApplication.instance.firebaseAnalytics.logEvent("launch", log);
-		setContentView(getLocalActivityManager().startActivity("main", new Intent(this, Content.class)).getDecorView());
-	}
-	public static class Content extends ServerListActivityImpl {public static void deleteRef() {instance = new WeakReference<>(null);}}
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// TODO: Implement this method
-		if (nonLoop)
-			return true;
-		nonLoop = true;
-		boolean val= getLocalActivityManager().getActivity("main").onCreateOptionsMenu(menu);
-		nonLoop = false;
-		return val;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO: Implement this method
-		if (nonLoop)
-			return true;
-		nonLoop = true;
-		boolean val= getLocalActivityManager().getActivity("main").onOptionsItemSelected(item);
-		nonLoop = false;
-		return val;
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO: Implement this method
-		((ActivityResultInterface)getLocalActivityManager().getActivity("main")).onActivityResult(requestCode, resultCode, data);
-	}
-
-	@Override
-	protected void attachBaseContext(Context newBase) {
-		super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
-	}
-}
-*/
-
 public class ServerListActivity extends ServerListActivityImpl {
 	public static WeakReference<ServerListActivity> instance=new WeakReference(null);
 

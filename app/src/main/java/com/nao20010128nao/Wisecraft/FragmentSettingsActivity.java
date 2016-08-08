@@ -40,10 +40,6 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
-		if(pref.getBoolean("useBright",false)){
-			setTheme(R.style.AppTheme_Bright);
-			getTheme().applyStyle(R.style.AppTheme_Bright,true);
-		}
 		super.onCreate(savedInstanceState);
 		pref.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener(){
 				public void onSharedPreferenceChanged(SharedPreferences pref,String key){
@@ -235,7 +231,6 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 						return Factories.strArray(l);
 					}
 				});
-			findPreference("useBright").setEnabled(getResources().getBoolean(R.bool.useBrightEnabled));
 		}
 
 		@Override

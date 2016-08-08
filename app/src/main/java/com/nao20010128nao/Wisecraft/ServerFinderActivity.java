@@ -35,10 +35,6 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
-		if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("useBright", false)) {
-			setTheme(R.style.AppTheme_Bright);
-			getTheme().applyStyle(R.style.AppTheme_Bright, true);
-		}
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.recycler_view_content);
 		sl = new RecyclerServerList(this);
@@ -303,10 +299,6 @@ public class ServerFinderActivity extends CompatActivityGroup {
 		// TODO: Implement this method
 		instance = new WeakReference(this);
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
-		if (pref.getBoolean("useBright", false)) {
-			setTheme(R.style.AppTheme_Bright);
-			getTheme().applyStyle(R.style.AppTheme_Bright, true);
-		}
 		super.onCreate(savedInstanceState);
 		getSupportActionBar().hide();
 		setContentView(getLocalActivityManager().startActivity("main", new Intent(this, Content.class).putExtras(getIntent())).getDecorView());

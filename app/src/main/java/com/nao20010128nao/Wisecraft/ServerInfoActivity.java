@@ -64,10 +64,6 @@ public class ServerInfoActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
-		if (pref.getBoolean("useBright", false) & !(pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false))) {
-			setTheme(R.style.AppTheme_Bright_NoActionBar);
-			getTheme().applyStyle(R.style.AppTheme_Bright_NoActionBar, true);
-		}
 		super.onCreate(savedInstanceState);
 		getWindow().requestFeature(Window.FEATURE_ACTION_MODE_OVERLAY);
 		instance = new WeakReference(this);

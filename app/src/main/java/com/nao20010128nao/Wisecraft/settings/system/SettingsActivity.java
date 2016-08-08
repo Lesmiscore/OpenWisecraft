@@ -18,10 +18,6 @@ public class SettingsActivity extends SHablePreferenceActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
-		if(pref.getBoolean("useBright",false)){
-			setTheme(R.style.AppThemeN_Bright);
-			getTheme().applyStyle(R.style.AppThemeN_Bright,true);
-		}
 		super.onCreate(savedInstanceState);
 		delegate.onCreate();
 	}
@@ -44,10 +40,6 @@ public class SettingsActivity extends SHablePreferenceActivity {
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
 			// TODO: Implement this method
-			if(pref.getBoolean("useBright",false)){
-				setTheme(R.style.AppThemeN_Bright);
-				getTheme().applyStyle(R.style.AppThemeN_Bright,true);
-			}
 			super.onCreate(savedInstanceState);
 			delegate.onCreate();
 		}

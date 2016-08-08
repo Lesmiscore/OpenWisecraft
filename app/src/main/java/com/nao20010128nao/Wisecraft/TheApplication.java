@@ -51,7 +51,14 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		InformationCommunicatorReceiver.startDisclosureRequestIfNeeded(this,this);
 		genPassword();
 		
-		pref.edit().remove("showDetailsIfNoDetails").remove("useOldActivity").remove("serverListStyle").remove("main_style").remove("specialDrawer1").commit();
+		pref.edit()
+			.remove("showDetailsIfNoDetails")
+			.remove("useOldActivity")
+			.remove("serverListStyle")
+			.remove("main_style")
+			.remove("specialDrawer1")
+			.remove("useBright")
+			.commit();
 	}
 	public Typeface getLocalizedFont() {
 		try {

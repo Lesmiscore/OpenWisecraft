@@ -136,7 +136,6 @@ public class SettingsDelegate extends ContextWrapper
 							return Factories.strArray(l);
 						}
 					});
-				act.findPreference("useBright").setEnabled(getResources().getBoolean(R.bool.useBrightEnabled));
 			}else if(features==actClass){
 				act.addPreferencesFromResource(R.xml.settings_features);
 			}else if(asfsls==actClass){

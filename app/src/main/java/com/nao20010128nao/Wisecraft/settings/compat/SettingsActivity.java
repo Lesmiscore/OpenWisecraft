@@ -18,10 +18,6 @@ public class SettingsActivity extends CompatSHablePreferenceActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
-		if(pref.getBoolean("useBright",false)){
-			setTheme(R.style.AppTheme_Bright);
-			getTheme().applyStyle(R.style.AppTheme_Bright,true);
-		}
 		super.onCreate(savedInstanceState);
 		delegate.onCreate();
 	}
@@ -44,10 +40,6 @@ public class SettingsActivity extends CompatSHablePreferenceActivity {
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
 			// TODO: Implement this method
-			if(pref.getBoolean("useBright",false)){
-				setTheme(R.style.AppTheme_Bright);
-				getTheme().applyStyle(R.style.AppTheme_Bright,true);
-			}
 			super.onCreate(savedInstanceState);
 			delegate.onCreate();
 		}
