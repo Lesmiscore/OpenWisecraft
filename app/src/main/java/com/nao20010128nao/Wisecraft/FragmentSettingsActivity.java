@@ -28,13 +28,13 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 	SharedPreferences pref;
 	boolean requireRestart=false;
 	List<String> nonRestartKeys=Collections.unmodifiableList(Arrays.asList(new String[]{
-		"showPcUserFace",
+		/*"showPcUserFace",
 		"selectFont",
 		"sendInfos",
 		"exitCompletely",
 		"useBright",
 		"allowAutoUpdateSLSCode",
-		"aausc_monnet"
+		"aausc_monnet"*/
 	}));
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
