@@ -116,7 +116,7 @@ public class ServerGetActivity extends CompatWebViewActivity {
 									public void onClick(DialogInterface di, int w) {
 										List<com.nao20010128nao.McServerList.Server> selected=getServers(serv, selections);
 										for (com.nao20010128nao.Wisecraft.misc.Server s:Utils.convertServerObject(selected))
-											((ServerListActivityInterface)ServerListActivity.instance/*.get().getLocalActivityManager().getActivity("main")*/).addIntoList(s);
+											((ServerListActivityInterface)ServerListActivity.instance.get()/*.getLocalActivityManager().getActivity("main")*/).addIntoList(s);
 										di.dismiss();
 									}
 								})
