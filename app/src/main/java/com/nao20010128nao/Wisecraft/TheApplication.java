@@ -42,9 +42,6 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		MultiDex.install(this);
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
 		instance = this;
-		firebaseAnalytics=FirebaseAnalytics.getInstance(this);
-		firebaseRemoteCfg=FirebaseRemoteConfig.getInstance();
-		fbCfgLoader=firebaseRemoteCfg.fetch();
 		
 		///////
 		pcUserUUIDs=new Gson().fromJson(pref.getString("pcuseruuids","{}"),PCUserUUIDMap.class);
@@ -101,6 +98,10 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		return result;
 	}
 	public void initForActivities(){
+		firebaseAnalytics=FirebaseAnalytics.getInstance(this);
+		firebaseRemoteCfg=FirebaseRemoteConfig.getInstance();
+		fbCfgLoader=firebaseRemoteCfg.fetch();
+		
 		droidSans = Typeface.createFromAsset(getAssets(), "DroidSans.ttf");
 		latoLight = Typeface.createFromAsset(getAssets(), "lato-light.ttf");
 		icomoon1 = Typeface.createFromAsset(getAssets(), "icomoon.ttf");
