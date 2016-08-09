@@ -65,4 +65,6 @@ dependencies {
 	compile 'com.google.firebase:firebase-core:9.+'
 	compile 'com.google.firebase:firebase-storage:9.+'
 	compile 'com.google.firebase:firebase-config:9.+'
+	compile 'com.google.firebase:firebase-crash:9.+'
+	
 }

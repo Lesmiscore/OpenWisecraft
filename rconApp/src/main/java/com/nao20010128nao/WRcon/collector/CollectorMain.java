@@ -24,6 +24,7 @@ import com.nao20010128nao.WRcon.misc.Constant;
 import com.nao20010128nao.WRcon.misc.Utils;
 import com.nao20010128nao.WRcon.Server;
 import com.google.firebase.crash.*;
+import com.google.firebase.remoteconfig.*;
 
 
 public class CollectorMain extends ContextWrapper implements Runnable {
