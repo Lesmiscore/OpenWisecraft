@@ -95,7 +95,7 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 		pw.setTouchable(false);
 		pw.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 		pw.setContentView(dialog2 = getLayoutInflater().inflate(R.layout.server_finder_finding, null, false));
-		pw.setWidth(Math.min(dm.widthPixels, dm.heightPixels));
+		pw.setWidth(Utils.getScreenWidth(ServerFinderActivityImpl.this));
 		pw.setHeight(getResources().getDimensionPixelSize(R.dimen.server_finder_finding_height));
 
 		ViewCompat.setAlpha(dialog2, 0.7f);

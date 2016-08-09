@@ -330,6 +330,30 @@ public class Utils extends PingerUtils{
 		}
 		return (int)Math.max(1,((double)width)/((double)base));
 	}
+	public static int getScreenWidth(Context c){
+		int width;Configuration cfg=c.getResources().getConfiguration();
+		Point point=getRealSize(c);
+		switch(cfg.orientation){
+			case Configuration.ORIENTATION_LANDSCAPE :width=Math.max(point.x,point.y);break;
+			case Configuration.ORIENTATION_PORTRAIT  :width=Math.min(point.x,point.y);break;
+			case Configuration.ORIENTATION_SQUARE    :width=point.x;                  break;
+			case Configuration.ORIENTATION_UNDEFINED :width=(point.x+point.y)/2;      break;
+			default                                  :width=(point.x+point.y)/2;      break;
+		}
+		return width;
+	}
+	public static int getScreenHeight(Context c){
+		int width;Configuration cfg=c.getResources().getConfiguration();
+		Point point=getRealSize(c);
+		switch(cfg.orientation){
+			case Configuration.ORIENTATION_LANDSCAPE :width=Math.min(point.x,point.y);break;
+			case Configuration.ORIENTATION_PORTRAIT  :width=Math.max(point.x,point.y);break;
+			case Configuration.ORIENTATION_SQUARE    :width=point.y;                  break;
+			case Configuration.ORIENTATION_UNDEFINED :width=(point.x+point.y)/2;      break;
+			default                                  :width=(point.x+point.y)/2;      break;
+		}
+		return width;
+	}
 	public static Object tryExecuteMethod(Object object,String methodName,Class[] signature,Object[] parameter){
 		Class objClass;
 		if(object instanceof Class){
