@@ -52,16 +52,16 @@ public class ContextWrappingExtender extends ContextWrapper
 		@Override
 		public int getColor(int id, Resources.Theme theme) throws Resources.NotFoundException {
 			// color override
-			if(id==R.color.stat_ok){
-				return pref.getInt("colorStatOk",getBaseContext().getColor(R.color.stat_ok));
+			switch(id){
+				case R.color.stat_ok:
+					return pref.getInt("colorStatOk",getBaseContext().getColor(R.color.stat_ok));
+				case R.color.stat_pending:
+					return pref.getInt("colorStatPending",getBaseContext().getColor(R.color.stat_pending));
+				case R.color.stat_error:
+					return pref.getInt("colorStatError",getBaseContext().getColor(R.color.stat_error));
+				default:
+					return super.getColor(id, theme);
 			}
-			if(id==R.color.stat_pending){
-				return pref.getInt("colorStatPending",getBaseContext().getColor(R.color.stat_pending));
-			}
-			if(id==R.color.stat_error){
-				return pref.getInt("colorStatError",getBaseContext().getColor(R.color.stat_error));
-			}
-			return super.getColor(id, theme);
 		}
 	}
 }
