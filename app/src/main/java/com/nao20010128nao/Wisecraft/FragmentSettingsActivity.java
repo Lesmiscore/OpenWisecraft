@@ -297,6 +297,13 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		}
 
 		@Override
+		public void onResume() {
+			// TODO: Implement this method
+			super.onResume();
+			getActivity().setTitle(R.string.colorChange);
+		}
+
+		@Override
 		public void onCreatePreferences(Bundle p1, String p2) {
 			// TODO: Implement this method
 			addPreferencesFromResource(R.xml.settings_color_changer_compat);
