@@ -22,7 +22,7 @@ public class ColorPickerPreferenceCompat extends Preference
 		init (context,attrs,defStyleAttr,defStyleRes);
 	}
     public ColorPickerPreferenceCompat(android.content.Context context, android.util.AttributeSet attrs, int defStyleAttr) {
-		this(context,attrs,defStyleAttr,0);
+		this(context,attrs,defStyleAttr,R.style.Preference_ColorPickerPreference);
 	}
     public ColorPickerPreferenceCompat(android.content.Context context, android.util.AttributeSet attrs) {
 		this(context,attrs,0);
@@ -44,9 +44,9 @@ public class ColorPickerPreferenceCompat extends Preference
 		super.onBindViewHolder(holder);
 		PreferenceUtils.onBindViewHolder(getContext(),this,holder);
 		LinearLayout widgetFrame=(LinearLayout)holder.findViewById(android.R.id.widget_frame);
-		widgetFrame.removeAllViews();
+		//widgetFrame.removeAllViews();
 		widgetFrame.setVisibility(View.VISIBLE);
-		LayoutInflater.from(getContext()).inflate(R.layout.color_picker_preference,widgetFrame);
+		//LayoutInflater.from(getContext()).inflate(R.layout.color_picker_preference,widgetFrame);
 		CircularImageView civ=(CircularImageView)holder.findViewById(R.id.circle);
 		civ.setImageDrawable(new ColorDrawable(getPersistedInt(defaultColor)));
 	}
