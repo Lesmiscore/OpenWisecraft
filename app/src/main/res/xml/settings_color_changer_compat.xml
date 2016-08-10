@@ -3,7 +3,15 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto">
 	<com.nao20010128nao.Wisecraft.misc.pref.ColorPickerPreferenceCompat
-		android:title="Server Status: Online"
+		android:title="@string/colorChange_statusOk"
 		android:key="colorStatOk"
 		app:color="@color/stat_ok"/>
+	<com.nao20010128nao.Wisecraft.misc.pref.ColorPickerPreferenceCompat
+		android:title="@string/colorChange_statusError"
+		android:key="colorStatError"
+		app:color="@color/stat_error"/>
+	<com.nao20010128nao.Wisecraft.misc.pref.ColorPickerPreferenceCompat
+		android:title="@string/colorChange_statusPending"
+		android:key="colorStatPending"
+		app:color="@color/stat_pending"/>
 </PreferenceScreen>
