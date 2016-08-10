@@ -276,4 +276,19 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			getActivity().setTitle(R.string.addServerFromServerListSite);
 		}
 	}
+	
+	public static class ColorChanger extends BaseFragment {
+
+		@Override
+		public void onCreate(Bundle savedInstanceState) {
+			// TODO: Implement this method
+			super.onCreate(savedInstanceState);
+		}
+
+		@Override
+		public void onCreatePreferences(Bundle p1, String p2) {
+			// TODO: Implement this method
+			addPreferencesFromResource(R.xml.settings_color_changer_compat);
+		}
+	}
 }
