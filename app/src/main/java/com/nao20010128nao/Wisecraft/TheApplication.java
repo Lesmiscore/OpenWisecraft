@@ -19,6 +19,7 @@ import java.lang.reflect.*;
 import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
 import android.support.v7.app.*;
+import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
 
 public class TheApplication extends Application implements com.nao20010128nao.Wisecraft.rcon.Presenter,com.ipaulpro.afilechooser.Presenter,InformationCommunicatorReceiver.DisclosureResult {
 	public static TheApplication instance;
@@ -224,7 +225,8 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 	
 	public static Context injectContextSpecial(final Context base){
 		final Context calligraphy=CalligraphyContextWrapper.wrap(base);
-		return calligraphy;
+		final Context extender=ContextWrappingExtender.wrap(calligraphy);
+		return extender;
 	}
 	
 	static{
