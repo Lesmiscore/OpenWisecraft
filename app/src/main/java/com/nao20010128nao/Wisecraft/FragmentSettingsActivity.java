@@ -125,6 +125,17 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 							.commit();
 					}
 				});
+			sH("changeColor",new HandledPreference.OnClickListener(){
+					public void onClick(String a,String b,String c){
+						getActivity()
+							.getSupportFragmentManager()
+							.beginTransaction()
+							.replace(android.R.id.content,new ColorChanger())
+							.addToBackStack("changeColor")
+							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+							.commit();
+					}
+				});
 			sH("osl",new HandledPreference.OnClickListener(){
 					public void onClick(String a,String b,String c){
 						startActivity(new Intent(getContext(),OpenSourceActivity.class));

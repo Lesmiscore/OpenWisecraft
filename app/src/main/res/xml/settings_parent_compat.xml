@@ -19,6 +19,10 @@
 		android:key="asfsls"
 		/>
 	<com.nao20010128nao.Wisecraft.misc.pref.StartPrefCompat
+		android:title="Change colors"
+		android:key="changeColor"
+	/>
+	<com.nao20010128nao.Wisecraft.misc.pref.StartPrefCompat
 		android:title="@string/osl"
 		android:key="osl"
 	/>
