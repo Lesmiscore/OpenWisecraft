@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<bool name="useBrightEnabled">false</bool>
-	
 	<bool name="useNativePreferenceActivity">false</bool>
 	
 	<bool name="isBeta">false</bool>

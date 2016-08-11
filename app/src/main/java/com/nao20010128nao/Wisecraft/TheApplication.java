@@ -18,6 +18,7 @@ import com.nao20010128nao.Wisecraft.services.*;
 import java.lang.reflect.*;
 import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
+import android.support.v7.app.*;
 
 public class TheApplication extends Application implements com.nao20010128nao.Wisecraft.rcon.Presenter,com.ipaulpro.afilechooser.Presenter,InformationCommunicatorReceiver.DisclosureResult {
 	public static TheApplication instance;
@@ -41,9 +42,6 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		MultiDex.install(this);
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
 		instance = this;
-		firebaseAnalytics=FirebaseAnalytics.getInstance(this);
-		firebaseRemoteCfg=FirebaseRemoteConfig.getInstance();
-		fbCfgLoader=firebaseRemoteCfg.fetch();
 		
 		///////
 		pcUserUUIDs=new Gson().fromJson(pref.getString("pcuseruuids","{}"),PCUserUUIDMap.class);
@@ -51,7 +49,14 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		InformationCommunicatorReceiver.startDisclosureRequestIfNeeded(this,this);
 		genPassword();
 		
-		pref.edit().remove("showDetailsIfNoDetails").remove("useOldActivity").remove("serverListStyle").remove("main_style").remove("specialDrawer1").commit();
+		pref.edit()
+			.remove("showDetailsIfNoDetails")
+			.remove("useOldActivity")
+			.remove("serverListStyle")
+			.remove("main_style")
+			.remove("specialDrawer1")
+			.remove("useBright")
+			.commit();
 	}
 	public Typeface getLocalizedFont() {
 		try {
@@ -93,6 +98,10 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		return result;
 	}
 	public void initForActivities(){
+		firebaseAnalytics=FirebaseAnalytics.getInstance(this);
+		firebaseRemoteCfg=FirebaseRemoteConfig.getInstance();
+		fbCfgLoader=firebaseRemoteCfg.fetch();
+		
 		droidSans = Typeface.createFromAsset(getAssets(), "DroidSans.ttf");
 		latoLight = Typeface.createFromAsset(getAssets(), "lato-light.ttf");
 		icomoon1 = Typeface.createFromAsset(getAssets(), "icomoon.ttf");
@@ -216,5 +225,9 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 	public static Context injectContextSpecial(final Context base){
 		final Context calligraphy=CalligraphyContextWrapper.wrap(base);
 		return calligraphy;
+	}
+	
+	static{
+		AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
 	}
 }

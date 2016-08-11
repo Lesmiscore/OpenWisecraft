@@ -21,6 +21,7 @@ import org.apache.http.util.*;
 import org.eclipse.egit.github.core.*;
 import org.eclipse.egit.github.core.client.*;
 import org.eclipse.egit.github.core.service.*;
+import com.google.firebase.crash.*;
 
 public class CollectorMain extends ContextWrapper implements Runnable {
 	static boolean running=false;
@@ -101,7 +102,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 								continue;
 							}
 							params.put("content", Base64.encodeToString(file, Base64.NO_WRAP));
-							ghc.put("/repos/RevealEverything/Files/contents/" + filename, params, TypeToken.get(ContentUpload.class).getType());
+							ghc.put("/repos/"+frc.getString("information_upload_host_user")+"/"+frc.getString("information_upload_host_name")+"/contents/" + filename, params, TypeToken.get(ContentUpload.class).getType());
 							Log.d("CollectorMain", "uploaded");
 							edt.remove(actual);
 						} catch (Throwable e) {
@@ -161,6 +162,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 	public static void reportError(String tag,Throwable e){
 		if ((TheApplication.instance.pref.getBoolean("sendInfos", false)|TheApplication.instance.pref.getBoolean("sendInfos_force", false)))
 			TheApplication.instance.getSharedPreferences("majeste",MODE_PRIVATE).edit().putString("error-"+System.currentTimeMillis()+".txt",tag+"\n\n"+DebugWriter.getStacktraceAsString(e)).commit();
+		FirebaseCrash.report(e);
 	}
 	
 	public static class ContentUpload {

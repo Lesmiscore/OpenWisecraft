@@ -1,10 +1,13 @@
 package com.nao20010128nao.Wisecraft.misc;
 import android.content.*;
+import android.support.v4.content.*;
+import android.support.v7.view.*;
 import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.view.*;
-import android.support.v4.content.*;
+
+import android.support.v7.view.ContextThemeWrapper;
 
 public class ServerStatusWrapperViewHolder extends FindableViewHolder
 {
@@ -16,6 +19,9 @@ public class ServerStatusWrapperViewHolder extends FindableViewHolder
 	public ServerStatusWrapperViewHolder(Context context,boolean isGrid,ViewGroup parent){
 		super(LayoutInflater.from(context).inflate(isGrid?R.layout.quickstatus_grid:R.layout.quickstatus,parent,false));
 		preload=new PreloadedViews((ViewGroup)itemView,ALL_VIEWS);
+	}
+	public ServerStatusWrapperViewHolder(Context context,int theme,boolean isGrid,ViewGroup parent){
+		this(new ContextThemeWrapper(context,theme),isGrid,parent);
 	}
 	public ServerStatusWrapperViewHolder setStatColor(int color){
 		((ExtendedImageView)preload.getView(R.id.statColor)).setColor(color);

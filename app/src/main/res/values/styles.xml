@@ -19,16 +19,7 @@
 		<item name="preferenceTheme">@style/AppTheme.Preference</item>
 	</style>
 	
-	<style name="AppTheme.Bright" parent="AppTheme">
-		
-	</style>
-	
 	<style name="AppTheme.NoActionBar" parent="AppTheme">
-		<item name="windowActionBar">false</item>
-		<item name="windowNoTitle">true</item>
-		<item name="preferenceTheme">@style/AppTheme.Preference</item>
-	</style>
-	<style name="AppTheme.Bright.NoActionBar" parent="AppTheme.Bright">
 		<item name="windowActionBar">false</item>
 		<item name="windowNoTitle">true</item>
 		<item name="preferenceTheme">@style/AppTheme.Preference</item>
@@ -41,11 +32,6 @@
 		<item name="preferenceTheme">@style/AppTheme.Preference</item>
 		<item name="actionBarStyle">@style/WhiteTextActionBar</item>
 	</style>
-	<style name="AppTheme.Bright.OpenSource" parent="AppTheme.Bright.NoActionBar">
-		<item name="android:windowContentOverlay">@null</item>
-		<item name="preferenceTheme">@style/AppTheme.Preference</item>
-		<item name="actionBarStyle">@style/WhiteTextActionBar</item>
-	</style>
 	
 	<style name="AppTheme.Toolbar" parent="AppTheme">
 		<item name="colorControlNormal">@color/upd_2</item>
@@ -54,9 +40,6 @@
 	
 	<style name="AppThemeN" parent="@android:style/Theme.Light">
 		<item name="preferenceTheme">@style/AppTheme.Preference</item>
-	</style>
-	<style name="AppThemeN.Bright" parent="AppThemeN">
-
 	</style>
 	
 	

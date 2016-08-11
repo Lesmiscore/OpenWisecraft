@@ -3,7 +3,4 @@
 	<style name="AppThemeN" parent="@android:style/Theme.Holo.Light">
 		<item name="preferenceTheme">@style/AppTheme.Preference</item>
 	</style>
-	<style name="AppThemeN.Bright" parent="AppThemeN">
-
-	</style>
 </resources>

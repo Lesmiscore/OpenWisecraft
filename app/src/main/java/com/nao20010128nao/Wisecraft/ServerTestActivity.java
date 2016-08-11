@@ -50,10 +50,6 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
-		if (pref.getBoolean("useBright", false)) {
-			setTheme(R.style.AppTheme_Bright);
-			getTheme().applyStyle(R.style.AppTheme_Bright, true);
-		}
 		super.onCreate(savedInstanceState);
 		boolean usesOldInstance=false;
 		if (instance.get() != null) {
@@ -335,10 +331,6 @@ public class ServerTestActivity extends CompatActivityGroup {
 		// TODO: Implement this method
 		instance = new WeakReference(this);
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
-		if (pref.getBoolean("useBright", false)) {
-			setTheme(R.style.AppTheme_Bright);
-			getTheme().applyStyle(R.style.AppTheme_Bright, true);
-		}
 		super.onCreate(savedInstanceState);
 		getSupportActionBar().hide();
 		setContentView(getLocalActivityManager().startActivity("main", new Intent(this, Content.class).putExtras(getIntent())).getDecorView());

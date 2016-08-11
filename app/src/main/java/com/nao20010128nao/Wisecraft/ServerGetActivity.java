@@ -20,10 +20,6 @@ public class ServerGetActivity extends CompatWebViewActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
-		if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("useBright", false)) {
-			setTheme(R.style.AppTheme_Bright);
-			getTheme().applyStyle(R.style.AppTheme_Bright, true);
-		}
 		super.onCreate(savedInstanceState);
 		if(!Utils.isOnline(this)){
 			new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
@@ -120,7 +116,7 @@ public class ServerGetActivity extends CompatWebViewActivity {
 									public void onClick(DialogInterface di, int w) {
 										List<com.nao20010128nao.McServerList.Server> selected=getServers(serv, selections);
 										for (com.nao20010128nao.Wisecraft.misc.Server s:Utils.convertServerObject(selected))
-											((ServerListActivityInterface)ServerListActivity.instance.get().getLocalActivityManager().getActivity("main")).addIntoList(s);
+											((ServerListActivityInterface)ServerListActivity.instance.get()/*.getLocalActivityManager().getActivity("main")*/).addIntoList(s);
 										di.dismiss();
 									}
 								})

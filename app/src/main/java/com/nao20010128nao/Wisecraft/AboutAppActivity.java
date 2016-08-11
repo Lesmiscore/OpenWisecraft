@@ -14,10 +14,6 @@ public class AboutAppActivity extends AboutAppActivityBase
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
-		if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("useBright",false)){
-			setTheme(R.style.AppTheme_Bright_OpenSource);
-			getTheme().applyStyle(R.style.AppTheme_Bright_OpenSource,true);
-		}
 		super.onCreate(savedInstanceState);
 		Utils.getActionBarTextView(this).setTextColor(Color.WHITE);
 		//34

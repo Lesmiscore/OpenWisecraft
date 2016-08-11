@@ -306,16 +306,7 @@ public class Utils extends PingerUtils{
     }
 	public static int calculateRows(Context c){
 		int base=c.getResources().getDimensionPixelSize(R.dimen.panel_base_size);
-		int width;Configuration cfg=c.getResources().getConfiguration();
-		Point point=getRealSize(c);
-		switch(cfg.orientation){
-			case Configuration.ORIENTATION_LANDSCAPE :width=Math.max(point.x,point.y);break;
-			case Configuration.ORIENTATION_PORTRAIT  :width=Math.min(point.x,point.y);break;
-			case Configuration.ORIENTATION_SQUARE    :width=point.x;                  break;
-			case Configuration.ORIENTATION_UNDEFINED :width=base;                     break;
-			default                                  :width=base;                     break;
-		}
-		return (int)Math.max(1,((double)width)/((double)base));
+		return (int)Math.max(1,((double)getScreenWidth(c,base))/((double)base));
 	}
 	public static int calculateRows(Context c,View v){
 		int base=c.getResources().getDimensionPixelSize(R.dimen.panel_base_size);
@@ -329,6 +320,36 @@ public class Utils extends PingerUtils{
 			default                                  :width=base;                     break;
 		}
 		return (int)Math.max(1,((double)width)/((double)base));
+	}
+	public static int getScreenWidth(Context c){
+		return getScreenWidth(c,-1);
+	}
+	public static int getScreenHeight(Context c){
+		return getScreenHeight(c,-1);
+	}
+	public static int getScreenWidth(Context c,int def){
+		int width;Configuration cfg=c.getResources().getConfiguration();
+		Point point=getRealSize(c);
+		switch(cfg.orientation){
+			case Configuration.ORIENTATION_LANDSCAPE :width=Math.max(point.x,point.y);break;
+			case Configuration.ORIENTATION_PORTRAIT  :width=Math.min(point.x,point.y);break;
+			case Configuration.ORIENTATION_SQUARE    :width=point.x;                  break;
+			case Configuration.ORIENTATION_UNDEFINED :width=def;                      break;
+			default                                  :width=def;                      break;
+		}
+		return width;
+	}
+	public static int getScreenHeight(Context c,int def){
+		int width;Configuration cfg=c.getResources().getConfiguration();
+		Point point=getRealSize(c);
+		switch(cfg.orientation){
+			case Configuration.ORIENTATION_LANDSCAPE :width=Math.min(point.x,point.y);break;
+			case Configuration.ORIENTATION_PORTRAIT  :width=Math.max(point.x,point.y);break;
+			case Configuration.ORIENTATION_SQUARE    :width=point.y;                  break;
+			case Configuration.ORIENTATION_UNDEFINED :width=def;                      break;
+			default                                  :width=def;                      break;
+		}
+		return width;
 	}
 	public static Object tryExecuteMethod(Object object,String methodName,Class[] signature,Object[] parameter){
 		Class objClass;

@@ -68,10 +68,6 @@ public class ServerTestActivity extends AppCompatListActivity implements ServerL
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
-		if(pref.getBoolean("useBright",false)){
-			setTheme(R.style.AppTheme_Bright);
-			getTheme().applyStyle(R.style.AppTheme_Bright,true);
-		}
 		super.onCreate(savedInstanceState);
 		boolean usesOldInstance=false;
 		if(instance.get()!=null){

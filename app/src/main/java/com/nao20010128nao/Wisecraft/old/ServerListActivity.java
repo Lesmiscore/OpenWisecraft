@@ -298,7 +298,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	
 	@Override
 	protected void attachBaseContext(Context newBase) {
-		TheApplication.instance.initForActivities();
 		super.attachBaseContext(ContextWrappingExtender.wrap(CalligraphyContextWrapper.wrap(newBase)));
 	}
 	@Override

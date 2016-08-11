@@ -28,10 +28,6 @@ public class ProxyActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
-		if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("useBright",false)){
-			setTheme(R.style.AppTheme_Bright);
-			getTheme().applyStyle(R.style.AppTheme_Bright,true);
-		}
 		super.onCreate(savedInstanceState);
 		
 		try {

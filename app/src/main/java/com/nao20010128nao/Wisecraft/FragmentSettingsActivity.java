@@ -28,22 +28,18 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 	SharedPreferences pref;
 	boolean requireRestart=false;
 	List<String> nonRestartKeys=Collections.unmodifiableList(Arrays.asList(new String[]{
-		"showPcUserFace",
+		/*"showPcUserFace",
 		"selectFont",
 		"sendInfos",
 		"exitCompletely",
 		"useBright",
 		"allowAutoUpdateSLSCode",
-		"aausc_monnet"
+		"aausc_monnet"*/
 	}));
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
-		if(pref.getBoolean("useBright",false)){
-			setTheme(R.style.AppTheme_Bright);
-			getTheme().applyStyle(R.style.AppTheme_Bright,true);
-		}
 		super.onCreate(savedInstanceState);
 		pref.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener(){
 				public void onSharedPreferenceChanged(SharedPreferences pref,String key){
@@ -221,7 +217,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 								public void onClick(DialogInterface di, int w) {
 									di.cancel();
 									TheApplication.instance.setFontFieldName(choiceList.get(w));
-									Toast.makeText(getContext(),R.string.saved_fonts,Toast.LENGTH_LONG).show();
+									//Toast.makeText(getContext(),R.string.saved_fonts,Toast.LENGTH_LONG).show();
 								}
 							})
 							.show();
@@ -235,7 +231,6 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 						return Factories.strArray(l);
 					}
 				});
-			findPreference("useBright").setEnabled(getResources().getBoolean(R.bool.useBrightEnabled));
 		}
 
 		@Override
@@ -244,33 +239,6 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			super.onResume();
 			getActivity().setTitle(R.string.basics);
 		}
-		
-		/*
-		@Override
-		public void onDisplayPreferenceDialog(Preference preference) {
-			// TODO: Implement this method
-			if(preference.getKey().equals("parallels")){
-				/*
-				EditTextPreferenceDialogFragmentCompat etpdf=EditTextPreferenceDialogFragmentCompat.newInstance(preference.getKey());
-				etpdf.setTargetFragment(this,0);
-				etpdf.setStyle(DialogFragment.STYLE_NORMAL,R.style.AppAlertDialog);
-				etpdf.show(getFragmentManager(),PARALLELS_DIALOG_FRAGMENT_TAG);
-				/
-				//I'll show a EditText dialog with AlertDialog.Builder because the text color of buttons can't be changed
-				PreferenceUtils.showEditTextDialog(getActivity(),preference,getString(R.string.parallels_default),new Treatment<View>(){
-					public void process(View v){
-						EditText et=(EditText)v.findViewById(android.R.id.edit);
-						et.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_VARIATION_NORMAL);
-						ArrayList<InputFilter> ifs=new ArrayList<InputFilter>(Arrays.<InputFilter>asList(et.getFilters()));
-						ifs.add(new InputFilter.LengthFilter(3));
-						et.setFilters(ifs.toArray(new InputFilter[ifs.size()]));
-					}
-				});
-				return;
-			}
-			super.onDisplayPreferenceDialog(preference);
-		}
-		*/
 	}
 
 

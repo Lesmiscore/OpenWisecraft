@@ -52,18 +52,6 @@
 		android:defaultValue="false"
 		android:dependency="colorFormattedText"
 	/>
-<!--
-	<com.nao20010128nao.Wisecraft.misc.pref.CheckBoxPreferenceCompat
-		android:title="@string/specialDrawer1"
-		android:key="specialDrawer1"
-		android:defaultValue="false"
-	/>
--->
-	<com.nao20010128nao.Wisecraft.misc.pref.CheckBoxPreferenceCompat
-		android:title="@string/useBright"
-		android:key="useBright"
-		android:defaultValue="false"
-	/>
 	<com.nao20010128nao.Wisecraft.misc.pref.CheckBoxPreferenceCompat
 		android:title="@string/showStatusesBar"
 		android:key="showStatusesBar"
@@ -84,16 +72,4 @@
 		android:title="@string/serverListStyle"
 		android:key="serverListStyle"
 	/>
-<!--
-	<com.nao20010128nao.Wisecraft.misc.pref.CheckBoxPreferenceCompat
-		android:title="@string/useOldActivity"
-		android:key="useOldActivity"
-		android:defaultValue="false"
-	/>
-	<com.nao20010128nao.Wisecraft.misc.pref.StartPrefCompat
-		android:title="@string/serverListStyle"
-		android:key="serverListStyle"
-		android:dependency="useOldActivity"
-	/>
--->
 </PreferenceScreen>

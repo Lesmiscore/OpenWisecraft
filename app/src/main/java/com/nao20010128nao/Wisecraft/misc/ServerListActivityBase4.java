@@ -39,10 +39,6 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBaseGran
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
-		if (pref.getBoolean("useBright", false)) {
-			setTheme(R.style.AppTheme_Bright_NoActionBar);
-			getTheme().applyStyle(R.style.AppTheme_Bright_NoActionBar, true);
-		}
 		super.onCreate(savedInstanceState);
 		{
 			setContentView(R.layout.server_list_content_toolbar);

@@ -5,7 +5,4 @@
 		<item name="android:colorAccent">@color/upd_2</item>
 		<item name="preferenceTheme">@style/AppTheme.Preference</item>
 	</style>
-	<style name="AppThemeN.Bright" parent="AppThemeN">
-
-	</style>
 </resources>
