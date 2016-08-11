@@ -1,11 +1,13 @@
 package com.nao20010128nao.Wisecraft;
 import android.app.*;
 import android.content.*;
+import android.content.res.*;
 import android.graphics.*;
 import android.graphics.drawable.*;
 import android.preference.*;
 import android.support.multidex.*;
 import android.support.v4.graphics.drawable.*;
+import android.support.v7.app.*;
 import android.view.*;
 import android.widget.*;
 import com.google.android.gms.tasks.*;
@@ -13,13 +15,12 @@ import com.google.firebase.analytics.*;
 import com.google.firebase.remoteconfig.*;
 import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
 import com.nao20010128nao.Wisecraft.rcon.*;
 import com.nao20010128nao.Wisecraft.services.*;
 import java.lang.reflect.*;
 import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
-import android.support.v7.app.*;
-import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
 
 public class TheApplication extends Application implements com.nao20010128nao.Wisecraft.rcon.Presenter,com.ipaulpro.afilechooser.Presenter,InformationCommunicatorReceiver.DisclosureResult {
 	public static TheApplication instance;
@@ -34,6 +35,7 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 	public FirebaseAnalytics firebaseAnalytics;
 	public FirebaseRemoteConfig firebaseRemoteCfg;
 	public Task<Void> fbCfgLoader;
+	public Context extenderWrapped;
 	boolean disclosurePending=true,disclosureEnded=false;
 	
 	@Override
@@ -222,11 +224,23 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		// TODO: Implement this method
 		return true;
 	}
+
+	@Override
+	protected void attachBaseContext(Context base) {
+		super.attachBaseContext(base);
+		extenderWrapped=ContextWrappingExtender.wrap(base);
+	}
+
+	@Override
+	public Resources getResources() {
+		// TODO: Implement this method
+		return extenderWrapped.getResources();
+	}
 	
 	public static Context injectContextSpecial(final Context base){
-		final Context calligraphy=CalligraphyContextWrapper.wrap(base);
-		final Context extender=ContextWrappingExtender.wrap(calligraphy);
-		return extender;
+		final Context extender=ContextWrappingExtender.wrap(base);
+		final Context calligraphy=CalligraphyContextWrapper.wrap(extender);
+		return calligraphy;
 	}
 	
 	static{
