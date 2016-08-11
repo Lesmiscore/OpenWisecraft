@@ -222,6 +222,12 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		// TODO: Implement this method
 		return true;
 	}
+
+	@Override
+	protected void attachBaseContext(Context base) {
+		super.attachBaseContext(ContextWrappingExtender.wrap(base));//To apply changes forcely
+		//Don't wrap Calligraphy here!
+	}
 	
 	public static Context injectContextSpecial(final Context base){
 		final Context extender=ContextWrappingExtender.wrap(base);
