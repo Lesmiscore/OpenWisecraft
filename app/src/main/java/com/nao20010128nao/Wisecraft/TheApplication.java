@@ -20,6 +20,7 @@ import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
 import android.support.v7.app.*;
 import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
+import android.content.res.*;
 
 public class TheApplication extends Application implements com.nao20010128nao.Wisecraft.rcon.Presenter,com.ipaulpro.afilechooser.Presenter,InformationCommunicatorReceiver.DisclosureResult {
 	public static TheApplication instance;
@@ -34,6 +35,7 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 	public FirebaseAnalytics firebaseAnalytics;
 	public FirebaseRemoteConfig firebaseRemoteCfg;
 	public Task<Void> fbCfgLoader;
+	public Context extenderWrapped;
 	boolean disclosurePending=true,disclosureEnded=false;
 	
 	@Override
@@ -225,8 +227,14 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 
 	@Override
 	protected void attachBaseContext(Context base) {
-		super.attachBaseContext(ContextWrappingExtender.wrap(base));//To apply changes forcely
-		//Don't wrap Calligraphy here!
+		super.attachBaseContext(base);
+		extenderWrapped=ContextWrappingExtender.wrap(base);
+	}
+
+	@Override
+	public Resources getResources() {
+		// TODO: Implement this method
+		return extenderWrapped.getResources();
 	}
 	
 	public static Context injectContextSpecial(final Context base){
