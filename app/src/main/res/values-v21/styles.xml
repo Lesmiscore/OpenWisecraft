@@ -2,7 +2,7 @@
 <resources>
 	<style name="AppThemeN" parent="@android:style/Theme.Material.Light">
 		<item name="android:colorPrimary">@color/primary</item>
-		<item name="android:colorAccent">@color/upd_2</item>
+		<item name="android:colorAccent">@color/mainColor</item>
 		<item name="preferenceTheme">@style/AppTheme.Preference</item>
 	</style>
 </resources>
