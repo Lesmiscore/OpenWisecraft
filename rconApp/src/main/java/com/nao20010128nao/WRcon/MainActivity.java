@@ -197,7 +197,30 @@ public class MainActivity extends MainActivityBase1
 							Toast.makeText(MainActivity.this, R.string.importing, Toast.LENGTH_LONG).show();
 							new Thread(){
 								public void run() {
-									final Server[] sv = gson.fromJson(Utils.readWholeFile(new File(et.getText().toString())), Server[].class);
+									File file=new File(et.getText().toString());
+									if(!file.exists()){
+										runOnUiThread(new Runnable(){
+												public void run(){
+													Toast.makeText(MainActivity.this, R.string.fileNotExist, Toast.LENGTH_LONG).show();
+												}
+											});
+										return;
+									}
+									String json;
+									try{
+										json=Utils.readWholeFile(file);
+									}catch(Throwable e){
+										runOnUiThread(new Runnable(){
+												public void run(){
+													Toast.makeText(MainActivity.this, R.string.failedImport, Toast.LENGTH_LONG).show();
+												}
+											});
+										return;
+									}
+									if(json==null){
+										return;
+									}
+									final Server[] sv = gson.fromJson(json, Server[].class);
 									runOnUiThread(new Runnable(){
 											public void run() {
 												sla.addAll(sv);
