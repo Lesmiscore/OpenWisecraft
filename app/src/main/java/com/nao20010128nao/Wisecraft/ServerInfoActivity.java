@@ -832,7 +832,7 @@ public class ServerInfoActivity extends AppCompatActivity {
 		hsv[2] = v - 0.05f;//V-10
 		DIRT_DARK = Color.HSVToColor(hsv);
 
-		int palePrimary=ContextCompat.getColor(TheApplication.instance, R.color.upd_2);
+		int palePrimary=ContextCompat.getColor(TheApplication.instance, R.color.mainColor);
 		int r=Color.red(palePrimary);
 		int g=Color.green(palePrimary);
 		int b=Color.blue(palePrimary);

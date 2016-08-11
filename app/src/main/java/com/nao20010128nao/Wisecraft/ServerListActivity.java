@@ -80,7 +80,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				PrimaryDrawerItem pdi=new LineWrappingPrimaryDrawerItem();
 				pdi.withName(s.getKey()).withIcon(s.getValue());
 				pdi.withSetSelected(false).withIdentifier(appMenu.indexOf(s));
-				pdi.withIconColorRes(R.color.upd_2).withIconTinted(true);
+				pdi.withIconColorRes(R.color.mainColor).withIconTinted(true);
 				drawer.addItem(pdi.withIconTintingEnabled(true));
 			}
 			drawer.deselect();
