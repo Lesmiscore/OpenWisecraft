@@ -75,6 +75,7 @@ dependencies {
 	compile project(':aFileChooser')
 	compile project(':accounts')
 	compile project(':calligraphy')
+	compile project(':colorPicker')
 	
 	compile 'com.android.support:recyclerview-v7:24.0.0'
 	compile 'com.android.support:design:24.0.0'
@@ -91,7 +92,6 @@ dependencies {
 	compile 'org.nanohttpd:nanohttpd:2.3.0'
 	compile 'org.jsoup:jsoup:1.9.1'
 	compile 'org.eclipse.mylyn.github:org.eclipse.egit.github.core:3.4.0.201406110918-r'
-	compile 'com.azeesoft.lib.colorpicker:colorpicker:+'
 	compile 'com.mikhaellopez:circularimageview:+'
 	compile 'com.google.firebase:firebase-core:9.+'
 	compile 'com.google.firebase:firebase-storage:9.+'

@@ -22,6 +22,9 @@ before_script:
   - cd ../psts
   - git pull origin master > NUL
   - git checkout master > NUL
+  - cd ../colorPicker
+  - git pull origin master > NUL
+  - git checkout master > NUL
   - cd ../
   - wget --quiet --output-document=android-sdk.tgz https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz
   - tar --extract --gzip --file=android-sdk.tgz
