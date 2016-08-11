@@ -49,7 +49,6 @@ public class ServerInfoActivity extends AppCompatActivity {
 
 	MenuItem updateBtn,seeTitleButton;
 
-	List<Thread> t=new ArrayList<>();
 	InternalPagerAdapter adapter;
 	ViewPager tabs;
 
@@ -184,6 +183,7 @@ public class ServerInfoActivity extends AppCompatActivity {
 		} else if (resp instanceof UnconnectedPing.UnconnectedPingResult & resp == localStat.response) {
 			setTitle((((UnconnectedPing.UnconnectedPingResult)resp).getServerName()));
 		}
+		Utils.getToolbar(this).setSubtitle(localStat.toString());
 
 
 		updateTaskDesc(resp);
