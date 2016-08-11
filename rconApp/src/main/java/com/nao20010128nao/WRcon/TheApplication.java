@@ -38,12 +38,14 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
 		InformationCommunicatorReceiver.startDisclosureRequestIfNeeded(this,this);
 		genPassword();//collectImpl();
-		
+	}
+
+	public void prepareFirebase(){
 		firebaseAnalytics=FirebaseAnalytics.getInstance(this);
 		firebaseRemoteCfg=FirebaseRemoteConfig.getInstance();
 		fbCfgLoader=firebaseRemoteCfg.fetch();
 	}
-
+	
 	@Override
 	public int getDialogStyleId() {
 		// TODO: Implement this method
