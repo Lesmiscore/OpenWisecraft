@@ -241,7 +241,7 @@ public class ServerInfoActivity extends AppCompatActivity {
 		} else {
 			isDark = false;
 		}
-		int color= ContextCompat.getColor(this, R.color.upd_2);
+		int color= ContextCompat.getColor(this, R.color.mainColor);
 		seeTitleButton = menu.add(Menu.NONE, 0, 0, R.string.seeTitle);
 		seeTitleButton.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_open_in_new_black_48dp, isDark ?Color.WHITE: color));
 		MenuItemCompat.setShowAsAction(seeTitleButton, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);

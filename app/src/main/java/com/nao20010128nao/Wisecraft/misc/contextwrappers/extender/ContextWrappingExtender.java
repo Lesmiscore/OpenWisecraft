@@ -40,6 +40,7 @@ public class ContextWrappingExtender extends ContextWrapper
 	}
 	
 	
+	
 	public static ContextWrappingExtender wrap(Context ctx){
 		return new ContextWrappingExtender(ctx);
 	}
@@ -60,7 +61,7 @@ public class ContextWrappingExtender extends ContextWrapper
 				case R.color.stat_error:
 					return pref.getInt("colorStatError",getBaseContext().getColor(R.color.stat_error));
 				case R.color.mainColor:
-					return pref.getInt("colorMainColor",getBaseContext().getColor(R.color.mainColor));
+					//return pref.getInt("colorMainColor",getBaseContext().getColor(R.color.mainColor));
 				default:
 					return super.getColor(id, theme);
 			}
