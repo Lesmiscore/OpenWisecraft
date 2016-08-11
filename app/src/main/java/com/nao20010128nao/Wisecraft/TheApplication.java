@@ -1,11 +1,13 @@
 package com.nao20010128nao.Wisecraft;
 import android.app.*;
 import android.content.*;
+import android.content.res.*;
 import android.graphics.*;
 import android.graphics.drawable.*;
 import android.preference.*;
 import android.support.multidex.*;
 import android.support.v4.graphics.drawable.*;
+import android.support.v7.app.*;
 import android.view.*;
 import android.widget.*;
 import com.google.android.gms.tasks.*;
@@ -13,14 +15,12 @@ import com.google.firebase.analytics.*;
 import com.google.firebase.remoteconfig.*;
 import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
 import com.nao20010128nao.Wisecraft.rcon.*;
 import com.nao20010128nao.Wisecraft.services.*;
 import java.lang.reflect.*;
 import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
-import android.support.v7.app.*;
-import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
-import android.content.res.*;
 
 public class TheApplication extends Application implements com.nao20010128nao.Wisecraft.rcon.Presenter,com.ipaulpro.afilechooser.Presenter,InformationCommunicatorReceiver.DisclosureResult {
 	public static TheApplication instance;
