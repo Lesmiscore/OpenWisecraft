@@ -224,9 +224,9 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 	}
 	
 	public static Context injectContextSpecial(final Context base){
-		final Context calligraphy=CalligraphyContextWrapper.wrap(base);
-		final Context extender=ContextWrappingExtender.wrap(calligraphy);
-		return extender;
+		final Context extender=ContextWrappingExtender.wrap(base);
+		final Context calligraphy=CalligraphyContextWrapper.wrap(extender);
+		return calligraphy;
 	}
 	
 	static{
