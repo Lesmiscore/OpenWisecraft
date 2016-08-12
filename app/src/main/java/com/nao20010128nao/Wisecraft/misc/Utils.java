@@ -425,4 +425,30 @@ public class Utils extends PingerUtils{
 		}
 		return li;
 	}
+	public static void applyTypefaceForViewTree(View v,Typeface tf){
+		if(v!=null){
+			applyTypeface(v,tf);
+			if(v instanceof ViewGroup){
+				ViewGroup vg=(ViewGroup)v;
+				for(int i=0;i<vg.getChildCount();i++){
+					applyTypefaceForViewTree(vg.getChildAt(i),tf);
+				}
+			}
+		}
+	}
+	public static void applyTypeface(View v,Typeface tf){
+		try {
+			v.getClass().getMethod("setTypeface", Typeface.class).invoke(v, tf);
+		} catch (NoSuchMethodException e) {
+			
+		} catch (IllegalArgumentException e) {
+			
+		} catch (IllegalAccessException e) {
+			
+		} catch (InvocationTargetException e) {
+			
+		} catch (Throwable e) {
+			
+		}
+	}
 }

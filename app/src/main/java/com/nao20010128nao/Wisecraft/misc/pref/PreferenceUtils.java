@@ -14,6 +14,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.content.DialogInterface;
 import com.nao20010128nao.Wisecraft.misc.Treatment;
+import com.nao20010128nao.Wisecraft.misc.*;
+import com.nao20010128nao.Wisecraft.*;
 
 public class PreferenceUtils
 {
@@ -24,6 +26,7 @@ public class PreferenceUtils
 		if(pref instanceof SetTextColor){
 			onBindViewHolder((SetTextColor)pref,holder);
 		}
+		Utils.applyTypefaceForViewTree(holder.itemView,TheApplication.instance.getLocalizedFont());
 	}
 	public static void onBindViewHolder(SetTextColor pref,PreferenceViewHolder holder){
 		((TextView)holder.findViewById(android.R.id.title)).setTextColor(pref.getTextColor());
