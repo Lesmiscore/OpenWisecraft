@@ -287,6 +287,8 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 
 	public abstract static class BaseFragment extends SHablePreferenceFragment {
 		protected SharedPreferences pref;
+		
+		LinearLayout miscContent;
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			// TODO: Implement this method
@@ -309,7 +311,14 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
-			return super.onCreateView(getActivity().getLayoutInflater(), container, savedInstanceState);
+			View v=super.onCreateView(getActivity().getLayoutInflater(), container, savedInstanceState);
+			miscContent=(LinearLayout)v.findViewById(R.id.misc);
+			if(miscContent!=null)onMiscPartAvailable(miscContent);
+			return v;
 		}
+		
+		protected void onMiscPartAvailable(LinearLayout misc){}
+		
+		public LinearLayout getMiscContent(){return miscContent;}
 	}
 }
