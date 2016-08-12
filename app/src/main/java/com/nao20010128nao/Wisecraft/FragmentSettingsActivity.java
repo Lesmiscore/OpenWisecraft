@@ -158,36 +158,6 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		}
 	}
 
-	
-	public abstract static class BaseFragment extends SHablePreferenceFragment {
-		protected SharedPreferences pref;
-		@Override
-		public void onCreate(Bundle savedInstanceState) {
-			// TODO: Implement this method
-			pref=PreferenceManager.getDefaultSharedPreferences(getContext());
-			super.onCreate(savedInstanceState);
-		}
-
-		@Override
-		public LayoutInflater getLayoutInflater(Bundle savedInstanceState) {
-			// TODO: Implement this method
-			return super.getLayoutInflater(savedInstanceState).cloneInContext(getActivity());
-		}
-
-		@Override
-		public Context getContext() {
-			// TODO: Implement this method
-			return TheApplication.injectContextSpecial(super.getContext());
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-			// TODO: Implement this method
-			return super.onCreateView(getActivity().getLayoutInflater(), container, savedInstanceState);
-		}
-	}
-
-
 	public static class Basics extends BaseFragment {
 		public static final String PARALLELS_DIALOG_FRAGMENT_TAG=DIALOG_FRAGMENT_TAG_PREFIX+"parallels-dialog";
 		int which;
@@ -307,6 +277,39 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		public void onCreatePreferences(Bundle p1, String p2) {
 			// TODO: Implement this method
 			addPreferencesFromResource(R.xml.settings_color_changer_compat);
+		}
+	}
+	
+	
+	
+	
+	
+
+	public abstract static class BaseFragment extends SHablePreferenceFragment {
+		protected SharedPreferences pref;
+		@Override
+		public void onCreate(Bundle savedInstanceState) {
+			// TODO: Implement this method
+			pref=PreferenceManager.getDefaultSharedPreferences(getContext());
+			super.onCreate(savedInstanceState);
+		}
+
+		@Override
+		public LayoutInflater getLayoutInflater(Bundle savedInstanceState) {
+			// TODO: Implement this method
+			return super.getLayoutInflater(savedInstanceState).cloneInContext(getActivity());
+		}
+
+		@Override
+		public Context getContext() {
+			// TODO: Implement this method
+			return TheApplication.injectContextSpecial(super.getContext());
+		}
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+			// TODO: Implement this method
+			return super.onCreateView(getActivity().getLayoutInflater(), container, savedInstanceState);
 		}
 	}
 }
