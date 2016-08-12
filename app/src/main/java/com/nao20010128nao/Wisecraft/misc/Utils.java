@@ -22,6 +22,7 @@ import java.util.*;
 
 import android.support.v7.widget.Toolbar;
 import com.nao20010128nao.Wisecraft.R;
+import uk.co.chrisjenx.calligraphy.*;
 
 public class Utils extends PingerUtils{
 	public static String deleteDecorations(String decorated) {
@@ -410,5 +411,18 @@ public class Utils extends PingerUtils{
 		Bundle bnd=new Bundle();
 		putServersIntoBundle(bnd,s);
 		return bnd;
+	}
+	public static LayoutInflater fixLayoutInflaterIfNeeded(Context c,Activity a){
+		LayoutInflater li=LayoutInflater.from(c);
+		if(li.getClass().getName().equals("uk.co.chrisjenx.calligraphy.CalligraphyLayoutInflater")){
+			LayoutInflater ali=LayoutInflater.from(a);
+			if(li.getFactory()==null){
+				li.setFactory(ali.getFactory());
+			}
+			if(li.getFactory2()==null){
+				li.setFactory2(ali.getFactory2());
+			}
+		}
+		return li;
 	}
 }
