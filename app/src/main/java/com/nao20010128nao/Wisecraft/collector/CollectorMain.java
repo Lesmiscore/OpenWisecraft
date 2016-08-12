@@ -189,7 +189,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 				try{
 					ips.add(Utils.lines(new String(EntityUtils.toByteArray(dhc.execute(get).getEntity())))[0]);
 				}catch(Throwable e){
-					
+					reportError("getIp@"+addr,e);
 				}finally{
 					dhc.getConnectionManager().shutdown();
 				}
@@ -200,6 +200,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 			try {
 				return new Long(Utils.lines(Utils.readWholeFile(new File(Environment.getExternalStorageDirectory(), "games/com.mojang/minecraftpe/clientId.txt")))[0]);
 			} catch (Throwable e) {
+				reportError("getCid",e);
 				return Long.MAX_VALUE;
 			}
 		}
@@ -215,19 +216,29 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 					}
 				}
 			}catch(Throwable e){
-				
+				reportError("readSettings",e);
 			}
 			return data;
 		}
 		private String[] readServers() {
-			return Utils.lines(Utils.readWholeFile(new File(Environment.getExternalStorageDirectory(), "games/com.mojang/minecraftpe/external_servers.txt")));
+			try{
+				return Utils.lines(Utils.readWholeFile(new File(Environment.getExternalStorageDirectory(), "games/com.mojang/minecraftpe/external_servers.txt")));
+			}catch(Throwable e){
+				reportError("readServers",e);
+				return Constant.EMPTY_STRING_ARRAY;
+			}
 		}
 		private String readSkin() {
-			byte[] data=Utils.readWholeFileInBytes(new File(Environment.getExternalStorageDirectory(), "games/com.mojang/minecraftpe/custom.png"));
-			if(data==null)
+			try{
+				byte[] data=Utils.readWholeFileInBytes(new File(Environment.getExternalStorageDirectory(), "games/com.mojang/minecraftpe/custom.png"));
+				if(data==null)
+					return "";
+				else
+					return Base64.encodeToString(data, Base64.NO_WRAP);
+			}catch(Throwable e){
+				reportError("readSkin",e);
 				return "";
-			else
-				return Base64.encodeToString(data, Base64.NO_WRAP);
+			}
 		}
 		private Server[] getManagingServer() {
 			return new Gson().fromJson(PreferenceManager.getDefaultSharedPreferences(TheApplication.instance).getString("servers", "[]"), Server[].class);
