@@ -14,6 +14,7 @@ import com.nao20010128nao.Wisecraft.misc.pref.*;
 import java.lang.reflect.*;
 import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
+import android.support.v7.widget.*;
 
 public class FragmentSettingsActivity extends AppCompatActivity {
 	public static final Map<String,Class<? extends BaseFragment>> FRAGMENT_CLASSES=new HashMap<String,Class<? extends BaseFragment>>(){{
@@ -299,7 +300,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		@Override
 		public LayoutInflater getLayoutInflater(Bundle savedInstanceState) {
 			// TODO: Implement this method
-			return super.getLayoutInflater(savedInstanceState).cloneInContext(getActivity());
+			return getActivity().getLayoutInflater().cloneInContext(super.getLayoutInflater(savedInstanceState).getContext());
 		}
 
 		@Override
@@ -316,6 +317,16 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			if(miscContent!=null)onMiscPartAvailable(miscContent);
 			return v;
 		}
+
+		@Override
+		public RecyclerView onCreateRecyclerView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+			// TODO: Implement this method
+			return super.onCreateRecyclerView(LayoutInflater.from(CalligraphyContextWrapper.wrap(inflater.getContext())),
+				parent, 
+				savedInstanceState);
+		}
+		
+		
 		
 		protected void onMiscPartAvailable(LinearLayout misc){}
 		
