@@ -321,8 +321,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		@Override
 		public RecyclerView onCreateRecyclerView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
 			// TODO: Implement this method
-			return super.onCreateRecyclerView(
-				getActivity().getLayoutInflater(),
+			return super.onCreateRecyclerView(Utils.fixLayoutInflaterIfNeeded(CalligraphyContextWrapper.wrap(inflater.getContext()),getActivity()),
 				parent, 
 				savedInstanceState);
 		}
