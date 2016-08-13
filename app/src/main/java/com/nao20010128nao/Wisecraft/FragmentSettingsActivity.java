@@ -15,6 +15,7 @@ import java.lang.reflect.*;
 import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
 import android.support.v7.widget.*;
+import android.support.v4.view.*;
 
 public class FragmentSettingsActivity extends AppCompatActivity {
 	public static final Map<String,Class<? extends BaseFragment>> FRAGMENT_CLASSES=new HashMap<String,Class<? extends BaseFragment>>(){{
@@ -27,7 +28,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 	
 	int which;
 	SharedPreferences pref;
-	boolean requireRestart=false;
+	boolean requireRestart=true;
 	List<String> nonRestartKeys=Collections.unmodifiableList(Arrays.asList(new String[]{
 		/*"showPcUserFace",
 		"selectFont",
@@ -37,6 +38,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		"allowAutoUpdateSLSCode",
 		"aausc_monnet"*/
 	}));
+	FrameLayout misc;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
@@ -56,7 +58,35 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 				.addToBackStack("root")
 				.commit();
 		}
+		misc=(FrameLayout)findViewById(R.id.misc);
 	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// TODO: Implement this method
+		MenuItem showPreview=menu.add(Menu.NONE,0,0,R.string.preview);
+		showPreview.setIcon(misc.getVisibility()==View.VISIBLE?R.drawable.ic_visibility_black_48dp:R.drawable.ic_visibility_off_black_48dp);
+		MenuItemCompat.setShowAsAction(showPreview,MenuItem.SHOW_AS_ACTION_ALWAYS);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO: Implement this method
+		switch(item.getItemId()){
+			case 0:
+				boolean isShowing=misc.getVisibility()==View.VISIBLE;
+				if(isShowing){
+					misc.setVisibility(View.GONE);
+				}else{
+					misc.setVisibility(View.VISIBLE);
+				}
+				invalidateOptionsMenu();
+				break;
+		}
+		return true;
+	}
+	
 	@Override
 	protected void attachBaseContext(Context newBase) {
 		super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
