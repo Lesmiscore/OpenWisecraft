@@ -42,17 +42,20 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		// TODO: Implement this method
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.fragment_settings_with_preview);
 		pref.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener(){
 				public void onSharedPreferenceChanged(SharedPreferences pref,String key){
 					if(nonRestartKeys.contains(key))return;
 					requireRestart=true;
 				}
 			});
-		getSupportFragmentManager()
-			.beginTransaction()
-			.replace(android.R.id.content,new HubPrefFragment())
-			.addToBackStack("root")
-			.commit();
+		if(savedInstanceState==null){
+			getSupportFragmentManager()
+				.beginTransaction()
+				.replace(R.id.preference,new HubPrefFragment())
+				.addToBackStack("root")
+				.commit();
+		}
 	}
 	@Override
 	protected void attachBaseContext(Context newBase) {
@@ -98,7 +101,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 					public void onClick(String a, String b, String c) {
 						getActivity().getSupportFragmentManager()
 							.beginTransaction()
-							.replace(android.R.id.content,new Basics())
+							.replace(R.id.preference,new Basics())
 							.addToBackStack("basics")
 							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
 							.commit();
@@ -109,7 +112,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 						getActivity()
 							.getSupportFragmentManager()
 							.beginTransaction()
-							.replace(android.R.id.content,new Features())
+							.replace(R.id.preference,new Features())
 							.addToBackStack("features")
 							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
 							.commit();
@@ -120,7 +123,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 						getActivity()
 							.getSupportFragmentManager()
 							.beginTransaction()
-							.replace(android.R.id.content,new Asfsls())
+							.replace(R.id.preference,new Asfsls())
 							.addToBackStack("asfsls")
 							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
 							.commit();
@@ -131,7 +134,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 						getActivity()
 							.getSupportFragmentManager()
 							.beginTransaction()
-							.replace(android.R.id.content,new ColorChanger())
+							.replace(R.id.preference,new ColorChanger())
 							.addToBackStack("changeColor")
 							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
 							.commit();
