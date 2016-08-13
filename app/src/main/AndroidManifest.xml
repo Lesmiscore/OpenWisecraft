@@ -107,7 +107,8 @@
 		<activity
 			android:label="@string/settings"
 			android:name=".FragmentSettingsActivity"
-			android:exported="false">
+			android:exported="false"
+			android:fitsSystemWindows="false">
         </activity>
 		
         <activity
