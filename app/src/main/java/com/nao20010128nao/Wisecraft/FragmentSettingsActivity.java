@@ -107,7 +107,8 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 	public void finish() {
 		// TODO: Implement this method
 		if(requireRestart){
-			ServerListActivityImpl.instance.get().finish();
+			if(ServerListActivityImpl.instance.get()!=null)
+				ServerListActivityImpl.instance.get().finish();
 			startActivity(new Intent(this,ServerListActivity.class));
 		}
 		super.finish();
