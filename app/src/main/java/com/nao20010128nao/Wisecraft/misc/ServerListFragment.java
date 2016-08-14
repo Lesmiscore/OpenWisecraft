@@ -8,18 +8,25 @@ import android.view.*;
 import com.nao20010128nao.Wisecraft.*;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
+import java.util.*;
 
 public class ServerListFragment<T extends FragmentActivity> extends BaseFragment<T>
 {
 
 	RecyclerView rv;
 	ServerListRecyclerAdapter slra;
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		// TODO: Implement this method
+		super.onCreate(savedInstanceState);
+		slra=new ServerListRecyclerAdapter(getActivity());
+	}
 	
 	@Override
 	public void onResume() {
 		// TODO: Implement this method
 		super.onResume();
-		slra=new ServerListRecyclerAdapter(getActivity());
 		setLayoutModeInternal(pref.getInt("serverListStyle2",0));
 		rv.setAdapter(slra);
 		setDarkBackground(pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false));
@@ -61,6 +68,20 @@ public class ServerListFragment<T extends FragmentActivity> extends BaseFragment
 	public void setLayoutMode(int mode){
 		setLayoutModeInternal(mode);
 		slra.setLayoutMode(mode);
+	}
+	
+	public void addServer(Server s){
+		slra.add(s);
+	}
+	public void addServers(Server[] s){
+		slra.addAll(s);
+	}
+	public void addServers(Collection<Server> s){
+		slra.addAll(s);
+	}
+	
+	public void removeServer(Server s){
+		slra.remove(s);
 	}
 	
 	private void setLayoutModeInternal(int mode){

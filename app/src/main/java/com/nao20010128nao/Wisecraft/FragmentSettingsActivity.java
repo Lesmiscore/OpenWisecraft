@@ -4,18 +4,20 @@ import android.os.*;
 import android.preference.*;
 import android.support.v4.app.*;
 import android.support.v4.content.*;
+import android.support.v4.view.*;
 import android.support.v7.app.*;
+import android.support.v7.widget.*;
 import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.ToolBox.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.pref.*;
+import java.io.*;
 import java.lang.reflect.*;
 import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
-import android.support.v7.widget.*;
-import android.support.v4.view.*;
+import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
 
 public class FragmentSettingsActivity extends AppCompatActivity {
 	public static final Map<String,Class<? extends BaseFragment>> FRAGMENT_CLASSES=new HashMap<String,Class<? extends BaseFragment>>(){{
@@ -56,6 +58,10 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 				.beginTransaction()
 				.replace(R.id.preference,new HubPrefFragment())
 				.addToBackStack("root")
+				.commit();
+			getSupportFragmentManager()
+				.beginTransaction()
+				.replace(R.id.misc,new PreviewFragment())
 				.commit();
 		}
 		misc=(FrameLayout)findViewById(R.id.misc);
@@ -365,5 +371,124 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		protected void onMiscPartAvailable(LinearLayout misc){}
 		
 		public LinearLayout getMiscContent(){return miscContent;}
+	}
+	
+	
+	
+	//preview part
+	public static class PreviewFragment extends com.nao20010128nao.Wisecraft.misc.BaseFragment<FragmentSettingsActivity> {
+		ViewPager pager;
+		ServerListFragment slf;
+		
+		@Override
+		public void onResume() {
+			// TODO: Implement this method
+			super.onResume();
+			pager=(ViewPager)getView().findViewById(R.id.pager);
+			
+			UsefulPagerAdapter2 upa=new UsefulPagerAdapter2(getChildFragmentManager());
+			slf=new ServerListPreviewFragment();
+			upa.addTab(slf,"");
+			pager.setAdapter(upa);
+		}
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+			// TODO: Implement this method
+			return LayoutInflater.from(getActivity()).inflate(R.layout.view_pager_only,container,false);
+		}
+	}
+	
+	public static class ServerListPreviewFragment extends ServerListFragment<FragmentSettingsActivity> {
+
+		@Override
+		public void onResume() {
+			// TODO: Implement this method
+			super.onResume();
+			new AsyncTask<Void,Void,List<Server>>(){
+				public List<Server> doInBackground(Void...a){
+					List<Server> list=new ArrayList<>();
+					
+					ByteArrayOutputStream result=new ByteArrayOutputStream();
+					DataOutputStream resW=new DataOutputStream(result);
+					try{
+						//full stat
+						resW.write(0);resW.writeInt(0);
+						//73 70 6C 69 74 6E 75 6D 00 80 00
+						resW.write((byte)0x73);
+						resW.write((byte)0x70);
+						resW.write((byte)0x6c);
+						resW.write((byte)0x69);
+						resW.write((byte)0x74);
+						resW.write((byte)0x6e);
+						resW.write((byte)0x75);
+						resW.write((byte)0x6d);
+						resW.write((byte)0x00);
+						resW.write((byte)0x80);
+						resW.write((byte)0x00);
+						//KV
+						Map<String,String> kv=new HashMap();
+						kv.put("gametype", "SMP");
+						kv.put("map", "wisecraft");
+						kv.put("server_engine", "");
+						kv.put("hostport", "");
+						kv.put("whitelist", "on");
+						kv.put("plugins", "Wisecraft Ghost Ping");
+						kv.put("hostname", "§0W§1i§2s§3e§4c§5r§6a§7f§8t §9P§aE §bS§ce§dr§ev§fe§rr");//Colorful!
+						kv.put("numplayers", Integer.MAX_VALUE + "");
+						kv.put("version", "v0.15.6 alpha");
+						kv.put("game_id", "MINECRAFTPE");
+						kv.put("hostip", "127.0.0.1");
+						kv.put("maxplayers", Integer.MAX_VALUE + "");
+						for (Map.Entry<String,String> ent:kv.entrySet()) {
+							resW.write(ent.getKey().getBytes(CompatCharsets.UTF_8));
+							resW.write(0);
+							resW.write(ent.getValue().getBytes(CompatCharsets.UTF_8));
+							resW.write(0);
+						}
+						resW.write(0);
+						//01 70 6C 61 79 65 72 5F 00 00
+						resW.write((byte)0x01);
+						resW.write((byte)0x70);
+						resW.write((byte)0x6c);
+						resW.write((byte)0x61);
+						resW.write((byte)0x79);
+						resW.write((byte)0x65);
+						resW.write((byte)0x72);
+						resW.write((byte)0x5f);
+						resW.write((byte)0x00);
+						resW.write((byte)0x00);
+						//players
+						resW.write(0);
+						resW.write(0);
+						
+						resW.flush();
+					}catch(Throwable e){}
+					
+					ServerStatus success=new ServerStatus();//success server(PE)
+					success.ip="localhost";
+					success.port=19132;
+					success.ping=123;
+					success.response=new FullStat(result.toByteArray());
+					list.add(success);
+					
+					Server error=success.cloneAsServer();//error server(PE)
+					error.port++;
+					list.add(error);
+					
+					Server pending=error.cloneAsServer();//pending server(PE)
+					pending.port++;
+					list.add(pending);
+					
+					return list;
+				}
+				
+				public void onPostExecute(List<Server> lst){
+					getAdapter().getPingingMap().put(lst.get(2),true);
+					addServers(lst);
+				}
+			}.execute();
+			
+		}
 	}
 }
