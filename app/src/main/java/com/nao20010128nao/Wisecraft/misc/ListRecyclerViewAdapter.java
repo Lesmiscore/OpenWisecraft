@@ -40,10 +40,6 @@ public abstract class ListRecyclerViewAdapter<VH extends RecyclerView.ViewHolder
 		return b;
 	}
 
-	public void remove(LType e){
-		remove((Object)e);
-	}
-	
 	@Override
 	public int getItemCount() {
 		// TODO: Implement this method
