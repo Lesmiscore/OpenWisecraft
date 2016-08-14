@@ -32,7 +32,7 @@ public abstract class ListRecyclerViewAdapter<VH extends RecyclerView.ViewHolder
 		return b;
 	}
 
-	public boolean remove(LType object) {
+	public boolean remove(Object object) {
 		// TODO: Implement this method
 		int ofs=list.indexOf(object);
 		boolean b=list.remove(object);
@@ -40,6 +40,10 @@ public abstract class ListRecyclerViewAdapter<VH extends RecyclerView.ViewHolder
 		return b;
 	}
 
+	public void remove(LType e){
+		remove((Object)e);
+	}
+	
 	@Override
 	public int getItemCount() {
 		// TODO: Implement this method
