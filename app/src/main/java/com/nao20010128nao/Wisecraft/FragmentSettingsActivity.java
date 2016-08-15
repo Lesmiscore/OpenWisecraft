@@ -93,7 +93,11 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 					misc.setVisibility(View.GONE);
 				}else{
 					misc.setVisibility(View.VISIBLE);
-					slf.setRows(Utils.calculateRows(this,misc));
+					new Handler().post(new Runnable(){
+						public void run(){
+							slf.setRows(Utils.calculateRows(FragmentSettingsActivity.this,misc));
+						}
+					});
 				}
 				invalidateOptionsMenu();
 				break;
