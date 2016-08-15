@@ -93,6 +93,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 					misc.setVisibility(View.GONE);
 				}else{
 					misc.setVisibility(View.VISIBLE);
+					slf.setRows(Utils.calculateRows(this,misc));
 				}
 				invalidateOptionsMenu();
 				break;
@@ -468,6 +469,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 				}
 				
 				public void onPostExecute(List<Server> lst){
+					getAdapter().clear();
 					getAdapter().getPingingMap().put(lst.get(2),true);
 					addServers(lst);
 				}

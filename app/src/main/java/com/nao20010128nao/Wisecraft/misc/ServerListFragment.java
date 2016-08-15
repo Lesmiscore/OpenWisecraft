@@ -84,6 +84,15 @@ public class ServerListFragment<T extends FragmentActivity> extends BaseFragment
 		slra.remove(s);
 	}
 	
+	public void setRows(int rows){
+		RecyclerView.LayoutManager lm=rv.getLayoutManager();
+		if(lm instanceof GridLayoutManager){
+			((GridLayoutManager)lm).setSpanCount(rows);
+		}else if(lm instanceof StaggeredGridLayoutManager){
+			((StaggeredGridLayoutManager)lm).setSpanCount(rows);
+		}
+	}
+	
 	private void setLayoutModeInternal(int mode){
 		switch(mode){
 			case 0:default:
