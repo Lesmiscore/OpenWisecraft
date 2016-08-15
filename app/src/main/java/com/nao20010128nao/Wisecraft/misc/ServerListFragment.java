@@ -12,7 +12,9 @@ import java.util.*;
 
 public class ServerListFragment<T extends FragmentActivity> extends BaseFragment<T>
 {
-
+	int rows=-1;
+	
+	
 	RecyclerView rv;
 	ServerListRecyclerAdapter slra;
 
@@ -85,6 +87,10 @@ public class ServerListFragment<T extends FragmentActivity> extends BaseFragment
 	}
 	
 	public void setRows(int rows){
+		this.rows=rows;
+		if(rv==null){
+			return;
+		}
 		RecyclerView.LayoutManager lm=rv.getLayoutManager();
 		if(lm instanceof GridLayoutManager){
 			((GridLayoutManager)lm).setSpanCount(rows);
@@ -94,16 +100,20 @@ public class ServerListFragment<T extends FragmentActivity> extends BaseFragment
 	}
 	
 	private void setLayoutModeInternal(int mode){
+		int rows=this.rows;
+		if(rows==-1){
+			rows=calculateRows(getActivity());
+		}
 		switch(mode){
 			case 0:default:
 				rv.setLayoutManager(new LinearLayoutManager(getActivity()));
 				break;
 			case 1:
-				GridLayoutManager glm=new GridLayoutManager(getActivity(),calculateRows(getActivity()));
+				GridLayoutManager glm=new GridLayoutManager(getActivity(),rows);
 				rv.setLayoutManager(glm);
 				break;
 			case 2:
-				StaggeredGridLayoutManager sglm=new StaggeredGridLayoutManager(calculateRows(getActivity()),StaggeredGridLayoutManager.VERTICAL);
+				StaggeredGridLayoutManager sglm=new StaggeredGridLayoutManager(rows,StaggeredGridLayoutManager.VERTICAL);
 				rv.setLayoutManager(sglm);
 				break;
 		}
