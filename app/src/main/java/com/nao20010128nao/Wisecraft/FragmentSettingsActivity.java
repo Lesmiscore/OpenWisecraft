@@ -96,7 +96,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 					if(getResources().getBoolean(R.bool.is_port)){
 						slf.setRows(Utils.calculateRows(FragmentSettingsActivity.this));
 					}else{
-						slf.setRows(Utils.calculateRows(FragmentSettingsActivity.this,Utils.getViewSize(findViewById(android.R.id.content)).x));
+						slf.setRows(Utils.calculateRows(FragmentSettingsActivity.this,Utils.getViewSize(findViewById(android.R.id.content)).x/2));
 					}
 				}
 				invalidateOptionsMenu();
