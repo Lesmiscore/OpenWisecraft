@@ -305,6 +305,10 @@ public class Utils extends PingerUtils{
 
         return point;
     }
+	public static int calculateRows(Context c,int value){
+		int base=c.getResources().getDimensionPixelSize(R.dimen.panel_base_size);
+		return (int)Math.max(1,((double)value)/((double)base));
+	}
 	public static int calculateRows(Context c){
 		int base=c.getResources().getDimensionPixelSize(R.dimen.panel_base_size);
 		return (int)Math.max(1,((double)getScreenWidth(c,base))/((double)base));

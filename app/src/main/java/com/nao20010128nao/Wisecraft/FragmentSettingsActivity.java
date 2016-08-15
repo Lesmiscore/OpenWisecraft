@@ -93,11 +93,11 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 					misc.setVisibility(View.GONE);
 				}else{
 					misc.setVisibility(View.VISIBLE);
-					new Handler().postDelayed(new Runnable(){
-						public void run(){
-							slf.setRows(Utils.calculateRows(FragmentSettingsActivity.this,misc));
-						}
-					},50);
+					if(getResources().getBoolean(R.bool.is_port)){
+						slf.setRows(Utils.calculateRows(FragmentSettingsActivity.this));
+					}else{
+						slf.setRows(Utils.calculateRows(FragmentSettingsActivity.this,Utils.getViewSize(findViewById(android.R.id.content)).x));
+					}
 				}
 				invalidateOptionsMenu();
 				break;
