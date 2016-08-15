@@ -387,9 +387,9 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			pager=(ViewPager)getView().findViewById(R.id.pager);
 			
 			UsefulPagerAdapter2 upa=new UsefulPagerAdapter2(getChildFragmentManager());
+			pager.setAdapter(upa);
 			slf=new ServerListPreviewFragment();
 			upa.addTab(slf,"");
-			pager.setAdapter(upa);
 			pager.setCurrentItem(0);
 		}
 
