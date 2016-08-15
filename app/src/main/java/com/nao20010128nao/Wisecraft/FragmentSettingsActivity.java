@@ -40,8 +40,11 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		"allowAutoUpdateSLSCode",
 		"aausc_monnet"*/
 	}));
+	
 	FrameLayout misc;
-	PreviewFragment preview;
+	ViewPager pager;
+	ServerListFragment slf;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
@@ -62,6 +65,13 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 				.commit();
 		}
 		misc=(FrameLayout)findViewById(R.id.misc);
+		pager=(ViewPager)LayoutInflater.from(this).inflate(R.layout.view_pager_only,misc,true).findViewById(R.id.pager);
+		
+		UsefulPagerAdapter2 upa=new UsefulPagerAdapter2(getSupportFragmentManager());
+		pager.setAdapter(upa);
+		slf=new ServerListPreviewFragment();
+		upa.addTab(slf,"");
+		pager.setCurrentItem(0);
 	}
 
 	@Override
@@ -81,17 +91,8 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 				boolean isShowing=misc.getVisibility()==View.VISIBLE;
 				if(isShowing){
 					misc.setVisibility(View.GONE);
-					if(preview!=null)
-						getSupportFragmentManager()
-							.beginTransaction()
-							.remove(preview)
-							.commit();
 				}else{
 					misc.setVisibility(View.VISIBLE);
-					getSupportFragmentManager()
-						.beginTransaction()
-						.replace(R.id.misc,preview=new PreviewFragment())
-						.commit();
 				}
 				invalidateOptionsMenu();
 				break;
@@ -382,30 +383,6 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 	
 	
 	//preview part
-	public static class PreviewFragment extends com.nao20010128nao.Wisecraft.misc.BaseFragment<FragmentSettingsActivity> {
-		ViewPager pager;
-		ServerListFragment slf;
-		
-		@Override
-		public void onResume() {
-			// TODO: Implement this method
-			super.onResume();
-			pager=(ViewPager)getView().findViewById(R.id.pager);
-			
-			UsefulPagerAdapter2 upa=new UsefulPagerAdapter2(getChildFragmentManager());
-			pager.setAdapter(upa);
-			slf=new ServerListPreviewFragment();
-			upa.addTab(slf,"");
-			pager.setCurrentItem(0);
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-			// TODO: Implement this method
-			return LayoutInflater.from(getActivity()).inflate(R.layout.view_pager_only,container,false);
-		}
-	}
-	
 	public static class ServerListPreviewFragment extends ServerListFragment<FragmentSettingsActivity> {
 
 		@Override
