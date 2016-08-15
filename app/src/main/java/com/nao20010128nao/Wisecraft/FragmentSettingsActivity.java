@@ -41,6 +41,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		"aausc_monnet"*/
 	}));
 	FrameLayout misc;
+	PreviewFragment preview;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
@@ -60,10 +61,6 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 				.addToBackStack("root")
 				.commit();
 		}
-		getSupportFragmentManager()
-			.beginTransaction()
-			.replace(R.id.misc,new PreviewFragment())
-			.commit();
 		misc=(FrameLayout)findViewById(R.id.misc);
 	}
 
@@ -84,8 +81,17 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 				boolean isShowing=misc.getVisibility()==View.VISIBLE;
 				if(isShowing){
 					misc.setVisibility(View.GONE);
+					if(preview!=null)
+						getSupportFragmentManager()
+							.beginTransaction()
+							.remove(preview)
+							.commit();
 				}else{
 					misc.setVisibility(View.VISIBLE);
+					getSupportFragmentManager()
+						.beginTransaction()
+						.replace(R.id.misc,preview=new PreviewFragment())
+						.commit();
 				}
 				invalidateOptionsMenu();
 				break;
