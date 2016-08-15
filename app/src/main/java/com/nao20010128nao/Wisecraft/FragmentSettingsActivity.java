@@ -59,11 +59,11 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 				.replace(R.id.preference,new HubPrefFragment())
 				.addToBackStack("root")
 				.commit();
-			getSupportFragmentManager()
-				.beginTransaction()
-				.replace(R.id.misc,new PreviewFragment())
-				.commit();
 		}
+		getSupportFragmentManager()
+			.beginTransaction()
+			.replace(R.id.misc,new PreviewFragment())
+			.commit();
 		misc=(FrameLayout)findViewById(R.id.misc);
 	}
 
@@ -390,6 +390,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			slf=new ServerListPreviewFragment();
 			upa.addTab(slf,"");
 			pager.setAdapter(upa);
+			pager.setCurrentItem(0);
 		}
 
 		@Override

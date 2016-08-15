@@ -2,7 +2,7 @@ package com.nao20010128nao.Wisecraft.misc;
 import android.support.v4.app.*;
 import java.util.*;
 
-public class UsefulPagerAdapter extends FragmentStatePagerAdapter{
+public class UsefulPagerAdapter extends FragmentPagerAdapter{
 	List<Map.Entry<Class,String>> pages=new ArrayList<>();
 
 	public UsefulPagerAdapter(FragmentManager fm){
