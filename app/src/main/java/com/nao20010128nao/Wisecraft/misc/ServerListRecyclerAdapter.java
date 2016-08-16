@@ -68,6 +68,7 @@ public class ServerListRecyclerAdapter extends ListRecyclerViewAdapter<ServerSta
 			case 0:default:isGrid=false;break;
 			case 1:case 2:isGrid=true;break;
 		}
+		notifyItemRangeChanged(0,size());
 	}
 	
 	public void addBindViewHolderListener(BindViewHolderListener b){

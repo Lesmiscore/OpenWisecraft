@@ -97,6 +97,7 @@ public class ServerListFragment<T extends FragmentActivity> extends BaseFragment
 		}else if(lm instanceof StaggeredGridLayoutManager){
 			((StaggeredGridLayoutManager)lm).setSpanCount(rows);
 		}
+		rv.setLayoutManager(lm);
 	}
 	
 	private void setLayoutModeInternal(int mode){
