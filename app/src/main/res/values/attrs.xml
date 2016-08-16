@@ -4,4 +4,5 @@
 		<attr name="rawRes" format="string"/>
 		<attr name="async" format="boolean"/>
 	</declare-styleable>
+	<attr name="colorPickerPreferenceStyle" format="reference"/>
 </resources>

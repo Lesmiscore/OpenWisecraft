@@ -25,7 +25,7 @@ public class ColorPickerPreferenceCompat extends Preference
 		this(context,attrs,defStyleAttr,R.style.Preference_ColorPickerPreference);
 	}
     public ColorPickerPreferenceCompat(android.content.Context context, android.util.AttributeSet attrs) {
-		this(context,attrs,0);
+		this(context,attrs,R.attr.colorPickerPreferenceStyle);
 	}
     public ColorPickerPreferenceCompat(android.content.Context context) {
 		this(context,null);

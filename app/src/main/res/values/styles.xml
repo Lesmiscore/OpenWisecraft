@@ -56,6 +56,7 @@
         <item name="dialogPreferenceStyle">@style/Preference.DialogPreference</item>
         <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
         <item name="preferenceFragmentListStyle">@style/PreferenceFragmentList</item>
+		<item name="colorPickerPreferenceStyle">@style/Preference.ColorPickerPreference</item>
 		<item name="android:layout">@layout/fragment_settings_content</item>
     </style>
 	
