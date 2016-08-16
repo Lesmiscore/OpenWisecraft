@@ -100,13 +100,15 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		switch(item.getItemId()){
 			case 0:
 				boolean isShowing=misc.getVisibility()==View.VISIBLE;
+				int rows;
 				if(getResources().getBoolean(R.bool.is_port)){
 					Log.d("FSA","calculating by the width of the screen");
-					slf.setRows(Utils.calculateRows(FragmentSettingsActivity.this));
+					slf.setRows(rows=Utils.calculateRows(FragmentSettingsActivity.this));
 				}else{
 					Log.d("FSA","calculating by the width of the content");
-					slf.setRows(Utils.calculateRows(FragmentSettingsActivity.this,Utils.getViewSize(findViewById(android.R.id.content)).x/2));
+					slf.setRows(rows=Utils.calculateRows(FragmentSettingsActivity.this,Utils.getScreenWidth(this)/2));
 				}
+				Log.d("FSA","calculated rows: "+rows);
 				if(isShowing){
 					misc.setVisibility(View.GONE);
 				}else{
