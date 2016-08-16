@@ -7,17 +7,18 @@ import android.support.v4.content.*;
 import android.support.v4.view.*;
 import android.support.v7.app.*;
 import android.support.v7.widget.*;
+import android.util.*;
 import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.ToolBox.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
+import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
 import com.nao20010128nao.Wisecraft.misc.pref.*;
 import java.io.*;
 import java.lang.reflect.*;
 import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
-import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
 
 public class FragmentSettingsActivity extends AppCompatActivity {
 	public static final Map<String,Class<? extends BaseFragment>> FRAGMENT_CLASSES=new HashMap<String,Class<? extends BaseFragment>>(){{
@@ -100,8 +101,10 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			case 0:
 				boolean isShowing=misc.getVisibility()==View.VISIBLE;
 				if(getResources().getBoolean(R.bool.is_port)){
+					Log.d("FSA","calculating by the width of the screen");
 					slf.setRows(Utils.calculateRows(FragmentSettingsActivity.this));
 				}else{
+					Log.d("FSA","calculating by the width of the content");
 					slf.setRows(Utils.calculateRows(FragmentSettingsActivity.this,Utils.getViewSize(findViewById(android.R.id.content)).x/2));
 				}
 				if(isShowing){
