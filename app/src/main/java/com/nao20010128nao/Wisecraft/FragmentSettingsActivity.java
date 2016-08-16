@@ -72,6 +72,16 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		slf=new ServerListPreviewFragment();
 		upa.addTab(slf,"");
 		pager.setCurrentItem(0);
+		if(savedInstanceState!=null){
+			misc.setVisibility(savedInstanceState.getInt("misc.visibility"));
+		}
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		// TODO: Implement this method
+		super.onSaveInstanceState(outState);
+		outState.putInt("misc.visibility",misc.getVisibility());
 	}
 
 	@Override
@@ -89,15 +99,15 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		switch(item.getItemId()){
 			case 0:
 				boolean isShowing=misc.getVisibility()==View.VISIBLE;
+				if(getResources().getBoolean(R.bool.is_port)){
+					slf.setRows(Utils.calculateRows(FragmentSettingsActivity.this));
+				}else{
+					slf.setRows(Utils.calculateRows(FragmentSettingsActivity.this,Utils.getViewSize(findViewById(android.R.id.content)).x/2));
+				}
 				if(isShowing){
 					misc.setVisibility(View.GONE);
 				}else{
 					misc.setVisibility(View.VISIBLE);
-					if(getResources().getBoolean(R.bool.is_port)){
-						slf.setRows(Utils.calculateRows(FragmentSettingsActivity.this));
-					}else{
-						slf.setRows(Utils.calculateRows(FragmentSettingsActivity.this,Utils.getViewSize(findViewById(android.R.id.content)).x/2));
-					}
 				}
 				invalidateOptionsMenu();
 				break;
