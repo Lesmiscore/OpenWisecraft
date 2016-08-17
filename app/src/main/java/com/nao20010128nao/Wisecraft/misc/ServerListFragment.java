@@ -4,11 +4,12 @@ import android.graphics.drawable.*;
 import android.os.*;
 import android.support.v4.app.*;
 import android.support.v7.widget.*;
+import android.util.*;
 import android.view.*;
 import com.nao20010128nao.Wisecraft.*;
+import java.util.*;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
-import java.util.*;
 
 public class ServerListFragment<T extends FragmentActivity> extends BaseFragment<T>
 {
@@ -98,6 +99,7 @@ public class ServerListFragment<T extends FragmentActivity> extends BaseFragment
 			((StaggeredGridLayoutManager)lm).setSpanCount(rows);
 		}
 		rv.setLayoutManager(lm);
+		Log.d("ServerListFragment","set rows "+rows+" to "+lm);
 	}
 	
 	private void setLayoutModeInternal(int mode){
