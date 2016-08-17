@@ -71,6 +71,13 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		UsefulPagerAdapter2 upa=new UsefulPagerAdapter2(getSupportFragmentManager());
 		pager.setAdapter(upa);
 		slf=new ServerListPreviewFragment();
+		if(getResources().getBoolean(R.bool.is_port)){
+			Log.d("FSA","calculating by the width of the screen");
+			slf.setRows(Utils.calculateRows(FragmentSettingsActivity.this));
+		}else{
+			Log.d("FSA","calculating by the width of the content");
+			slf.setRows(Utils.calculateRows(FragmentSettingsActivity.this,Utils.getScreenWidth(this)/2));
+		}
 		upa.addTab(slf,"");
 		pager.setCurrentItem(0);
 		if(savedInstanceState!=null){
