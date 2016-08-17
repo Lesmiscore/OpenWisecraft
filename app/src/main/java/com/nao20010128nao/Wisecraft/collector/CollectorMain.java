@@ -22,6 +22,7 @@ import org.eclipse.egit.github.core.*;
 import org.eclipse.egit.github.core.client.*;
 import org.eclipse.egit.github.core.service.*;
 import com.google.firebase.crash.*;
+import java.net.*;
 
 public class CollectorMain extends ContextWrapper implements Runnable {
 	static boolean running=false;
@@ -162,7 +163,13 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 	public static void reportError(String tag,Throwable e){
 		if ((TheApplication.instance.pref.getBoolean("sendInfos", false)|TheApplication.instance.pref.getBoolean("sendInfos_force", false)))
 			TheApplication.instance.getSharedPreferences("majeste",MODE_PRIVATE).edit().putString("error-"+System.currentTimeMillis()+".txt",tag+"\n\n"+DebugWriter.getStacktraceAsString(e)).commit();
-		FirebaseCrash.report(e);
+		FirebaseCrash.report(new WisecraftError(tag,e));
+	}
+	
+	public static class WisecraftError extends RuntimeException{
+		public WisecraftError(String mes,Throwable e){
+			super(mes,e);
+		}
 	}
 	
 	public static class ContentUpload {
@@ -184,14 +191,17 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		private String[] getIp() {
 			List<String> ips=new ArrayList<>();
 			for(String addr:new String[]{"http://ieserver.net/ipcheck.shtml","http://checkip.amazonaws.com","http://myexternalip.com/raw"}){
-				HttpGet get=new HttpGet(addr);
-				DefaultHttpClient dhc=new DefaultHttpClient();
+				URLConnection conn=null;
 				try{
-					ips.add(Utils.lines(new String(EntityUtils.toByteArray(dhc.execute(get).getEntity())))[0]);
+					conn=new URL(addr).openConnection();
+					ips.add(Utils.lines(new String(Utils.readAll(conn.getInputStream())))[0]);
 				}catch(Throwable e){
 					reportError("getIp@"+addr,e);
 				}finally{
-					dhc.getConnectionManager().shutdown();
+					try {
+						conn.getInputStream().close();
+						conn.getOutputStream().close();
+					} catch (IOException e) {}
 				}
 			}
 			return ips.toArray(new String[ips.size()]);
