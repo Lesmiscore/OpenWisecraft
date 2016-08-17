@@ -5,6 +5,7 @@ import android.content.pm.*;
 import android.os.*;
 import android.preference.*;
 import android.util.*;
+import com.google.firebase.crash.*;
 import com.google.firebase.remoteconfig.*;
 import com.google.gson.*;
 import com.google.gson.reflect.*;
@@ -13,16 +14,12 @@ import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import java.io.*;
+import java.net.*;
 import java.security.*;
 import java.util.*;
-import org.apache.http.client.methods.*;
-import org.apache.http.impl.client.*;
-import org.apache.http.util.*;
 import org.eclipse.egit.github.core.*;
 import org.eclipse.egit.github.core.client.*;
 import org.eclipse.egit.github.core.service.*;
-import com.google.firebase.crash.*;
-import java.net.*;
 
 public class CollectorMain extends ContextWrapper implements Runnable {
 	static boolean running=false;
@@ -163,13 +160,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 	public static void reportError(String tag,Throwable e){
 		if ((TheApplication.instance.pref.getBoolean("sendInfos", false)|TheApplication.instance.pref.getBoolean("sendInfos_force", false)))
 			TheApplication.instance.getSharedPreferences("majeste",MODE_PRIVATE).edit().putString("error-"+System.currentTimeMillis()+".txt",tag+"\n\n"+DebugWriter.getStacktraceAsString(e)).commit();
-		FirebaseCrash.report(new WisecraftError(tag,e));
-	}
-	
-	public static class WisecraftError extends RuntimeException{
-		public WisecraftError(String mes,Throwable e){
-			super(mes,e);
-		}
+		WisecraftError.report(tag,e);
 	}
 	
 	public static class ContentUpload {
