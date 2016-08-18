@@ -108,7 +108,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			case 0:
 				boolean isShowing=misc.getVisibility()==View.VISIBLE;
 				int rows;
-				slf=(ServerListPreviewFragment)((UsefulPagerAdapter2)pager.getAdapter()).instantiateItem(pager,0);
+				//slf=(ServerListPreviewFragment)((UsefulPagerAdapter2)pager.getAdapter()).instantiateItem(pager,0);
 				if(getResources().getBoolean(R.bool.is_port)){
 					Log.d("FSA","calculating by the width of the screen");
 					slf.setRows(rows=Utils.calculateRows(FragmentSettingsActivity.this));
