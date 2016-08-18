@@ -107,16 +107,6 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		switch(item.getItemId()){
 			case 0:
 				boolean isShowing=misc.getVisibility()==View.VISIBLE;
-				int rows;
-				//slf=(ServerListPreviewFragment)((UsefulPagerAdapter2)pager.getAdapter()).instantiateItem(pager,0);
-				if(getResources().getBoolean(R.bool.is_port)){
-					Log.d("FSA","calculating by the width of the screen");
-					slf.setRows(rows=Utils.calculateRows(FragmentSettingsActivity.this));
-				}else{
-					Log.d("FSA","calculating by the width of the content");
-					slf.setRows(rows=Utils.calculateRows(FragmentSettingsActivity.this,Utils.getScreenWidth(this)/2));
-				}
-				Log.d("FSA","calculated rows: "+rows);
 				if(isShowing){
 					misc.setVisibility(View.GONE);
 				}else{
@@ -501,7 +491,15 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 					addServers(lst);
 				}
 			}.execute();
-			
+			int rows;
+			if(getResources().getBoolean(R.bool.is_port)){
+				Log.d("FSA","calculating by the width of the screen");
+				setRows(rows=Utils.calculateRows(getActivity()));
+			}else{
+				Log.d("FSA","calculating by the width of the content");
+				setRows(rows=Utils.calculateRows(getActivity(),Utils.getScreenWidth(getActivity())/2));
+			}
+			Log.d("FSA","calculated rows: "+rows);
 		}
 	}
 }
