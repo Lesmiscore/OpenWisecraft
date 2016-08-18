@@ -1,5 +1,7 @@
 package com.nao20010128nao.Wisecraft;
 import android.content.*;
+import android.graphics.*;
+import android.graphics.drawable.*;
 import android.os.*;
 import android.preference.*;
 import android.support.v4.app.*;
@@ -10,15 +12,19 @@ import android.support.v7.widget.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
+import com.astuetz.*;
 import com.nao20010128nao.ToolBox.*;
+import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
 import com.nao20010128nao.Wisecraft.misc.pref.*;
 import java.io.*;
-import java.lang.reflect.*;
 import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
+
+import android.support.v7.widget.Toolbar;
+import com.nao20010128nao.Wisecraft.R;
 
 public class FragmentSettingsActivity extends AppCompatActivity {
 	public static final Map<String,Class<? extends BaseFragment>> FRAGMENT_CLASSES=new HashMap<String,Class<? extends BaseFragment>>(){{
@@ -79,7 +85,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			slf.setRows(Utils.calculateRows(FragmentSettingsActivity.this,Utils.getScreenWidth(this)/2));
 		}
 		upa.addTab(slf,"");
-		pager.setCurrentItem(0);
+		upa.addTab(new ServerInfoToolbarFragment(),"");
 		if(savedInstanceState!=null){
 			misc.setVisibility(savedInstanceState.getInt("misc.visibility"));
 		}
@@ -502,6 +508,81 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			}
 			Log.d("FSA","calculated rows: "+rows);
 			return rows;
+		}
+	}
+	
+	public static class ServerInfoToolbarFragment extends com.nao20010128nao.Wisecraft.misc.BaseFragment<FragmentSettingsActivity> {
+		UsefulPagerAdapter adapter;
+		ViewPager tabs;
+		
+		@Override
+		public void onResume() {
+			// TODO: Implement this method
+			super.onResume();
+			Toolbar tb=(Toolbar)findViewById(R.id.toolbar);
+			
+			tabs = (ViewPager)findViewById(R.id.pager);
+			tabs.setAdapter(adapter = new UsefulPagerAdapter(getChildFragmentManager()));
+			PagerSlidingTabStrip psts=(PagerSlidingTabStrip)findViewById(R.id.tabs);
+			psts.setViewPager(tabs);
+			
+			adapter.addTab(BlankFragment.class,"A");
+			adapter.addTab(BlankFragment.class,"B");
+			adapter.addTab(BlankFragment.class,"C");
+			
+			if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
+				BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
+				bd.setTargetDensity(getResources().getDisplayMetrics());
+				bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
+				findViewById(R.id.appbar).setBackgroundDrawable(bd);
+				psts.setIndicatorColor(Color.WHITE);
+				psts.setTextColor(Color.WHITE);
+				psts.setOnPageChangeListener(new ColorUpdater(Color.WHITE, ServerInfoActivity.DIRT_BRIGHT, tabs, psts));
+				tb.setTitle(Utils.parseMinecraftFormattingCodeForDark("§0W§1i§2s§3e§4c§5r§6a§7f§8t §9P§aE §bS§ce§dr§ev§fe§rr"));
+			} else {
+				psts.setIndicatorColor(ContextCompat.getColor(getActivity(), R.color.mainColor));
+				psts.setTextColor(ContextCompat.getColor(getActivity(), R.color.mainColor));
+				psts.setOnPageChangeListener(new ColorUpdater(ContextCompat.getColor(getActivity(), R.color.mainColor), ServerInfoActivity.PALE_PRIMARY, tabs, psts));
+				tb.setTitle(Utils.parseMinecraftFormattingCode       ("§0W§1i§2s§3e§4c§5r§6a§7f§8t §9P§aE §bS§ce§dr§ev§fe§rr"));
+			}
+			
+			{
+				Menu menu=tb.getMenu();
+				MenuItem updateBtn,seeTitleButton;
+				boolean isDark;
+				if (pref.getBoolean("colorFormattedText", false)) {
+					if (pref.getBoolean("darkBackgroundForServerName", false)) {
+						isDark = true;
+					} else {
+						isDark = false;
+					}
+				} else {
+					isDark = false;
+				}
+				int color= ContextCompat.getColor(getContext(), R.color.mainColor);
+				seeTitleButton = menu.add(Menu.NONE, 0, 0, R.string.seeTitle);
+				seeTitleButton.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_open_in_new_black_48dp, isDark ?Color.WHITE: color));
+				MenuItemCompat.setShowAsAction(seeTitleButton, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
+
+				updateBtn = menu.add(Menu.NONE, 1, 1, R.string.update);
+				updateBtn.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_refresh_black_48dp, isDark ?Color.WHITE: color));
+				MenuItemCompat.setShowAsAction(updateBtn, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
+			}
+		}
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+			// TODO: Implement this method
+			return LayoutInflater.from(getActivity()).inflate(R.layout.fragment_settings_preview_server_info_toolbar,container,false);
+		}
+		
+		public static class BlankFragment extends com.nao20010128nao.Wisecraft.misc.BaseFragment<FragmentSettingsActivity> {
+
+			@Override
+			public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+				// TODO: Implement this method
+				return inflater.inflate(R.layout.none,container,false);
+			}
 		}
 	}
 }

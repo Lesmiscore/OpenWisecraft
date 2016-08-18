@@ -1,8 +1,9 @@
 package com.nao20010128nao.Wisecraft.misc;
+import android.content.*;
+import android.os.*;
+import android.preference.*;
 import android.support.v4.app.*;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
+import android.view.*;
 
 public abstract class BaseFragment<Parent extends FragmentActivity> extends Fragment {
 	protected SharedPreferences pref;
@@ -15,5 +16,9 @@ public abstract class BaseFragment<Parent extends FragmentActivity> extends Frag
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		pref=PreferenceManager.getDefaultSharedPreferences(getParentActivity());
+	}
+	
+	public View findViewById(int id){
+		return getView().findViewById(id);
 	}
 }
