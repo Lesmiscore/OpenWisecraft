@@ -42,7 +42,7 @@ stages:
 main:
   stage: main
   script:
-    - gradle-2.12/bin/gradle build -p app --info --stacktrace
+    - gradle-2.12/bin/gradle build -p app --info --stacktrace > build.log
     - mv app/build/outputs/apk/*.apk .
     - unzip app-release.apk -d unzippedApk > NUL
     - android-sdk-linux/build-tools/23.0.2/dexdump -d unzippedApk/classes.dex > dexdump.txt
@@ -50,6 +50,7 @@ main:
     paths:
       - "*.apk"
       - dexdump.txt
+      - build.log
 
 
 rcon:
