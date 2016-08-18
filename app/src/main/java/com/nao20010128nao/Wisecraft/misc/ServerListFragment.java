@@ -30,8 +30,8 @@ public class ServerListFragment<T extends FragmentActivity> extends BaseFragment
 	public void onResume() {
 		// TODO: Implement this method
 		super.onResume();
-		setLayoutModeInternal(pref.getInt("serverListStyle2",0));
 		rv.setAdapter(slra);
+		setLayoutModeInternal(pref.getInt("serverListStyle2",0));
 		setDarkBackground(pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false));
 	}
 
@@ -108,6 +108,7 @@ public class ServerListFragment<T extends FragmentActivity> extends BaseFragment
 		if(rows==-1){
 			rows=calculateRows(getActivity());
 		}
+		Log.d("ServerListFragment","setLayoutModeInternal:rows=="+rows);
 		switch(mode){
 			case 0:default:
 				rv.setLayoutManager(new LinearLayoutManager(getActivity()));
