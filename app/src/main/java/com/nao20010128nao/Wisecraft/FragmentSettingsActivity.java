@@ -538,12 +538,23 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 				psts.setIndicatorColor(Color.WHITE);
 				psts.setTextColor(Color.WHITE);
 				psts.setOnPageChangeListener(new ColorUpdater(Color.WHITE, ServerInfoActivity.DIRT_BRIGHT, tabs, psts));
-				tb.setTitle(Utils.parseMinecraftFormattingCodeForDark("§0W§1i§2s§3e§4c§5r§6a§7f§8t §9P§aE §bS§ce§dr§ev§fe§rr"));
 			} else {
 				psts.setIndicatorColor(ContextCompat.getColor(getActivity(), R.color.mainColor));
 				psts.setTextColor(ContextCompat.getColor(getActivity(), R.color.mainColor));
 				psts.setOnPageChangeListener(new ColorUpdater(ContextCompat.getColor(getActivity(), R.color.mainColor), ServerInfoActivity.PALE_PRIMARY, tabs, psts));
-				tb.setTitle(Utils.parseMinecraftFormattingCode       ("§0W§1i§2s§3e§4c§5r§6a§7f§8t §9P§aE §bS§ce§dr§ev§fe§rr"));
+			}
+			
+			{
+				String title="§0W§1i§2s§3e§4c§5r§6a§7f§8t §9P§aE §bS§ce§dr§ev§fe§rr";
+				if (pref.getBoolean("colorFormattedText", false)) {
+					if (pref.getBoolean("darkBackgroundForServerName", false)) {
+						tb.setTitle(Utils.parseMinecraftFormattingCodeForDark(title.toString()));
+					} else {
+						tb.setTitle(Utils.parseMinecraftFormattingCode(title.toString()));
+					}
+				} else {
+					tb.setTitle(Utils.deleteDecorations(title.toString()));
+				}
 			}
 			
 			{
