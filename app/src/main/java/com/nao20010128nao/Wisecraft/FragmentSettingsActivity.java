@@ -413,16 +413,10 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 	public static class ServerListPreviewFragment extends ServerListFragment<FragmentSettingsActivity> {
 
 		@Override
-		public void onCreate(Bundle savedInstanceState) {
-			// TODO: Implement this method
-			super.onCreate(savedInstanceState);
-			getParentActivity().slf=this;
-		}
-
-		@Override
 		public void onResume() {
 			// TODO: Implement this method
 			super.onResume();
+			getParentActivity().slf=this;
 			new AsyncTask<Void,Void,List<Server>>(){
 				public List<Server> doInBackground(Void...a){
 					List<Server> list=new ArrayList<>();
