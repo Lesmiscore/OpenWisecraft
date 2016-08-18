@@ -104,7 +104,6 @@ public class ServerListFragment<T extends FragmentActivity> extends BaseFragment
 	}
 	
 	private void setLayoutModeInternal(int mode){
-		int rows=this.rows;
 		if(rows==-1){
 			rows=calculateRows(getActivity());
 		}
