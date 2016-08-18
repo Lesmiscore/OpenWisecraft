@@ -126,7 +126,7 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		fontDisplayNames.put("icomoon1",R.string.font_icomoon1);
 		fontDisplayNames.put("sysDefault",R.string.font_sysDefault);
 		fontDisplayNames.put("robotoSlabLight",R.string.font_robotoSlabLight);
-		fontDisplayNames.put("ubuntu",R.string.font_ubuntu);
+		fontDisplayNames.put("ubuntuFont",R.string.font_ubuntu);
 		
 		CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath(getFontFilename()).setFontAttrId(R.attr.fontPath).build());
 	}
