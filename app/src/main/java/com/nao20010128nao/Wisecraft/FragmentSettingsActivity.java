@@ -270,12 +270,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 							.show();
 					}
 					String[] getFontChoices() {
-						List<String> l=new ArrayList();
-						for (Field f:TheApplication.fonts) {
-							l.add(f.getName());
-						}
-						l.remove("icomoon1");
-						return Factories.strArray(l);
+						return getResources().getStringArray(R.array.fontNamesOrder);
 					}
 				});
 		}
