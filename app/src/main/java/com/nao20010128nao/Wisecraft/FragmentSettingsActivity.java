@@ -491,15 +491,22 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 					addServers(lst);
 				}
 			}.execute();
+			setRows(onCalculateRows());
+		}
+
+		@Override
+		protected int onCalculateRows() {
+			// TODO: Implement this method
 			int rows;
 			if(getResources().getBoolean(R.bool.is_port)){
 				Log.d("FSA","calculating by the width of the screen");
-				setRows(rows=Utils.calculateRows(getActivity()));
+				rows=Utils.calculateRows(getActivity());
 			}else{
 				Log.d("FSA","calculating by the width of the content");
-				setRows(rows=Utils.calculateRows(getActivity(),Utils.getScreenWidth(getActivity())/2));
+				rows=Utils.calculateRows(getActivity(),Utils.getScreenWidth(getActivity())/2);
 			}
 			Log.d("FSA","calculated rows: "+rows);
+			return rows;
 		}
 	}
 }

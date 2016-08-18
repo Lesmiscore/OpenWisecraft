@@ -105,7 +105,7 @@ public class ServerListFragment<T extends FragmentActivity> extends BaseFragment
 	
 	private void setLayoutModeInternal(int mode){
 		if(rows==-1){
-			rows=calculateRows(getActivity());
+			rows=onCalculateRows();
 		}
 		Log.d("ServerListFragment","setLayoutModeInternal:rows=="+rows);
 		switch(mode){
@@ -121,5 +121,9 @@ public class ServerListFragment<T extends FragmentActivity> extends BaseFragment
 				rv.setLayoutManager(sglm);
 				break;
 		}
+	}
+	
+	protected int onCalculateRows(){
+		return calculateRows(getActivity());
 	}
 }
