@@ -87,9 +87,10 @@ public class ServerListFragment<T extends FragmentActivity> extends BaseFragment
 		slra.remove(s);
 	}
 	
-	public void setRows(int rows){
-		this.rows=rows;
+	public void setRows(int row){
+		rows=row;
 		if(rv==null){
+			Log.d("ServerListFragment","rv==null");
 			return;
 		}
 		RecyclerView.LayoutManager lm=rv.getLayoutManager();
