@@ -75,7 +75,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			Log.d("FSA","calculating by the width of the screen");
 			slf.setRows(Utils.calculateRows(FragmentSettingsActivity.this));
 		}else{
-			Log.d("FSA","calculating by the width of the content");
+			Log.d("FSA","calculating by the half width of the screen");
 			slf.setRows(Utils.calculateRows(FragmentSettingsActivity.this,Utils.getScreenWidth(this)/2));
 		}
 		upa.addTab(slf,"");
@@ -108,6 +108,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			case 0:
 				boolean isShowing=misc.getVisibility()==View.VISIBLE;
 				int rows;
+				slf=(ServerListPreviewFragment)((UsefulPagerAdapter2)pager.getAdapter()).instantiateItem(pager,0);
 				if(getResources().getBoolean(R.bool.is_port)){
 					Log.d("FSA","calculating by the width of the screen");
 					slf.setRows(rows=Utils.calculateRows(FragmentSettingsActivity.this));
@@ -416,7 +417,6 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		public void onResume() {
 			// TODO: Implement this method
 			super.onResume();
-			getParentActivity().slf=this;
 			new AsyncTask<Void,Void,List<Server>>(){
 				public List<Server> doInBackground(Void...a){
 					List<Server> list=new ArrayList<>();
