@@ -20,12 +20,12 @@ public class PreferenceUtils
 	public static void onBindViewHolder(Context context,Preference pref,PreferenceViewHolder holder){
 		((TextView)holder.findViewById(android.R.id.title)).setSingleLine(false);
 		((TextView)holder.findViewById(android.R.id.title)).setTextAppearance(context,R.style.AppPreferenceTextAppearance);
-		if(pref.isEnabled()){
-			((TextView)holder.findViewById(android.R.id.title)).setTextColor(ContextCompat.getColor(context,R.color.color888));
-		}
 		holder.itemView.setMinimumHeight(context.getResources().getDimensionPixelOffset(R.dimen.settings_pref_height));
 		if(pref instanceof SetTextColor){
 			onBindViewHolder((SetTextColor)pref,holder);
+		}
+		if(!pref.isEnabled()){
+			((TextView)holder.findViewById(android.R.id.title)).setTextColor(ContextCompat.getColor(context,R.color.color888));
 		}
 		Utils.applyTypefaceForViewTree(holder.itemView,TheApplication.instance.getLocalizedFont());
 	}
