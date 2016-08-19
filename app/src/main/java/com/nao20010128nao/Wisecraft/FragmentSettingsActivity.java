@@ -280,9 +280,9 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 						return getResources().getStringArray(R.array.fontNamesOrder);
 					}
 				});
-			sH("densityDpi", new HandledPreference.OnClickListener(){
+			sH("changeDpi", new HandledPreference.OnClickListener(){
 					public void onClick(String a, String b, String c) {
-						PreferenceUtils.showEditTextDialog(getActivity(),findPreference("densityDpi"),"1.0",new Treatment<View>(){
+						PreferenceUtils.showEditTextDialog(getActivity(),findPreference("changeDpi"),"1.0",new Treatment<View>(){
 							public void process(View v){
 								((EditText)v.findViewById(android.R.id.edit)).setInputType(InputType.TYPE_CLASS_NUMBER|
 																							InputType.TYPE_TEXT_VARIATION_NORMAL|
