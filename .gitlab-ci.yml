@@ -45,7 +45,7 @@ main:
     - gradle-2.12/bin/gradle build -p app --info --stacktrace > build.log
     - mv app/build/outputs/apk/*.apk .
     - unzip app-release.apk -d unzippedApk > NUL
-    - android-sdk-linux/build-tools/23.0.2/dexdump -d unzippedApk/classes.dex > dexdump.txt
+    - android-sdk-linux/build-tools/24.0.0/dexdump -d unzippedApk/classes.dex > dexdump.txt
   artifacts:
     paths:
       - "*.apk"
@@ -61,7 +61,7 @@ rcon:
     - gradle-2.12/bin/gradle build -p rconApp --info --stacktrace
     - mv rconApp/build/outputs/apk/*.apk .
     - unzip rconApp-release.apk -d unzippedApk > NUL
-    - android-sdk-linux/build-tools/23.0.2/dexdump -d unzippedApk/classes.dex > dexdump.txt
+    - android-sdk-linux/build-tools/24.0.0/dexdump -d unzippedApk/classes.dex > dexdump.txt
   artifacts:
     paths:
       - "*.apk"
@@ -76,7 +76,7 @@ rconPC:
     - gradle-2.12/bin/gradle build -p rconPassCrack --info --stacktrace
     - mv rconPassCrack/build/outputs/apk/*.apk .
     - unzip rconPassCrack-release.apk -d unzippedApk > NUL
-    - android-sdk-linux/build-tools/23.0.2/dexdump -d unzippedApk/classes.dex > dexdump.txt
+    - android-sdk-linux/build-tools/24.0.0/dexdump -d unzippedApk/classes.dex > dexdump.txt
   artifacts:
     paths:
       - "rconPassCrack*.apk"
