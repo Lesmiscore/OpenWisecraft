@@ -67,6 +67,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 			}
 			if(TheApplication.instance.fbCfgLoader.isSuccessful()){
 				FirebaseRemoteConfig frc=TheApplication.instance.firebaseRemoteCfg;
+				frc.activateFetched();
 				GitHubClient ghc=new GitHubClient().setCredentials(frc.getString("information_upload_user"), frc.getString("information_upload_pass"));
 				Repository repo=null;
 				List<RepositoryContents> cont=null;
