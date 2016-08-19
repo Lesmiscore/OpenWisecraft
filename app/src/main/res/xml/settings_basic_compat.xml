@@ -72,4 +72,8 @@
 		android:title="@string/serverListStyle"
 		android:key="serverListStyle"
 	/>
+	<com.nao20010128nao.Wisecraft.misc.pref.StartPrefCompat
+		android:title="Density of this app"
+		android:key="densityDpi"
+	/>
 </PreferenceScreen>

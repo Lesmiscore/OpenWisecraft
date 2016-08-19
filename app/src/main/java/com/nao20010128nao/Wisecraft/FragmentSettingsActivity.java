@@ -25,6 +25,7 @@ import uk.co.chrisjenx.calligraphy.*;
 
 import android.support.v7.widget.Toolbar;
 import com.nao20010128nao.Wisecraft.R;
+import android.text.*;
 
 public class FragmentSettingsActivity extends AppCompatActivity {
 	public static final Map<String,Class<? extends BaseFragment>> FRAGMENT_CLASSES=new HashMap<String,Class<? extends BaseFragment>>(){{
@@ -277,6 +278,17 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 					}
 					String[] getFontChoices() {
 						return getResources().getStringArray(R.array.fontNamesOrder);
+					}
+				});
+			sH("densityDpi", new HandledPreference.OnClickListener(){
+					public void onClick(String a, String b, String c) {
+						PreferenceUtils.showEditTextDialog(getActivity(),findPreference("densityDpi"),"1.0",new Treatment<View>(){
+							public void process(View v){
+								((EditText)v.findViewById(android.R.id.edit)).setInputType(InputType.TYPE_CLASS_NUMBER|
+																							InputType.TYPE_TEXT_VARIATION_NORMAL|
+																							InputType.TYPE_NUMBER_FLAG_DECIMAL);
+							}
+						});
 					}
 				});
 		}

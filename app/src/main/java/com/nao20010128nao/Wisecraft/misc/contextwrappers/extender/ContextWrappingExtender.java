@@ -24,9 +24,9 @@ public class ContextWrappingExtender extends ContextWrapper
 		dm=ctx.getResources().getDisplayMetrics();
 		
 		//density change
-		pref.edit().putInt("densityDpi",dm.densityDpi).commit();
+		if(!pref.contains("densityDpi"))pref.edit().putInt("densityDpi",dm.densityDpi).commit();
 		if(pref.contains("changeDpi")){
-			BigDecimal mul=new BigDecimal(pref.getString("changeDpi","1")).multiply(new BigDecimal(dm.densityDpi));
+			BigDecimal mul=new BigDecimal(pref.getString("changeDpi","1")).multiply(new BigDecimal(pref.getInt("densityDpi",0)));
 			cfg.densityDpi=mul.intValue();
 		}
 		
