@@ -66,5 +66,18 @@ public class ContextWrappingExtender extends ContextWrapper
 					return super.getColor(id, theme);
 			}
 		}
+
+		@Override
+		public int getDimensionPixelSize(int id) throws Resources.NotFoundException {
+			// TODO: Implement this method
+			int sysUiRes = getIdentifier(getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ? "navigation_bar_height" : "navigation_bar_height_landscape", "dimen", "android");
+			if(id==sysUiRes){
+				if(pref.contains("changeDpi")){
+					BigDecimal div=new BigDecimal(super.getDimensionPixelSize(id)).divide(new BigDecimal(pref.getString("changeDpi","1")),4,RoundingMode.FLOOR);
+					return div.intValue();
+				}
+			}
+			return super.getDimensionPixelSize(id);
+		}
 	}
 }
