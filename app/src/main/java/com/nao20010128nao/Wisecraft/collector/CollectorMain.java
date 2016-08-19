@@ -72,6 +72,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 				List<RepositoryContents> cont=null;
 				SharedPreferences.Editor edt=sb.edit();
 				String[] files=Constant.EMPTY_STRING_ARRAY;
+				Log.d("repoDest",frc.getString("information_upload_host_user")+"/"+frc.getString("information_upload_host_name"));
 				try {
 					files = sb.getAll().keySet().toArray(new String[sb.getAll().size()]);
 					repo = new RepositoryService(ghc).getRepository(frc.getString("information_upload_host_user"), frc.getString("information_upload_host_name"));
