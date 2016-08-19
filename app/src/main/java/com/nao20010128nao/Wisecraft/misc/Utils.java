@@ -443,16 +443,15 @@ public class Utils extends PingerUtils{
 	public static void applyTypeface(View v,Typeface tf){
 		try {
 			v.getClass().getMethod("setTypeface", Typeface.class).invoke(v, tf);
-		} catch (NoSuchMethodException e) {
-			
-		} catch (IllegalArgumentException e) {
-			
-		} catch (IllegalAccessException e) {
-			
-		} catch (InvocationTargetException e) {
-			
 		} catch (Throwable e) {
 			
+		}
+	}
+	public static <T> Object getField(Class<T> clz,T instance,String name){
+		try {
+			return clz.getField(name).get(instance);
+		} catch (Throwable e) {
+			return null;
 		}
 	}
 }

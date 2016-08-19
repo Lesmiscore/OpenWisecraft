@@ -21,6 +21,7 @@ import com.nao20010128nao.Wisecraft.services.*;
 import java.lang.reflect.*;
 import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
+import android.util.*;
 
 public class TheApplication extends Application implements com.nao20010128nao.Wisecraft.rcon.Presenter,com.ipaulpro.afilechooser.Presenter,InformationCommunicatorReceiver.DisclosureResult {
 	public static TheApplication instance;
@@ -60,6 +61,8 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 			.remove("specialDrawer1")
 			.remove("useBright")
 			.commit();
+			
+		Log.d("GitRevisionHash",Utils.getField(BuildConfig.class,null,"GIT_REVISION_HASH")+"");
 	}
 	public Typeface getLocalizedFont() {
 		try {
