@@ -10,6 +10,15 @@ android {
         minSdkVersion 17
         targetSdkVersion 21
 		multiDexEnabled true
+		
+		def revisionHash = "Unknown"
+		if(!System.getProperty("os.name").toLowerCase().startsWith("windows")){
+			revisionHash = ["sh",  "-c",  "cd ${project.rootDir} ; git rev-parse --short HEAD"].execute().in.text.trim()
+		}else{
+			revisionHash = ["cmd",  "/c",  "git rev-parse --short HEAD"].execute(null,new File("${project.rootDir}")).in.text.trim()
+		}
+		println "Git Revision is:"+revisionHash
+		buildConfigField "String", "GIT_REVISION_HASH", revisionHash
     }
 	
 	signingConfigs {
@@ -53,15 +62,6 @@ android {
 	lintOptions {
         abortOnError false
     }
-	
-	
-	
-	def revisionHash = "Unknown"
-	if(!System.getProperty("os.name").toLowerCase().startsWith("windows")){
-		revisionHash = ["sh",  "-c",  "cd ${project.rootDir} ; git rev-parse --short HEAD"].execute().in.text.trim()
-		println "Git Revision is:"+revisionHash
-	}
-	buildConfigField "String", "GIT_REVISION_HASH", revisionHash
 }
 
 dependencies {
