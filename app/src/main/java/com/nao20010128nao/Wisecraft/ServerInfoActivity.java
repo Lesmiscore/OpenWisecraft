@@ -190,7 +190,7 @@ public class ServerInfoActivity extends AppCompatActivity {
 	}
 	public void updateTaskDesc(ServerPingResult resp) {
 		if (Build.VERSION.SDK_INT >= 21) {
-			int color=ContextCompat.getColor(this, R.color.upd_2);
+			int color=ContextCompat.getColor(this, R.color.mainColor);
 			if (resp instanceof Reply) {
 				Reply rep=(Reply)resp;
 				if (rep.favicon != null) {
