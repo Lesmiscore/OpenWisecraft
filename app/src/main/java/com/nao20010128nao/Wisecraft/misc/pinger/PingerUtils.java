@@ -3,6 +3,7 @@ package com.nao20010128nao.Wisecraft.misc.pinger;
 import java.io.*;
 import java.nio.*;
 import java.util.*;
+import java.lang.reflect.*;
 
 public class PingerUtils {
 
@@ -136,4 +137,75 @@ public class PingerUtils {
 	public static int bytesToInt(byte[] in) {
 		return ByteBuffer.wrap(in).getInt();
 	}
+	
+    @SuppressWarnings("unchecked")
+    public static <T> T[] copyOf(T[] original, int newLength) {
+        return (T[]) copyOf(original, newLength, original.getClass());
+    }
+
+    public static <T,U> T[] copyOf(U[] original, int newLength, Class<? extends T[]> newType) {
+        @SuppressWarnings("unchecked")
+        T[] copy = ((Object)newType == (Object)Object[].class)
+            ? (T[]) new Object[newLength]
+            : (T[]) Array.newInstance(newType.getComponentType(), newLength);
+        System.arraycopy(original, 0, copy, 0,
+                         Math.min(original.length, newLength));
+        return copy;
+    }
+
+    public static byte[] copyOf(byte[] original, int newLength) {
+        byte[] copy = new byte[newLength];
+        System.arraycopy(original, 0, copy, 0,
+                         Math.min(original.length, newLength));
+        return copy;
+    }
+
+    public static short[] copyOf(short[] original, int newLength) {
+        short[] copy = new short[newLength];
+        System.arraycopy(original, 0, copy, 0,
+                         Math.min(original.length, newLength));
+        return copy;
+    }
+
+    public static int[] copyOf(int[] original, int newLength) {
+        int[] copy = new int[newLength];
+        System.arraycopy(original, 0, copy, 0,
+                         Math.min(original.length, newLength));
+        return copy;
+    }
+
+    public static long[] copyOf(long[] original, int newLength) {
+        long[] copy = new long[newLength];
+        System.arraycopy(original, 0, copy, 0,
+                         Math.min(original.length, newLength));
+        return copy;
+    }
+
+    public static char[] copyOf(char[] original, int newLength) {
+        char[] copy = new char[newLength];
+        System.arraycopy(original, 0, copy, 0,
+                         Math.min(original.length, newLength));
+        return copy;
+    }
+
+    public static float[] copyOf(float[] original, int newLength) {
+        float[] copy = new float[newLength];
+        System.arraycopy(original, 0, copy, 0,
+                         Math.min(original.length, newLength));
+        return copy;
+    }
+
+    public static double[] copyOf(double[] original, int newLength) {
+        double[] copy = new double[newLength];
+        System.arraycopy(original, 0, copy, 0,
+                         Math.min(original.length, newLength));
+        return copy;
+    }
+
+    public static boolean[] copyOf(boolean[] original, int newLength) {
+        boolean[] copy = new boolean[newLength];
+        System.arraycopy(original, 0, copy, 0,
+                         Math.min(original.length, newLength));
+        return copy;
+    }
 }
