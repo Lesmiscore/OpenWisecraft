@@ -8,7 +8,6 @@ import android.os.*;
 import android.preference.*;
 import android.support.v4.content.*;
 import android.support.v4.view.*;
-import android.support.v7.app.*;
 import android.support.v7.graphics.*;
 import android.text.*;
 import android.text.style.*;
@@ -17,7 +16,6 @@ import android.view.*;
 import android.widget.*;
 import com.astuetz.*;
 import com.google.gson.*;
-import com.ipaulpro.afilechooser.*;
 import com.nao20010128nao.OTC.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
@@ -33,7 +31,7 @@ import java.util.*;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 
-public class ServerInfoActivity extends ServerListActivityBase3 {
+public class ServerInfoActivity extends ServerInfoActivityBase1 {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
 	public static List<ServerStatus> stat=new ArrayList<>();
 	public static Map<String,Bitmap> faces=new HashMap<>();
