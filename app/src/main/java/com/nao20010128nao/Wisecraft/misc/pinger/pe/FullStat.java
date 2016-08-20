@@ -13,9 +13,11 @@ public class FullStat implements ServerPingResult {
 
 	private Map<String, String> datas = new OrderTrustedMap<>();
 	private ArrayList<String> playerList = new ArrayList<>();
+	private byte[] raw;
 
 	@TargetApi(9)
 	public FullStat(byte[] data) {
+		raw=Arrays.copyOf(data,data.length);
 		data = PingerUtils.trim(data);
 		byte[][] temp = PingerUtils.split(data);
 		byte[] d;
@@ -49,5 +51,11 @@ public class FullStat implements ServerPingResult {
 
 	public List<String> getPlayerList() {
 		return Collections.unmodifiableList(playerList);
+	}
+
+	@Override
+	public byte[] getRawResult() {
+		// TODO: Implement this method
+		return Arrays.copyOf(raw,raw.length);
 	}
 }
