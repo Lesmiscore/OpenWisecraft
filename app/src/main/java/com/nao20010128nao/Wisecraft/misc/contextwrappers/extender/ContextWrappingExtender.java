@@ -70,15 +70,33 @@ public class ContextWrappingExtender extends ContextWrapper
 		@Override
 		public int getDimensionPixelSize(int id) throws Resources.NotFoundException {
 			// TODO: Implement this method
-			final int sysUiResA = getIdentifier("navigation_bar_height", "dimen", "android");
-			final int sysUiResB = getIdentifier("navigation_bar_height_landscape", "dimen", "android");
-			if(id==sysUiResA|id==sysUiResB){
-				if(pref.contains("changeDpi")){
-					BigDecimal div=new BigDecimal(super.getDimensionPixelSize(id)).divide(new BigDecimal(pref.getString("changeDpi","1")),4,RoundingMode.FLOOR);
-					return div.intValue();
+			{
+				final int sysUiResA = getIdentifier("navigation_bar_height", "dimen", "android");
+				final int sysUiResB = getIdentifier("navigation_bar_height_landscape", "dimen", "android");
+				if(id==sysUiResA|id==sysUiResB){
+					if(pref.contains("changeDpi")){
+						return getDimensionPixelSizeFixed(id);
+					}
+				}
+			}
+			{
+				int resourceId = getIdentifier("status_bar_height", "dimen", "android");
+				if (resourceId > 0) {
+					if(id==resourceId){
+						return getDimensionPixelSizeFixed(id);
+					}
+				}
+			}
+			{
+				if(id==R.dimen.tool_bar_top_padding){
+					return getDimensionPixelSizeFixed(id);
 				}
 			}
 			return super.getDimensionPixelSize(id);
+		}
+		private int getDimensionPixelSizeFixed(int id){
+			BigDecimal div=new BigDecimal(super.getDimensionPixelSize(id)).divide(new BigDecimal(pref.getString("changeDpi","1")),4,RoundingMode.FLOOR);
+			return div.intValue();
 		}
 	}
 }
