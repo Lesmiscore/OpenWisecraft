@@ -88,7 +88,7 @@ public class UnconnectedPing {
 		@Override
 		public byte[] getRawResult() {
 			// TODO: Implement this method
-			return Arrays.copyOf(data,data.length);
+			return PingerUtils.copyOf(data,data.length);
 		}
 	}
 }

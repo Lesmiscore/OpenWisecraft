@@ -17,7 +17,7 @@ public class FullStat implements ServerPingResult {
 
 	@TargetApi(9)
 	public FullStat(byte[] data) {
-		raw=Arrays.copyOf(data,data.length);
+		raw=PingerUtils.copyOf(data,data.length);
 		data = PingerUtils.trim(data);
 		byte[][] temp = PingerUtils.split(data);
 		byte[] d;
@@ -56,6 +56,6 @@ public class FullStat implements ServerPingResult {
 	@Override
 	public byte[] getRawResult() {
 		// TODO: Implement this method
-		return Arrays.copyOf(raw,raw.length);
+		return PingerUtils.copyOf(raw,raw.length);
 	}
 }
