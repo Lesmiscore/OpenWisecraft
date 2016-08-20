@@ -61,7 +61,7 @@ public class PingSerializeProvider
 					break;
 				case 0x1002:case 0x1003:
 					String json=new String(resultBytes, CompatCharsets.UTF_8);
-					result = new Gson().fromJson(json, resultClass);
+					result = new Gson().fromJson(json, (Class<? extends ServerPingResult>)resultClass);
 					((PCQueryResult)result).setRaw(json);
 					break;
 				case 0xf004:
