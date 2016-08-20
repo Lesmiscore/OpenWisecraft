@@ -303,47 +303,56 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					show();
 				break;
 			case 1:
-				Toast.makeText(ServerListActivityImpl.this, R.string.importing, Toast.LENGTH_LONG).show();
-				new Thread(){
-					public void run() {
-						ArrayList<String[]> al=new ArrayList<String[]>();
-						try {
-							String[] lines=Utils.lines(Utils.readWholeFile(new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt")));
-							for (String s:lines) {
-								Log.d("readLine", s);
-								al.add(s.split("\\:"));
-							}
-						} catch (Throwable ex) {
-							DebugWriter.writeToE("ServerListActivity", ex);
-						}
-						final ArrayList<Server> sv=new ArrayList<>();
-						for (String[] s:al) {
-							if (s.length != 4)continue;
-							try {
-								Server svr=new Server();
-								svr.ip = s[2];
-								svr.port = Integer.valueOf(s[3]);
-								svr.mode = 0;
-								sv.add(svr);
-							} catch (NumberFormatException e) {}
-						}
-						sv.removeAll(list);
-						runOnUiThread(new Runnable(){
+				new AppCompatAlertDialog.Builder(this)
+					.setTitle(R.string.addFromMCPE)
+					.setMessage(R.string.auSure)
+					.setPositiveButton(android.R.string.yes,new DialogInterface.OnClickListener(){
+						public void onClick(DialogInterface di,int w){
+							Toast.makeText(ServerListActivityImpl.this, R.string.importing, Toast.LENGTH_LONG).show();
+							new Thread(){
 								public void run() {
-									if (sv.size() != 0) {
-										for (Server s:sv) {
-											if (!list.contains(s)) {
-												spp.putInQueue(s, new PingHandlerImpl(true, -1));
-												pinging.put(s, true);
-												sl.add(s);
-											}
+									ArrayList<String[]> al=new ArrayList<String[]>();
+									try {
+										String[] lines=Utils.lines(Utils.readWholeFile(new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt")));
+										for (String s:lines) {
+											Log.d("readLine", s);
+											al.add(s.split("\\:"));
 										}
+									} catch (Throwable ex) {
+										DebugWriter.writeToE("ServerListActivity", ex);
 									}
-									saveServers();
+									final ArrayList<Server> sv=new ArrayList<>();
+									for (String[] s:al) {
+										if (s.length != 4)continue;
+										try {
+											Server svr=new Server();
+											svr.ip = s[2];
+											svr.port = Integer.valueOf(s[3]);
+											svr.mode = 0;
+											sv.add(svr);
+										} catch (NumberFormatException e) {}
+									}
+									sv.removeAll(list);
+									runOnUiThread(new Runnable(){
+											public void run() {
+												if (sv.size() != 0) {
+													for (Server s:sv) {
+														if (!list.contains(s)) {
+															spp.putInQueue(s, new PingHandlerImpl(true, -1));
+															pinging.put(s, true);
+															sl.add(s);
+														}
+													}
+												}
+												saveServers();
+											}
+										});
 								}
-							});
-					}
-				}.start();
+							}.start();
+						}
+					})
+					.setNegativeButton(android.R.string.no,null)
+					.show();
 				break;
 			case 2:
 				for (int i=0;i < list.size();i++) {
