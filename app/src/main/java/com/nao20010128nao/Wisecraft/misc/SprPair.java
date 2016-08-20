@@ -27,14 +27,9 @@ public class SprPair implements ServerPingResult {
 		// TODO: Implement this method
 		ByteArrayOutputStream baos=new ByteArrayOutputStream();
 		DataOutputStream dos=new DataOutputStream(baos);
-		byte[] rawA,rawB;
-		rawA=a.getRawResult();
-		rawB=b.getRawResult();
 		try {
-			dos.writeInt(rawA.length);
-			dos.write(rawA);
-			dos.writeInt(rawB.length);
-			dos.write(rawB);
+			dos.write(PingSerializeProvider.doRawDump(a));
+			dos.write(PingSerializeProvider.doRawDump(b));
 			dos.flush();
 		} catch (IOException e) {
 			WisecraftError.report("SprPair#getRawResult",e);
