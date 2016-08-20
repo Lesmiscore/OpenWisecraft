@@ -28,6 +28,7 @@ import java.lang.ref.*;
 import java.util.*;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
+import com.nao20010128nao.Wisecraft.misc.pinger.*;
 
 //Full implement for user interface (Some part is available at ServerListActivityBase4)
 abstract class ServerListActivityImpl extends ServerListActivityBase1 implements ServerListActivityInterface {
@@ -62,8 +63,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		appMenu.add(new KVP<Integer,Integer>(R.string.sort,R.drawable.ic_compare_arrows_black_48dp));//5
 		appMenu.add(new KVP<Integer,Integer>(R.string.serverFinder,R.drawable.ic_search_black_48dp));//6
 		appMenu.add(new KVP<Integer,Integer>(R.string.addServerFromServerListSite,R.drawable.ic_language_black_48dp));//7
-		appMenu.add(new KVP<Integer,Integer>(R.string.settings,R.drawable.ic_settings_black_48dp));//8
-		appMenu.add(new KVP<Integer,Integer>(R.string.exit,R.drawable.ic_close_black_48dp));//9
+		appMenu.add(new KVP<Integer,Integer>(R.string.loadPing,R.drawable.ic_open_in_new_black_48dp));//8
+		appMenu.add(new KVP<Integer,Integer>(R.string.settings,R.drawable.ic_settings_black_48dp));//9
+		appMenu.add(new KVP<Integer,Integer>(R.string.exit,R.drawable.ic_close_black_48dp));//10
 
 		{
 			for (Map.Entry<Integer,Integer> s:appMenu) {
@@ -390,7 +392,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					}
 				}.start();
 				break;
-			case 3:
+			case 3:{
 				View dialogView_=getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
 				final EditText et_=(EditText)dialogView_.findViewById(R.id.filePath);
 				et_.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/servers.json").toString());
@@ -433,8 +435,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 						}
 					})
 					.show();
-				break;
-			case 4:
+				break;}
+			case 4:{
 				View dialogView=getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
 				final EditText et=(EditText)dialogView.findViewById(R.id.filePath);
 				et.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/servers.json").toString());
@@ -487,7 +489,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 						}
 					})
 					.show();
-				break;
+				break;}
 			case 5:
 				new AppCompatAlertDialog.Builder(this, R.style.AppAlertDialog)
 					.setTitle(R.string.sort)
@@ -538,10 +540,64 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			case 7:
 				startActivity(new Intent(this, ServerGetActivity.class));
 				break;
-			case 8:
+			case 8:{
+				View dialogView=getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
+				final EditText et=(EditText)dialogView.findViewById(R.id.filePath);
+				et.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/pingresult.wisecraft-ping").toString());
+				dialogView.findViewById(R.id.selectFile).setOnClickListener(new View.OnClickListener(){
+						public void onClick(View v) {
+							File f=new File(et.getText().toString());
+							if (f.isFile())f = f.getParentFile();
+							startChooseFileForSelect(f, new FileChooserResult(){
+									public void onSelected(File f) {
+										et.setText(f.toString());
+									}
+									public void onSelectCancelled() {/*No-op*/}
+								});
+						}
+					});
+				new AppCompatAlertDialog.Builder(ServerListActivityImpl.this, R.style.AppAlertDialog)
+					.setTitle(R.string.load_typepath_simple)
+					.setView(dialogView)
+					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
+						public void onClick(DialogInterface di, int w) {
+							wd.showWorkingDialog(getResources().getString(R.string.loading));
+							new Thread(){
+								public void run() {
+									byte[] data=readWholeFileInBytes(new File(et.getText().toString()));
+									ServerPingResult spr=null;
+									try{
+										spr=PingSerializeProvider.loadFromRawDumpFile(data);
+									}catch(Throwable e){
+										WisecraftError.report("ServerListActivity#execOption#8",e);
+									}
+									final ServerStatus sv=new ServerStatus();
+									sv.ip="localhost";
+									sv.port=Integer.MIN_VALUE;
+									sv.ping=0;
+									sv.response=spr;
+									runOnUiThread(new Runnable(){
+											public void run() {
+												wd.hideWorkingDialog();
+												if(sv.response==null){
+													Toast.makeText(ServerListActivityImpl.this,R.string.loadPing_loadError,Toast.LENGTH_SHORT).show();
+												}else{
+													ServerInfoActivity.stat.add(sv);
+													int ofs=ServerInfoActivity.stat.indexOf(sv);
+													startActivity(new Intent(ServerListActivityImpl.this, ServerInfoActivity.class).putExtra("statListOffset", ofs).putExtra("noExport",true).putExtra("nonUpd",true));
+												}
+											}
+										});
+								}
+							}.start();
+						}
+					})
+					.show();
+				break;}
+			case 9:
 				SettingsDelegate.openAppSettings(this);
 				break;
-			case 9:
+			case 10:
 				finish();
 				saveServers();
 				instance = new WeakReference(null);

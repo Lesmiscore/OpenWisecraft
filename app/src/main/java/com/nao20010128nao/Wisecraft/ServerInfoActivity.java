@@ -17,6 +17,7 @@ import android.view.*;
 import android.widget.*;
 import com.astuetz.*;
 import com.google.gson.*;
+import com.ipaulpro.afilechooser.*;
 import com.nao20010128nao.OTC.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
@@ -25,13 +26,14 @@ import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
 import com.nao20010128nao.Wisecraft.misc.skin_face.*;
 import com.nao20010128nao.Wisecraft.pingEngine.*;
+import java.io.*;
 import java.lang.ref.*;
 import java.math.*;
 import java.util.*;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 
-public class ServerInfoActivity extends AppCompatActivity {
+public class ServerInfoActivity extends ServerListActivityBase3 {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
 	public static List<ServerStatus> stat=new ArrayList<>();
 	public static Map<String,Bitmap> faces=new HashMap<>();
@@ -45,9 +47,9 @@ public class ServerInfoActivity extends AppCompatActivity {
 
 	String ip;
 	int port;
-	boolean nonUpd,hidePlayer,hideData,hidePlugins,hideMods;
+	boolean nonUpd,hidePlayer,hideData,hidePlugins,hideMods,noExport;
 
-	MenuItem updateBtn,seeTitleButton;
+	MenuItem updateBtn,seeTitleButton,exportButton;
 
 	InternalPagerAdapter adapter;
 	ViewPager tabs;
@@ -90,7 +92,7 @@ public class ServerInfoActivity extends AppCompatActivity {
 		hidePlayer = getIntent().getBooleanExtra("nonPlayers", false);
 		hidePlugins = getIntent().getBooleanExtra("nonPlugins", false);
 		hideMods = getIntent().getBooleanExtra("nonMods", false);
-
+		
 		if (!hidePlayer) {
 			if (localStat.response instanceof UnconnectedPing.UnconnectedPingResult) {
 				adapter.addTab(UcpInfoFragment.class, getResources().getString(R.string.players));
@@ -119,6 +121,7 @@ public class ServerInfoActivity extends AppCompatActivity {
 		}
 
 		nonUpd = getIntent().getBooleanExtra("nonUpd", false);
+		noExport = getIntent().getBooleanExtra("noExport", false);
 
 		ip = localStat.ip;
 		port = localStat.port;
@@ -242,11 +245,16 @@ public class ServerInfoActivity extends AppCompatActivity {
 			isDark = false;
 		}
 		int color= ContextCompat.getColor(this, R.color.mainColor);
-		seeTitleButton = menu.add(Menu.NONE, 0, 0, R.string.seeTitle);
+		if (!noExport) {
+			exportButton = menu.add(Menu.NONE, 0, 0, R.string.exportPing);
+			exportButton.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_file_upload_black_48dp, isDark ?Color.WHITE: color));
+			MenuItemCompat.setShowAsAction(exportButton, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
+		}
+		seeTitleButton = menu.add(Menu.NONE, 1, 1, R.string.seeTitle);
 		seeTitleButton.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_open_in_new_black_48dp, isDark ?Color.WHITE: color));
 		MenuItemCompat.setShowAsAction(seeTitleButton, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
 		if (!nonUpd) {
-			updateBtn = menu.add(Menu.NONE, 1, 1, R.string.update);
+			updateBtn = menu.add(Menu.NONE, 2, 2, R.string.update);
 			updateBtn.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_refresh_black_48dp, isDark ?Color.WHITE: color));
 			MenuItemCompat.setShowAsAction(updateBtn, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
 		}
@@ -257,11 +265,52 @@ public class ServerInfoActivity extends AppCompatActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO: Implement this method
 		switch (item.getItemId()) {
-			case 1://Update
+			case 0://Export this ping result
+				View dialogView_=getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
+				final EditText et_=(EditText)dialogView_.findViewById(R.id.filePath);
+				et_.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/servers.json").toString());
+				dialogView_.findViewById(R.id.selectFile).setOnClickListener(new View.OnClickListener(){
+						public void onClick(View v) {
+							startChooseFileForOpen(new File(et_.getText().toString()), new FileChooserResult(){
+									public void onSelected(File f) {
+										et_.setText(f.toString());
+									}
+									public void onSelectCancelled() {/*No-op*/}
+								});
+						}
+					});
+				new AppCompatAlertDialog.Builder(this, R.style.AppAlertDialog)
+					.setTitle(R.string.export_typepath)
+					.setView(dialogView_)
+					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
+						public void onClick(DialogInterface di, int w) {
+							Toast.makeText(ServerInfoActivity.this, R.string.exporting, Toast.LENGTH_LONG).show();
+							new AsyncTask<String,Void,File>(){
+								public File doInBackground(String... texts) {
+									File f;
+									byte[] data=PingSerializeProvider.doRawDumpForFile(localStat.response);
+									if (writeToFileByBytes(f = new File(texts[0]), data))
+										return f;
+									else
+										return null;
+								}
+								public void onPostExecute(File f) {
+									if (f != null) {
+										Toast.makeText(ServerInfoActivity.this, getResources().getString(R.string.export_complete).replace("[PATH]", f + ""), Toast.LENGTH_LONG).show();
+									} else {
+										Toast.makeText(ServerInfoActivity.this, getResources().getString(R.string.export_failed), Toast.LENGTH_LONG).show();
+									}
+								}
+							}.execute(et_.getText().toString());
+						}
+					})
+					.show();
+				break;
+			case 2://Update
 				setResultInstead(Constant.ACTIVITY_RESULT_UPDATE, new Intent().putExtra("offset", tabs.getCurrentItem()));
 				finish();//ServerListActivity updates the stat
 				return true;
-			case 0://See the title for all
+			case 1://See the title for all
 				AppCompatAlertDialog.Builder ab=new AppCompatAlertDialog.Builder(this, R.style.AppAlertDialog);
 				LinearLayout ll;
 				boolean dark;
@@ -339,9 +388,7 @@ public class ServerInfoActivity extends AppCompatActivity {
 	}
 
 	public void addUcpDetailsTab() {
-		if ((!hideMods) | localStat.mode == 1) {
-			adapter.addTab(UcpDetailsFragment.class, getResources().getString(R.string.data_ucp));
-		}
+		adapter.addTab(UcpDetailsFragment.class, getResources().getString(R.string.data_ucp));
 	}
 
 	@Override
