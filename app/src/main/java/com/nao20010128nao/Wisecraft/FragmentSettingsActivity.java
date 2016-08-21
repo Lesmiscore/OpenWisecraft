@@ -352,12 +352,6 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 	public static class ColorChanger extends BaseFragment {
 
 		@Override
-		public void onCreate(Bundle savedInstanceState) {
-			// TODO: Implement this method
-			super.onCreate(savedInstanceState);
-		}
-
-		@Override
 		public void onResume() {
 			// TODO: Implement this method
 			super.onResume();
@@ -372,6 +366,14 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 	}
 	
 	public static class VersionInfoFragmentLocal extends VersionInfoFragment{
+
+		@Override
+		public void onResume() {
+			// TODO: Implement this method
+			super.onResume();
+			getActivity().setTitle(R.string.versionInfo);
+		}
+		
 		@Override
 		public RecyclerView onCreateRecyclerView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
 			// TODO: Implement this method
