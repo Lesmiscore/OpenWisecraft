@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<style name="AppTheme" parent="Base.AppTheme">
+	<style name="AppTheme" parent="@style/Theme.AppCompat.Light">
 		<item name="colorPrimary">@color/primary</item>
 		<item name="colorAccent">@color/mainColor</item>
 		<item name="android:windowContentOverlay">@null</item>
 		<item name="preferenceTheme">@style/AppTheme.Preference</item>
 		<item name="alertDialogTheme">@style/AppAlertDialog</item>
 	</style>
-	<style name="AppDialog" parent="Base.AppDialog">
+	<style name="AppDialog" parent="@style/Theme.AppCompat.Light.Dialog">
 		<item name="colorPrimary">@color/primary</item>
 		<item name="colorAccent">@color/mainColor</item>
 		<item name="android:windowContentOverlay">@null</item>
 		<item name="preferenceTheme">@style/AppTheme.Preference</item>
 	</style>
-	<style name="AppAlertDialog" parent="Base.AppAlertDialog">
+	<style name="AppAlertDialog" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
 		<item name="colorPrimary">@color/primary</item>
 		<item name="colorAccent">@color/mainColor</item>
 		<item name="preferenceTheme">@style/AppTheme.Preference</item>
 	</style>
 	
-	<style name="AppTheme.NoActionBar" parent="Base.AppTheme.NoActionBar">
+	<style name="AppTheme.NoActionBar" parent="AppTheme">
+		<item name="windowActionBar">false</item>
+		<item name="windowNoTitle">true</item>
 		<item name="preferenceTheme">@style/AppTheme.Preference</item>
 	</style>
 	
@@ -35,6 +37,11 @@
 		<item name="colorControlNormal">@color/mainColor</item>
 		<item name="android:textColorSecondary">@color/mainColor</item>
 	</style>
+	
+	<style name="AppThemeN" parent="@android:style/Theme.Light">
+		<item name="preferenceTheme">@style/AppTheme.Preference</item>
+	</style>
+	
 	
 	
 	
@@ -90,14 +97,4 @@
 	<declare-styleable name="ColorPickerPreferenceCompat">
 		<attr name="color"/>
 	</declare-styleable>
-	
-	
-	
-	
-	<!-- Base Styles -->
-	<style name="Base.AppTheme" parent="Theme.AppCompat.Light"></style>
-	<style name="Base.AppDialog" parent="Theme.AppCompat.Light.Dialog"></style>
-	<style name="Base.AppAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert"></style>
-	
-	<style name="Base.AppTheme.NoActionBar" parent="Base.AppTheme"><item name="windowActionBar">false</item><item name="windowNoTitle">true</item></style>
 </resources>
