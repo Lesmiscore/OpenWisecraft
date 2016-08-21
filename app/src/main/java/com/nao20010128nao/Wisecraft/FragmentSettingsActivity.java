@@ -33,6 +33,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			put("basics",Basics.class);
 			put("features",Features.class);
 			put("asfsls",Asfsls.class);
+			put("versionInfo",VersionInfoFragmentLocal.class);
 	}};
 	public static final String DIALOG_FRAGMENT_TAG_PREFIX="settings@com.nao20010128nao.Wisecraft#";
 	
@@ -219,6 +220,17 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 						startActivity(new Intent(getContext(),AboutAppActivity.class));
 					}
 				});
+			sH("versionInfo",new HandledPreference.OnClickListener(){
+					public void onClick(String a,String b,String c){
+						getActivity()
+							.getSupportFragmentManager()
+							.beginTransaction()
+							.replace(R.id.preference,new VersionInfoFragmentLocal())
+							.addToBackStack("versionInfo")
+							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+							.commit();
+					}
+				});
 			findPreference("asfsls").setEnabled(pref.getBoolean("feature_asfsls",false));
 			((SetTextColor)findPreference("settingsAttention")).setTextColor(ContextCompat.getColor(getContext(),R.color.color888));
 		}
@@ -356,6 +368,16 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		public void onCreatePreferences(Bundle p1, String p2) {
 			// TODO: Implement this method
 			addPreferencesFromResource(R.xml.settings_color_changer_compat);
+		}
+	}
+	
+	public static class VersionInfoFragmentLocal extends VersionInfoFragment{
+		@Override
+		public RecyclerView onCreateRecyclerView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+			// TODO: Implement this method
+			return super.onCreateRecyclerView(Utils.fixLayoutInflaterIfNeeded(CalligraphyContextWrapper.wrap(inflater.getContext()),getActivity()),
+											  parent, 
+											  savedInstanceState);
 		}
 	}
 	
