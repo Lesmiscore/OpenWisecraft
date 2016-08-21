@@ -266,10 +266,12 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			case 0://Export this ping result
 				View dialogView_=getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
 				final EditText et_=(EditText)dialogView_.findViewById(R.id.filePath);
-				et_.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/servers.json").toString());
+				et_.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/pingresult.wisecraft-ping").toString());
 				dialogView_.findViewById(R.id.selectFile).setOnClickListener(new View.OnClickListener(){
 						public void onClick(View v) {
-							startChooseFileForOpen(new File(et_.getText().toString()), new FileChooserResult(){
+							File f=new File(et_.getText().toString());
+							if ((!f.exists())|f.isFile())f = f.getParentFile();
+							startChooseFileForOpen(f, new FileChooserResult(){
 									public void onSelected(File f) {
 										et_.setText(f.toString());
 									}
@@ -278,7 +280,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 						}
 					});
 				new AppCompatAlertDialog.Builder(this, R.style.AppAlertDialog)
-					.setTitle(R.string.export_typepath)
+					.setTitle(R.string.export_typepath_simple)
 					.setView(dialogView_)
 					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 						public void onClick(DialogInterface di, int w) {
