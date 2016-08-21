@@ -57,7 +57,7 @@ public class PingSerializeProvider
 					result = new FullStat(resultBytes);
 					break;
 				case 0x0001:
-					result = new UnconnectedPing.UnconnectedPingResult(new String(resultBytes, CompatCharsets.UTF_8), 0, resultBytes);
+					result = new UnconnectedPing.UnconnectedPingResult(new String(resultBytes,32,resultBytes.length-2, CompatCharsets.UTF_8), 0, resultBytes);
 					break;
 				case 0x1002:case 0x1003:
 					String json=new String(resultBytes, CompatCharsets.UTF_8);
