@@ -3,12 +3,13 @@ import android.content.*;
 import android.graphics.*;
 import android.graphics.drawable.*;
 import android.os.*;
-import android.preference.*;
 import android.support.v4.app.*;
 import android.support.v4.content.*;
 import android.support.v4.view.*;
 import android.support.v7.app.*;
+import android.support.v7.preference.*;
 import android.support.v7.widget.*;
+import android.text.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
@@ -25,7 +26,6 @@ import uk.co.chrisjenx.calligraphy.*;
 
 import android.support.v7.widget.Toolbar;
 import com.nao20010128nao.Wisecraft.R;
-import android.text.*;
 
 public class FragmentSettingsActivity extends AppCompatActivity {
 	public static final Map<String,Class<? extends Fragment>> FRAGMENT_CLASSES=new HashMap<String,Class<? extends Fragment>>(){{
@@ -378,6 +378,12 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			return super.onCreateRecyclerView(Utils.fixLayoutInflaterIfNeeded(CalligraphyContextWrapper.wrap(inflater.getContext()),getActivity()),
 											  parent, 
 											  savedInstanceState);
+		}
+
+		@Override
+		public void onModifyPreferenceViewHolder(PreferenceViewHolder viewHolder, Preference pref) {
+			// TODO: Implement this method
+			PreferenceUtils.onBindViewHolder(getActivity(),pref,viewHolder);
 		}
 	}
 	
