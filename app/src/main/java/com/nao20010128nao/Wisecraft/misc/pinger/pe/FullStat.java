@@ -8,7 +8,7 @@ import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import java.util.*;
 import android.util.*;
 
-public class FullStat implements ServerPingResult {
+public class FullStat implements ServerPingResult,PEPingResult {
 	static byte NULL = '\0';
 	static byte SPACE = ' ';
 

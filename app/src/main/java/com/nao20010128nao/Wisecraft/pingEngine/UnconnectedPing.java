@@ -1,10 +1,10 @@
 package com.nao20010128nao.Wisecraft.pingEngine;
 import android.util.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
+import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
 import java.io.*;
 import java.math.*;
 import java.net.*;
-import java.util.*;
 
 public class UnconnectedPing {
 	public static final byte UCP_PID=0x01;
@@ -56,7 +56,7 @@ public class UnconnectedPing {
 		}
 	}
 
-	public static class UnconnectedPingResult implements ServerPingResult, PingHost {
+	public static class UnconnectedPingResult implements ServerPingResult, PingHost, PEPingResult {
 		String[] serverInfos;
 		String raw;
 		long latestPing;

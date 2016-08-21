@@ -577,6 +577,18 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 									sv.port=Integer.MIN_VALUE;
 									sv.ping=0;
 									sv.response=spr;
+									if(spr instanceof PEPingResult){
+										sv.mode=0;
+									}else if(spr instanceof PCQueryResult){
+										sv.mode=1;
+									}else if(spr instanceof SprPair){
+										SprPair pair=(SprPair)spr;
+										if(pair.getA() instanceof PEPingResult|pair.getB() instanceof PEPingResult){
+											sv.mode=0;
+										}else if(pair.getA() instanceof PCQueryResult|pair.getB() instanceof PCQueryResult){
+											sv.mode=1;
+										}
+									}
 									runOnUiThread(new Runnable(){
 											public void run() {
 												wd.hideWorkingDialog();
