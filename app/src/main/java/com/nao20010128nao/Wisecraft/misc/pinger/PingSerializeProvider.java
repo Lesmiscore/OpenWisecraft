@@ -65,9 +65,10 @@ public class PingSerializeProvider
 					((PCQueryResult)result).setRaw(json);
 					break;
 				case 0xf004:
-					SprPair pair=new SprPair();
-					pair.setA(loadFromRawDump(dis));
-					pair.setB(loadFromRawDump(dis));
+					SprPair pair = new SprPair();
+					DataInputStream dis2 = new DataInputStream(new ByteArrayInputStream(resultBytes));
+					pair.setA(loadFromRawDump(dis2));
+					pair.setB(loadFromRawDump(dis2));
 					result = pair;
 					break;
 
