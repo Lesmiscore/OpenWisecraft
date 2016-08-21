@@ -46,6 +46,7 @@ main:
     - mv app/build/outputs/apk/*.apk .
     - unzip app-release.apk -d unzippedApk > NUL
     - android-sdk-linux/build-tools/24.0.0/dexdump -d unzippedApk/classes.dex > dexdump.txt
+    - grep "Git\sRevision" build.log
   artifacts:
     paths:
       - "*.apk"
