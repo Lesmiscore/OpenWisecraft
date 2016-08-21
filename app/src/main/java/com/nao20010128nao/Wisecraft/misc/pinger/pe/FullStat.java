@@ -45,14 +45,14 @@ public class FullStat implements ServerPingResult {
 		for (int i = dataEnds + 2; i < temp.length; i++)
 			playerList.add(new String(temp[i], CompatCharsets.UTF_8).trim());
 			
-		{
+		/*{
 			for(Map.Entry<String,String> dat:datas.entrySet()){
 				Log.d("fullStat",dat.getKey()+":"+dat.getValue());
 			}
 			for(String s:playerList){
 				Log.d("fullStat",s);
 			}
-		}
+		}*/
 	}
 
 	public Map<String, String> getData() {

@@ -398,7 +398,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				et_.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/servers.json").toString());
 				dialogView_.findViewById(R.id.selectFile).setOnClickListener(new View.OnClickListener(){
 						public void onClick(View v) {
-							startChooseFileForOpen(new File(et_.getText().toString()), new FileChooserResult(){
+							File f=new File(et_.getText().toString());
+							if ((!f.exists())|f.isFile())f = f.getParentFile();
+							startChooseFileForOpen(f, new FileChooserResult(){
 									public void onSelected(File f) {
 										et_.setText(f.toString());
 									}
@@ -443,7 +445,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				dialogView.findViewById(R.id.selectFile).setOnClickListener(new View.OnClickListener(){
 						public void onClick(View v) {
 							File f=new File(et.getText().toString());
-							if (f.isFile())f = f.getParentFile();
+							if ((!f.exists())|f.isFile())f = f.getParentFile();
 							startChooseFileForSelect(f, new FileChooserResult(){
 									public void onSelected(File f) {
 										et.setText(f.toString());
@@ -547,7 +549,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				dialogView.findViewById(R.id.selectFile).setOnClickListener(new View.OnClickListener(){
 						public void onClick(View v) {
 							File f=new File(et.getText().toString());
-							if (f.isFile())f = f.getParentFile();
+							if ((!f.exists())|f.isFile())f = f.getParentFile();
 							startChooseFileForSelect(f, new FileChooserResult(){
 									public void onSelected(File f) {
 										et.setText(f.toString());
@@ -564,10 +566,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							wd.showWorkingDialog(getResources().getString(R.string.loading));
 							new Thread(){
 								public void run() {
-									byte[] data=readWholeFileInBytes(new File(et.getText().toString()));
 									ServerPingResult spr=null;
 									try{
-										spr=PingSerializeProvider.loadFromRawDumpFile(data);
+										spr=PingSerializeProvider.loadFromRawDumpFile(new BufferedInputStream(new FileInputStream(new File(et.getText().toString()))));
 									}catch(Throwable e){
 										WisecraftError.report("ServerListActivity#execOption#8",e);
 									}
