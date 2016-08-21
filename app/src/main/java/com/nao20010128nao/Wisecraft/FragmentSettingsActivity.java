@@ -28,7 +28,7 @@ import com.nao20010128nao.Wisecraft.R;
 import android.text.*;
 
 public class FragmentSettingsActivity extends AppCompatActivity {
-	public static final Map<String,Class<? extends BaseFragment>> FRAGMENT_CLASSES=new HashMap<String,Class<? extends BaseFragment>>(){{
+	public static final Map<String,Class<? extends Fragment>> FRAGMENT_CLASSES=new HashMap<String,Class<? extends Fragment>>(){{
 			put("root",HubPrefFragment.class);
 			put("basics",Basics.class);
 			put("features",Features.class);
