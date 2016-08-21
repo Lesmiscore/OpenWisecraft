@@ -25,13 +25,13 @@ public class VersionInfoFragment extends PreferenceFragmentCompat
 		Class d=getBuildConfigClass();
 		addPreferencesFromResource(R.xml.libcompat_version_fragment);
 		findPreference("versionInfo_wisecraft").setSummary(getVersionName(getContext()));
-		findPreference("versionInfo_wisecraftInternal").setSummary(getField(d,null,"GIT_REVISION_HASH"));
-		findPreference("versionInfo_i18nInternal").setSummary(getField(d,null,"GIT_REVISION_HASH_I18N"));
-		findPreference("versionInfo_statusesLayoutInternal").setSummary(getField(d,null,"GIT_REVISION_HASH_STATUSES_LAYOUT"));
-		findPreference("versionInfo_materialIconsInternal").setSummary(getField(d,null,"GIT_REVISION_HASH_MATERIAL_ICONS"));
-		findPreference("versionInfo_calligraphyInternal").setSummary(getField(d,null,"GIT_REVISION_HASH_CALLIGRAPHY"));
-		findPreference("versionInfo_pstsInternal").setSummary(getField(d,null,"GIT_REVISION_HASH_PSTS"));
-		findPreference("versionInfo_colorPickerInternal").setSummary(getField(d,null,"GIT_REVISION_HASH_COLOR_PICKER"));
+		findPreference("versionInfo_wisecraftInternal").setSummary(getField(d,null,"GIT_REVISION_HASH")+"");
+		findPreference("versionInfo_i18nInternal").setSummary(getField(d,null,"GIT_REVISION_HASH_I18N")+"");
+		findPreference("versionInfo_statusesLayoutInternal").setSummary(getField(d,null,"GIT_REVISION_HASH_STATUSES_LAYOUT")+"");
+		findPreference("versionInfo_materialIconsInternal").setSummary(getField(d,null,"GIT_REVISION_HASH_MATERIAL_ICONS")+"");
+		findPreference("versionInfo_calligraphyInternal").setSummary(getField(d,null,"GIT_REVISION_HASH_CALLIGRAPHY")+"");
+		findPreference("versionInfo_pstsInternal").setSummary(getField(d,null,"GIT_REVISION_HASH_PSTS")+"");
+		findPreference("versionInfo_colorPickerInternal").setSummary(getField(d,null,"GIT_REVISION_HASH_COLOR_PICKER")+"");
 	}
 	
 	private Class getBuildConfigClass(){
