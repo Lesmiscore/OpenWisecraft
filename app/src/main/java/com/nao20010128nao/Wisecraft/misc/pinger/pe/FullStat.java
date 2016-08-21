@@ -6,6 +6,7 @@ import com.nao20010128nao.OTC.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import java.util.*;
+import android.util.*;
 
 public class FullStat implements ServerPingResult {
 	static byte NULL = '\0';
@@ -33,8 +34,8 @@ public class FullStat implements ServerPingResult {
 			dataEnds--;
 
 		for (int i = 2; i < dataEnds; i += 2) {
-			String k = new String(temp[i], CompatCharsets.UTF_8);
-			String v = new String(temp[i + 1], CompatCharsets.UTF_8);
+			String k = new String(temp[i], CompatCharsets.UTF_8).trim();
+			String v = new String(temp[i + 1], CompatCharsets.UTF_8).trim();
 			if ("".equals(k) | "".equals(v))
 				continue;
 			datas.put(k, v);
@@ -42,7 +43,16 @@ public class FullStat implements ServerPingResult {
 
 		playerList = new ArrayList<String>();
 		for (int i = dataEnds + 2; i < temp.length; i++)
-			playerList.add(new String(temp[i], CompatCharsets.UTF_8));
+			playerList.add(new String(temp[i], CompatCharsets.UTF_8).trim());
+			
+		{
+			for(Map.Entry<String,String> dat:datas.entrySet()){
+				Log.d("fullStat",dat.getKey()+":"+dat.getValue());
+			}
+			for(String s:playerList){
+				Log.d("fullStat",s);
+			}
+		}
 	}
 
 	public Map<String, String> getData() {
