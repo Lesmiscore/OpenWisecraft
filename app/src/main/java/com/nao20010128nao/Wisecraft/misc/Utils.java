@@ -22,6 +22,7 @@ import java.util.*;
 
 import android.support.v7.widget.Toolbar;
 import com.nao20010128nao.Wisecraft.R;
+import uk.co.chrisjenx.calligraphy.*;
 
 public class Utils extends PingerUtils{
 	public static String deleteDecorations(String decorated) {
@@ -304,6 +305,10 @@ public class Utils extends PingerUtils{
 
         return point;
     }
+	public static int calculateRows(Context c,int value){
+		int base=c.getResources().getDimensionPixelSize(R.dimen.panel_base_size);
+		return (int)Math.max(1,((double)value)/((double)base));
+	}
 	public static int calculateRows(Context c){
 		int base=c.getResources().getDimensionPixelSize(R.dimen.panel_base_size);
 		return (int)Math.max(1,((double)getScreenWidth(c,base))/((double)base));
@@ -410,5 +415,43 @@ public class Utils extends PingerUtils{
 		Bundle bnd=new Bundle();
 		putServersIntoBundle(bnd,s);
 		return bnd;
+	}
+	public static LayoutInflater fixLayoutInflaterIfNeeded(Context c,Activity a){
+		LayoutInflater li=LayoutInflater.from(c);
+		if(li.getClass().getName().equals("uk.co.chrisjenx.calligraphy.CalligraphyLayoutInflater")){
+			LayoutInflater ali=LayoutInflater.from(a);
+			if(li.getFactory()==null){
+				li.setFactory(ali.getFactory());
+			}
+			if(li.getFactory2()==null){
+				li.setFactory2(ali.getFactory2());
+			}
+		}
+		return li;
+	}
+	public static void applyTypefaceForViewTree(View v,Typeface tf){
+		if(v!=null){
+			applyTypeface(v,tf);
+			if(v instanceof ViewGroup){
+				ViewGroup vg=(ViewGroup)v;
+				for(int i=0;i<vg.getChildCount();i++){
+					applyTypefaceForViewTree(vg.getChildAt(i),tf);
+				}
+			}
+		}
+	}
+	public static void applyTypeface(View v,Typeface tf){
+		try {
+			v.getClass().getMethod("setTypeface", Typeface.class).invoke(v, tf);
+		} catch (Throwable e) {
+			
+		}
+	}
+	public static <T> Object getField(Class<T> clz,T instance,String name){
+		try {
+			return clz.getField(name).get(instance);
+		} catch (Throwable e) {
+			return null;
+		}
 	}
 }

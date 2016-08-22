@@ -1,32 +1,45 @@
 package com.nao20010128nao.Wisecraft;
 import android.content.*;
+import android.graphics.*;
+import android.graphics.drawable.*;
 import android.os.*;
-import android.preference.*;
 import android.support.v4.app.*;
 import android.support.v4.content.*;
+import android.support.v4.view.*;
 import android.support.v7.app.*;
+import android.support.v7.preference.*;
+import android.support.v7.widget.*;
+import android.text.*;
+import android.util.*;
 import android.view.*;
 import android.widget.*;
+import com.astuetz.*;
 import com.nao20010128nao.ToolBox.*;
+import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
+import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
 import com.nao20010128nao.Wisecraft.misc.pref.*;
-import java.lang.reflect.*;
+import java.io.*;
 import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
 
+import android.support.v7.widget.Toolbar;
+import com.nao20010128nao.Wisecraft.R;
+
 public class FragmentSettingsActivity extends AppCompatActivity {
-	public static final Map<String,Class<? extends BaseFragment>> FRAGMENT_CLASSES=new HashMap<String,Class<? extends BaseFragment>>(){{
+	public static final Map<String,Class<? extends Fragment>> FRAGMENT_CLASSES=new HashMap<String,Class<? extends Fragment>>(){{
 			put("root",HubPrefFragment.class);
 			put("basics",Basics.class);
 			put("features",Features.class);
 			put("asfsls",Asfsls.class);
+			put("versionInfo",VersionInfoFragmentLocal.class);
 	}};
 	public static final String DIALOG_FRAGMENT_TAG_PREFIX="settings@com.nao20010128nao.Wisecraft#";
 	
 	int which;
 	SharedPreferences pref;
-	boolean requireRestart=false;
+	boolean requireRestart=true;
 	List<String> nonRestartKeys=Collections.unmodifiableList(Arrays.asList(new String[]{
 		/*"showPcUserFace",
 		"selectFont",
@@ -36,23 +49,83 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		"allowAutoUpdateSLSCode",
 		"aausc_monnet"*/
 	}));
+	
+	FrameLayout misc;
+	ViewPager pager;
+	ServerListFragment slf;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.fragment_settings_with_preview);
 		pref.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener(){
 				public void onSharedPreferenceChanged(SharedPreferences pref,String key){
 					if(nonRestartKeys.contains(key))return;
 					requireRestart=true;
 				}
 			});
-		getSupportFragmentManager()
-			.beginTransaction()
-			.replace(android.R.id.content,new HubPrefFragment())
-			.addToBackStack("root")
-			.commit();
+		if(savedInstanceState==null){
+			getSupportFragmentManager()
+				.beginTransaction()
+				.replace(R.id.preference,new HubPrefFragment())
+				.addToBackStack("root")
+				.commit();
+		}
+		misc=(FrameLayout)findViewById(R.id.misc);
+		pager=(ViewPager)LayoutInflater.from(this).inflate(R.layout.view_pager_only,misc,true).findViewById(R.id.pager);
+		
+		UsefulPagerAdapter2 upa=new UsefulPagerAdapter2(getSupportFragmentManager());
+		pager.setAdapter(upa);
+		slf=new ServerListPreviewFragment();
+		if(getResources().getBoolean(R.bool.is_port)){
+			Log.d("FSA","calculating by the width of the screen");
+			slf.setRows(Utils.calculateRows(FragmentSettingsActivity.this));
+		}else{
+			Log.d("FSA","calculating by the half width of the screen");
+			slf.setRows(Utils.calculateRows(FragmentSettingsActivity.this,Utils.getScreenWidth(this)/2));
+		}
+		upa.addTab(slf,"");
+		upa.addTab(new ServerInfoToolbarFragment(),"");
+		if(savedInstanceState!=null){
+			misc.setVisibility(savedInstanceState.getInt("misc.visibility"));
+		}
 	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		// TODO: Implement this method
+		super.onSaveInstanceState(outState);
+		outState.putInt("misc.visibility",misc.getVisibility());
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// TODO: Implement this method
+		MenuItem showPreview=menu.add(Menu.NONE,0,0,R.string.preview);
+		showPreview.setIcon(misc.getVisibility()==View.VISIBLE?R.drawable.ic_visibility_black_48dp:R.drawable.ic_visibility_off_black_48dp);
+		MenuItemCompat.setShowAsAction(showPreview,MenuItem.SHOW_AS_ACTION_ALWAYS);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO: Implement this method
+		switch(item.getItemId()){
+			case 0:
+				boolean isShowing=misc.getVisibility()==View.VISIBLE;
+				if(isShowing){
+					misc.setVisibility(View.GONE);
+				}else{
+					misc.setVisibility(View.VISIBLE);
+				}
+				invalidateOptionsMenu();
+				break;
+		}
+		return true;
+	}
+	
 	@Override
 	protected void attachBaseContext(Context newBase) {
 		super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
@@ -73,7 +146,8 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 	public void finish() {
 		// TODO: Implement this method
 		if(requireRestart){
-			ServerListActivityImpl.instance.get().finish();
+			if(ServerListActivityImpl.instance.get()!=null)
+				ServerListActivityImpl.instance.get().finish();
 			startActivity(new Intent(this,ServerListActivity.class));
 		}
 		super.finish();
@@ -97,7 +171,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 					public void onClick(String a, String b, String c) {
 						getActivity().getSupportFragmentManager()
 							.beginTransaction()
-							.replace(android.R.id.content,new Basics())
+							.replace(R.id.preference,new Basics())
 							.addToBackStack("basics")
 							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
 							.commit();
@@ -108,7 +182,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 						getActivity()
 							.getSupportFragmentManager()
 							.beginTransaction()
-							.replace(android.R.id.content,new Features())
+							.replace(R.id.preference,new Features())
 							.addToBackStack("features")
 							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
 							.commit();
@@ -119,8 +193,19 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 						getActivity()
 							.getSupportFragmentManager()
 							.beginTransaction()
-							.replace(android.R.id.content,new Asfsls())
+							.replace(R.id.preference,new Asfsls())
 							.addToBackStack("asfsls")
+							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+							.commit();
+					}
+				});
+			sH("changeColor",new HandledPreference.OnClickListener(){
+					public void onClick(String a,String b,String c){
+						getActivity()
+							.getSupportFragmentManager()
+							.beginTransaction()
+							.replace(R.id.preference,new ColorChanger())
+							.addToBackStack("changeColor")
 							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
 							.commit();
 					}
@@ -135,6 +220,17 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 						startActivity(new Intent(getContext(),AboutAppActivity.class));
 					}
 				});
+			sH("versionInfo",new HandledPreference.OnClickListener(){
+					public void onClick(String a,String b,String c){
+						getActivity()
+							.getSupportFragmentManager()
+							.beginTransaction()
+							.replace(R.id.preference,new VersionInfoFragmentLocal())
+							.addToBackStack("versionInfo")
+							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+							.commit();
+					}
+				});
 			findPreference("asfsls").setEnabled(pref.getBoolean("feature_asfsls",false));
 			((SetTextColor)findPreference("settingsAttention")).setTextColor(ContextCompat.getColor(getContext(),R.color.color888));
 		}
@@ -146,36 +242,6 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			findPreference("asfsls").setEnabled(pref.getBoolean("feature_asfsls",false));
 		}
 	}
-
-	
-	public abstract static class BaseFragment extends SHablePreferenceFragment {
-		protected SharedPreferences pref;
-		@Override
-		public void onCreate(Bundle savedInstanceState) {
-			// TODO: Implement this method
-			pref=PreferenceManager.getDefaultSharedPreferences(getContext());
-			super.onCreate(savedInstanceState);
-		}
-
-		@Override
-		public LayoutInflater getLayoutInflater(Bundle savedInstanceState) {
-			// TODO: Implement this method
-			return super.getLayoutInflater(savedInstanceState).cloneInContext(getActivity());
-		}
-
-		@Override
-		public Context getContext() {
-			// TODO: Implement this method
-			return TheApplication.injectContextSpecial(super.getContext());
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-			// TODO: Implement this method
-			return super.onCreateView(getActivity().getLayoutInflater(), container, savedInstanceState);
-		}
-	}
-
 
 	public static class Basics extends BaseFragment {
 		public static final String PARALLELS_DIALOG_FRAGMENT_TAG=DIALOG_FRAGMENT_TAG_PREFIX+"parallels-dialog";
@@ -223,12 +289,18 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 							.show();
 					}
 					String[] getFontChoices() {
-						List<String> l=new ArrayList();
-						for (Field f:TheApplication.fonts) {
-							l.add(f.getName());
-						}
-						l.remove("icomoon1");
-						return Factories.strArray(l);
+						return getResources().getStringArray(R.array.fontNamesOrder);
+					}
+				});
+			sH("changeDpi", new HandledPreference.OnClickListener(){
+					public void onClick(String a, String b, String c) {
+						PreferenceUtils.showEditTextDialog(getActivity(),findPreference("changeDpi"),"1.0",new Treatment<View>(){
+							public void process(View v){
+								((EditText)v.findViewById(android.R.id.edit)).setInputType(InputType.TYPE_CLASS_NUMBER|
+																							InputType.TYPE_TEXT_VARIATION_NORMAL|
+																							InputType.TYPE_NUMBER_FLAG_DECIMAL);
+							}
+						});
 					}
 				});
 		}
@@ -274,6 +346,296 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			// TODO: Implement this method
 			super.onResume();
 			getActivity().setTitle(R.string.addServerFromServerListSite);
+		}
+	}
+	
+	public static class ColorChanger extends BaseFragment {
+
+		@Override
+		public void onResume() {
+			// TODO: Implement this method
+			super.onResume();
+			getActivity().setTitle(R.string.colorChange);
+		}
+
+		@Override
+		public void onCreatePreferences(Bundle p1, String p2) {
+			// TODO: Implement this method
+			addPreferencesFromResource(R.xml.settings_color_changer_compat);
+		}
+	}
+	
+	public static class VersionInfoFragmentLocal extends VersionInfoFragment{
+
+		@Override
+		public void onResume() {
+			// TODO: Implement this method
+			super.onResume();
+			getActivity().setTitle(R.string.versionInfo);
+		}
+		
+		@Override
+		public RecyclerView onCreateRecyclerView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+			// TODO: Implement this method
+			return super.onCreateRecyclerView(Utils.fixLayoutInflaterIfNeeded(CalligraphyContextWrapper.wrap(inflater.getContext()),getActivity()),
+											  parent, 
+											  savedInstanceState);
+		}
+
+		@Override
+		public void onModifyPreferenceViewHolder(PreferenceViewHolder viewHolder, Preference pref) {
+			// TODO: Implement this method
+			PreferenceUtils.onBindViewHolder(getActivity(),pref,viewHolder);
+		}
+	}
+	
+	
+	
+	
+	
+
+	public abstract static class BaseFragment extends SHablePreferenceFragment {
+		protected SharedPreferences pref;
+		
+		LinearLayout miscContent;
+		@Override
+		public void onCreate(Bundle savedInstanceState) {
+			// TODO: Implement this method
+			pref=PreferenceManager.getDefaultSharedPreferences(getContext());
+			super.onCreate(savedInstanceState);
+		}
+
+		@Override
+		public LayoutInflater getLayoutInflater(Bundle savedInstanceState) {
+			// TODO: Implement this method
+			return getActivity().getLayoutInflater().cloneInContext(super.getLayoutInflater(savedInstanceState).getContext());
+		}
+
+		@Override
+		public Context getContext() {
+			// TODO: Implement this method
+			return TheApplication.injectContextSpecial(super.getContext());
+		}
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+			// TODO: Implement this method
+			View v=super.onCreateView(getActivity().getLayoutInflater(), container, savedInstanceState);
+			miscContent=(LinearLayout)v.findViewById(R.id.misc);
+			if(miscContent!=null)onMiscPartAvailable(miscContent);
+			return v;
+		}
+
+		@Override
+		public RecyclerView onCreateRecyclerView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+			// TODO: Implement this method
+			return super.onCreateRecyclerView(Utils.fixLayoutInflaterIfNeeded(CalligraphyContextWrapper.wrap(inflater.getContext()),getActivity()),
+				parent, 
+				savedInstanceState);
+		}
+		
+		
+		
+		protected void onMiscPartAvailable(LinearLayout misc){}
+		
+		public LinearLayout getMiscContent(){return miscContent;}
+	}
+	
+	
+	
+	//preview part
+	public static class ServerListPreviewFragment extends ServerListFragment<FragmentSettingsActivity> {
+
+		@Override
+		public void onResume() {
+			// TODO: Implement this method
+			super.onResume();
+			new AsyncTask<Void,Void,List<Server>>(){
+				public List<Server> doInBackground(Void...a){
+					List<Server> list=new ArrayList<>();
+					
+					ByteArrayOutputStream result=new ByteArrayOutputStream();
+					DataOutputStream resW=new DataOutputStream(result);
+					try{
+						//full stat
+						resW.write(0);resW.writeInt(0);
+						//73 70 6C 69 74 6E 75 6D 00 80 00
+						resW.write((byte)0x73);
+						resW.write((byte)0x70);
+						resW.write((byte)0x6c);
+						resW.write((byte)0x69);
+						resW.write((byte)0x74);
+						resW.write((byte)0x6e);
+						resW.write((byte)0x75);
+						resW.write((byte)0x6d);
+						resW.write((byte)0x00);
+						resW.write((byte)0x80);
+						resW.write((byte)0x00);
+						//KV
+						Map<String,String> kv=new HashMap();
+						kv.put("gametype", "SMP");
+						kv.put("map", "wisecraft");
+						kv.put("server_engine", "");
+						kv.put("hostport", "");
+						kv.put("whitelist", "on");
+						kv.put("plugins", "Wisecraft Ghost Ping");
+						kv.put("hostname", "§0W§1i§2s§3e§4c§5r§6a§7f§8t §9P§aE §bS§ce§dr§ev§fe§rr");//Colorful!
+						kv.put("numplayers", Integer.MAX_VALUE + "");
+						kv.put("version", "v0.15.6 alpha");
+						kv.put("game_id", "MINECRAFTPE");
+						kv.put("hostip", "127.0.0.1");
+						kv.put("maxplayers", Integer.MAX_VALUE + "");
+						for (Map.Entry<String,String> ent:kv.entrySet()) {
+							resW.write(ent.getKey().getBytes(CompatCharsets.UTF_8));
+							resW.write(0);
+							resW.write(ent.getValue().getBytes(CompatCharsets.UTF_8));
+							resW.write(0);
+						}
+						resW.write(0);
+						//01 70 6C 61 79 65 72 5F 00 00
+						resW.write((byte)0x01);
+						resW.write((byte)0x70);
+						resW.write((byte)0x6c);
+						resW.write((byte)0x61);
+						resW.write((byte)0x79);
+						resW.write((byte)0x65);
+						resW.write((byte)0x72);
+						resW.write((byte)0x5f);
+						resW.write((byte)0x00);
+						resW.write((byte)0x00);
+						//players
+						resW.write(0);
+						resW.write(0);
+						
+						resW.flush();
+					}catch(Throwable e){}
+					
+					ServerStatus success=new ServerStatus();//success server(PE)
+					success.ip="localhost";
+					success.port=19132;
+					success.ping=123;
+					success.response=new FullStat(result.toByteArray());
+					list.add(success);
+					
+					Server error=success.cloneAsServer();//error server(PE)
+					error.port++;
+					list.add(error);
+					
+					Server pending=error.cloneAsServer();//pending server(PE)
+					pending.port++;
+					list.add(pending);
+					
+					return list;
+				}
+				
+				public void onPostExecute(List<Server> lst){
+					getAdapter().clear();
+					getAdapter().getPingingMap().put(lst.get(2),true);
+					addServers(lst);
+				}
+			}.execute();
+			setRows(onCalculateRows());
+		}
+
+		@Override
+		protected int onCalculateRows() {
+			// TODO: Implement this method
+			int rows;
+			if(getResources().getBoolean(R.bool.is_port)){
+				Log.d("FSA","calculating by the width of the screen");
+				rows=Utils.calculateRows(getActivity());
+			}else{
+				Log.d("FSA","calculating by the width of the content");
+				rows=Utils.calculateRows(getActivity(),Utils.getScreenWidth(getActivity())/2);
+			}
+			Log.d("FSA","calculated rows: "+rows);
+			return rows;
+		}
+	}
+	
+	public static class ServerInfoToolbarFragment extends com.nao20010128nao.Wisecraft.misc.BaseFragment<FragmentSettingsActivity> {
+		UsefulPagerAdapter adapter;
+		ViewPager tabs;
+		
+		@Override
+		public void onResume() {
+			// TODO: Implement this method
+			super.onResume();
+			Toolbar tb=(Toolbar)findViewById(R.id.toolbar);
+			
+			tabs = (ViewPager)findViewById(R.id.pager);
+			tabs.setAdapter(adapter = new UsefulPagerAdapter(getChildFragmentManager()));
+			PagerSlidingTabStrip psts=(PagerSlidingTabStrip)findViewById(R.id.tabs);
+			psts.setViewPager(tabs);
+			
+			adapter.addTab(BlankFragment.class,"A");
+			adapter.addTab(BlankFragment.class,"B");
+			adapter.addTab(BlankFragment.class,"C");
+			
+			if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
+				BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
+				bd.setTargetDensity(getResources().getDisplayMetrics());
+				bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
+				findViewById(R.id.appbar).setBackgroundDrawable(bd);
+				psts.setIndicatorColor(Color.WHITE);
+				psts.setTextColor(Color.WHITE);
+				psts.setOnPageChangeListener(new ColorUpdater(Color.WHITE, ServerInfoActivity.DIRT_BRIGHT, tabs, psts));
+			} else {
+				psts.setIndicatorColor(ContextCompat.getColor(getActivity(), R.color.mainColor));
+				psts.setTextColor(ContextCompat.getColor(getActivity(), R.color.mainColor));
+				psts.setOnPageChangeListener(new ColorUpdater(ContextCompat.getColor(getActivity(), R.color.mainColor), ServerInfoActivity.PALE_PRIMARY, tabs, psts));
+			}
+			
+			{
+				String title="§0W§1i§2s§3e§4c§5r§6a§7f§8t §9P§aE §bS§ce§dr§ev§fe§rr";
+				if (pref.getBoolean("colorFormattedText", false)) {
+					if (pref.getBoolean("darkBackgroundForServerName", false)) {
+						tb.setTitle(Utils.parseMinecraftFormattingCodeForDark(title.toString()));
+					} else {
+						tb.setTitle(Utils.parseMinecraftFormattingCode(title.toString()));
+					}
+				} else {
+					tb.setTitle(Utils.deleteDecorations(title.toString()));
+				}
+			}
+			
+			{
+				Menu menu=tb.getMenu();
+				MenuItem updateBtn,seeTitleButton;
+				boolean isDark;
+				if (pref.getBoolean("colorFormattedText", false)) {
+					if (pref.getBoolean("darkBackgroundForServerName", false)) {
+						isDark = true;
+					} else {
+						isDark = false;
+					}
+				} else {
+					isDark = false;
+				}
+				int color= ContextCompat.getColor(getContext(), R.color.mainColor);
+				seeTitleButton = menu.add(Menu.NONE, 0, 0, R.string.seeTitle);
+				seeTitleButton.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_open_in_new_black_48dp, isDark ?Color.WHITE: color));
+				MenuItemCompat.setShowAsAction(seeTitleButton, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
+
+				updateBtn = menu.add(Menu.NONE, 1, 1, R.string.update);
+				updateBtn.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_refresh_black_48dp, isDark ?Color.WHITE: color));
+				MenuItemCompat.setShowAsAction(updateBtn, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
+			}
+		}
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+			// TODO: Implement this method
+			return LayoutInflater.from(getActivity()).inflate(R.layout.server_info_pager,container,false);
+		}
+		
+		public static class BlankFragment extends com.nao20010128nao.Wisecraft.misc.BaseFragment<FragmentSettingsActivity> {
+
+			@Override
+			public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+				// TODO: Implement this method
+				return inflater.inflate(R.layout.none,container,false);
+			}
 		}
 	}
 }

@@ -1,0 +1,28 @@
+<PreferenceScreen
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:title="@string/versionInfo">
+	<com.nao20010128nao.Wisecraft.misc.pref.SimplePref
+		android:key="versionInfo_wisecraft"
+		android:title="@string/versionInfo_wisecraft"/>
+	<com.nao20010128nao.Wisecraft.misc.pref.SimplePref
+		android:key="versionInfo_wisecraftInternal"
+		android:title="@string/versionInfo_wisecraftInternal"/>
+	<com.nao20010128nao.Wisecraft.misc.pref.SimplePref
+		android:key="versionInfo_i18nInternal"
+		android:title="@string/versionInfo_i18nInternal"/>
+	<com.nao20010128nao.Wisecraft.misc.pref.SimplePref
+		android:key="versionInfo_statusesLayoutInternal"
+		android:title="@string/versionInfo_statusesLayoutInternal"/>
+	<com.nao20010128nao.Wisecraft.misc.pref.SimplePref
+		android:key="versionInfo_materialIconsInternal"
+		android:title="@string/versionInfo_materialIconsInternal"/>
+	<com.nao20010128nao.Wisecraft.misc.pref.SimplePref
+		android:key="versionInfo_calligraphyInternal"
+		android:title="@string/versionInfo_calligraphyInternal"/>
+	<com.nao20010128nao.Wisecraft.misc.pref.SimplePref
+		android:key="versionInfo_pstsInternal"
+		android:title="@string/versionInfo_pstsInternal"/>
+	<com.nao20010128nao.Wisecraft.misc.pref.SimplePref
+		android:key="versionInfo_colorPickerInternal"
+		android:title="@string/versionInfo_colorPickerInternal"/>
+</PreferenceScreen>

@@ -1,11 +1,13 @@
 package com.nao20010128nao.Wisecraft;
 import android.app.*;
 import android.content.*;
+import android.content.res.*;
 import android.graphics.*;
 import android.graphics.drawable.*;
 import android.preference.*;
 import android.support.multidex.*;
 import android.support.v4.graphics.drawable.*;
+import android.support.v7.app.*;
 import android.view.*;
 import android.widget.*;
 import com.google.android.gms.tasks.*;
@@ -13,16 +15,17 @@ import com.google.firebase.analytics.*;
 import com.google.firebase.remoteconfig.*;
 import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
 import com.nao20010128nao.Wisecraft.rcon.*;
 import com.nao20010128nao.Wisecraft.services.*;
 import java.lang.reflect.*;
 import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
-import android.support.v7.app.*;
+import android.util.*;
 
 public class TheApplication extends Application implements com.nao20010128nao.Wisecraft.rcon.Presenter,com.ipaulpro.afilechooser.Presenter,InformationCommunicatorReceiver.DisclosureResult {
 	public static TheApplication instance;
-	public static Typeface latoLight,icomoon1,sysDefault,droidSans,robotoSlabLight;
+	public static Typeface latoLight,icomoon1,sysDefault,droidSans,robotoSlabLight,ubuntuFont;
 	public static Field[] fonts=getFontFields();
 	public static Map<Typeface,String> fontFilenames;
 	public static Map<String,Integer> fontDisplayNames;
@@ -33,6 +36,7 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 	public FirebaseAnalytics firebaseAnalytics;
 	public FirebaseRemoteConfig firebaseRemoteCfg;
 	public Task<Void> fbCfgLoader;
+	public Context extenderWrapped;
 	boolean disclosurePending=true,disclosureEnded=false;
 	
 	@Override
@@ -57,6 +61,8 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 			.remove("specialDrawer1")
 			.remove("useBright")
 			.commit();
+			
+		Log.d("GitRevisionHash",Utils.getField(BuildConfig.class,null,"GIT_REVISION_HASH")+"");
 	}
 	public Typeface getLocalizedFont() {
 		try {
@@ -107,6 +113,7 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		icomoon1 = Typeface.createFromAsset(getAssets(), "icomoon.ttf");
 		sysDefault = Typeface.DEFAULT;
 		robotoSlabLight = Typeface.createFromAsset(getAssets(), "RobotoSlab-Light.ttf");
+		ubuntuFont = Typeface.createFromAsset(getAssets(), "Ubuntu-Regular.ttf");
 
 		fontFilenames = new HashMap<Typeface,String>();
 		fontFilenames.put(droidSans, "DroidSans.ttf");
@@ -114,14 +121,16 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		fontFilenames.put(icomoon1, "icomoon.ttf");
 		fontFilenames.put(sysDefault, "");
 		fontFilenames.put(robotoSlabLight, "RobotoSlab-Light.ttf");
-
+		fontFilenames.put(ubuntuFont, "Ubuntu-Regular.ttf");
+		
 		fontDisplayNames=new HashMap<>();
 		fontDisplayNames.put("droidSans",R.string.font_droidSans);
 		fontDisplayNames.put("latoLight",R.string.font_latoLight);
 		fontDisplayNames.put("icomoon1",R.string.font_icomoon1);
 		fontDisplayNames.put("sysDefault",R.string.font_sysDefault);
 		fontDisplayNames.put("robotoSlabLight",R.string.font_robotoSlabLight);
-
+		fontDisplayNames.put("ubuntuFont",R.string.font_ubuntu);
+		
 		CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath(getFontFilename()).setFontAttrId(R.attr.fontPath).build());
 	}
 	
@@ -221,9 +230,22 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		// TODO: Implement this method
 		return true;
 	}
+
+	@Override
+	protected void attachBaseContext(Context base) {
+		super.attachBaseContext(base);
+		extenderWrapped=ContextWrappingExtender.wrap(base);
+	}
+
+	@Override
+	public Resources getResources() {
+		// TODO: Implement this method
+		return extenderWrapped.getResources();
+	}
 	
 	public static Context injectContextSpecial(final Context base){
-		final Context calligraphy=CalligraphyContextWrapper.wrap(base);
+		final Context extender=ContextWrappingExtender.wrap(base);
+		final Context calligraphy=CalligraphyContextWrapper.wrap(extender);
 		return calligraphy;
 	}
 	

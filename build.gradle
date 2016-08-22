@@ -29,7 +29,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.2'
+        classpath 'com.android.tools.build:gradle:2.1.3'
         classpath 'com.google.gms:google-services:3.0.0'
     }
 }
@@ -39,5 +39,6 @@ allprojects {
         jcenter()
 		mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+		maven { url 'https://dl.bintray.com/azeesoft/maven' }
     }
 }

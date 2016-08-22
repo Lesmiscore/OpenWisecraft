@@ -1,19 +1,19 @@
 package com.nao20010128nao.Wisecraft.misc.pref;
-import android.app.Activity;
-import android.content.Context;
+import android.app.*;
+import android.content.*;
+import android.preference.*;
+import android.support.v4.content.*;
+import android.support.v7.app.*;
+import android.support.v7.preference.*;
+import android.view.*;
+import android.widget.*;
+import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.misc.*;
+
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.Preference;
-import android.support.v7.preference.PreferenceViewHolder;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 import com.nao20010128nao.Wisecraft.R;
-import com.nao20010128nao.Wisecraft.misc.SetTextColor;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.content.DialogInterface;
-import com.nao20010128nao.Wisecraft.misc.Treatment;
 
 public class PreferenceUtils
 {
@@ -24,6 +24,10 @@ public class PreferenceUtils
 		if(pref instanceof SetTextColor){
 			onBindViewHolder((SetTextColor)pref,holder);
 		}
+		if(!pref.isEnabled()){
+			((TextView)holder.findViewById(android.R.id.title)).setTextColor(ContextCompat.getColor(context,R.color.color888));
+		}
+		Utils.applyTypefaceForViewTree(holder.itemView,TheApplication.instance.getLocalizedFont());
 	}
 	public static void onBindViewHolder(SetTextColor pref,PreferenceViewHolder holder){
 		((TextView)holder.findViewById(android.R.id.title)).setTextColor(pref.getTextColor());

@@ -2,20 +2,20 @@
 <resources>
 	<style name="AppTheme" parent="@style/Theme.AppCompat.Light">
 		<item name="colorPrimary">@color/primary</item>
-		<item name="colorAccent">@color/upd_2</item>
+		<item name="colorAccent">@color/mainColor</item>
 		<item name="android:windowContentOverlay">@null</item>
 		<item name="preferenceTheme">@style/AppTheme.Preference</item>
 		<item name="alertDialogTheme">@style/AppAlertDialog</item>
 	</style>
 	<style name="AppDialog" parent="@style/Theme.AppCompat.Light.Dialog">
 		<item name="colorPrimary">@color/primary</item>
-		<item name="colorAccent">@color/upd_2</item>
+		<item name="colorAccent">@color/mainColor</item>
 		<item name="android:windowContentOverlay">@null</item>
 		<item name="preferenceTheme">@style/AppTheme.Preference</item>
 	</style>
 	<style name="AppAlertDialog" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
 		<item name="colorPrimary">@color/primary</item>
-		<item name="colorAccent">@color/upd_2</item>
+		<item name="colorAccent">@color/mainColor</item>
 		<item name="preferenceTheme">@style/AppTheme.Preference</item>
 	</style>
 	
@@ -27,15 +27,15 @@
 	
 	<style name="AppTheme.OpenSource" parent="AppTheme.NoActionBar">
 		<item name="android:statusBarColor">@color/upd_1</item>
-		<item name="colorPrimary">@color/upd_2</item>
+		<item name="colorPrimary">@color/mainColor</item>
 		<item name="android:windowContentOverlay">@null</item>
 		<item name="preferenceTheme">@style/AppTheme.Preference</item>
 		<item name="actionBarStyle">@style/WhiteTextActionBar</item>
 	</style>
 	
 	<style name="AppTheme.Toolbar" parent="AppTheme">
-		<item name="colorControlNormal">@color/upd_2</item>
-		<item name="android:textColorSecondary">@color/upd_2</item>
+		<item name="colorControlNormal">@color/mainColor</item>
+		<item name="android:textColorSecondary">@color/mainColor</item>
 	</style>
 	
 	<style name="AppThemeN" parent="@android:style/Theme.Light">
@@ -56,6 +56,8 @@
         <item name="dialogPreferenceStyle">@style/Preference.DialogPreference</item>
         <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
         <item name="preferenceFragmentListStyle">@style/PreferenceFragmentList</item>
+		<item name="colorPickerPreferenceStyle">@style/Preference.ColorPickerPreference</item>
+		<item name="android:layout">@layout/fragment_settings_content</item>
     </style>
 	
 	
@@ -63,11 +65,11 @@
 	<style name="AppButton" parent="@style/Widget.AppCompat.Button.Colored">
 		<item name="android:textColor">#fff</item>
         <item name="android:gravity">center</item>
-		<item name="colorButtonNormal">@color/upd_2</item>
-		<item name="colorControlNormal">@color/upd_2</item>
+		<item name="colorButtonNormal">@color/mainColor</item>
+		<item name="colorControlNormal">@color/mainColor</item>
 	</style>
 	<style name="AppButton.Inverse">
-		<item name="android:textColor">@color/upd_2</item>
+		<item name="android:textColor">@color/mainColor</item>
 		<item name="colorButtonNormal">#fff</item>
 		<item name="colorControlNormal">#fff</item>
 	</style>
@@ -84,4 +86,15 @@
 	<style name="WhiteTitleTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
 		<item name="android:textColor">@color/white</item>
 	</style>
+	
+	
+	
+	<style name="Preference.ColorPickerPreference">
+        <item name="android:widgetLayout">@layout/color_picker_preference</item>
+    </style>
+	
+	
+	<declare-styleable name="ColorPickerPreferenceCompat">
+		<attr name="color"/>
+	</declare-styleable>
 </resources>

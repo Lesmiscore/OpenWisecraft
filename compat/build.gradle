@@ -1,14 +1,23 @@
 apply plugin: 'com.android.library'
 
 android{
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 24
+    buildToolsVersion "24.0.0"
 
     defaultConfig {
-        minSdkVersion 8
+        minSdkVersion 10
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
+		
+		def root="${project.rootDir}";
+		buildConfigField "String", "GIT_REVISION_HASH", "\""+getHashOfRepo("","Wisecraft",root)+"\""
+		buildConfigField "String", "GIT_REVISION_HASH_I18N", "\""+getHashOfRepo("wisecraft-i18n","Wisecraft-Multilanguage",root)+"\""
+		buildConfigField "String", "GIT_REVISION_HASH_STATUSES_LAYOUT", "\""+getHashOfRepo("statusesLayout","StatusesLayout",root)+"\""
+		buildConfigField "String", "GIT_REVISION_HASH_MATERIAL_ICONS", "\""+getHashOfRepo("MaterialIcons","MaterialIconsLight",root)+"\""
+		buildConfigField "String", "GIT_REVISION_HASH_CALLIGRAPHY", "\""+getHashOfRepo("calligraphy","Calligraphy-Wisecraft",root)+"\""
+		buildConfigField "String", "GIT_REVISION_HASH_PSTS", "\""+getHashOfRepo("psts","Wisecraft-PagerSlidingTabStrip",root)+"\""
+		buildConfigField "String", "GIT_REVISION_HASH_COLOR_PICKER", "\""+getHashOfRepo("colorPicker","Wisecraft-AndroidPhotoshopColorPicker",root)+"\""
     }
     buildTypes {
         release {
@@ -22,13 +31,30 @@ android{
 }
 
 dependencies {
-	compile 'com.android.support:support-v4:23.4.0'
-	compile 'com.android.support:appcompat-v7:23.4.0'
-	compile 'com.android.support:design:23.4.0'
-	compile 'com.android.support:preference-v7:23.4.0'
-	compile 'com.android.support:cardview-v7:23.4.0'
+	compile 'com.android.support:support-compat:24.2.0'
+	compile 'com.android.support:support-fragment:24.2.0'
+	compile 'com.android.support:appcompat-v7:24.2.0'
+	compile 'com.android.support:design:24.2.0'
+	compile 'com.android.support:cardview-v7:24.2.0'
+	compile 'com.android.support:preference-v7:24.2.0'
+	
+	compile 'com.google.firebase:firebase-config:9.+'
+	compile 'com.google.firebase:firebase-crash:9.+'
+	
 	compile 'com.google.code.gson:gson:2.6.2'
 	compile project(':scrolling')
 	compile project(':wisecraft-i18n')
     compile fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+
+def getHashOfRepo(String modul,String name,String root){
+	def revisionHash = "Unknown"
+	if(!System.getProperty("os.name").toLowerCase().startsWith("windows")){
+		revisionHash = ["sh",  "-c",  "cd "+root+"/"+modul+" ; git rev-parse HEAD"].execute().in.text.trim()
+	}else{
+		revisionHash = ["cmd",  "/c",  "git rev-parse HEAD"].execute(null,new File(root,modul)).in.text.trim()
+	}
+	println "Git Revision of "+name+" is:"+revisionHash
+	return revisionHash;
 }

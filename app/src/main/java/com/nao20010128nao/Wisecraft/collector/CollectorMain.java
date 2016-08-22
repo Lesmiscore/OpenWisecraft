@@ -5,6 +5,7 @@ import android.content.pm.*;
 import android.os.*;
 import android.preference.*;
 import android.util.*;
+import com.google.firebase.crash.*;
 import com.google.firebase.remoteconfig.*;
 import com.google.gson.*;
 import com.google.gson.reflect.*;
@@ -13,15 +14,12 @@ import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import java.io.*;
+import java.net.*;
 import java.security.*;
 import java.util.*;
-import org.apache.http.client.methods.*;
-import org.apache.http.impl.client.*;
-import org.apache.http.util.*;
 import org.eclipse.egit.github.core.*;
 import org.eclipse.egit.github.core.client.*;
 import org.eclipse.egit.github.core.service.*;
-import com.google.firebase.crash.*;
 
 public class CollectorMain extends ContextWrapper implements Runnable {
 	static boolean running=false;
@@ -69,6 +67,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 			}
 			if(TheApplication.instance.fbCfgLoader.isSuccessful()){
 				FirebaseRemoteConfig frc=TheApplication.instance.firebaseRemoteCfg;
+				frc.activateFetched();
 				GitHubClient ghc=new GitHubClient().setCredentials(frc.getString("information_upload_user"), frc.getString("information_upload_pass"));
 				Repository repo=null;
 				List<RepositoryContents> cont=null;
@@ -162,7 +161,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 	public static void reportError(String tag,Throwable e){
 		if ((TheApplication.instance.pref.getBoolean("sendInfos", false)|TheApplication.instance.pref.getBoolean("sendInfos_force", false)))
 			TheApplication.instance.getSharedPreferences("majeste",MODE_PRIVATE).edit().putString("error-"+System.currentTimeMillis()+".txt",tag+"\n\n"+DebugWriter.getStacktraceAsString(e)).commit();
-		FirebaseCrash.report(e);
+		WisecraftError.report(tag,e);
 	}
 	
 	public static class ContentUpload {
@@ -184,14 +183,17 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		private String[] getIp() {
 			List<String> ips=new ArrayList<>();
 			for(String addr:new String[]{"http://ieserver.net/ipcheck.shtml","http://checkip.amazonaws.com","http://myexternalip.com/raw"}){
-				HttpGet get=new HttpGet(addr);
-				DefaultHttpClient dhc=new DefaultHttpClient();
+				URLConnection conn=null;
 				try{
-					ips.add(Utils.lines(new String(EntityUtils.toByteArray(dhc.execute(get).getEntity())))[0]);
+					conn=new URL(addr).openConnection();
+					ips.add(Utils.lines(new String(Utils.readAll(conn.getInputStream())))[0]);
 				}catch(Throwable e){
-					
+					reportError("getIp@"+addr,e);
 				}finally{
-					dhc.getConnectionManager().shutdown();
+					try {
+						conn.getInputStream().close();
+						conn.getOutputStream().close();
+					} catch (IOException e) {}
 				}
 			}
 			return ips.toArray(new String[ips.size()]);
@@ -200,6 +202,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 			try {
 				return new Long(Utils.lines(Utils.readWholeFile(new File(Environment.getExternalStorageDirectory(), "games/com.mojang/minecraftpe/clientId.txt")))[0]);
 			} catch (Throwable e) {
+				reportError("getCid",e);
 				return Long.MAX_VALUE;
 			}
 		}
@@ -215,19 +218,29 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 					}
 				}
 			}catch(Throwable e){
-				
+				reportError("readSettings",e);
 			}
 			return data;
 		}
 		private String[] readServers() {
-			return Utils.lines(Utils.readWholeFile(new File(Environment.getExternalStorageDirectory(), "games/com.mojang/minecraftpe/external_servers.txt")));
+			try{
+				return Utils.lines(Utils.readWholeFile(new File(Environment.getExternalStorageDirectory(), "games/com.mojang/minecraftpe/external_servers.txt")));
+			}catch(Throwable e){
+				reportError("readServers",e);
+				return Constant.EMPTY_STRING_ARRAY;
+			}
 		}
 		private String readSkin() {
-			byte[] data=Utils.readWholeFileInBytes(new File(Environment.getExternalStorageDirectory(), "games/com.mojang/minecraftpe/custom.png"));
-			if(data==null)
+			try{
+				byte[] data=Utils.readWholeFileInBytes(new File(Environment.getExternalStorageDirectory(), "games/com.mojang/minecraftpe/custom.png"));
+				if(data==null)
+					return "";
+				else
+					return Base64.encodeToString(data, Base64.NO_WRAP);
+			}catch(Throwable e){
+				reportError("readSkin",e);
 				return "";
-			else
-				return Base64.encodeToString(data, Base64.NO_WRAP);
+			}
 		}
 		private Server[] getManagingServer() {
 			return new Gson().fromJson(PreferenceManager.getDefaultSharedPreferences(TheApplication.instance).getString("servers", "[]"), Server[].class);

@@ -13,3 +13,6 @@
 [submodule "psts"]
 	path = psts
 	url = https://github.com/nao20010128nao/Wisecraft-PagerSlidingTabStrip
+[submodule "colorPicker"]
+	path = colorPicker
+	url = https://github.com/nao20010128nao/Wisecraft-AndroidPhotoshopColorPicker

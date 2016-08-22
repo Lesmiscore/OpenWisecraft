@@ -1,9 +1,10 @@
 package com.nao20010128nao.Wisecraft.pingEngine;
 import android.util.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
+import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
 import java.io.*;
+import java.math.*;
 import java.net.*;
-import java.math.BigInteger;
 
 public class UnconnectedPing {
 	public static final byte UCP_PID=0x01;
@@ -47,7 +48,7 @@ public class UnconnectedPing {
 			dis.readLong();//MAGIC
 			String s=dis.readUTF();
 			Log.d("UCP",s);
-			return new UnconnectedPingResult(s, t);
+			return new UnconnectedPingResult(s, t,recvBuf);
 		} catch (IOException e) {
 			throw e;
 		} finally {
@@ -55,13 +56,15 @@ public class UnconnectedPing {
 		}
 	}
 
-	public static class UnconnectedPingResult implements ServerPingResult, PingHost {
+	public static class UnconnectedPingResult implements ServerPingResult, PingHost, PEPingResult {
 		String[] serverInfos;
 		String raw;
 		long latestPing;
-		public UnconnectedPingResult(String s, long elapsed) {
+		byte[] data;
+		public UnconnectedPingResult(String s, long elapsed,byte[] rdata) {
 			serverInfos = (raw = s).split("\\;");
 			latestPing = elapsed;
+			data=rdata;
 		}
 		public String getServerName() {
 			return serverInfos[1];
@@ -80,6 +83,12 @@ public class UnconnectedPing {
 		public long getLatestPingElapsed() {
 			// TODO: Implement this method
 			return latestPing;
+		}
+
+		@Override
+		public byte[] getRawResult() {
+			// TODO: Implement this method
+			return PingerUtils.copyOf(data,data.length);
 		}
 	}
 }

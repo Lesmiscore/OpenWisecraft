@@ -88,11 +88,14 @@ public class PCQuery implements PingHost{
 			String s = getStatJson(dis);
 			Log.i("ping_pc",s);
 			lastPing=System.currentTimeMillis()-t;
+			PCQueryResult result;
 			try {
-				return gson.fromJson(s, Reply.class);
+				result= gson.fromJson(s, Reply.class);
 			} catch (JsonSyntaxException e) {
-				return gson.fromJson(s, Reply19.class);
+				result= gson.fromJson(s, Reply19.class);
 			}
+			result.setRaw(s);
+			return result;
 		} finally {
 			if (sock != null)
 				sock.close();

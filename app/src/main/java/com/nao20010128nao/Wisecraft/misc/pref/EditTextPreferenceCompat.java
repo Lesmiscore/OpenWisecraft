@@ -4,7 +4,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 import android.support.v7.preference.PreferenceViewHolder;
-import com.nao20010128nao.Wisecraft.R;
+import com.nao20010128nao.Wisecraft.misc.compat.R;
 import com.nao20010128nao.Wisecraft.misc.SetTextColor;
 import android.graphics.Color;
 
