@@ -8,23 +8,25 @@ public abstract class ViewHolderCatchablePreferenceFragment extends PreferenceFr
 	@Override
 	protected RecyclerView.Adapter onCreateAdapter(PreferenceScreen preferenceScreen) {
 		// TODO: Implement this method
-		return new ViewModifyablePreferenceGroupAdapter(preferenceScreen);
+		return new ViewModifyablePreferenceGroupAdapter(preferenceScreen,this);
 	}
 
 	public void onModifyPreferenceViewHolder(PreferenceViewHolder viewHolder,Preference pref){
 
 	}
 
-	class ViewModifyablePreferenceGroupAdapter extends PreferenceGroupAdapter{
-		public ViewModifyablePreferenceGroupAdapter(PreferenceGroup pg){
+	public static class ViewModifyablePreferenceGroupAdapter extends PreferenceGroupAdapter{
+		ViewHolderCatchablePreferenceFragment fragment;
+		public ViewModifyablePreferenceGroupAdapter(PreferenceGroup pg,ViewHolderCatchablePreferenceFragment fragment){
 			super(pg);
+			this.fragment=fragment;
 		}
 
 		@Override
 		public void onBindViewHolder(PreferenceViewHolder holder, int position) {
 			// TODO: Implement this method
 			super.onBindViewHolder(holder, position);
-			onModifyPreferenceViewHolder(holder,getItem(position));
+			fragment.onModifyPreferenceViewHolder(holder,getItem(position));
 		}
 	}
 }
