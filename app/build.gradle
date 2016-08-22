@@ -10,6 +10,9 @@ android {
         minSdkVersion 17
         targetSdkVersion 21
 		multiDexEnabled true
+		jackOptions {
+			enabled true
+		}
 	}
 	
 	signingConfigs {

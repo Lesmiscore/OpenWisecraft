@@ -7,6 +7,9 @@ android {
     defaultConfig {
         minSdkVersion 8
         targetSdkVersion 14
+        jackOptions {
+			enabled true
+		}
     }
     buildTypes {
         release {
