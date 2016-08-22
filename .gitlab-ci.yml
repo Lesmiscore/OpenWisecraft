@@ -59,7 +59,7 @@ rcon:
   script:
     - "rm *.apk"
     - rm dexdump.txt
-    - gradle-2.14.1/bin/gradle build -p rconApp --info --stacktrace
+    - gradle-2.14.1/bin/gradle build -p rconApp --info --stacktrace > build.log
     - mv rconApp/build/outputs/apk/*.apk .
     - unzip rconApp-release.apk -d unzippedApk > NUL
     - android-sdk-linux/build-tools/24.0.0/dexdump -d unzippedApk/classes.dex > dexdump.txt
@@ -67,6 +67,7 @@ rcon:
     paths:
       - "*.apk"
       - dexdump.txt
+      - build.log
 
 
 rconPC:
@@ -74,13 +75,14 @@ rconPC:
   script:
     - "rm *.apk"
     - rm dexdump.txt
-    - gradle-2.14.1/bin/gradle build -p rconPassCrack --info --stacktrace
+    - gradle-2.14.1/bin/gradle build -p rconPassCrack --info --stacktrace > build.log
     - mv rconPassCrack/build/outputs/apk/*.apk .
     - unzip rconPassCrack-release.apk -d unzippedApk > NUL
     - android-sdk-linux/build-tools/24.0.0/dexdump -d unzippedApk/classes.dex > dexdump.txt
   artifacts:
     paths:
-      - "rconPassCrack*.apk"
+      - "*.apk"
       - dexdump.txt
+      - build.log
 
 
