@@ -10,7 +10,7 @@ import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.compat.BuildConfig;
 import com.nao20010128nao.Wisecraft.misc.compat.R;
 
-public class VersionInfoFragment extends PreferenceFragmentCompat
+public class VersionInfoFragment extends ViewHolderCatchablePreferenceFragment
 {
 
 	@Override
@@ -42,32 +42,10 @@ public class VersionInfoFragment extends PreferenceFragmentCompat
 		}
 	}
 
-	@Override
-	protected RecyclerView.Adapter onCreateAdapter(PreferenceScreen preferenceScreen) {
-		// TODO: Implement this method
-		return new ViewModifyablePreferenceGroupAdapter(preferenceScreen);
-	}
-	
 	public Class onGetBuildConfigClass()throws ClassNotFoundException{
 		return BuildConfig.class;
 	}
 	
-	public void onModifyPreferenceViewHolder(PreferenceViewHolder viewHolder,Preference pref){
-		
-	}
-	
-	class ViewModifyablePreferenceGroupAdapter extends PreferenceGroupAdapter{
-		public ViewModifyablePreferenceGroupAdapter(PreferenceGroup pg){
-			super(pg);
-		}
-
-		@Override
-		public void onBindViewHolder(PreferenceViewHolder holder, int position) {
-			// TODO: Implement this method
-			super.onBindViewHolder(holder, position);
-			onModifyPreferenceViewHolder(holder,getItem(position));
-		}
-	}
 	
 	
 	private static String getVersionName(Context context) {
