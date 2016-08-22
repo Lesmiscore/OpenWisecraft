@@ -11,7 +11,7 @@ android {
         targetSdkVersion 21
 		multiDexEnabled true
 		jackOptions {
-			enabled true
+			enabled false
 		}
 	}
 	
