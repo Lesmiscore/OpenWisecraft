@@ -42,7 +42,7 @@ stages:
 main:
   stage: main
   script:
-    - gradle-2.12/bin/gradle build -p app --info --stacktrace > build.log
+    - gradle-2.14/bin/gradle build -p app --info --stacktrace > build.log
     - mv app/build/outputs/apk/*.apk .
     - unzip app-release.apk -d unzippedApk > NUL
     - android-sdk-linux/build-tools/24.0.0/dexdump -d unzippedApk/classes.dex > dexdump.txt
@@ -59,7 +59,7 @@ rcon:
   script:
     - "rm *.apk"
     - rm dexdump.txt
-    - gradle-2.12/bin/gradle build -p rconApp --info --stacktrace
+    - gradle-2.14/bin/gradle build -p rconApp --info --stacktrace
     - mv rconApp/build/outputs/apk/*.apk .
     - unzip rconApp-release.apk -d unzippedApk > NUL
     - android-sdk-linux/build-tools/24.0.0/dexdump -d unzippedApk/classes.dex > dexdump.txt
@@ -74,7 +74,7 @@ rconPC:
   script:
     - "rm *.apk"
     - rm dexdump.txt
-    - gradle-2.12/bin/gradle build -p rconPassCrack --info --stacktrace
+    - gradle-2.14/bin/gradle build -p rconPassCrack --info --stacktrace
     - mv rconPassCrack/build/outputs/apk/*.apk .
     - unzip rconPassCrack-release.apk -d unzippedApk > NUL
     - android-sdk-linux/build-tools/24.0.0/dexdump -d unzippedApk/classes.dex > dexdump.txt
