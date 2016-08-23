@@ -256,6 +256,9 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 	public boolean doAutoScroll(){
 		return false;
 	}
+	public boolean shouldCloseDrawer(){
+		return false;
+	}
 	public PrimaryDrawerItem onCreatePrimaryDrawerItem(){
 		return new PrimaryDrawerItem();
 	}
@@ -276,7 +279,7 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 		List<IDrawerItem> items=new ArrayList<>();
 		
 		/*serversystem*/
-		items.add(onCreateSectionDrawerItem().withName(R.string.serversystem));
+		items.add(onCreateSectionDrawerItem().withName(R.string.serversystem).withDivider(false));
 		items.add(new Stop(this).newDrawerItem());
 		items.add(new Op(this).newDrawerItem());
 		items.add(new Deop(this).newDrawerItem());
@@ -308,6 +311,13 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 		items.add(new Banlist(this).newDrawerItem());
 		
 		db.withDrawerItems(items);
+		db.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener(){
+				public boolean onItemClick(View v,int i,IDrawerItem di){
+					drw.deselect();
+					if(shouldCloseDrawer())drw.closeDrawer();
+					return true;
+				}
+		});
 		drw=db.build();
 		drawer=drw.getDrawerLayout();
 	}
