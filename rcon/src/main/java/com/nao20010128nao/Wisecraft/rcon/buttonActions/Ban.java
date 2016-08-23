@@ -31,4 +31,10 @@ public class Ban extends NameSelectAction {
 		// TODO: Implement this method
 		return R.id.ban;
 	}
+
+	@Override
+	public int getTitleId() {
+		// TODO: Implement this method
+		return R.string.ban;
+	}
 }

@@ -33,4 +33,10 @@ public class Save_All extends BaseAction {
 		// TODO: Implement this method
 		return R.id.saveall;
 	}
+
+	@Override
+	public int getTitleId() {
+		// TODO: Implement this method
+		return R.string.saveall;
+	}
 }

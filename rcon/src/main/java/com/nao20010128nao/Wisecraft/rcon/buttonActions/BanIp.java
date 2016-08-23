@@ -37,4 +37,10 @@ public class BanIp extends NameSelectAction {
 		// TODO: Implement this method
 		return R.id.banip;
 	}
+
+	@Override
+	public int getTitleId() {
+		// TODO: Implement this method
+		return R.string.ban_ip;
+	}
 }

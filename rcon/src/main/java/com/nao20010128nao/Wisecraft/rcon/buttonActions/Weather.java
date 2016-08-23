@@ -39,4 +39,10 @@ public class Weather extends NameSelectAction {
 		// TODO: Implement this method
 		return super.onPlayersList();
 	}
+
+	@Override
+	public int getTitleId() {
+		// TODO: Implement this method
+		return R.string.changeweather;
+	}
 }

@@ -31,4 +31,10 @@ public class Kill extends NameSelectAction {
 		// TODO: Implement this method
 		return R.id.kill;
 	}
+
+	@Override
+	public int getTitleId() {
+		// TODO: Implement this method
+		return R.string.kill;
+	}
 }

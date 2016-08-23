@@ -33,4 +33,10 @@ public class Save_Off extends BaseAction {
 		// TODO: Implement this method
 		return R.id.saveoff;
 	}
+
+	@Override
+	public int getTitleId() {
+		// TODO: Implement this method
+		return R.string.saveoff;
+	}
 }

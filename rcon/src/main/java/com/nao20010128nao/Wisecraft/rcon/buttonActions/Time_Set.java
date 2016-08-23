@@ -46,4 +46,9 @@ public class Time_Set extends NameSelectAction {
 		return getResString(R.string.setTimeHint);
 	}
 
+	@Override
+	public int getTitleId() {
+		// TODO: Implement this method
+		return R.string.gametime;
+	}
 }

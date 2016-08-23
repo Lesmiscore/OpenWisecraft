@@ -37,4 +37,10 @@ public class DefaultGamemode extends NameSelectAction {
 		// TODO: Implement this method
 		return getResources().getStringArray(R.array.defaultgamemodeConst);
 	}
+
+	@Override
+	public int getTitleId() {
+		// TODO: Implement this method
+		return R.string.defaultgm;
+	}
 }

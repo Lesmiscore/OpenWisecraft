@@ -39,4 +39,10 @@ public class Pardon extends NameSelectAction {
 		// TODO: Implement this method
 		return R.id.pardon;
 	}
+
+	@Override
+	public int getTitleId() {
+		// TODO: Implement this method
+		return R.string.pardon;
+	}
 }

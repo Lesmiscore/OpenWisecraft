@@ -31,4 +31,10 @@ public class Deop extends NameSelectAction {
 		// TODO: Implement this method
 		return R.id.deop;
 	}
+
+	@Override
+	public int getTitleId() {
+		// TODO: Implement this method
+		return R.string.deop;
+	}
 }

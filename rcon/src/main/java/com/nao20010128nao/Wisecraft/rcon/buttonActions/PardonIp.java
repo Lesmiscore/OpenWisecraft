@@ -45,4 +45,10 @@ public class PardonIp extends NameSelectAction {
 		// TODO: Implement this method
 		return R.id.pardonip;
 	}
+
+	@Override
+	public int getTitleId() {
+		// TODO: Implement this method
+		return R.string.pardon_ip;
+	}
 }

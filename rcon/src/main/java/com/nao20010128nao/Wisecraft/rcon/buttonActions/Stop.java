@@ -32,4 +32,10 @@ public class Stop extends BaseAction {
 		// TODO: Implement this method
 		return R.id.stopServer;
 	}
+
+	@Override
+	public int getTitleId() {
+		// TODO: Implement this method
+		return R.string.stop;
+	}
 }

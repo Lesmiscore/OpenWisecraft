@@ -69,4 +69,10 @@ public class Gamemode extends NameSelectAction {
 		else
 			return null;
 	}
+
+	@Override
+	public int getTitleId() {
+		// TODO: Implement this method
+		return R.string.changepgm;
+	}
 }

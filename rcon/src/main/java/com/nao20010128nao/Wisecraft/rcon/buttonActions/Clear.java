@@ -125,4 +125,10 @@ public class Clear extends NameSelectAction {
 		// TODO: Implement this method
 		return hint;
 	}
+
+	@Override
+	public int getTitleId() {
+		// TODO: Implement this method
+		return R.string.clear;
+	}
 }

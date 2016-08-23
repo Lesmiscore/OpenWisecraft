@@ -32,4 +32,10 @@ public class Op extends NameSelectAction {
 		// TODO: Implement this method
 		return R.id.op;
 	}
+
+	@Override
+	public int getTitleId() {
+		// TODO: Implement this method
+		return R.string.op;
+	}
 }

@@ -32,4 +32,10 @@ public class Banlist extends BaseAction {
 		// TODO: Implement this method
 		return R.id.banlist;
 	}
+
+	@Override
+	public int getTitleId() {
+		// TODO: Implement this method
+		return R.string.banlist;
+	}
 }

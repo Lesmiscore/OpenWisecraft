@@ -31,4 +31,10 @@ public class Kick extends NameSelectAction {
 		// TODO: Implement this method
 		return R.id.kick;
 	}
+
+	@Override
+	public int getTitleId() {
+		// TODO: Implement this method
+		return R.string.kick;
+	}
 }

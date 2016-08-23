@@ -1,26 +1,28 @@
 package com.nao20010128nao.Wisecraft.rcon;
 import android.content.*;
-import android.graphics.*;
+import android.content.res.*;
 import android.os.*;
-import android.preference.*;
 import android.support.v4.app.*;
 import android.support.v4.widget.*;
 import android.support.v7.app.*;
+import android.support.v7.widget.*;
+import android.util.*;
 import android.view.*;
 import android.widget.*;
-import com.nao20010128nao.Wisecraft.*;
+import com.mikepenz.materialdrawer.*;
+import com.mikepenz.materialdrawer.model.*;
+import com.mikepenz.materialdrawer.model.interfaces.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.rcon.*;
+import com.nao20010128nao.Wisecraft.rcon.*;
 import com.nao20010128nao.Wisecraft.rcon.buttonActions.*;
 import java.io.*;
 import java.lang.ref.*;
 import java.util.*;
 
-import com.nao20010128nao.Wisecraft.rcon.R;
-import android.content.res.TypedArray;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import com.nao20010128nao.Wisecraft.rcon.R;
 
 public abstract class RCONActivityBase extends AppCompatActivity {
 	public static WeakReference<RCONActivityBase> instance=new WeakReference(null);
@@ -33,6 +35,7 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 	LinearLayout console;
 	EditText command;
 	Button ok;
+	Drawer drw;
 	DrawerLayout drawer;
 	ListView players;
 	TextView playersCount;
@@ -45,7 +48,7 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 	int port;
 	String ip;
 	boolean living=true;
-	boolean drawerOpening=false;
+	boolean wasSetHandlersCalled=false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
@@ -74,22 +77,6 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 		}
 		fth = (FragmentTabHost)findViewById(android.R.id.tabhost);
 		fth.setup(this, getSupportFragmentManager(), R.id.container);
-
-		drawer = (DrawerLayout)findViewById(R.id.mainDrawer);
-		drawer.setDrawerListener(new DrawerLayout.DrawerListener(){
-				public void onDrawerClosed(View v) {
-					drawerOpening = false;
-				}
-				public void onDrawerOpened(View v) {
-					drawerOpening = true;
-				}
-				public void onDrawerStateChanged(int v) {
-
-				}
-				public void onDrawerSlide(View v, float f) {
-
-				}
-			});
 
 		playersList = new AppBaseArrayAdapter<String>(this, android.R.layout.simple_list_item_1, playersListInternal = new ArrayList<>(10));
 
@@ -203,9 +190,8 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 	@Override
 	public void onBackPressed() {
 		// TODO: Implement this method
-		if (drawerOpening) {
-			drawer.closeDrawers();
-			drawerOpening = false;
+		if (drw.isDrawerOpen()) {
+			drw.closeDrawer();
 		} else {
 			exitActivity();
 		}
@@ -269,35 +255,68 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 	public boolean doAutoScroll(){
 		return false;
 	}
+	public PrimaryDrawerItem onCreatePrimaryDrawerItem(){
+		return new PrimaryDrawerItem();
+	}
 
 	protected void onConnectionFailed(){}
 	protected void onConnectionSuccess(String password){}
 	
 	private void applyHandlers() {
-		new Stop(this);
-		new Op(this);
-		new Deop(this);
-		new Kick(this);
-		new Ban(this);
-		new BanIp(this);
-		new Pardon(this);
-		new PardonIp(this);
-		new Time_Set(this);
-		new Gamemode(this);
-		new Save_All(this);
-		new Save_On(this);
-		new Save_Off(this);
-		new Give(this);
-		new Clear(this);
-		new Kill(this);
-		new Tell(this);
-		new Tp(this);
-		new Xp(this);
-		new DefaultGamemode(this);
-		new Weather(this);
-		new Me(this);
-		new Banlist(this);
+		if(wasSetHandlersCalled){
+			return;
+		}
+		wasSetHandlersCalled=true;
+		DrawerBuilder db=new DrawerBuilder(this);
+		db.withToolbar(getToolbar());
+		List<IDrawerItem> items=new ArrayList<>();
+		
+		//serversystem
+		items.add(new Stop(this).newDrawerItem());
+		items.add(new Op(this).newDrawerItem());
+		items.add(new Deop(this).newDrawerItem());
+		items.add(new Kick(this).newDrawerItem());
+		items.add(new Ban(this).newDrawerItem());
+		items.add(new BanIp(this).newDrawerItem());
+		items.add(new Pardon(this).newDrawerItem());
+		items.add(new PardonIp(this).newDrawerItem());
+		items.add(new Time_Set(this).newDrawerItem());
+		items.add(new Gamemode(this).newDrawerItem());
+		items.add(new Save_All(this).newDrawerItem());
+		items.add(new Save_On(this).newDrawerItem());
+		items.add(new Save_Off(this).newDrawerItem());
+		
+		//playertools
+		items.add(new Give(this).newDrawerItem());
+		items.add(new Clear(this).newDrawerItem());
+		items.add(new Kill(this).newDrawerItem());
+		items.add(new Tell(this).newDrawerItem());
+		items.add(new Tp(this).newDrawerItem());
+		items.add(new Xp(this).newDrawerItem());
+		items.add(new DefaultGamemode(this).newDrawerItem());
+		items.add(new Weather(this).newDrawerItem());
+		
+		//nocategory
+		items.add(new Me(this).newDrawerItem());
+		items.add(new Banlist(this).newDrawerItem());
+		
+		db.withDrawerItems(items);
+		drw=db.build();
+		drawer=drw.getDrawerLayout();
 	}
+	
+	
+	private android.support.v7.widget.Toolbar getToolbar(){
+		int[] ids=new int[]{R.id.appbar,R.id.toolbar,R.id.toolbar_layout,R.id.action_bar};
+		for(int id:ids){
+			View v=getWindow().getDecorView().findViewById(id);
+			if(v instanceof android.support.v7.widget.Toolbar){
+				return (android.support.v7.widget.Toolbar)v;
+			}
+		}
+		return null;
+	}
+	
 	class PasswordAsking extends ContextThemeWrapper {
 		EditText password;
 		public PasswordAsking() {

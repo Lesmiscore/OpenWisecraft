@@ -42,4 +42,10 @@ public class Tp extends BaseAction {
 			});
 		return v;
 	}
+
+	@Override
+	public int getTitleId() {
+		// TODO: Implement this method
+		return R.string.tp;
+	}
 }
