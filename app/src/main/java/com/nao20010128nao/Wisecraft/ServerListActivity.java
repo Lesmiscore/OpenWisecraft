@@ -206,7 +206,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	protected void onSaveInstanceState(Bundle outState) {
 		// TODO: Implement this method
 		outState=drawer.saveInstanceState(outState);
-		if(crossFader!=null)outState=crossFader.saveInstanceState(outState);
 		super.onSaveInstanceState(outState);
 	}
 	
