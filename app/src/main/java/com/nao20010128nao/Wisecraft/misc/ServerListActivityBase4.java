@@ -29,7 +29,6 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBaseGran
 {
 	protected int newVersionAnnounce=0;
 	protected Drawer drawer;
-	protected Crossfader crossFader;
 	protected MiniDrawer sideMenu;
 	protected RecyclerView rv;
 	protected Snackbar networkState;
@@ -50,32 +49,7 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBaseGran
 				.withDrawerWidthRes(R.dimen.drawer_width)
 				.withDrawerLayout(R.layout.drawer_single_for_builder);
 			
-			switch(getResources().getInteger(R.integer.server_list_layout_mode)*0){
-				case 0:
-					drawer=bld.build();
-					break;
-				case 1:
-					drawer=bld.buildView();
-					sideMenu=drawer.getMiniDrawer();
-					sideMenu.withOnMiniDrawerItemClickListener(new MiniDrawer.OnMiniDrawerItemClickListener(){
-							public boolean onItemClick(View p1, int p2, IDrawerItem p3, int p4){
-								sideMenu.getAdapter().deselect();//cf. MiniDrawer#updateItem(long)
-								return false;
-							}
-						});
-					View minidrawer=sideMenu.build(this);
-					crossFader=new Crossfader()
-						.withContent(findViewById(android.R.id.content))
-						.withFirst(drawer.getSlider(),getResources().getDimensionPixelSize(R.dimen.drawer_width))
-						.withSecond(minidrawer,getResources().getDimensionPixelSize(R.dimen.minidrawer_width))
-						.withSavedInstance(savedInstanceState)
-						.build();
-					break;
-				case 2:
-					drawer=bld.buildView();
-					((FrameLayout)findViewById(R.id.drawer)).addView(drawer.getSlider());
-					break;
-			}
+			drawer=bld.build();
 		}
 		rv = (RecyclerView)findViewById(android.R.id.list);
 		switch(pref.getInt("serverListStyle2",0)){
