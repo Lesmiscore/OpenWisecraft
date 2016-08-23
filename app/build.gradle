@@ -41,14 +41,6 @@ android {
 			signingConfig signingConfigs.release
 			resValue "string", "app_name", "Wisecraft BETA"
 		}
-		proguardTest {
-            minifyEnabled false
-            proguardFiles '../proguard-test.txt'
-			applicationIdSuffix = '.pg'  
-            versionNameSuffix = ' Test'
-			signingConfig signingConfigs.release
-			resValue "string", "app_name", "Wisecraft TEST"
-        }
     }
 	
 	applicationVariants.all { variant ->
