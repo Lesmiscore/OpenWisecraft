@@ -9,4 +9,10 @@ public class RCONActivity extends RCONActivityBase {
 		// TODO: Implement this method
 		return new LineWrappingPrimaryDrawerItem();
 	}
+
+	@Override
+	public SectionDrawerItem onCreateSectionDrawerItem() {
+		// TODO: Implement this method
+		return new LineWrappingSectionDrawerItem();
+	}
 }

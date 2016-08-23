@@ -258,6 +258,12 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 	public PrimaryDrawerItem onCreatePrimaryDrawerItem(){
 		return new PrimaryDrawerItem();
 	}
+	public DividerDrawerItem onCreateDividerDrawerItem(){
+		return new DividerDrawerItem();
+	}
+	public SectionDrawerItem onCreateSectionDrawerItem(){
+		return new SectionDrawerItem();
+	}
 
 	protected void onConnectionFailed(){}
 	protected void onConnectionSuccess(String password){}
@@ -271,7 +277,7 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 		db.withToolbar(getToolbar());
 		List<IDrawerItem> items=new ArrayList<>();
 		
-		//serversystem
+		/*serversystem*/items.add(onCreateSectionDrawerItem().withName(R.string.serversystem));
 		items.add(new Stop(this).newDrawerItem());
 		items.add(new Op(this).newDrawerItem());
 		items.add(new Deop(this).newDrawerItem());
@@ -286,7 +292,8 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 		items.add(new Save_On(this).newDrawerItem());
 		items.add(new Save_Off(this).newDrawerItem());
 		
-		//playertools
+		items.add(onCreateDividerDrawerItem());
+		/*playertools*/items.add(onCreateSectionDrawerItem().withName(R.string.playertools));
 		items.add(new Give(this).newDrawerItem());
 		items.add(new Clear(this).newDrawerItem());
 		items.add(new Kill(this).newDrawerItem());
@@ -296,7 +303,8 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 		items.add(new DefaultGamemode(this).newDrawerItem());
 		items.add(new Weather(this).newDrawerItem());
 		
-		//nocategory
+		items.add(onCreateDividerDrawerItem());
+		/*nocategory*/items.add(onCreateSectionDrawerItem().withName(R.string.nocategory));
 		items.add(new Me(this).newDrawerItem());
 		items.add(new Banlist(this).newDrawerItem());
 		
