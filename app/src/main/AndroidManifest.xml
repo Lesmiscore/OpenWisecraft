@@ -40,7 +40,8 @@
         <activity
 			android:label="@string/rcon"
 			android:name=".rcon.RCONActivity"
-			android:exported="false">
+			android:exported="false"
+			android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
 			android:label="@string/mtl"

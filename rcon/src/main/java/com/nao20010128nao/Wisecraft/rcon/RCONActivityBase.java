@@ -23,6 +23,7 @@ import java.util.*;
 
 import android.support.v7.widget.Toolbar;
 import com.nao20010128nao.Wisecraft.rcon.R;
+import android.text.*;
 
 public abstract class RCONActivityBase extends AppCompatActivity {
 	public static WeakReference<RCONActivityBase> instance=new WeakReference(null);
@@ -219,7 +220,7 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 				public void run() {
 					try {
 						String s=rcon.send(cmd);
-						if (s.equals("")) {
+						if (TextUtils.isEmpty(s)) {
 							s = getResources().getString(R.string.emptyResponse);
 						}
 						appendIntoConsole(s);
@@ -258,9 +259,6 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 	public PrimaryDrawerItem onCreatePrimaryDrawerItem(){
 		return new PrimaryDrawerItem();
 	}
-	public DividerDrawerItem onCreateDividerDrawerItem(){
-		return new DividerDrawerItem();
-	}
 	public SectionDrawerItem onCreateSectionDrawerItem(){
 		return new SectionDrawerItem();
 	}
@@ -277,7 +275,8 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 		db.withToolbar(getToolbar());
 		List<IDrawerItem> items=new ArrayList<>();
 		
-		/*serversystem*/items.add(onCreateSectionDrawerItem().withName(R.string.serversystem));
+		/*serversystem*/
+		items.add(onCreateSectionDrawerItem().withName(R.string.serversystem));
 		items.add(new Stop(this).newDrawerItem());
 		items.add(new Op(this).newDrawerItem());
 		items.add(new Deop(this).newDrawerItem());
@@ -292,8 +291,8 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 		items.add(new Save_On(this).newDrawerItem());
 		items.add(new Save_Off(this).newDrawerItem());
 		
-		items.add(onCreateDividerDrawerItem());
-		/*playertools*/items.add(onCreateSectionDrawerItem().withName(R.string.playertools));
+		/*playertools*/
+		items.add(onCreateSectionDrawerItem().withName(R.string.playertools));
 		items.add(new Give(this).newDrawerItem());
 		items.add(new Clear(this).newDrawerItem());
 		items.add(new Kill(this).newDrawerItem());
@@ -303,8 +302,8 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 		items.add(new DefaultGamemode(this).newDrawerItem());
 		items.add(new Weather(this).newDrawerItem());
 		
-		items.add(onCreateDividerDrawerItem());
-		/*nocategory*/items.add(onCreateSectionDrawerItem().withName(R.string.nocategory));
+		/*nocategory*/
+		items.add(onCreateSectionDrawerItem().withName(R.string.nocategory));
 		items.add(new Me(this).newDrawerItem());
 		items.add(new Banlist(this).newDrawerItem());
 		
