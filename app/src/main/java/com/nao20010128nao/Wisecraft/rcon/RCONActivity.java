@@ -1,7 +1,12 @@
 package com.nao20010128nao.Wisecraft.rcon;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import com.nao20010128nao.Wisecraft.R;
+import com.mikepenz.materialdrawer.model.*;
+import com.nao20010128nao.Wisecraft.misc.*;
 
-public class RCONActivity extends RCONActivityBase{
+public class RCONActivity extends RCONActivityBase {
+
+	@Override
+	public PrimaryDrawerItem onCreatePrimaryDrawerItem() {
+		// TODO: Implement this method
+		return new LineWrappingPrimaryDrawerItem();
+	}
 }
