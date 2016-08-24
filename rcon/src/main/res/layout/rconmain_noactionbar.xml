@@ -26,7 +26,9 @@
 			app:pstsTabTextStyle="coded"
 			android:paddingLeft="10dp"
 			android:paddingRight="10dp"
-			android:gravity="center"/>
+			android:gravity="center"
+			app:pstsShouldExpand="true"
+			app:pstsPaddingMiddle="true"/>
 
 	</android.support.design.widget.AppBarLayout>
 

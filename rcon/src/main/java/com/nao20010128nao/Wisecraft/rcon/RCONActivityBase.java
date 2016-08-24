@@ -102,6 +102,7 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 			PALE_PRIMARY = Color.argb(a, r, g, b);
 		}
 		psts.setOnPageChangeListener(new PstsTabColorUpdater(ContextCompat.getColor(this, R.color.mainColor), PALE_PRIMARY, pager, psts));
+		psts.setIndicatorColor(ContextCompat.getColor(this, R.color.mainColor));
 	}
 	
 	public boolean tryConnect(String pass) {

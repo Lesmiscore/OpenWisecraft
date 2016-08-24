@@ -15,7 +15,9 @@
 		app:pstsTabTextStyle="coded"
 		android:paddingLeft="10dp"
 		android:paddingRight="10dp"
-		android:gravity="center"/>
+		android:gravity="center"
+		app:pstsShouldExpand="true"
+		app:pstsPaddingMiddle="true"/>
 
 	<android.support.v4.view.ViewPager
 		android:layout_height="match_parent"
