@@ -1,14 +1,18 @@
 package com.nao20010128nao.Wisecraft.rcon;
 import android.content.*;
 import android.content.res.*;
+import android.graphics.*;
 import android.os.*;
-import android.support.v4.app.*;
+import android.support.v4.content.*;
+import android.support.v4.view.*;
 import android.support.v4.widget.*;
 import android.support.v7.app.*;
 import android.support.v7.widget.*;
+import android.text.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
+import com.astuetz.*;
 import com.mikepenz.materialdrawer.*;
 import com.mikepenz.materialdrawer.model.*;
 import com.mikepenz.materialdrawer.model.interfaces.*;
@@ -19,11 +23,11 @@ import com.nao20010128nao.Wisecraft.rcon.*;
 import com.nao20010128nao.Wisecraft.rcon.buttonActions.*;
 import java.io.*;
 import java.lang.ref.*;
+import java.math.*;
 import java.util.*;
 
 import android.support.v7.widget.Toolbar;
 import com.nao20010128nao.Wisecraft.rcon.R;
-import android.text.*;
 
 public abstract class RCONActivityBase extends AppCompatActivity {
 	public static WeakReference<RCONActivityBase> instance=new WeakReference(null);
@@ -31,8 +35,8 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 	static RCon rcon;
 
 	PasswordAsking pa;
-	FragmentTabHost fth;
-	TabHost.TabSpec consoleF,playersF;
+	ViewPager pager;
+	PagerSlidingTabStrip psts;
 	LinearLayout console;
 	EditText command;
 	Button ok;
@@ -76,18 +80,28 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 				}
 			}
 		}
-		fth = (FragmentTabHost)findViewById(android.R.id.tabhost);
-		fth.setup(this, getSupportFragmentManager(), R.id.container);
+		pager=(ViewPager)findViewById(R.id.pager);
+		psts=(PagerSlidingTabStrip)findViewById(R.id.tabs);
+		UsefulPagerAdapter upa=new UsefulPagerAdapter(this);
 
 		playersList = new AppBaseArrayAdapter<String>(this, android.R.layout.simple_list_item_1, playersListInternal = new ArrayList<>(10));
 
-		consoleF = fth.newTabSpec("console");
-		consoleF.setIndicator(getResources().getString(R.string.console));
-		fth.addTab(consoleF, ConsoleFragment.class, null);
+		upa.addTab(ConsoleFragment.class, getResources().getString(R.string.console));
+		upa.addTab(PlayersFragment.class, getResources().getString(R.string.players));
+		pager.setAdapter(upa);
+		psts.setViewPager(pager);
+		
+		int PALE_PRIMARY;
+		{
+			int palePrimary=ContextCompat.getColor(this, R.color.mainColor);
+			int r=Color.red(palePrimary);
+			int g=Color.green(palePrimary);
+			int b=Color.blue(palePrimary);
+			int a=new BigDecimal(0xff).multiply(new BigDecimal("0.3")).intValue();
 
-		playersF = fth.newTabSpec("players");
-		playersF.setIndicator(getResources().getString(R.string.players));
-		fth.addTab(playersF, PlayersFragment.class, null);
+			PALE_PRIMARY = Color.argb(a, r, g, b);
+		}
+		psts.setOnPageChangeListener(new PstsTabColorUpdater(ContextCompat.getColor(this, R.color.mainColor), PALE_PRIMARY, pager, psts));
 	}
 	
 	public boolean tryConnect(String pass) {
