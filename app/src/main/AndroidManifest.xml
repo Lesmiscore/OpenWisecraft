@@ -67,6 +67,7 @@
 			<intent-filter >
 				<category android:name="android.intent.category.LAUNCHER" />
 				<action android:name="android.intent.action.SEND" />
+				<action android:name="android.intent.action.VIEW" />
 				<data android:scheme="wisecraft" android:host="addserver"  android:pathPrefix="/" />
             </intent-filter>
         </activity>
