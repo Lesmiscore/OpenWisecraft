@@ -75,6 +75,7 @@ public class AddServerActivity extends ApiBaseActivity
 						servers.add(result);
 						pref.edit().putString("servers",new Gson().toJson(servers)).commit();
 					}
+					finish();
 				}
 			});
 		findViewById(R.id.no).setOnClickListener(new View.OnClickListener(){
