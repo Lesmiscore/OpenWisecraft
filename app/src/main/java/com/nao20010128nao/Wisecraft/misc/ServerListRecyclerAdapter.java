@@ -1,12 +1,9 @@
 package com.nao20010128nao.Wisecraft.misc;
 import android.content.*;
 import android.preference.*;
-import android.support.v4.content.*;
 import android.view.*;
-
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
-
 import java.util.*;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
@@ -120,7 +117,7 @@ public class ServerListRecyclerAdapter extends ListRecyclerViewAdapter<ServerSta
 		} else {
 			if (s instanceof ServerStatus) {
 				ServerStatus sv=(ServerStatus)s;
-				viewHolder.setStatColor(ContextCompat.getColor(context, R.color.stat_ok));
+				viewHolder.online(context);
 				final String title;
 				if (sv.response instanceof FullStat) {//PE
 					FullStat fs=(FullStat)sv.response;

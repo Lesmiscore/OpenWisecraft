@@ -116,4 +116,8 @@ public class ServerStatusWrapperViewHolder extends FindableViewHolder
 			.setPingMillis(sla.getResources().getString(R.string.notResponding))
 			.setServerPlayers("-/-").setServer(sv);
 	}
+	
+	public ServerStatusWrapperViewHolder online(Context context){
+		return setStatColor(ContextCompat.getColor(context, R.color.stat_ok));
+	}
 }
