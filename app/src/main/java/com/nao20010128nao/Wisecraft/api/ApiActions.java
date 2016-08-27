@@ -9,12 +9,20 @@ public class ApiActions {
 	public  final static String SERVER_INFO_IP=ACTION_BASE + "SERVER_IP";
 	public  final static String SERVER_INFO_PORT=ACTION_BASE + "SERVER_PORT";
 	public  final static String SERVER_INFO_ISPC=ACTION_BASE + "SERVER_ISPC";
+	public  final static String SERVER_INFO_MODE=ACTION_BASE + "SERVER_MODE";
 
 	public  final static String SERVER_INFO_HIDE_DETAILS=SERVER_INFO_HIDE + "DETAILS";
 	public  final static String SERVER_INFO_HIDE_PLAYERS=SERVER_INFO_HIDE + "PLAYERS";
 	public  final static String SERVER_INFO_HIDE_PLUGINS=SERVER_INFO_HIDE + "PLUGINS";
 	public  final static String SERVER_INFO_DISABLE_UPDATE=SERVER_INFO_HIDE + "UPDATE";
 
+	
+	public  final static String ADD_SERVER=ACTION_BASE + "ADD_SERVER";
+	public  final static String ADD_SERVER_IP=SERVER_INFO_IP;
+	public  final static String ADD_SERVER_PORT=SERVER_INFO_PORT;
+	public  final static String ADD_SERVER_ISPC=SERVER_INFO_ISPC;
+	public  final static String ADD_SERVER_MODE=SERVER_INFO_MODE;
+	
 
 	private final static String RCON=ACTION_BASE + "RCON";
 

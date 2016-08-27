@@ -54,8 +54,20 @@
 			android:name=".api.RequestedServerInfoActivity" >
             <intent-filter >
                 <action android:name="com.nao20010128nao.Wisecraft.SERVER_INFO" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+		<activity
+			android:label="@string/add"
+			android:name=".api.AddServerActivity" >
+            <intent-filter >
+                <action android:name="com.nao20010128nao.Wisecraft.ADD_SERVER" />
+                <category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+			<intent-filter >
+				<category android:name="android.intent.category.LAUNCHER" />
+				<action android:name="android.intent.action.SEND" />
+				<data android:scheme="wisecraft" android:host="addserver"  android:pathPrefix="/" />
             </intent-filter>
         </activity>
 

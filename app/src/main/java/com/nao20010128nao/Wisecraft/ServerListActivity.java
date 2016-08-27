@@ -13,9 +13,10 @@ import com.google.gson.*;
 import com.mikepenz.materialdrawer.*;
 import com.mikepenz.materialdrawer.model.*;
 import com.mikepenz.materialdrawer.model.interfaces.*;
-import com.nao20010128nao.Wisecraft.misc.collector.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+import com.nao20010128nao.Wisecraft.misc.collector.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
+import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
 import com.nao20010128nao.Wisecraft.misc.provider.*;
@@ -25,7 +26,6 @@ import java.lang.ref.*;
 import java.util.*;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
-import com.nao20010128nao.Wisecraft.misc.pinger.*;
 
 //Full implement for user interface (Some part is available at ServerListActivityBase4)
 abstract class ServerListActivityImpl extends ServerListActivityBase1 implements ServerListActivityInterface {
@@ -1212,6 +1212,13 @@ public class ServerListActivity extends ServerListActivityImpl {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		instance = new WeakReference(this);
+	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO: Implement this method
+		super.onDestroy();
+		instance.clear();
 	}
 }
 

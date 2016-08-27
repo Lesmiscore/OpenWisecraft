@@ -23,6 +23,7 @@ import java.util.*;
 import android.support.v7.widget.Toolbar;
 import com.nao20010128nao.Wisecraft.R;
 import uk.co.chrisjenx.calligraphy.*;
+import com.nao20010128nao.Wisecraft.api.*;
 
 public class Utils extends PingerUtils{
 	public static String deleteDecorations(String decorated) {
@@ -453,5 +454,57 @@ public class Utils extends PingerUtils{
 		} catch (Throwable e) {
 			return null;
 		}
+	}
+	public static int getModeFromIntent(Intent values){
+		if(values.hasExtra(ApiActions.SERVER_INFO_MODE)){
+			return values.getIntExtra(ApiActions.SERVER_INFO_MODE,0);
+		}else if(values.hasExtra(ApiActions.SERVER_INFO_ISPC)){
+			return values.getBooleanExtra(ApiActions.SERVER_INFO_ISPC, false)?1:0;
+		}else{
+			return 0;
+		}
+	}
+	public static int parseModeName(String name){
+		try{
+			return Integer.valueOf(name);
+		}catch(Throwable e){
+			//PE
+			if("pe".equalsIgnoreCase(name)){
+				return 0;
+			}else
+			if("phone".equalsIgnoreCase(name)){
+				return 0;
+			}else
+			if("android".equalsIgnoreCase(name)){
+				return 0;
+			}else
+			if("ios".equalsIgnoreCase(name)){
+				return 0;
+			}else
+			if("pocket".equalsIgnoreCase(name)){
+				return 0;
+			}else
+			
+			//PC
+			if("pc".equalsIgnoreCase(name)){
+				return 1;
+			}else
+			if("desktop".equalsIgnoreCase(name)){
+				return 1;
+			}else
+			if("windows".equalsIgnoreCase(name)){
+				return 1;
+			}else
+			if("mac".equalsIgnoreCase(name)){
+				return 1;
+			}else
+			if("linux".equalsIgnoreCase(name)){
+				return 1;
+			}else
+			if("java".equalsIgnoreCase(name)){
+				return 1;
+			}
+		}
+		return 0;
 	}
 }

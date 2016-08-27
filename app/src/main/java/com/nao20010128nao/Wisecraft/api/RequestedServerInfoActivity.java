@@ -26,7 +26,7 @@ public class RequestedServerInfoActivity extends ApiBaseActivity {
 
 		Server s=new Server();
 		s.ip = getIntent().getStringExtra(ApiActions.SERVER_INFO_IP);
-		s.mode = getIntent().getBooleanExtra(ApiActions.SERVER_INFO_ISPC, false)?1:0;
+		s.mode = Utils.getModeFromIntent(getIntent());
 		s.port = getIntent().getIntExtra(ApiActions.SERVER_INFO_PORT, s.mode==0?19132:25565);
 		requested = s.cloneAsServer();
 		wd.showWorkingDialog();
