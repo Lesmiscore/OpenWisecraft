@@ -59,7 +59,8 @@
         </activity>
 		<activity
 			android:label="@string/add"
-			android:name=".api.AddServerActivity" >
+			android:name=".api.AddServerActivity"
+			android:theme="@style/AppDialog">
             <intent-filter >
                 <action android:name="com.nao20010128nao.Wisecraft.ADD_SERVER" />
                 <category android:name="android.intent.category.LAUNCHER" />
