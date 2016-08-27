@@ -1,8 +1,9 @@
-package com.nao20010128nao.Wisecraft.provider;
+package com.nao20010128nao.Wisecraft.misc.provider;
 import android.util.*;
 
 import com.nao20010128nao.Wisecraft.misc.*;
-import com.nao20010128nao.Wisecraft.pingEngine.*;
+import com.nao20010128nao.Wisecraft.misc.pinger.pe.UnconnectedPing;
+
 import java.io.*;
 import java.util.*;
 public class UnconnectedServerPingProvider implements ServerPingProvider

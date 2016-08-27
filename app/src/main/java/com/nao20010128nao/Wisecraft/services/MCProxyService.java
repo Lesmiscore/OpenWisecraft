@@ -7,7 +7,7 @@ import android.support.v4.content.ContextCompat;
 
 import com.nao20010128nao.MCProxy.*;
 import com.nao20010128nao.Wisecraft.*;
-import com.nao20010128nao.Wisecraft.proxy.*;
+
 import java.io.*;
 import java.net.*;
 import java.security.*;

@@ -39,13 +39,13 @@
         </activity>
         <activity
 			android:label="@string/rcon"
-			android:name=".rcon.RCONActivity"
+			android:name=".RCONActivity"
 			android:exported="false"
 			android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
 			android:label="@string/mtl"
-			android:name=".proxy.ProxyActivity"
+			android:name=".ProxyActivity"
 			android:exported="false">
         </activity>
 

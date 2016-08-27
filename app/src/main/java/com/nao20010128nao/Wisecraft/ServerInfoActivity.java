@@ -23,7 +23,7 @@ import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
 import com.nao20010128nao.Wisecraft.misc.skin_face.*;
-import com.nao20010128nao.Wisecraft.pingEngine.*;
+
 import java.io.*;
 import java.lang.ref.*;
 import java.math.*;

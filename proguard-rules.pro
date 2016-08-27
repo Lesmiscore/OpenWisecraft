@@ -59,7 +59,7 @@
 -keep public class com.nao20010128nao.WRcon.misc.Server {
    public <fields>;
 }
--keep public class com.nao20010128nao.Wisecraft.collector.CollectorMain {
+-keep public class com.nao20010128nao.Wisecraft.misc.collector.CollectorMain {
    public <fields>;
 }
 -keep public class com.nao20010128nao.WRcon.collector.CollectorMain {
@@ -71,7 +71,7 @@
 -keep public class com.nao20010128nao.Wisecraft.misc.pinger.** {
    *;
 }
--keep public class com.nao20010128nao.Wisecraft.collector.CollectorMain$** {
+-keep public class com.nao20010128nao.Wisecraft.misc.collector.CollectorMain$** {
    public <fields>;
 }
 -keep public class com.nao20010128nao.WRcon.collector.CollectorMain$** {

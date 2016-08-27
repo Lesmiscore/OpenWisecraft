@@ -14,8 +14,7 @@ import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
-import com.nao20010128nao.Wisecraft.pingEngine.*;
-import com.nao20010128nao.Wisecraft.provider.*;
+import com.nao20010128nao.Wisecraft.misc.provider.*;
 import java.lang.ref.*;
 import java.util.*;
 

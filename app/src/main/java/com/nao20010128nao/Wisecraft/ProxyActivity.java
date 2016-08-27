@@ -1,4 +1,4 @@
-package com.nao20010128nao.Wisecraft.proxy;
+package com.nao20010128nao.Wisecraft;
 import android.app.*;
 import android.content.*;
 import android.os.*;

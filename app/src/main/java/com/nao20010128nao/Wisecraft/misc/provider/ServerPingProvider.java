@@ -1,4 +1,4 @@
-package com.nao20010128nao.Wisecraft.provider;
+package com.nao20010128nao.Wisecraft.misc.provider;
 import com.nao20010128nao.Wisecraft.misc.*;
 
 public interface ServerPingProvider {

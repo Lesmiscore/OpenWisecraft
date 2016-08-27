@@ -1,6 +1,6 @@
-package com.nao20010128nao.Wisecraft.provider;
+package com.nao20010128nao.Wisecraft.misc.provider;
 import com.nao20010128nao.Wisecraft.misc.Server;
-import com.nao20010128nao.Wisecraft.provider.ServerPingProvider.PingHandler;
+
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Map;

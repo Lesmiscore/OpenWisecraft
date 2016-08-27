@@ -1,8 +1,9 @@
-package com.nao20010128nao.Wisecraft.rcon;
+package com.nao20010128nao.Wisecraft;
 import android.content.*;
 import com.mikepenz.materialdrawer.model.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+import com.nao20010128nao.Wisecraft.rcon.RCONActivityBase;
 
 public class RCONActivity extends RCONActivityBase {
 

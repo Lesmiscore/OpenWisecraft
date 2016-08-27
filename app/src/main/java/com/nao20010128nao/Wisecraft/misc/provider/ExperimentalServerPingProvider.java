@@ -1,23 +1,27 @@
-package com.nao20010128nao.Wisecraft.provider;
+package com.nao20010128nao.Wisecraft.misc.provider;
 import com.nao20010128nao.Wisecraft.misc.*;
 import java.util.*;
 
-public class UnconnectedMultiServerPingProvider implements ServerPingProvider {
-	List<UnconnectedServerPingProvider> objects=new ArrayList<>();
-	int count=0;
-	public UnconnectedMultiServerPingProvider(int parallels) {
+public class ExperimentalServerPingProvider implements ServerPingProvider {
+	List<NormalServerPingProvider> objects=new ArrayList<>();
+	public ExperimentalServerPingProvider(int parallels) {
 		for (int i=0;i < parallels;i++) {
-			objects.add(new UnconnectedServerPingProvider());
+			objects.add(new NormalServerPingProvider());
 		}
 	}
 	@Override
 	public void putInQueue(Server server, ServerPingProvider.PingHandler handler) {
 		// TODO: Implement this method
-		objects.get(count).putInQueue(server, handler);
-		count++;
-		count = count % objects.size();
+		int delta=Integer.MAX_VALUE;
+		ServerPingProvider obj=null;
+		for (ServerPingProvider spp:objects) {
+			if (delta > spp.getQueueRemain()) {
+				delta = spp.getQueueRemain();
+				obj = spp;
+			}
+		}
+		obj.putInQueue(server, handler);
 	}
-
 	@Override
 	public int getQueueRemain() {
 		// TODO: Implement this method

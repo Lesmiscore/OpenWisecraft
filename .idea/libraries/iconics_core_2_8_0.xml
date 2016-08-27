@@ -7,6 +7,8 @@
     <JAVADOC />
     <SOURCES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mikepenz/iconics-core/2.8.0/9a9d44712ed9ec641bcbfb842914022c6d34f06e/iconics-core-2.8.0-sources.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mikepenz/iconics-core/2.8.0/9a9d44712ed9ec641bcbfb842914022c6d34f06e/iconics-core-2.8.0-sources.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mikepenz/iconics-core/2.8.0/9a9d44712ed9ec641bcbfb842914022c6d34f06e/iconics-core-2.8.0-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

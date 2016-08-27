@@ -3,7 +3,7 @@ import android.app.*;
 import android.content.*;
 import android.os.*;
 import android.util.*;
-import com.nao20010128nao.Wisecraft.collector.*;
+import com.nao20010128nao.Wisecraft.misc.collector.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 
 public class CollectorMainService extends Service

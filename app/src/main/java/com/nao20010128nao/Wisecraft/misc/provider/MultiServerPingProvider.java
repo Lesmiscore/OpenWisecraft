@@ -1,13 +1,13 @@
-package com.nao20010128nao.Wisecraft.provider;
+package com.nao20010128nao.Wisecraft.misc.provider;
 import com.nao20010128nao.Wisecraft.misc.*;
 import java.util.*;
 
-public class PCMultiServerPingProvider implements ServerPingProvider {
-	List<PCServerPingProvider> objects=new ArrayList<>();
+public class MultiServerPingProvider implements ServerPingProvider {
+	List<NormalServerPingProvider> objects=new ArrayList<>();
 	int count=0;
-	public PCMultiServerPingProvider(int parallels) {
+	public MultiServerPingProvider(int parallels) {
 		for (int i=0;i < parallels;i++) {
-			objects.add(new PCServerPingProvider());
+			objects.add(new NormalServerPingProvider());
 		}
 	}
 	@Override

@@ -8,7 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/accounts/accounts.iml" filepath="$PROJECT_DIR$/accounts/accounts.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/calligraphy/calligraphy.iml" filepath="$PROJECT_DIR$/calligraphy/calligraphy.iml" />
-      <module fileurl="file://$PROJECT_DIR$/colorPicker/colorPicker.iml" filepath="$PROJECT_DIR$/colorPicker/colorPicker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/colorPicker/colorpicker.iml" filepath="$PROJECT_DIR$/colorPicker/colorpicker.iml" />
       <module fileurl="file://$PROJECT_DIR$/compat/compat.iml" filepath="$PROJECT_DIR$/compat/compat.iml" />
       <module fileurl="file://$PROJECT_DIR$/psts/psts.iml" filepath="$PROJECT_DIR$/psts/psts.iml" />
       <module fileurl="file://$PROJECT_DIR$/rcon/rcon.iml" filepath="$PROJECT_DIR$/rcon/rcon.iml" />

@@ -3,10 +3,10 @@ import android.content.*;
 import android.preference.*;
 import android.support.v4.content.*;
 import android.view.*;
-import com.nao20010128nao.Wisecraft.*;
+
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
-import com.nao20010128nao.Wisecraft.pingEngine.*;
+
 import java.util.*;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;

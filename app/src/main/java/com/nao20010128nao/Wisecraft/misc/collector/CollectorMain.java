@@ -1,4 +1,4 @@
-package com.nao20010128nao.Wisecraft.collector;
+package com.nao20010128nao.Wisecraft.misc.collector;
 import android.annotation.*;
 import android.content.*;
 import android.content.pm.*;

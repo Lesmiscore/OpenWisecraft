@@ -1,4 +1,4 @@
-package com.nao20010128nao.Wisecraft.pingEngine;
+package com.nao20010128nao.Wisecraft.misc.pinger.pe;
 import android.util.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
