@@ -430,6 +430,18 @@ public class Utils extends PingerUtils{
 		}
 		return li;
 	}
+	public static LayoutInflater fixLayoutInflaterIfNeeded(Context c){
+		LayoutInflater li=LayoutInflater.from(c);
+		if(li.getClass().getName().equals("uk.co.chrisjenx.calligraphy.CalligraphyLayoutInflater")){
+			if(li.getFactory()==null){
+				li.setFactory(li.getFactory());
+			}
+			if(li.getFactory2()==null){
+				li.setFactory2(li.getFactory2());
+			}
+		}
+		return li;
+	}
 	public static void applyTypefaceForViewTree(View v,Typeface tf){
 		if(v!=null){
 			applyTypeface(v,tf);

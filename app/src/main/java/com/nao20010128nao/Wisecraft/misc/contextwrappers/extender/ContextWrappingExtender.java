@@ -6,6 +6,7 @@ import android.preference.*;
 import java.math.*;
 import android.content.res.Resources.*;
 import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.misc.*;
 
 public class ContextWrappingExtender extends ContextWrapper
 {
@@ -38,6 +39,16 @@ public class ContextWrappingExtender extends ContextWrapper
 		// TODO: Implement this method
 		return modRes;
 	}
+
+	@Override
+	public Object getSystemService(String name) {
+		// TODO: Implement this method
+		if(LAYOUT_INFLATER_SERVICE.equals(name))
+			return Utils.fixLayoutInflaterIfNeeded(this);
+		else
+			return super.getSystemService(name);
+	}
+	
 	
 	
 	
