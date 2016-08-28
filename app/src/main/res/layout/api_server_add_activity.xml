@@ -12,44 +12,11 @@
 		android:text="@string/auSureToAddServer"
 		android:gravity="center"/>
 
-	<LinearLayout
+	<ListView
 		android:layout_height="match_parent"
 		android:layout_width="match_parent"
 		android:id="@+id/list"
-		android:layout_weight="1.0"
-		android:orientation="vertical">
-
-		<FrameLayout
-			android:layout_height="wrap_content"
-			android:layout_width="match_parent"
-			android:id="@+id/ip">
-
-			<include
-				layout="@layout/data"/>
-
-		</FrameLayout>
-
-		<FrameLayout
-			android:layout_height="wrap_content"
-			android:layout_width="match_parent"
-			android:id="@+id/port">
-
-			<include
-				layout="@layout/data"/>
-
-		</FrameLayout>
-
-		<FrameLayout
-			android:layout_height="wrap_content"
-			android:layout_width="match_parent"
-			android:id="@+id/kind">
-
-			<include
-				layout="@layout/data"/>
-
-		</FrameLayout>
-
-	</LinearLayout>
+		android:layout_weight="1.0"/>
 
 	<LinearLayout
 		android:layout_height="wrap_content"
