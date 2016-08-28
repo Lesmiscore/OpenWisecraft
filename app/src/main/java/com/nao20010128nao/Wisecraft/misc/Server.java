@@ -36,9 +36,13 @@ public class Server {
 
 	public Server cloneAsServer() {
 		Server s=new Server();
-		s.ip = ip;
-		s.port = port;
-		s.mode = mode;
+		cloneInto(s);
 		return s;
 	}
+    
+    public void cloneInto(Server dest){
+        dest.ip=ip;
+        dest.port=port;
+        dest.mode=mode;
+    }
 }

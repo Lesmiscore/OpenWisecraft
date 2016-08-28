@@ -48,9 +48,7 @@ public class NormalServerPingProvider implements ServerPingProvider {
 				try {
 					now = queue.poll();
 					ServerStatus stat=new ServerStatus();
-					stat.ip = now.getKey().ip;
-					stat.port = now.getKey().port;
-					stat.mode = now.getKey().mode;
+                    now.getKey().cloneInto(stat);
 					Log.d("NSPP", stat.ip + ":" + stat.port + " " + stat.mode);
 					switch(now.getKey().mode){
 						case 0:{
@@ -58,7 +56,6 @@ public class NormalServerPingProvider implements ServerPingProvider {
 							PEQuery query=new PEQuery(stat.ip, stat.port);
 							try {
 								stat.response = query.fullStat();
-								Log.d("NSPP", "Success: Full Stat");
 								try {
 									UnconnectedPing.UnconnectedPingResult res=UnconnectedPing.doPing(stat.ip, stat.port);
 									SprPair pair=new SprPair();
@@ -67,6 +64,7 @@ public class NormalServerPingProvider implements ServerPingProvider {
 									stat.response = pair;
 									Log.d("NSPP", "Success: Full Stat & Unconnected Ping");
 								} catch (IOException e) {
+                                    DebugWriter.writeToE("NSPP",e);
 									Log.d("NSPP", "Success: Full Stat");
 								}
 								stat.ping = query.getLatestPingElapsed();
@@ -78,6 +76,7 @@ public class NormalServerPingProvider implements ServerPingProvider {
 									stat.ping = res.getLatestPingElapsed();
 									Log.d("NSPP", "Success: Unconnected Ping");
 								} catch (IOException ex) {
+                                    DebugWriter.writeToE("NSPP",ex);
 									try {
 										now.getValue().onPingFailed(now.getKey());
 									} catch (Throwable ex_) {
@@ -95,7 +94,7 @@ public class NormalServerPingProvider implements ServerPingProvider {
 									stat.response = query.fetchReply();
 									Log.d("NSPP", "Success");
 								} catch (IOException e) {
-									DebugWriter.writeToE("PCSPP",e);
+									DebugWriter.writeToE("NSPP",e);
 									Log.d("NSPP", "Failed");
 									try {
 										now.getValue().onPingFailed(now.getKey());

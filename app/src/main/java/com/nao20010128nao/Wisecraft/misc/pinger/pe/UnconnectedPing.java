@@ -65,6 +65,7 @@ public class UnconnectedPing {
 			serverInfos = (raw = s).split("\\;");
 			latestPing = elapsed;
 			data=rdata;
+            if(serverInfos.length<5)throw new IllegalArgumentException("Splitted length is invalid. The length was "+serverInfos.length);
 		}
 		public String getServerName() {
 			return serverInfos[1];
