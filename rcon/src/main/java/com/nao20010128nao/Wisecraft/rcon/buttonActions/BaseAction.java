@@ -10,7 +10,7 @@ import com.nao20010128nao.Wisecraft.rcon.*;
 
 import com.nao20010128nao.Wisecraft.rcon.R;
 
-public abstract class BaseAction extends ContextWrapper implements OnClickListener {
+public abstract class BaseAction extends ContextWrapper implements OnClickListener,Drawer.OnDrawerItemClickListener {
 	private RCONActivityBase ra;
 	public BaseAction(RCONActivityBase act) {
 		super(act);
@@ -23,12 +23,7 @@ public abstract class BaseAction extends ContextWrapper implements OnClickListen
 	
 	public PrimaryDrawerItem newDrawerItem(){
 		PrimaryDrawerItem pdi=getActivity().onCreatePrimaryDrawerItem();
-		pdi.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener(){
-			public boolean onItemClick(View v,int i,IDrawerItem di){
-				onClick(v);
-				return true;
-			}
-		});
+		pdi.withOnDrawerItemClickListener(this);
 		pdi.withDescription(getTitleId());
 		return pdi;
 	}
@@ -41,4 +36,10 @@ public abstract class BaseAction extends ContextWrapper implements OnClickListen
 	public String getResString(int id) {
 		return getResources().getString(id);
 	}
+
+    @Override
+    public boolean onItemClick(View p1, int p2, IDrawerItem p3) {
+        onClick(p1);
+        return true;
+    }
 }
