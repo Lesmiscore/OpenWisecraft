@@ -40,14 +40,6 @@ public class ContextWrappingExtender extends ContextWrapper
 		return modRes;
 	}
 
-	@Override
-	public Object getSystemService(String name) {
-		// TODO: Implement this method
-		if(LAYOUT_INFLATER_SERVICE.equals(name))
-			return Utils.fixLayoutInflaterIfNeeded(this);
-		else
-			return super.getSystemService(name);
-	}
 	
 	
 	
