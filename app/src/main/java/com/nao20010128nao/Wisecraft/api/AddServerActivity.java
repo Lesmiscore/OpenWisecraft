@@ -41,14 +41,24 @@ public class AddServerActivity extends ApiBaseActivity
 			result.ip=values.getStringExtra(ApiActions.ADD_SERVER_IP);
 		}else if(values.getData()!=null){
 			Uri data=values.getData();
-			List<String> path=data.getPathSegments();
-			if(path.size()<3){
+			if("wisecraft".equalsIgnoreCase(data.getScheme())){
+				List<String> path=data.getPathSegments();
+				if(path.size()<3){
+					finish();
+					return;
+				}
+				result.ip=path.get(0);
+				result.port=Integer.valueOf(path.get(1));
+				result.mode=Utils.parseModeName(path.get(2));
+			}else if("mccqp".equalsIgnoreCase(data.getScheme())){
+				result.ip=data.getHost();
+				result.port=data.getPort();
+				result.mode=1;//always PC
+				if(result.port==-1)result.port=25565;
+			}else{
 				finish();
 				return;
 			}
-			result.ip=path.get(0);
-			result.port=Integer.valueOf(path.get(1));
-			result.mode=Utils.parseModeName(path.get(2));
 		}
 		if(result.mode<0|result.mode>1){
 			finish();

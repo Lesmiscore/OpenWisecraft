@@ -72,6 +72,13 @@
 				<action android:name="android.intent.action.VIEW" />
 				<data android:scheme="wisecraft" android:host="addserver"/>
             </intent-filter>
+			<intent-filter >
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" /> 
+				<action android:name="android.intent.action.SEND" />
+				<action android:name="android.intent.action.VIEW" />
+				<data android:scheme="mccqp"/>
+            </intent-filter>
         </activity>
 
 		<activity
