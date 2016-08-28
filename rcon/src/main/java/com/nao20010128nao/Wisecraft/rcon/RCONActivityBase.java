@@ -103,6 +103,9 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 		}
 		psts.setOnPageChangeListener(new PstsTabColorUpdater(ContextCompat.getColor(this, R.color.mainColor), PALE_PRIMARY, pager, psts));
 		psts.setIndicatorColor(ContextCompat.getColor(this, R.color.mainColor));
+        
+        pager.setCurrentItem(1);
+        pager.setCurrentItem(0);
 	}
 	
 	public boolean tryConnect(String pass) {
@@ -198,7 +201,7 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 		}.execute();
 	}
 	TextView newTextViewForConsole(String s) {
-		TextView tv=(TextView)getLayoutInflater().inflate(R.layout.rcon_line_textview,null);
+		TextView tv=(TextView)getLayoutInflater().inflate(R.layout.rcon_line_textview,console,false);
 		tv.setText(s);
 		return tv;
 	}
@@ -419,7 +422,6 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 			getParentActivity().setPlayersListView((ListView)v.findViewById(R.id.players));
 			getParentActivity().setPlayersCountTextView((TextView)v.findViewById(R.id.playersCount));
 			getParentActivity().setUpdatePlayersButton((ImageButton)v.findViewById(R.id.updatePlayers));
-			getParentActivity().refreshPlayers();
 			return v;
 		}
 	}

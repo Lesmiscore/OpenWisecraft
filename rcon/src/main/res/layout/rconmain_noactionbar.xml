@@ -28,7 +28,7 @@
 			android:paddingRight="10dp"
 			android:gravity="center"
 			app:pstsShouldExpand="true"
-			app:pstsPaddingMiddle="true"/>
+			app:pstsPaddingMiddle="false"/>
 
 	</android.support.design.widget.AppBarLayout>
 
