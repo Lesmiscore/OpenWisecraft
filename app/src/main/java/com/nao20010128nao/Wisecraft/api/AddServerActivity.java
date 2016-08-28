@@ -66,12 +66,15 @@ public class AddServerActivity extends ApiBaseActivity
 		}
 		
 		setContentView(R.layout.api_server_add_activity);
-		ListView lv=(ListView)findViewById(R.id.list);
-		KVListAdapter<String,String> adapter=new KVListAdapter<String,String>(this);
-		lv.setAdapter(adapter);
-		adapter.add(getResources().getString(R.string.ipAddress),result.ip);
-		adapter.add(getResources().getString(R.string.port_single),result.port+"");
-		adapter.add(getResources().getString(R.string.kind),getResources().getString(result.mode==0?R.string.peServer:R.string.pcServer));
+		LinearLayout lv=(LinearLayout)findViewById(R.id.list);
+		((TextView)lv.findViewById(R.id.ip).findViewById(R.id.k)).setText(R.string.ipAddress);
+        ((TextView)lv.findViewById(R.id.ip).findViewById(R.id.v)).setText(result.ip);
+        
+		((TextView)lv.findViewById(R.id.port).findViewById(R.id.k)).setText(R.string.port_single);
+        ((TextView)lv.findViewById(R.id.port).findViewById(R.id.v)).setText(result.port+"");
+        
+		((TextView)lv.findViewById(R.id.kind).findViewById(R.id.k)).setText(R.string.kind);
+        ((TextView)lv.findViewById(R.id.kind).findViewById(R.id.v)).setText(result.mode==0?R.string.peServer:R.string.pcServer);
 		
 		findViewById(R.id.yes).setOnClickListener(new View.OnClickListener(){
 				public void onClick(View v){
