@@ -1,7 +1,7 @@
 package com.nao20010128nao.Wisecraft.misc;
 import java.util.*;
 
-public class ServerListArrayList extends ArrayList<Server>
+public class ServerListArrayList extends ArrayList<Server> implements ServerListProvider
 {
 	public ServerListArrayList(){
 		
@@ -41,5 +41,11 @@ public class ServerListArrayList extends ArrayList<Server>
 		// TODO: Implement this method
 		if(object==null)return false;
 		return super.add(object);
+	}
+
+	@Override
+	public void addIntoList(Server s) {
+		// TODO: Implement this method
+		add(s);
 	}
 }

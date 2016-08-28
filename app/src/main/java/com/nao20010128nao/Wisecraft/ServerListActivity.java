@@ -28,7 +28,7 @@ import java.util.*;
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 
 //Full implement for user interface (Some part is available at ServerListActivityBase4)
-abstract class ServerListActivityImpl extends ServerListActivityBase1 implements ServerListActivityInterface {
+abstract class ServerListActivityImpl extends ServerListActivityBase1 implements ServerListActivityInterface,ServerListProvider {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
 
 	static final File mcpeServerList=new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt");
@@ -692,6 +692,14 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		spp.putInQueue(s, new PingHandlerImpl(true, -1));
 		pinging.put(s, true);
 	}
+
+	@Override
+	public boolean contains(Object s) {
+		// TODO: Implement this method
+		return list.contains(s);
+	}
+
+	
 	
 	static class RecycleServerList extends RecyclerView.Adapter<ServerStatusWrapperViewHolder> implements AdapterView.OnItemClickListener,AdapterView.OnItemLongClickListener {
 		ServerListActivityImpl sla;
