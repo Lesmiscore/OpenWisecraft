@@ -458,30 +458,39 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							Toast.makeText(ServerListActivityImpl.this, R.string.importing, Toast.LENGTH_LONG).show();
 							new Thread(){
 								public void run() {
-									final Server[] sv;
-									String json=readWholeFile(new File(et.getText().toString()));
-									if (json.contains("\"isPC\"") & (json.contains("true") | json.contains("false"))) {
-										//old version json file
-										OldServer19[] sa=gson.fromJson(json, OldServer19[].class);
-										List<Server> ns=new ArrayList<>();
-										for (OldServer19 s:sa) {
-											Server nso=new Server();
-											nso.ip = s.ip;
-											nso.port = s.port;
-											nso.mode = s.isPC ?1: 0;
-											ns.add(nso);
-										}
-										sv = ns.toArray(new Server[ns.size()]);
-									} else {
-										sv = gson.fromJson(json, Server[].class);
-									}
-									runOnUiThread(new Runnable(){
-											public void run() {
-												sl.addAll(sv);
-												saveServers();
-												Toast.makeText(ServerListActivityImpl.this, getResources().getString(R.string.imported).replace("[PATH]", et.getText().toString()), Toast.LENGTH_LONG).show();
-											}
-										});
+                                    File f=new File(et.getText().toString());
+                                    if(f.exists()){
+                                        final Server[] sv;
+                                        String json=readWholeFile(f);
+                                        if (json.contains("\"isPC\"") & (json.contains("true") | json.contains("false"))) {
+                                            //old version json file
+                                            OldServer19[] sa=gson.fromJson(json, OldServer19[].class);
+                                            List<Server> ns=new ArrayList<>();
+                                            for (OldServer19 s:sa) {
+                                                Server nso=new Server();
+                                                nso.ip = s.ip;
+                                                nso.port = s.port;
+                                                nso.mode = s.isPC ?1: 0;
+                                                ns.add(nso);
+                                            }
+                                            sv = ns.toArray(new Server[ns.size()]);
+                                        } else {
+                                            sv = gson.fromJson(json, Server[].class);
+                                        }
+                                        runOnUiThread(new Runnable(){
+                                                public void run() {
+                                                    sl.addAll(sv);
+                                                    saveServers();
+                                                    Toast.makeText(ServerListActivityImpl.this, getResources().getString(R.string.imported).replace("[PATH]", et.getText().toString()), Toast.LENGTH_LONG).show();
+                                                }
+                                            });
+                                    }else{
+                                        runOnUiThread(new Runnable(){
+                                                public void run() {
+                                                    Toast.makeText(ServerListActivityImpl.this, R.string.fileNotExist, Toast.LENGTH_LONG).show();
+                                                }
+                                            });
+                                    }
 								}
 							}.start();
 						}
