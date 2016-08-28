@@ -328,7 +328,7 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 		items.add(new Me(this).newDrawerItem());
 		items.add(new Banlist(this).newDrawerItem());
 		
-		db.withDrawerItems(items);
+		db.withDrawerItems(items).withDrawerWidthRes(R.dimen.drawer_width);
 		db.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener(){
 				public boolean onItemClick(View v,int i,IDrawerItem di){
 					drw.deselect();
