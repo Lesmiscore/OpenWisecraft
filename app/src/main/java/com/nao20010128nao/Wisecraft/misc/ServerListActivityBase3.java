@@ -2,7 +2,6 @@ package com.nao20010128nao.Wisecraft.misc;
 import android.content.*;
 import com.ipaulpro.afilechooser.*;
 import java.io.*;
-import java.security.*;
 import java.util.*;
 
 
