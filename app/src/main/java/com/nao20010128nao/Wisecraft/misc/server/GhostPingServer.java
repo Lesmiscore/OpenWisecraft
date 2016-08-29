@@ -1,5 +1,5 @@
 package com.nao20010128nao.Wisecraft.misc.server;
-import android.annotation.TargetApi;
+import android.annotation.*;
 import android.os.*;
 import android.preference.*;
 import android.util.*;

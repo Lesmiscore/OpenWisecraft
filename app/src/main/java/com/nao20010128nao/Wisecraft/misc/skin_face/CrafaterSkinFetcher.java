@@ -1,8 +1,7 @@
 package com.nao20010128nao.Wisecraft.misc.skin_face;
-import java.net.URL;
-import java.net.MalformedURLException;
-import com.nao20010128nao.Wisecraft.misc.DebugWriter;
-import android.graphics.Bitmap;
+import android.graphics.*;
+import com.nao20010128nao.Wisecraft.misc.*;
+import java.net.*;
 
 public class CrafaterSkinFetcher extends SkinFaceFetcher
 {

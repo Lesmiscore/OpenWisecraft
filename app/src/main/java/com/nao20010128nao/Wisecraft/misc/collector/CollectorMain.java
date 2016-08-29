@@ -5,7 +5,6 @@ import android.content.pm.*;
 import android.os.*;
 import android.preference.*;
 import android.util.*;
-import com.google.firebase.crash.*;
 import com.google.firebase.remoteconfig.*;
 import com.google.gson.*;
 import com.google.gson.reflect.*;

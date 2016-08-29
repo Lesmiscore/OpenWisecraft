@@ -1,12 +1,10 @@
 package com.nao20010128nao.Wisecraft.misc.pref;
-import android.content.Context;
-import android.support.v7.preference.PreferenceViewHolder;
-import android.util.AttributeSet;
-import android.widget.TextView;
-import com.nao20010128nao.ToolBox.HandledPreferenceCompat;
-import com.nao20010128nao.Wisecraft.misc.compat.R;
-import com.nao20010128nao.Wisecraft.misc.SetTextColor;
-import android.graphics.Color;
+import android.content.*;
+import android.graphics.*;
+import android.support.v7.preference.*;
+import android.util.*;
+import com.nao20010128nao.ToolBox.*;
+import com.nao20010128nao.Wisecraft.misc.*;
 
 public class StartPrefCompat extends HandledPreferenceCompat implements SetTextColor{
 	int color=Color.BLACK;

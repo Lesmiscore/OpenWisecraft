@@ -1,12 +1,9 @@
 package com.nao20010128nao.Wisecraft.misc.pref;
-import android.content.Context;
-import android.util.AttributeSet;
-import android.view.View;
-import android.widget.TextView;
-import android.support.v7.preference.PreferenceViewHolder;
-import com.nao20010128nao.Wisecraft.misc.compat.R;
-import com.nao20010128nao.Wisecraft.misc.SetTextColor;
-import android.graphics.Color;
+import android.content.*;
+import android.graphics.*;
+import android.support.v7.preference.*;
+import android.util.*;
+import com.nao20010128nao.Wisecraft.misc.*;
 
 public class EditTextPreferenceCompat extends android.support.v7.preference.EditTextPreference implements SetTextColor{
 	int color=Color.BLACK;

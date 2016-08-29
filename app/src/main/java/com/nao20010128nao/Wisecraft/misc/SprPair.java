@@ -1,7 +1,7 @@
 package com.nao20010128nao.Wisecraft.misc;
+import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import java.io.*;
-import com.nao20010128nao.Wisecraft.*;
 
 public class SprPair implements ServerPingResult {
 	ServerPingResult a,b;

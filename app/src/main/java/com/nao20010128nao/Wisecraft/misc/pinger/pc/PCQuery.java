@@ -1,6 +1,6 @@
 package com.nao20010128nao.Wisecraft.misc.pinger.pc;
 
-import android.annotation.TargetApi;
+import android.annotation.*;
 import android.util.*;
 import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;

@@ -1,5 +1,5 @@
 package com.nao20010128nao.Wisecraft.misc;
-import android.content.Intent;
+import android.content.*;
 
 public interface ActivityResultInterface
 {

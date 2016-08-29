@@ -2,8 +2,7 @@ package com.nao20010128nao.Wisecraft.api;
 import android.content.*;
 import android.os.*;
 import android.support.v7.app.*;
-import uk.co.chrisjenx.calligraphy.*;
-import com.nao20010128nao.Wisecraft.TheApplication;
+import com.nao20010128nao.Wisecraft.*;
 
 public abstract class ApiBaseActivity extends AppCompatActivity {
 	@Override

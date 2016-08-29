@@ -3,11 +3,9 @@ import android.app.*;
 import android.content.*;
 import android.os.*;
 import android.support.v4.app.*;
-import android.support.v4.content.ContextCompat;
-
+import android.support.v4.content.*;
 import com.nao20010128nao.MCProxy.*;
 import com.nao20010128nao.Wisecraft.*;
-
 import java.io.*;
 import java.net.*;
 import java.security.*;

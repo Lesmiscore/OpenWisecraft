@@ -1,9 +1,9 @@
 package com.nao20010128nao.Wisecraft.misc.pinger;
 
 import java.io.*;
+import java.lang.reflect.*;
 import java.nio.*;
 import java.util.*;
-import java.lang.reflect.*;
 
 public class PingerUtils {
 

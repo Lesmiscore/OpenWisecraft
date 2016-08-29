@@ -1,12 +1,10 @@
 package com.nao20010128nao.Wisecraft.misc.pinger.pe;
 
-import android.annotation.TargetApi;
-
+import android.annotation.*;
 import com.nao20010128nao.OTC.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import java.util.*;
-import android.util.*;
 
 public class FullStat implements ServerPingResult,PEPingResult {
 	static byte NULL = '\0';

@@ -1,6 +1,5 @@
 package com.nao20010128nao.Wisecraft.misc.provider;
 import android.util.*;
-
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 import java.io.*;

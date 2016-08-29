@@ -8,6 +8,7 @@ import android.preference.*;
 import android.support.multidex.*;
 import android.support.v4.graphics.drawable.*;
 import android.support.v7.app.*;
+import android.util.*;
 import android.view.*;
 import android.widget.*;
 import com.google.android.gms.tasks.*;
@@ -21,7 +22,6 @@ import com.nao20010128nao.Wisecraft.services.*;
 import java.lang.reflect.*;
 import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
-import android.util.*;
 
 public class TheApplication extends Application implements com.nao20010128nao.Wisecraft.rcon.Presenter,com.ipaulpro.afilechooser.Presenter,InformationCommunicatorReceiver.DisclosureResult {
 	public static TheApplication instance;

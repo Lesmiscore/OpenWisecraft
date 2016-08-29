@@ -1,7 +1,6 @@
 package com.nao20010128nao.Wisecraft;
 import android.content.*;
 import android.os.*;
-import android.preference.*;
 import android.support.design.widget.*;
 import android.util.*;
 import android.view.*;

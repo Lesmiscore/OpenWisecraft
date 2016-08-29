@@ -1,8 +1,8 @@
 package com.nao20010128nao.Wisecraft.misc.view;
-import android.support.v4.view.ViewPager;
-import android.view.MotionEvent;
-import android.content.Context;
-import android.util.AttributeSet;
+import android.content.*;
+import android.support.v4.view.*;
+import android.util.*;
+import android.view.*;
 
 
 /*

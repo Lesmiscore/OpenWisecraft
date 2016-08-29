@@ -1,16 +1,15 @@
 package com.nao20010128nao.Wisecraft.misc.pref;
 import android.content.res.*;
+import android.graphics.*;
+import android.graphics.drawable.*;
 import android.support.v7.preference.*;
 import android.view.*;
 import android.widget.*;
+import com.azeesoft.lib.colorpicker.*;
 import com.mikhaellopez.circularimageview.*;
 import com.nao20010128nao.Wisecraft.*;
 
 import com.nao20010128nao.Wisecraft.R;
-import android.support.v4.content.res.*;
-import android.graphics.*;
-import android.graphics.drawable.*;
-import com.azeesoft.lib.colorpicker.*;
 
 public class ColorPickerPreferenceCompat extends Preference
 {

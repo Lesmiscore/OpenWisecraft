@@ -13,6 +13,7 @@ import android.text.style.*;
 import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.api.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import java.io.*;
@@ -22,8 +23,6 @@ import java.util.*;
 
 import android.support.v7.widget.Toolbar;
 import com.nao20010128nao.Wisecraft.R;
-import uk.co.chrisjenx.calligraphy.*;
-import com.nao20010128nao.Wisecraft.api.*;
 
 public class Utils extends PingerUtils{
 	public static String deleteDecorations(String decorated) {

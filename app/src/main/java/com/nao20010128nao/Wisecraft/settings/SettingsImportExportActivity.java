@@ -1,17 +1,12 @@
 package com.nao20010128nao.Wisecraft.settings;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-import com.nao20010128nao.Wisecraft.misc.UsefulPagerAdapter;
-import com.astuetz.PagerSlidingTabStrip;
-import com.nao20010128nao.Wisecraft.misc.PstsTabColorUpdater;
-import com.nao20010128nao.Wisecraft.R;
-import com.nao20010128nao.Wisecraft.ServerInfoActivity;
-import com.nao20010128nao.Wisecraft.misc.BaseFragment;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.LayoutInflater;
-import android.support.v4.content.ContextCompat;
+import android.os.*;
+import android.support.v4.content.*;
+import android.support.v4.view.*;
+import android.support.v7.app.*;
+import android.view.*;
+import com.astuetz.*;
+import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.misc.*;
 
 public class SettingsImportExportActivity extends AppCompatActivity {
 	ViewPager tabs;
