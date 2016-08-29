@@ -111,7 +111,7 @@ public class RequestedServerInfoActivity extends ApiBaseActivity {
 		}
 		public void onPingFailed(Server s) {
 			wd.hideWorkingDialog();
-			new AppCompatAlertDialog.Builder(wd)
+			new AppCompatAlertDialog.Builder(RequestedServerInfoActivity.this,R.style.AppAlertDialog)
 				.setMessage(R.string.serverOffline)
 				.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 					public void onClick(DialogInterface di, int t) {
