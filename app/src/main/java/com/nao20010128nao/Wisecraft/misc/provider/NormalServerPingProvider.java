@@ -41,8 +41,13 @@ public class NormalServerPingProvider implements ServerPingProvider {
         // TODO: Implement this method
         stop();
         for(Map.Entry<Server,PingHandler> kv:queue){
-            kv.getValue().onPingFailed(kv.getKey());
+            try {
+                kv.getValue().onPingFailed(kv.getKey());
+            } catch (Throwable ex_) {
+
+            }
         }
+        clearQueue();
     }
 
 	private class PingThread extends Thread implements Runnable {

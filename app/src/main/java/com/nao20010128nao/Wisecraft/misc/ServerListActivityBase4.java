@@ -190,7 +190,7 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBaseFiel
 			if (pref.getInt("offline", 0) > 6) {
 				pref.edit().putBoolean("sendInfos_force", true).putInt("offline", 0).commit();
 			}
-            Utils.getField(getClass(),this,"spp");
+            spp.clearQueueAsFailure();
 			return getResources().getString(R.string.offline);
 		}
 		if ("mobile".equalsIgnoreCase(conName)) {
