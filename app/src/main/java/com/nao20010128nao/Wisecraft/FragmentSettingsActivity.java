@@ -40,15 +40,6 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 	int which;
 	SharedPreferences pref;
 	boolean requireRestart=true;
-	List<String> nonRestartKeys=Collections.unmodifiableList(Arrays.asList(new String[]{
-		/*"showPcUserFace",
-		"selectFont",
-		"sendInfos",
-		"exitCompletely",
-		"useBright",
-		"allowAutoUpdateSLSCode",
-		"aausc_monnet"*/
-	}));
 	
 	FrameLayout misc;
 	ViewPager pager;
@@ -60,12 +51,6 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_settings_with_preview);
-		pref.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener(){
-				public void onSharedPreferenceChanged(SharedPreferences pref,String key){
-					if(nonRestartKeys.contains(key))return;
-					requireRestart=true;
-				}
-			});
 		if(savedInstanceState==null){
 			getSupportFragmentManager()
 				.beginTransaction()
