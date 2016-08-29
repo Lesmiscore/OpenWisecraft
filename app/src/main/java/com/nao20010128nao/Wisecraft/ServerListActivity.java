@@ -154,26 +154,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	}
 
 	private void setupDrawer() {
-		View drawerId=findViewById(R.id.drawer);
-		if(!(drawerId instanceof DrawerLayout))return;
-		dl = (DrawerLayout)drawerId;
-		if(dl==null)dl=drawer.getDrawerLayout();
-		if(dl!=null)dl.setDrawerListener(new OpenCloseListener());
-
-		if (false/*pref.getBoolean("specialDrawer1", false)*/) {
-			ViewGroup decor=(ViewGroup)getWindow().getDecorView();
-			View decorChild=decor.getChildAt(0);
-			View dChild=dl.getChildAt(0);
-			ViewGroup content=(ViewGroup)dl.getParent();
-
-			dl.removeView(dChild);
-			decor.removeView(decorChild);
-			content.removeView(dl);
-
-			content.addView(dChild);
-			decor.addView(dl);
-			dl.addView(decorChild, 0);
-		}
+		dl = drawer.getDrawerLayout();
 	}
 	
 	@Override
@@ -190,7 +171,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		if (dl == null)
 			super.onBackPressed();
 		else
-			if (drawerOpened)
+			if (drawer.isDrawerOpen())
 				if(drawer==null)
 					dl.closeDrawers();
 				else 
@@ -1203,21 +1184,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		}
 		private ServerListActivityImpl act() {
 			return ServerListActivityImpl.instance.get();
-		}
-	}
-	
-	class OpenCloseListener implements DrawerLayout.DrawerListener {
-		public void onDrawerSlide(View v, float slide) {
-
-		}
-		public void onDrawerStateChanged(int state) {
-
-		}
-		public void onDrawerClosed(View v) {
-			drawerOpened = false;
-		}
-		public void onDrawerOpened(View v) {
-			drawerOpened = true;
 		}
 	}
 }
