@@ -15,7 +15,8 @@ public class ApiActions {
 	public  final static String SERVER_INFO_HIDE_PLAYERS=SERVER_INFO_HIDE + "PLAYERS";
 	public  final static String SERVER_INFO_HIDE_PLUGINS=SERVER_INFO_HIDE + "PLUGINS";
 	public  final static String SERVER_INFO_DISABLE_UPDATE=SERVER_INFO_HIDE + "UPDATE";
-
+    public  final static String SERVER_INFO_DISABLE_EXPORT=SERVER_INFO_HIDE + "EXPORT";
+    
 	
 	public  final static String ADD_SERVER=ACTION_BASE + "ADD_SERVER";
 	public  final static String ADD_SERVER_IP=SERVER_INFO_IP;

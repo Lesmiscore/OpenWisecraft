@@ -56,6 +56,20 @@
                 <action android:name="com.nao20010128nao.Wisecraft.SERVER_INFO" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter >
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" /> 
+                <action android:name="android.intent.action.SEND" />
+                <action android:name="android.intent.action.VIEW" />
+                <data android:scheme="wisecraft" android:host="serverinfo"/>
+            </intent-filter>
+            <intent-filter >
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" /> 
+                <action android:name="android.intent.action.SEND" />
+                <action android:name="android.intent.action.VIEW" />
+                <data android:scheme="wisecraft" android:host="info"/>
+            </intent-filter>
         </activity>
 		<activity
 			android:label="@string/add"
