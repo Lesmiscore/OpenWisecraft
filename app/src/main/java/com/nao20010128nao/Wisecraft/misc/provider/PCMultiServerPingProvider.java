@@ -41,4 +41,11 @@ public class PCMultiServerPingProvider implements ServerPingProvider {
 			spp.clearQueue();
 		}
 	}
+    @Override
+    public void clearQueueAsFailure() {
+        // TODO: Implement this method
+        for (ServerPingProvider spp:objects) {
+            spp.clearQueueAsFailure();
+        }
+    }
 }

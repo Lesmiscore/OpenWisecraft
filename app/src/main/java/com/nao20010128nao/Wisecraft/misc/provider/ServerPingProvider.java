@@ -6,6 +6,7 @@ public interface ServerPingProvider {
 	public int getQueueRemain();
 	public void stop();
 	public void clearQueue();
+    public void clearQueueAsFailure();
 	public static interface PingHandler {
 		void onPingArrives(ServerStatus stat);
 		void onPingFailed(Server server);

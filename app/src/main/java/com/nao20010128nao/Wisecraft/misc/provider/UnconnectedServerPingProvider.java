@@ -36,7 +36,14 @@ public class UnconnectedServerPingProvider implements ServerPingProvider
 		queue.clear();
 	}
 
-
+    @Override
+    public void clearQueueAsFailure() {
+        // TODO: Implement this method
+        stop();
+        for(Map.Entry<Server,PingHandler> kv:queue){
+            kv.getValue().onPingFailed(kv.getKey());
+        }
+    }
 
 	private class PingThread extends Thread implements Runnable {
 		@Override

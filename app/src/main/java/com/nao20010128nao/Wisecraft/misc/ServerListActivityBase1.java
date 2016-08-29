@@ -10,7 +10,6 @@ import java.util.*;
 //Permission Request Part
 public abstract class ServerListActivityBase1 extends ServerListActivityBase2
 {
-	SecureRandom sr=new SecureRandom();
 	HashMap<Integer,Metadata> permRequire=new HashMap<>();
 	HashMap<Integer,Boolean> permReqResults=new HashMap<Integer,Boolean>(){
 		@Override

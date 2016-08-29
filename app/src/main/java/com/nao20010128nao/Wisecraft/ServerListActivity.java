@@ -9,7 +9,6 @@ import android.support.v7.widget.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
-import com.google.gson.*;
 import com.mikepenz.materialdrawer.*;
 import com.mikepenz.materialdrawer.model.*;
 import com.mikepenz.materialdrawer.model.interfaces.*;
@@ -30,23 +29,10 @@ import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 //Full implement for user interface (Some part is available at ServerListActivityBase4)
 abstract class ServerListActivityImpl extends ServerListActivityBase1 implements ServerListActivityInterface,ServerListProvider {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
-
-	static final File mcpeServerList=new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt");
-
-	final List<Map.Entry<Integer,Integer>> appMenu=new ArrayList<>();
-	ServerPingProvider spp,updater;
-	Gson gson=new Gson();
-	RecycleServerList sl;
-	List<Server> list;
-	int clicked=-1;
-	WorkingDialog wd;
-	SwipeRefreshLayout srl;
-	List<MenuItem> items=new ArrayList<>();
-	DrawerLayout dl;
-	boolean drawerOpened;
-	boolean skipSave=false;
-	Map<Server,Boolean> pinging=new NonNullableMap<Server>();
 	
+    RecycleServerList sl;
+    List<Server> list;
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method

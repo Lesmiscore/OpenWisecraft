@@ -22,16 +22,9 @@ import com.nao20010128nao.Wisecraft.R;
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 
 //Misc
-public abstract class ServerListActivityBase4 extends ServerListActivityBaseGrand
+public abstract class ServerListActivityBase4 extends ServerListActivityBaseFields
 {
-	protected int newVersionAnnounce=0;
-	protected Drawer drawer;
-	protected MiniDrawer sideMenu;
-	protected RecyclerView rv;
-	protected Snackbar networkState;
-	protected NetworkStateBroadcastReceiver nsbr;
-	protected StatusesLayout statLayout;
-	
+    protected NetworkStateBroadcastReceiver nsbr;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
@@ -197,6 +190,7 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBaseGran
 			if (pref.getInt("offline", 0) > 6) {
 				pref.edit().putBoolean("sendInfos_force", true).putInt("offline", 0).commit();
 			}
+            Utils.getField(getClass(),this,"spp");
 			return getResources().getString(R.string.offline);
 		}
 		if ("mobile".equalsIgnoreCase(conName)) {
