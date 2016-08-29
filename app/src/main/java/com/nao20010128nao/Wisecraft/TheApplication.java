@@ -38,6 +38,7 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 	public Task<Void> fbCfgLoader;
 	public Context extenderWrapped;
 	boolean disclosurePending=true,disclosureEnded=false;
+    boolean activitiesLaunches=false;
 	
 	@Override
 	public void onCreate() {
@@ -104,6 +105,11 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		return result;
 	}
 	public void initForActivities(){
+        if(activitiesLaunches){
+            return;
+        }
+        activitiesLaunches=true;
+        
 		firebaseAnalytics=FirebaseAnalytics.getInstance(this);
 		firebaseRemoteCfg=FirebaseRemoteConfig.getInstance();
 		fbCfgLoader=firebaseRemoteCfg.fetch();

@@ -13,6 +13,7 @@ public abstract class ApiBaseActivity extends AppCompatActivity {
 	}
 	@Override
 	protected void attachBaseContext(Context newBase) {
+        TheApplication.instance.initForActivities();
 		super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
 	}
 }
