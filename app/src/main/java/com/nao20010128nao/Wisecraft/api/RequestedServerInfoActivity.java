@@ -103,22 +103,30 @@ public class RequestedServerInfoActivity extends ApiBaseActivity {
 		public PingHandlingImpl(int ofs){
 			offset=ofs;
 		}
-		public void onPingArrives(ServerStatus s) {
-			ServerInfoActivity.stat.add(s);
-			int ofs=ServerInfoActivity.stat.indexOf(s);
-			startActivityForResult(((Intent)si.clone()).putExtra("offset",offset).putExtra("statListOffset",ofs), 0);
-			wd.hideWorkingDialog();
+		public void onPingArrives(final ServerStatus s) {
+            runOnUiThread(new Runnable(){
+                    public void run(){
+                        ServerInfoActivity.stat.add(s);
+                        int ofs=ServerInfoActivity.stat.indexOf(s);
+                        startActivityForResult(((Intent)si.clone()).putExtra("offset",offset).putExtra("statListOffset",ofs), 0);
+                        wd.hideWorkingDialog();
+                    }
+                });
 		}
 		public void onPingFailed(Server s) {
-			wd.hideWorkingDialog();
-			new AppCompatAlertDialog.Builder(RequestedServerInfoActivity.this,R.style.AppAlertDialog)
-				.setMessage(R.string.serverOffline)
-				.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
-					public void onClick(DialogInterface di, int t) {
-						finish();
-					}
-				})
-				.show();
+            runOnUiThread(new Runnable(){
+                    public void run(){
+                        wd.hideWorkingDialog();
+                        new AppCompatAlertDialog.Builder(RequestedServerInfoActivity.this,R.style.AppAlertDialog)
+                            .setMessage(R.string.serverOffline)
+                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
+                                public void onClick(DialogInterface di, int t) {
+                                    finish();
+                                }
+                            })
+                            .show();
+                    }
+                });
 		}
 	}
 }
