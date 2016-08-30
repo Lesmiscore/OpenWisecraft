@@ -64,7 +64,7 @@ public class NormalServerPingProvider implements ServerPingProvider {
                     } catch (Throwable ex_) {
 
                     }
-                    return;
+                    continue;
                 }
 				try {
 					now = queue.poll();
