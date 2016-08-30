@@ -76,7 +76,7 @@
 		android:title="@string/changeDpi"
 		android:key="changeDpi"
 	/>
-    <com.nao20010128nao.Wisecraft.misc.pref.StartPrefCompat
+    <com.nao20010128nao.Wisecraft.misc.pref.CheckBoxPreferenceCompat
         android:title="@string/noCellular"
         android:description="@string/noCellular_desc"
         android:key="noCellular"
