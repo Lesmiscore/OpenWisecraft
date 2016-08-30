@@ -125,6 +125,10 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		}
 		rv.setLongClickable(true);
 		wd = new WorkingDialog(this);
+        if(Utils.isOnline(this))
+            spp.online();
+        else
+            spp.offline();
 		if (!usesOldInstance) {
 			loadServers();
 			statLayout.initStatuses(list.size(), 1);
