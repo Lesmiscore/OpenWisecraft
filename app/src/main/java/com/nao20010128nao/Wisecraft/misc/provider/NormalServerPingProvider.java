@@ -57,17 +57,17 @@ public class NormalServerPingProvider implements ServerPingProvider {
 			Map.Entry<Server,PingHandler> now=null;
 			while (!(queue.isEmpty()|isInterrupted())) {
 				Log.d("NSPP", "Starting ping");
-                if(offline){
-                    Log.d("NSPP", "Offline");
-                    try {
-                        now.getValue().onPingFailed(now.getKey());
-                    } catch (Throwable ex_) {
-
-                    }
-                    continue;
-                }
 				try {
 					now = queue.poll();
+                    if(offline){
+                        Log.d("NSPP", "Offline");
+                        try {
+                            now.getValue().onPingFailed(now.getKey());
+                        } catch (Throwable ex_) {
+
+                        }
+                        continue;
+                    }
 					ServerStatus stat=new ServerStatus();
                     now.getKey().cloneInto(stat);
 					Log.d("NSPP", stat.ip + ":" + stat.port + " " + stat.mode);

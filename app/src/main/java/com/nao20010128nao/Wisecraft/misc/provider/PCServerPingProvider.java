@@ -55,17 +55,17 @@ public class PCServerPingProvider implements ServerPingProvider
 			Map.Entry<Server,PingHandler> now=null;
 			while (!(queue.isEmpty()|isInterrupted())) {
 				Log.d("PCSPP", "Starting ping");
-                if(offline){
-                    Log.d("PCSPP", "Offline");
-                    try {
-                        now.getValue().onPingFailed(now.getKey());
-                    } catch (Throwable ex_) {
-
-                    }
-                    return;
-                }
 				try {
 					now = queue.poll();
+                    if(offline){
+                        Log.d("PCSPP", "Offline");
+                        try {
+                            now.getValue().onPingFailed(now.getKey());
+                        } catch (Throwable ex_) {
+
+                        }
+                        continue;
+                    }
 					ServerStatus stat=new ServerStatus();
 					stat.ip = now.getKey().ip;
 					stat.port = now.getKey().port;

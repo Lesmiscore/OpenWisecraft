@@ -55,18 +55,18 @@ public class UnconnectedServerPingProvider implements ServerPingProvider
 			// TODO: Implement this method
 			Map.Entry<Server,PingHandler> now=null;
 			while (!(queue.isEmpty()|isInterrupted())) {
-                if(offline){
-                    Log.d("NSPP", "Offline");
-                    try {
-                        now.getValue().onPingFailed(now.getKey());
-                    } catch (Throwable ex_) {
-
-                    }
-                    return;
-                }
 				try {
 					Log.d("UPP", "Starting ping");
 					now = queue.poll();
+                    if(offline){
+                        Log.d("UPP", "Offline");
+                        try {
+                            now.getValue().onPingFailed(now.getKey());
+                        } catch (Throwable ex_) {
+
+                        }
+                        continue;
+                    }
 					ServerStatus stat=new ServerStatus();
 					stat.ip = now.getKey().ip;
 					stat.port = now.getKey().port;
