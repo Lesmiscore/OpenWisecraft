@@ -8,6 +8,7 @@ public class PCServerPingProvider implements ServerPingProvider
 {
 	Queue<Map.Entry<Server,PingHandler>> queue=new LinkedList<>();
 	Thread pingThread=new PingThread();
+    boolean offline=false;
 	
 	public void putInQueue(Server server, PingHandler handler) {
 		Utils.requireNonNull(server);
@@ -36,12 +37,15 @@ public class PCServerPingProvider implements ServerPingProvider
 	}
 	
     @Override
-    public void clearQueueAsFailure() {
+    public void offline() {
         // TODO: Implement this method
-        stop();
-        for(Map.Entry<Server,PingHandler> kv:queue){
-            kv.getValue().onPingFailed(kv.getKey());
-        }
+        offline=true;
+    }
+
+    @Override
+    public void online() {
+        // TODO: Implement this method
+        offline=false;
     }
 
 	private class PingThread extends Thread implements Runnable {
@@ -51,6 +55,15 @@ public class PCServerPingProvider implements ServerPingProvider
 			Map.Entry<Server,PingHandler> now=null;
 			while (!(queue.isEmpty()|isInterrupted())) {
 				Log.d("PCSPP", "Starting ping");
+                if(offline){
+                    Log.d("PCSPP", "Offline");
+                    try {
+                        now.getValue().onPingFailed(now.getKey());
+                    } catch (Throwable ex_) {
+
+                    }
+                    return;
+                }
 				try {
 					now = queue.poll();
 					ServerStatus stat=new ServerStatus();

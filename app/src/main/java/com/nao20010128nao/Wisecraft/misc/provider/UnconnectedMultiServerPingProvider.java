@@ -43,10 +43,18 @@ public class UnconnectedMultiServerPingProvider implements ServerPingProvider {
 	}
     
     @Override
-    public void clearQueueAsFailure() {
+    public void offline() {
         // TODO: Implement this method
         for (ServerPingProvider spp:objects) {
-            spp.clearQueueAsFailure();
+            spp.offline();
+        }
+    }
+    
+    @Override
+    public void online() {
+        // TODO: Implement this method
+        for (ServerPingProvider spp:objects) {
+            spp.online();
         }
     }
 }
