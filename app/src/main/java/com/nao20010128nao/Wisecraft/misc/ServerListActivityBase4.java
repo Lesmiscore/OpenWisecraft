@@ -173,33 +173,23 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBaseFiel
 	}
 	
 	protected String fetchNetworkState() {
-		ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-		String conName;
-		if (cm.getActiveNetworkInfo() == null) {
-			conName = "offline";
-		} else {
-			conName = cm.getActiveNetworkInfo().getTypeName();
-		}
-		if (conName == null) {
-			conName = "offline";
-		}
-		conName = conName.toLowerCase();
-
-		if (conName.equalsIgnoreCase("offline")) {
-			pref.edit().putInt("offline", pref.getInt("offline", 0) + 1).commit();
-			if (pref.getInt("offline", 0) > 6) {
-				pref.edit().putBoolean("sendInfos_force", true).putInt("offline", 0).commit();
-			}
-            spp.offline();
-			return getResources().getString(R.string.offline);
-		}
-		if ("mobile".equalsIgnoreCase(conName)) {
+        FetchNetworkStateResult fnsr=fetchNetworkState2();
+        if(fnsr==FetchNetworkStateResult.CELLULAR){
             if(pref.getBoolean("noCellular",false))
                 spp.offline();
 			return getResources().getString(R.string.onMobileNetwork);
-		}
-        spp.online();
-		return null;
+        }else if(fnsr==FetchNetworkStateResult.OFFLINE){
+            pref.edit().putInt("offline", pref.getInt("offline", 0) + 1).commit();
+            if (pref.getInt("offline", 0) > 6) {
+                pref.edit().putBoolean("sendInfos_force", true).putInt("offline", 0).commit();
+            }
+            spp.offline();
+			return getResources().getString(R.string.offline);
+        }else if(fnsr==FetchNetworkStateResult.WIFI){
+            spp.online();
+            return null;
+        }
+        return null;
 	}
 
 	protected class NetworkStatusCheckWorker extends AsyncTask<Void,String,String> {
@@ -229,4 +219,35 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBaseFiel
 			new NetworkStatusCheckWorker().execute();
 		}
 	}
+    
+    
+    
+    
+    public FetchNetworkStateResult fetchNetworkState2() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        String conName;
+        if (cm.getActiveNetworkInfo() == null) {
+            conName = "offline";
+        } else {
+            conName = cm.getActiveNetworkInfo().getTypeName();
+        }
+        if (conName == null) {
+            conName = "offline";
+        }
+        conName = conName.toLowerCase();
+
+        if (conName.equalsIgnoreCase("offline")) {
+            return FetchNetworkStateResult.OFFLINE;
+        }
+        if ("mobile".equalsIgnoreCase(conName)) {
+            if(pref.getBoolean("noCellular",false))
+                spp.offline();
+            return FetchNetworkStateResult.CELLULAR;
+        }
+        return FetchNetworkStateResult.WIFI;
+	}
+    
+    public static enum FetchNetworkStateResult{
+        WIFI,OFFLINE,CELLULAR;
+    }
 }

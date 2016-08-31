@@ -125,7 +125,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		}
 		rv.setLongClickable(true);
 		wd = new WorkingDialog(this);
-        if(Utils.isOnline(this))
+        if(fetchNetworkState2()==FetchNetworkStateResult.WIFI)
             spp.online();
         else if(pref.getBoolean("noCellular",false))
             spp.offline();
