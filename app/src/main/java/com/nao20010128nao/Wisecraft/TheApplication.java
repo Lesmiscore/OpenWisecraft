@@ -63,7 +63,7 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 			.remove("useBright")
 			.commit();
 			
-		Log.d("GitRevisionHash",Utils.getField(BuildConfig.class,null,"GIT_REVISION_HASH")+"");
+		Log.d("Tesuya",(String)Utils.getField(com.nao20010128nao.Wisecraft.misc.compat.BuildConfig.class,null,"HIDDEN_AD"));
 	}
 	public Typeface getLocalizedFont() {
 		try {
