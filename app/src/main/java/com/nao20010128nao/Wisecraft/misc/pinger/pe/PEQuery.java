@@ -30,7 +30,7 @@ public class PEQuery implements PingHost {
 		byte[] input = Utils.padArrayEnd(req.toBytes(), val);
 		byte[] result = sendUDP(input);
 
-		token = Integer.parseInt(new String(result).trim());
+		token = Integer.valueOf(new String(result).trim());
 	}
 
 	public FullStat fullStat() {
