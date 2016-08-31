@@ -6,6 +6,7 @@ import android.widget.*;
 import com.mikepenz.fastadapter.utils.*;
 import com.mikepenz.materialdrawer.model.*;
 import com.nao20010128nao.Wisecraft.*;
+import java.util.*;
 
 public class InvisibleWebViewDrawerItem extends AbstractDrawerItem<InvisibleWebViewDrawerItem,InvisibleWebViewDrawerItem.ViewHolder>
 {
@@ -37,6 +38,11 @@ public class InvisibleWebViewDrawerItem extends AbstractDrawerItem<InvisibleWebV
         p1.itemView.setClickable(false);
         p1.itemView.setEnabled(true);
         onPostBindView(this,p1.itemView);
+    }
+
+    public void bindView(InvisibleWebViewDrawerItem.ViewHolder p1,List payload) {
+        // TODO: Implement this method
+        bindView(p1);
     }
     
     public InvisibleWebViewDrawerItem withUrl(String url){
