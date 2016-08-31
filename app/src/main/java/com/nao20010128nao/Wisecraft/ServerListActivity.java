@@ -127,7 +127,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		wd = new WorkingDialog(this);
         if(Utils.isOnline(this))
             spp.online();
-        else
+        else if(pref.getBoolean("noCellular",false))
             spp.offline();
 		if (!usesOldInstance) {
 			loadServers();
