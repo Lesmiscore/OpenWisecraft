@@ -1,11 +1,14 @@
 package com.nao20010128nao.Wisecraft.misc.skin_face;
 import android.graphics.*;
 
-public class SkinFaceFetcher
+public class SkinFaceFetcher implements SkinFetcherInterface
 {
-	SkinFetcher sf=new SkinFetcher();
-	public void requestLoadSkin(String player,SkinFetcher.SkinFetchListener listener){
-		sf.requestLoadSkin(player,new LoaderListener(player,listener));
+	SkinFetcherInterface sf;
+    public SkinFaceFetcher(SkinFetcherInterface sr){
+        sf=sr;
+    }
+	public void requestLoadSkin(String player,String uuid,SkinFetcher.SkinFetchListener listener){
+		sf.requestLoadSkin(player,uuid,new LoaderListener(player,listener));
 	}
 	class LoaderListener implements SkinFetcher.SkinFetchListener {
 		String player;

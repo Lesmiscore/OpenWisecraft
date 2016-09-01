@@ -417,7 +417,8 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 				iv.setScaleType(ImageView.ScaleType.FIT_CENTER);
 			} else {
 				iv.setVisibility(View.GONE);
-				sff.requestLoadSkin(playerName, new Handler());
+                String uuid=TheApplication.instance.pcUserUUIDs.get(playerName);
+				sff.requestLoadSkin(playerName,uuid, new Handler());
 				iv.setImageBitmap(null);
 			}
 			cached.set(position, convertView);
@@ -528,7 +529,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			ServerPingResult resp=localStat.response;
 			if (pref.getBoolean("showPcUserFace", false) & localStat.mode == 1 & canInflateSkinFaceList()) {
 				getParentActivity().skinFaceImages = new ArrayList<>();
-				getParentActivity().sff = new SkinFaceFetcher();
+				getParentActivity().sff = new SkinFaceFetcher(new SkinFetcher());
 				player = getParentActivity().new PCUserFaceAdapter();
 				Log.d("ServerInfoActivity", "face on");
 			} else {

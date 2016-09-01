@@ -3,10 +3,10 @@ import android.graphics.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import java.net.*;
 
-public class SkinFetcher
+public class SkinFetcher implements SkinFetcherInterface
 {
 	ImageLoader il=new ImageLoader();
-	public void requestLoadSkin(String player,SkinFetchListener listener){
+	public void requestLoadSkin(String player,String uuid,SkinFetchListener listener){
 		try {
 			il.putInQueue(new URL("http://skins.minecraft.net/MinecraftSkins/"+player+".png"), new LoaderListener(player, listener));
 		} catch (MalformedURLException e) {
