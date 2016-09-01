@@ -23,15 +23,22 @@ extends NormalButtonPreferenceCompat {
 	static final NullClickListener defHandler=new NullClickListener();
     HandledPreference.OnClickListener clickListener=defHandler;
 
-    public HandledPreferenceCompat(Context context, AttributeSet attributeSet) {
-        super(context, attributeSet);
-		try {
-			Class.forName("com.nao20010128nao.Wisecraft.misc.pref.StartPref").getField("as").set(null,attributeSet);
-		} catch (Throwable e) {
-			
-		}
+    public HandledPreferenceCompat(android.content.Context context, android.util.AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context,attrs,defStyleAttr,defStyleRes);
     }
 
+    public HandledPreferenceCompat(android.content.Context context, android.util.AttributeSet attrs, int defStyleAttr) {
+        super(context,attrs,defStyleAttr);
+    }
+
+    public HandledPreferenceCompat(android.content.Context context, android.util.AttributeSet attrs) {
+        super(context,attrs);
+    }
+
+    public HandledPreferenceCompat(android.content.Context context) {
+        super(context);
+    }
+    
     public static OnClickListener createListenerFrom(final View.OnClickListener onClickListener) {
         return new OnClickListener(){
             @Override

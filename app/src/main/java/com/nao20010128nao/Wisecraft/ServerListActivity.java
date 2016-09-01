@@ -37,7 +37,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
-		getLayoutInflater().inflate(R.layout.hacks, null);//空インフレート
 		appMenu.add(new KVP<Integer,Integer>(R.string.add,R.drawable.ic_add_black_48dp));//0
 		appMenu.add(new KVP<Integer,Integer>(R.string.addFromMCPE,R.drawable.ic_add_black_48dp));//1
 		appMenu.add(new KVP<Integer,Integer>(R.string.update_all,R.drawable.ic_refresh_black_48dp));//2

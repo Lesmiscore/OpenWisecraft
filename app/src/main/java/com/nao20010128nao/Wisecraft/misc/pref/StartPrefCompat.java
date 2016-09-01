@@ -9,13 +9,22 @@ import com.nao20010128nao.Wisecraft.misc.*;
 public class StartPrefCompat extends HandledPreferenceCompat implements SetTextColor{
 	int color=Color.BLACK;
 	
-	public StartPrefCompat(Context c, AttributeSet attrs) {
-		super(c, StartPref.as = attrs);
-	}
-	public StartPrefCompat(Context c) {
-		super(c, StartPref.as);
-	}
+	public StartPrefCompat(android.content.Context context, android.util.AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context,attrs,defStyleAttr,defStyleRes);
+    }
 
+    public StartPrefCompat(android.content.Context context, android.util.AttributeSet attrs, int defStyleAttr) {
+        super(context,attrs,defStyleAttr);
+    }
+
+    public StartPrefCompat(android.content.Context context, android.util.AttributeSet attrs) {
+        super(context,attrs);
+    }
+
+    public StartPrefCompat(android.content.Context context) {
+        super(context);
+    }
+	
 	@Override
 	public void onBindViewHolder(PreferenceViewHolder holder) {
 		// TODO: Implement this method
