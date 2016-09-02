@@ -41,6 +41,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
     
     boolean isEditing=false;
     ItemTouchHelper itemDecor;
+    SimpleCallback ddManager;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -166,28 +167,38 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
 			rv.setBackgroundDrawable(bd);
 		}
-        itemDecor = new ItemTouchHelper(
-            new SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN|ItemTouchHelper.RIGHT|ItemTouchHelper.LEFT,0) {
-                @Override
-                public boolean onMove(RecyclerView recyclerView, ViewHolder viewHolder, ViewHolder target) {
-                    if(!isEditing)return false;
-                    final int fromPos = viewHolder.getAdapterPosition();
-                    final int toPos = target.getAdapterPosition();
-                    sl.notifyItemMoved(fromPos, toPos);
-                    list.add(toPos,list.remove(fromPos));
-                    return true;
-                }
+        ddManager=new SimpleCallback(0,0) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, ViewHolder viewHolder, ViewHolder target) {
+                if(!isEditing)return false;
+                final int fromPos = viewHolder.getAdapterPosition();
+                final int toPos = target.getAdapterPosition();
+                sl.notifyItemMoved(fromPos, toPos);
+                list.add(toPos,list.remove(fromPos));
+                return true;
+            }
 
-                @Override
-                public void onSwiped(ViewHolder viewHolder, int direction) {
-
-                }
+            @Override
+            public void onSwiped(ViewHolder viewHolder, int direction) {
                 
-                @Override
-                public boolean isItemViewSwipeEnabled(){
-                    return isEditing;
-                }
-            });
+            }
+
+            @Override
+            public boolean isItemViewSwipeEnabled(){
+                return isEditing;
+            }
+        };
+        switch(pref.getInt("serverListStyle2",0)){
+            case 0:
+                ddManager.setDefaultDragDirs(ItemTouchHelper.UP | ItemTouchHelper.DOWN);
+                break;
+            case 1:
+            case 2:
+            default:
+                ddManager.setDefaultDragDirs(ItemTouchHelper.UP | ItemTouchHelper.DOWN|ItemTouchHelper.RIGHT|ItemTouchHelper.LEFT);
+                break;
+        }
+        itemDecor = new ItemTouchHelper(ddManager);
         if(isEditing)
             startEditMode();
 	}
