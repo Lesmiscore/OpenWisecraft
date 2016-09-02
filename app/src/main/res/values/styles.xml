@@ -6,6 +6,7 @@
 		<item name="android:windowContentOverlay">@null</item>
 		<item name="preferenceTheme">@style/AppTheme.Preference</item>
 		<item name="alertDialogTheme">@style/AppAlertDialog</item>
+        <item name="windowActionModeOverlay">true</item>
 	</style>
 	<style name="AppDialog" parent="@style/Theme.AppCompat.Light.Dialog">
 		<item name="colorPrimary">@color/primary</item>

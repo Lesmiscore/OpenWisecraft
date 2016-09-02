@@ -5,7 +5,11 @@ import android.graphics.drawable.*;
 import android.os.*;
 import android.support.v4.content.*;
 import android.support.v4.widget.*;
+import android.support.v7.view.*;
 import android.support.v7.widget.*;
+import android.support.v7.widget.RecyclerView.*;
+import android.support.v7.widget.helper.*;
+import android.support.v7.widget.helper.ItemTouchHelper.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
@@ -24,6 +28,8 @@ import java.io.*;
 import java.lang.ref.*;
 import java.util.*;
 
+import android.support.v7.view.ActionMode;
+
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 
 //Full implement for user interface (Some part is available at ServerListActivityBase4)
@@ -32,6 +38,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	
     RecycleServerList sl;
     List<Server> list;
+    
+    boolean isEditing=false;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +126,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			clicked = instance.get().clicked;
 			statLayout.setStatuses(instance.get().statLayout.getStatuses());
 			instance.get().statLayout = statLayout;
+            isEditing=instance.get().isEditing;
+            instance.get().isEditing=false;
 			usesOldInstance = true;
 
 			sl.attachNewActivity(this);
@@ -155,6 +165,27 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
 			rv.setBackgroundDrawable(bd);
 		}
+        final ItemTouchHelper itemDecor = new ItemTouchHelper(
+            new SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN|ItemTouchHelper.RIGHT|ItemTouchHelper.LEFT,0) {
+                @Override
+                public boolean onMove(RecyclerView recyclerView, ViewHolder viewHolder, ViewHolder target) {
+                    if(!isEditing)return false;
+                    final int fromPos = viewHolder.getAdapterPosition();
+                    final int toPos = target.getAdapterPosition();
+                    sl.notifyItemMoved(fromPos, toPos);
+                    list.add(toPos,list.remove(fromPos));
+                    return true;
+                }
+
+                @Override
+                public void onSwiped(ViewHolder viewHolder, int direction) {
+
+                }
+            });
+        itemDecor.attachToRecyclerView(rv);
+        
+        if(isEditing)
+            startEditMode();
 	}
 
 	private void setupDrawer() {
@@ -487,42 +518,46 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					.setTitle(R.string.sort)
 					.setItems(R.array.serverSortMenu, new DialogInterface.OnClickListener(){
 						public void onClick(DialogInterface di, int w) {
-							SortKind sk=new SortKind[]{SortKind.BRING_ONLINE_SERVERS_TO_TOP,SortKind.IP_AND_PORT,SortKind.ONLINE_AND_OFFLINE}[w];
-							skipSave = true;
-							doSort(list, sk,new SortFinishedCallback(){
-									public void onSortFinished(List<Server> data){
-										list.clear();
-										list.addAll(data);
-										saveServers();
-										sl.notifyItemRangeChanged(0,list.size()-1);
-										rv.smoothScrollToPosition(0);
-										new Thread(){
-											public void run(){
-												List<Server> lList=new ArrayList<>(list);
-												final int[] datas=new int[list.size()];
-												for(int i=0;i<datas.length;i++){
-													Server s=lList.get(i);
-													if(pinging.get(s)){
-														datas[i]=1;
-													}else{
-														if(s instanceof ServerStatus){
-															datas[i]=2;
-														}else{
-															datas[i]=0;
-														}
-													}
-												}
-												runOnUiThread(new Runnable(){
-													public void run(){
-														statLayout.setStatuses(datas);
-													}
-												});
-											}
-										}.start();
-									}
-								});
+                            if(w==getResources().getStringArray(R.array.serverSortMenu).length-1){
+                                startEditMode();
+                            }else{
+							    SortKind sk=new SortKind[]{SortKind.BRING_ONLINE_SERVERS_TO_TOP,SortKind.IP_AND_PORT,SortKind.ONLINE_AND_OFFLINE}[w];
+                                skipSave = true;
+                                doSort(list, sk,new SortFinishedCallback(){
+                                        public void onSortFinished(List<Server> data){
+                                            list.clear();
+                                            list.addAll(data);
+                                            saveServers();
+                                            sl.notifyItemRangeChanged(0,list.size()-1);
+                                            rv.smoothScrollToPosition(0);
+                                            new Thread(){
+                                                public void run(){
+                                                    List<Server> lList=new ArrayList<>(list);
+                                                    final int[] datas=new int[list.size()];
+                                                    for(int i=0;i<datas.length;i++){
+                                                        Server s=lList.get(i);
+                                                        if(pinging.get(s)){
+                                                            datas[i]=1;
+                                                        }else{
+                                                            if(s instanceof ServerStatus){
+                                                                datas[i]=2;
+                                                            }else{
+                                                                datas[i]=0;
+                                                            }
+                                                        }
+                                                    }
+                                                    runOnUiThread(new Runnable(){
+                                                            public void run(){
+                                                                statLayout.setStatuses(datas);
+                                                            }
+                                                        });
+                                                }
+                                            }.start();
+                                        }
+                                    });
+                            }
 							di.dismiss();
-						}
+				        }
 					})
 					.show();
 				break;
@@ -692,6 +727,29 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		// TODO: Implement this method
 		return list.contains(s);
 	}
+    
+    private void startEditMode() {
+        //start action mode here
+        ActionMode.Callback am=new ActionMode.Callback(){
+            public boolean onCreateActionMode(ActionMode p1, Menu p2) {
+                return true;
+            }
+
+            public boolean onPrepareActionMode(ActionMode p1, Menu p2) {
+                isEditing=true;
+                return true;
+            }
+
+            public boolean onActionItemClicked(ActionMode p1, MenuItem p2) {
+                return true;
+            }
+
+            public void onDestroyActionMode(ActionMode p1) {
+                isEditing=false;
+            }
+        };
+        startSupportActionMode(am);
+    }
 
 	
 	
