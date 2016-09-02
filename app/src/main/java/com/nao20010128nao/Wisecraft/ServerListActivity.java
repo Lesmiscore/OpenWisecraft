@@ -748,6 +748,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
         ActionMode.Callback am=new ActionMode.Callback(){
             public boolean onCreateActionMode(ActionMode p1, Menu p2) {
                 itemDecor.attachToRecyclerView(rv);
+                srl.setEnabled(false);
+                dl.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                 return true;
             }
 
@@ -763,6 +765,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             public void onDestroyActionMode(ActionMode p1) {
                 isEditing=false;
                 itemDecor.attachToRecyclerView(null);
+                srl.setEnabled(true);
+                dl.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             }
         };
         startSupportActionMode(am);
