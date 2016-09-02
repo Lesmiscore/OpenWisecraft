@@ -126,7 +126,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		if (usesOldInstance) {
 			rv.setAdapter(sl);
 		} else {
-            if(false){
+            if(true){
                 spp = updater = new MultiServerPingProvider(Integer.valueOf(pref.getString("parallels", "6")));
                 if (pref.getBoolean("updAnotherThread", false))
 				    updater = new NormalServerPingProvider();
