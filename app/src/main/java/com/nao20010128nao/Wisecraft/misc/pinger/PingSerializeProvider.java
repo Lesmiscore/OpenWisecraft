@@ -38,6 +38,21 @@ public class PingSerializeProvider
 		}
 		return baos.toByteArray();
 	}
+    
+    public static byte[] dumpServerForFile(ServerStatus server){
+        ByteArrayOutputStream baos=new ByteArrayOutputStream();
+        try {
+            baos.write("WisecraftPngRngD".getBytes());//16bytes
+            baos.write(doRawDump(server.response));
+            DataOutputStream dos=new DataOutputStream(baos);
+            dos.writeLong(server.ping);
+            dos.writeUTF(server.ip);
+            dos.writeInt(server.port);
+        } catch (IOException e) {
+            WisecraftError.report("PingSerializeProvider#doRawDumpForFile",e);
+        }
+		return baos.toByteArray();
+    }
 	
 	public static ServerPingResult loadFromRawDump(byte[] data){
 		return loadFromRawDump(new ByteArrayInputStream(data));
@@ -83,11 +98,12 @@ public class PingSerializeProvider
 	}
 	
 	public static ServerPingResult loadFromRawDumpFile(DataInputStream dis){
+        int version;
 		try {
-			byte[] rdataSampleBuf="WisecraftPngRDmp".getBytes();
-			byte[] rdataHeader=new byte[rdataSampleBuf.length];
+			byte[] rdataHeader=new byte["WisecraftPngRDmp".length()];
 			dis.readFully(rdataHeader);
-			if (!Arrays.equals(rdataSampleBuf, rdataHeader)) {
+            version=checkHeader(rdataHeader);
+			if (version==-1) {
 				throw new IllegalArgumentException("InputStream has an invalid content!");
 			}
 		} catch (IOException e) {
@@ -101,6 +117,51 @@ public class PingSerializeProvider
 	public static ServerPingResult loadFromRawDumpFile(byte[] data){
 		return loadFromRawDumpFile(new ByteArrayInputStream(data));
 	}
+    
+    public static ServerStatus loadFromServerDumpFile(DataInputStream dis){
+        int version;
+        try {
+            byte[] rdataHeader=new byte["WisecraftPngRDmp".length()];
+            dis.readFully(rdataHeader);
+            version=checkHeader(rdataHeader);
+            if (version==-1) {
+                throw new IllegalArgumentException("InputStream has an invalid content!");
+            }
+            if(version==0){
+                throw new IllegalArgumentException("Unsupported type! Use loadFromDumpFile() instead.");
+            }
+        } catch (IOException e) {
+            throw new IllegalArgumentException("Failed to check the header of the InputStream.");
+        }
+        try {
+            ServerStatus result=new ServerStatus();
+            result.response = loadFromRawDump(dis);
+            result.ping = dis.readLong();
+            result.ip = dis.readUTF();
+            result.port = dis.readInt();
+            return result;
+        } catch (IOException e) {
+            return null;
+        }
+    }
+    public static ServerStatus loadFromServerDumpFile(InputStream dis){
+        return loadFromServerDumpFile(new DataInputStream(dis));
+    }
+    public static ServerStatus loadFromServerDumpFile(byte[] data){
+        return loadFromServerDumpFile(new ByteArrayInputStream(data));
+    }
+    
+    private static int checkHeader(byte[] header){
+        {
+            byte[] head="WisecraftPngRDmp".getBytes();
+            if(Arrays.equals(header,head))return 0;//only ping data
+        }
+        {
+            byte[] head="WisecraftPngRngD".getBytes();
+            if(Arrays.equals(header,head))return 1;//includes ip&port&mode
+        }
+        return -1;
+    }
 	
 	static{
 		Map<Class<? extends ServerPingResult>,Integer> pingClassNumber=new HashMap<>();
