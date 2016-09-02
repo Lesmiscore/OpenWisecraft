@@ -40,6 +40,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
     List<Server> list;
     
     boolean isEditing=false;
+    ItemTouchHelper itemDecor;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -165,7 +166,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
 			rv.setBackgroundDrawable(bd);
 		}
-        final ItemTouchHelper itemDecor = new ItemTouchHelper(
+        itemDecor = new ItemTouchHelper(
             new SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN|ItemTouchHelper.RIGHT|ItemTouchHelper.LEFT,0) {
                 @Override
                 public boolean onMove(RecyclerView recyclerView, ViewHolder viewHolder, ViewHolder target) {
@@ -181,9 +182,12 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                 public void onSwiped(ViewHolder viewHolder, int direction) {
 
                 }
+                
+                @Override
+                public boolean isItemViewSwipeEnabled(){
+                    return isEditing;
+                }
             });
-        itemDecor.attachToRecyclerView(rv);
-        
         if(isEditing)
             startEditMode();
 	}
@@ -732,6 +736,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
         //start action mode here
         ActionMode.Callback am=new ActionMode.Callback(){
             public boolean onCreateActionMode(ActionMode p1, Menu p2) {
+                itemDecor.attachToRecyclerView(rv);
                 return true;
             }
 
@@ -746,6 +751,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
             public void onDestroyActionMode(ActionMode p1) {
                 isEditing=false;
+                itemDecor.attachToRecyclerView(null);
             }
         };
         startSupportActionMode(am);
@@ -899,6 +905,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		@Override
 		public void onItemClick(AdapterView<?> p1, View p2, int p3, long p4) {
 			// TODO: Implement this method
+            if(sla.isEditing)return;
 			Server s=getItem(p3);
 			sla.clicked = p3;
 			if (sla.pinging.get(s))return;
@@ -921,6 +928,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		@Override
 		public boolean onItemLongClick(AdapterView<?> p1, View p2, final int p3, long p4) {
 			// TODO: Implement this method
+            if(sla.isEditing)return true;
 			sla.clicked = p3;
 			new AppCompatAlertDialog.Builder(sla)
 				.setTitle(getItem(p3).toString())
