@@ -175,6 +175,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                 final int toPos = target.getAdapterPosition();
                 sl.notifyItemMoved(fromPos, toPos);
                 list.add(toPos,list.remove(fromPos));
+                statLayout.moveStatus(fromPos,toPos);
                 return true;
             }
 
