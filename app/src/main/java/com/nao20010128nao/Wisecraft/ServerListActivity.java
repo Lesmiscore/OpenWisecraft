@@ -193,9 +193,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             case 0:
                 ddManager.setDefaultDragDirs(ItemTouchHelper.UP | ItemTouchHelper.DOWN);
                 break;
-            case 1:
-            case 2:
-            default:
+            case 1:case 2:default:
                 ddManager.setDefaultDragDirs(ItemTouchHelper.UP | ItemTouchHelper.DOWN|ItemTouchHelper.RIGHT|ItemTouchHelper.LEFT);
                 break;
         }
