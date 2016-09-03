@@ -766,6 +766,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                 itemDecor.attachToRecyclerView(null);
                 srl.setEnabled(true);
                 dl.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                saveServers();
             }
         };
         startSupportActionMode(am);
