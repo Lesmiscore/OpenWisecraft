@@ -39,10 +39,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
     RecycleServerList sl;
     List<Server> list;
     
-    boolean isEditing=false;
-    ItemTouchHelper itemDecor;
-    SimpleCallback ddManager;
-    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
@@ -187,6 +183,31 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             @Override
             public boolean isItemViewSwipeEnabled(){
                 return isEditing;
+            }
+        };
+        am=new ActionMode.Callback(){
+            public boolean onCreateActionMode(ActionMode p1, Menu p2) {
+                itemDecor.attachToRecyclerView(rv);
+                srl.setEnabled(false);
+                dl.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                return true;
+            }
+
+            public boolean onPrepareActionMode(ActionMode p1, Menu p2) {
+                isEditing=true;
+                return true;
+            }
+
+            public boolean onActionItemClicked(ActionMode p1, MenuItem p2) {
+                return true;
+            }
+
+            public void onDestroyActionMode(ActionMode p1) {
+                isEditing=false;
+                itemDecor.attachToRecyclerView(null);
+                srl.setEnabled(true);
+                dl.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                saveServers();
             }
         };
         switch(pref.getInt("serverListStyle2",0)){
@@ -744,31 +765,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
     
     private void startEditMode() {
         //start action mode here
-        ActionMode.Callback am=new ActionMode.Callback(){
-            public boolean onCreateActionMode(ActionMode p1, Menu p2) {
-                itemDecor.attachToRecyclerView(rv);
-                srl.setEnabled(false);
-                dl.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-                return true;
-            }
-
-            public boolean onPrepareActionMode(ActionMode p1, Menu p2) {
-                isEditing=true;
-                return true;
-            }
-
-            public boolean onActionItemClicked(ActionMode p1, MenuItem p2) {
-                return true;
-            }
-
-            public void onDestroyActionMode(ActionMode p1) {
-                isEditing=false;
-                itemDecor.attachToRecyclerView(null);
-                srl.setEnabled(true);
-                dl.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-                saveServers();
-            }
-        };
         startSupportActionMode(am);
     }
 
