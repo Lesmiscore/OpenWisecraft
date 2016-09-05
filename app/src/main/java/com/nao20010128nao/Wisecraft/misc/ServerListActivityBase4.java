@@ -9,6 +9,8 @@ import android.util.*;
 import android.view.*;
 import com.google.android.gms.tasks.*;
 import com.mikepenz.materialdrawer.*;
+import com.mikepenz.materialdrawer.model.*;
+import com.mikepenz.materialdrawer.model.interfaces.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.server.*;
@@ -33,11 +35,35 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBaseFiel
 			setContentView(R.layout.server_list_content_toolbar);
 
 			setSupportActionBar(Utils.getToolbar(this));
+            
+            AccountHeaderBuilder ahb=new AccountHeaderBuilder()
+                .withActivity(this)
+				.withTypeface(TheApplication.instance.getLocalizedFont())
+                .withHeaderBackground(R.color.mainColor)
+                .withSelectionListEnabled(false)
+                .withSelectionListEnabledForSingleProfile(false)
+                .withOnAccountHeaderProfileImageListener(new AccountHeader.OnAccountHeaderProfileImageListener(){
+                    public boolean onProfileImageClick(View p1, IProfile p2, boolean p3){
+                        return true;
+                    }
+
+                    public boolean onProfileImageLongClick(View p1, IProfile p2, boolean p3){
+                        return false;
+                    }
+                })
+                .addProfiles(
+                    new ProfileDrawerItem()
+                        .withName("てすや")
+                        .withEmail("wisecraft@localhost")
+                        .withIcon(getResources().getDrawable(R.drawable.ic_launcher))
+                );
+            
 			DrawerBuilder bld=new DrawerBuilder()
 				.withActivity(this)
 				.withToolbar(Utils.getToolbar(this))
 				.withDrawerWidthRes(R.dimen.drawer_width)
-				.withDrawerLayout(R.layout.drawer_single_for_builder);
+				.withDrawerLayout(R.layout.drawer_single_for_builder)
+                .withAccountHeader(ahb.build());
 			
 			drawer=bld.build();
 		}
