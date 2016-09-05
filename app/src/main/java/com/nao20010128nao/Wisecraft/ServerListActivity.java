@@ -68,8 +68,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				}
 				PrimaryDrawerItem pdi=new LineWrappingPrimaryDrawerItem();
 				pdi.withName(s.getKey()).withIcon(s.getValue());
-				pdi.withSetSelected(false).withIdentifier(appMenu.indexOf(s));
+				pdi.withSetSelected(false);((IdContainer)pdi).setIntId(appMenu.indexOf(s));
 				pdi.withIconColorRes(R.color.mainColor).withIconTinted(true);
+                pdi.withIdentifier(appMenu.indexOf(s));
 				drawer.addItem(pdi.withIconTintingEnabled(true));
 			}
             if(!getPackageName().equals("com.nao20010128nao.Wisecraft.alpha")){
@@ -79,7 +80,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			drawer.setOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener(){
 					@Override
 					public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-						execOption((int)((PrimaryDrawerItem)drawerItem).getIdentifier());
+						execOption(((IdContainer)drawerItem).getIntId());
 						drawer.deselect();
 						return false;
 					}
