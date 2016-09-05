@@ -10,6 +10,7 @@ import android.view.*;
 import com.google.android.gms.tasks.*;
 import com.mikepenz.materialdrawer.*;
 import com.mikepenz.materialdrawer.model.*;
+import com.mikepenz.materialdrawer.model.interfaces.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.server.*;
@@ -39,6 +40,17 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBaseFiel
                 .withActivity(this)
 				.withTypeface(TheApplication.instance.getLocalizedFont())
                 .withHeaderBackground(R.color.mainColor)
+                .withSelectionListEnabled(false)
+                .withSelectionListEnabledForSingleProfile(false)
+                .withOnAccountHeaderProfileImageListener(new AccountHeader.OnAccountHeaderProfileImageListener(){
+                    public boolean onProfileImageClick(View p1, IProfile p2, boolean p3){
+                        return true;
+                    }
+
+                    public boolean onProfileImageLongClick(View p1, IProfile p2, boolean p3){
+                        return false;
+                    }
+                })
                 .addProfiles(
                     new ProfileDrawerItem()
                         .withName("てすや")
