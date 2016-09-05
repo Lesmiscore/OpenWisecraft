@@ -38,12 +38,12 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBaseFiel
             AccountHeaderBuilder ahb=new AccountHeaderBuilder()
                 .withActivity(this)
 				.withTypeface(TheApplication.instance.getLocalizedFont())
+                .withHeaderBackground(R.color.mainColor)
                 .addProfiles(
                     new ProfileDrawerItem()
                         .withName("てすや")
                         .withEmail("wisecraft@localhost")
                         .withIcon(getResources().getDrawable(R.drawable.ic_launcher))
-                        .withSelectedColorRes(R.color.mainColor)
                 );
             
 			DrawerBuilder bld=new DrawerBuilder()
