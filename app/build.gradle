@@ -67,7 +67,7 @@ dependencies {
 	compile project(':rcon')
 	compile project(':compat')
 	compile project(':aFileChooser')
-	//compile project(':accounts')
+	compile project(':accounts')
 	compile project(':calligraphy')
 	compile project(':colorPicker')
 	
