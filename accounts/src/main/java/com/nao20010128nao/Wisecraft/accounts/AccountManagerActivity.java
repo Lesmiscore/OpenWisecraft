@@ -13,6 +13,8 @@ import com.mikepenz.materialdrawer.model.*;
 import com.nao20010128nao.Wisecraft.misc.skin_face.*;
 import java.net.*;
 import java.util.*;
+import com.mikepenz.materialdrawer.model.interfaces.*;
+import com.nao20010128nao.Wisecraft.misc.*;
 
 public class AccountManagerActivity extends AppCompatActivity
 {
@@ -38,6 +40,18 @@ public class AccountManagerActivity extends AppCompatActivity
 		DrawerBuilder builder=new DrawerBuilder();
 		builder.withAccountHeader(ahb.build());
 		builder.withActivity(this);
+		List<IDrawerItem> items=new ArrayList<>();
+		items.add(
+			new LineWrappingPrimaryDrawerItem()
+				.withName(R.string.signout)
+				.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener(){
+        			public boolean onItemClick(android.view.View p1, int p2, com.mikepenz.materialdrawer.model.interfaces.IDrawerItem p3){
+						return true;
+					}
+
+				})
+		);
+		builder.withDrawerItems(items);
 		setContentView(builder.buildView().getSlider());
 	}
 	
