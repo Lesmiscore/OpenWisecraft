@@ -1,4 +1,5 @@
 package com.nao20010128nao.Wisecraft.misc;
+import android.net.*;
 import android.os.*;
 import android.support.design.widget.*;
 import android.support.v4.widget.*;
@@ -10,6 +11,7 @@ import android.view.*;
 import com.google.gson.*;
 import com.mikepenz.materialdrawer.*;
 import com.nao20010128nao.Wisecraft.misc.provider.*;
+import com.nao20010128nao.Wisecraft.misc.skin_face.*;
 import com.nao20010128nao.Wisecraft.misc.view.*;
 import java.io.*;
 import java.security.*;
@@ -49,4 +51,6 @@ public abstract class ServerListActivityBaseFields extends ServerListActivityBas
     protected RecyclerView rv;
     protected Snackbar networkState;
     protected StatusesLayout statLayout;
+    protected Uri userImage;
+    protected ImageLoader imageLoader=new ImageLoader();
 }

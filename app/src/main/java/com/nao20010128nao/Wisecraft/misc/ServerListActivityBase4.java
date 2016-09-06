@@ -1,5 +1,7 @@
 package com.nao20010128nao.Wisecraft.misc;
 import android.content.*;
+import android.graphics.*;
+import android.graphics.drawable.*;
 import android.net.*;
 import android.os.*;
 import android.support.design.widget.*;
@@ -8,16 +10,19 @@ import android.support.v7.widget.*;
 import android.util.*;
 import android.view.*;
 import com.google.android.gms.tasks.*;
+import com.google.firebase.auth.*;
 import com.mikepenz.materialdrawer.*;
 import com.mikepenz.materialdrawer.model.*;
 import com.mikepenz.materialdrawer.model.interfaces.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.server.*;
+import com.nao20010128nao.Wisecraft.misc.skin_face.*;
 import com.nao20010128nao.Wisecraft.misc.view.*;
 import com.nao20010128nao.Wisecraft.services.*;
 import java.io.*;
 import java.net.*;
+import java.util.*;
 
 import com.nao20010128nao.Wisecraft.R;
 
@@ -36,7 +41,7 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBaseFiel
 
 			setSupportActionBar(Utils.getToolbar(this));
             
-            AccountHeaderBuilder ahb=new AccountHeaderBuilder()
+            final AccountHeaderBuilder ahb=new AccountHeaderBuilder()
                 .withActivity(this)
 				.withTypeface(TheApplication.instance.getLocalizedFont())
                 .withHeaderBackground(R.color.mainColor)
@@ -50,13 +55,51 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBaseFiel
                     public boolean onProfileImageLongClick(View p1, IProfile p2, boolean p3){
                         return false;
                     }
-                })
-                .addProfiles(
+                });
+            final FirebaseUser user=TheApplication.instance.firebaseAuth.getCurrentUser();
+            if(user==null){
+                ahb.addProfiles(
                     new ProfileDrawerItem()
-                        .withName("てすや")
-                        .withEmail("wisecraft@localhost")
-                        .withIcon(getResources().getDrawable(R.drawable.ic_launcher))
+                    .withName(getResources().getString(R.string.noLogin))
+                    .withEmail(getResources().getString(R.string.noLogin))
+                    .withIcon(getResources().getDrawable(R.drawable.ic_launcher))
                 );
+            }else if(user.isAnonymous()){
+                ahb.addProfiles(
+                    new ProfileDrawerItem()
+                    .withName(getResources().getString(R.string.anonymous))
+                    .withEmail(getResources().getString(R.string.anonymous))
+                    .withIcon(getResources().getDrawable(R.drawable.ic_launcher))
+                );
+            }else{
+                ahb.addProfiles(
+                    new ProfileDrawerItem()
+                    .withName(user.getDisplayName())
+                    .withEmail(user.getEmail())
+                    .withIcon(getResources().getDrawable(R.drawable.ic_launcher))
+                );
+                userImage=user.getPhotoUrl();
+                try {
+                    imageLoader.putInQueue(new URL(userImage.toString()), new ImageLoader.ImageStatusListener(){
+                            public void onSuccess(Bitmap bmp, URL url) {
+                                ahb.withProfiles(Collections.<com.mikepenz.materialdrawer.model.interfaces.IProfile>emptyList());
+                                BitmapDrawable bd=new BitmapDrawable(bmp);
+                                //bd.setTileModeXY(Shader.TileMode.CLAMP,Shader.TileMode.CLAMP);
+                                ahb.addProfiles(
+                                    new ProfileDrawerItem()
+                                    .withName(user.getDisplayName())
+                                    .withEmail(user.getEmail())
+                                    .withIcon(bd)
+                                );
+                            }
+                            public void onError(Throwable err, URL url) {
+
+                            }
+                        });
+                } catch (MalformedURLException e) {
+                    
+                }
+            }
             
 			DrawerBuilder bld=new DrawerBuilder()
 				.withActivity(this)

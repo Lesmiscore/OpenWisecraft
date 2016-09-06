@@ -13,6 +13,7 @@ import android.view.*;
 import android.widget.*;
 import com.google.android.gms.tasks.*;
 import com.google.firebase.analytics.*;
+import com.google.firebase.auth.*;
 import com.google.firebase.remoteconfig.*;
 import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.misc.*;
@@ -35,6 +36,7 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 	public SharedPreferences stolenInfos;
 	public FirebaseAnalytics firebaseAnalytics;
 	public FirebaseRemoteConfig firebaseRemoteCfg;
+    public FirebaseAuth firebaseAuth;
 	public Task<Void> fbCfgLoader;
 	public Context extenderWrapped;
 	boolean disclosurePending=true,disclosureEnded=false;
@@ -113,6 +115,7 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		firebaseAnalytics=FirebaseAnalytics.getInstance(this);
 		firebaseRemoteCfg=FirebaseRemoteConfig.getInstance();
 		fbCfgLoader=firebaseRemoteCfg.fetch();
+        firebaseAuth=FirebaseAuth.getInstance();
 		
 		droidSans = Typeface.createFromAsset(getAssets(), "DroidSans.ttf");
 		latoLight = Typeface.createFromAsset(getAssets(), "lato-light.ttf");
