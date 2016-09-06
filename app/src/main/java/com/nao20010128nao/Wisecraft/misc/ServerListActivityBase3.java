@@ -25,7 +25,7 @@ public abstract class ServerListActivityBase3 extends ServerListActivityBase4
 			results.remove(requestCode);
 			return true;
 		}
-		return false;
+		return super.dispatchActivityResult(requestCode,resultCode,data);
 	}
 	
 	public void startChooseFileForOpen(File startDir,FileChooserResult result){

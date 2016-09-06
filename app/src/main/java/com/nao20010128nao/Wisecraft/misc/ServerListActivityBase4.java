@@ -92,6 +92,7 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBaseFiel
 
     private void loadUserInfo(final AccountHeaderBuilder ahb) throws Resources.NotFoundException {
         final FirebaseUser user=TheApplication.instance.firebaseAuth.getCurrentUser();
+        ahb.withProfiles(Collections.<com.mikepenz.materialdrawer.model.interfaces.IProfile>emptyList());
         if (user == null) {
             ahb.addProfiles(
                 new ProfileDrawerItem()
@@ -136,6 +137,17 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBaseFiel
             }
         }
     }
+
+    @Override
+    public boolean dispatchActivityResult(int requestCode, int resultCode, Intent data) {
+        // TODO: Implement this method
+        if(resultCode==10){
+            loadUserInfo(ahb);
+            return true;
+        }
+        return false;
+    }
+
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
