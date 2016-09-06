@@ -26,4 +26,14 @@ dependencies {
 	
 	compile project(':wisecraft-i18n')
 	compile project(':compat')
+	
+	compile('com.mikepenz:materialdrawer:+') {
+		transitive = true
+	}
+	//These lines are required to write code using AIDE. Please don't remove them.
+	if(null){
+		compile 'com.mikepenz:materialize:+'
+    	compile 'com.mikepenz:iconics-core:+'
+    	compile 'com.mikepenz:fastadapter:+'
+	}
 }

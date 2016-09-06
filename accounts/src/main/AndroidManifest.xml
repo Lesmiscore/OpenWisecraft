@@ -11,6 +11,10 @@
 			android:label="@string/register"
 			android:name=".RegisterActivity"
 			android:exported="false"/>
+		<activity
+			android:label="@string/account"
+			android:name=".AccountManagerActivity"
+			android:exported="false"/>
     </application>
 
 </manifest>

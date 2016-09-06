@@ -52,7 +52,7 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBaseFiel
                 .withSelectionListEnabledForSingleProfile(false)
                 .withOnAccountHeaderProfileImageListener(new AccountHeader.OnAccountHeaderProfileImageListener(){
                     public boolean onProfileImageClick(View p1, IProfile p2, boolean p3){
-                        startActivityForResult(new Intent(ServerListActivityBase4.this,SigninActivity.class),10);
+                        startActivityForResult(new Intent(ServerListActivityBase4.this,AccountManagerActivity.class),10);
                         return true;
                     }
 

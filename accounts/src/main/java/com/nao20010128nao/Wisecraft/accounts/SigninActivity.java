@@ -29,10 +29,7 @@ public class SigninActivity extends AppCompatActivity
 		auth=FirebaseAuth.getInstance();
 		wd=new WorkingDialog(this);
 		snackbar=Snackbar.make(findViewById(android.R.id.content),"",Snackbar.LENGTH_LONG);
-		if(auth.getCurrentUser()!=null){
-			finish();
-			return;
-		}
+        
 		email=(EditText)findViewById(R.id.email);
 		password=(EditText)findViewById(R.id.password);
 		findViewById(R.id.signin).setOnClickListener(new View.OnClickListener(){
