@@ -518,4 +518,7 @@ public class Utils extends PingerUtils{
 		}
 		return 0;
 	}
+	public static <T> List<T> emptyList(){
+		return new ArrayList<T>();
+	}
 }

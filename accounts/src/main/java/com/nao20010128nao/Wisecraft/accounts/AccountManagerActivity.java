@@ -43,7 +43,7 @@ public class AccountManagerActivity extends AppCompatActivity
 	
 	private void loadUserInfo() throws Resources.NotFoundException {
         final FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
-        ahb.withProfiles(Collections.<com.mikepenz.materialdrawer.model.interfaces.IProfile>emptyList());
+        ahb.withProfiles(this.<com.mikepenz.materialdrawer.model.interfaces.IProfile>emptyList());
         if (user == null) {
             ahb.addProfiles(
                 new ProfileDrawerItem()
@@ -69,7 +69,7 @@ public class AccountManagerActivity extends AppCompatActivity
             try {
                 imageLoader.putInQueue(new URL(userImage.toString()), new ImageLoader.ImageStatusListener(){
                         public void onSuccess(Bitmap bmp, URL url) {
-                            ahb.withProfiles(Collections.<com.mikepenz.materialdrawer.model.interfaces.IProfile>emptyList());
+                            ahb.withProfiles(AccountManagerActivity.this.<com.mikepenz.materialdrawer.model.interfaces.IProfile>emptyList());
                             BitmapDrawable bd=new BitmapDrawable(bmp);
                             //bd.setTileModeXY(Shader.TileMode.CLAMP,Shader.TileMode.CLAMP);
                             ahb.addProfiles(
@@ -88,4 +88,8 @@ public class AccountManagerActivity extends AppCompatActivity
             }
         }
     }
+	
+	<T> List<T> emptyList(){
+		return new ArrayList<T>();
+	}
 }

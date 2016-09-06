@@ -92,7 +92,7 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBaseFiel
 
     private void loadUserInfo(final AccountHeaderBuilder ahb) throws Resources.NotFoundException {
         final FirebaseUser user=TheApplication.instance.firebaseAuth.getCurrentUser();
-        ahb.withProfiles(Collections.<com.mikepenz.materialdrawer.model.interfaces.IProfile>emptyList());
+        ahb.withProfiles(Utils.<com.mikepenz.materialdrawer.model.interfaces.IProfile>emptyList());
         if (user == null) {
             ahb.addProfiles(
                 new ProfileDrawerItem()
@@ -118,7 +118,7 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBaseFiel
             try {
                 imageLoader.putInQueue(new URL(userImage.toString()), new ImageLoader.ImageStatusListener(){
                         public void onSuccess(Bitmap bmp, URL url) {
-                            ahb.withProfiles(Collections.<com.mikepenz.materialdrawer.model.interfaces.IProfile>emptyList());
+                            ahb.withProfiles(Utils.<com.mikepenz.materialdrawer.model.interfaces.IProfile>emptyList());
                             BitmapDrawable bd=new BitmapDrawable(bmp);
                             //bd.setTileModeXY(Shader.TileMode.CLAMP,Shader.TileMode.CLAMP);
                             ahb.addProfiles(
