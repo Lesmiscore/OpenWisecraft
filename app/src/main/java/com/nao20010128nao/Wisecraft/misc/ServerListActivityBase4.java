@@ -52,7 +52,7 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBaseFiel
                 .withSelectionListEnabledForSingleProfile(false)
                 .withOnAccountHeaderProfileImageListener(new AccountHeader.OnAccountHeaderProfileImageListener(){
                     public boolean onProfileImageClick(View p1, IProfile p2, boolean p3){
-                        startActivityForResult(new Intent(ServerListActivityBase4.this,AccountManagerActivity.class),10);
+                        startActivityForResult(new Intent(ServerListActivityBase4.this,AccountManagerActivity.class),0xff);
                         return true;
                     }
 
@@ -114,9 +114,9 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBaseFiel
                 .withEmail(user.getEmail())
                 .withIcon(getResources().getDrawable(R.drawable.ic_launcher))
             );
-            userImage = user.getPhotoUrl();
             try {
-                imageLoader.putInQueue(new URL(userImage.toString()), new ImageLoader.ImageStatusListener(){
+                userImage = user.getPhotoUrl();
+				imageLoader.putInQueue(new URL(userImage.toString()), new ImageLoader.ImageStatusListener(){
                         public void onSuccess(Bitmap bmp, URL url) {
                             ahb.withProfiles(Utils.<com.mikepenz.materialdrawer.model.interfaces.IProfile>emptyList());
                             BitmapDrawable bd=new BitmapDrawable(bmp);
@@ -132,7 +132,7 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBaseFiel
 
                         }
                     });
-            } catch (MalformedURLException e) {
+            } catch (Throwable e) {
 
             }
         }
@@ -141,7 +141,7 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBaseFiel
     @Override
     public boolean dispatchActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO: Implement this method
-        if(resultCode==10){
+        if(resultCode==0xff){
             loadUserInfo(ahb);
             return true;
         }

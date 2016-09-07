@@ -23,10 +23,7 @@ public class RegisterActivity extends AppCompatActivity
 		auth=FirebaseAuth.getInstance();
 		wd=new WorkingDialog(this);
 		snackbar=Snackbar.make(findViewById(android.R.id.content),"",Snackbar.LENGTH_LONG);
-		if(auth.getCurrentUser()!=null){
-			finish();
-			return;
-		}
+		
 		email=(EditText)findViewById(R.id.email);
 		password=(EditText)findViewById(R.id.password);
 		pw_again=(EditText)findViewById(R.id.password_again);

@@ -94,9 +94,9 @@ public class AccountManagerActivity extends AppCompatActivity
                 .withEmail(user.getEmail())
                 .withIcon(getResources().getDrawable(getApplicationInfo().icon))
             );
-            userImage = user.getPhotoUrl();
             try {
-                imageLoader.putInQueue(new URL(userImage.toString()), new ImageLoader.ImageStatusListener(){
+                userImage = user.getPhotoUrl();
+				imageLoader.putInQueue(new URL(userImage.toString()), new ImageLoader.ImageStatusListener(){
                         public void onSuccess(Bitmap bmp, URL url) {
                             ahb.withProfiles(AccountManagerActivity.this.<com.mikepenz.materialdrawer.model.interfaces.IProfile>emptyList());
                             BitmapDrawable bd=new BitmapDrawable(bmp);
@@ -112,7 +112,7 @@ public class AccountManagerActivity extends AppCompatActivity
 
                         }
                     });
-            } catch (MalformedURLException e) {
+            } catch (Throwable e) {
 
             }
         }

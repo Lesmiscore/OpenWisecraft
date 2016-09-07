@@ -106,7 +106,7 @@ public class SigninActivity extends AppCompatActivity
 			});
 			
 		if(getIntent().getBooleanExtra("add",false)){
-			findViewById(R.id.signin).setEnabled(false);
+			findViewById(R.id.signinAnon).setEnabled(false);
 		}
 	}
 
