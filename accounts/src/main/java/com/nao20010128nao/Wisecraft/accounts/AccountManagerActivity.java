@@ -38,7 +38,7 @@ public class AccountManagerActivity extends AppCompatActivity
 			.withSelectionListEnabled(false)
 			.withSelectionListEnabledForSingleProfile(false);
 		loadUserInfo();
-		DrawerBuilder builder=new DrawerBuilder();
+		final DrawerBuilder builder=new DrawerBuilder();
 		builder.withAccountHeader(ahb.build());
 		builder.withActivity(this);
 		List<IDrawerItem> items=new ArrayList<>();
@@ -67,6 +67,13 @@ public class AccountManagerActivity extends AppCompatActivity
 		}
 		
 		builder.withDrawerItems(items);
+		builder.withSelectedItemByPosition(-1);
+		builder.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener(){
+				public boolean onItemClick(View p1, int p2, IDrawerItem p3){
+					builder.withSelectedItemByPosition(-1);
+					return true;
+				}
+			});
 		setContentView(builder.buildView().getSlider());
 	}
 	
