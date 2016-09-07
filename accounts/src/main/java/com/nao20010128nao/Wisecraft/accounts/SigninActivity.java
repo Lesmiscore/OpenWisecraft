@@ -1,19 +1,14 @@
 package com.nao20010128nao.Wisecraft.accounts;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.widget.EditText;
-import com.google.firebase.auth.FirebaseAuth;
-import com.nao20010128nao.Wisecraft.misc.WorkingDialog;
-import android.view.View;
-import java.util.regex.Pattern;
-import org.apache.commons.validator.EmailValidator;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.firebase.auth.AuthResult;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.OnFailureListener;
-import android.support.design.widget.Snackbar;
-import com.nao20010128nao.Wisecraft.misc.DebugWriter;
-import android.content.Intent;
+import android.content.*;
+import android.os.*;
+import android.support.design.widget.*;
+import android.support.v7.app.*;
+import android.view.*;
+import android.widget.*;
+import com.google.android.gms.tasks.*;
+import com.google.firebase.auth.*;
+import com.nao20010128nao.Wisecraft.misc.*;
+import org.apache.commons.validator.*;
 
 public class SigninActivity extends AppCompatActivity
 {
@@ -43,21 +38,39 @@ public class SigninActivity extends AppCompatActivity
 						return;
 					}
 					wd.showWorkingDialog(getResources().getString(R.string.signingin));
-					auth.signInWithEmailAndPassword(email.getText().toString(),password.getText().toString())
-						.addOnCompleteListener(SigninActivity.this,new OnCompleteListener<AuthResult>(){
-							public void onComplete(Task<AuthResult> task){
-								wd.hideWorkingDialog();
-								setResult(RESULT_OK);
-								finish();
-							}
-						})
-						.addOnFailureListener(SigninActivity.this,new OnFailureListener(){
-							public void onFailure(Exception err){
-								wd.hideWorkingDialog();
-								DebugWriter.writeToE("Sign-In",err);
-								snackbar.setText(R.string.unableSignin).show();
-							}
-						});
+					if(getIntent().getBooleanExtra("add",false)){
+						auth.getCurrentUser().linkWithCredential(EmailAuthProvider.getCredential(email.getText().toString(),password.getText().toString()))
+							.addOnCompleteListener(SigninActivity.this,new OnCompleteListener<AuthResult>(){
+								public void onComplete(Task<AuthResult> task){
+									wd.hideWorkingDialog();
+									setResult(RESULT_OK);
+									finish();
+								}
+							})
+							.addOnFailureListener(SigninActivity.this,new OnFailureListener(){
+								public void onFailure(Exception err){
+									wd.hideWorkingDialog();
+									DebugWriter.writeToE("Sign-In",err);
+									snackbar.setText(R.string.unableSignin).show();
+								}
+							});
+					}else{
+						auth.signInWithEmailAndPassword(email.getText().toString(),password.getText().toString())
+							.addOnCompleteListener(SigninActivity.this,new OnCompleteListener<AuthResult>(){
+								public void onComplete(Task<AuthResult> task){
+									wd.hideWorkingDialog();
+									setResult(RESULT_OK);
+									finish();
+								}
+							})
+							.addOnFailureListener(SigninActivity.this,new OnFailureListener(){
+								public void onFailure(Exception err){
+									wd.hideWorkingDialog();
+									DebugWriter.writeToE("Sign-In",err);
+									snackbar.setText(R.string.unableSignin).show();
+								}
+							});
+					}
 				}
 			});
 		findViewById(R.id.signinAnon).setOnClickListener(new View.OnClickListener(){
@@ -88,9 +101,13 @@ public class SigninActivity extends AppCompatActivity
 			});
 		findViewById(R.id.newAccount).setOnClickListener(new View.OnClickListener(){
 				public void onClick(View v){
-					startActivityForResult(new Intent(SigninActivity.this,RegisterActivity.class),0);
+					startActivityForResult(new Intent(SigninActivity.this,RegisterActivity.class).putExtras(getIntent()),0);
 				}
 			});
+			
+		if(getIntent().getBooleanExtra("add",false)){
+			findViewById(R.id.signin).setEnabled(false);
+		}
 	}
 
 	@Override

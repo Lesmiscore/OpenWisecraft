@@ -1,17 +1,13 @@
 package com.nao20010128nao.Wisecraft.accounts;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import com.nao20010128nao.Wisecraft.misc.WorkingDialog;
-import com.google.firebase.auth.FirebaseAuth;
-import android.widget.EditText;
-import android.view.View;
-import org.apache.commons.validator.EmailValidator;
-import android.support.design.widget.Snackbar;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.firebase.auth.AuthResult;
-import com.google.android.gms.tasks.Task;
-import com.nao20010128nao.Wisecraft.misc.DebugWriter;
+import android.os.*;
+import android.support.design.widget.*;
+import android.support.v7.app.*;
+import android.view.*;
+import android.widget.*;
+import com.google.android.gms.tasks.*;
+import com.google.firebase.auth.*;
+import com.nao20010128nao.Wisecraft.misc.*;
+import org.apache.commons.validator.*;
 
 public class RegisterActivity extends AppCompatActivity
 {
@@ -49,21 +45,54 @@ public class RegisterActivity extends AppCompatActivity
 						return;
 					}
 					wd.showWorkingDialog(getResources().getString(R.string.registering));
-					auth.createUserWithEmailAndPassword(email.getText().toString(),password.getText().toString())
-						.addOnCompleteListener(RegisterActivity.this,new OnCompleteListener<AuthResult>(){
-							public void onComplete(Task<AuthResult> task){
-								wd.hideWorkingDialog();
-								setResult(RESULT_OK);
-								finish();
-							}
-						})
-						.addOnFailureListener(RegisterActivity.this,new OnFailureListener(){
-							public void onFailure(Exception err){
-								wd.hideWorkingDialog();
-								DebugWriter.writeToE("Register",err);
-								snackbar.setText(R.string.unableSignin).show();
-							}
-						});
+					if(getIntent().getBooleanExtra("add",false)){
+						final FirebaseUser current=auth.getCurrentUser();
+						auth.createUserWithEmailAndPassword(email.getText().toString(),password.getText().toString())
+							.addOnCompleteListener(RegisterActivity.this,new OnCompleteListener<AuthResult>(){
+								public void onComplete(Task<AuthResult> task){
+									wd.hideWorkingDialog();
+									wd.showWorkingDialog(getResources().getString(R.string.signingin));
+									current.linkWithCredential(EmailAuthProvider.getCredential(email.getText().toString(),password.getText().toString()))
+										.addOnCompleteListener(RegisterActivity.this,new OnCompleteListener<AuthResult>(){
+											public void onComplete(Task<AuthResult> task){
+												wd.hideWorkingDialog();
+												setResult(RESULT_OK);
+												finish();
+											}
+										})
+										.addOnFailureListener(RegisterActivity.this,new OnFailureListener(){
+											public void onFailure(Exception err){
+												wd.hideWorkingDialog();
+												DebugWriter.writeToE("Register",err);
+												snackbar.setText(R.string.unableSignin).show();
+											}
+										});
+								}
+							})
+							.addOnFailureListener(RegisterActivity.this,new OnFailureListener(){
+								public void onFailure(Exception err){
+									wd.hideWorkingDialog();
+									DebugWriter.writeToE("Register",err);
+									snackbar.setText(R.string.unableSignin).show();
+								}
+							});
+					}else{
+						auth.createUserWithEmailAndPassword(email.getText().toString(),password.getText().toString())
+							.addOnCompleteListener(RegisterActivity.this,new OnCompleteListener<AuthResult>(){
+								public void onComplete(Task<AuthResult> task){
+									wd.hideWorkingDialog();
+									setResult(RESULT_OK);
+									finish();
+								}
+							})
+							.addOnFailureListener(RegisterActivity.this,new OnFailureListener(){
+								public void onFailure(Exception err){
+									wd.hideWorkingDialog();
+									DebugWriter.writeToE("Register",err);
+									snackbar.setText(R.string.unableSignin).show();
+								}
+							});
+					}
 				}
 			});
 		findViewById(R.id.close).setOnClickListener(new View.OnClickListener(){

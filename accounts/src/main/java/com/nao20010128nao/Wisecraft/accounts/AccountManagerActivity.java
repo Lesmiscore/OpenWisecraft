@@ -7,30 +7,31 @@ import android.graphics.drawable.*;
 import android.net.*;
 import android.os.*;
 import android.support.v7.app.*;
+import android.view.*;
 import com.google.firebase.auth.*;
 import com.mikepenz.materialdrawer.*;
 import com.mikepenz.materialdrawer.model.*;
+import com.mikepenz.materialdrawer.model.interfaces.*;
+import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.skin_face.*;
 import java.net.*;
 import java.util.*;
-import com.mikepenz.materialdrawer.model.interfaces.*;
-import com.nao20010128nao.Wisecraft.misc.*;
 
 public class AccountManagerActivity extends AppCompatActivity
 {
 	AccountHeaderBuilder ahb;
 	Uri userImage;
     ImageLoader imageLoader=new ImageLoader();
+	WorkingDialog wd;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		final FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) {
-			startActivity(new Intent(this,SigninActivity.class));
-			finish();
-			return;
+			startActivityForResult(new Intent(this,SigninActivity.class),0);
 		}
+		wd=new WorkingDialog(this);
 		ahb=new AccountHeaderBuilder()
 			.withActivity(this)
 			.withHeaderBackground(R.color.mainColor)
@@ -45,12 +46,26 @@ public class AccountManagerActivity extends AppCompatActivity
 			new LineWrappingPrimaryDrawerItem()
 				.withName(R.string.signout)
 				.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener(){
-        			public boolean onItemClick(android.view.View p1, int p2, com.mikepenz.materialdrawer.model.interfaces.IDrawerItem p3){
+        			public boolean onItemClick(View p1, int p2, IDrawerItem p3){
+						FirebaseAuth.getInstance().signOut();
+						finish();
 						return true;
 					}
-
 				})
 		);
+		if(user.isAnonymous()){
+			items.add(
+				new LineWrappingPrimaryDrawerItem()
+				.withName(R.string.addEmail)
+				.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener(){
+						public boolean onItemClick(View p1, int p2, IDrawerItem p3){
+							startActivityForResult(new Intent(AccountManagerActivity.this,SigninActivity.class).putExtra("add",true),0);
+							return true;
+						}
+					})
+			);
+		}
+		
 		builder.withDrawerItems(items);
 		setContentView(builder.buildView().getSlider());
 	}
@@ -102,6 +117,13 @@ public class AccountManagerActivity extends AppCompatActivity
             }
         }
     }
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(requestCode==0){
+			loadUserInfo();
+		}
+	}
 	
 	<T> List<T> emptyList(){
 		return new ArrayList<T>();
