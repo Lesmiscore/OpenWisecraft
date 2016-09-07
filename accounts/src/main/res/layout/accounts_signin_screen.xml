@@ -66,14 +66,16 @@
 			android:textAppearance="?android:attr/textAppearanceMedium"
 			android:layout_width="match_parent"
 			android:text="@string/or"
-			android:gravity="center"/>
+			android:gravity="center"
+			android:visibility="gone"/>
 
 		<Button
 			style="?android:attr/buttonBarButtonStyle"
 			android:layout_height="wrap_content"
 			android:layout_width="match_parent"
 			android:text="@string/signin_anonymous"
-			android:id="@+id/signinAnon"/>
+			android:id="@+id/signinAnon"
+			android:visibility="gone"/>
 
 		<TextView
 			android:layout_height="wrap_content"
