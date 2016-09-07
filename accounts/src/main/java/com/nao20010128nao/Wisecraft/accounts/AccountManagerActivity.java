@@ -23,6 +23,7 @@ public class AccountManagerActivity extends AppCompatActivity
 	Uri userImage;
     ImageLoader imageLoader=new ImageLoader();
 	WorkingDialog wd;
+	Drawer content;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
@@ -74,7 +75,7 @@ public class AccountManagerActivity extends AppCompatActivity
 					return true;
 				}
 			});
-		setContentView(builder.buildView().getSlider());
+		setContentView((content=builder.buildView()).getSlider());
 	}
 	
 	private void loadUserInfo() throws Resources.NotFoundException {
@@ -123,6 +124,7 @@ public class AccountManagerActivity extends AppCompatActivity
 
             }
         }
+		if(content!=null)content.getAdapter().notifyDataSetChanged();
     }
 
 	@Override
