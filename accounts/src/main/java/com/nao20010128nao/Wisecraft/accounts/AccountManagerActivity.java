@@ -53,7 +53,7 @@ public class AccountManagerActivity extends AppCompatActivity
 					}
 				})
 		);
-		if(user.isAnonymous()){
+		if(user!=null&&user.isAnonymous()){
 			items.add(
 				new LineWrappingPrimaryDrawerItem()
 				.withName(R.string.addEmail)
