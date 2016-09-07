@@ -6,6 +6,7 @@ import android.support.v4.content.*;
 import android.util.*;
 import java.security.*;
 import java.util.*;
+import android.os.*;
 
 //Permission Request Part
 public abstract class ServerListActivityBase1 extends ServerListActivityBase2
@@ -22,7 +23,18 @@ public abstract class ServerListActivityBase1 extends ServerListActivityBase2
 			return b;
 		}
 	};
-	
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO: Implement this method
+		super.onCreate(savedInstanceState);
+		addActivityResultReceiver(new DispatchActivityResult(){
+				public boolean dispatchActivityResult(int request,int result,Intent data,boolean consumed){
+					if(consumed)return true;
+					return permReqResults.get(request);
+				}
+			});
+	}
 	
 	public void doAfterRequirePerm(RequirePermissionResult r,String[] perms){
 		int call=Math.abs(sr.nextInt())&0xf;
@@ -51,11 +63,6 @@ public abstract class ServerListActivityBase1 extends ServerListActivityBase2
 		md.currentlyDenied=Factories.strArray(unconfirmable);
 		permRequire.put(call,md);
 		ActivityCompat.requestPermissions(this,Factories.strArray(notAllowed),call);
-	}
-	
-	public boolean dispatchActivityResult(int request,int result,Intent data){
-		if(super.dispatchActivityResult(request,result,data))return true;
-		return permReqResults.get(request);
 	}
 
 	@Override

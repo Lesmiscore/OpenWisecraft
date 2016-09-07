@@ -88,6 +88,19 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBaseFiel
 		statLayout = (StatusesLayout)findViewById(R.id.serverStatuses);
 		statLayout.setColorRes(R.color.stat_error, R.color.stat_pending, R.color.stat_ok);
 		if (!pref.getBoolean("showStatusesBar", false))statLayout.setVisibility(View.GONE);
+		
+		addActivityResultReceiver(new DispatchActivityResult(){
+				@Override
+				public boolean dispatchActivityResult(int requestCode, int resultCode, Intent data,boolean consumed) {
+					// TODO: Implement this method
+					if(consumed)return true;
+					if(resultCode==0xff){
+						loadUserInfo(ahb);
+						return true;
+					}
+					return false;
+				}
+			});
 	}
 
     private void loadUserInfo(final AccountHeaderBuilder ahb) throws Resources.NotFoundException {
@@ -136,16 +149,6 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBaseFiel
 
             }
         }
-    }
-
-    @Override
-    public boolean dispatchActivityResult(int requestCode, int resultCode, Intent data) {
-        // TODO: Implement this method
-        if(resultCode==0xff){
-            loadUserInfo(ahb);
-            return true;
-        }
-        return false;
     }
 
 	@Override

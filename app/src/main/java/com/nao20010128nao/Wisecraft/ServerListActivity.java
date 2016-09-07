@@ -222,6 +222,29 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
         itemDecor = new ItemTouchHelper(ddManager);
         if(isEditing)
             startEditMode();
+			
+		addActivityResultReceiver(new DispatchActivityResult(){
+				@Override
+				public boolean dispatchActivityResult(int requestCode, int resultCode, Intent data,boolean consumed) {
+					// TODO: Implement this method
+					if (consumed)return true;
+					switch (requestCode) {
+						case 0:
+							switch (resultCode) {
+								case Constant.ACTIVITY_RESULT_UPDATE:
+									Bundle obj=data.getBundleExtra("object");
+									updater.putInQueue(list.get(clicked), new PingHandlerImpl(true, data.getIntExtra("offset", 0), true));
+									pinging.put(list.get(clicked), true);
+									statLayout.setStatusAt(clicked, 1);
+									sl.notifyItemChanged(clicked);
+									wd.showWorkingDialog();
+									break;
+							}
+							return true;
+					}
+					return false;
+				}
+			});
 	}
 
 	private void setupDrawer() {
@@ -256,27 +279,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		// TODO: Implement this method
 		outState=drawer.saveInstanceState(outState);
 		super.onSaveInstanceState(outState);
-	}
-	
-	@Override
-	public boolean dispatchActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO: Implement this method
-		if (super.dispatchActivityResult(requestCode, resultCode, data))return true;
-		switch (requestCode) {
-			case 0:
-				switch (resultCode) {
-					case Constant.ACTIVITY_RESULT_UPDATE:
-						Bundle obj=data.getBundleExtra("object");
-						updater.putInQueue(list.get(clicked), new PingHandlerImpl(true, data.getIntExtra("offset", 0), true));
-						pinging.put(list.get(clicked), true);
-						statLayout.setStatusAt(clicked, 1);
-						sl.notifyItemChanged(clicked);
-						wd.showWorkingDialog();
-						break;
-				}
-				return true;
-		}
-		return false;
 	}
 
 	public boolean execOption(int item) {

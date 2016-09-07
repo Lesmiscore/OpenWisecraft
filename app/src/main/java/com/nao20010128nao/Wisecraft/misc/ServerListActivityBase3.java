@@ -3,6 +3,7 @@ import android.content.*;
 import com.ipaulpro.afilechooser.*;
 import java.io.*;
 import java.util.*;
+import android.os.*;
 
 
 //Wrapper for aFileChooser
@@ -11,21 +12,28 @@ public abstract class ServerListActivityBase3 extends ServerListActivityBase4
 	Map<Integer,FileChooserResult> results=new HashMap<>();
 
 	@Override
-	public boolean dispatchActivityResult(int requestCode, int resultCode, Intent data) {
+	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
-		if(results.containsKey(requestCode)){
-			switch(resultCode){
-				case RESULT_OK:
-					results.get(requestCode).onSelected(new File(data.getStringExtra("path")));
-					break;
-				case RESULT_CANCELED:
-					results.get(requestCode).onSelectCancelled();
-					break;
-			}
-			results.remove(requestCode);
-			return true;
-		}
-		return super.dispatchActivityResult(requestCode,resultCode,data);
+		super.onCreate(savedInstanceState);
+		addActivityResultReceiver(new DispatchActivityResult(){
+				@Override
+				public boolean dispatchActivityResult(int requestCode, int resultCode, Intent data,boolean consumed) {
+					// TODO: Implement this method
+					if(results.containsKey(requestCode)){
+						switch(resultCode){
+							case RESULT_OK:
+								results.get(requestCode).onSelected(new File(data.getStringExtra("path")));
+								break;
+							case RESULT_CANCELED:
+								results.get(requestCode).onSelectCancelled();
+								break;
+						}
+						results.remove(requestCode);
+						return true;
+					}
+					return false;
+				}
+			});
 	}
 	
 	public void startChooseFileForOpen(File startDir,FileChooserResult result){
