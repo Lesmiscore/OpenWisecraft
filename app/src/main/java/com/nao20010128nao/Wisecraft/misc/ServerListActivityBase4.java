@@ -149,6 +149,7 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBaseFiel
 
             }
         }
+		if(drawer!=null)drawer.getAdapter().notifyDataSetChanged();
     }
 
 	@Override
