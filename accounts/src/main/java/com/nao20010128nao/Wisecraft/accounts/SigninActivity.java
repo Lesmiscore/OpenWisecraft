@@ -59,8 +59,12 @@ public class SigninActivity extends AppCompatActivity
 							.addOnCompleteListener(SigninActivity.this,new OnCompleteListener<AuthResult>(){
 								public void onComplete(Task<AuthResult> task){
 									wd.hideWorkingDialog();
-									setResult(RESULT_OK);
-									finish();
+									if(task.isSuccessful()){
+										setResult(RESULT_OK);
+										finish();
+									}else{
+										snackbar.setText(R.string.unableSignin).show();
+									}
 								}
 							})
 							.addOnFailureListener(SigninActivity.this,new OnFailureListener(){
@@ -73,7 +77,7 @@ public class SigninActivity extends AppCompatActivity
 					}
 				}
 			});
-		findViewById(R.id.signinAnon).setOnClickListener(new View.OnClickListener(){
+		/*findViewById(R.id.signinAnon).setOnClickListener(new View.OnClickListener(){
 				public void onClick(View v){
 					wd.showWorkingDialog(getResources().getString(R.string.signingin));
 					auth.signInAnonymously()
@@ -92,7 +96,7 @@ public class SigninActivity extends AppCompatActivity
 							}
 						});
 				}
-			});
+			});*/
 		findViewById(R.id.close).setOnClickListener(new View.OnClickListener(){
 				public void onClick(View v){
 					setResult(RESULT_CANCELED);
@@ -105,9 +109,9 @@ public class SigninActivity extends AppCompatActivity
 				}
 			});
 			
-		if(getIntent().getBooleanExtra("add",false)){
+		/*if(getIntent().getBooleanExtra("add",false)){
 			findViewById(R.id.signinAnon).setEnabled(false);
-		}
+		}*/
 	}
 
 	@Override

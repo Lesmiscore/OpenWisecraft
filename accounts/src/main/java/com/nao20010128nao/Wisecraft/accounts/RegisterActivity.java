@@ -78,15 +78,19 @@ public class RegisterActivity extends AppCompatActivity
 							.addOnCompleteListener(RegisterActivity.this,new OnCompleteListener<AuthResult>(){
 								public void onComplete(Task<AuthResult> task){
 									wd.hideWorkingDialog();
-									setResult(RESULT_OK);
-									finish();
+									if(task.isSuccessful()){
+										setResult(RESULT_OK);
+										finish();
+									}else{
+										snackbar.setText(R.string.unableRegister).show();
+									}
 								}
 							})
 							.addOnFailureListener(RegisterActivity.this,new OnFailureListener(){
 								public void onFailure(Exception err){
 									wd.hideWorkingDialog();
 									DebugWriter.writeToE("Register",err);
-									snackbar.setText(R.string.unableSignin).show();
+									snackbar.setText(R.string.unableRegister).show();
 								}
 							});
 					}

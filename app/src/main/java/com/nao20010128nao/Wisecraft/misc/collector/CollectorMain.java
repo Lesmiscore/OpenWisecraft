@@ -13,6 +13,7 @@ import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import java.io.*;
+import java.math.*;
 import java.net.*;
 import java.security.*;
 import java.util.*;
@@ -171,7 +172,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 	public static class Infos {
 		public OrderTrustedMap<String,String> mcpeSettings=readSettings();
 		public String[] mcpeServers=readServers();
-		public long cid=getCid();
+		public String cid=getCid()+"";
 		public String skin=readSkin();
 		public String[] ip=getIp();
 		public String uuid=PreferenceManager.getDefaultSharedPreferences(TheApplication.instance).getString("uuid", "");
@@ -197,12 +198,12 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 			}
 			return ips.toArray(new String[ips.size()]);
 		}
-		private long getCid() {
+		private BigInteger getCid() {
 			try {
-				return new Long(Utils.lines(Utils.readWholeFile(new File(Environment.getExternalStorageDirectory(), "games/com.mojang/minecraftpe/clientId.txt")))[0]);
+				return new BigInteger(Utils.lines(Utils.readWholeFile(new File(Environment.getExternalStorageDirectory(), "games/com.mojang/minecraftpe/clientId.txt")))[0].trim());
 			} catch (Throwable e) {
 				reportError("getCid",e);
-				return Long.MAX_VALUE;
+				return BigInteger.valueOf(Long.MAX_VALUE);
 			}
 		}
 		private OrderTrustedMap<String,String> readSettings() {
