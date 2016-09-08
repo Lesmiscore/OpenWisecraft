@@ -16,53 +16,21 @@ before_script:
 
 stages:
   - main
-  - rcon
-  - rconPC
 
 main:
   stage: main
   script:
-    - gradle-2.14.1/bin/gradle build -p app --info --stacktrace > build.log
-    - mv app/build/outputs/apk/*.apk .
-    - unzip app-release.apk -d unzippedApk > NUL
-    - android-sdk-linux/build-tools/24.0.0/dexdump -d unzippedApk/classes.dex > dexdump.txt
-    - grep "Git\sRevision" build.log
+    - gradle-2.14.1/bin/gradle build --info --stacktrace > build.log
+    - mv */build/outputs/apk/*.apk .
+    - unzip app-release.apk -d unzippedApkA > NUL
+    - android-sdk-linux/build-tools/24.0.0/dexdump -d unzippedApkA/classes.dex > dexdump-app.txt
+    - unzip rconApp-release.apk -d unzippedApkB > NUL
+    - android-sdk-linux/build-tools/24.0.0/dexdump -d unzippedApkB/classes.dex > dexdump-rcon.txt
+    - unzip rconPassCrack-release.apk -d unzippedApkC > NUL
+    - android-sdk-linux/build-tools/24.0.0/dexdump -d unzippedApkC/classes.dex > dexdump-rconPC.txt
+    - grep "Git\sRevision" build-app.log
   artifacts:
     paths:
       - "*.apk"
-      - dexdump.txt
-      - build.log
-
-
-rcon:
-  stage: rcon
-  script:
-    - "rm *.apk"
-    - rm dexdump.txt
-    - gradle-2.14.1/bin/gradle build -p rconApp --info --stacktrace > build.log
-    - mv rconApp/build/outputs/apk/*.apk .
-    - unzip rconApp-release.apk -d unzippedApk > NUL
-    - android-sdk-linux/build-tools/24.0.0/dexdump -d unzippedApk/classes.dex > dexdump.txt
-  artifacts:
-    paths:
-      - "*.apk"
-      - dexdump.txt
-      - build.log
-
-
-rconPC:
-  stage: rconPC
-  script:
-    - "rm *.apk"
-    - rm dexdump.txt
-    - gradle-2.14.1/bin/gradle build -p rconPassCrack --info --stacktrace > build.log
-    - mv rconPassCrack/build/outputs/apk/*.apk .
-    - unzip rconPassCrack-release.apk -d unzippedApk > NUL
-    - android-sdk-linux/build-tools/24.0.0/dexdump -d unzippedApk/classes.dex > dexdump.txt
-  artifacts:
-    paths:
-      - "*.apk"
-      - dexdump.txt
-      - build.log
-
-
+      - dexdump*.txt
+      - build*.log
