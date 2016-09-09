@@ -6,6 +6,7 @@ import android.graphics.*;
 import android.graphics.drawable.*;
 import android.os.*;
 import android.preference.*;
+import android.support.design.widget.*;
 import android.support.v4.content.*;
 import android.support.v4.view.*;
 import android.support.v7.graphics.*;
@@ -53,6 +54,10 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 
 	List<Bitmap> skinFaceImages;
 	SkinFaceFetcher sff;
+	
+	View bottomSheet;
+	BottomSheetBehavior behavior;
+	boolean isBsStarting=true;
 
 	/*Only for PC servers*/
 	Drawable serverIconObj;
@@ -145,7 +150,75 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		int offset=getIntent().getIntExtra("offset", 0);
 		if (adapter.getCount() >= 2 & offset == 0)tabs.setCurrentItem(1);
 		tabs.setCurrentItem(offset);
+		
+		{
+			bottomSheet = findViewById(R.id.serverInfoFragment);
+			behavior = BottomSheetBehavior.from(bottomSheet);
+			behavior.setHideable(true);
+			behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+			behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+					@Override
+					public void onStateChanged(View bottomSheet, int newState) {
+						switch (newState) {
+							case BottomSheetBehavior.STATE_DRAGGING:
+							case BottomSheetBehavior.STATE_SETTLING:
+							case BottomSheetBehavior.STATE_COLLAPSED:
+								if (Build.VERSION.SDK_INT >= 21) {
+									getWindow().setStatusBarColor(0);
+								}
+								break;
+							case BottomSheetBehavior.STATE_EXPANDED:
+								if (Build.VERSION.SDK_INT >= 21) {
+									if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
+										getWindow().setStatusBarColor(DIRT_DARK);
+									}else{
+										getWindow().setStatusBarColor(ContextCompat.getColor(ServerInfoActivity.this,R.color.material_grey_100));
+									}
+								}
+								break;
+							case BottomSheetBehavior.STATE_HIDDEN:
+								if(isBsStarting){
+									behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+									isBsStarting=false;
+								}else{
+									ServerInfoActivity.super.finish();
+								}
+								break;
+						}
+					}
+
+					@Override
+					public void onSlide(View bottomSheet, float slideOffset) {
+					}
+				});
+		}
 	}
+
+	@Override
+	protected void onStart() {
+		// TODO: Implement this method
+		super.onStart();
+	}
+
+	@Override
+	public void onBackPressed() {
+		// TODO: Implement this method
+		switch(behavior.getState()){
+			case BottomSheetBehavior.STATE_EXPANDED:
+				behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+				break;
+			case BottomSheetBehavior.STATE_COLLAPSED:
+				finish();
+				break;
+		}
+	}
+
+	@Override
+	public void finish() {
+		// TODO: Implement this method
+		behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+	}
+	
 	public synchronized void update(final ServerPingResult resp) {
 		if (resp instanceof FullStat) {
 			FullStat fs=(FullStat)resp;
