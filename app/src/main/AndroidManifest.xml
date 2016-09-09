@@ -28,7 +28,7 @@
 			android:label="@string/app_name"
 			android:name=".ServerInfoActivity"
 			android:exported="false"
-			android:theme="@style/AppTheme.NoActionBar">
+			android:theme="@style/AppTheme.ServerInfo">
         </activity>
         <activity
 			android:label="@string/testServer"

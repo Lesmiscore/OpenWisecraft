@@ -39,8 +39,9 @@
 		<item name="android:textColorSecondary">@color/mainColor</item>
 	</style>
 	
-	<style name="AppThemeN" parent="@android:style/Theme.Light">
-		<item name="preferenceTheme">@style/AppTheme.Preference</item>
+	<style name="AppTheme.ServerInfo" parent="AppTheme.NoActionBar">
+		<item name="android:windowIsTranslucent">true</item>
+		<item name="android:windowBackground">@android:color/transparent</item>
 	</style>
 	
 	
