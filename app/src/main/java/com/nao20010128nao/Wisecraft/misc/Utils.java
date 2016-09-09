@@ -7,6 +7,7 @@ import android.content.res.*;
 import android.graphics.*;
 import android.net.*;
 import android.os.*;
+import android.preference.*;
 import android.support.v7.widget.*;
 import android.text.*;
 import android.text.style.*;
@@ -307,13 +308,34 @@ public class Utils extends PingerUtils{
     }
 	public static int calculateRows(Context c,int value){
 		int base=c.getResources().getDimensionPixelSize(R.dimen.panel_base_size);
-		return (int)Math.max(1,((double)value)/((double)base));
+		return (int)Math.max(1,((double)value)/((double)base))+getPreferences(c).getInt("addLessRows",0);
 	}
 	public static int calculateRows(Context c){
 		int base=c.getResources().getDimensionPixelSize(R.dimen.panel_base_size);
-		return (int)Math.max(1,((double)getScreenWidth(c,base))/((double)base));
+		return (int)Math.max(1,((double)getScreenWidth(c,base))/((double)base))+getPreferences(c).getInt("addLessRows",0);
 	}
 	public static int calculateRows(Context c,View v){
+		int base=c.getResources().getDimensionPixelSize(R.dimen.panel_base_size);
+		int width;Configuration cfg=c.getResources().getConfiguration();
+		Point point=getViewSize(v);
+		switch(cfg.orientation){
+			case Configuration.ORIENTATION_LANDSCAPE :width=Math.max(point.x,point.y);break;
+			case Configuration.ORIENTATION_PORTRAIT  :width=Math.min(point.x,point.y);break;
+			case Configuration.ORIENTATION_SQUARE    :width=point.x;                  break;
+			case Configuration.ORIENTATION_UNDEFINED :width=base;                     break;
+			default                                  :width=base;                     break;
+		}
+		return (int)Math.max(1,((double)width)/((double)base))+getPreferences(c).getInt("addLessRows",0);
+	}
+	public static int calculateRowsNoAdjust(Context c,int value){
+		int base=c.getResources().getDimensionPixelSize(R.dimen.panel_base_size);
+		return (int)Math.max(1,((double)value)/((double)base));
+	}
+	public static int calculateRowsNoAdjust(Context c){
+		int base=c.getResources().getDimensionPixelSize(R.dimen.panel_base_size);
+		return (int)Math.max(1,((double)getScreenWidth(c,base))/((double)base));
+	}
+	public static int calculateRowsNoAdjust(Context c,View v){
 		int base=c.getResources().getDimensionPixelSize(R.dimen.panel_base_size);
 		int width;Configuration cfg=c.getResources().getConfiguration();
 		Point point=getViewSize(v);
@@ -520,5 +542,8 @@ public class Utils extends PingerUtils{
 	}
 	public static <T> List<T> emptyList(){
 		return new ArrayList<T>();
+	}
+	public static SharedPreferences getPreferences(Context c){
+		return PreferenceManager.getDefaultSharedPreferences(c);
 	}
 }
