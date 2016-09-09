@@ -309,9 +309,13 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 								public void onStopTrackingTouch(SeekBar p1){
 									
 								}
+								
+								{
+									onProgressChanged(null,0,false);
+								}
 						});
 						new AppCompatAlertDialog.Builder(getContext(),R.style.AppAlertDialog)
-							.setTitle(R.string.serverListStyle)
+							.setTitle(R.string.addLessRows)
 							.setView(v)
 							.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
 								public void onClick(DialogInterface di,int w){
