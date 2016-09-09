@@ -289,6 +289,43 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 						});
 					}
 				});
+			sH("addLessRows", new HandledPreference.OnClickListener(){
+					public void onClick(String a, String b, String c) {
+						View v=getLayoutInflater(null).inflate(R.layout.quick_seekbar,null);
+						final SeekBar seekBar=(SeekBar)v.findViewById(R.id.seekbar);
+						((TextView)v.findViewById(R.id.max)).setText("5");
+						((TextView)v.findViewById(R.id.min)).setText("-5");
+						final TextView value=(TextView)v.findViewById(R.id.value);
+						seekBar.setMax(10);seekBar.setProgress(pref.getInt("addLessRows",0));
+						seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
+								public void onProgressChanged(SeekBar p1, int p2, boolean p3){
+									value.setText((seekBar.getProgress()-5)+"");
+								}
+
+								public void onStartTrackingTouch(SeekBar p1){
+									
+								}
+
+								public void onStopTrackingTouch(SeekBar p1){
+									
+								}
+						});
+						new AppCompatAlertDialog.Builder(getContext(),R.style.AppAlertDialog)
+							.setTitle(R.string.serverListStyle)
+							.setView(v)
+							.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+								public void onClick(DialogInterface di,int w){
+									pref.edit().putInt("addLessRows",seekBar.getProgress()-5).commit();
+								}
+							})
+							.setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
+								public void onClick(DialogInterface di,int w){
+
+								}
+							})
+							.show();
+					}
+				});
 		}
 
 		@Override
