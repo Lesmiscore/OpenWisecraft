@@ -572,7 +572,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 	}
 	class PlayerNamesListAdapter extends ListRecyclerViewAdapter<FindableViewHolder,String> {
 		public PlayerNamesListAdapter(){
-			super(new ArrayList<>());
+			super(new ArrayList<String>());
 		}
 		
 		@Override

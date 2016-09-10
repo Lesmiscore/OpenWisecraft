@@ -18,7 +18,7 @@ public class SimpleRecyclerAdapter<T> extends ListRecyclerViewAdapter<FindableVi
 	@Override
 	public void onBindViewHolder(FindableViewHolder parent, int offset) {
 		// TODO: Implement this method
-		((TextView)parent.findViewById(android.R.id.text1)).setText(getItem(offset));
+		((TextView)parent.findViewById(android.R.id.text1)).setText(getItem(offset).toString());
 	}
 
 	public class VH extends FindableViewHolder{
