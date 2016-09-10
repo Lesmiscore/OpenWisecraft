@@ -40,5 +40,6 @@ allprojects {
 		mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 		maven { url 'https://dl.bintray.com/azeesoft/maven' }
+		maven { url "https://raw.github.com/laenger/maven-releases/master/releases" }
     }
 }

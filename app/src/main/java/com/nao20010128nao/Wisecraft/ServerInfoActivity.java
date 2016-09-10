@@ -15,6 +15,7 @@ import android.text.style.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
+import biz.laenger.android.vpbs.*;
 import com.astuetz.*;
 import com.google.gson.*;
 import com.nao20010128nao.OTC.*;
@@ -56,7 +57,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 	SkinFaceFetcher sff;
 	
 	View bottomSheet;
-	BottomSheetBehavior behavior;
+	ViewPagerBottomSheetBehavior behavior;
 	boolean isBsStarting=true;
 
 	/*Only for PC servers*/
@@ -152,22 +153,23 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		tabs.setCurrentItem(offset);
 		
 		{
+			BottomSheetUtils.setupViewPager(tabs);
 			bottomSheet = findViewById(R.id.serverInfoFragment);
-			behavior = BottomSheetBehavior.from(bottomSheet);
+			behavior = ViewPagerBottomSheetBehavior.from(bottomSheet);
 			behavior.setHideable(true);
-			behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-			behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+			behavior.setState(ViewPagerBottomSheetBehavior.STATE_COLLAPSED);
+			behavior.setBottomSheetCallback(new ViewPagerBottomSheetBehavior.BottomSheetCallback() {
 					@Override
 					public void onStateChanged(View bottomSheet, int newState) {
 						switch (newState) {
-							case BottomSheetBehavior.STATE_DRAGGING:
-							case BottomSheetBehavior.STATE_SETTLING:
-							case BottomSheetBehavior.STATE_COLLAPSED:
+							case ViewPagerBottomSheetBehavior.STATE_DRAGGING:
+							case ViewPagerBottomSheetBehavior.STATE_SETTLING:
+							case ViewPagerBottomSheetBehavior.STATE_COLLAPSED:
 								if (Build.VERSION.SDK_INT >= 21) {
 									getWindow().setStatusBarColor(0);
 								}
 								break;
-							case BottomSheetBehavior.STATE_EXPANDED:
+							case ViewPagerBottomSheetBehavior.STATE_EXPANDED:
 								if (Build.VERSION.SDK_INT >= 21) {
 									if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
 										getWindow().setStatusBarColor(DIRT_DARK);
@@ -176,7 +178,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 									}
 								}
 								break;
-							case BottomSheetBehavior.STATE_HIDDEN:
+							case ViewPagerBottomSheetBehavior.STATE_HIDDEN:
 								ServerInfoActivity.super.finish();
 								break;
 						}
@@ -199,10 +201,10 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 	public void onBackPressed() {
 		// TODO: Implement this method
 		switch(behavior.getState()){
-			case BottomSheetBehavior.STATE_EXPANDED:
-				behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+			case ViewPagerBottomSheetBehavior.STATE_EXPANDED:
+				behavior.setState(ViewPagerBottomSheetBehavior.STATE_COLLAPSED);
 				break;
-			case BottomSheetBehavior.STATE_COLLAPSED:
+			case ViewPagerBottomSheetBehavior.STATE_COLLAPSED:
 				finish();
 				break;
 		}
