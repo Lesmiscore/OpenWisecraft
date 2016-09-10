@@ -308,11 +308,11 @@ public class Utils extends PingerUtils{
     }
 	public static int calculateRows(Context c,int value){
 		int base=c.getResources().getDimensionPixelSize(R.dimen.panel_base_size);
-		return (int)Math.max(1,((double)value)/((double)base))+getPreferences(c).getInt("addLessRows",0);
+		return Math.max(1,(int)Math.max(1,((double)value)/((double)base))+getPreferences(c).getInt("addLessRows",0));
 	}
 	public static int calculateRows(Context c){
 		int base=c.getResources().getDimensionPixelSize(R.dimen.panel_base_size);
-		return (int)Math.max(1,((double)getScreenWidth(c,base))/((double)base))+getPreferences(c).getInt("addLessRows",0);
+		return Math.max(1,(int)Math.max(1,((double)getScreenWidth(c,base))/((double)base))+getPreferences(c).getInt("addLessRows",0));
 	}
 	public static int calculateRows(Context c,View v){
 		int base=c.getResources().getDimensionPixelSize(R.dimen.panel_base_size);
@@ -325,7 +325,7 @@ public class Utils extends PingerUtils{
 			case Configuration.ORIENTATION_UNDEFINED :width=base;                     break;
 			default                                  :width=base;                     break;
 		}
-		return (int)Math.max(1,((double)width)/((double)base))+getPreferences(c).getInt("addLessRows",0);
+		return Math.max(1,(int)Math.max(1,((double)width)/((double)base))+getPreferences(c).getInt("addLessRows",0));
 	}
 	public static int calculateRowsNoAdjust(Context c,int value){
 		int base=c.getResources().getDimensionPixelSize(R.dimen.panel_base_size);
