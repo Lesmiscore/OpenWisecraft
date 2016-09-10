@@ -180,7 +180,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 								}
 								break;
 							case ViewPagerBottomSheetBehavior.STATE_HIDDEN:
-								ServerInfoActivity.super.finish();
+								finish();
 								break;
 						}
 					}
@@ -189,6 +189,11 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 					public void onSlide(View bottomSheet, float slideOffset) {
 					}
 				});
+			findViewById(R.id.background).setOnClickListener(new View.OnClickListener(){
+				public void onClick(View v){
+					finish();
+				}
+			});
 		}
 	}
 
