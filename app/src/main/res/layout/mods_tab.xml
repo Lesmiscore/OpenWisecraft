@@ -11,13 +11,13 @@
 		android:orientation="horizontal"
 		android:gravity="center_vertical">
 
-		<android.support.v7.widget.AppCompatTextView
+		<TextView
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceLarge"
 			android:layout_width="wrap_content"
 			android:text="@string/type_colon"/>
 
-		<android.support.v7.widget.AppCompatTextView
+		<TextView
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceMedium"
 			android:layout_width="wrap_content"

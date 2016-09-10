@@ -2,6 +2,7 @@ package com.nao20010128nao.Wisecraft;
 
 import android.app.*;
 import android.content.*;
+import android.content.res.*;
 import android.graphics.*;
 import android.graphics.drawable.*;
 import android.os.*;
@@ -9,11 +10,13 @@ import android.preference.*;
 import android.support.v4.content.*;
 import android.support.v4.view.*;
 import android.support.v7.graphics.*;
+import android.support.v7.widget.*;
 import android.text.*;
 import android.text.style.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
+import biz.laenger.android.vpbs.*;
 import com.astuetz.*;
 import com.google.gson.*;
 import com.nao20010128nao.OTC.*;
@@ -53,6 +56,10 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 
 	List<Bitmap> skinFaceImages;
 	SkinFaceFetcher sff;
+	
+	View bottomSheet;
+	ViewPagerBottomSheetBehavior behavior;
+	boolean isBsStarting=true;
 
 	/*Only for PC servers*/
 	Drawable serverIconObj;
@@ -130,9 +137,6 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			bd.setTargetDensity(getResources().getDisplayMetrics());
 			bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
 			findViewById(R.id.appbar).setBackgroundDrawable(bd);
-			if (Build.VERSION.SDK_INT >= 21) {
-				getWindow().setStatusBarColor(DIRT_DARK);
-			}
 			psts.setIndicatorColor(Color.WHITE);
 			psts.setTextColor(Color.WHITE);
 			psts.setOnPageChangeListener(new ColorUpdater(Color.WHITE, DIRT_BRIGHT, tabs, psts));
@@ -145,7 +149,73 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		int offset=getIntent().getIntExtra("offset", 0);
 		if (adapter.getCount() >= 2 & offset == 0)tabs.setCurrentItem(1);
 		tabs.setCurrentItem(offset);
+		if (Build.VERSION.SDK_INT >= 21) {
+			getWindow().setStatusBarColor(0);
+		}
+		
+		{
+			BottomSheetUtils.setupViewPager(tabs);
+			bottomSheet = findViewById(R.id.serverInfoFragment);
+			behavior = ViewPagerBottomSheetBehavior.from(bottomSheet);
+			behavior.setHideable(true);
+			behavior.setState(ViewPagerBottomSheetBehavior.STATE_COLLAPSED);
+			behavior.setBottomSheetCallback(new ViewPagerBottomSheetBehavior.BottomSheetCallback() {
+					@Override
+					public void onStateChanged(View bottomSheet, int newState) {
+						switch (newState) {
+							case ViewPagerBottomSheetBehavior.STATE_DRAGGING:
+							case ViewPagerBottomSheetBehavior.STATE_SETTLING:
+							case ViewPagerBottomSheetBehavior.STATE_COLLAPSED:
+								if (Build.VERSION.SDK_INT >= 21) {
+									getWindow().setStatusBarColor(0);
+								}
+								break;
+							case ViewPagerBottomSheetBehavior.STATE_EXPANDED:
+								if (Build.VERSION.SDK_INT >= 21) {
+									if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
+										getWindow().setStatusBarColor(DIRT_DARK);
+									}else{
+										getWindow().setStatusBarColor(ContextCompat.getColor(ServerInfoActivity.this,R.color.material_grey_100));
+									}
+								}
+								break;
+							case ViewPagerBottomSheetBehavior.STATE_HIDDEN:
+								finish();
+								break;
+						}
+					}
+
+					@Override
+					public void onSlide(View bottomSheet, float slideOffset) {
+					}
+				});
+			findViewById(R.id.background).setOnClickListener(new View.OnClickListener(){
+				public void onClick(View v){
+					finish();
+				}
+			});
+		}
 	}
+
+	@Override
+	protected void onStart() {
+		// TODO: Implement this method
+		super.onStart();
+	}
+
+	@Override
+	public void onBackPressed() {
+		// TODO: Implement this method
+		switch(behavior.getState()){
+			case ViewPagerBottomSheetBehavior.STATE_EXPANDED:
+				behavior.setState(ViewPagerBottomSheetBehavior.STATE_COLLAPSED);
+				break;
+			case ViewPagerBottomSheetBehavior.STATE_COLLAPSED:
+				finish();
+				break;
+		}
+	}
+
 	public synchronized void update(final ServerPingResult resp) {
 		if (resp instanceof FullStat) {
 			FullStat fs=(FullStat)resp;
@@ -397,17 +467,17 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 
 	class PCUserFaceAdapter extends PlayerNamesListAdapter {
 		List<View> cached=new ArrayList<>(Constant.ONE_HUNDRED_LENGTH_NULL_LIST);
-		public PCUserFaceAdapter() {
-			super(ServerInfoActivity.this, R.layout.simple_list_item_with_image, new ArrayList<String>());
+		
+		@Override
+		public FindableViewHolder onCreateViewHolder(ViewGroup parent, int type) {
+			// TODO: Implement this method
+			return new VH(getLayoutInflater().inflate(R.layout.simple_list_item_with_image,parent,false));
 		}
 
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
+		public void onBindViewHolder(FindableViewHolder holder, int position, List<Object> payloads) {
 			// TODO: Implement this method
-			if (convertView == null) {
-				convertView = getLayoutInflater().inflate(R.layout.simple_list_item_with_image, parent, false);
-			}
-			while (cached.size() < position)cached.addAll(Constant.ONE_HUNDRED_LENGTH_NULL_LIST);
+			View convertView=holder.itemView;
 			String playerName=getItem(position);
 			((TextView)convertView.findViewById(android.R.id.text1)).setText(playerName);
 			ImageView iv=(ImageView)convertView.findViewById(R.id.image);
@@ -421,10 +491,14 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 				sff.requestLoadSkin(playerName,uuid, new Handler());
 				iv.setImageBitmap(null);
 			}
-			cached.set(position, convertView);
-			return convertView;
 		}
 
+		public class VH extends FindableViewHolder{
+			public VH(View w){
+				super(w);
+			}
+		}
+		
 		class Handler implements SkinFetcher.SkinFetchListener {
 			@Override
 			public void onError(String player) {
@@ -447,7 +521,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 						faces.put(player, bmp);
 						runOnUiThread(new Runnable(){
 								public void run() {
-									notifyDataSetChanged();
+									notifyItemChanged(indexOf(player));
 									Log.d("face", "ok:" + player);
 								}
 							});
@@ -456,21 +530,28 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			}
 		}
 	}
-	class ModInfoListAdapter extends AppBaseArrayAdapter<Object> {
-		List<View> cached=new ArrayList<>(Constant.ONE_HUNDRED_LENGTH_NULL_LIST);
-		public ModInfoListAdapter() {
-			super(ServerInfoActivity.this, R.layout.simple_list_item_with_image, new ArrayList<Object>());
+	class ModInfoListAdapter extends ListRecyclerViewAdapter<FindableViewHolder,Object> {
+		@Override
+		public int getItemCount() {
+			// TODO: Implement this method
+			return super.getItemCount()+1;
 		}
 
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
+		public FindableViewHolder onCreateViewHolder(ViewGroup parent, int type) {
 			// TODO: Implement this method
-			if (position == 0) {
-				return getLayoutInflater().inflate(R.layout.void_view, null);
-			} else {
-				position--;
-			}
-			View v=getLayoutInflater().inflate(R.layout.mod_info_content, parent, false);
+			if(type==0)
+				return new VH(getLayoutInflater().inflate(R.layout.void_view,null));
+			else
+				return new VH(getLayoutInflater().inflate(R.layout.mod_info_content, parent, false));
+		}
+
+		@Override
+		public void onBindViewHolder(FindableViewHolder parent, int offset) {
+			// TODO: Implement this method
+			if(offset==0)return;
+			int position=offset-1;
+			View v=parent.itemView;
 			Object o=getItem(position);
 			if (o instanceof Reply.ModListContent) {
 				Reply.ModListContent mlc=(Reply.ModListContent)o;
@@ -481,23 +562,25 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 				((TextView)v.findViewById(R.id.modName)).setText(mlc.modid);
 				((TextView)v.findViewById(R.id.modVersion)).setText(mlc.version);
 			}
-			return v;
 		}
 
 		@Override
-		public int getCount() {
+		public int getItemViewType(int position) {
 			// TODO: Implement this method
-			return super.getCount() + 1;
+			if(position==0)return 0;else return 1;
+		}
+		
+		public class VH extends FindableViewHolder{
+			public VH(View w){
+				super(w);
+			}
 		}
 	}
-	class PlayerNamesListAdapter extends AppBaseArrayAdapter<String> {
-		public PlayerNamesListAdapter() {
-			super(ServerInfoActivity.this, android.R.layout.simple_list_item_1, new ArrayList<String>());
+	class PlayerNamesListAdapter extends ListRecyclerViewAdapter<FindableViewHolder,String> {
+		public PlayerNamesListAdapter(){
+			super(new ArrayList<String>());
 		}
-		public PlayerNamesListAdapter(Context context, int resource, List<String> objects) {
-			super(context, resource, objects);
-		}
-
+		
 		@Override
 		public String getItem(int position) {
 			// TODO: Implement this method
@@ -505,6 +588,24 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			if (pref.getBoolean("deleteDecoPlayerName", false))
 				s = deleteDecorations(s);
 			return s;
+		}
+
+		@Override
+		public FindableViewHolder onCreateViewHolder(ViewGroup parent, int type) {
+			// TODO: Implement this method
+			return new VH(getLayoutInflater().inflate(android.R.layout.simple_list_item_1,parent,false));
+		}
+
+		@Override
+		public void onBindViewHolder(FindableViewHolder parent, int offset) {
+			// TODO: Implement this method
+			((TextView)parent.findViewById(android.R.id.text1)).setText(getItem(offset));
+		}
+		
+		public class VH extends FindableViewHolder{
+			public VH(View w){
+				super(w);
+			}
 		}
 	}
 
@@ -514,15 +615,59 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			super(getSupportFragmentManager());
 		}
 	}
+	
+	static class DividerItemDecoration extends RecyclerView.ItemDecoration {
 
+		private static final int[] ATTRS = new int[]{android.R.attr.listDivider};
+
+		private Drawable mDivider;
+
+		/**
+		 * Default divider will be used
+		 */
+		public DividerItemDecoration(Context context) {
+			final TypedArray styledAttributes = context.obtainStyledAttributes(ATTRS);
+			mDivider = styledAttributes.getDrawable(0);
+			styledAttributes.recycle();
+		}
+
+		/**
+		 * Custom divider will be used
+		 */
+		public DividerItemDecoration(Context context, int resId) {
+			mDivider = ContextCompat.getDrawable(context, resId);
+		}
+
+		@Override
+		public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+			int left = parent.getPaddingLeft();
+			int right = parent.getWidth() - parent.getPaddingRight();
+
+			int childCount = parent.getChildCount();
+			for (int i = 0; i < childCount; i++) {
+				View child = parent.getChildAt(i);
+
+				RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
+
+				int top = child.getBottom() + params.bottomMargin;
+				int bottom = top + mDivider.getIntrinsicHeight();
+
+				mDivider.setBounds(left, top, right, bottom);
+				mDivider.draw(c);
+			}
+		}
+	}
+	
+	
 	public static class PlayersFragment extends BaseFragment<ServerInfoActivity> {
-		ListView lv;
-		ArrayAdapter<String> player;
+		RecyclerView lv;
+		ListRecyclerViewAdapter<FindableViewHolder,String> player;
 		@Override
 		public void onResume() {
 			// TODO: Implement this method
 			super.onResume();
-			lv = (ListView)getView();
+			lv = (RecyclerView)getView();
+			lv.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
 			ServerStatus localStat=getParentActivity().localStat;
@@ -549,7 +694,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 				if (pref.getBoolean("sortPlayerNames", true))
 					Collections.sort(sort);
 				player.clear();
-				CompatArrayAdapter.addAll(player, sort);
+				player.addAll(sort);
 			} else if (resp instanceof Reply) {
 				Reply rep=(Reply)resp;
 				if (rep.players.sample != null) {
@@ -561,7 +706,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 					if (pref.getBoolean("sortPlayerNames", true))
 						Collections.sort(sort);
 					player.clear();
-					CompatArrayAdapter.addAll(player, sort);
+					player.addAll(sort);
 				} else {
 					player.clear();
 				}
@@ -576,7 +721,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 					if (pref.getBoolean("sortPlayerNames", true))
 						Collections.sort(sort);
 					player.clear();
-					CompatArrayAdapter.addAll(player, sort);
+					player.addAll(sort);
 				} else {
 					player.clear();
 				}
@@ -600,15 +745,17 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 	}
 	public static class DataFragmentPE extends BaseFragment<ServerInfoActivity> {
 		View lv;
-		ListView data;
-		KVListAdapter<String,String> infos;
+		RecyclerView data;
+		KVRecyclerAdapter<String,String> infos;
 		@Override
 		public void onResume() {
 			// TODO: Implement this method
 			super.onResume();
-			data = (ListView)getView().findViewById(R.id.data);
+			data = (RecyclerView)getView().findViewById(R.id.data);
+			data.setLayoutManager(new LinearLayoutManager(getActivity()));
+			data.addItemDecoration(new DividerItemDecoration(getContext()));
 
-			infos = new KVListAdapter<>(getParentActivity());
+			infos = new KVRecyclerAdapter<>(getParentActivity());
 			data.setAdapter(infos);
 			ServerStatus localStat=getParentActivity().localStat;
 			ServerPingResult resp=localStat.response;
@@ -619,7 +766,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 				else if (resp instanceof SprPair)
 					fs = (FullStat)((SprPair)resp).getA();
 				infos.clear();
-				CompatArrayAdapter.addAll(infos, fs.getData().entrySet());
+				infos.addAll(fs.getData().entrySet());
 			} 
 		}
 
@@ -634,19 +781,21 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		TextView serverName;
 		Drawable serverIconObj;
 		Bitmap serverIconBmp;
-		ListView data;
+		RecyclerView data;
 		CharSequence serverNameStr;
-		KVListAdapter<String,String> infos;
+		KVRecyclerAdapter<String,String> infos;
 		@Override
 		public void onResume() {
 			// TODO: Implement this method
 			super.onResume();
 			serverIcon = (ImageView)getView().findViewById(R.id.serverIcon);
 			serverName = (TextView)getView().findViewById(R.id.serverTitle);
-			data = (ListView)getView().findViewById(R.id.data);
+			data = (RecyclerView)getView().findViewById(R.id.data);
+			data.setLayoutManager(new LinearLayoutManager(getActivity()));
+			data.addItemDecoration(new DividerItemDecoration(getContext()));
 
 
-			infos = new KVListAdapter<>(getParentActivity());
+			infos = new KVRecyclerAdapter<>(getParentActivity());
 			data.setAdapter(infos);
 			ServerStatus localStat=getParentActivity().localStat;
 			ServerPingResult resp=localStat.response;
@@ -668,7 +817,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 				data.put(getResources().getString(R.string.pc_nowPlayers), rep.players.online + "");
 				data.put(getResources().getString(R.string.pc_softwareVersion), rep.version.name);
 				data.put(getResources().getString(R.string.pc_protocolVersion), rep.version.protocol + "");
-				CompatArrayAdapter.addAll(infos, data.entrySet());
+				infos.addAll(data.entrySet());
 
 				if (rep.favicon != null) {
 					byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
@@ -695,7 +844,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 				data.put(getResources().getString(R.string.pc_nowPlayers), rep.players.online + "");
 				data.put(getResources().getString(R.string.pc_softwareVersion), rep.version.name);
 				data.put(getResources().getString(R.string.pc_protocolVersion), rep.version.protocol + "");
-				CompatArrayAdapter.addAll(infos, data.entrySet());
+				infos.addAll(data.entrySet());
 
 				if (rep.favicon != null) {
 					byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
@@ -723,16 +872,17 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		}
 	}
 	public static class PluginsFragment extends BaseFragment<ServerInfoActivity> {
-		ArrayAdapter<String> pluginNames;
-		ListView lv;
+		SimpleRecyclerAdapter<String> pluginNames;
+		RecyclerView lv;
 		@Override
 		public void onResume() {
 			// TODO: Implement this method
 			super.onResume();
-			lv = (ListView)getView();
+			lv = (RecyclerView)getView();
+			lv.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
-			pluginNames = new AppBaseArrayAdapter<String>(getParentActivity(), android.R.layout.simple_list_item_1, new ArrayList<String>());
+			pluginNames = new SimpleRecyclerAdapter<String>(getParentActivity());
 			lv.setAdapter(pluginNames);
 			ServerStatus localStat=getParentActivity().localStat;
 			ServerPingResult resp=localStat.response;
@@ -749,7 +899,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 						ArrayList<String> plugins=new ArrayList<>(Arrays.<String>asList(data[1].split("\\; ")));
 						if (pref.getBoolean("sortPluginNames", false))
 							Collections.sort(plugins);
-						CompatArrayAdapter.addAll(pluginNames, plugins);
+						pluginNames.addAll(plugins);
 					}
 				}
 			}
@@ -758,20 +908,21 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
-			return lv = (ListView) inflater.inflate(R.layout.players_tab, container, false);
+			return inflater.inflate(R.layout.players_tab, container, false);
 		}
 	}
 	public static class ModsFragment extends BaseFragment<ServerInfoActivity> {
 		String modLoaderTypeName;
 		TextView modLoader;
-		ArrayAdapter<Object> modInfos;
-		ListView mods;
+		ListRecyclerViewAdapter<FindableViewHolder,Object> modInfos;
+		RecyclerView mods;
 		@Override
 		public void onResume() {
 			// TODO: Implement this method
 			super.onResume();
-			mods = (ListView)getView().findViewById(R.id.players);
+			mods = (RecyclerView)getView().findViewById(R.id.players);
 			modLoader = (TextView)getView().findViewById(R.id.modLoaderType);
+			mods.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
 			modInfos = getParentActivity().new ModInfoListAdapter();
@@ -781,13 +932,13 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			if (resp instanceof Reply) {
 				Reply rep=(Reply)resp;
 				if (rep.modinfo != null) {
-					CompatArrayAdapter.addAll(modInfos, rep.modinfo.modList);
+					modInfos.addAll(rep.modinfo.modList);
 					modLoaderTypeName = rep.modinfo.type;
 				}
 			} else if (resp instanceof Reply19) {
 				Reply19 rep=(Reply19)resp;
 				if (rep.modinfo != null) {
-					CompatArrayAdapter.addAll(modInfos, rep.modinfo.modList);
+					modInfos.addAll(rep.modinfo.modList);
 					modLoaderTypeName = rep.modinfo.type;
 				}
 			}
@@ -818,8 +969,11 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			} else {
 				result = (UnconnectedPing.UnconnectedPingResult)((SprPair)getParentActivity().localStat.response).getB();
 			}
-			ListView lv=(ListView)getView().findViewById(R.id.data);
-			KVListAdapter<String,String> adap=new KVListAdapter<String,String>(getActivity());
+			RecyclerView lv=(RecyclerView)getView().findViewById(R.id.data);
+			lv.setLayoutManager(new LinearLayoutManager(getActivity()));
+			lv.addItemDecoration(new DividerItemDecoration(getContext()));
+			
+			KVRecyclerAdapter<String,String> adap=new KVRecyclerAdapter<String,String>(getActivity());
 			lv.setAdapter(adap);
 			OrderTrustedMap<String,String> otm=new OrderTrustedMap<String,String>();
 			String[] values=result.getRaw().split("\\;");
@@ -828,7 +982,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			otm.put(getString(R.string.ucp_mcpeVersion),     values[3]);
 			otm.put(getString(R.string.ucp_nowPlayers),      values[4]);
 			otm.put(getString(R.string.ucp_maxPlayers),      values[5]);
-			CompatArrayAdapter.addAll(adap, otm.entrySet());
+			adap.addAll(otm.entrySet());
 		}
 
 		@Override
