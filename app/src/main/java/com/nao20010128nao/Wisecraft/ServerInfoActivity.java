@@ -155,7 +155,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			bottomSheet = findViewById(R.id.serverInfoFragment);
 			behavior = BottomSheetBehavior.from(bottomSheet);
 			behavior.setHideable(true);
-			behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+			behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 			behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
 					@Override
 					public void onStateChanged(View bottomSheet, int newState) {
@@ -177,12 +177,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 								}
 								break;
 							case BottomSheetBehavior.STATE_HIDDEN:
-								if(isBsStarting){
-									behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-									isBsStarting=false;
-								}else{
-									ServerInfoActivity.super.finish();
-								}
+								ServerInfoActivity.super.finish();
 								break;
 						}
 					}
@@ -213,12 +208,6 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		}
 	}
 
-	@Override
-	public void finish() {
-		// TODO: Implement this method
-		behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-	}
-	
 	public synchronized void update(final ServerPingResult resp) {
 		if (resp instanceof FullStat) {
 			FullStat fs=(FullStat)resp;
