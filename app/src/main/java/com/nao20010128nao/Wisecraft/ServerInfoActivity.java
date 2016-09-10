@@ -618,6 +618,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			// TODO: Implement this method
 			super.onResume();
 			lv = (RecyclerView)getView();
+			lv.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
 			ServerStatus localStat=getParentActivity().localStat;
@@ -695,15 +696,16 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 	}
 	public static class DataFragmentPE extends BaseFragment<ServerInfoActivity> {
 		View lv;
-		ListView data;
-		KVListAdapter<String,String> infos;
+		RecyclerView data;
+		KVRecyclerAdapter<String,String> infos;
 		@Override
 		public void onResume() {
 			// TODO: Implement this method
 			super.onResume();
-			data = (ListView)getView().findViewById(R.id.data);
+			data = (RecyclerView)getView().findViewById(R.id.data);
+			data.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-			infos = new KVListAdapter<>(getParentActivity());
+			infos = new KVRecyclerAdapter<>(getParentActivity());
 			data.setAdapter(infos);
 			ServerStatus localStat=getParentActivity().localStat;
 			ServerPingResult resp=localStat.response;
@@ -714,7 +716,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 				else if (resp instanceof SprPair)
 					fs = (FullStat)((SprPair)resp).getA();
 				infos.clear();
-				CompatArrayAdapter.addAll(infos, fs.getData().entrySet());
+				infos.addAll(fs.getData().entrySet());
 			} 
 		}
 
@@ -729,19 +731,20 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		TextView serverName;
 		Drawable serverIconObj;
 		Bitmap serverIconBmp;
-		ListView data;
+		RecyclerView data;
 		CharSequence serverNameStr;
-		KVListAdapter<String,String> infos;
+		KVRecyclerAdapter<String,String> infos;
 		@Override
 		public void onResume() {
 			// TODO: Implement this method
 			super.onResume();
 			serverIcon = (ImageView)getView().findViewById(R.id.serverIcon);
 			serverName = (TextView)getView().findViewById(R.id.serverTitle);
-			data = (ListView)getView().findViewById(R.id.data);
+			data = (RecyclerView)getView().findViewById(R.id.data);
+			data.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
-			infos = new KVListAdapter<>(getParentActivity());
+			infos = new KVRecyclerAdapter<>(getParentActivity());
 			data.setAdapter(infos);
 			ServerStatus localStat=getParentActivity().localStat;
 			ServerPingResult resp=localStat.response;
@@ -763,7 +766,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 				data.put(getResources().getString(R.string.pc_nowPlayers), rep.players.online + "");
 				data.put(getResources().getString(R.string.pc_softwareVersion), rep.version.name);
 				data.put(getResources().getString(R.string.pc_protocolVersion), rep.version.protocol + "");
-				CompatArrayAdapter.addAll(infos, data.entrySet());
+				infos.addAll(data.entrySet());
 
 				if (rep.favicon != null) {
 					byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
@@ -790,7 +793,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 				data.put(getResources().getString(R.string.pc_nowPlayers), rep.players.online + "");
 				data.put(getResources().getString(R.string.pc_softwareVersion), rep.version.name);
 				data.put(getResources().getString(R.string.pc_protocolVersion), rep.version.protocol + "");
-				CompatArrayAdapter.addAll(infos, data.entrySet());
+				infos.addAll(data.entrySet());
 
 				if (rep.favicon != null) {
 					byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
@@ -825,6 +828,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			// TODO: Implement this method
 			super.onResume();
 			lv = (RecyclerView)getView();
+			lv.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
 			pluginNames = new SimpleRecyclerAdapter<String>(getParentActivity());
@@ -867,6 +871,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			super.onResume();
 			mods = (RecyclerView)getView().findViewById(R.id.players);
 			modLoader = (TextView)getView().findViewById(R.id.modLoaderType);
+			mods.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
 			modInfos = getParentActivity().new ModInfoListAdapter();
@@ -914,6 +919,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 				result = (UnconnectedPing.UnconnectedPingResult)((SprPair)getParentActivity().localStat.response).getB();
 			}
 			RecyclerView lv=(RecyclerView)getView().findViewById(R.id.data);
+			lv.setLayoutManager(new LinearLayoutManager(getActivity()));
 			KVRecyclerAdapter<String,String> adap=new KVRecyclerAdapter<String,String>(getActivity());
 			lv.setAdapter(adap);
 			OrderTrustedMap<String,String> otm=new OrderTrustedMap<String,String>();
