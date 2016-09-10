@@ -136,9 +136,6 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			bd.setTargetDensity(getResources().getDisplayMetrics());
 			bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
 			findViewById(R.id.appbar).setBackgroundDrawable(bd);
-			if (Build.VERSION.SDK_INT >= 21) {
-				getWindow().setStatusBarColor(DIRT_DARK);
-			}
 			psts.setIndicatorColor(Color.WHITE);
 			psts.setTextColor(Color.WHITE);
 			psts.setOnPageChangeListener(new ColorUpdater(Color.WHITE, DIRT_BRIGHT, tabs, psts));
@@ -151,6 +148,9 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		int offset=getIntent().getIntExtra("offset", 0);
 		if (adapter.getCount() >= 2 & offset == 0)tabs.setCurrentItem(1);
 		tabs.setCurrentItem(offset);
+		if (Build.VERSION.SDK_INT >= 21) {
+			getWindow().setStatusBarColor(0);
+		}
 		
 		{
 			BottomSheetUtils.setupViewPager(tabs);
