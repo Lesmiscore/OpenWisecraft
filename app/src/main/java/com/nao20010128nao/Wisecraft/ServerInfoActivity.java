@@ -6,10 +6,10 @@ import android.graphics.*;
 import android.graphics.drawable.*;
 import android.os.*;
 import android.preference.*;
-import android.support.design.widget.*;
 import android.support.v4.content.*;
 import android.support.v4.view.*;
 import android.support.v7.graphics.*;
+import android.support.v7.widget.*;
 import android.text.*;
 import android.text.style.*;
 import android.util.*;
@@ -461,17 +461,17 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 
 	class PCUserFaceAdapter extends PlayerNamesListAdapter {
 		List<View> cached=new ArrayList<>(Constant.ONE_HUNDRED_LENGTH_NULL_LIST);
-		public PCUserFaceAdapter() {
-			super(ServerInfoActivity.this, R.layout.simple_list_item_with_image, new ArrayList<String>());
+		
+		@Override
+		public FindableViewHolder onCreateViewHolder(ViewGroup parent, int type) {
+			// TODO: Implement this method
+			return new VH(getLayoutInflater().inflate(R.layout.simple_list_item_with_image,parent,false));
 		}
 
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
+		public void onBindViewHolder(FindableViewHolder holder, int position, List<Object> payloads) {
 			// TODO: Implement this method
-			if (convertView == null) {
-				convertView = getLayoutInflater().inflate(R.layout.simple_list_item_with_image, parent, false);
-			}
-			while (cached.size() < position)cached.addAll(Constant.ONE_HUNDRED_LENGTH_NULL_LIST);
+			View convertView=holder.itemView;
 			String playerName=getItem(position);
 			((TextView)convertView.findViewById(android.R.id.text1)).setText(playerName);
 			ImageView iv=(ImageView)convertView.findViewById(R.id.image);
@@ -485,10 +485,14 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 				sff.requestLoadSkin(playerName,uuid, new Handler());
 				iv.setImageBitmap(null);
 			}
-			cached.set(position, convertView);
-			return convertView;
 		}
 
+		public class VH extends FindableViewHolder{
+			public VH(View w){
+				super(w);
+			}
+		}
+		
 		class Handler implements SkinFetcher.SkinFetchListener {
 			@Override
 			public void onError(String player) {
@@ -511,7 +515,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 						faces.put(player, bmp);
 						runOnUiThread(new Runnable(){
 								public void run() {
-									notifyDataSetChanged();
+									notifyItemChanged(indexOf(player));
 									Log.d("face", "ok:" + player);
 								}
 							});
@@ -520,21 +524,28 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			}
 		}
 	}
-	class ModInfoListAdapter extends AppBaseArrayAdapter<Object> {
-		List<View> cached=new ArrayList<>(Constant.ONE_HUNDRED_LENGTH_NULL_LIST);
-		public ModInfoListAdapter() {
-			super(ServerInfoActivity.this, R.layout.simple_list_item_with_image, new ArrayList<Object>());
+	class ModInfoListAdapter extends ListRecyclerViewAdapter<FindableViewHolder,Object> {
+		@Override
+		public int getItemCount() {
+			// TODO: Implement this method
+			return super.getItemCount()+1;
 		}
 
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
+		public FindableViewHolder onCreateViewHolder(ViewGroup parent, int type) {
 			// TODO: Implement this method
-			if (position == 0) {
-				return getLayoutInflater().inflate(R.layout.void_view, null);
-			} else {
-				position--;
-			}
-			View v=getLayoutInflater().inflate(R.layout.mod_info_content, parent, false);
+			if(type==0)
+				return new VH(getLayoutInflater().inflate(R.layout.void_view,null));
+			else
+				return new VH(getLayoutInflater().inflate(R.layout.mod_info_content, parent, false));
+		}
+
+		@Override
+		public void onBindViewHolder(FindableViewHolder parent, int offset) {
+			// TODO: Implement this method
+			if(offset==0)return;
+			int position=offset-1;
+			View v=parent.itemView;
 			Object o=getItem(position);
 			if (o instanceof Reply.ModListContent) {
 				Reply.ModListContent mlc=(Reply.ModListContent)o;
@@ -545,23 +556,25 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 				((TextView)v.findViewById(R.id.modName)).setText(mlc.modid);
 				((TextView)v.findViewById(R.id.modVersion)).setText(mlc.version);
 			}
-			return v;
 		}
 
 		@Override
-		public int getCount() {
+		public int getItemViewType(int position) {
 			// TODO: Implement this method
-			return super.getCount() + 1;
+			if(position==0)return 0;else return 1;
+		}
+		
+		public class VH extends FindableViewHolder{
+			public VH(View w){
+				super(w);
+			}
 		}
 	}
-	class PlayerNamesListAdapter extends AppBaseArrayAdapter<String> {
-		public PlayerNamesListAdapter() {
-			super(ServerInfoActivity.this, android.R.layout.simple_list_item_1, new ArrayList<String>());
+	class PlayerNamesListAdapter extends ListRecyclerViewAdapter<FindableViewHolder,String> {
+		public PlayerNamesListAdapter(){
+			super(new ArrayList<>());
 		}
-		public PlayerNamesListAdapter(Context context, int resource, List<String> objects) {
-			super(context, resource, objects);
-		}
-
+		
 		@Override
 		public String getItem(int position) {
 			// TODO: Implement this method
@@ -569,6 +582,24 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			if (pref.getBoolean("deleteDecoPlayerName", false))
 				s = deleteDecorations(s);
 			return s;
+		}
+
+		@Override
+		public FindableViewHolder onCreateViewHolder(ViewGroup parent, int type) {
+			// TODO: Implement this method
+			return new VH(getLayoutInflater().inflate(android.R.layout.simple_list_item_1,parent,false));
+		}
+
+		@Override
+		public void onBindViewHolder(FindableViewHolder parent, int offset) {
+			// TODO: Implement this method
+			((TextView)parent.findViewById(android.R.id.text1)).setText(getItem(offset));
+		}
+		
+		public class VH extends FindableViewHolder{
+			public VH(View w){
+				super(w);
+			}
 		}
 	}
 
@@ -578,15 +609,15 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			super(getSupportFragmentManager());
 		}
 	}
-
+	
 	public static class PlayersFragment extends BaseFragment<ServerInfoActivity> {
-		ListView lv;
-		ArrayAdapter<String> player;
+		RecyclerView lv;
+		ListRecyclerViewAdapter<FindableViewHolder,String> player;
 		@Override
 		public void onResume() {
 			// TODO: Implement this method
 			super.onResume();
-			lv = (ListView)getView();
+			lv = (RecyclerView)getView();
 
 
 			ServerStatus localStat=getParentActivity().localStat;
@@ -613,7 +644,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 				if (pref.getBoolean("sortPlayerNames", true))
 					Collections.sort(sort);
 				player.clear();
-				CompatArrayAdapter.addAll(player, sort);
+				player.addAll(sort);
 			} else if (resp instanceof Reply) {
 				Reply rep=(Reply)resp;
 				if (rep.players.sample != null) {
@@ -625,7 +656,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 					if (pref.getBoolean("sortPlayerNames", true))
 						Collections.sort(sort);
 					player.clear();
-					CompatArrayAdapter.addAll(player, sort);
+					player.addAll(sort);
 				} else {
 					player.clear();
 				}
@@ -640,7 +671,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 					if (pref.getBoolean("sortPlayerNames", true))
 						Collections.sort(sort);
 					player.clear();
-					CompatArrayAdapter.addAll(player, sort);
+					player.addAll(sort);
 				} else {
 					player.clear();
 				}
@@ -787,16 +818,16 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		}
 	}
 	public static class PluginsFragment extends BaseFragment<ServerInfoActivity> {
-		ArrayAdapter<String> pluginNames;
-		ListView lv;
+		SimpleRecyclerAdapter<String> pluginNames;
+		RecyclerView lv;
 		@Override
 		public void onResume() {
 			// TODO: Implement this method
 			super.onResume();
-			lv = (ListView)getView();
+			lv = (RecyclerView)getView();
 
 
-			pluginNames = new AppBaseArrayAdapter<String>(getParentActivity(), android.R.layout.simple_list_item_1, new ArrayList<String>());
+			pluginNames = new SimpleRecyclerAdapter<String>(getParentActivity());
 			lv.setAdapter(pluginNames);
 			ServerStatus localStat=getParentActivity().localStat;
 			ServerPingResult resp=localStat.response;
@@ -813,7 +844,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 						ArrayList<String> plugins=new ArrayList<>(Arrays.<String>asList(data[1].split("\\; ")));
 						if (pref.getBoolean("sortPluginNames", false))
 							Collections.sort(plugins);
-						CompatArrayAdapter.addAll(pluginNames, plugins);
+						pluginNames.addAll(plugins);
 					}
 				}
 			}
@@ -822,19 +853,19 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
-			return lv = (ListView) inflater.inflate(R.layout.players_tab, container, false);
+			return inflater.inflate(R.layout.players_tab, container, false);
 		}
 	}
 	public static class ModsFragment extends BaseFragment<ServerInfoActivity> {
 		String modLoaderTypeName;
 		TextView modLoader;
-		ArrayAdapter<Object> modInfos;
-		ListView mods;
+		ListRecyclerViewAdapter<FindableViewHolder,Object> modInfos;
+		RecyclerView mods;
 		@Override
 		public void onResume() {
 			// TODO: Implement this method
 			super.onResume();
-			mods = (ListView)getView().findViewById(R.id.players);
+			mods = (RecyclerView)getView().findViewById(R.id.players);
 			modLoader = (TextView)getView().findViewById(R.id.modLoaderType);
 
 
@@ -845,13 +876,13 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			if (resp instanceof Reply) {
 				Reply rep=(Reply)resp;
 				if (rep.modinfo != null) {
-					CompatArrayAdapter.addAll(modInfos, rep.modinfo.modList);
+					modInfos.addAll(rep.modinfo.modList);
 					modLoaderTypeName = rep.modinfo.type;
 				}
 			} else if (resp instanceof Reply19) {
 				Reply19 rep=(Reply19)resp;
 				if (rep.modinfo != null) {
-					CompatArrayAdapter.addAll(modInfos, rep.modinfo.modList);
+					modInfos.addAll(rep.modinfo.modList);
 					modLoaderTypeName = rep.modinfo.type;
 				}
 			}
@@ -882,8 +913,8 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			} else {
 				result = (UnconnectedPing.UnconnectedPingResult)((SprPair)getParentActivity().localStat.response).getB();
 			}
-			ListView lv=(ListView)getView().findViewById(R.id.data);
-			KVListAdapter<String,String> adap=new KVListAdapter<String,String>(getActivity());
+			RecyclerView lv=(RecyclerView)getView().findViewById(R.id.data);
+			KVRecyclerAdapter<String,String> adap=new KVRecyclerAdapter<String,String>(getActivity());
 			lv.setAdapter(adap);
 			OrderTrustedMap<String,String> otm=new OrderTrustedMap<String,String>();
 			String[] values=result.getRaw().split("\\;");
@@ -892,7 +923,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			otm.put(getString(R.string.ucp_mcpeVersion),     values[3]);
 			otm.put(getString(R.string.ucp_nowPlayers),      values[4]);
 			otm.put(getString(R.string.ucp_maxPlayers),      values[5]);
-			CompatArrayAdapter.addAll(adap, otm.entrySet());
+			adap.addAll(otm.entrySet());
 		}
 
 		@Override

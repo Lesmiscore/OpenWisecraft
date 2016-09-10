@@ -6,7 +6,10 @@ public abstract class ListRecyclerViewAdapter<VH extends RecyclerView.ViewHolder
 {
 	List<LType> list;
 	public ListRecyclerViewAdapter(List<LType> lst){
-		list=lst;
+		list=new ArrayList<LType>(lst);
+	}
+	public ListRecyclerViewAdapter(){
+		this(new ArrayList<LType>());
 	}
 	public LType getItem(int ofs){
 		return list.get(ofs);
