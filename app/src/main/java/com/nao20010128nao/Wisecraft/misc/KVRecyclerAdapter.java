@@ -20,7 +20,7 @@ public class KVRecyclerAdapter<K,V> extends ListRecyclerViewAdapter<KVRecyclerAd
 
 	@Override
 	public KVVH onCreateViewHolder(ViewGroup parent, int type) {
-		return new KVVH(LayoutInflater.from(ctx).inflate(R.id.data,parent,false));
+		return new KVVH(LayoutInflater.from(ctx).inflate(R.layout.data,parent,false));
 	}
 
 
