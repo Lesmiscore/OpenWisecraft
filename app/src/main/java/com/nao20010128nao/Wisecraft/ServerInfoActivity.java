@@ -2,6 +2,7 @@ package com.nao20010128nao.Wisecraft;
 
 import android.app.*;
 import android.content.*;
+import android.content.res.*;
 import android.graphics.*;
 import android.graphics.drawable.*;
 import android.os.*;
@@ -610,6 +611,49 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		}
 	}
 	
+	static class DividerItemDecoration extends RecyclerView.ItemDecoration {
+
+		private static final int[] ATTRS = new int[]{android.R.attr.listDivider};
+
+		private Drawable mDivider;
+
+		/**
+		 * Default divider will be used
+		 */
+		public DividerItemDecoration(Context context) {
+			final TypedArray styledAttributes = context.obtainStyledAttributes(ATTRS);
+			mDivider = styledAttributes.getDrawable(0);
+			styledAttributes.recycle();
+		}
+
+		/**
+		 * Custom divider will be used
+		 */
+		public DividerItemDecoration(Context context, int resId) {
+			mDivider = ContextCompat.getDrawable(context, resId);
+		}
+
+		@Override
+		public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+			int left = parent.getPaddingLeft();
+			int right = parent.getWidth() - parent.getPaddingRight();
+
+			int childCount = parent.getChildCount();
+			for (int i = 0; i < childCount; i++) {
+				View child = parent.getChildAt(i);
+
+				RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
+
+				int top = child.getBottom() + params.bottomMargin;
+				int bottom = top + mDivider.getIntrinsicHeight();
+
+				mDivider.setBounds(left, top, right, bottom);
+				mDivider.draw(c);
+			}
+		}
+	}
+	
+	
 	public static class PlayersFragment extends BaseFragment<ServerInfoActivity> {
 		RecyclerView lv;
 		ListRecyclerViewAdapter<FindableViewHolder,String> player;
@@ -704,6 +748,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			super.onResume();
 			data = (RecyclerView)getView().findViewById(R.id.data);
 			data.setLayoutManager(new LinearLayoutManager(getActivity()));
+			data.addItemDecoration(new DividerItemDecoration(getContext()));
 
 			infos = new KVRecyclerAdapter<>(getParentActivity());
 			data.setAdapter(infos);
@@ -742,6 +787,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			serverName = (TextView)getView().findViewById(R.id.serverTitle);
 			data = (RecyclerView)getView().findViewById(R.id.data);
 			data.setLayoutManager(new LinearLayoutManager(getActivity()));
+			data.addItemDecoration(new DividerItemDecoration(getContext()));
 
 
 			infos = new KVRecyclerAdapter<>(getParentActivity());
@@ -920,6 +966,8 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			}
 			RecyclerView lv=(RecyclerView)getView().findViewById(R.id.data);
 			lv.setLayoutManager(new LinearLayoutManager(getActivity()));
+			lv.addItemDecoration(new DividerItemDecoration(getContext()));
+			
 			KVRecyclerAdapter<String,String> adap=new KVRecyclerAdapter<String,String>(getActivity());
 			lv.setAdapter(adap);
 			OrderTrustedMap<String,String> otm=new OrderTrustedMap<String,String>();
