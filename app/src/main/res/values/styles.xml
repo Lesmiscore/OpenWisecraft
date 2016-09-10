@@ -7,6 +7,7 @@
 		<item name="preferenceTheme">@style/AppTheme.Preference</item>
 		<item name="alertDialogTheme">@style/AppAlertDialog</item>
         <item name="windowActionModeOverlay">true</item>
+		<item name="android:windowAnimationStyle">@style/AppTheme.Transition</item>
 	</style>
 	<style name="AppDialog" parent="@style/Theme.AppCompat.Light.Dialog">
 		<item name="colorPrimary">@color/primary</item>
@@ -79,6 +80,13 @@
 	<style name="AppPreferenceTextAppearance" parent="TextAppearance.AppCompat.Medium">
 		<item name="android:textColor">#000</item>
 	</style>
+	
+	<style name="AppTheme.Transition" parent="@android:style/Animation.Activity"> 
+		<item name="android:activityOpenEnterAnimation">@anim/activity_open_enter</item>
+        <item name="android:activityOpenExitAnimation">@anim/activity_open_exit</item>
+        <item name="android:activityCloseEnterAnimation">@anim/activity_close_enter</item>
+        <item name="android:activityCloseExitAnimation">@anim/activity_close_exit</item>
+    </style>
 	
 
 	<style name="WhiteTextActionBar" parent="@style/Widget.AppCompat.ActionBar.Solid">
