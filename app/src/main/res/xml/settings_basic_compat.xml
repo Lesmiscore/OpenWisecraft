@@ -89,6 +89,6 @@
 	<com.nao20010128nao.Wisecraft.misc.pref.CheckBoxPreferenceCompat
 		android:title="@string/noScrollServerInfo"
 		android:key="noScrollServerInfo"
-		android:defaultValue="true"
+		android:defaultValue="false"
 	/>
 </PreferenceScreen>

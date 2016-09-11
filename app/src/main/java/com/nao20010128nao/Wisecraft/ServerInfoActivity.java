@@ -86,7 +86,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		}
 
 		keeping = getIntent().getBundleExtra("object");
-		useBottomSheet=getIntent().getBooleanExtra("bottomSheet",true)&pref.getBoolean("noScrollServerInfo",true);
+		useBottomSheet=getIntent().getBooleanExtra("bottomSheet",true)&!pref.getBoolean("noScrollServerInfo",false);
 
 		if(useBottomSheet)
 			setContentView(R.layout.server_info_pager);

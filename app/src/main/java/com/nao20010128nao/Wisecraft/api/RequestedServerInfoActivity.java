@@ -106,7 +106,7 @@ public class RequestedServerInfoActivity extends ApiBaseActivity {
 		public void onPingArrives(final ServerStatus s) {
             runOnUiThread(new Runnable(){
                     public void run(){
-                        startActivityForResult(((Intent)si.clone()).putExtra("offset",offset).putExtra("stat",Utils.encodeForServerInfo(s)), 0);
+                        startActivityForResult(((Intent)si.clone()).putExtra("offset",offset).putExtra("bottomSheet",false).putExtra("stat",Utils.encodeForServerInfo(s)), 0);
                         wd.hideWorkingDialog();
                     }
                 });
