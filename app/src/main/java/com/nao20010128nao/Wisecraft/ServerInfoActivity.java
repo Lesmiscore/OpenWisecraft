@@ -60,7 +60,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 	
 	View bottomSheet;
 	ViewPagerBottomSheetBehavior behavior;
-	boolean isBsStarting=true;
+	boolean useBottomSheet=false;
 
 	/*Only for PC servers*/
 	Drawable serverIconObj;
@@ -86,8 +86,12 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		}
 
 		keeping = getIntent().getBundleExtra("object");
+		useBottomSheet=getIntent().getBooleanExtra("bottomSheet",true)&pref.getBoolean("noScrollServerInfo",true);
 
-		setContentView(R.layout.server_info_pager);
+		if(useBottomSheet)
+			setContentView(R.layout.server_info_pager);
+		else
+			setContentView(R.layout.server_info_pager_nobs);
 		setSupportActionBar((android.support.v7.widget.Toolbar)findViewById(R.id.toolbar));
 		tabs = (ViewPager)findViewById(R.id.pager);
 		tabs.setAdapter(adapter = new InternalPagerAdapter());
@@ -155,7 +159,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			getWindow().setStatusBarColor(0);
 		}
 		
-		{
+		if(useBottomSheet){
 			BottomSheetUtils.setupViewPager(tabs);
 			bottomSheet = findViewById(R.id.serverInfoFragment);
 			behavior = ViewPagerBottomSheetBehavior.from(bottomSheet);
@@ -177,7 +181,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 									if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
 										getWindow().setStatusBarColor(DIRT_DARK);
 									}else{
-										getWindow().setStatusBarColor(ContextCompat.getColor(ServerInfoActivity.this,R.color.material_grey_100));
+										getWindow().setStatusBarColor(0);
 									}
 								}
 								break;
@@ -196,25 +200,37 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 					behavior.setState(ViewPagerBottomSheetBehavior.STATE_HIDDEN);
 				}
 			});
+		}else{
+			if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
+				getWindow().setStatusBarColor(DIRT_DARK);
+			}else{
+				getWindow().setStatusBarColor(ContextCompat.getColor(ServerInfoActivity.this,R.color.material_grey_100));
+			}
+			tabs.setBackgroundColor(Color.WHITE);
 		}
 	}
 
-	@Override
-	protected void onStart() {
-		// TODO: Implement this method
-		super.onStart();
-	}
-
-	@Override
 	public void onBackPressed() {
 		// TODO: Implement this method
-		switch(behavior.getState()){
-			case ViewPagerBottomSheetBehavior.STATE_EXPANDED:
-				behavior.setState(ViewPagerBottomSheetBehavior.STATE_COLLAPSED);
-				break;
-			case ViewPagerBottomSheetBehavior.STATE_COLLAPSED:
-				behavior.setState(ViewPagerBottomSheetBehavior.STATE_HIDDEN);
-				break;
+		if(useBottomSheet){
+			switch(behavior.getState()){
+				case ViewPagerBottomSheetBehavior.STATE_EXPANDED:
+					behavior.setState(ViewPagerBottomSheetBehavior.STATE_COLLAPSED);
+					break;
+				case ViewPagerBottomSheetBehavior.STATE_COLLAPSED:
+					behavior.setState(ViewPagerBottomSheetBehavior.STATE_HIDDEN);
+					break;
+			}
+		}else{
+			finish();
+		}
+	}
+	
+	public void scheduleFinish(){
+		if(useBottomSheet){
+			behavior.setState(ViewPagerBottomSheetBehavior.STATE_HIDDEN);
+		}else{
+			finish();
 		}
 	}
 
@@ -379,7 +395,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 				break;
 			case 2://Update
 				setResultInstead(Constant.ACTIVITY_RESULT_UPDATE, new Intent().putExtra("offset", tabs.getCurrentItem()));
-				behavior.setState(ViewPagerBottomSheetBehavior.STATE_HIDDEN);//ServerListActivity updates the stat
+				scheduleFinish();//ServerListActivity updates the stat
 				return true;
 			case 1://See the title for all
 				AppCompatAlertDialog.Builder ab=new AppCompatAlertDialog.Builder(this, R.style.AppAlertDialog);

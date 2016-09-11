@@ -86,4 +86,9 @@
 		android:title="@string/addLessRows"
 		android:key="addLessRows"
 	/>
+	<com.nao20010128nao.Wisecraft.misc.pref.CheckBoxPreferenceCompat
+		android:title="@string/noScrollServerInfo"
+		android:key="noScrollServerInfo"
+		android:defaultValue="true"
+	/>
 </PreferenceScreen>
