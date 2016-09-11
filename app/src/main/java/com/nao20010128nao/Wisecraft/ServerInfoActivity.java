@@ -211,7 +211,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 				behavior.setState(ViewPagerBottomSheetBehavior.STATE_COLLAPSED);
 				break;
 			case ViewPagerBottomSheetBehavior.STATE_COLLAPSED:
-				finish();
+				behavior.setState(ViewPagerBottomSheetBehavior.STATE_HIDDEN);
 				break;
 		}
 	}
