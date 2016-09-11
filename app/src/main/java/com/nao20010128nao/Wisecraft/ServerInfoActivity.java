@@ -191,7 +191,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 				});
 			findViewById(R.id.background).setOnClickListener(new View.OnClickListener(){
 				public void onClick(View v){
-					finish();
+					behavior.setState(ViewPagerBottomSheetBehavior.STATE_HIDDEN);
 				}
 			});
 		}
@@ -377,7 +377,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 				break;
 			case 2://Update
 				setResultInstead(Constant.ACTIVITY_RESULT_UPDATE, new Intent().putExtra("offset", tabs.getCurrentItem()));
-				finish();//ServerListActivity updates the stat
+				behavior.setState(ViewPagerBottomSheetBehavior.STATE_HIDDEN);//ServerListActivity updates the stat
 				return true;
 			case 1://See the title for all
 				AppCompatAlertDialog.Builder ab=new AppCompatAlertDialog.Builder(this, R.style.AppAlertDialog);
