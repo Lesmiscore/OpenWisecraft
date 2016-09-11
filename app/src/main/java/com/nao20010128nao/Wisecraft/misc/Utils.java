@@ -11,6 +11,7 @@ import android.preference.*;
 import android.support.v7.widget.*;
 import android.text.*;
 import android.text.style.*;
+import android.util.*;
 import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.*;
@@ -545,5 +546,9 @@ public class Utils extends PingerUtils{
 	}
 	public static SharedPreferences getPreferences(Context c){
 		return PreferenceManager.getDefaultSharedPreferences(c);
+	}
+	public static String encodeForServerInfo(ServerStatus s){
+		byte[] data=PingSerializeProvider.dumpServerForFile(s);
+		return Base64.encodeToString(data,ServerInfoActivity.BASE64_FLAGS);
 	}
 }

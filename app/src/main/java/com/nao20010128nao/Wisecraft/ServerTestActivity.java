@@ -199,9 +199,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 			Server s=getItem(p3);
 			sta.clicked = p3;
 			if (s instanceof ServerStatus) {
-				ServerInfoActivity.stat.add((ServerStatus)s);
-				int ofs=ServerInfoActivity.stat.indexOf(s);
-				sta.startActivityForResult(new Intent(sta, ServerInfoActivity.class).putExtra("nonUpd", true).putExtra("statListOffset", ofs), 0);
+				sta.startActivityForResult(new Intent(sta, ServerInfoActivity.class).putExtra("nonUpd", true).putExtra("sta", Utils.encodeForServerInfo((ServerStatus)s)), 0);
 			}
 		}
 

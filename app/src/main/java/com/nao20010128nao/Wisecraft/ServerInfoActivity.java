@@ -35,10 +35,11 @@ import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 
 public class ServerInfoActivity extends ServerInfoActivityBase1 {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
-	public static List<ServerStatus> stat=new ArrayList<>();
+	//public static List<ServerStatus> stat=new ArrayList<>();
 	public static Map<String,Bitmap> faces=new HashMap<>();
 
 	public static int DIRT_BRIGHT,DIRT_DARK,PALE_PRIMARY;
+	public static final int BASE64_FLAGS=Base64.NO_WRAP|Base64.NO_PADDING;
 
 	SharedPreferences pref;
 
@@ -74,9 +75,10 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		getWindow().requestFeature(Window.FEATURE_ACTION_MODE_OVERLAY);
 		instance = new WeakReference(this);
 
-		int statOfs=getIntent().getIntExtra("statListOffset", -1);
-
-		if (stat.size() > statOfs & statOfs != -1)localStat = stat.get(statOfs);
+		String stat=getIntent().getStringExtra("stat");
+		if(stat==null){finish();return;}
+		byte[] statData=Base64.decode(stat,BASE64_FLAGS);
+		localStat=PingSerializeProvider.loadFromServerDumpFile(statData);
 
 		if (localStat == null) {
 			finish();

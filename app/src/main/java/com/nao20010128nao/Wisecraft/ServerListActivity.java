@@ -652,15 +652,14 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 											sv.mode=1;
 										}
 									}
+									final String stat=Utils.encodeForServerInfo(sv);
 									runOnUiThread(new Runnable(){
 											public void run() {
 												wd.hideWorkingDialog();
 												if(sv.response==null){
 													Toast.makeText(ServerListActivityImpl.this,R.string.loadPing_loadError,Toast.LENGTH_SHORT).show();
 												}else{
-													ServerInfoActivity.stat.add(sv);
-													int ofs=ServerInfoActivity.stat.indexOf(sv);
-													startActivity(new Intent(ServerListActivityImpl.this, ServerInfoActivity.class).putExtra("statListOffset", ofs).putExtra("noExport",true).putExtra("nonUpd",true));
+													startActivity(new Intent(ServerListActivityImpl.this, ServerInfoActivity.class).putExtra("stat", stat).putExtra("noExport",true).putExtra("nonUpd",true));
 												}
 											}
 										});
@@ -924,12 +923,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			sla.clicked = p3;
 			if (sla.pinging.get(s))return;
 			if (s instanceof ServerStatus) {
-				ServerInfoActivity.stat.clear();
-				ServerInfoActivity.stat.add((ServerStatus)s);
-				int ofs=ServerInfoActivity.stat.indexOf(s);
 				Bundle bnd=new Bundle();
-				bnd.putInt("statListOffset", ofs);
-				sla.startActivityForResult(new Intent(sla, ServerInfoActivity.class).putExtra("statListOffset", ofs).putExtra("object", bnd), 0);
+				sla.startActivityForResult(new Intent(sla, ServerInfoActivity.class).putExtra("stat", Utils.encodeForServerInfo((ServerStatus)s)).putExtra("object", bnd), 0);
 			} else {
 				sla.updater.putInQueue(s, new PingHandlerImpl(true, 0, true));
 				sla.pinging.put(sla.list.get(sla.clicked), true);
@@ -1243,9 +1238,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							act().statLayout.setStatusAt(i_, 2);
 							act().sl.notifyItemChanged(i_);
 							if (statTabOfs != -1) {
-								ServerInfoActivity.stat.add(s);
-								int ofs = ServerInfoActivity.stat.lastIndexOf(s);
-								Intent caller = new Intent(act(), ServerInfoActivity.class).putExtra("offset", statTabOfs).putExtra("statListOffset", ofs);
+								Intent caller = new Intent(act(), ServerInfoActivity.class).putExtra("offset", statTabOfs).putExtra("stat", Utils.encodeForServerInfo(s));
 								if (obj != null) {
 									caller.putExtra("object", obj);
 								}
