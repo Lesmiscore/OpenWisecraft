@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<dimen name="bottomSheet_peek">400dp</dimen>
+	<dimen name="bottomSheet_peek">300dp</dimen>
 </resources>
