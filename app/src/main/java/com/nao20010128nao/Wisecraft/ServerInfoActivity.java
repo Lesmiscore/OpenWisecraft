@@ -621,6 +621,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		private static final int[] ATTRS = new int[]{android.R.attr.listDivider};
 
 		private Drawable mDivider;
+		private int oneDp;
 
 		/**
 		 * Default divider will be used
@@ -629,6 +630,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			final TypedArray styledAttributes = context.obtainStyledAttributes(ATTRS);
 			mDivider = styledAttributes.getDrawable(0);
 			styledAttributes.recycle();
+			oneDp=context.getResources().getDimensionPixelSize(R.dimen.one_dp);
 		}
 
 		/**
@@ -636,6 +638,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		 */
 		public DividerItemDecoration(Context context, int resId) {
 			mDivider = ContextCompat.getDrawable(context, resId);
+			oneDp=context.getResources().getDimensionPixelSize(R.dimen.one_dp);
 		}
 
 		@Override
@@ -650,7 +653,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 				RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
 
 				int top = child.getBottom() + params.bottomMargin;
-				int bottom = top + mDivider.getIntrinsicHeight();
+				int bottom = top + oneDp;
 
 				mDivider.setBounds(left, top, right, bottom);
 				mDivider.draw(c);
