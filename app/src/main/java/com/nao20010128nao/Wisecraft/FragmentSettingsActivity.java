@@ -296,7 +296,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 						((TextView)v.findViewById(R.id.max)).setText("5");
 						((TextView)v.findViewById(R.id.min)).setText("-5");
 						final TextView value=(TextView)v.findViewById(R.id.value);
-						seekBar.setMax(10);seekBar.setProgress(pref.getInt("addLessRows",0));
+						seekBar.setMax(10);seekBar.setProgress(pref.getInt("addLessRows",0)+5);
 						seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
 								public void onProgressChanged(SeekBar p1, int p2, boolean p3){
 									value.setText((seekBar.getProgress()-5)+"");
