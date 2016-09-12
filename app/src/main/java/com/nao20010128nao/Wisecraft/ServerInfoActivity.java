@@ -689,6 +689,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			super.onResume();
 			lv = (RecyclerView)getView();
 			lv.setLayoutManager(new LinearLayoutManager(getActivity()));
+			lv.setHasFixedSize(false);
 
 
 			ServerStatus localStat=getParentActivity().localStat;
@@ -703,6 +704,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 				Log.d("ServerInfoActivity", "face off");
 			}
 
+			player.setHasStableIds(false);
 			lv.setAdapter(player);
 
 			if (resp instanceof FullStat | resp instanceof SprPair) {
@@ -775,8 +777,10 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			data = (RecyclerView)getView().findViewById(R.id.data);
 			data.setLayoutManager(new LinearLayoutManager(getActivity()));
 			data.addItemDecoration(new DividerItemDecoration(getContext()));
+			data.setHasFixedSize(false);
 
 			infos = new KVRecyclerAdapter<>(getParentActivity());
+			infos.setHasStableIds(false);
 			data.setAdapter(infos);
 			ServerStatus localStat=getParentActivity().localStat;
 			ServerPingResult resp=localStat.response;
@@ -814,9 +818,11 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			data = (RecyclerView)getView().findViewById(R.id.data);
 			data.setLayoutManager(new LinearLayoutManager(getActivity()));
 			data.addItemDecoration(new DividerItemDecoration(getContext()));
+			data.setHasFixedSize(false);
 
 
 			infos = new KVRecyclerAdapter<>(getParentActivity());
+			infos.setHasStableIds(false);
 			data.setAdapter(infos);
 			ServerStatus localStat=getParentActivity().localStat;
 			ServerPingResult resp=localStat.response;
@@ -901,9 +907,11 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			super.onResume();
 			lv = (RecyclerView)getView();
 			lv.setLayoutManager(new LinearLayoutManager(getActivity()));
+			lv.setHasFixedSize(false);
 
 
 			pluginNames = new SimpleRecyclerAdapter<String>(getParentActivity());
+			pluginNames.setHasStableIds(false);
 			lv.setAdapter(pluginNames);
 			ServerStatus localStat=getParentActivity().localStat;
 			ServerPingResult resp=localStat.response;
@@ -944,9 +952,11 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			mods = (RecyclerView)getView().findViewById(R.id.players);
 			modLoader = (TextView)getView().findViewById(R.id.modLoaderType);
 			mods.setLayoutManager(new LinearLayoutManager(getActivity()));
+			mods.setHasFixedSize(false);
 
 
 			modInfos = getParentActivity().new ModInfoListAdapter();
+			modInfos.setHasStableIds(false);
 			mods.setAdapter(modInfos);
 			ServerStatus localStat=getParentActivity().localStat;
 			ServerPingResult resp=localStat.response;
@@ -993,8 +1003,10 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			RecyclerView lv=(RecyclerView)getView().findViewById(R.id.data);
 			lv.setLayoutManager(new LinearLayoutManager(getActivity()));
 			lv.addItemDecoration(new DividerItemDecoration(getContext()));
+			lv.setHasFixedSize(false);
 			
 			KVRecyclerAdapter<String,String> adap=new KVRecyclerAdapter<String,String>(getActivity());
+			adap.setHasStableIds(false);
 			lv.setAdapter(adap);
 			OrderTrustedMap<String,String> otm=new OrderTrustedMap<String,String>();
 			String[] values=result.getRaw().split("\\;");
