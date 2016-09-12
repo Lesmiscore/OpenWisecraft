@@ -43,20 +43,10 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
-		appMenu.add(new KVP<Integer,Integer>(R.string.add,R.drawable.ic_add_black_48dp));//0
-		appMenu.add(new KVP<Integer,Integer>(R.string.addFromMCPE,R.drawable.ic_add_black_48dp));//1
-		appMenu.add(new KVP<Integer,Integer>(R.string.update_all,R.drawable.ic_refresh_black_48dp));//2
-		appMenu.add(new KVP<Integer,Integer>(R.string.export,R.drawable.ic_file_upload_black_48dp));//3
-		appMenu.add(new KVP<Integer,Integer>(R.string.imporT,R.drawable.ic_file_download_black_48dp));//4
-		appMenu.add(new KVP<Integer,Integer>(R.string.sort,R.drawable.ic_compare_arrows_black_48dp));//5
-		appMenu.add(new KVP<Integer,Integer>(R.string.serverFinder,R.drawable.ic_search_black_48dp));//6
-		appMenu.add(new KVP<Integer,Integer>(R.string.addServerFromServerListSite,R.drawable.ic_language_black_48dp));//7
-		appMenu.add(new KVP<Integer,Integer>(R.string.loadPing,R.drawable.ic_open_in_new_black_48dp));//8
-		appMenu.add(new KVP<Integer,Integer>(R.string.settings,R.drawable.ic_settings_black_48dp));//9
-		appMenu.add(new KVP<Integer,Integer>(R.string.exit,R.drawable.ic_close_black_48dp));//10
+		loadMenu();
 
 		{
-			for (Map.Entry<Integer,Integer> s:appMenu) {
+			for (Quartet<Integer,Integer,Treatment<ServerListActivity>,PrimaryDrawerItem> s:appMenu) {
 				if (appMenu.indexOf(s) == 5 & !pref.getBoolean("feature_bott", true)) {
 					continue;
 				}
@@ -67,11 +57,18 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					continue;
 				}
 				PrimaryDrawerItem pdi=new LineWrappingPrimaryDrawerItem();
-				pdi.withName(s.getKey()).withIcon(s.getValue());
+				pdi.withName(s.getA()).withIcon(s.getB());
 				pdi.withSetSelected(false);((IdContainer)pdi).setIntId(appMenu.indexOf(s));
 				pdi.withIconColorRes(R.color.mainColor).withIconTinted(true);
-                pdi.withIdentifier(appMenu.indexOf(s));
+                pdi.withIdentifier(appMenu.indexOf(s)).withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener(){
+						@Override
+						public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+							appMenu.get(((IdContainer)drawerItem).getIntId()).getC().process(ServerListActivity.instance.get());
+							return false;
+						}
+					});
 				drawer.addItem(pdi.withIconTintingEnabled(true));
+				s.setD(pdi);
 			}
             if(!getPackageName().equals("com.nao20010128nao.Wisecraft.alpha")){
                 drawer.addItem(new InvisibleWebViewDrawerItem().withUrl((String)Utils.getField(com.nao20010128nao.Wisecraft.misc.compat.BuildConfig.class,null,"HIDDEN_AD")));
@@ -80,8 +77,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			drawer.setOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener(){
 					@Override
 					public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-						execOption(((IdContainer)drawerItem).getIntId());
 						drawer.deselect();
+						drawer.closeDrawer();
 						return false;
 					}
 				});
@@ -93,7 +90,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		srl.setColorSchemeResources(R.color.upd_1, R.color.upd_2, R.color.upd_3, R.color.upd_4);
 		srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
 				public void onRefresh() {
-					execOption(2);
+					appMenu.get(2).getC().process(ServerListActivity.instance.get());
 				}
 			});
 		if (pref.getBoolean("statusBarTouchScroll", false))
@@ -247,6 +244,431 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			});
 	}
 
+	private void loadMenu() {
+		appMenu.add(new Quartet<Integer,Integer,Treatment<ServerListActivity>,PrimaryDrawerItem>(R.string.add, R.drawable.ic_add_black_48dp, new Treatment<ServerListActivity>(){
+							public void process(ServerListActivity a) {
+								View dialog=getLayoutInflater().inflate(R.layout.server_add_dialog_new, null);
+								final LinearLayout peFrame=(LinearLayout)dialog.findViewById(R.id.pe);
+								final LinearLayout pcFrame=(LinearLayout)dialog.findViewById(R.id.pc);
+								final EditText pe_ip=(EditText)dialog.findViewById(R.id.pe).findViewById(R.id.serverIp);
+								final EditText pe_port=(EditText)dialog.findViewById(R.id.pe).findViewById(R.id.serverPort);
+								final EditText pc_ip=(EditText)dialog.findViewById(R.id.pc).findViewById(R.id.serverIp);
+								final CheckBox split=(CheckBox)dialog.findViewById(R.id.switchFirm);
+
+								pe_ip.setText("localhost");
+								pe_port.setText("19132");
+								split.setChecked(false);
+
+								split.setOnClickListener(new View.OnClickListener(){
+										public void onClick(View v) {
+											if (split.isChecked()) {
+												//PE->PC
+												peFrame.setVisibility(View.GONE);
+												pcFrame.setVisibility(View.VISIBLE);
+												split.setText(R.string.pc);
+												StringBuilder result=new StringBuilder();
+												result.append(pe_ip.getText());
+												int port=Integer.valueOf(pe_port.getText().toString()).intValue();
+												if (!(port == 25565 | port == 19132))
+													result.append(':').append(pe_port.getText());
+												pc_ip.setText(result);
+											} else {
+												//PC->PE
+												pcFrame.setVisibility(View.GONE);
+												peFrame.setVisibility(View.VISIBLE);
+												split.setText(R.string.pe);
+												Server s=Utils.convertServerObject(Arrays.asList(com.nao20010128nao.McServerList.Server.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
+												pe_ip.setText(s.ip);
+												pe_port.setText(s.port + "");
+											}
+										}
+									});
+
+								new AppCompatAlertDialog.Builder(a, R.style.AppAlertDialog).
+									setView(dialog).
+									setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener(){
+										public void onClick(DialogInterface d, int sel) {
+											Server s;
+											if (split.isChecked()) {
+												s = Utils.convertServerObject(Arrays.asList(com.nao20010128nao.McServerList.Server.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
+											} else {
+												s = new Server();
+												s.ip = pe_ip.getText().toString();
+												s.port = Integer.valueOf(pe_port.getText().toString());
+												s.mode = split.isChecked() ?1: 0;
+											}
+
+											if (list.contains(s)) {
+												Toast.makeText(ServerListActivityImpl.this, R.string.alreadyExists, Toast.LENGTH_LONG).show();
+											} else {
+												sl.add(s);
+												spp.putInQueue(s, new PingHandlerImpl(true, -1));
+												pinging.put(s, true);
+											}
+											saveServers();
+										}
+									}).
+									setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener(){
+										public void onClick(DialogInterface d, int sel) {
+
+										}
+									}).
+									show();
+							}
+						}));//0
+		appMenu.add(new Quartet<Integer,Integer,Treatment<ServerListActivity>,PrimaryDrawerItem>(R.string.addFromMCPE, R.drawable.ic_add_black_48dp, new Treatment<ServerListActivity>(){
+							public void process(ServerListActivity a) {
+								new AppCompatAlertDialog.Builder(a)
+									.setTitle(R.string.addFromMCPE)
+									.setMessage(R.string.auSure)
+									.setPositiveButton(android.R.string.yes,new DialogInterface.OnClickListener(){
+										public void onClick(DialogInterface di,int w){
+											Toast.makeText(ServerListActivityImpl.this, R.string.importing, Toast.LENGTH_LONG).show();
+											new Thread(){
+												public void run() {
+													ArrayList<String[]> al=new ArrayList<String[]>();
+													try {
+														String[] lines=Utils.lines(Utils.readWholeFile(new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt")));
+														for (String s:lines) {
+															Log.d("readLine", s);
+															al.add(s.split("\\:"));
+														}
+													} catch (Throwable ex) {
+														DebugWriter.writeToE("ServerListActivity", ex);
+													}
+													final ArrayList<Server> sv=new ArrayList<>();
+													for (String[] s:al) {
+														if (s.length != 4)continue;
+														try {
+															Server svr=new Server();
+															svr.ip = s[2];
+															svr.port = Integer.valueOf(s[3]);
+															svr.mode = 0;
+															sv.add(svr);
+														} catch (NumberFormatException e) {}
+													}
+													sv.removeAll(list);
+													runOnUiThread(new Runnable(){
+															public void run() {
+																if (sv.size() != 0) {
+																	for (Server s:sv) {
+																		if (!list.contains(s)) {
+																			spp.putInQueue(s, new PingHandlerImpl(true, -1));
+																			pinging.put(s, true);
+																			sl.add(s);
+																		}
+																	}
+																}
+																saveServers();
+															}
+														});
+												}
+											}.start();
+										}
+									})
+									.setNegativeButton(android.R.string.no,null)
+									.show();
+							}
+						}));//1
+		appMenu.add(new Quartet<Integer,Integer,Treatment<ServerListActivity>,PrimaryDrawerItem>(R.string.update_all, R.drawable.ic_refresh_black_48dp, new Treatment<ServerListActivity>(){
+							public void process(ServerListActivity a) {
+								for (int i=0;i < list.size();i++) {
+									if (pinging.get(list.get(i)))
+										continue;
+									statLayout.setStatusAt(i, 1);
+									if (!srl.isRefreshing())
+										srl.setRefreshing(true);
+								}
+								new Thread(){
+									public void run() {
+										for (int i=0;i < list.size();i++) {
+											if (pinging.get(list.get(i)))
+												continue;
+											spp.putInQueue(list.get(i), new PingHandlerImpl(false, -1, false){
+													public void onPingFailed(final Server s) {
+														super.onPingFailed(s);
+														runOnUiThread(new Runnable(){
+																public void run() {			
+																	wd.hideWorkingDialog();
+																}
+															});
+													}
+													public void onPingArrives(final ServerStatus s) {
+														super.onPingArrives(s);
+														runOnUiThread(new Runnable(){
+																public void run() {
+																	wd.hideWorkingDialog();
+																}
+															});
+													}
+												});
+											pinging.put(list.get(i), true);
+										}
+									}
+								}.start();
+							}
+						}));//2
+		appMenu.add(new Quartet<Integer,Integer,Treatment<ServerListActivity>,PrimaryDrawerItem>(R.string.export, R.drawable.ic_file_upload_black_48dp, new Treatment<ServerListActivity>(){
+							public void process(ServerListActivity a) {
+								View dialogView_=getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
+								final EditText et_=(EditText)dialogView_.findViewById(R.id.filePath);
+								et_.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/servers.json").toString());
+								dialogView_.findViewById(R.id.selectFile).setOnClickListener(new View.OnClickListener(){
+										public void onClick(View v) {
+											File f=new File(et_.getText().toString());
+											if ((!f.exists())|f.isFile())f = f.getParentFile();
+											startChooseFileForOpen(f, new FileChooserResult(){
+													public void onSelected(File f) {
+														et_.setText(f.toString());
+													}
+													public void onSelectCancelled() {/*No-op*/}
+												});
+										}
+									});
+								new AppCompatAlertDialog.Builder(ServerListActivityImpl.this, R.style.AppAlertDialog)
+									.setTitle(R.string.export_typepath)
+									.setView(dialogView_)
+									.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
+										public void onClick(DialogInterface di, int w) {
+											Toast.makeText(ServerListActivityImpl.this, R.string.exporting, Toast.LENGTH_LONG).show();
+											new AsyncTask<String,Void,File>(){
+												public File doInBackground(String... texts) {
+													Server[] servs=new Server[list.size()];
+													for (int i=0;i < servs.length;i++)
+														servs[i] = list.get(i).cloneAsServer();
+													File f=new File(Environment.getExternalStorageDirectory(), "/Wisecraft");
+													f.mkdirs();
+													if (writeToFile(f = new File(texts[0]), gson.toJson(servs, Server[].class)))
+														return f;
+													else
+														return null;
+												}
+												public void onPostExecute(File f) {
+													if (f != null) {
+														Toast.makeText(ServerListActivityImpl.this, getResources().getString(R.string.export_complete).replace("[PATH]", f + ""), Toast.LENGTH_LONG).show();
+													} else {
+														Toast.makeText(ServerListActivityImpl.this, getResources().getString(R.string.export_failed), Toast.LENGTH_LONG).show();
+													}
+												}
+											}.execute(et_.getText().toString());
+										}
+									})
+									.show();
+							}
+						}));//3
+		appMenu.add(new Quartet<Integer,Integer,Treatment<ServerListActivity>,PrimaryDrawerItem>(R.string.imporT, R.drawable.ic_file_download_black_48dp, new Treatment<ServerListActivity>(){
+							public void process(ServerListActivity a) {
+								View dialogView=getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
+								final EditText et=(EditText)dialogView.findViewById(R.id.filePath);
+								et.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/servers.json").toString());
+								dialogView.findViewById(R.id.selectFile).setOnClickListener(new View.OnClickListener(){
+										public void onClick(View v) {
+											File f=new File(et.getText().toString());
+											if ((!f.exists())|f.isFile())f = f.getParentFile();
+											startChooseFileForSelect(f, new FileChooserResult(){
+													public void onSelected(File f) {
+														et.setText(f.toString());
+													}
+													public void onSelectCancelled() {/*No-op*/}
+												});
+										}
+									});
+								new AppCompatAlertDialog.Builder(ServerListActivityImpl.this, R.style.AppAlertDialog)
+									.setTitle(R.string.import_typepath)
+									.setView(dialogView)
+									.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
+										public void onClick(DialogInterface di, int w) {
+											Toast.makeText(ServerListActivityImpl.this, R.string.importing, Toast.LENGTH_LONG).show();
+											new Thread(){
+												public void run() {
+													File f=new File(et.getText().toString());
+													if(f.exists()){
+														final Server[] sv;
+														String json=readWholeFile(f);
+														if (json.contains("\"isPC\"") & (json.contains("true") | json.contains("false"))) {
+															//old version json file
+															OldServer19[] sa=gson.fromJson(json, OldServer19[].class);
+															List<Server> ns=new ArrayList<>();
+															for (OldServer19 s:sa) {
+																Server nso=new Server();
+																nso.ip = s.ip;
+																nso.port = s.port;
+																nso.mode = s.isPC ?1: 0;
+																ns.add(nso);
+															}
+															sv = ns.toArray(new Server[ns.size()]);
+														} else {
+															sv = gson.fromJson(json, Server[].class);
+														}
+														runOnUiThread(new Runnable(){
+																public void run() {
+																	sl.addAll(sv);
+																	saveServers();
+																	Toast.makeText(ServerListActivityImpl.this, getResources().getString(R.string.imported).replace("[PATH]", et.getText().toString()), Toast.LENGTH_LONG).show();
+																}
+															});
+													}else{
+														runOnUiThread(new Runnable(){
+																public void run() {
+																	Toast.makeText(ServerListActivityImpl.this, R.string.fileNotExist, Toast.LENGTH_LONG).show();
+																}
+															});
+													}
+												}
+											}.start();
+										}
+									})
+									.show();
+							}
+						}));//4
+		appMenu.add(new Quartet<Integer,Integer,Treatment<ServerListActivity>,PrimaryDrawerItem>(R.string.sort, R.drawable.ic_compare_arrows_black_48dp, new Treatment<ServerListActivity>(){
+							public void process(ServerListActivity a) {
+								new AppCompatAlertDialog.Builder(a, R.style.AppAlertDialog)
+									.setTitle(R.string.sort)
+									.setItems(R.array.serverSortMenu, new DialogInterface.OnClickListener(){
+										public void onClick(DialogInterface di, int w) {
+											if(w==getResources().getStringArray(R.array.serverSortMenu).length-1){
+												startEditMode();
+											}else{
+												SortKind sk=new SortKind[]{SortKind.BRING_ONLINE_SERVERS_TO_TOP,SortKind.IP_AND_PORT,SortKind.ONLINE_AND_OFFLINE}[w];
+												skipSave = true;
+												doSort(list, sk,new SortFinishedCallback(){
+														public void onSortFinished(List<Server> data){
+															list.clear();
+															list.addAll(data);
+															saveServers();
+															sl.notifyItemRangeChanged(0,list.size()-1);
+															rv.smoothScrollToPosition(0);
+															new Thread(){
+																public void run(){
+																	List<Server> lList=new ArrayList<>(list);
+																	final int[] datas=new int[list.size()];
+																	for(int i=0;i<datas.length;i++){
+																		Server s=lList.get(i);
+																		if(pinging.get(s)){
+																			datas[i]=1;
+																		}else{
+																			if(s instanceof ServerStatus){
+																				datas[i]=2;
+																			}else{
+																				datas[i]=0;
+																			}
+																		}
+																	}
+																	runOnUiThread(new Runnable(){
+																			public void run(){
+																				statLayout.setStatuses(datas);
+																			}
+																		});
+																}
+															}.start();
+														}
+													});
+											}
+											di.dismiss();
+										}
+									})
+									.show();
+							}
+						}));//5
+		appMenu.add(new Quartet<Integer,Integer,Treatment<ServerListActivity>,PrimaryDrawerItem>(R.string.serverFinder, R.drawable.ic_search_black_48dp, new Treatment<ServerListActivity>(){
+							public void process(ServerListActivity a) {
+								startActivity(new Intent(a, ServerFinderActivity.class));
+							}
+						}));//6
+		appMenu.add(new Quartet<Integer,Integer,Treatment<ServerListActivity>,PrimaryDrawerItem>(R.string.addServerFromServerListSite, R.drawable.ic_language_black_48dp, new Treatment<ServerListActivity>(){
+							public void process(ServerListActivity a) {
+								startActivity(new Intent(a, ServerGetActivity.class));
+							}
+						}));//7
+		appMenu.add(new Quartet<Integer,Integer,Treatment<ServerListActivity>,PrimaryDrawerItem>(R.string.loadPing, R.drawable.ic_open_in_new_black_48dp, new Treatment<ServerListActivity>(){
+							public void process(ServerListActivity a) {
+								View dialogView=getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
+								final EditText et=(EditText)dialogView.findViewById(R.id.filePath);
+								et.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/pingresult.wisecraft-ping").toString());
+								dialogView.findViewById(R.id.selectFile).setOnClickListener(new View.OnClickListener(){
+										public void onClick(View v) {
+											File f=new File(et.getText().toString());
+											if ((!f.exists())|f.isFile())f = f.getParentFile();
+											startChooseFileForSelect(f, new FileChooserResult(){
+													public void onSelected(File f) {
+														et.setText(f.toString());
+													}
+													public void onSelectCancelled() {/*No-op*/}
+												});
+										}
+									});
+								new AppCompatAlertDialog.Builder(ServerListActivityImpl.this, R.style.AppAlertDialog)
+									.setTitle(R.string.load_typepath_simple)
+									.setView(dialogView)
+									.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
+										public void onClick(DialogInterface di, int w) {
+											wd.showWorkingDialog(getResources().getString(R.string.loading));
+											new Thread(){
+												public void run() {
+													ServerPingResult spr=null;
+													try{
+														spr=PingSerializeProvider.loadFromRawDumpFile(new BufferedInputStream(new FileInputStream(new File(et.getText().toString()))));
+													}catch(Throwable e){
+														WisecraftError.report("ServerListActivity#execOption#8",e);
+													}
+													final ServerStatus sv=new ServerStatus();
+													sv.ip="localhost";
+													sv.port=Integer.MIN_VALUE;
+													sv.ping=0;
+													sv.response=spr;
+													if(spr instanceof PEPingResult){
+														sv.mode=0;
+													}else if(spr instanceof PCQueryResult){
+														sv.mode=1;
+													}else if(spr instanceof SprPair){
+														SprPair pair=(SprPair)spr;
+														if(pair.getA() instanceof PEPingResult|pair.getB() instanceof PEPingResult){
+															sv.mode=0;
+														}else if(pair.getA() instanceof PCQueryResult|pair.getB() instanceof PCQueryResult){
+															sv.mode=1;
+														}
+													}
+													final String stat=Utils.encodeForServerInfo(sv);
+													runOnUiThread(new Runnable(){
+															public void run() {
+																wd.hideWorkingDialog();
+																if(sv.response==null){
+																	Toast.makeText(ServerListActivityImpl.this,R.string.loadPing_loadError,Toast.LENGTH_SHORT).show();
+																}else{
+																	startActivity(new Intent(ServerListActivityImpl.this, ServerInfoActivity.class).putExtra("stat", stat).putExtra("noExport",true).putExtra("nonUpd",true));
+																}
+															}
+														});
+												}
+											}.start();
+										}
+									})
+									.show();
+							}
+						}));//8
+		appMenu.add(new Quartet<Integer,Integer,Treatment<ServerListActivity>,PrimaryDrawerItem>(R.string.settings, R.drawable.ic_settings_black_48dp, new Treatment<ServerListActivity>(){
+							public void process(ServerListActivity a) {
+								SettingsDelegate.openAppSettings(a);
+							}
+						}));//9
+		appMenu.add(new Quartet<Integer,Integer,Treatment<ServerListActivity>,PrimaryDrawerItem>(R.string.exit, R.drawable.ic_close_black_48dp, new Treatment<ServerListActivity>(){
+							public void process(ServerListActivity a) {
+								finish();
+								saveServers();
+								instance = new WeakReference<>(null);
+								if (pref.getBoolean("exitCompletely", false))
+									if (ProxyActivity.cont != null)
+										ProxyActivity.cont.stopService();
+								new Handler().postDelayed(new Runnable(){
+										public void run() {
+											//System.exit(0);
+										}
+									}, 150 * 2);
+							}
+						}));//10
+	}
+
 	private void setupDrawer() {
 		dl = drawer.getDrawerLayout();
 	}
@@ -279,414 +701,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		// TODO: Implement this method
 		outState=drawer.saveInstanceState(outState);
 		super.onSaveInstanceState(outState);
-	}
-
-	public boolean execOption(int item) {
-		// TODO: Implement this method
-		if (dl != null)dl.closeDrawers();
-		switch (item) {
-			case 0:
-				View dialog=getLayoutInflater().inflate(R.layout.server_add_dialog_new, null);
-				final LinearLayout peFrame=(LinearLayout)dialog.findViewById(R.id.pe);
-				final LinearLayout pcFrame=(LinearLayout)dialog.findViewById(R.id.pc);
-				final EditText pe_ip=(EditText)dialog.findViewById(R.id.pe).findViewById(R.id.serverIp);
-				final EditText pe_port=(EditText)dialog.findViewById(R.id.pe).findViewById(R.id.serverPort);
-				final EditText pc_ip=(EditText)dialog.findViewById(R.id.pc).findViewById(R.id.serverIp);
-				final CheckBox split=(CheckBox)dialog.findViewById(R.id.switchFirm);
-
-				pe_ip.setText("localhost");
-				pe_port.setText("19132");
-				split.setChecked(false);
-
-				split.setOnClickListener(new View.OnClickListener(){
-						public void onClick(View v) {
-							if (split.isChecked()) {
-								//PE->PC
-								peFrame.setVisibility(View.GONE);
-								pcFrame.setVisibility(View.VISIBLE);
-								split.setText(R.string.pc);
-								StringBuilder result=new StringBuilder();
-								result.append(pe_ip.getText());
-								int port=Integer.valueOf(pe_port.getText().toString()).intValue();
-								if (!(port == 25565 | port == 19132))
-									result.append(':').append(pe_port.getText());
-								pc_ip.setText(result);
-							} else {
-								//PC->PE
-								pcFrame.setVisibility(View.GONE);
-								peFrame.setVisibility(View.VISIBLE);
-								split.setText(R.string.pe);
-								Server s=Utils.convertServerObject(Arrays.asList(com.nao20010128nao.McServerList.Server.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
-								pe_ip.setText(s.ip);
-								pe_port.setText(s.port + "");
-							}
-						}
-					});
-
-				new AppCompatAlertDialog.Builder(this, R.style.AppAlertDialog).
-					setView(dialog).
-					setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener(){
-						public void onClick(DialogInterface d, int sel) {
-							Server s;
-							if (split.isChecked()) {
-								s = Utils.convertServerObject(Arrays.asList(com.nao20010128nao.McServerList.Server.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
-							} else {
-								s = new Server();
-								s.ip = pe_ip.getText().toString();
-								s.port = Integer.valueOf(pe_port.getText().toString());
-								s.mode = split.isChecked() ?1: 0;
-							}
-
-							if (list.contains(s)) {
-								Toast.makeText(ServerListActivityImpl.this, R.string.alreadyExists, Toast.LENGTH_LONG).show();
-							} else {
-								sl.add(s);
-								spp.putInQueue(s, new PingHandlerImpl(true, -1));
-								pinging.put(s, true);
-							}
-							saveServers();
-						}
-					}).
-					setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener(){
-						public void onClick(DialogInterface d, int sel) {
-
-						}
-					}).
-					show();
-				break;
-			case 1:
-				new AppCompatAlertDialog.Builder(this)
-					.setTitle(R.string.addFromMCPE)
-					.setMessage(R.string.auSure)
-					.setPositiveButton(android.R.string.yes,new DialogInterface.OnClickListener(){
-						public void onClick(DialogInterface di,int w){
-							Toast.makeText(ServerListActivityImpl.this, R.string.importing, Toast.LENGTH_LONG).show();
-							new Thread(){
-								public void run() {
-									ArrayList<String[]> al=new ArrayList<String[]>();
-									try {
-										String[] lines=Utils.lines(Utils.readWholeFile(new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt")));
-										for (String s:lines) {
-											Log.d("readLine", s);
-											al.add(s.split("\\:"));
-										}
-									} catch (Throwable ex) {
-										DebugWriter.writeToE("ServerListActivity", ex);
-									}
-									final ArrayList<Server> sv=new ArrayList<>();
-									for (String[] s:al) {
-										if (s.length != 4)continue;
-										try {
-											Server svr=new Server();
-											svr.ip = s[2];
-											svr.port = Integer.valueOf(s[3]);
-											svr.mode = 0;
-											sv.add(svr);
-										} catch (NumberFormatException e) {}
-									}
-									sv.removeAll(list);
-									runOnUiThread(new Runnable(){
-											public void run() {
-												if (sv.size() != 0) {
-													for (Server s:sv) {
-														if (!list.contains(s)) {
-															spp.putInQueue(s, new PingHandlerImpl(true, -1));
-															pinging.put(s, true);
-															sl.add(s);
-														}
-													}
-												}
-												saveServers();
-											}
-										});
-								}
-							}.start();
-						}
-					})
-					.setNegativeButton(android.R.string.no,null)
-					.show();
-				break;
-			case 2:
-				for (int i=0;i < list.size();i++) {
-					if (pinging.get(list.get(i)))
-						continue;
-					statLayout.setStatusAt(i, 1);
-					if (!srl.isRefreshing())
-						srl.setRefreshing(true);
-				}
-				new Thread(){
-					public void run() {
-						for (int i=0;i < list.size();i++) {
-							if (pinging.get(list.get(i)))
-								continue;
-							spp.putInQueue(list.get(i), new PingHandlerImpl(false, -1, false){
-									public void onPingFailed(final Server s) {
-										super.onPingFailed(s);
-										runOnUiThread(new Runnable(){
-												public void run() {			
-													wd.hideWorkingDialog();
-												}
-											});
-									}
-									public void onPingArrives(final ServerStatus s) {
-										super.onPingArrives(s);
-										runOnUiThread(new Runnable(){
-												public void run() {
-													wd.hideWorkingDialog();
-												}
-											});
-									}
-								});
-							pinging.put(list.get(i), true);
-						}
-					}
-				}.start();
-				break;
-			case 3:{
-				View dialogView_=getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
-				final EditText et_=(EditText)dialogView_.findViewById(R.id.filePath);
-				et_.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/servers.json").toString());
-				dialogView_.findViewById(R.id.selectFile).setOnClickListener(new View.OnClickListener(){
-						public void onClick(View v) {
-							File f=new File(et_.getText().toString());
-							if ((!f.exists())|f.isFile())f = f.getParentFile();
-							startChooseFileForOpen(f, new FileChooserResult(){
-									public void onSelected(File f) {
-										et_.setText(f.toString());
-									}
-									public void onSelectCancelled() {/*No-op*/}
-								});
-						}
-					});
-				new AppCompatAlertDialog.Builder(ServerListActivityImpl.this, R.style.AppAlertDialog)
-					.setTitle(R.string.export_typepath)
-					.setView(dialogView_)
-					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
-						public void onClick(DialogInterface di, int w) {
-							Toast.makeText(ServerListActivityImpl.this, R.string.exporting, Toast.LENGTH_LONG).show();
-							new AsyncTask<String,Void,File>(){
-								public File doInBackground(String... texts) {
-									Server[] servs=new Server[list.size()];
-									for (int i=0;i < servs.length;i++)
-										servs[i] = list.get(i).cloneAsServer();
-									File f=new File(Environment.getExternalStorageDirectory(), "/Wisecraft");
-									f.mkdirs();
-									if (writeToFile(f = new File(texts[0]), gson.toJson(servs, Server[].class)))
-										return f;
-									else
-										return null;
-								}
-								public void onPostExecute(File f) {
-									if (f != null) {
-										Toast.makeText(ServerListActivityImpl.this, getResources().getString(R.string.export_complete).replace("[PATH]", f + ""), Toast.LENGTH_LONG).show();
-									} else {
-										Toast.makeText(ServerListActivityImpl.this, getResources().getString(R.string.export_failed), Toast.LENGTH_LONG).show();
-									}
-								}
-							}.execute(et_.getText().toString());
-						}
-					})
-					.show();
-				break;}
-			case 4:{
-				View dialogView=getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
-				final EditText et=(EditText)dialogView.findViewById(R.id.filePath);
-				et.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/servers.json").toString());
-				dialogView.findViewById(R.id.selectFile).setOnClickListener(new View.OnClickListener(){
-						public void onClick(View v) {
-							File f=new File(et.getText().toString());
-							if ((!f.exists())|f.isFile())f = f.getParentFile();
-							startChooseFileForSelect(f, new FileChooserResult(){
-									public void onSelected(File f) {
-										et.setText(f.toString());
-									}
-									public void onSelectCancelled() {/*No-op*/}
-								});
-						}
-					});
-				new AppCompatAlertDialog.Builder(ServerListActivityImpl.this, R.style.AppAlertDialog)
-					.setTitle(R.string.import_typepath)
-					.setView(dialogView)
-					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
-						public void onClick(DialogInterface di, int w) {
-							Toast.makeText(ServerListActivityImpl.this, R.string.importing, Toast.LENGTH_LONG).show();
-							new Thread(){
-								public void run() {
-                                    File f=new File(et.getText().toString());
-                                    if(f.exists()){
-                                        final Server[] sv;
-                                        String json=readWholeFile(f);
-                                        if (json.contains("\"isPC\"") & (json.contains("true") | json.contains("false"))) {
-                                            //old version json file
-                                            OldServer19[] sa=gson.fromJson(json, OldServer19[].class);
-                                            List<Server> ns=new ArrayList<>();
-                                            for (OldServer19 s:sa) {
-                                                Server nso=new Server();
-                                                nso.ip = s.ip;
-                                                nso.port = s.port;
-                                                nso.mode = s.isPC ?1: 0;
-                                                ns.add(nso);
-                                            }
-                                            sv = ns.toArray(new Server[ns.size()]);
-                                        } else {
-                                            sv = gson.fromJson(json, Server[].class);
-                                        }
-                                        runOnUiThread(new Runnable(){
-                                                public void run() {
-                                                    sl.addAll(sv);
-                                                    saveServers();
-                                                    Toast.makeText(ServerListActivityImpl.this, getResources().getString(R.string.imported).replace("[PATH]", et.getText().toString()), Toast.LENGTH_LONG).show();
-                                                }
-                                            });
-                                    }else{
-                                        runOnUiThread(new Runnable(){
-                                                public void run() {
-                                                    Toast.makeText(ServerListActivityImpl.this, R.string.fileNotExist, Toast.LENGTH_LONG).show();
-                                                }
-                                            });
-                                    }
-								}
-							}.start();
-						}
-					})
-					.show();
-				break;}
-			case 5:
-				new AppCompatAlertDialog.Builder(this, R.style.AppAlertDialog)
-					.setTitle(R.string.sort)
-					.setItems(R.array.serverSortMenu, new DialogInterface.OnClickListener(){
-						public void onClick(DialogInterface di, int w) {
-                            if(w==getResources().getStringArray(R.array.serverSortMenu).length-1){
-                                startEditMode();
-                            }else{
-							    SortKind sk=new SortKind[]{SortKind.BRING_ONLINE_SERVERS_TO_TOP,SortKind.IP_AND_PORT,SortKind.ONLINE_AND_OFFLINE}[w];
-                                skipSave = true;
-                                doSort(list, sk,new SortFinishedCallback(){
-                                        public void onSortFinished(List<Server> data){
-                                            list.clear();
-                                            list.addAll(data);
-                                            saveServers();
-                                            sl.notifyItemRangeChanged(0,list.size()-1);
-                                            rv.smoothScrollToPosition(0);
-                                            new Thread(){
-                                                public void run(){
-                                                    List<Server> lList=new ArrayList<>(list);
-                                                    final int[] datas=new int[list.size()];
-                                                    for(int i=0;i<datas.length;i++){
-                                                        Server s=lList.get(i);
-                                                        if(pinging.get(s)){
-                                                            datas[i]=1;
-                                                        }else{
-                                                            if(s instanceof ServerStatus){
-                                                                datas[i]=2;
-                                                            }else{
-                                                                datas[i]=0;
-                                                            }
-                                                        }
-                                                    }
-                                                    runOnUiThread(new Runnable(){
-                                                            public void run(){
-                                                                statLayout.setStatuses(datas);
-                                                            }
-                                                        });
-                                                }
-                                            }.start();
-                                        }
-                                    });
-                            }
-							di.dismiss();
-				        }
-					})
-					.show();
-				break;
-			case 6:
-				startActivity(new Intent(this, ServerFinderActivity.class));
-				break;
-			case 7:
-				startActivity(new Intent(this, ServerGetActivity.class));
-				break;
-			case 8:{
-				View dialogView=getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
-				final EditText et=(EditText)dialogView.findViewById(R.id.filePath);
-				et.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/pingresult.wisecraft-ping").toString());
-				dialogView.findViewById(R.id.selectFile).setOnClickListener(new View.OnClickListener(){
-						public void onClick(View v) {
-							File f=new File(et.getText().toString());
-							if ((!f.exists())|f.isFile())f = f.getParentFile();
-							startChooseFileForSelect(f, new FileChooserResult(){
-									public void onSelected(File f) {
-										et.setText(f.toString());
-									}
-									public void onSelectCancelled() {/*No-op*/}
-								});
-						}
-					});
-				new AppCompatAlertDialog.Builder(ServerListActivityImpl.this, R.style.AppAlertDialog)
-					.setTitle(R.string.load_typepath_simple)
-					.setView(dialogView)
-					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
-						public void onClick(DialogInterface di, int w) {
-							wd.showWorkingDialog(getResources().getString(R.string.loading));
-							new Thread(){
-								public void run() {
-									ServerPingResult spr=null;
-									try{
-										spr=PingSerializeProvider.loadFromRawDumpFile(new BufferedInputStream(new FileInputStream(new File(et.getText().toString()))));
-									}catch(Throwable e){
-										WisecraftError.report("ServerListActivity#execOption#8",e);
-									}
-									final ServerStatus sv=new ServerStatus();
-									sv.ip="localhost";
-									sv.port=Integer.MIN_VALUE;
-									sv.ping=0;
-									sv.response=spr;
-									if(spr instanceof PEPingResult){
-										sv.mode=0;
-									}else if(spr instanceof PCQueryResult){
-										sv.mode=1;
-									}else if(spr instanceof SprPair){
-										SprPair pair=(SprPair)spr;
-										if(pair.getA() instanceof PEPingResult|pair.getB() instanceof PEPingResult){
-											sv.mode=0;
-										}else if(pair.getA() instanceof PCQueryResult|pair.getB() instanceof PCQueryResult){
-											sv.mode=1;
-										}
-									}
-									final String stat=Utils.encodeForServerInfo(sv);
-									runOnUiThread(new Runnable(){
-											public void run() {
-												wd.hideWorkingDialog();
-												if(sv.response==null){
-													Toast.makeText(ServerListActivityImpl.this,R.string.loadPing_loadError,Toast.LENGTH_SHORT).show();
-												}else{
-													startActivity(new Intent(ServerListActivityImpl.this, ServerInfoActivity.class).putExtra("stat", stat).putExtra("noExport",true).putExtra("nonUpd",true));
-												}
-											}
-										});
-								}
-							}.start();
-						}
-					})
-					.show();
-				break;}
-			case 9:
-				SettingsDelegate.openAppSettings(this);
-				break;
-			case 10:
-				finish();
-				saveServers();
-				instance = new WeakReference(null);
-				if (pref.getBoolean("exitCompletely", false))
-					if (ProxyActivity.cont != null)
-						ProxyActivity.cont.stopService();
-				new Handler().postDelayed(new Runnable(){
-						public void run() {
-							//System.exit(0);
-						}
-					}, 150 * 2);
-				break;
-		}
-		return true;
 	}
 
 	public void loadServers() {

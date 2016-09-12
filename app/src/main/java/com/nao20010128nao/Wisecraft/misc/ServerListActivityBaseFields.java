@@ -18,6 +18,8 @@ import java.security.*;
 import java.util.*;
 
 import android.support.v7.view.ActionMode;
+import com.nao20010128nao.Wisecraft.*;
+import com.mikepenz.materialdrawer.model.*;
 
 //Fields
 public abstract class ServerListActivityBaseFields extends ServerListActivityBaseGrand
@@ -25,7 +27,7 @@ public abstract class ServerListActivityBaseFields extends ServerListActivityBas
     //impl
     protected static final File mcpeServerList=new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt");
 
-    protected final List<Map.Entry<Integer,Integer>> appMenu=new ArrayList<>();
+    protected final List<Quartet<Integer,Integer,Treatment<ServerListActivity>,PrimaryDrawerItem>> appMenu=new ArrayList<>();
     protected ServerPingProvider spp,updater;
     protected Gson gson=new Gson();
     protected int clicked=-1;
