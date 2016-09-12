@@ -1036,6 +1036,9 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		hsv[2] = v - 0.05f;//V-10
 		DIRT_DARK = Color.HSVToColor(hsv);
 		
+		Log.d("DirtBright",Integer.toHexString(DIRT_BRIGHT));
+		Log.d("DirtDark",Integer.toHexString(DIRT_DARK));
+		
 		calculatePalePrimary();
 	}
 	
@@ -1047,5 +1050,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		int a=new BigDecimal(0xff).multiply(new BigDecimal("0.3")).intValue();
 
 		PALE_PRIMARY = Color.argb(a, r, g, b);
+		
+		Log.d("PalePrimary",Integer.toHexString(PALE_PRIMARY));
 	}
 }
