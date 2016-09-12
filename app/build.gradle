@@ -115,6 +115,6 @@ dependencies {
 def getRandomBetaSuffix(){
 	def suffix=["BETA","Beta","beta","Soyokaze","Tokikaze","Throne"]
 	def rand=new SecureRandom();
-	def where=Math.abs(rand.nextInt())%suffix.length;
+	def where=Math.abs(rand.nextInt())%suffix.length();
 	return suffix[where];
 }
