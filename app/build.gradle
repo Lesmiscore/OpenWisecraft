@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
-apply from: '../sharing.gradle'
 
 import java.security.SecureRandom;
 
@@ -111,4 +110,11 @@ dependencies {
     	compile 'com.mikepenz:iconics-core:+'
     	compile 'com.mikepenz:fastadapter:+'
 	}
+}
+
+def getRandomBetaSuffix(){
+	def suffix=["BETA","Beta","beta","Soyokaze","Tokikaze","Throne"]
+	def rand=new SecureRandom();
+	def where=Math.abs(rand.nextInt())%suffix.length();
+	return suffix[where];
 }
