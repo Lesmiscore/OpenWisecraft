@@ -4,6 +4,13 @@ apply plugin: 'com.google.gms.google-services'
 import java.security.SecureRandom;
 
 android {
+	def getRandomBetaSuffix={->
+		def suffix=["BETA","Beta","beta","Soyokaze","Tokikaze","Throne"]
+		def rand=new SecureRandom();
+		def where=Math.abs(rand.nextInt())%suffix.size();
+		return suffix[where]
+	}
+
     compileSdkVersion 24
     buildToolsVersion "24.0.0"
 
@@ -58,13 +65,6 @@ android {
 	lintOptions {
         abortOnError false
     }
-    
-    def getRandomBetaSuffix(){
-		def suffix=["BETA","Beta","beta","Soyokaze","Tokikaze","Throne"]
-		def rand=new SecureRandom();
-		def where=Math.abs(rand.nextInt())%suffix.size();
-		return suffix[where]
-	}
 }
 
 dependencies {
