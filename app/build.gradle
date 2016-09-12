@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 
+import java.security.SecureRandom;
+
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.0"
@@ -35,13 +37,13 @@ android {
 		pre {
         	versionNameSuffix = ' Pre'
 			signingConfig signingConfigs.release
-			resValue "string", "app_name", "Wisecraft BETA"
+			resValue "string", "app_name", "Wisecraft "+getRandomBetaSuffix()
 		}
 		debug2 {
         	applicationIdSuffix = '.alpha'  
             versionNameSuffix = ' Pre'
 			signingConfig signingConfigs.release
-			resValue "string", "app_name", "Wisecraft BETA"
+			resValue "string", "app_name", "Wisecraft "+getRandomBetaSuffix()
 		}
     }
 	
@@ -108,4 +110,11 @@ dependencies {
     	compile 'com.mikepenz:iconics-core:+'
     	compile 'com.mikepenz:fastadapter:+'
 	}
+}
+
+def getRandomBetaSuffix(){
+	def suffix=["BETA","Beta","beta","Soyokaze","Tokikaze","Throne"]
+	def rand=new SecureRandom();
+	def where=Math.abs(rand.nextInt())%suffix.length;
+	return suffix[where];
 }
