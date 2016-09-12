@@ -58,6 +58,13 @@ android {
 	lintOptions {
         abortOnError false
     }
+    
+    def getRandomBetaSuffix(){
+		def suffix=["BETA","Beta","beta","Soyokaze","Tokikaze","Throne"]
+		def rand=new SecureRandom();
+		def where=Math.abs(rand.nextInt())%suffix.size();
+		return suffix[where]
+	}
 }
 
 dependencies {
@@ -110,11 +117,4 @@ dependencies {
     	compile 'com.mikepenz:iconics-core:+'
     	compile 'com.mikepenz:fastadapter:+'
 	}
-}
-
-def getRandomBetaSuffix(){
-	def suffix=["BETA","Beta","beta","Soyokaze","Tokikaze","Throne"]
-	def rand=new SecureRandom();
-	def where=Math.abs(rand.nextInt())%suffix.length();
-	return suffix[where];
 }
