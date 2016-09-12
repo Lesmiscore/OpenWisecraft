@@ -767,7 +767,6 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		}
 	}
 	public static class DataFragmentPE extends BaseFragment<ServerInfoActivity> {
-		View lv;
 		RecyclerView data;
 		KVRecyclerAdapter<String,String> infos;
 		@Override
@@ -776,7 +775,6 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			super.onResume();
 			data = (RecyclerView)getView().findViewById(R.id.data);
 			data.setLayoutManager(new HPLinearLayoutManager(getActivity()));
-			data.addItemDecoration(new DividerItemDecoration(getContext()));
 			data.setHasFixedSize(false);
 
 			infos = new KVRecyclerAdapter<>(getParentActivity());
@@ -798,7 +796,9 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
-			return this.lv = inflater.inflate(R.layout.data_tab, container, false);
+			View v= inflater.inflate(R.layout.data_tab, container, false);
+			((RecyclerView)v.findViewById(R.id.data)).addItemDecoration(new DividerItemDecoration(getContext()));
+			return v;
 		}
 	}
 	public static class DataFragmentPC extends BaseFragment<ServerInfoActivity> {
@@ -817,7 +817,6 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			serverName = (TextView)getView().findViewById(R.id.serverTitle);
 			data = (RecyclerView)getView().findViewById(R.id.data);
 			data.setLayoutManager(new HPLinearLayoutManager(getActivity()));
-			data.addItemDecoration(new DividerItemDecoration(getContext()));
 			data.setHasFixedSize(false);
 
 
@@ -895,6 +894,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 				bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
 				lv.findViewById(R.id.serverImageAndName).setBackgroundDrawable(bd);
 			}
+			((RecyclerView)lv.findViewById(R.id.data)).addItemDecoration(new DividerItemDecoration(getContext()));
 			return lv;
 		}
 	}
@@ -1021,7 +1021,9 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
-			return inflater.inflate(R.layout.server_info_ucp_details, container, false);
+			View v= inflater.inflate(R.layout.server_info_ucp_details, container, false);
+			((RecyclerView)v.findViewById(R.id.data)).addItemDecoration(new DividerItemDecoration(getContext()));
+			return v;
 		}
 	}
 
