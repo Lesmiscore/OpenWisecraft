@@ -688,7 +688,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			// TODO: Implement this method
 			super.onResume();
 			lv = (RecyclerView)getView();
-			lv.setLayoutManager(new LinearLayoutManager(getActivity()));
+			lv.setLayoutManager(new HPLinearLayoutManager(getActivity()));
 			lv.setHasFixedSize(false);
 
 
@@ -775,7 +775,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			// TODO: Implement this method
 			super.onResume();
 			data = (RecyclerView)getView().findViewById(R.id.data);
-			data.setLayoutManager(new LinearLayoutManager(getActivity()));
+			data.setLayoutManager(new HPLinearLayoutManager(getActivity()));
 			data.addItemDecoration(new DividerItemDecoration(getContext()));
 			data.setHasFixedSize(false);
 
@@ -816,7 +816,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			serverIcon = (ImageView)getView().findViewById(R.id.serverIcon);
 			serverName = (TextView)getView().findViewById(R.id.serverTitle);
 			data = (RecyclerView)getView().findViewById(R.id.data);
-			data.setLayoutManager(new LinearLayoutManager(getActivity()));
+			data.setLayoutManager(new HPLinearLayoutManager(getActivity()));
 			data.addItemDecoration(new DividerItemDecoration(getContext()));
 			data.setHasFixedSize(false);
 
@@ -906,7 +906,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			// TODO: Implement this method
 			super.onResume();
 			lv = (RecyclerView)getView();
-			lv.setLayoutManager(new LinearLayoutManager(getActivity()));
+			lv.setLayoutManager(new HPLinearLayoutManager(getActivity()));
 			lv.setHasFixedSize(false);
 
 
@@ -951,7 +951,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			super.onResume();
 			mods = (RecyclerView)getView().findViewById(R.id.players);
 			modLoader = (TextView)getView().findViewById(R.id.modLoaderType);
-			mods.setLayoutManager(new LinearLayoutManager(getActivity()));
+			mods.setLayoutManager(new HPLinearLayoutManager(getActivity()));
 			mods.setHasFixedSize(false);
 
 
@@ -1001,7 +1001,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 				result = (UnconnectedPing.UnconnectedPingResult)((SprPair)getParentActivity().localStat.response).getB();
 			}
 			RecyclerView lv=(RecyclerView)getView().findViewById(R.id.data);
-			lv.setLayoutManager(new LinearLayoutManager(getActivity()));
+			lv.setLayoutManager(new HPLinearLayoutManager(getActivity()));
 			lv.addItemDecoration(new DividerItemDecoration(getContext()));
 			lv.setHasFixedSize(false);
 			
