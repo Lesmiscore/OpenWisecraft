@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply from: '../sharing.gradle'
 
 android{
     compileSdkVersion 24
@@ -57,16 +58,4 @@ dependencies {
     	compile 'com.mikepenz:iconics-core:+'
     	compile 'com.mikepenz:fastadapter:+'
 	}
-}
-
-
-def getHashOfRepo(String modul,String name,String root){
-	def revisionHash = "Unknown"
-	if(!System.getProperty("os.name").toLowerCase().startsWith("windows")){
-		revisionHash = ["sh",  "-c",  "cd "+root+"/"+modul+" ; git rev-parse HEAD"].execute().in.text.trim()
-	}else{
-		revisionHash = ["cmd",  "/c",  "git rev-parse HEAD"].execute(null,new File(root,modul)).in.text.trim()
-	}
-	println "Git Revision of "+name+" is:"+revisionHash
-	return revisionHash;
 }
