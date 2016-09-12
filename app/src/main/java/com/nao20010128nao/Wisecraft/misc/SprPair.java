@@ -3,25 +3,7 @@ import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import java.io.*;
 
-public class SprPair implements ServerPingResult {
-	ServerPingResult a,b;
-
-	public void setA(ServerPingResult a) {
-		this.a = a;
-	}
-
-	public ServerPingResult getA() {
-		return a;
-	}
-
-	public void setB(ServerPingResult b) {
-		this.b = b;
-	}
-
-	public ServerPingResult getB() {
-		return b;
-	}
-
+public class SprPair extends Duo<ServerPingResult,ServerPingResult> implements ServerPingResult {
 	@Override
 	public byte[] getRawResult() {
 		// TODO: Implement this method
