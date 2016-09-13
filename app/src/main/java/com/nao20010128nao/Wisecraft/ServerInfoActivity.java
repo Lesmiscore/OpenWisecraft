@@ -170,7 +170,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 					if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
 						color=DIRT_DARK;
 					}else{
-						color=ContextCompat.getColor(ServerInfoActivity.this,R.color.material_grey_100);
+						color=ContextCompat.getColor(ServerInfoActivity.this,R.color.material_grey_600);
 					}
 					r=Color.red(color);
 					g=Color.green(color);
@@ -232,14 +232,14 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
 				background.setBackgroundColor(DIRT_DARK);
 			}else{
-				background.setBackgroundColor(ContextCompat.getColor(ServerInfoActivity.this,R.color.material_grey_100));
+				background.setBackgroundColor(ContextCompat.getColor(ServerInfoActivity.this,R.color.material_grey_600));
 			}
 		}else{
 			if (Build.VERSION.SDK_INT >= 21) {
 				if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
 					getWindow().setStatusBarColor(DIRT_DARK);
 				}else{
-					getWindow().setStatusBarColor(ContextCompat.getColor(ServerInfoActivity.this,R.color.material_grey_100));
+					getWindow().setStatusBarColor(ContextCompat.getColor(ServerInfoActivity.this,R.color.material_grey_600));
 				}
 			}
 		}
