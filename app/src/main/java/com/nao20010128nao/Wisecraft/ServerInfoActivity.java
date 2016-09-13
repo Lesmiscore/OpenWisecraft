@@ -61,6 +61,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 	View bottomSheet;
 	ViewPagerBottomSheetBehavior behavior;
 	boolean useBottomSheet=false;
+	View background;//it is actually FrameLayout
 
 	/*Only for PC servers*/
 	Drawable serverIconObj;
@@ -155,9 +156,6 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		int offset=getIntent().getIntExtra("offset", 0);
 		if (adapter.getCount() >= 2 & offset == 0)tabs.setCurrentItem(1);
 		tabs.setCurrentItem(offset);
-		if (Build.VERSION.SDK_INT >= 21) {
-			getWindow().setStatusBarColor(0);
-		}
 		
 		if(useBottomSheet){
 			BottomSheetUtils.setupViewPager(tabs);
@@ -166,6 +164,18 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			behavior.setHideable(true);
 			behavior.setState(ViewPagerBottomSheetBehavior.STATE_COLLAPSED);
 			behavior.setBottomSheetCallback(new ViewPagerBottomSheetBehavior.BottomSheetCallback() {
+				int r,g,b;
+				{
+					int color;
+					if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
+						color=DIRT_DARK;
+					}else{
+						color=ContextCompat.getColor(ServerInfoActivity.this,R.color.material_grey_100);
+					}
+					r=Color.red(color);
+					g=Color.green(color);
+					b=Color.blue(color);
+				}
 					@Override
 					public void onStateChanged(View bottomSheet, int newState) {
 						switch (newState) {
@@ -193,20 +203,35 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 
 					@Override
 					public void onSlide(View bottomSheet, float slideOffset) {
+						BigDecimal val=new BigDecimal(slideOffset).add(BigDecimal.ONE).divide(new BigDecimal(2));
+						ViewCompat.setAlpha(background,val.floatValue());
+						
+						if (Build.VERSION.SDK_INT >= 21) {
+							int alpha=val.multiply(new BigDecimal(255)).intValue();
+							int status=Color.argb(alpha,r,g,b);
+							getWindow().setStatusBarColor(status);
+						}
 					}
 				});
-			findViewById(R.id.background).setOnClickListener(new View.OnClickListener(){
+			background=findViewById(R.id.background);
+			background.setOnClickListener(new View.OnClickListener(){
 				public void onClick(View v){
 					behavior.setState(ViewPagerBottomSheetBehavior.STATE_HIDDEN);
 				}
 			});
-		}else{
 			if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
-				getWindow().setStatusBarColor(DIRT_DARK);
+				background.setBackgroundColor(DIRT_DARK);
 			}else{
-				getWindow().setStatusBarColor(ContextCompat.getColor(ServerInfoActivity.this,R.color.material_grey_100));
+				background.setBackgroundColor(ContextCompat.getColor(ServerInfoActivity.this,R.color.material_grey_100));
 			}
-			tabs.setBackgroundColor(Color.WHITE);
+		}else{
+			if (Build.VERSION.SDK_INT >= 21) {
+				if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
+					getWindow().setStatusBarColor(DIRT_DARK);
+				}else{
+					getWindow().setStatusBarColor(ContextCompat.getColor(ServerInfoActivity.this,R.color.material_grey_100));
+				}
+			}
 		}
 	}
 
