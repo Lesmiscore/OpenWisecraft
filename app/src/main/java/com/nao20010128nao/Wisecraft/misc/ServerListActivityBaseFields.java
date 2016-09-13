@@ -10,6 +10,8 @@ import android.support.v7.widget.helper.ItemTouchHelper.*;
 import android.view.*;
 import com.google.gson.*;
 import com.mikepenz.materialdrawer.*;
+import com.mikepenz.materialdrawer.model.interfaces.*;
+import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.provider.*;
 import com.nao20010128nao.Wisecraft.misc.skin_face.*;
 import com.nao20010128nao.Wisecraft.misc.view.*;
@@ -18,8 +20,6 @@ import java.security.*;
 import java.util.*;
 
 import android.support.v7.view.ActionMode;
-import com.nao20010128nao.Wisecraft.*;
-import com.mikepenz.materialdrawer.model.*;
 
 //Fields
 public abstract class ServerListActivityBaseFields extends ServerListActivityBaseGrand
@@ -27,7 +27,7 @@ public abstract class ServerListActivityBaseFields extends ServerListActivityBas
     //impl
     protected static final File mcpeServerList=new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt");
 
-    protected final List<Quartet<Integer,Integer,Treatment<ServerListActivity>,PrimaryDrawerItem>> appMenu=new ArrayList<>();
+    protected final QuartetWalker<Integer,Integer,Treatment<ServerListActivity>,IDrawerItem> appMenu=new QuartetWalker<>();
     protected ServerPingProvider spp,updater;
     protected Gson gson=new Gson();
     protected int clicked=-1;
