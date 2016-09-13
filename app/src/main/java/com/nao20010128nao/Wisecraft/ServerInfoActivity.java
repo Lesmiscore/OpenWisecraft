@@ -182,18 +182,18 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 							case ViewPagerBottomSheetBehavior.STATE_DRAGGING:
 							case ViewPagerBottomSheetBehavior.STATE_SETTLING:
 							case ViewPagerBottomSheetBehavior.STATE_COLLAPSED:
-								if (Build.VERSION.SDK_INT >= 21) {
+								/*if (Build.VERSION.SDK_INT >= 21) {
 									getWindow().setStatusBarColor(0);
-								}
+								}*/
 								break;
 							case ViewPagerBottomSheetBehavior.STATE_EXPANDED:
-								if (Build.VERSION.SDK_INT >= 21) {
+								/*if (Build.VERSION.SDK_INT >= 21) {
 									if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
 										getWindow().setStatusBarColor(DIRT_DARK);
 									}else{
 										getWindow().setStatusBarColor(0);
 									}
-								}
+								}*/
 								break;
 							case ViewPagerBottomSheetBehavior.STATE_HIDDEN:
 								finish();
@@ -203,9 +203,19 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 
 					@Override
 					public void onSlide(View bottomSheet, float slideOffset) {
+						/*
 						BigDecimal val=new BigDecimal(slideOffset).add(BigDecimal.ONE).divide(new BigDecimal(2));
 						ViewCompat.setAlpha(background,val.floatValue());
 						
+						if (Build.VERSION.SDK_INT >= 21) {
+							int alpha=val.multiply(new BigDecimal(255)).intValue();
+							int status=Color.argb(alpha,r,g,b);
+							getWindow().setStatusBarColor(status);
+						}
+						*/
+						BigDecimal val=slideOffset<0?BigDecimal.ZERO:new BigDecimal(slideOffset);
+						ViewCompat.setAlpha(background,val.floatValue());
+
 						if (Build.VERSION.SDK_INT >= 21) {
 							int alpha=val.multiply(new BigDecimal(255)).intValue();
 							int status=Color.argb(alpha,r,g,b);
