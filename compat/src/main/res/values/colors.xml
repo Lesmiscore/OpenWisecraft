@@ -5,13 +5,13 @@
 	<color name="stat_error">#f00</color>
 	<color name="stat_ok">#0f0</color>
 	
-	<color name="upd_1">#425E35</color>
-	<color name="upd_2">#59A145</color>
+	<color name="upd_1">#425E35</color><!--#303F9F-->
+	<color name="upd_2">#3949AB</color>
 	<color name="upd_3">#a0782e</color>
 	<color name="upd_4">#ff723a</color>
 	
 	<color name="primary">#F5F5F5</color>
-	<color name="accent">@color/upd_2</color>
+	<color name="accent">#3949AB</color>
 	
 	<color name="light_icons_foreground">#666666</color>
 	
@@ -21,5 +21,5 @@
 	<color name="white">#ffffff</color>
 	
 	
-	<color name="mainColor">@color/upd_2</color>
+	<color name="mainColor">#3949AB</color>
 </resources>
