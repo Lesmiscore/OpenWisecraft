@@ -47,15 +47,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
 		{
 			for (Quartet<Integer,Integer,Treatment<ServerListActivity>,IDrawerItem> s:appMenu) {
-				if (appMenu.indexOf(s) == 5 & !pref.getBoolean("feature_bott", true)) {
-					continue;
-				}
-				if (appMenu.indexOf(s) == 6 & !pref.getBoolean("feature_serverFinder", false)) {
-					continue;
-				}
-				if (appMenu.indexOf(s) == 7 & !pref.getBoolean("feature_asfsls", false)) {
-					continue;
-				}
 				PrimaryDrawerItem pdi=new LineWrappingPrimaryDrawerItem();
 				pdi.withName(s.getA()).withIcon(s.getB());
 				pdi.withSetSelected(false);((IdContainer)pdi).setIntId(appMenu.indexOf(s));
@@ -521,66 +512,72 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 									.show();
 							}
 						}));//4
-		appMenu.add(new Quartet<Integer,Integer,Treatment<ServerListActivity>,IDrawerItem>(R.string.sort, R.drawable.ic_compare_arrows_black_48dp, new Treatment<ServerListActivity>(){
-							public void process(ServerListActivity a) {
-								new AppCompatAlertDialog.Builder(a, R.style.AppAlertDialog)
-									.setTitle(R.string.sort)
-									.setItems(R.array.serverSortMenu, new DialogInterface.OnClickListener(){
-										public void onClick(DialogInterface di, int w) {
-											if(w==getResources().getStringArray(R.array.serverSortMenu).length-1){
-												startEditMode();
-											}else{
-												SortKind sk=new SortKind[]{SortKind.BRING_ONLINE_SERVERS_TO_TOP,SortKind.IP_AND_PORT,SortKind.ONLINE_AND_OFFLINE}[w];
-												skipSave = true;
-												doSort(list, sk,new SortFinishedCallback(){
-														public void onSortFinished(List<Server> data){
-															list.clear();
-															list.addAll(data);
-															saveServers();
-															sl.notifyItemRangeChanged(0,list.size()-1);
-															rv.smoothScrollToPosition(0);
-															new Thread(){
-																public void run(){
-																	List<Server> lList=new ArrayList<>(list);
-																	final int[] datas=new int[list.size()];
-																	for(int i=0;i<datas.length;i++){
-																		Server s=lList.get(i);
-																		if(pinging.get(s)){
-																			datas[i]=1;
-																		}else{
-																			if(s instanceof ServerStatus){
-																				datas[i]=2;
+		if(pref.getBoolean("feature_bott", true)){
+			appMenu.add(new Quartet<Integer,Integer,Treatment<ServerListActivity>,IDrawerItem>(R.string.sort, R.drawable.ic_compare_arrows_black_48dp, new Treatment<ServerListActivity>(){
+								public void process(ServerListActivity a) {
+									new AppCompatAlertDialog.Builder(a, R.style.AppAlertDialog)
+										.setTitle(R.string.sort)
+										.setItems(R.array.serverSortMenu, new DialogInterface.OnClickListener(){
+											public void onClick(DialogInterface di, int w) {
+												if(w==getResources().getStringArray(R.array.serverSortMenu).length-1){
+													startEditMode();
+												}else{
+													SortKind sk=new SortKind[]{SortKind.BRING_ONLINE_SERVERS_TO_TOP,SortKind.IP_AND_PORT,SortKind.ONLINE_AND_OFFLINE}[w];
+													skipSave = true;
+													doSort(list, sk,new SortFinishedCallback(){
+															public void onSortFinished(List<Server> data){
+																list.clear();
+																list.addAll(data);
+																saveServers();
+																sl.notifyItemRangeChanged(0,list.size()-1);
+																rv.smoothScrollToPosition(0);
+																new Thread(){
+																	public void run(){
+																		List<Server> lList=new ArrayList<>(list);
+																		final int[] datas=new int[list.size()];
+																		for(int i=0;i<datas.length;i++){
+																			Server s=lList.get(i);
+																			if(pinging.get(s)){
+																				datas[i]=1;
 																			}else{
-																				datas[i]=0;
+																				if(s instanceof ServerStatus){
+																					datas[i]=2;
+																				}else{
+																					datas[i]=0;
+																				}
 																			}
 																		}
+																		runOnUiThread(new Runnable(){
+																				public void run(){
+																					statLayout.setStatuses(datas);
+																				}
+																			});
 																	}
-																	runOnUiThread(new Runnable(){
-																			public void run(){
-																				statLayout.setStatuses(datas);
-																			}
-																		});
-																}
-															}.start();
-														}
-													});
+																}.start();
+															}
+														});
+												}
+												di.dismiss();
 											}
-											di.dismiss();
-										}
-									})
-									.show();
-							}
-						}));//5
-		appMenu.add(new Quartet<Integer,Integer,Treatment<ServerListActivity>,IDrawerItem>(R.string.serverFinder, R.drawable.ic_search_black_48dp, new Treatment<ServerListActivity>(){
-							public void process(ServerListActivity a) {
-								startActivity(new Intent(a, ServerFinderActivity.class));
-							}
-						}));//6
-		appMenu.add(new Quartet<Integer,Integer,Treatment<ServerListActivity>,IDrawerItem>(R.string.addServerFromServerListSite, R.drawable.ic_language_black_48dp, new Treatment<ServerListActivity>(){
-							public void process(ServerListActivity a) {
-								startActivity(new Intent(a, ServerGetActivity.class));
-							}
-						}));//7
+										})
+										.show();
+								}
+							}));//5
+		}
+		if(pref.getBoolean("feature_serverFinder", false)){
+			appMenu.add(new Quartet<Integer,Integer,Treatment<ServerListActivity>,IDrawerItem>(R.string.serverFinder, R.drawable.ic_search_black_48dp, new Treatment<ServerListActivity>(){
+								public void process(ServerListActivity a) {
+									startActivity(new Intent(a, ServerFinderActivity.class));
+								}
+							}));//6
+		}
+		if(pref.getBoolean("feature_asfsls", false)){
+			appMenu.add(new Quartet<Integer,Integer,Treatment<ServerListActivity>,IDrawerItem>(R.string.addServerFromServerListSite, R.drawable.ic_language_black_48dp, new Treatment<ServerListActivity>(){
+								public void process(ServerListActivity a) {
+									startActivity(new Intent(a, ServerGetActivity.class));
+								}
+							}));//7
+		}
 		appMenu.add(new Quartet<Integer,Integer,Treatment<ServerListActivity>,IDrawerItem>(R.string.loadPing, R.drawable.ic_open_in_new_black_48dp, new Treatment<ServerListActivity>(){
 							public void process(ServerListActivity a) {
 								View dialogView=getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
