@@ -234,6 +234,9 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			}else{
 				background.setBackgroundColor(ContextCompat.getColor(ServerInfoActivity.this,R.color.material_grey_600));
 			}
+			if (Build.VERSION.SDK_INT >= 21) {
+				getWindow().setStatusBarColor(0);
+			}
 		}else{
 			if (Build.VERSION.SDK_INT >= 21) {
 				if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
