@@ -653,7 +653,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
-			return LayoutInflater.from(getActivity()).inflate(R.layout.server_info_pager,container,false);
+			return LayoutInflater.from(getActivity()).inflate(R.layout.server_info_pager_nobs,container,false);
 		}
 		
 		public static class BlankFragment extends com.nao20010128nao.Wisecraft.misc.BaseFragment<FragmentSettingsActivity> {
