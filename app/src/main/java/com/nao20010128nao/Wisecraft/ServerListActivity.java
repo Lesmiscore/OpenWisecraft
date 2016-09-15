@@ -694,6 +694,20 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	}
 
 	@Override
+	public boolean onKeyUp(int keyCode, KeyEvent event) {
+		// TODO: Implement this method
+		if(keyCode==KeyEvent.KEYCODE_MENU){
+			if(drawer.isDrawerOpen())
+				drawer.closeDrawer();
+			else
+				drawer.openDrawer();
+			return true;
+		}
+		return super.onKeyUp(keyCode, event);
+	}
+
+
+	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		// TODO: Implement this method
 		outState=drawer.saveInstanceState(outState);
