@@ -718,37 +718,27 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		int version=pref.getInt("serversJsonVersion", 0);
 		version = version == 0 ?(pref.getString("servers", "[]").equals("[]") ?version: 1): version;
 		switch (version) {
-			case 0:
-				wd.showWorkingDialog(getResources().getString(R.string.upgrading));
-				new AsyncTask<Void,Void,Void>(){
-					public Void doInBackground(Void...args) {
-						OldServer19[] sa=gson.fromJson(pref.getString("servers", "[]"), OldServer19[].class);
-						List<Server> ns=new ArrayList<>();
-						for (OldServer19 s:sa) {
-							Server nso=new Server();
-							nso.ip = s.ip;
-							nso.port = s.port;
-							nso.mode = s.isPC ?1: 0;
-							ns.add(nso);
-						}
-						pref.edit().putInt("serversJsonVersion", 1).putString("servers", gson.toJson(ns)).commit();
-						return null;
+			case 0:{
+					OldServer19[] sa=gson.fromJson(pref.getString("servers", "[]"), OldServer19[].class);
+					List<Server> ns=new ArrayList<>();
+					for (OldServer19 s:sa) {
+						Server nso=new Server();
+						nso.ip = s.ip;
+						nso.port = s.port;
+						nso.mode = s.isPC ?1: 0;
+						ns.add(nso);
 					}
-					public void onPostExecute(Void v) {
-						wd.hideWorkingDialog();
-						loadServers();
-					}
-				}.execute();
-				break;
-			case 1:
-				Server[] sa=gson.fromJson(pref.getString("servers", "[]"), Server[].class);
-				int prevLen=list.size();
-				list.clear();
-				sl.notifyItemRangeRemoved(0, prevLen);
-				int curLen=sa.length;
-				list.addAll(Arrays.asList(sa));
-				sl.notifyItemRangeInserted(0, curLen);
-				break;
+					pref.edit().putInt("serversJsonVersion", 1).putString("servers", gson.toJson(ns)).commit();
+				}
+			case 1:{
+					Server[] sa=gson.fromJson(pref.getString("servers", "[]"), Server[].class);
+					int prevLen=list.size();
+					list.clear();
+					sl.notifyItemRangeRemoved(0, prevLen);
+					int curLen=sa.length;
+					list.addAll(Arrays.asList(sa));
+					sl.notifyItemRangeInserted(0, curLen);
+				}
 		}
 	}
 	public void saveServers() {
