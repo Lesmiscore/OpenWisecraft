@@ -551,4 +551,7 @@ public class Utils extends PingerUtils{
 		byte[] data=PingSerializeProvider.dumpServerForFile(s);
 		return Base64.encodeToString(data,ServerInfoActivity.BASE64_FLAGS);
 	}
+	public static boolean equals(Object a, Object b) {
+        return (a == b) || (a != null && a.equals(b));
+    }
 }
