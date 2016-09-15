@@ -92,16 +92,16 @@ public class MinecraftFormattingCodeParser
 						
 					/*Styles*/
 					case 'l':case 'L':
-						flag=(byte)(flag|0b00010000);
+						flag|=0b00010000;
 						break;
 					case 'm':case 'M':
-						flag=(byte)(flag|0b00100000);
+						flag|=0b00100000;
 						break;
 					case 'n':case 'N':
-						flag=(byte)(flag|0b01000000);
+						flag|=0b01000000;
 						break;
 					case 'o':case 'O':
-						flag=(byte)(flag|0b10000000);
+						flag|=0b10000000;
 						break;
 					
 					/*Reset*/
