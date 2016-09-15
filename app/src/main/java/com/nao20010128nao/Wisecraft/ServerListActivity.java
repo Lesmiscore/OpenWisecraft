@@ -81,7 +81,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		srl.setColorSchemeResources(R.color.upd_1, R.color.upd_2, R.color.upd_3, R.color.upd_4);
 		srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
 				public void onRefresh() {
-					appMenu.get(2).getC().process(ServerListActivity.instance.get());
+					appMenu.findByA(R.string.update_all).getC().process(ServerListActivity.instance.get());
 				}
 			});
 		if (pref.getBoolean("statusBarTouchScroll", false))
