@@ -23,7 +23,8 @@ dependencies {
 	
 	compile 'com.google.firebase:firebase-auth:9.+'
 	compile 'commons-validator:commons-validator:+'
-	
+	compile 'com.google.android.gms:play-services-auth:9.+'
+
 	compile project(':wisecraft-i18n')
 	compile project(':compat')
 	
