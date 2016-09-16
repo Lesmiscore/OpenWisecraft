@@ -839,6 +839,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					} else {
 						viewHolder.setServerTitle(deleteDecorations(sv.name));
 					}
+					viewHolder.showServerTitle();
 				}
 				if (sla.pref.getBoolean("colorFormattedText", false)) {
 					if (sla.pref.getBoolean("darkBackgroundForServerName", false)) {

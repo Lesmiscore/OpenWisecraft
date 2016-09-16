@@ -217,6 +217,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 			} else {
 				viewHolder.setDarkness(false);
 			}
+			viewHolder.hideServerTitle();
             if (sta.pinging.get(offset)) {
 				viewHolder.pending(s,sta);
 			} else {

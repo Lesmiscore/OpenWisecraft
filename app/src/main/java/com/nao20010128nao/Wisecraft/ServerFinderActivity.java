@@ -245,7 +245,8 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 				.setTag(s)
 				.setPingMillis(s.ping)
 				.setServer(s)
-				.setServerAddress(s.port + "");
+				.setServerAddress(s.port + "")
+				.hideServerTitle();
 			applyHandlersForViewTree(viewHolder.itemView,
 				new View.OnClickListener() {
 					@Override

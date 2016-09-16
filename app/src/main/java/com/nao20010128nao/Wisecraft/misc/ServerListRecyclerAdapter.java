@@ -1,6 +1,7 @@
 package com.nao20010128nao.Wisecraft.misc;
 import android.content.*;
 import android.preference.*;
+import android.text.*;
 import android.view.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
@@ -16,7 +17,7 @@ public class ServerListRecyclerAdapter extends ListRecyclerViewAdapter<ServerSta
 	List<BindViewHolderListener> bhListeners=new ArrayList<>();
 	SharedPreferences pref;
 	PingingMap pinging=new PingingMap();
-	boolean forceDarkness,darkness;
+	boolean forceDarkness,darkness,showTitle;
 	
 	public ServerListRecyclerAdapter(Context ctx){
 		this(new ArrayList<Server>(),ctx);
@@ -51,7 +52,16 @@ public class ServerListRecyclerAdapter extends ListRecyclerViewAdapter<ServerSta
 	public boolean isDarkness() {
 		return darkness;
 	}
+	
+	public void setShowTitle(boolean showTitle) {
+		this.showTitle = showTitle;
+		if(showTitle)notifyItemRangeChanged(0,size());
+	}
 
+	public boolean isShowTitle() {
+		return showTitle;
+	}
+	
 	public void useGridLayout(boolean isGrid) {
 		this.isGrid = isGrid;
 	}
@@ -111,7 +121,20 @@ public class ServerListRecyclerAdapter extends ListRecyclerViewAdapter<ServerSta
 				viewHolder.setDarkness(false);
 			}
 		}
-		
+		if((TextUtils.isEmpty(s.name)||s.toString().equals(s.name))&(!showTitle)){
+			viewHolder.hideServerTitle();
+		}else{
+			if (pref.getBoolean("colorFormattedText", false)) {
+				if (pref.getBoolean("darkBackgroundForServerName", false)) {
+					viewHolder.setServerTitle(parseMinecraftFormattingCodeForDark(s.name));
+				} else {
+					viewHolder.setServerTitle(parseMinecraftFormattingCode(s.name));
+				}
+			} else {
+				viewHolder.setServerTitle(deleteDecorations(s.name));
+			}
+			viewHolder.showServerTitle();
+		}
 		if (pinging.get(s)) {
 			viewHolder.pending(s,context);
 		} else {
