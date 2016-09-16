@@ -720,9 +720,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		switch (version) {
 			case 0:{
 					OldServer19[] sa=gson.fromJson(pref.getString("servers", "[]"), OldServer19[].class);
-					List<Server> ns=new ArrayList<>();
+					List<OldServer35> ns=new ArrayList<>();
 					for (OldServer19 s:sa) {
-						Server nso=new Server();
+						OldServer35 nso=new OldServer35();
 						nso.ip = s.ip;
 						nso.port = s.port;
 						nso.mode = s.isPC ?1: 0;
@@ -731,6 +731,19 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					pref.edit().putInt("serversJsonVersion", 1).putString("servers", gson.toJson(ns)).commit();
 				}
 			case 1:{
+					OldServer35[] sa=gson.fromJson(pref.getString("servers", "[]"), OldServer35[].class);
+					List<Server> ns=new ArrayList<>();
+					for (OldServer35 s:sa) {
+						Server nso=new Server();
+						nso.ip = s.ip;
+						nso.port = s.port;
+						nso.mode = s.mode;
+						nso.name=nso.toString();
+						ns.add(nso);
+					}
+					pref.edit().putInt("serversJsonVersion", 2).putString("servers", gson.toJson(ns)).commit();
+				}
+			case 2:{
 					Server[] sa=gson.fromJson(pref.getString("servers", "[]"), Server[].class);
 					int prevLen=list.size();
 					list.clear();
