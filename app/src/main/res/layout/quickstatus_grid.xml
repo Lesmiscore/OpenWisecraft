@@ -70,18 +70,18 @@
 				android:layout_width="wrap_content"
 				android:text="-/-"
 				android:id="@+id/serverPlayers"
-				android:gravity="left"
+				android:gravity="center"
 				android:scrollHorizontally="true"
-				android:singleLine="true"/>
+				android:singleLine="true"
+				android:layout_weight="1.0"/>
 
 			<TextView
 				android:layout_height="wrap_content"
 				android:textAppearance="?android:attr/textAppearanceMedium"
-				android:layout_width="match_parent"
+				android:layout_width="wrap_content"
 				android:text="@string/notResponding"
 				android:id="@+id/pingMillis"
-				android:gravity="right"
-				android:layout_weight="1.0"/>
+				android:gravity="right"/>
 
 		</LinearLayout>
 

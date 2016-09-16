@@ -11,8 +11,8 @@ import android.support.v7.view.ContextThemeWrapper;
 
 public class ServerStatusWrapperViewHolder extends FindableViewHolder
 {
-	public static final int[] COLORED_TEXTVIEWS=new int[]{R.id.serverPlayers,R.id.serverAddress,R.id.pingMillis,R.id.serverName,R.id.target};
-	public static final int[] ALL_VIEWS=new int[]{R.id.serverPlayers,R.id.serverAddress,R.id.pingMillis,R.id.serverName,R.id.target,R.id.statColor};
+	public static final int[] COLORED_TEXTVIEWS=new int[]{R.id.serverPlayers,R.id.serverAddress,R.id.pingMillis,R.id.serverName,R.id.target,R.id.serverTitle};
+	public static final int[] ALL_VIEWS=new int[]{R.id.serverPlayers,R.id.serverAddress,R.id.pingMillis,R.id.serverName,R.id.target,R.id.serverTitle,R.id.statColor};
 	
 	PreloadedViews preload;
 	
@@ -80,6 +80,10 @@ public class ServerStatusWrapperViewHolder extends FindableViewHolder
 	public ServerStatusWrapperViewHolder setServer(Server server){
 		setServerAddress(server);
 		setTarget(server.mode);
+		return this;
+	}
+	public ServerStatusWrapperViewHolder setServerTitle(CharSequence text){
+		((TextView)preload.getView(R.id.serverTitle)).setText(text);
 		return this;
 	}
 	
