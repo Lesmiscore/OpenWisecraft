@@ -4,11 +4,12 @@ public class Server {
 	public String ip;
 	public int port;
 	public int mode;//0 is PE, 1 is PC
+	public String name;//,tag;
 
 	@Override
 	public int hashCode() {
 		// TODO: Implement this method
-		return ip.hashCode() ^ port ^ mode;
+		return ip.hashCode() ^ port ^ mode^name.hashCode();
 	}
 
 	@Override
@@ -44,5 +45,24 @@ public class Server {
         dest.ip=ip;
         dest.port=port;
         dest.mode=mode;
+		dest.name=name;
     }
+	
+	public static Server from(OldServer35 a){
+		Server s=new Server();
+		s.ip=a.ip;
+		s.port=a.port;
+		s.mode=a.mode;
+		s.name=s.toString();
+		return s;
+	}
+	
+	public static Server from(OldServer19 a){
+		Server s=new Server();
+		s.ip=a.ip;
+		s.port=a.port;
+		s.mode=a.isPC?1:0;
+		s.name=s.toString();
+		return s;
+	}
 }
