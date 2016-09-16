@@ -10,6 +10,7 @@ import android.support.v7.widget.*;
 import android.support.v7.widget.RecyclerView.*;
 import android.support.v7.widget.helper.*;
 import android.support.v7.widget.helper.ItemTouchHelper.*;
+import android.text.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
@@ -738,7 +739,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 						nso.ip = s.ip;
 						nso.port = s.port;
 						nso.mode = s.mode;
-						nso.name=nso.toString();
 						ns.add(nso);
 					}
 					pref.edit().putInt("serversJsonVersion", 2).putString("servers", gson.toJson(ns)).commit();
@@ -824,6 +824,19 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			if (sla.list != null && sla.list.size() > position && sla.list.get(position) != null) {
 				Server sv=getItem(position);
 				viewHolder.itemView.setTag(sv);
+				if(TextUtils.isEmpty(sv.name)||sv.toString().equals(sv.name)){
+					viewHolder.hideServerTitle();
+				}else{
+					if (sla.pref.getBoolean("colorFormattedText", false)) {
+						if (sla.pref.getBoolean("darkBackgroundForServerName", false)) {
+							viewHolder.setServerTitle(parseMinecraftFormattingCodeForDark(sv.name));
+						} else {
+							viewHolder.setServerTitle(parseMinecraftFormattingCode(sv.name));
+						}
+					} else {
+						viewHolder.setServerTitle(deleteDecorations(sv.name));
+					}
+				}
 				if (sla.pref.getBoolean("colorFormattedText", false)) {
 					if (sla.pref.getBoolean("darkBackgroundForServerName", false)) {
 						viewHolder.setDarkness(true);

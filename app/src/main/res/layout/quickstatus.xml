@@ -39,7 +39,11 @@
 				android:textAppearance="?android:attr/textAppearanceMedium"
 				android:layout_width="wrap_content"
 				android:text="ERROR"
-				android:id="@+id/serverAddress"/>
+				android:id="@+id/serverAddress"
+				android:lines="1"
+				android:maxLines="1"
+				android:singleLine="true"
+				android:scrollHorizontally="true"/>
 
 		</LinearLayout>
 
@@ -74,7 +78,11 @@
 					android:text="-/-"
 					android:id="@+id/serverPlayers"
 					android:layout_weight="1.0"
-					android:gravity="center"/>
+					android:gravity="center"
+					android:lines="1"
+					android:maxLines="1"
+					android:singleLine="true"
+					android:scrollHorizontally="true"/>
 
 				<TextView
 					android:layout_height="wrap_content"

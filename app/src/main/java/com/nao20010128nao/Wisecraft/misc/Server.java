@@ -53,7 +53,6 @@ public class Server {
 		s.ip=a.ip;
 		s.port=a.port;
 		s.mode=a.mode;
-		s.name=s.toString();
 		return s;
 	}
 	
@@ -62,7 +61,6 @@ public class Server {
 		s.ip=a.ip;
 		s.port=a.port;
 		s.mode=a.isPC?1:0;
-		s.name=s.toString();
 		return s;
 	}
 }

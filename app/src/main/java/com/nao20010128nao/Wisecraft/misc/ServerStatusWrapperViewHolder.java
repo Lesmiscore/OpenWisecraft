@@ -86,6 +86,14 @@ public class ServerStatusWrapperViewHolder extends FindableViewHolder
 		((TextView)preload.getView(R.id.serverTitle)).setText(text);
 		return this;
 	}
+	public ServerStatusWrapperViewHolder hideServerTitle(){
+		((TextView)preload.getView(R.id.serverTitle)).setVisibility(View.GONE);
+		return this;
+	}
+	public ServerStatusWrapperViewHolder showServerTitle(){
+		((TextView)preload.getView(R.id.serverTitle)).setVisibility(View.VISIBLE);
+		return this;
+	}
 	
 	
 	//ATTENTION: Don't add this method to setServer(Server) because this is used for a unexpected mode
