@@ -11,7 +11,9 @@
 	<android.support.design.widget.CoordinatorLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:fitsSystemWindows="true">
+		android:fitsSystemWindows="true"
+		android:layout_weight="1.0"
+		android:id="@+id/coordinator">
 
 		<android.support.design.widget.AppBarLayout
 			android:layout_width="match_parent"
@@ -34,7 +36,6 @@
 		<FrameLayout
 			android:layout_height="match_parent"
 			android:layout_width="match_parent"
-			android:layout_weight="1.0"
 			app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 			<com.nao20010128nao.Wisecraft.misc.view.FixedRefreshLayout
@@ -51,13 +52,13 @@
 
 		</FrameLayout>
 
-		<com.nao20010128nao.Wisecraft.misc.view.StatusesLayout
-			android:layout_height="10dp"
-			android:layout_width="match_parent"
-			android:id="@+id/serverStatuses"
-			app:layout_scrollFlags="scroll|enterAlways"/>
-		
 	</android.support.design.widget.CoordinatorLayout>
+
+	<com.nao20010128nao.Wisecraft.misc.view.StatusesLayout
+		android:layout_height="10dp"
+		android:layout_width="match_parent"
+		android:id="@+id/serverStatuses"
+		app:layout_scrollFlags="scroll|enterAlways"/>
 
 </LinearLayout>
 
