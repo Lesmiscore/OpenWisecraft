@@ -1093,17 +1093,11 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 												if(!TextUtils.isEmpty(serverName.getText()))
 													s.name=serverName.getText().toString();
 
-												List<Server> localServers=new ArrayList<>(sla.list);
-												int ofs=localServers.indexOf(data);
-												localServers.set(ofs, s);
-												if (localServers.contains(data)) {
-													Toast.makeText(sla, R.string.alreadyExists, Toast.LENGTH_LONG).show();
-												} else {
-													sla.list.set(ofs, s);
-													sla.sl.notifyItemChanged(ofs);
-													sla.dryUpdate(s, true);
-													sla.statLayout.setStatusAt(sla.clicked, 1);
-												}
+												sla.list.set(p3, s);
+												sla.sl.notifyItemChanged(p3);
+												sla.dryUpdate(s, true);
+												sla.statLayout.setStatusAt(p3, 1);
+												
 												sla.saveServers();
 											}
 										}).
