@@ -1,5 +1,6 @@
 package com.nao20010128nao.Wisecraft.misc;
 
+//Server class for <=1.3
 public class OldServer19 {
 	public String ip;
 	public int port;
