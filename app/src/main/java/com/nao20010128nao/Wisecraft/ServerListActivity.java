@@ -246,6 +246,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 								final EditText pe_port=(EditText)dialog.findViewById(R.id.pe).findViewById(R.id.serverPort);
 								final EditText pc_ip=(EditText)dialog.findViewById(R.id.pc).findViewById(R.id.serverIp);
 								final CheckBox split=(CheckBox)dialog.findViewById(R.id.switchFirm);
+								final EditText serverName=(EditText)dialog.findViewById(R.id.serverName);
 
 								pe_ip.setText("localhost");
 								pe_port.setText("19132");
@@ -289,6 +290,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 												s.port = Integer.valueOf(pe_port.getText().toString());
 												s.mode = split.isChecked() ?1: 0;
 											}
+											if(!TextUtils.isEmpty(serverName.getText()))
+												s.name=serverName.getText().toString();
 
 											if (list.contains(s)) {
 												Toast.makeText(ServerListActivityImpl.this, R.string.alreadyExists, Toast.LENGTH_LONG).show();
@@ -1023,7 +1026,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 									final EditText pe_port=(EditText)dialog.findViewById(R.id.pe).findViewById(R.id.serverPort);
 									final EditText pc_ip=(EditText)dialog.findViewById(R.id.pc).findViewById(R.id.serverIp);
 									final CheckBox split=(CheckBox)dialog.findViewById(R.id.switchFirm);
-
+									final EditText serverName=(EditText)dialog.findViewById(R.id.serverName);
+									
 									if (data.mode == 1) {
 										if (data.port == 25565) {
 											pc_ip.setText(data.ip);
@@ -1044,6 +1048,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 										peFrame.setVisibility(View.VISIBLE);
 										split.setText(R.string.pe);
 									}
+									if(!TextUtils.isEmpty(data.name))
+										serverName.setText(data.name);
 
 									split.setOnClickListener(new View.OnClickListener(){
 											public void onClick(View v) {
@@ -1084,6 +1090,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 													s.port = Integer.valueOf(pe_port.getText().toString());
 													s.mode = split.isChecked() ?1: 0;
 												}
+												if(!TextUtils.isEmpty(serverName.getText()))
+													s.name=serverName.getText().toString();
 
 												List<Server> localServers=new ArrayList<>(sla.list);
 												int ofs=localServers.indexOf(data);
