@@ -17,7 +17,8 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:id="@+id/appbar"
-			app:layout_scrollFlags="scroll|enterAlways">
+			app:layout_scrollFlags="scroll|enterAlways"
+			android:fitsSystemWindows="true">
 
 			<android.support.v7.widget.Toolbar
 				style="@style/AppTheme.Toolbar"
@@ -33,7 +34,8 @@
 		<FrameLayout
 			android:layout_height="match_parent"
 			android:layout_width="match_parent"
-			android:layout_weight="1.0">
+			android:layout_weight="1.0"
+			app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 			<com.nao20010128nao.Wisecraft.misc.view.FixedRefreshLayout
 				android:id="@+id/swipelayout"
