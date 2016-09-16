@@ -41,7 +41,7 @@ public class Server {
 		return s;
 	}
     
-    public void cloneInto(Server dest){
+    public final void cloneInto(Server dest){
         dest.ip=ip;
         dest.port=port;
         dest.mode=mode;
