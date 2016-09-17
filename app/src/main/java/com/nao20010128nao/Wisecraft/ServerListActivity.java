@@ -1151,6 +1151,11 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 									sla.startActivity(new Intent(sla, ServerFinderActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port).putExtra("mode", getItem(p3).mode));
 								}
 							});
+						executes.add(8, new Runnable(){
+								public void run() {
+									sla.startActivity(new Intent(sla, GenerateWisecraftOpenLinkActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port).putExtra("mode", getItem(p3).mode));
+								}
+							});
 
 						List<Runnable> all=new ArrayList(executes);
 

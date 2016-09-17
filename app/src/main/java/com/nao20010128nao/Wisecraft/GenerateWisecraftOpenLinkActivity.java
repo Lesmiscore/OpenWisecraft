@@ -1,5 +1,6 @@
 package com.nao20010128nao.Wisecraft;
 
+import android.content.*;
 import android.os.*;
 import android.support.v7.app.*;
 import android.view.*;
@@ -32,6 +33,13 @@ public class GenerateWisecraftOpenLinkActivity extends AppCompatActivity {
 		
 		generate=(Button)findViewById(R.id.generate);
 		result=(TextView)findViewById(R.id.result);
+		
+		Intent data=getIntent();
+		if(data.hasExtra("ip")&data.hasExtra("port")&data.hasExtra("mode")){
+			ip.setText(data.getStringExtra("ip"));
+			port.setText(data.getIntExtra("port",19132));
+			mode.check(data.getIntExtra("mode",0)==0?R.id.pe:R.id.pc);
+		}
 		
 		generate.setOnClickListener(new View.OnClickListener(){
 				public void onClick(View v){
