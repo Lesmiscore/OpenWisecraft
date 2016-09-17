@@ -7,6 +7,7 @@
 	android:layout_margin="4dp">
 
 	<TextView
+		style="@style/AppTheme.QuickStatus.SingleLineTextView"
 		android:layout_height="wrap_content"
 		android:textAppearance="?android:attr/textAppearanceLarge"
 		android:layout_width="match_parent"
@@ -26,38 +27,32 @@
 			android:orientation="horizontal">
 
 			<TextView
+				style="@style/AppTheme.QuickStatus.SingleLineTextView"
 				android:layout_height="wrap_content"
 				android:textAppearance="?android:attr/textAppearanceLarge"
 				android:layout_width="match_parent"
 				android:text="ERROR"
 				android:id="@+id/serverName"
-				android:lines="1"
-				android:maxLines="1"
-				android:layout_weight="1.0"
-				android:scrollHorizontally="true"
-				android:singleLine="true"/>
+				android:layout_weight="1.0"/>
 
 			<TextView
+				style="@style/AppTheme.QuickStatus.SingleLineTextView"
 				android:layout_height="match_parent"
 				android:textAppearance="?android:attr/textAppearanceMedium"
 				android:layout_width="wrap_content"
 				android:text="XX"
 				android:gravity="center"
-				android:id="@+id/target"
-				android:scrollHorizontally="true"
-				android:singleLine="true"/>
+				android:id="@+id/target"/>
 
 		</LinearLayout>
 
 		<TextView
+			style="@style/AppTheme.QuickStatus.SingleLineTextView"
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceMedium"
 			android:layout_width="wrap_content"
 			android:text="ERROR"
-			android:id="@+id/serverAddress"
-			android:lines="1"
-			android:maxLines="1"
-			android:singleLine="true"/>
+			android:id="@+id/serverAddress"/>
 
 		<LinearLayout
 			android:layout_height="wrap_content"
@@ -65,14 +60,13 @@
 			android:orientation="horizontal">
 
 			<TextView
+				style="@style/AppTheme.QuickStatus.SingleLineTextView"
 				android:layout_height="wrap_content"
 				android:textAppearance="?android:attr/textAppearanceMedium"
 				android:layout_width="wrap_content"
 				android:text="-/-"
 				android:id="@+id/serverPlayers"
 				android:gravity="center"
-				android:scrollHorizontally="true"
-				android:singleLine="true"
 				android:layout_weight="1.0"/>
 
 			<TextView

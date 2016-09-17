@@ -97,6 +97,13 @@
 		<item name="android:textColor">@color/white</item>
 	</style>
 	
+	<style name="AppTheme.QuickStatus.SingleLineTextView" parent="AppTheme">
+		<item name="android:lines">1</item>
+		<item name="android:maxLines">1</item>
+		<item name="android:singleLine">true</item>
+		<item name="android:scrollHorizontally">true</item>
+	</style>
+	
 	
 	
 	<style name="Preference.ColorPickerPreference">
