@@ -36,8 +36,10 @@ public class Server {
 	}
 	
 	public String resolveVisibleTitle(){
-		if(name==null||"".equals(name)||toString().equals(name))return toString();
-		else return name;
+		if(android.text.TextUtils.isEmpty(name))
+			return toString();
+		else
+			return name;
 	}
 
 	public Server cloneAsServer() {
