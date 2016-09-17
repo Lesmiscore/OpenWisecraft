@@ -985,7 +985,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             if(sla.isEditing)return true;
 			sla.clicked = p3;
 			new AppCompatAlertDialog.Builder(sla)
-				.setTitle(getItem(p3).toString())
+				.setTitle(getItem(p3).resolveVisibleTitle())
 				.setItems(generateSubMenu(getItem(p3).mode == 1), new DialogInterface.OnClickListener(){
 					public void onClick(DialogInterface di, int which) {
 						List<Runnable> executes=new ArrayList<>();

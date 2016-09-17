@@ -34,6 +34,11 @@ public class Server {
 		sb.append(':').append(port);
 		return sb.toString();
 	}
+	
+	public String resolveVisibleTitle(){
+		if(name==null||"".equals(name)||toString().equals(name))return toString();
+		else return name;
+	}
 
 	public Server cloneAsServer() {
 		Server s=new Server();
