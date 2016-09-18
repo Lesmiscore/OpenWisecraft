@@ -37,7 +37,7 @@ public class GenerateWisecraftOpenLinkActivity extends AppCompatActivity {
 		Intent data=getIntent();
 		if(data.hasExtra("ip")&data.hasExtra("port")&data.hasExtra("mode")){
 			ip.setText(data.getStringExtra("ip"));
-			port.setText(data.getIntExtra("port",19132));
+			port.setText(data.getIntExtra("port",19132)+"");
 			mode.check(data.getIntExtra("mode",0)==0?R.id.pe:R.id.pc);
 		}
 		
