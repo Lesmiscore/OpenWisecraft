@@ -59,4 +59,10 @@ public class GenerateWisecraftOpenLinkActivity extends AppCompatActivity {
 				}
 			});
 	}
+
+	@Override
+	protected void attachBaseContext(Context newBase) {
+		// TODO: Implement this method
+		super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
+	}
 }
