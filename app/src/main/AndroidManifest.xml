@@ -110,14 +110,7 @@
 			android:name=".ServerGetActivity"
 			android:exported="false">
         </activity>
-
-        <activity
-			android:label="@string/app_name"
-			android:name=".ServerListActivity$Content"
-			android:exported="false"
-			android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-
+		
         <activity
 			android:label="@string/app_name"
 			android:name=".ServerTestActivity$Content"
