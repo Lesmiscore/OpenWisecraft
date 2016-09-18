@@ -15,6 +15,10 @@
 			android:label="@string/account"
 			android:name=".AccountManagerActivity"
 			android:exported="false"/>
+		<activity
+			android:label="@string/signin"
+			android:name=".GoogleSigninActivity"
+			android:exported="false"/>
     </application>
 
 </manifest>
