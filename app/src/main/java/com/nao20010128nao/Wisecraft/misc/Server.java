@@ -1,5 +1,7 @@
 package com.nao20010128nao.Wisecraft.misc;
 
+import android.text.*;
+
 public class Server {
 	public String ip;
 	public int port;
@@ -9,7 +11,7 @@ public class Server {
 	@Override
 	public int hashCode() {
 		// TODO: Implement this method
-		return ip.hashCode() ^ port ^ mode^name.hashCode();
+		return ((((ip==null?0:ip.hashCode())<<6 ^ port)<<6) ^ mode)<<6 ^ (name==null?0:name.hashCode());
 	}
 
 	@Override
@@ -36,7 +38,7 @@ public class Server {
 	}
 	
 	public String resolveVisibleTitle(){
-		if(android.text.TextUtils.isEmpty(name))
+		if(TextUtils.isEmpty(name))
 			return toString();
 		else
 			return name;
