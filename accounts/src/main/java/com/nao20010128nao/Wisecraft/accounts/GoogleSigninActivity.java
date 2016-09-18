@@ -39,7 +39,7 @@ public class GoogleSigninActivity extends AppCompatActivity implements GoogleApi
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO: Implement this method
 		super.onActivityResult(requestCode, resultCode, data);
-		if(resultCode==0){
+		if(requestCode==0){
 			GoogleSignInResult gsr=Auth.GoogleSignInApi.getSignInResultFromIntent(data);
 			processResult(gsr);
 		}
