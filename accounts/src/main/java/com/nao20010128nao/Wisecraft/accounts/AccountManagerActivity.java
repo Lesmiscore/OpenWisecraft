@@ -30,7 +30,7 @@ public class AccountManagerActivity extends AppCompatActivity
 		super.onCreate(savedInstanceState);
 		final FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) {
-			startActivityForResult(new Intent(this,SigninActivity.class),0);
+			startActivityForResult(new Intent(this,GoogleSigninActivity.class),0);
 		}
 		wd=new WorkingDialog(this);
 		ahb=new AccountHeaderBuilder()
@@ -130,7 +130,12 @@ public class AccountManagerActivity extends AppCompatActivity
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if(requestCode==0){
-			loadUserInfo();
+			if(resultCode==RESULT_OK){
+				loadUserInfo();
+			}else{
+				setResult(resultCode);
+				finish();
+			}
 		}
 	}
 	
