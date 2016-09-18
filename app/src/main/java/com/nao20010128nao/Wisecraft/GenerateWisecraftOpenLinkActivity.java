@@ -49,7 +49,7 @@ public class GenerateWisecraftOpenLinkActivity extends AppCompatActivity {
 						case R.id.addServer:sb.append(ADD_SERVER);break;
 						case R.id.serverDetails:sb.append(SERVER_DETAILS);break;
 					}
-					sb.append('/').append(ip).append('/').append(port).append('/');
+					sb.append('/').append(ip.getText()).append('/').append(port.getText()).append('/');
 					switch(mode.getCheckedRadioButtonId()){
 						case R.id.pc:sb.append(PC);break;
 						case R.id.pe:sb.append(PE);break;
