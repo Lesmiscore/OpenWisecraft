@@ -3,6 +3,7 @@ import android.content.*;
 import android.graphics.*;
 import android.graphics.drawable.*;
 import android.os.*;
+import android.support.design.widget.*;
 import android.support.v4.content.*;
 import android.support.v4.widget.*;
 import android.support.v7.view.*;
@@ -17,6 +18,7 @@ import android.widget.*;
 import com.mikepenz.materialdrawer.*;
 import com.mikepenz.materialdrawer.model.*;
 import com.mikepenz.materialdrawer.model.interfaces.*;
+import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.collector.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
@@ -30,6 +32,7 @@ import java.lang.ref.*;
 import java.util.*;
 
 import android.support.v7.view.ActionMode;
+import com.nao20010128nao.Wisecraft.R;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 
@@ -294,7 +297,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 												s.name=serverName.getText().toString();
 
 											if (list.contains(s)) {
-												Toast.makeText(ServerListActivityImpl.this, R.string.alreadyExists, Toast.LENGTH_LONG).show();
+												Utils.makeNonClickableSB(ServerListActivityImpl.this, R.string.alreadyExists, Snackbar.LENGTH_LONG).show();
 											} else {
 												sl.add(s);
 												spp.putInQueue(s, new PingHandlerImpl(true, -1));
@@ -318,7 +321,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 									.setMessage(R.string.auSure)
 									.setPositiveButton(android.R.string.yes,new DialogInterface.OnClickListener(){
 										public void onClick(DialogInterface di,int w){
-											Toast.makeText(ServerListActivityImpl.this, R.string.importing, Toast.LENGTH_LONG).show();
+											Utils.makeNonClickableSB(ServerListActivityImpl.this, R.string.importing, Snackbar.LENGTH_LONG).show();
 											new Thread(){
 												public void run() {
 													ArrayList<String[]> al=new ArrayList<String[]>();
@@ -425,7 +428,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 									.setView(dialogView_)
 									.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 										public void onClick(DialogInterface di, int w) {
-											Toast.makeText(ServerListActivityImpl.this, R.string.exporting, Toast.LENGTH_LONG).show();
+											Utils.makeNonClickableSB(ServerListActivityImpl.this, R.string.exporting, Snackbar.LENGTH_LONG).show();
 											new AsyncTask<String,Void,File>(){
 												public File doInBackground(String... texts) {
 													Server[] servs=new Server[list.size()];
@@ -440,9 +443,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 												}
 												public void onPostExecute(File f) {
 													if (f != null) {
-														Toast.makeText(ServerListActivityImpl.this, getResources().getString(R.string.export_complete).replace("[PATH]", f + ""), Toast.LENGTH_LONG).show();
+														Utils.makeNonClickableSB(ServerListActivityImpl.this, getResources().getString(R.string.export_complete).replace("[PATH]", f + ""), Snackbar.LENGTH_LONG).show();
 													} else {
-														Toast.makeText(ServerListActivityImpl.this, getResources().getString(R.string.export_failed), Toast.LENGTH_LONG).show();
+														Utils.makeNonClickableSB(ServerListActivityImpl.this, getResources().getString(R.string.export_failed), Snackbar.LENGTH_LONG).show();
 													}
 												}
 											}.execute(et_.getText().toString());
@@ -473,7 +476,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 									.setView(dialogView)
 									.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 										public void onClick(DialogInterface di, int w) {
-											Toast.makeText(ServerListActivityImpl.this, R.string.importing, Toast.LENGTH_LONG).show();
+											Utils.makeNonClickableSB(ServerListActivityImpl.this, R.string.importing, Snackbar.LENGTH_LONG).show();
 											new Thread(){
 												public void run() {
 													File f=new File(et.getText().toString());
@@ -499,13 +502,13 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 																public void run() {
 																	sl.addAll(sv);
 																	saveServers();
-																	Toast.makeText(ServerListActivityImpl.this, getResources().getString(R.string.imported).replace("[PATH]", et.getText().toString()), Toast.LENGTH_LONG).show();
+																	Utils.makeNonClickableSB(ServerListActivityImpl.this, getResources().getString(R.string.imported).replace("[PATH]", et.getText().toString()), Snackbar.LENGTH_LONG).show();
 																}
 															});
 													}else{
 														runOnUiThread(new Runnable(){
 																public void run() {
-																	Toast.makeText(ServerListActivityImpl.this, R.string.fileNotExist, Toast.LENGTH_LONG).show();
+																	Utils.makeNonClickableSB(ServerListActivityImpl.this, R.string.fileNotExist, Snackbar.LENGTH_LONG).show();
 																}
 															});
 													}
@@ -635,7 +638,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 															public void run() {
 																wd.hideWorkingDialog();
 																if(sv.response==null){
-																	Toast.makeText(ServerListActivityImpl.this,R.string.loadPing_loadError,Toast.LENGTH_SHORT).show();
+																	Utils.makeNonClickableSB(ServerListActivityImpl.this,R.string.loadPing_loadError,Snackbar.LENGTH_SHORT).show();
 																}else{
 																	startActivity(new Intent(ServerListActivityImpl.this, ServerInfoActivity.class).putExtra("stat", stat).putExtra("noExport",true).putExtra("nonUpd",true));
 																}
@@ -1265,7 +1268,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							if (closeDialog)
 								act().wd.hideWorkingDialog();
 							if (statTabOfs != -1)
-								Toast.makeText(act(), R.string.serverOffline, Toast.LENGTH_SHORT).show();
+								Utils.makeNonClickableSB(act(), R.string.serverOffline, Snackbar.LENGTH_SHORT).show();
 							if (!act().pinging.containsValue(true))
 								act().srl.setRefreshing(false);
 						} catch (final Throwable e) {

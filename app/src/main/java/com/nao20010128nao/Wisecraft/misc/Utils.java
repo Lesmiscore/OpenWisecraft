@@ -8,6 +8,7 @@ import android.graphics.*;
 import android.net.*;
 import android.os.*;
 import android.preference.*;
+import android.support.design.widget.*;
 import android.support.v7.widget.*;
 import android.text.*;
 import android.text.style.*;
@@ -554,4 +555,20 @@ public class Utils extends PingerUtils{
 	public static boolean equals(Object a, Object b) {
         return (a == b) || (a != null && a.equals(b));
     }
+	public static Snackbar makeSB(Activity a,int t,int l){
+		return Snackbar.make(a.findViewById(android.R.id.content),t,l);
+	}
+	public static Snackbar makeSB(Activity a,String t,int l){
+		return Snackbar.make(a.findViewById(android.R.id.content),t,l);
+	}
+	public static Snackbar makeNonClickableSB(Activity a,int t,int l){
+		Snackbar sb=makeSB(a,t,l);
+		sb.getView().setClickable(false);
+		return sb;
+	}
+	public static Snackbar makeNonClickableSB(Activity a,String t,int l){
+		Snackbar sb=makeSB(a,t,l);
+		sb.getView().setClickable(false);
+		return sb;
+	}
 }

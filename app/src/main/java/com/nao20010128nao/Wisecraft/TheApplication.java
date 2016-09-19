@@ -5,12 +5,12 @@ import android.content.res.*;
 import android.graphics.*;
 import android.graphics.drawable.*;
 import android.preference.*;
+import android.support.design.widget.*;
 import android.support.multidex.*;
 import android.support.v4.graphics.drawable.*;
 import android.support.v7.app.*;
 import android.util.*;
 import android.view.*;
-import android.widget.*;
 import com.google.android.gms.tasks.*;
 import com.google.firebase.analytics.*;
 import com.google.firebase.auth.*;
@@ -194,13 +194,13 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 	@Override
 	public void showSelfMessage(Activity a, int strRes, int duration) {
 		// TODO: Implement this method
-		Toast.makeText(a,strRes,duration==com.nao20010128nao.Wisecraft.rcon.Presenter.MESSAGE_SHOW_LENGTH_SHORT?Toast.LENGTH_SHORT:Toast.LENGTH_LONG).show();
+		Utils.makeSB(a,strRes,duration==com.nao20010128nao.Wisecraft.rcon.Presenter.MESSAGE_SHOW_LENGTH_SHORT?Snackbar.LENGTH_SHORT:Snackbar.LENGTH_LONG).show();
 	}
 
 	@Override
 	public void showSelfMessage(Activity a, String str, int duration) {
 		// TODO: Implement this method
-		Toast.makeText(a,str,duration==com.nao20010128nao.Wisecraft.rcon.Presenter.MESSAGE_SHOW_LENGTH_SHORT?Toast.LENGTH_SHORT:Toast.LENGTH_LONG).show();
+		Utils.makeSB(a,str,duration==com.nao20010128nao.Wisecraft.rcon.Presenter.MESSAGE_SHOW_LENGTH_SHORT?Snackbar.LENGTH_SHORT:Snackbar.LENGTH_LONG).show();
 	}
 
 	@Override

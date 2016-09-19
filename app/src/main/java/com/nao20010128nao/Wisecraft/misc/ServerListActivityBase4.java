@@ -157,9 +157,9 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBaseFiel
 		// TODO: Implement this method
 		super.onPostCreate(savedInstanceState);
 
-		networkState = Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "", Snackbar.LENGTH_INDEFINITE);
-		ViewCompat.setAlpha(networkState.getView(), 0.7f);
-		networkState.getView().setClickable(false);
+		indicator = Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "", Snackbar.LENGTH_SHORT);
+		ViewCompat.setAlpha(indicator.getView(), 0.7f);
+		indicator.getView().setClickable(false);
 		new NetworkStatusCheckWorker().execute();
 		IntentFilter inFil=new IntentFilter();
 		inFil.addAction("android.net.conn.CONNECTIVITY_CHANGE");
@@ -296,10 +296,8 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBaseFiel
 		protected void onPostExecute(String result) {
 			// TODO: Implement this method
 			if (result != null) {
-				networkState.setText(result);
-				networkState.show();
-			} else {
-				networkState.dismiss();
+				indicator.setText(result);
+				indicator.show();
 			}
 		}
 	}

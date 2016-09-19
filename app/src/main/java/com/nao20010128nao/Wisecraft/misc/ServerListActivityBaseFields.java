@@ -51,7 +51,7 @@ public abstract class ServerListActivityBaseFields extends ServerListActivityBas
     protected Drawer drawer;
     protected MiniDrawer sideMenu;
     protected RecyclerView rv;
-    protected Snackbar networkState;
+    protected Snackbar indicator;
     protected StatusesLayout statLayout;
     protected Uri userImage;
     protected ImageLoader imageLoader=new ImageLoader();

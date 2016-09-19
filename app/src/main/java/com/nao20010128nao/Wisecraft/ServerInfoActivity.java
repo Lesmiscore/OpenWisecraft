@@ -7,6 +7,7 @@ import android.graphics.*;
 import android.graphics.drawable.*;
 import android.os.*;
 import android.preference.*;
+import android.support.design.widget.*;
 import android.support.v4.content.*;
 import android.support.v4.view.*;
 import android.support.v7.graphics.*;
@@ -390,7 +391,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 					.setView(dialogView_)
 					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 						public void onClick(DialogInterface di, int w) {
-							Toast.makeText(ServerInfoActivity.this, R.string.exporting, Toast.LENGTH_LONG).show();
+							Utils.makeSB(ServerInfoActivity.this, R.string.exporting, Snackbar.LENGTH_LONG).show();
 							new AsyncTask<String,Void,File>(){
 								public File doInBackground(String... texts) {
 									File f;
@@ -402,9 +403,9 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 								}
 								public void onPostExecute(File f) {
 									if (f != null) {
-										Toast.makeText(ServerInfoActivity.this, getResources().getString(R.string.export_complete).replace("[PATH]", f + ""), Toast.LENGTH_LONG).show();
+										Utils.makeSB(ServerInfoActivity.this, getResources().getString(R.string.export_complete).replace("[PATH]", f + ""), Snackbar.LENGTH_LONG).show();
 									} else {
-										Toast.makeText(ServerInfoActivity.this, getResources().getString(R.string.export_failed), Toast.LENGTH_LONG).show();
+										Utils.makeSB(ServerInfoActivity.this, getResources().getString(R.string.export_failed), Snackbar.LENGTH_LONG).show();
 									}
 								}
 							}.execute(et_.getText().toString());
