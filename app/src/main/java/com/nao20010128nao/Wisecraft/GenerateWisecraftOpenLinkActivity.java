@@ -2,9 +2,11 @@ package com.nao20010128nao.Wisecraft;
 
 import android.content.*;
 import android.os.*;
+import android.support.design.widget.*;
 import android.support.v7.app.*;
 import android.view.*;
 import android.widget.*;
+import com.nao20010128nao.Wisecraft.*;
 
 public class GenerateWisecraftOpenLinkActivity extends AppCompatActivity {
 	static final String PREFIX="wisecraft://";
@@ -17,7 +19,7 @@ public class GenerateWisecraftOpenLinkActivity extends AppCompatActivity {
 	
 	EditText ip,port;
 	RadioGroup action,mode;
-	Button generate;
+	Button generate,copy;
 	TextView result;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,7 @@ public class GenerateWisecraftOpenLinkActivity extends AppCompatActivity {
 		mode=(RadioGroup)findViewById(R.id.mode);
 		
 		generate=(Button)findViewById(R.id.generate);
+		copy=(Button)findViewById(R.id.copy);
 		result=(TextView)findViewById(R.id.result);
 		
 		Intent data=getIntent();
@@ -56,6 +59,14 @@ public class GenerateWisecraftOpenLinkActivity extends AppCompatActivity {
 					}
 					result.setVisibility(View.VISIBLE);
 					result.setText(sb);
+					copy.setVisibility(View.VISIBLE);
+				}
+			});
+		copy.setOnClickListener(new View.OnClickListener(){
+				public void onClick(View v){
+					ClipboardManager cm=(ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
+					cm.setText(result.getText().toString());
+					Snackbar.make(copy,R.string.copied,Snackbar.LENGTH_LONG).show();
 				}
 			});
 	}

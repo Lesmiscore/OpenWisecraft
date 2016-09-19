@@ -117,11 +117,26 @@
 				android:id="@+id/result"
 				android:visibility="gone"/>
 
-			<Button
+			<LinearLayout
 				android:layout_height="wrap_content"
-				android:layout_width="wrap_content"
-				android:text="@string/generate"
-				android:id="@+id/generate"/>
+				android:layout_width="match_parent"
+				android:orientation="horizontal">
+
+				<Button
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:text="@string/generate"
+					android:id="@+id/generate"/>
+
+				<Button
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:text="@string/copyToClipboard"
+					android:layout_marginLeft="15dp"
+					android:visibility="gone"
+					android:id="@+id/copy"/>
+
+			</LinearLayout>
 
 		</LinearLayout>
 
