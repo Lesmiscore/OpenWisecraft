@@ -19,6 +19,7 @@ public class GoogleSigninActivity extends AppCompatActivity implements GoogleApi
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		GoogleSignInOptions gso=new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+			.requestIdToken(getResources().getString(R.string.google_api_token))
 			.requestEmail().requestProfile().build();
 		gac=new GoogleApiClient.Builder(this)
 			.enableAutoManage(this,this)
