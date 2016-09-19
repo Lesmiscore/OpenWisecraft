@@ -31,7 +31,7 @@ import com.nao20010128nao.Wisecraft.R;
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 
 //Misc
-public abstract class ServerListActivityBase4 extends ServerListActivityBaseFields
+public abstract class ServerListActivityBase4 extends ServerListActivityBase5
 {
     protected NetworkStateBroadcastReceiver nsbr;
     protected AccountHeaderBuilder ahb;

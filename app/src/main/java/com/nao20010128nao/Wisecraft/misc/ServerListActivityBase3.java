@@ -9,8 +9,7 @@ import android.os.*;
 //Wrapper for aFileChooser
 public abstract class ServerListActivityBase3 extends ServerListActivityBase4
 {
-	Map<Integer,FileChooserResult> results=new HashMap<>();
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
@@ -19,16 +18,16 @@ public abstract class ServerListActivityBase3 extends ServerListActivityBase4
 				@Override
 				public boolean dispatchActivityResult(int requestCode, int resultCode, Intent data,boolean consumed) {
 					// TODO: Implement this method
-					if(results.containsKey(requestCode)){
+					if(localFileSelectResults.containsKey(requestCode)){
 						switch(resultCode){
 							case RESULT_OK:
-								results.get(requestCode).onSelected(new File(data.getStringExtra("path")));
+								localFileSelectResults.get(requestCode).onSelected(new File(data.getStringExtra("path")));
 								break;
 							case RESULT_CANCELED:
-								results.get(requestCode).onSelectCancelled();
+								localFileSelectResults.get(requestCode).onSelectCancelled();
 								break;
 						}
-						results.remove(requestCode);
+						localFileSelectResults.remove(requestCode);
 						return true;
 					}
 					return false;
@@ -38,46 +37,40 @@ public abstract class ServerListActivityBase3 extends ServerListActivityBase4
 	
 	public void startChooseFileForOpen(File startDir,FileChooserResult result){
 		int call=Math.abs(sr.nextInt())&0xf;
-		while(results.containsKey(call)){
+		while(localFileSelectResults.containsKey(call)){
 			call=Math.abs(sr.nextInt())&0xf;
 		}
 		Intent intent=new Intent(this,FileOpenChooserActivity.class);
 		if(startDir!=null){
 			intent.putExtra("path",startDir.toString());
 		}
-		results.put(call,Utils.requireNonNull(result));
+		localFileSelectResults.put(call,Utils.requireNonNull(result));
 		startActivityForResult(intent,call);
 	}
 	
 	public void startChooseFileForSelect(File startDir,FileChooserResult result){
 		int call=Math.abs(sr.nextInt())&0xf;
-		while(results.containsKey(call)){
+		while(localFileSelectResults.containsKey(call)){
 			call=Math.abs(sr.nextInt())&0xf;
 		}
 		Intent intent=new Intent(this,FileChooserActivity.class);
 		if(startDir!=null){
 			intent.putExtra("path",startDir.toString());
 		}
-		results.put(call,Utils.requireNonNull(result));
+		localFileSelectResults.put(call,Utils.requireNonNull(result));
 		startActivityForResult(intent,call);
 	}
 	
 	public void startChooseDirectory(File startDir,FileChooserResult result){
 		int call=Math.abs(sr.nextInt())&0xf;
-		while(results.containsKey(call)){
+		while(localFileSelectResults.containsKey(call)){
 			call=Math.abs(sr.nextInt())&0xf;
 		}
 		Intent intent=new Intent(this,DirectoryChooserActivity.class);
 		if(startDir!=null){
 			intent.putExtra("path",startDir.toString());
 		}
-		results.put(call,Utils.requireNonNull(result));
+		localFileSelectResults.put(call,Utils.requireNonNull(result));
 		startActivityForResult(intent,call);
-	}
-	
-	
-	public static interface FileChooserResult{
-		public void onSelected(File f);
-		public void onSelectCancelled();
 	}
 }
