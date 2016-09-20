@@ -126,7 +126,7 @@ public class ServerStatusWrapperViewHolder extends FindableViewHolder
 		return setStatColor(ContextCompat.getColor(sla, R.color.stat_error))
 			.setServerName(sv.ip + ":" + sv.port)
 			.setPingMillis(sla.getResources().getString(R.string.notResponding))
-			.setServerPlayers("-/-").setServer(sv);
+			.setServerPlayers().setServer(sv);
 	}
 	
 	public ServerStatusWrapperViewHolder online(Context context){
