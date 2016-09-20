@@ -28,7 +28,7 @@
 	</style>
 	
 	<style name="AppTheme.OpenSource" parent="AppTheme.NoActionBar">
-		<item name="android:statusBarColor">@color/upd_1</item>
+		<item name="android:statusBarColor">@color/accent</item>
 		<item name="colorPrimary">@color/mainColor</item>
 		<item name="android:windowContentOverlay">@null</item>
 		<item name="preferenceTheme">@style/AppTheme.Preference</item>
