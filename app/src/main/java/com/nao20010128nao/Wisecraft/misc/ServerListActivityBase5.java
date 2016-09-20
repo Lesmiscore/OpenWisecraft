@@ -46,12 +46,14 @@ public class ServerListActivityBase5 extends ServerListActivityBaseFields
 		startActivityForResult(intent, call);
 	}
 	
-	public static interface FileChooserResult{
-		public void onSelected(File f);
-		public void onSelectCancelled();
+	public static interface FileChooserResult extends ChooserResult<File>{
+		
 	}
-	public static interface UriFileChooserResult{
-		public void onSelected(Uri f);
+	public static interface UriFileChooserResult extends ChooserResult<Uri>{
+		
+	}
+	public static interface ChooserResult<R>{
+		public void onSelected(R f);
 		public void onSelectCancelled();
 	}
 }

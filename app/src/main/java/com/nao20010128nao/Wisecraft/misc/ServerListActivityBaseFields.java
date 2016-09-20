@@ -44,7 +44,7 @@ public abstract class ServerListActivityBaseFields extends ServerListActivityBas
     protected SimpleCallback ddManager;
     protected ActionMode.Callback am;
     
-    //base2,3
+    //base2,3,5
     protected SecureRandom sr=new SecureRandom();
 	//base4
     protected int newVersionAnnounce=0;
