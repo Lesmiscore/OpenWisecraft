@@ -85,6 +85,7 @@ public class FileSelectFragment extends BaseFragment<AppCompatActivity>
 				if(!v.isEnabled()){
 					v.setEnabled(true);
 					path.setText(getArguments().getString("default"));
+					lastResult=null;
 				}
 				return false;
 			}
