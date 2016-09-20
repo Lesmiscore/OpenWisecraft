@@ -2,15 +2,19 @@ package com.nao20010128nao.Wisecraft.misc;
 
 import android.app.*;
 import android.content.*;
+import android.graphics.*;
 import android.net.*;
 import android.os.*;
 import android.support.v7.app.*;
 import android.view.*;
 import android.widget.*;
 import com.ipaulpro.afilechooser.*;
+import com.nao20010128nao.Wisecraft.*;
 import java.io.*;
 import java.security.*;
 import java.util.*;
+
+import com.nao20010128nao.Wisecraft.R;
 
 public class FileSelectFragment extends BaseFragment<AppCompatActivity> 
 {
@@ -18,7 +22,8 @@ public class FileSelectFragment extends BaseFragment<AppCompatActivity>
 	SecureRandom sr=new SecureRandom();
 	Object lastResult=null;
 	
-	Button select,fileLocal,fileProvided;
+	Button select;
+	ImageButton fileLocal,fileProvided;
 	EditText path;
 	LinearLayout pathForm,modeForm;
 	
@@ -33,8 +38,8 @@ public class FileSelectFragment extends BaseFragment<AppCompatActivity>
 		// TODO: Implement this method
 		super.onResume();
 		select=(Button)getView().findViewById(R.id.selectFile);
-		fileLocal=(Button)getView().findViewById(R.id.openLocalChooser);
-		fileProvided=(Button)getView().findViewById(R.id.openProvidedChooser);
+		fileLocal=(ImageButton)getView().findViewById(R.id.openLocalChooser);
+		fileProvided=(ImageButton)getView().findViewById(R.id.openProvidedChooser);
 		path=(EditText)getView().findViewById(R.id.filePath);
 		pathForm=(LinearLayout)getView().findViewById(R.id.pathForm);
 		modeForm=(LinearLayout)getView().findViewById(R.id.modeForm);
@@ -85,6 +90,8 @@ public class FileSelectFragment extends BaseFragment<AppCompatActivity>
 			}
 		});
 		path.setText(getArguments().getString("default"));
+		fileLocal.setImageDrawable(TheApplication.getTintedDrawable(R.drawable.ic_file,Color.WHITE,getActivity()));
+		fileProvided.setImageDrawable(TheApplication.getTintedDrawable(R.drawable.ic_open_in_new_black_48dp,Color.WHITE,getActivity()));
 	}
 
 	@Override
