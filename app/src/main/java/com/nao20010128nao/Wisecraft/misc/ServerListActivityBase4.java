@@ -10,7 +10,6 @@ import android.support.v4.view.*;
 import android.support.v7.widget.*;
 import android.util.*;
 import android.view.*;
-import android.widget.*;
 import com.google.android.gms.tasks.*;
 import com.google.firebase.auth.*;
 import com.mikepenz.materialdrawer.*;
@@ -25,6 +24,7 @@ import com.nao20010128nao.Wisecraft.misc.view.*;
 import com.nao20010128nao.Wisecraft.services.*;
 import java.io.*;
 import java.net.*;
+import java.util.*;
 
 import com.nao20010128nao.Wisecraft.R;
 
@@ -35,8 +35,6 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBase5
 {
     protected NetworkStateBroadcastReceiver nsbr;
     protected AccountHeaderBuilder ahb;
-	protected BottomSheetBehavior spaceBottomSheet;
-	protected FrameLayout bottomSheetSpace;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
@@ -103,12 +101,6 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBase5
 					return false;
 				}
 			});
-		
-		bottomSheetSpace=(FrameLayout)findViewById(R.id.bottomSheetSpace);
-		spaceBottomSheet=BottomSheetBehavior.from(bottomSheetSpace);
-		
-		spaceBottomSheet.setState(BottomSheetBehavior.STATE_HIDDEN);
-		bottomSheetSpace.setEnabled(false);
 	}
 
     private void loadUserInfo(final AccountHeaderBuilder ahb) throws Resources.NotFoundException {
