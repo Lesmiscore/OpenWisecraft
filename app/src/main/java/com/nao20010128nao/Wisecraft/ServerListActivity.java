@@ -312,6 +312,12 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 											unloadBottomSheet();
 										}
 									});
+								
+								new Handler().post(new Runnable(){
+									public void run(){
+										spaceBottomSheet.setState(BottomSheetBehavior.STATE_COLLAPSED);
+									}
+								});
 							}
 						}));//0
 		appMenu.add(new Quartet<Integer,Integer,Treatment<ServerListActivity>,IDrawerItem>(R.string.addFromMCPE, R.drawable.ic_add_black_48dp, new Treatment<ServerListActivity>(){
