@@ -52,6 +52,15 @@
 
 		</FrameLayout>
 
+		<FrameLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			app:layout_behavior="@string/bottom_sheet_behavior"
+			app:behavior_peekHeight="@dimen/bottomSheet_peek"
+			app:behavior_hideable="false"
+			android:background="@android:color/white"
+			android:id="@+id/bottomSheetSpace"/>
+
 	</android.support.design.widget.CoordinatorLayout>
 
 	<com.nao20010128nao.Wisecraft.misc.view.StatusesLayout
@@ -60,6 +69,6 @@
 		android:id="@+id/serverStatuses"
 		app:layout_scrollFlags="enterAlways"
 		android:gravity="bottom"/>
-	
+
 </LinearLayout>
 

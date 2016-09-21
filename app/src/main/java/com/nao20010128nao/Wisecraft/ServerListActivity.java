@@ -1304,7 +1304,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 								act().srl.setRefreshing(false);
 							}
 						} catch (final Throwable e) {
-							DebugWriter.writeToE("ServerListActivity", e);
 							CollectorMain.reportError("ServerListActivity#onPingArrives", e);
 							onPingFailed(s);
 						}
