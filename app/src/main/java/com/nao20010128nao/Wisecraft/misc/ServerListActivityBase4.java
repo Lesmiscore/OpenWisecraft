@@ -109,15 +109,6 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBase5
 		
 		spaceBottomSheet.setState(BottomSheetBehavior.STATE_HIDDEN);
 		bottomSheetSpace.setEnabled(false);
-		spaceBottomSheet.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback(){
-				public void onSlide(View p1, float p2) {
-					ServerListActivityBase4.this.onSlide(p1,p2);
-				}
-
-				public void onStateChanged(View p1, int p2) {
-					ServerListActivityBase4.this.onStateChanged(p1,p2);
-				}
-			});
 	}
 
     private void loadUserInfo(final AccountHeaderBuilder ahb) throws Resources.NotFoundException {
@@ -301,39 +292,6 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBase5
         }
         return null;
 	}
-
-	public void onSlide(View p1, float p2) {
-		int heightShouldBe=0;
-		if(p2==0){
-			heightShouldBe=spaceBottomSheet.getPeekHeight();
-		}else if(p2<0){
-			p2+=1;
-			heightShouldBe=(int)(spaceBottomSheet.getPeekHeight()*p2);
-		}else if(p2>0){
-			heightShouldBe=spaceBottomSheet.getPeekHeight()+(int)((bottomSheetSpace.getHeight()-spaceBottomSheet.getPeekHeight())*p2);
-		}
-		View heightChanging=bottomSheetSpace.getChildAt(0);
-		ViewGroup.LayoutParams lp=heightChanging.getLayoutParams();
-		if(lp==null)lp=new FrameLayout.LayoutParams(-1,heightShouldBe);
-		else lp.height=heightShouldBe;
-		heightChanging.setLayoutParams(lp);
-	}
-
-	public void onStateChanged(View p1, int p2) {if(p2==BottomSheetBehavior.STATE_HIDDEN)unloadBottomSheet();}
-	
-	public void prepareBottomSheet(){
-		bottomSheetSpace.setEnabled(true);
-		bottomSheetSpace.removeAllViews();
-		spaceBottomSheet.setState(BottomSheetBehavior.STATE_HIDDEN);
-	}
-	public void unloadBottomSheet(){
-		bottomSheetSpace.setEnabled(false);
-		bottomSheetSpace.removeAllViews();
-		spaceBottomSheet.setState(BottomSheetBehavior.STATE_HIDDEN);
-	}
-
-
-	
 
 	protected class NetworkStatusCheckWorker extends AsyncTask<Void,String,String> {
 		@Override
