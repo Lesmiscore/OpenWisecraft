@@ -13,7 +13,6 @@ import android.util.*;
 import android.view.*;
 import com.google.android.gms.tasks.*;
 import com.google.firebase.analytics.*;
-import com.google.firebase.auth.*;
 import com.google.firebase.remoteconfig.*;
 import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.misc.*;

@@ -1,8 +1,5 @@
 package com.nao20010128nao.Wisecraft.misc;
 import android.content.*;
-import android.content.res.*;
-import android.graphics.*;
-import android.graphics.drawable.*;
 import android.net.*;
 import android.os.*;
 import android.support.design.widget.*;
@@ -11,20 +8,14 @@ import android.support.v7.widget.*;
 import android.util.*;
 import android.view.*;
 import com.google.android.gms.tasks.*;
-import com.google.firebase.auth.*;
 import com.mikepenz.materialdrawer.*;
-import com.mikepenz.materialdrawer.model.*;
-import com.mikepenz.materialdrawer.model.interfaces.*;
 import com.nao20010128nao.Wisecraft.*;
-import com.nao20010128nao.Wisecraft.accounts.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.server.*;
-import com.nao20010128nao.Wisecraft.misc.skin_face.*;
 import com.nao20010128nao.Wisecraft.misc.view.*;
 import com.nao20010128nao.Wisecraft.services.*;
 import java.io.*;
 import java.net.*;
-import java.util.*;
 
 import com.nao20010128nao.Wisecraft.R;
 
