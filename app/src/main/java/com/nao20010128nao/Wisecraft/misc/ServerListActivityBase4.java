@@ -34,7 +34,6 @@ import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 public abstract class ServerListActivityBase4 extends ServerListActivityBase5
 {
     protected NetworkStateBroadcastReceiver nsbr;
-    protected AccountHeaderBuilder ahb;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
@@ -44,30 +43,11 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBase5
 
 			setSupportActionBar(Utils.getToolbar(this));
             
-            ahb=new AccountHeaderBuilder()
-                .withActivity(this)
-				.withTypeface(TheApplication.instance.getLocalizedFont())
-                .withHeaderBackground(R.color.mainColor)
-                .withSelectionListEnabled(false)
-                .withSelectionListEnabledForSingleProfile(false)
-                .withOnAccountHeaderProfileImageListener(new AccountHeader.OnAccountHeaderProfileImageListener(){
-                    public boolean onProfileImageClick(View p1, IProfile p2, boolean p3){
-                        startActivityForResult(new Intent(ServerListActivityBase4.this,AccountManagerActivity.class),0xff);
-                        return true;
-                    }
-
-                    public boolean onProfileImageLongClick(View p1, IProfile p2, boolean p3){
-                        return false;
-                    }
-                });
-            loadUserInfo(ahb);
-            
 			DrawerBuilder bld=new DrawerBuilder()
 				.withActivity(this)
 				.withToolbar(Utils.getToolbar(this))
 				.withDrawerWidthRes(R.dimen.drawer_width)
-				.withDrawerLayout(R.layout.drawer_single_for_builder)
-                .withAccountHeader(ahb.build());
+				.withDrawerLayout(R.layout.drawer_single_for_builder);
 			
 			drawer=bld.build();
 		}
@@ -88,69 +68,7 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBase5
 		statLayout = (StatusesLayout)findViewById(R.id.serverStatuses);
 		statLayout.setColorRes(R.color.stat_error, R.color.stat_pending, R.color.stat_ok);
 		if (!pref.getBoolean("showStatusesBar", false))statLayout.setVisibility(View.GONE);
-		
-		addActivityResultReceiver(new DispatchActivityResult(){
-				@Override
-				public boolean dispatchActivityResult(int requestCode, int resultCode, Intent data,boolean consumed) {
-					// TODO: Implement this method
-					if(consumed)return true;
-					if(resultCode==0xff){
-						loadUserInfo(ahb);
-						return true;
-					}
-					return false;
-				}
-			});
 	}
-
-    private void loadUserInfo(final AccountHeaderBuilder ahb) throws Resources.NotFoundException {
-        final FirebaseUser user=TheApplication.instance.firebaseAuth.getCurrentUser();
-        ahb.withProfiles(Utils.<com.mikepenz.materialdrawer.model.interfaces.IProfile>emptyList());
-        if (user == null) {
-            ahb.addProfiles(
-                new ProfileDrawerItem()
-                .withName(getResources().getString(R.string.noLogin))
-                .withEmail(getResources().getString(R.string.noLogin))
-                .withIcon(getResources().getDrawable(R.drawable.ic_launcher))
-            );
-        } else if (user.isAnonymous()) {
-            ahb.addProfiles(
-                new ProfileDrawerItem()
-                .withName(getResources().getString(R.string.anonymous))
-                .withEmail(getResources().getString(R.string.anonymous))
-                .withIcon(getResources().getDrawable(R.drawable.ic_launcher))
-            );
-        } else {
-            ahb.addProfiles(
-                new ProfileDrawerItem()
-                .withName(user.getDisplayName())
-                .withEmail(user.getEmail())
-                .withIcon(getResources().getDrawable(R.drawable.ic_launcher))
-            );
-            try {
-                userImage = user.getPhotoUrl();
-				imageLoader.putInQueue(new URL(userImage.toString()), new ImageLoader.ImageStatusListener(){
-                        public void onSuccess(Bitmap bmp, URL url) {
-                            ahb.withProfiles(Utils.<com.mikepenz.materialdrawer.model.interfaces.IProfile>emptyList());
-                            BitmapDrawable bd=new BitmapDrawable(bmp);
-                            //bd.setTileModeXY(Shader.TileMode.CLAMP,Shader.TileMode.CLAMP);
-                            ahb.addProfiles(
-                                new ProfileDrawerItem()
-                                .withName(user.getDisplayName())
-                                .withEmail(user.getEmail())
-                                .withIcon(bd)
-                            );
-                        }
-                        public void onError(Throwable err, URL url) {
-
-                        }
-                    });
-            } catch (Throwable e) {
-
-            }
-        }
-		if(drawer!=null)drawer.getAdapter().notifyDataSetChanged();
-    }
 
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
