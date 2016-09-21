@@ -282,7 +282,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 										}
 									});
 								
-								dialogContent.findViewById(R.id.yes).setOnClickListener(new View.OnClickListener(){
+								dialogContent.findViewById(R.id.ok).setOnClickListener(new View.OnClickListener(){
 										public void onClick(View v){
 											Server s;
 											if (split.isChecked()) {
@@ -307,7 +307,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 											unloadBottomSheet();
 										}
 									});
-								dialogContent.findViewById(R.id.no).setOnClickListener(new View.OnClickListener(){
+								dialogContent.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener(){
 										public void onClick(View v){
 											unloadBottomSheet();
 										}
