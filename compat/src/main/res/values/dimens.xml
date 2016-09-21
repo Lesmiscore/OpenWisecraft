@@ -1,4 +1,6 @@
 <resources>
 	<dimen name="cardContentMargin">5dp</dimen>
     <dimen name="drawer_width">250dp</dimen>
+	<dimen name="buttonHeight">48dp</dimen>
+	<dimen name="buttonHeightX2">96dp</dimen>
 </resources>

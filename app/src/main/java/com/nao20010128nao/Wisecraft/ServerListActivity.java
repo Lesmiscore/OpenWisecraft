@@ -242,7 +242,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	private void loadMenu() {
 		appMenu.add(new Quartet<Integer,Integer,Treatment<ServerListActivity>,IDrawerItem>(R.string.add, R.drawable.ic_add_black_48dp, new Treatment<ServerListActivity>(){
 							public void process(ServerListActivity a) {
-								View dialog=getLayoutInflater().inflate(R.layout.server_add_dialog_new, null);
+								prepareBottomSheet();
+								View dialogContent=getLayoutInflater().inflate(R.layout.yes_no_buttons,bottomSheetSpace,true);
+								View dialog=getLayoutInflater().inflate(R.layout.server_add_dialog_new, (ViewGroup)dialogContent);
 								final LinearLayout peFrame=(LinearLayout)dialog.findViewById(R.id.pe);
 								final LinearLayout pcFrame=(LinearLayout)dialog.findViewById(R.id.pc);
 								final EditText pe_ip=(EditText)dialog.findViewById(R.id.pe).findViewById(R.id.serverIp);
@@ -279,11 +281,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 											}
 										}
 									});
-
-								new AppCompatAlertDialog.Builder(a, R.style.AppAlertDialog).
-									setView(dialog).
-									setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener(){
-										public void onClick(DialogInterface d, int sel) {
+								
+								dialogContent.findViewById(R.id.yes).setOnClickListener(new View.OnClickListener(){
+										public void onClick(View v){
 											Server s;
 											if (split.isChecked()) {
 												s = Utils.convertServerObject(Arrays.asList(com.nao20010128nao.McServerList.Server.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
@@ -304,14 +304,14 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 												pinging.put(s, true);
 											}
 											saveServers();
+											unloadBottomSheet();
 										}
-									}).
-									setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener(){
-										public void onClick(DialogInterface d, int sel) {
-
+									});
+								dialogContent.findViewById(R.id.no).setOnClickListener(new View.OnClickListener(){
+										public void onClick(View v){
+											unloadBottomSheet();
 										}
-									}).
-									show();
+									});
 							}
 						}));//0
 		appMenu.add(new Quartet<Integer,Integer,Treatment<ServerListActivity>,IDrawerItem>(R.string.addFromMCPE, R.drawable.ic_add_black_48dp, new Treatment<ServerListActivity>(){
