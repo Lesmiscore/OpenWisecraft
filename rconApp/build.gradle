@@ -57,7 +57,6 @@ dependencies {
 	compile project(':scrolling')
 	compile project(':MaterialIcons')
 	compile project(':aFileChooser')
-	compile project(':accounts')
 	compile project(':wisecraft-i18n')
 	
 	compile 'com.android.support:design:24.2.0'
