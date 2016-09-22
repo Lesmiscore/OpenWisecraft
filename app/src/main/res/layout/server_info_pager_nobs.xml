@@ -28,7 +28,8 @@
 			app:pstsTabTextStyle="coded"
 			android:paddingLeft="10dp"
 			android:paddingRight="10dp"
-			android:gravity="center"/>
+			android:gravity="center"
+			app:layout_scrollFlags="scroll|enterAlways"/>
 
 	</android.support.design.widget.AppBarLayout>
 
