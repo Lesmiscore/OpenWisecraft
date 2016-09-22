@@ -62,7 +62,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 	View bottomSheet;
 	ViewPagerBottomSheetBehavior behavior;
 	boolean useBottomSheet=false;
-	View background;//it is actually FrameLayout
+	View background;//it is actually CoordinatorLayout
 
 	/*Only for PC servers*/
 	Drawable serverIconObj;
