@@ -688,16 +688,10 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	@Override
 	public void onBackPressed() {
 		// TODO: Implement this method
-		if (dl == null)
-			super.onBackPressed();
+		if (drawer.isDrawerOpen())
+			drawer.closeDrawer();
 		else
-			if (drawer.isDrawerOpen())
-				if(drawer==null)
-					dl.closeDrawers();
-				else 
-					drawer.closeDrawer();
-			else
-				super.onBackPressed();
+			super.onBackPressed();
 	}
 
 	@Override
