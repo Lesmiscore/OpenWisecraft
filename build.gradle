@@ -57,8 +57,7 @@ def download(String url,String dir){
 	try{
 		def conn=new URL(url).openConnection();
 		is=conn.getInputStream();
-		def fnTmp=url.split("\\/");
-		def filename=fnTmp[fnTmp.length()-1];
+		def filename=url.split("\\/").last();
 		def file=new File(dir,filename);
 		os=new FileOutputStream(file);
 		byte[] buf=new byte[100];
