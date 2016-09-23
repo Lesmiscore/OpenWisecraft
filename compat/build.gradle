@@ -1,4 +1,12 @@
 apply plugin: 'com.android.library'
+import org.eclipse.jgit.api.*;
+import org.eclipse.jgit.api.errors.*;
+import org.eclipse.jgit.revwalk.*;
+import org.eclipse.jgit.errors.*;
+import java.io.*;
+import java.util.*;
+import org.eclipse.jgit.lib.*;
+import org.eclipse.jgit.storage.file.*;
 
 android{
     compileSdkVersion 24
@@ -60,7 +68,7 @@ dependencies {
 }
 
 
-def getHashOfRepo(String modul,String name,String root){
+def getHashOfRepoGitProc(String modul,String name,String root){
 	def revisionHash = "Unknown"
 	if(!System.getProperty("os.name").toLowerCase().startsWith("windows")){
 		revisionHash = ["sh",  "-c",  "cd "+root+"/"+modul+" ; git rev-parse HEAD"].execute().in.text.trim()
@@ -70,3 +78,32 @@ def getHashOfRepo(String modul,String name,String root){
 	println "Git Revision of "+name+" is:"+revisionHash
 	return revisionHash;
 }
+def getHashOfRepo(String modul,String name,String root){
+	def revisionHash = "Unknown"
+	def git=null;
+	def repository=null;
+	try{
+		try {
+			repository = new FileRepositoryBuilder().setGitDir(new File(repo.localDir, org.eclipse.jgit.lib.Constants.DOT_GIT)).readEnvironment().findGitDir().build();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return revisionHash;
+		}
+		git=new Git(repository);
+		def list=new ArrayList<RevCommit>();	
+		for(RevCommit cmt:getGit().log().call()){
+			list.add(cmt);
+		}	
+		def last=list.get(0);
+		revisionHash=last.getId().getName();
+	}catch(Throwable e){
+		e.printStackTrace();
+	}finally{
+		if(git!=null)git.close();
+		if(repository!=null)repository.close();
+	}
+	
+	println "Git Revision of "+name+" is:"+revisionHash
+	return revisionHash;
+}
+
