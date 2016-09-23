@@ -90,6 +90,6 @@ for(String s:jars)
 	outputs.add(download(s,dir));
 def classLoader=LocalClass.class.getClassLoader();
 for(File f:outputs)
-	classLoader.addURL(f.getURI().getURL());
+	classLoader.addURL(f.toURI().toURL());
 
 class LocalClass{}
