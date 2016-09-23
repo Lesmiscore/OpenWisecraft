@@ -3,8 +3,6 @@ import org.eclipse.jgit.api.*;
 import org.eclipse.jgit.api.errors.*;
 import org.eclipse.jgit.revwalk.*;
 import org.eclipse.jgit.errors.*;
-import java.io.*;
-import java.util.*;
 import org.eclipse.jgit.lib.*;
 import org.eclipse.jgit.storage.file.*;
 
@@ -84,7 +82,7 @@ def getHashOfRepo(String modul,String name,String root){
 	def repository=null;
 	try{
 		try {
-			repository = new FileRepositoryBuilder().setGitDir(new File(repo.localDir, org.eclipse.jgit.lib.Constants.DOT_GIT)).readEnvironment().findGitDir().build();
+			repository = new FileRepositoryBuilder().setGitDir(new File(new File(root,modul), org.eclipse.jgit.lib.Constants.DOT_GIT)).readEnvironment().findGitDir().build();
 		} catch (IOException e) {
 			e.printStackTrace();
 			return revisionHash;
