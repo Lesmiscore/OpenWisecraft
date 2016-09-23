@@ -1,3 +1,5 @@
+import java.net.*
+
 System.println(
 "REM                                                                                                           \n" + 
 "REM I8,        8        ,8I  88                                                                ad88           \n" + 
@@ -47,3 +49,48 @@ allprojects {
 		maven { url "https://raw.github.com/nao20010128nao/AndroidSupportRepo/master/m2repository" }
 	}
 }
+
+def download(String url,String dir){
+	println "downloading from: "+url
+	def is=null;
+	def os=null;
+	try{
+		def conn=new URL(url).openConnection();
+		is=conn.getInputStream();
+		def fnTmp=url.split("\\/");
+		def filename=fnTmp[fnTmp.length()-1];
+		def file=new File(dir,filename);
+		os=new FileOutputStream(file);
+		byte[] buf=new byte[100];
+		while (true) {
+			def r=is.read(buf);
+			if (r <= 0)
+				break;
+			os.write(buf, 0, r);
+		}
+		println "success."
+		return file;
+	}catch(Throwable e){
+		e.printStackTrace();
+		println "failed."
+		return null;
+	}finally{
+		if(is!=null)is.close();
+		if(os!=null)os.close();
+	}
+}
+
+def jars=[
+	"https://repo.eclipse.org/content/groups/releases/org/eclipse/mylyn/github/org.eclipse.egit.github.core/4.4.0.201606070830-r/org.eclipse.egit.github.core-4.4.0.201606070830-r.jar",
+	"http://central.maven.org/maven2/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar",
+	"http://central.maven.org/maven2/org/objenesis/objenesis/1.0/objenesis-1.0.jar"
+];
+def outputs=new ArrayList<File>();
+def dir=System.getProperty("user.dir");
+for(String s:jars)
+	outputs.add(download(s,dir));
+def classLoader=LocalClass.class.getClassLoader();
+for(File f:outputs)
+	classLoader.addURL(f.getURI().getURL());
+
+class LocalClass{}
