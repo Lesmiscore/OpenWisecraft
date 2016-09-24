@@ -63,7 +63,9 @@ public class ServerStatusWrapperViewHolder extends FindableViewHolder
 		return this;
 	}
 	public ServerStatusWrapperViewHolder setDarkness(boolean dark){
-		int color=dark?0xff_ffffff:0xff_000000;
+		return setTextColor(dark?0xff_ffffff:0xff_000000);
+	}
+	public ServerStatusWrapperViewHolder setTextColor(int color){
 		for(int i:COLORED_TEXTVIEWS)
 			if(findViewById(i)!=null)
 				((TextView)preload.getView(i)).setTextColor(color);
