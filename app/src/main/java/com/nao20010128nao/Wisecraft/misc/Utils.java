@@ -45,26 +45,14 @@ public class Utils extends PingerUtils{
 	public static CharSequence parseMinecraftFormattingCode(String s){
 		try {
 			MinecraftFormattingCodeParser mfcp=new MinecraftFormattingCodeParser();
-			mfcp.loadFlags(s, (byte)0);
+			mfcp.loadFlags(s);
 			return mfcp.build();
 		} catch (Throwable e) {
-			SpannableStringBuilder ssb=new SpannableStringBuilder();
-			ssb.append(deleteDecorations(s));
-			if(ssb.length()!=0)ssb.setSpan(new ForegroundColorSpan(Color.BLACK),0,ssb.length()-1,SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
-			return ssb;
+			return s;
 		}
 	}
 	public static CharSequence parseMinecraftFormattingCodeForDark(String s){
-		try {
-			MinecraftFormattingCodeParser mfcp=new MinecraftFormattingCodeParser();
-			mfcp.loadFlags(s, (byte)15);
-			return mfcp.build();
-		} catch (Throwable e) {
-			SpannableStringBuilder ssb=new SpannableStringBuilder();
-			ssb.append(deleteDecorations(s));
-			if(ssb.length()!=0)ssb.setSpan(new ForegroundColorSpan(Color.WHITE),0,ssb.length()-1,SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
-			return ssb;
-		}
+		return parseMinecraftFormattingCode(s);
 	}
 	public static boolean isNullString(String s) {
 		if (s == null) 
