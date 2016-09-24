@@ -25,15 +25,15 @@ public class ServerListStyleLoader {
 			boolean willColorText;
 			if (pref.getBoolean("colorFormattedText", false)) {
 				if (pref.getBoolean("darkBackgroundForServerName", false)) {
-					setTextColor(Color.BLACK);
+					setTextColor(Color.WHITE);
 					setDirtBg();
 				} else {
-					setTextColor(Color.WHITE);
+					setTextColor(Color.BLACK);
 					setWhiteBg();
 				}
 				willColorText=true;
 			} else {
-				setTextColor(Color.WHITE);
+				setTextColor(Color.BLACK);
 				setWhiteBg();
 				willColorText=false;
 			}
