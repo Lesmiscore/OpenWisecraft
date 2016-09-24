@@ -418,11 +418,12 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 	}
 	
 	public static class ServerListStyleEditor extends com.nao20010128nao.Wisecraft.misc.BaseFragment<FragmentSettingsActivity> {
-
+		ServerListStyleLoader slsl;
 		@Override
 		public void onResume() {
 			// TODO: Implement this method
 			super.onResume();
+			slsl=new ServerListStyleLoader(getActivity());
 		}
 
 		@Override
