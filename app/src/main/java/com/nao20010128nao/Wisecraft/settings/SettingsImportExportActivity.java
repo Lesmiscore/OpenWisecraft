@@ -7,22 +7,27 @@ import android.view.*;
 import com.astuetz.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
 
 public class SettingsImportExportActivity extends AppCompatActivity {
 	ViewPager tabs;
 	UsefulPagerAdapter adapter;
+	ServerListStyleLoader slsl;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
+		slsl=(ServerListStyleLoader)getSystemService(ContextWrappingExtender.SERVER_LIST_STYLE_LOADER);
+		
 		tabs = (ViewPager)findViewById(R.id.pager);
 		tabs.setAdapter(adapter = new UsefulPagerAdapter(this));
 		PagerSlidingTabStrip psts=(PagerSlidingTabStrip)findViewById(R.id.tabs);
 		psts.setViewPager(tabs);
 		
-		psts.setIndicatorColor(ContextCompat.getColor(this, R.color.upd_2));
-		psts.setTextColor(ContextCompat.getColor(this, R.color.upd_2));
-		psts.setOnPageChangeListener(new PstsTabColorUpdater(ContextCompat.getColor(this, R.color.upd_2), ServerInfoActivity.PALE_PRIMARY, tabs, psts));
+		psts.setIndicatorColor(slsl.getTextColor());
+		psts.setTextColor(slsl.getTextColor());
+		psts.setOnPageChangeListener(new PstsTabColorUpdater(slsl.getTextColor(), ServerInfoActivity.translucent(slsl.getTextColor()), tabs, psts));
 
 
 

@@ -26,6 +26,7 @@ import uk.co.chrisjenx.calligraphy.*;
 
 import android.support.v7.widget.Toolbar;
 import com.nao20010128nao.Wisecraft.R;
+import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
 
 public class FragmentSettingsActivity extends AppCompatActivity {
 	public static final Map<String,Class<? extends Fragment>> FRAGMENT_CLASSES=new HashMap<String,Class<? extends Fragment>>(){{
@@ -583,12 +584,14 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 	public static class ServerInfoToolbarFragment extends com.nao20010128nao.Wisecraft.misc.BaseFragment<FragmentSettingsActivity> {
 		UsefulPagerAdapter adapter;
 		ViewPager tabs;
+		ServerListStyleLoader slsl;
 		
 		@Override
 		public void onResume() {
 			// TODO: Implement this method
 			super.onResume();
 			Toolbar tb=(Toolbar)findViewById(R.id.toolbar);
+			slsl=(ServerListStyleLoader)getActivity().getSystemService(ContextWrappingExtender.SERVER_LIST_STYLE_LOADER);
 			
 			tabs = (ViewPager)findViewById(R.id.pager);
 			tabs.setAdapter(adapter = new UsefulPagerAdapter(getChildFragmentManager()));
@@ -599,19 +602,11 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			adapter.addTab(BlankFragment.class,"B");
 			adapter.addTab(BlankFragment.class,"C");
 			
-			if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
-				BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
-				bd.setTargetDensity(getResources().getDisplayMetrics());
-				bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
-				findViewById(R.id.appbar).setBackgroundDrawable(bd);
-				psts.setIndicatorColor(Color.WHITE);
-				psts.setTextColor(Color.WHITE);
-				psts.setOnPageChangeListener(new ColorUpdater(Color.WHITE, ServerInfoActivity.DIRT_BRIGHT, tabs, psts));
-			} else {
-				psts.setIndicatorColor(ContextCompat.getColor(getActivity(), R.color.mainColor));
-				psts.setTextColor(ContextCompat.getColor(getActivity(), R.color.mainColor));
-				psts.setOnPageChangeListener(new ColorUpdater(ContextCompat.getColor(getActivity(), R.color.mainColor), ServerInfoActivity.PALE_PRIMARY, tabs, psts));
-			}
+			psts.setIndicatorColor(slsl.getTextColor());
+			psts.setTextColor(slsl.getTextColor());
+			psts.setOnPageChangeListener(new ColorUpdater(slsl.getTextColor(), ServerInfoActivity.translucent(slsl.getTextColor()), tabs, psts));
+
+			findViewById(R.id.appbar).setBackgroundDrawable(slsl.load());
 			
 			{
 				String title="§0W§1i§2s§3e§4c§5r§6a§7f§8t §9P§aE §bS§ce§dr§ev§fe§rr";

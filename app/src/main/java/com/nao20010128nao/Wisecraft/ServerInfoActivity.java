@@ -40,7 +40,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 	//public static List<ServerStatus> stat=new ArrayList<>();
 	public static Map<String,Bitmap> faces=new HashMap<>();
 
-	public static int DIRT_BRIGHT,DIRT_DARK,PALE_PRIMARY;
+	public static int DIRT_BRIGHT,DIRT_DARK;
 	public static final int BASE64_FLAGS=Base64.NO_WRAP|Base64.NO_PADDING;
 
 	SharedPreferences pref;
@@ -76,7 +76,6 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		// TODO: Implement this method
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
 		super.onCreate(savedInstanceState);
-		calculatePalePrimary();
 		getWindow().requestFeature(Window.FEATURE_ACTION_MODE_OVERLAY);
 		instance = new WeakReference(this);
 		slsl=(ServerListStyleLoader)getSystemService(ContextWrappingExtender.SERVER_LIST_STYLE_LOADER);
@@ -144,15 +143,10 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 
 		update(localStat.response);
 
-		if (slsl.isDarkerTextColor()) {
-			psts.setIndicatorColor(Color.WHITE);
-			psts.setTextColor(Color.WHITE);
-			psts.setOnPageChangeListener(new ColorUpdater(Color.WHITE, DIRT_BRIGHT, tabs, psts));
-		} else {
-			psts.setIndicatorColor(ContextCompat.getColor(this, R.color.mainColor));
-			psts.setTextColor(ContextCompat.getColor(this, R.color.mainColor));
-			psts.setOnPageChangeListener(new ColorUpdater(ContextCompat.getColor(this, R.color.mainColor), PALE_PRIMARY, tabs, psts));
-		}
+		psts.setIndicatorColor(slsl.getTextColor());
+		psts.setTextColor(slsl.getTextColor());
+		psts.setOnPageChangeListener(new ColorUpdater(slsl.getTextColor(), translucent(slsl.getTextColor()), tabs, psts));
+		
 		findViewById(R.id.appbar).setBackgroundDrawable(slsl.load());
 
 		int offset=getIntent().getIntExtra("offset", 0);
@@ -327,28 +321,17 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		boolean isDark;
-		if (pref.getBoolean("colorFormattedText", false)) {
-			if (pref.getBoolean("darkBackgroundForServerName", false)) {
-				isDark = true;
-			} else {
-				isDark = false;
-			}
-		} else {
-			isDark = false;
-		}
-		int color= ContextCompat.getColor(this, R.color.mainColor);
 		if (!noExport) {
 			exportButton = menu.add(Menu.NONE, 0, 0, R.string.exportPing);
-			exportButton.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_file_upload_black_48dp, isDark ?Color.WHITE: color));
+			exportButton.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_file_upload_black_48dp, slsl.getTextColor()));
 			MenuItemCompat.setShowAsAction(exportButton, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
 		}
 		seeTitleButton = menu.add(Menu.NONE, 1, 1, R.string.seeTitle);
-		seeTitleButton.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_open_in_new_black_48dp, isDark ?Color.WHITE: color));
+		seeTitleButton.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_open_in_new_black_48dp, slsl.getTextColor()));
 		MenuItemCompat.setShowAsAction(seeTitleButton, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
 		if (!nonUpd) {
 			updateBtn = menu.add(Menu.NONE, 2, 2, R.string.update);
-			updateBtn.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_refresh_black_48dp, isDark ?Color.WHITE: color));
+			updateBtn.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_refresh_black_48dp, slsl.getTextColor()));
 			MenuItemCompat.setShowAsAction(updateBtn, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
 		}
 		return true;
@@ -1036,19 +1019,14 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		
 		Log.d("DirtBright",Integer.toHexString(DIRT_BRIGHT));
 		Log.d("DirtDark",Integer.toHexString(DIRT_DARK));
-		
-		calculatePalePrimary();
 	}
 	
-	public static void calculatePalePrimary(){
-		int palePrimary=ContextCompat.getColor(TheApplication.instance, R.color.mainColor);
+	public static int translucent(int palePrimary){
 		int r=Color.red(palePrimary);
 		int g=Color.green(palePrimary);
 		int b=Color.blue(palePrimary);
 		int a=new BigDecimal(0xff).multiply(new BigDecimal("0.3")).intValue();
 
-		PALE_PRIMARY = Color.argb(a, r, g, b);
-		
-		Log.d("PalePrimary",Integer.toHexString(PALE_PRIMARY));
+		return Color.argb(a, r, g, b);
 	}
 }
