@@ -8,6 +8,7 @@ import android.support.v4.content.*;
 import android.util.*;
 import com.nao20010128nao.Wisecraft.*;
 import java.io.*;
+import android.support.v7.graphics.*;
 
 public class ServerListStyleLoader {
 	public static final int BACKGROUND_WHITE=0;
@@ -65,6 +66,25 @@ public class ServerListStyleLoader {
 				return last;
 		}
 		return null;
+	}
+	
+	public int getBackgroundSimpleColor(){
+		switch(pref.getInt("serverListBgId",0)){
+			case BACKGROUND_WHITE:
+				return Color.WHITE;
+			case BACKGROUND_BLACK:
+				return Color.BLACK;
+			case BACKGROUND_DIRT:
+				return ServerInfoActivity.DIRT_DARK;
+			case BACKGROUND_SINGLE_COLOR:
+				return pref.getInt("serverListBgColor",Color.BLACK);
+			case BACKGROUND_IMAGE:
+				byte[] data=Base64.decode(pref.getString("serverListBgImg",""),ServerInfoActivity.BASE64_FLAGS);
+				Bitmap bmp=BitmapFactory.decodeByteArray(data,0,data.length);
+				Palette palette=Palette.generate(bmp);
+				palette.getDarkVibrantColor(Color.BLACK);
+		}
+		return 0;
 	}
 	
 	public void setWhiteBg(){
