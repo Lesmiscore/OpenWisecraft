@@ -417,6 +417,21 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		}
 	}
 	
+	public static class ServerListStyleEditor extends com.nao20010128nao.Wisecraft.misc.BaseFragment<FragmentSettingsActivity> {
+
+		@Override
+		public void onResume() {
+			// TODO: Implement this method
+			super.onResume();
+		}
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+			// TODO: Implement this method
+			return inflater.inflate(R.layout.settings_server_list_style_editor,container,false);
+		}
+	}
+	
 	
 	
 	
