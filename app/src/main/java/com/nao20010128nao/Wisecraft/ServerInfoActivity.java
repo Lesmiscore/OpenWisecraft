@@ -144,11 +144,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 
 		update(localStat.response);
 
-		if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
-			BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
-			bd.setTargetDensity(getResources().getDisplayMetrics());
-			bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
-			findViewById(R.id.appbar).setBackgroundDrawable(bd);
+		if (slsl.isDarkerTextColor()) {
 			psts.setIndicatorColor(Color.WHITE);
 			psts.setTextColor(Color.WHITE);
 			psts.setOnPageChangeListener(new ColorUpdater(Color.WHITE, DIRT_BRIGHT, tabs, psts));
@@ -157,6 +153,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			psts.setTextColor(ContextCompat.getColor(this, R.color.mainColor));
 			psts.setOnPageChangeListener(new ColorUpdater(ContextCompat.getColor(this, R.color.mainColor), PALE_PRIMARY, tabs, psts));
 		}
+		findViewById(R.id.appbar).setBackgroundDrawable(slsl.load());
 
 		int offset=getIntent().getIntExtra("offset", 0);
 		if (adapter.getCount() >= 2 & offset == 0)tabs.setCurrentItem(1);

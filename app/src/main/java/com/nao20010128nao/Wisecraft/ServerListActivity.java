@@ -826,11 +826,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					viewHolder.hideServerTitle();
 				}else{
 					if (sla.pref.getBoolean("serverListColorFormattedText", false)) {
-						if (sla.slsl.isDarkerTextColor()) {
-							viewHolder.setServerTitle(parseMinecraftFormattingCodeForDark(sv.name));
-						} else {
-							viewHolder.setServerTitle(parseMinecraftFormattingCode(sv.name));
-						}
+						viewHolder.setServerTitle(parseMinecraftFormattingCode(sv.name));
 					} else {
 						viewHolder.setServerTitle(deleteDecorations(sv.name));
 					}
