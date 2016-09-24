@@ -4,12 +4,16 @@ import android.content.res.*;
 import android.preference.*;
 import android.util.*;
 import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.misc.*;
 import java.math.*;
 
 public class ContextWrappingExtender extends ContextWrapper
 {
+	public static final String SERVER_LIST_STYLE_LOADER="server_list_style_loader";
+	
 	Resources modRes;
 	SharedPreferences pref;
+	ServerListStyleLoader slsl;
 	private ContextWrappingExtender(Context ctx){
 		super(ctx);
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
@@ -37,6 +41,26 @@ public class ContextWrappingExtender extends ContextWrapper
 		// TODO: Implement this method
 		return modRes;
 	}
+
+	@Override
+	public Object getSystemService(String name) {
+		// TODO: Implement this method
+		if(SERVER_LIST_STYLE_LOADER.equals(name)){
+			if(slsl==null)
+				slsl=new ServerListStyleLoader(this);
+			return slsl;
+		}
+		return super.getSystemService(name);
+	}
+
+	@Override
+	public String getSystemServiceName(Class<?> serviceClass) {
+		// TODO: Implement this method
+		if(serviceClass==ServerListStyleLoader.class)
+			return SERVER_LIST_STYLE_LOADER;
+		return super.getSystemServiceName(serviceClass);
+	}
+	
 
 	
 	
