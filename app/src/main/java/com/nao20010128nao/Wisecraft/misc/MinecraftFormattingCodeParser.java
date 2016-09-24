@@ -38,7 +38,7 @@ public class MinecraftFormattingCodeParser
 		int offset=0;
 		int undecOffset=0;
 		byte flag=0;
-		boolean noColor=false;
+		boolean noColor=true;
 		while (chars.length > offset) {
 			if (chars[offset] == '§') {
 				offset++;
