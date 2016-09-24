@@ -825,9 +825,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				if(TextUtils.isEmpty(sv.name)||sv.toString().equals(sv.name)){
 					viewHolder.hideServerTitle();
 				}else{
-					if (sla.pref.getBoolean("serverListColorFormattedText", false)) {
+					/*if (sla.pref.getBoolean("serverListColorFormattedText", false)) {
 						viewHolder.setServerTitle(parseMinecraftFormattingCode(sv.name));
-					} else {
+					} else */{
 						viewHolder.setServerTitle(deleteDecorations(sv.name));
 					}
 					viewHolder.showServerTitle();
