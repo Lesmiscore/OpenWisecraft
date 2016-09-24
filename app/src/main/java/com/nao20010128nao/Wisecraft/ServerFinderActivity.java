@@ -220,11 +220,7 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 				title = s.toString();
 			}
 			if (sta.pref.getBoolean("serverListColorFormattedText", false)) {
-				if (sta.slsl.isDarkerTextColor()) {
-					viewHolder.setServerName(parseMinecraftFormattingCodeForDark(title));
-				} else {
-					viewHolder.setServerName(parseMinecraftFormattingCode(title));
-				}
+				viewHolder.setServerName(parseMinecraftFormattingCode(title,sta.slsl.getTextColor()));
 			} else {
 				viewHolder.setServerName(deleteDecorations(title));
 			}

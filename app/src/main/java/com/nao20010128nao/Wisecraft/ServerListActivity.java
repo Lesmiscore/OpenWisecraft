@@ -897,11 +897,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							viewHolder.setServerPlayers();
 						}
 						if (sla.pref.getBoolean("serverListColorFormattedText", false)) {
-							if (sla.slsl.isDarkerTextColor()) {
-								viewHolder.setServerName(parseMinecraftFormattingCodeForDark(title));
-							} else {
-								viewHolder.setServerName(parseMinecraftFormattingCode(title));
-							}
+							viewHolder.setServerName(parseMinecraftFormattingCode(title,sla.slsl.getTextColor()));
 						} else {
 							viewHolder.setServerName(deleteDecorations(title));
 						}

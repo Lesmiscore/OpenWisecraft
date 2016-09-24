@@ -42,17 +42,15 @@ public class Utils extends PingerUtils{
 		}
 		return sb.toString();
 	}
-	public static CharSequence parseMinecraftFormattingCode(String s){
+	public static CharSequence parseMinecraftFormattingCode(String s,int defColor){
 		try {
 			MinecraftFormattingCodeParser mfcp=new MinecraftFormattingCodeParser();
 			mfcp.loadFlags(s);
+			mfcp.defaultColor=defColor;
 			return mfcp.build();
 		} catch (Throwable e) {
 			return s;
 		}
-	}
-	public static CharSequence parseMinecraftFormattingCodeForDark(String s){
-		return parseMinecraftFormattingCode(s);
 	}
 	public static boolean isNullString(String s) {
 		if (s == null) 

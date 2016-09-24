@@ -611,11 +611,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			{
 				String title="§0W§1i§2s§3e§4c§5r§6a§7f§8t §9P§aE §bS§ce§dr§ev§fe§rr";
 				if (pref.getBoolean("colorFormattedText", false)) {
-					if (pref.getBoolean("darkBackgroundForServerName", false)) {
-						tb.setTitle(Utils.parseMinecraftFormattingCodeForDark(title.toString()));
-					} else {
-						tb.setTitle(Utils.parseMinecraftFormattingCode(title.toString()));
-					}
+					tb.setTitle(Utils.parseMinecraftFormattingCode(title.toString(),slsl.getTextColor()));
 				} else {
 					tb.setTitle(Utils.deleteDecorations(title.toString()));
 				}

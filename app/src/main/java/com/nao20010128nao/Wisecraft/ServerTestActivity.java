@@ -271,11 +271,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
                         viewHolder.setServerPlayers();
                     }
 					if (sta.pref.getBoolean("serverListColorFormattedText", false)) {
-						if (sta.slsl.isDarkerTextColor()) {
-							viewHolder.setServerName(parseMinecraftFormattingCodeForDark(title));
-						} else {
-							viewHolder.setServerName(parseMinecraftFormattingCode(title));
-						}
+						viewHolder.setServerName(parseMinecraftFormattingCode(title,sta.slsl.getTextColor()));
 					} else {
 						viewHolder.setServerName(deleteDecorations(title));
 					}

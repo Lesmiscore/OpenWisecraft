@@ -17,7 +17,8 @@ public class ServerListRecyclerAdapter extends ListRecyclerViewAdapter<ServerSta
 	List<BindViewHolderListener> bhListeners=new ArrayList<>();
 	SharedPreferences pref;
 	PingingMap pinging=new PingingMap();
-	boolean forceDarkness,darkness,showTitle;
+	boolean showTitle;
+	ServerListStyleLoader slsl;
 	
 	public ServerListRecyclerAdapter(Context ctx){
 		this(new ArrayList<Server>(),ctx);
@@ -32,25 +33,7 @@ public class ServerListRecyclerAdapter extends ListRecyclerViewAdapter<ServerSta
 		context=ctx;
 		pref=PreferenceManager.getDefaultSharedPreferences(context);
 		configure();
-	}
-	
-
-	public void setForceDarkness(boolean forceDarkness) {
-		this.forceDarkness = forceDarkness;
-		notifyItemRangeChanged(0,size());
-	}
-
-	public boolean isForceDarkness() {
-		return forceDarkness;
-	}
-
-	public void setDarkness(boolean darkness) {
-		this.darkness = darkness;
-		if(forceDarkness)notifyItemRangeChanged(0,size());
-	}
-
-	public boolean isDarkness() {
-		return darkness;
+		slsl=new ServerListStyleLoader(ctx);
 	}
 	
 	public void setShowTitle(boolean showTitle) {
@@ -108,28 +91,12 @@ public class ServerListRecyclerAdapter extends ListRecyclerViewAdapter<ServerSta
 		// TODO: Implement this method
 		Server s=getItem(offset);
 		viewHolder.setServer(s).setServerPlayers("-/-");
-		if(forceDarkness){
-			viewHolder.setDarkness(darkness);
-		}else{
-			if (pref.getBoolean("colorFormattedText", false)) {
-				if (pref.getBoolean("darkBackgroundForServerName", false)) {
-					viewHolder.setDarkness(true);
-				} else {
-					viewHolder.setDarkness(false);
-				}
-			} else {
-				viewHolder.setDarkness(false);
-			}
-		}
+		slsl.applyTextColorTo(viewHolder);
 		if((TextUtils.isEmpty(s.name)||s.toString().equals(s.name))&(!showTitle)){
 			viewHolder.hideServerTitle();
 		}else{
-			if (pref.getBoolean("colorFormattedText", false)) {
-				if (pref.getBoolean("darkBackgroundForServerName", false)) {
-					viewHolder.setServerTitle(parseMinecraftFormattingCodeForDark(s.name));
-				} else {
-					viewHolder.setServerTitle(parseMinecraftFormattingCode(s.name));
-				}
+			if (pref.getBoolean("serverListColorFormattedText", false)) {
+				viewHolder.setServerTitle(parseMinecraftFormattingCode(s.name,slsl.getTextColor()));
 			} else {
 				viewHolder.setServerTitle(deleteDecorations(s.name));
 			}
@@ -198,12 +165,8 @@ public class ServerListRecyclerAdapter extends ListRecyclerViewAdapter<ServerSta
 					title = sv.toString();
 					viewHolder.setServerPlayers();
 				}
-				if (pref.getBoolean("colorFormattedText", false)) {
-					if (pref.getBoolean("darkBackgroundForServerName", false)) {
-						viewHolder.setServerName(parseMinecraftFormattingCodeForDark(title));
-					} else {
-						viewHolder.setServerName(parseMinecraftFormattingCode(title));
-					}
+				if (pref.getBoolean("serverListColorFormattedText", false)) {
+					viewHolder.setServerName(parseMinecraftFormattingCode(title,slsl.getTextColor()));
 				} else {
 					viewHolder.setServerName(deleteDecorations(title));
 				}

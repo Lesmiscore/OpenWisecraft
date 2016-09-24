@@ -27,17 +27,18 @@ public class MinecraftFormattingCodeParser
 	
 	public byte[] flags=null;
 	public char[] escaped=null;
-	public boolean[] noSpans=null;
+	public boolean[] noColors=null;
+	public int defaultColor=Color.BLACK;
 	public void loadFlags(String s){
 		escaped=Utils.deleteDecorations(s).toCharArray();
 		flags=new byte[escaped.length];
-		noSpans=new boolean[flags.length];
+		noColors=new boolean[flags.length];
 		
 		char[] chars=s.toCharArray();
 		int offset=0;
 		int undecOffset=0;
 		byte flag=0;
-		boolean noSpan=false;
+		boolean noColor=false;
 		while (chars.length > offset) {
 			if (chars[offset] == '§') {
 				offset++;
@@ -45,77 +46,77 @@ public class MinecraftFormattingCodeParser
 				switch(keyChar){
 					/*Colors*/
 					case '0':
-						flag=0;noSpan=false;
+						flag=0;noColor=false;
 						break;
 					case '1':
-						flag=1;noSpan=false;
+						flag=1;noColor=false;
 						break;
 					case '2':
-						flag=2;noSpan=false;
+						flag=2;noColor=false;
 						break;
 					case '3':
-						flag=3;noSpan=false;
+						flag=3;noColor=false;
 						break;
 					case '4':
-						flag=4;noSpan=false;
+						flag=4;noColor=false;
 						break;
 					case '5':
-						flag=5;noSpan=false;
+						flag=5;noColor=false;
 						break;
 					case '6':
-						flag=6;noSpan=false;
+						flag=6;noColor=false;
 						break;
 					case '7':
-						flag=7;noSpan=false;
+						flag=7;noColor=false;
 						break;
 					case '8':
-						flag=8;noSpan=false;
+						flag=8;noColor=false;
 						break;
 					case '9':
-						flag=9;noSpan=false;
+						flag=9;noColor=false;
 						break;
 					case 'a':case 'A':
-						flag=10;noSpan=false;
+						flag=10;noColor=false;
 						break;
 					case 'b':case 'B':
-						flag=11;noSpan=false;
+						flag=11;noColor=false;
 						break;
 					case 'c':case 'C':
-						flag=12;noSpan=false;
+						flag=12;noColor=false;
 						break;
 					case 'd':case 'D':
-						flag=13;noSpan=false;
+						flag=13;noColor=false;
 						break;
 					case 'e':case 'E':
-						flag=14;noSpan=false;
+						flag=14;noColor=false;
 						break;
 					case 'f':case 'F':
-						flag=15;noSpan=false;
+						flag=15;noColor=false;
 						break;
 						
 					/*Styles*/
 					case 'l':case 'L':
-						flag|=0b00010000;noSpan=false;
+						flag|=0b00010000;
 						break;
 					case 'm':case 'M':
-						flag|=0b00100000;noSpan=false;
+						flag|=0b00100000;
 						break;
 					case 'n':case 'N':
-						flag|=0b01000000;noSpan=false;
+						flag|=0b01000000;
 						break;
 					case 'o':case 'O':
-						flag|=0b10000000;noSpan=false;
+						flag|=0b10000000;
 						break;
 					
 					/*Reset*/
 					case 'r':case 'R':
-						flag=0;noSpan=true;
+						flag=0;noColor=true;
 						break;
 				}
 				continue;
 			}
 			flags[undecOffset]=flag;
-			noSpans[undecOffset]=noSpan;
+			noColors[undecOffset]=noColor;
 			offset++;
 			undecOffset++;
 		}
@@ -126,22 +127,26 @@ public class MinecraftFormattingCodeParser
 	public Spannable build(){
 		SpannableStringBuilder ssb=new SpannableStringBuilder();
 		for(int i=0;i<escaped.length;i++){
-			if(!noSpans[i]){
-				ForegroundColorSpan fcs=new ForegroundColorSpan(TEXT_COLORS[flags[i]&0xF]);
-				ssb.append(escaped[i]);
-				ssb.setSpan(fcs,ssb.length()-1,ssb.length(),SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
-				if(0!=(flags[i]&0b00010000)){
-					ssb.setSpan(new StyleSpan(Typeface.BOLD),ssb.length()-1,ssb.length(),SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
-				}
-				if(0!=(flags[i]&0b00100000)){
-					ssb.setSpan(new StrikethroughSpan(),ssb.length()-1,ssb.length(),SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
-				}
-				if(0!=(flags[i]&0b01000000)){
-					ssb.setSpan(new UnderlineSpan(),ssb.length()-1,ssb.length(),SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
-				}
-				if(0!=(flags[i]&0b10000000)){
-					ssb.setSpan(new StyleSpan(Typeface.ITALIC),ssb.length()-1,ssb.length(),SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
-				}
+			int textColor;
+			if(noColors[i]){
+				textColor=defaultColor;
+			}else{
+				textColor=TEXT_COLORS[flags[i]&0xF];
+			}
+			ForegroundColorSpan fcs=new ForegroundColorSpan(textColor);
+			ssb.append(escaped[i]);
+			ssb.setSpan(fcs,ssb.length()-1,ssb.length(),SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+			if(0!=(flags[i]&0b00010000)){
+				ssb.setSpan(new StyleSpan(Typeface.BOLD),ssb.length()-1,ssb.length(),SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+			}
+			if(0!=(flags[i]&0b00100000)){
+				ssb.setSpan(new StrikethroughSpan(),ssb.length()-1,ssb.length(),SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+			}
+			if(0!=(flags[i]&0b01000000)){
+				ssb.setSpan(new UnderlineSpan(),ssb.length()-1,ssb.length(),SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+			}
+			if(0!=(flags[i]&0b10000000)){
+				ssb.setSpan(new StyleSpan(Typeface.ITALIC),ssb.length()-1,ssb.length(),SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
 			}
 		}
 		return ssb;
