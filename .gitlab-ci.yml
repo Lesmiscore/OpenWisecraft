@@ -12,7 +12,7 @@ before_script:
   - wget --quiet --output-document=gradle.zip https://services.gradle.org/distributions/gradle-2.14.1-bin.zip
   - unzip -q gradle.zip
   - export ANDROID_HOME=$PWD/android-sdk-linux
-  - export POW_OF_2=true
+  - export POW_OF_2=false
   - java -version
 
 stages:
@@ -30,11 +30,10 @@ main:
     - unzip rconPassCrack-release.apk -d unzippedApkC > /dev/null
     - android-sdk-linux/build-tools/24.0.0/dexdump -d unzippedApkC/classes.dex > dexdump-rconPC.txt
     - grep "Git\sRevision" build.log
-    - gzip powof2.txt
   artifacts:
     paths:
       - "*.apk"
       - dexdump*.txt
       - build.log
-      - powof2.txt.gz
+      - powof2.txt
 
