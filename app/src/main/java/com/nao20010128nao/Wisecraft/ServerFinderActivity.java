@@ -14,6 +14,7 @@ import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
+import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
 import com.nao20010128nao.Wisecraft.misc.provider.*;
@@ -30,7 +31,8 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 	ServerPingProvider spp;
 	SharedPreferences pref;
 	RecyclerView rv;
-
+	ServerListStyleLoader slsl;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
@@ -81,16 +83,11 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 			.show();
 		if (ip != null)((EditText)dialog.findViewById(R.id.ip)).setText(ip);
 		((CheckBox)dialog.findViewById(R.id.pc)).setChecked(mode == 0 ?false: true);
-
-		if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
-			BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
-			bd.setTargetDensity(getResources().getDisplayMetrics());
-			bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
-			rv.setBackgroundDrawable(bd);
-		}
+		slsl=(ServerListStyleLoader)getSystemService(ContextWrappingExtender.SERVER_LIST_STYLE_LOADER);
+		
+		rv.setBackgroundDrawable(slsl.load());
 	}
 	private void startFinding(final String ip, final int startPort, final int endPort, final boolean isPC) {
-		DisplayMetrics dm=getResources().getDisplayMetrics();
 		final PopupWindow pw=new PopupWindow(this);
 		pw.setTouchable(false);
 		pw.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -199,15 +196,7 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 
 		@Override
 		public void onBindViewHolder(ServerStatusWrapperViewHolder viewHolder, final int offset) {
-			if (sta.pref.getBoolean("colorFormattedText", false)) {
-				if (sta.pref.getBoolean("darkBackgroundForServerName", false)) {
-					viewHolder.setDarkness(true);
-				} else {
-					viewHolder.setDarkness(false);
-				}
-			} else {
-				viewHolder.setDarkness(false);
-			}
+			sta.slsl.applyTextColorTo(viewHolder);
 			ServerStatus s=getItem(offset);
 			
 			final String title;
@@ -230,8 +219,8 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 			} else {//Unreachable
 				title = s.toString();
 			}
-			if (sta.pref.getBoolean("colorFormattedText", false)) {
-				if (sta.pref.getBoolean("darkBackgroundForServerName", false)) {
+			if (sta.pref.getBoolean("serverListColorFormattedText", false)) {
+				if (sta.slsl.isDarkerTextColor()) {
 					viewHolder.setServerName(parseMinecraftFormattingCodeForDark(title));
 				} else {
 					viewHolder.setServerName(parseMinecraftFormattingCode(title));

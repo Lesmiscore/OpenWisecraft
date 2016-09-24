@@ -1,8 +1,6 @@
 package com.nao20010128nao.Wisecraft;
 import android.app.*;
 import android.content.*;
-import android.graphics.*;
-import android.graphics.drawable.*;
 import android.os.*;
 import android.preference.*;
 import android.support.v4.content.*;
@@ -12,6 +10,7 @@ import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
+import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
 import com.nao20010128nao.Wisecraft.misc.provider.*;
@@ -34,6 +33,8 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 	View dialog;
 	SharedPreferences pref;
 	RecyclerView rv;
+	ServerListStyleLoader slsl;
+    
 	Map<Integer,Boolean> pinging=new HashMap<Integer,Boolean>(){
 		@Override
 		public Boolean get(Object key) {
@@ -60,7 +61,8 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 			sl = new RecyclerServerList(this);
 		}
 		instance = new WeakReference(this);
-        setContentView(R.layout.recycler_view_content);
+        slsl=(ServerListStyleLoader)getSystemService(ContextWrappingExtender.SERVER_LIST_STYLE_LOADER);
+		setContentView(R.layout.recycler_view_content);
 		rv = (RecyclerView)findViewById(android.R.id.list);
 		switch(pref.getInt("serverListStyle2",0)){
 			case 0:default:
@@ -141,12 +143,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 				.show();
 		}
 
-		if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
-			BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
-			bd.setTargetDensity(getResources().getDisplayMetrics());
-			bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
-			rv.setBackgroundDrawable(bd);
-		}
+		rv.setBackground(slsl.load());
 	}
 	@Override
 	protected void attachBaseContext(Context newBase) {
@@ -208,15 +205,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 			// TODO: Implement this method
 			Server s=getItem(offset);
 			viewHolder.setServer(s).setServerPlayers("-/-");
-			if (sta.pref.getBoolean("colorFormattedText", false)) {
-				if (sta.pref.getBoolean("darkBackgroundForServerName", false)) {
-					viewHolder.setDarkness(true);
-				} else {
-					viewHolder.setDarkness(false);
-				}
-			} else {
-				viewHolder.setDarkness(false);
-			}
+			sta.slsl.applyTextColorTo(viewHolder);
 			viewHolder.hideServerTitle();
             if (sta.pinging.get(offset)) {
 				viewHolder.pending(s,sta);
@@ -281,8 +270,8 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 						title = sv.toString();
                         viewHolder.setServerPlayers();
                     }
-					if (sta.pref.getBoolean("colorFormattedText", false)) {
-						if (sta.pref.getBoolean("darkBackgroundForServerName", false)) {
+					if (sta.pref.getBoolean("serverListColorFormattedText", false)) {
+						if (sta.slsl.isDarkerTextColor()) {
 							viewHolder.setServerName(parseMinecraftFormattingCodeForDark(title));
 						} else {
 							viewHolder.setServerName(parseMinecraftFormattingCode(title));

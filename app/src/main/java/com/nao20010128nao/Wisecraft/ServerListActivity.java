@@ -35,6 +35,7 @@ import android.support.v7.view.ActionMode;
 import com.nao20010128nao.Wisecraft.R;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
+import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
 
 //Full implement for user interface (Some part is available at ServerListActivityBase4)
 abstract class ServerListActivityImpl extends ServerListActivityBase1 implements ServerListActivityInterface,ServerListProvider {
@@ -42,6 +43,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	
     RecycleServerList sl;
     List<Server> list;
+	ServerListStyleLoader slsl;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +126,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			sl.attachNewActivity(this);
 		}
 		instance = new WeakReference(this);
+		slsl=(ServerListStyleLoader)getSystemService(ContextWrappingExtender.SERVER_LIST_STYLE_LOADER);
 		if (usesOldInstance) {
 			rv.setAdapter(sl);
 		} else {
@@ -150,12 +153,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			for (int i=0;i < list.size();i++)
 				dryUpdate(list.get(i), false);
 		}
-		if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
-			BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
-			bd.setTargetDensity(getResources().getDisplayMetrics());
-			bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
-			rv.setBackgroundDrawable(bd);
-		}
+		rv.setBackground(slsl.load());
         ddManager=new SimpleCallback(0,0) {
             @Override
             public boolean onMove(RecyclerView recyclerView, ViewHolder viewHolder, ViewHolder target) {
@@ -827,8 +825,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				if(TextUtils.isEmpty(sv.name)||sv.toString().equals(sv.name)){
 					viewHolder.hideServerTitle();
 				}else{
-					if (sla.pref.getBoolean("colorFormattedText", false)) {
-						if (sla.pref.getBoolean("darkBackgroundForServerName", false)) {
+					if (sla.pref.getBoolean("serverListColorFormattedText", false)) {
+						if (sla.slsl.isDarkerTextColor()) {
 							viewHolder.setServerTitle(parseMinecraftFormattingCodeForDark(sv.name));
 						} else {
 							viewHolder.setServerTitle(parseMinecraftFormattingCode(sv.name));
@@ -838,15 +836,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					}
 					viewHolder.showServerTitle();
 				}
-				if (sla.pref.getBoolean("colorFormattedText", false)) {
-					if (sla.pref.getBoolean("darkBackgroundForServerName", false)) {
-						viewHolder.setDarkness(true);
-					} else {
-						viewHolder.setDarkness(false);
-					}
-				} else {
-					viewHolder.setDarkness(false);
-				}
+				sla.slsl.applyTextColorTo(viewHolder);
 				if (sla.pinging.get(sv)) {
 					viewHolder.pending(sv,sla);
 				} else {
@@ -910,8 +900,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							title = s.toString();
 							viewHolder.setServerPlayers();
 						}
-						if (sla.pref.getBoolean("colorFormattedText", false)) {
-							if (sla.pref.getBoolean("darkBackgroundForServerName", false)) {
+						if (sla.pref.getBoolean("serverListColorFormattedText", false)) {
+							if (sla.slsl.isDarkerTextColor()) {
 								viewHolder.setServerName(parseMinecraftFormattingCodeForDark(title));
 							} else {
 								viewHolder.setServerName(parseMinecraftFormattingCode(title));

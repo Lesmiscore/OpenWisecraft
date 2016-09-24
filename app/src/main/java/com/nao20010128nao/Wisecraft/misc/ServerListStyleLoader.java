@@ -21,6 +21,7 @@ public class ServerListStyleLoader {
 		ctx=c;
 		pref=PreferenceManager.getDefaultSharedPreferences(c);
 		if(pref.contains("colorFormattedText")|pref.contains("darkBackgroundForServerName")){
+			boolean willColorText;
 			if (pref.getBoolean("colorFormattedText", false)) {
 				if (pref.getBoolean("darkBackgroundForServerName", false)) {
 					setTextColor(Color.BLACK);
@@ -29,11 +30,17 @@ public class ServerListStyleLoader {
 					setTextColor(Color.WHITE);
 					setWhiteBg();
 				}
+				willColorText=true;
 			} else {
 				setTextColor(Color.WHITE);
 				setWhiteBg();
+				willColorText=false;
 			}
-			pref.edit().remove("colorFormattedText").remove("darkBackgroundForServerName").commit();
+			pref.edit()
+				.putBoolean("serverListColorFormattedText",willColorText)
+				.remove("colorFormattedText")
+				.remove("darkBackgroundForServerName")
+				.commit();
 		}
 	}
 	
@@ -121,5 +128,12 @@ public class ServerListStyleLoader {
 	
 	public void applyTextColorTo(ServerStatusWrapperViewHolder vh){
 		vh.setTextColor(getTextColor());
+	}
+	
+	public boolean isDarkerTextColor(){
+		float[] hsv=new float[3];
+		Color.colorToHSV(getTextColor(),hsv);
+		float v=hsv[2];
+		return v<=0.4;
 	}
 }
