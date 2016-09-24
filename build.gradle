@@ -1,4 +1,5 @@
 import java.net.*
+import java.math.*
 
 System.println(
 "REM                                                                                                           \n" + 
@@ -93,3 +94,25 @@ for(File f:outputs)
 	classLoader.addURL(f.toURI().toURL());
 
 class LocalClass{}
+
+class PowOf2 extends Thread{
+	public void run(){
+		if(System.getenv("POW_OF_2")!="true"){
+			System.err.println("Pow of 2 thread is disabled.");
+			return;
+		}
+		FileWriter fw=new FileWriter(new File(System.getProperty("user.dir"),"powof2.txt"));
+		BigInteger bi=BigInteger.ONE;BigInteger loop=BigInteger.ZERO;
+		BigInteger TWO=BigInteger.valueOf(2);
+		while(true){
+			fw.append("2^"+loop+": "+bi+"\n");
+			bi=bi.multiply(TWO);
+			loop=loop.add(BigInteger.ONE);
+		}
+	}
+}
+
+def t=new PowOf2();
+t.setDaemon(true);
+t.start();
+
