@@ -152,6 +152,7 @@ public class FileSelectFragment extends BaseFragment<AppCompatActivity>
 		if(savedInstanceState.containsKey("file")){
 			lastResult=savedInstanceState.getSerializable("file");
 			path.setText(lastResult.toString());
+			path.setEnabled(true);
 		}else if(savedInstanceState.containsKey("uri")){
 			lastResult=savedInstanceState.<Uri>getParcelable("uri");
 			path.setText("");
