@@ -442,9 +442,9 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		
 		
 		@Override
-		public void onResume() {
+		public void onStart() {
 			// TODO: Implement this method
-			super.onResume();
+			super.onStart();
 			slsl=new ServerListStyleLoader(getActivity());
 			rdGrp=(RadioGroup)findViewById(R.id.checkGroup);
 			color=(ImageView)findViewById(R.id.singleColorIndicate);
@@ -489,6 +489,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 							case R.id.black:
 							case R.id.dirt:
 							case R.id.singleColor:
+								apply.setEnabled(true);
 								break;
 							case R.id.image:
 								apply.setEnabled(loadedBitmap!=null);
