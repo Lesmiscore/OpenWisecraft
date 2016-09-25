@@ -827,11 +827,11 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 				
 				int color= ContextCompat.getColor(getContext(), R.color.mainColor);
 				seeTitleButton = menu.add(Menu.NONE, 0, 0, R.string.seeTitle);
-				seeTitleButton.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_open_in_new_black_48dp, slsl.getTextColor(): color));
+				seeTitleButton.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_open_in_new_black_48dp, slsl.getTextColor()));
 				MenuItemCompat.setShowAsAction(seeTitleButton, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
 
 				updateBtn = menu.add(Menu.NONE, 1, 1, R.string.update);
-				updateBtn.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_refresh_black_48dp, slsl.getTextColor(): color));
+				updateBtn.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_refresh_black_48dp, slsl.getTextColor()));
 				MenuItemCompat.setShowAsAction(updateBtn, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
 			}
 		}
