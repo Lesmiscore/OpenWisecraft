@@ -123,6 +123,16 @@ public class FileSelectFragment extends BaseFragment<AppCompatActivity>
 			results.remove(requestCode);
 		}
 	}
+
+	@Override
+	public void startActivityForResult(Intent intent, int requestCode) {
+		// TODO: Implement this method
+		if(getParentFragment()!=null)
+			getParentFragment().startActivityForResult(intent, requestCode);
+		else
+			super.startActivityForResult(intent, requestCode);
+	}
+	
 	
 	
 	
