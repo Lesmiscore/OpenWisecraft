@@ -587,7 +587,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			if(savedInstanceState==null)return;
 			rdGrp.check(savedInstanceState.getInt("checked"));
 			if(savedInstanceState.containsKey("color")){
-				selectedColor=savedInstanceState.get("color");
+				selectedColor=savedInstanceState.getInt("color");
 				color.setImageDrawable(new ColorDrawable(selectedColor));
 			}
 			if(savedInstanceState.containsKey("bitmap")){
