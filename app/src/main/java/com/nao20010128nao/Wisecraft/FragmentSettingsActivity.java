@@ -814,7 +814,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			
 			{
 				String title="§0W§1i§2s§3e§4c§5r§6a§7f§8t §9P§aE §bS§ce§dr§ev§fe§rr";
-				if (pref.getBoolean("colorFormattedText", false)) {
+				if (pref.getBoolean("serverListColorFormattedText", false)) {
 					tb.setTitle(Utils.parseMinecraftFormattingCode(title.toString(),slsl.getTextColor()));
 				} else {
 					tb.setTitle(Utils.deleteDecorations(title.toString()));
@@ -824,23 +824,14 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			{
 				Menu menu=tb.getMenu();
 				MenuItem updateBtn,seeTitleButton;
-				boolean isDark;
-				if (pref.getBoolean("colorFormattedText", false)) {
-					if (pref.getBoolean("darkBackgroundForServerName", false)) {
-						isDark = true;
-					} else {
-						isDark = false;
-					}
-				} else {
-					isDark = false;
-				}
+				
 				int color= ContextCompat.getColor(getContext(), R.color.mainColor);
 				seeTitleButton = menu.add(Menu.NONE, 0, 0, R.string.seeTitle);
-				seeTitleButton.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_open_in_new_black_48dp, isDark ?Color.WHITE: color));
+				seeTitleButton.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_open_in_new_black_48dp, slsl.getTextColor(): color));
 				MenuItemCompat.setShowAsAction(seeTitleButton, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
 
 				updateBtn = menu.add(Menu.NONE, 1, 1, R.string.update);
-				updateBtn.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_refresh_black_48dp, isDark ?Color.WHITE: color));
+				updateBtn.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_refresh_black_48dp, slsl.getTextColor(): color));
 				MenuItemCompat.setShowAsAction(updateBtn, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
 			}
 		}
