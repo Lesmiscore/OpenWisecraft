@@ -46,7 +46,7 @@ public class ServerListStyleLoader {
 	}
 	
 	public Drawable load(){
-		switch(pref.getInt("serverListBgId",0)){
+		switch(getBgId()){
 			case BACKGROUND_WHITE:
 				return new ColorDrawable(Color.WHITE);
 			case BACKGROUND_BLACK:
@@ -59,8 +59,7 @@ public class ServerListStyleLoader {
 			case BACKGROUND_SINGLE_COLOR:
 				return new ColorDrawable(pref.getInt("serverListBgColor",0));
 			case BACKGROUND_IMAGE:
-				byte[] data=Base64.decode(pref.getString("serverListBgImg",""),ServerInfoActivity.BASE64_FLAGS);
-				Bitmap bmp=BitmapFactory.decodeByteArray(data,0,data.length);
+				Bitmap bmp=getImageBgBitmap();
 				BitmapDrawable last=new BitmapDrawable(bmp);
 				last.setTargetDensity(ctx.getResources().getDisplayMetrics());
 				return last;
@@ -69,7 +68,7 @@ public class ServerListStyleLoader {
 	}
 	
 	public int getBackgroundSimpleColor(){
-		switch(pref.getInt("serverListBgId",0)){
+		switch(getBgId()){
 			case BACKGROUND_WHITE:
 				return Color.WHITE;
 			case BACKGROUND_BLACK:
@@ -79,10 +78,10 @@ public class ServerListStyleLoader {
 			case BACKGROUND_SINGLE_COLOR:
 				return pref.getInt("serverListBgColor",Color.BLACK);
 			case BACKGROUND_IMAGE:
-				byte[] data=Base64.decode(pref.getString("serverListBgImg",""),ServerInfoActivity.BASE64_FLAGS);
-				Bitmap bmp=BitmapFactory.decodeByteArray(data,0,data.length);
+				Bitmap bmp=getImageBgBitmap();
 				Palette palette=Palette.generate(bmp);
 				palette.getDarkVibrantColor(Color.BLACK);
+				bmp.recycle();
 		}
 		return 0;
 	}
@@ -126,6 +125,10 @@ public class ServerListStyleLoader {
 			.commit();
 	}
 	
+	public int getBgId(){
+		return pref.getInt("serverListBgId",0);
+	}
+	
 	public void setTextColor(int color){
 		pref.edit().putInt("serverListTextColor",color).commit();
 	}
@@ -148,6 +151,16 @@ public class ServerListStyleLoader {
 	
 	public void applyTextColorTo(ServerStatusWrapperViewHolder vh){
 		vh.setTextColor(getTextColor());
+	}
+	
+	public int getSingleColorBgColor(){
+		return pref.getInt("serverListBgColor",Color.BLACK);
+	}
+	
+	public Bitmap getImageBgBitmap(){
+		byte[] data=Base64.decode(pref.getString("serverListBgImg",""),ServerInfoActivity.BASE64_FLAGS);
+		Bitmap bmp=BitmapFactory.decodeByteArray(data,0,data.length);
+		return bmp;
 	}
 	
 	public boolean isDarkerTextColor(){

@@ -14,22 +14,26 @@
 		<RadioButton
 			android:layout_height="wrap_content"
 			android:layout_width="match_parent"
-			android:id="@+id/black"/>
+			android:id="@+id/white"
+			android:text="@string/white"/>
 
 		<RadioButton
 			android:layout_height="wrap_content"
 			android:layout_width="match_parent"
-			android:id="@+id/white"/>
+			android:id="@+id/black"
+			android:text="@string/black"/>
 
 		<RadioButton
 			android:layout_height="wrap_content"
 			android:layout_width="match_parent"
-			android:id="@+id/dirt"/>
+			android:id="@+id/dirt"
+			android:text="@string/dirt"/>
 
 		<RadioButton
 			android:layout_height="wrap_content"
 			android:layout_width="match_parent"
-			android:id="@+id/singleColor"/>
+			android:id="@+id/singleColor"
+			android:text="@string/singleColor"/>
 
 		<LinearLayout
 			android:layout_height="wrap_content"
@@ -52,30 +56,39 @@
 			<Button
 				android:layout_height="match_parent"
 				android:layout_width="wrap_content"
-				android:text="@string/select"/>
+				android:text="@string/select"
+				android:id="@+id/selectColor"/>
 
 		</LinearLayout>
 
 		<RadioButton
 			android:layout_height="wrap_content"
 			android:layout_width="match_parent"
-			android:id="@+id/image"/>
+			android:id="@+id/image"
+			android:text="@string/image"/>
 
 		<LinearLayout
 			android:layout_height="wrap_content"
 			android:layout_width="match_parent"
-			android:orientation="horizontal">
+			android:orientation="vertical">
+
+			<FrameLayout
+				android:layout_height="wrap_content"
+				android:layout_width="match_parent"
+				android:id="@+id/fileSelectFrg"/>
+
+			<Button
+				android:layout_height="wrap_content"
+				android:layout_width="match_parent"
+				android:text="@string/select"
+				android:layout_gravity="center"
+				android:id="@+id/selectImage"/>
 
 			<ImageView
 				android:layout_height="match_parent"
 				android:layout_width="match_parent"
-				android:layout_weight="1.0"/>
-
-			<Button
-				android:layout_height="wrap_content"
-				android:layout_width="wrap_content"
-				android:text="@string/select"
-				android:layout_gravity="center"/>
+				android:layout_weight="1.0"
+				android:id="@+id/imagePreview"/>
 
 		</LinearLayout>
 

@@ -1,7 +1,7 @@
 package com.nao20010128nao.Wisecraft;
 import android.content.*;
 import android.graphics.*;
-import android.graphics.drawable.*;
+import android.net.*;
 import android.os.*;
 import android.support.v4.app.*;
 import android.support.v4.content.*;
@@ -14,19 +14,21 @@ import android.util.*;
 import android.view.*;
 import android.widget.*;
 import com.astuetz.*;
+import com.azeesoft.lib.colorpicker.*;
 import com.nao20010128nao.ToolBox.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
+import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
 import com.nao20010128nao.Wisecraft.misc.pref.*;
 import java.io.*;
+import java.net.*;
 import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
 
 import android.support.v7.widget.Toolbar;
 import com.nao20010128nao.Wisecraft.R;
-import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
 
 public class FragmentSettingsActivity extends AppCompatActivity {
 	public static final Map<String,Class<? extends Fragment>> FRAGMENT_CLASSES=new HashMap<String,Class<? extends Fragment>>(){{
@@ -35,6 +37,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			put("features",Features.class);
 			put("asfsls",Asfsls.class);
 			put("versionInfo",VersionInfoFragmentLocal.class);
+			put("serverListStyleEditor",ServerListStyleEditor.class);
 	}};
 	public static final String DIALOG_FRAGMENT_TAG_PREFIX="settings@com.nao20010128nao.Wisecraft#";
 	
@@ -331,6 +334,17 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 							.show();
 					}
 				});
+			sH("serverListLooks", new HandledPreference.OnClickListener(){
+					public void onClick(String a, String b, String c) {
+						getActivity()
+							.getSupportFragmentManager()
+							.beginTransaction()
+							.replace(R.id.preference,new ServerListStyleEditor())
+							.addToBackStack("serverListStyleEditor")
+							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+							.commit();
+					}
+				});
 		}
 
 		@Override
@@ -419,17 +433,181 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 	
 	public static class ServerListStyleEditor extends com.nao20010128nao.Wisecraft.misc.BaseFragment<FragmentSettingsActivity> {
 		ServerListStyleLoader slsl;
+		RadioGroup rdGrp;
+		ImageView color,image;
+		Button selectColor,selectImage,apply;
+		FileSelectFragment fsf;
+		Bitmap loadedBitmap;
+		int selectedColor=Color.BLACK;
+		
+		
 		@Override
 		public void onResume() {
 			// TODO: Implement this method
 			super.onResume();
 			slsl=new ServerListStyleLoader(getActivity());
+			rdGrp=(RadioGroup)findViewById(R.id.checkGroup);
+			color=(ImageView)findViewById(R.id.singleColorIndicate);
+			image=(ImageView)findViewById(R.id.imagePreview);
+			selectColor=(Button)findViewById(R.id.selectColor);
+			selectImage=(Button)findViewById(R.id.selectImage);
+			apply=(Button)findViewById(R.id.apply);
+			
+			fsf=new FileSelectFragment();
+			fsf.setRetainInstance(true);
+			getChildFragmentManager()
+				.beginTransaction()
+				.replace(R.id.fileSelectFrg,fsf)
+				.commit();
+			
+			switch(slsl.getBgId()){
+				case ServerListStyleLoader.BACKGROUND_WHITE:
+					rdGrp.check(R.id.white);
+					break;
+				case ServerListStyleLoader.BACKGROUND_BLACK:
+					rdGrp.check(R.id.black);
+					break;
+				case ServerListStyleLoader.BACKGROUND_DIRT:
+					rdGrp.check(R.id.dirt);
+					break;
+				case ServerListStyleLoader.BACKGROUND_SINGLE_COLOR:
+					rdGrp.check(R.id.singleColor);
+					color.setImageDrawable(slsl.load());
+					selectedColor=slsl.getBackgroundSimpleColor();
+					break;
+				case ServerListStyleLoader.BACKGROUND_IMAGE:
+					rdGrp.check(R.id.image);
+					loadedBitmap=slsl.getImageBgBitmap();
+					image.setImageBitmap(loadedBitmap);
+					break;
+			}
+			
+			rdGrp.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
+					public void onCheckedChanged(RadioGroup p1, int p2){
+						switch(rdGrp.getCheckedRadioButtonId()){
+							case R.id.white:
+							case R.id.black:
+							case R.id.dirt:
+							case R.id.singleColor:
+								break;
+							case R.id.image:
+								apply.setEnabled(loadedBitmap!=null);
+								break;
+						}
+					}
+				});
+			selectColor.setOnClickListener(new View.OnClickListener(){
+					public void onClick(View v){
+						ColorPickerDialog cpd=ColorPickerDialog.createColorPickerDialog(getActivity(),ColorPickerDialog.LIGHT_THEME);
+						cpd.setLastColor(selectedColor);
+						cpd.setOnColorPickedListener(new ColorPickerDialog.OnColorPickedListener(){
+								public void onColorPicked(int color,String hex){
+									selectedColor=color;
+								}
+							});
+						cpd.setOnClosedListener(new ColorPickerDialog.OnClosedListener(){
+								public void onClosed(){
+
+								}
+							});
+						cpd.show();
+					}
+				});
+			selectImage.setOnClickListener(new View.OnClickListener(){
+					public void onClick(View v){
+						new AsyncTask<Object,Void,Bitmap>(){
+							public Bitmap doInBackground(Object... a){
+								String path=ServerListStyleEditor.toString(a[0]);
+								InputStream is=null;
+								try{
+									is=tryOpen(path);
+									return BitmapFactory.decodeStream(is);
+								}catch(Throwable e){
+									WisecraftError.report("slse image",e);
+									return null;
+								}finally{
+									try {
+										if (is != null)is.close();
+									} catch (IOException e) {
+										WisecraftError.report("slse image",e);
+									}
+								}
+							}
+							public void onPostExcecute(Bitmap bmp){
+								loadedBitmap=bmp;
+							}
+						}.execute(fsf.getLastResult());
+					}
+				});
+			apply.setOnClickListener(new View.OnClickListener(){
+					public void onClick(View v){
+						switch(rdGrp.getCheckedRadioButtonId()){
+							case R.id.white:
+								slsl.setWhiteBg();
+								break;
+							case R.id.black:
+								slsl.setBlackBg();
+								break;
+							case R.id.dirt:
+								slsl.setDirtBg();
+								break;
+							case R.id.singleColor:
+								slsl.setSingleColorBg(selectedColor);
+								break;
+							case R.id.image:
+								if(loadedBitmap!=null)
+									slsl.setImageBg(loadedBitmap);
+								else return;
+								break;
+						}
+						getParentActivity().getSupportFragmentManager().popBackStack();
+					}
+				});
 		}
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
 			return inflater.inflate(R.layout.settings_server_list_style_editor,container,false);
+		}
+		
+		public InputStream tryOpen(String uri) throws IOException {
+			Log.d("dbg", "tryOpen:" + uri);
+			if (uri.startsWith("content://")) {
+				return getActivity().getContentResolver().openInputStream(Uri.parse(uri));
+			} else if (uri.startsWith("/")) {
+				return new FileInputStream(uri);
+			} else {
+				return URI.create(uri).toURL().openConnection().getInputStream();
+			}
+		}
+		
+		public OutputStream trySave(String uri) throws IOException {
+			Log.d("dbg", "trySave:" + uri);
+			if (uri.startsWith("content://")) {
+				return getActivity().getContentResolver().openOutputStream(Uri.parse(uri));
+			} else if (uri.startsWith("/")) {
+				return new FileOutputStream(uri);
+			} else {
+				return URI.create(uri).toURL().openConnection().getOutputStream();
+			}
+		}
+		
+		public static String toUri(Object o) throws IOException,URISyntaxException{
+			if(o instanceof File)
+				return toUri(((File)o).toURL());
+			else if(o instanceof Uri)
+				return ((Uri)o).toString();
+			else if(o instanceof URL)
+				return toUri(((URL)o).toURI());
+			else if(o instanceof URI)
+				return ((URI)o).toString();
+			else
+				return null;
+		}
+		
+		public static String toString(Object o) {
+			return o==null?"null":o.toString();
 		}
 	}
 	
