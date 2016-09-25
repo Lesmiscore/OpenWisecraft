@@ -506,9 +506,10 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 						ColorPickerDialog cpd=ColorPickerDialog.createColorPickerDialog(getActivity(),ColorPickerDialog.LIGHT_THEME);
 						cpd.setLastColor(selectedColor);
 						cpd.setOnColorPickedListener(new ColorPickerDialog.OnColorPickedListener(){
-								public void onColorPicked(int color,String hex){
-									selectedColor=color;
+								public void onColorPicked(int c,String hex){
+									selectedColor=c;
 									didOnceColorSelected=true;
+									color.setImageDrawable(new ColorDrawable(selectedColor));
 								}
 							});
 						cpd.setOnClosedListener(new ColorPickerDialog.OnClosedListener(){
@@ -541,6 +542,8 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 							}
 							public void onPostExcecute(Bitmap bmp){
 								loadedBitmap=bmp;
+								image.setImageBitmap(loadedBitmap);
+								apply.setEnabled(loadedBitmap!=null);
 							}
 						}.execute(fsf.getResult());
 					}
