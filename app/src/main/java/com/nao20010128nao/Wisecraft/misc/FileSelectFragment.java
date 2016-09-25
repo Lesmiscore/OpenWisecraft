@@ -90,7 +90,14 @@ public class FileSelectFragment extends BaseFragment<AppCompatActivity>
 				return false;
 			}
 		});
-		path.setText(getArguments().getString("default"));
+		Bundle args=getArguments();
+		String s=Environment.getExternalStorageDirectory().toString();
+		if(args==null){
+			//no-op
+		}else if(args.containsKey("default")){
+			s=args.getString("default");
+		}
+		path.setText(s);
 		fileLocal.setImageDrawable(TheApplication.getTintedDrawable(R.drawable.ic_file,Color.WHITE,getActivity()));
 		fileProvided.setImageDrawable(TheApplication.getTintedDrawable(R.drawable.ic_open_in_new_black_48dp,Color.WHITE,getActivity()));
 	}
