@@ -336,10 +336,12 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 				});
 			sH("serverListLooks", new HandledPreference.OnClickListener(){
 					public void onClick(String a, String b, String c) {
+						ServerListStyleEditor slse=new ServerListStyleEditor();
+						slse.setRetainInstance(true);
 						getActivity()
 							.getSupportFragmentManager()
 							.beginTransaction()
-							.replace(R.id.preference,new ServerListStyleEditor())
+							.replace(R.id.preference,slse)
 							.addToBackStack("serverListStyleEditor")
 							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
 							.commit();
@@ -565,11 +567,18 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 					}
 				});
 		}
-
+		
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
 			return inflater.inflate(R.layout.settings_server_list_style_editor,container,false);
+		}
+
+		@Override
+		public void onActivityResult(int requestCode, int resultCode, Intent data) {
+			// TODO: Implement this method
+			super.onActivityResult(requestCode, resultCode, data);
+			fsf.onActivityResult(requestCode, resultCode, data);
 		}
 		
 		public InputStream tryOpen(String uri) throws IOException {
