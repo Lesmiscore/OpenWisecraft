@@ -1,6 +1,7 @@
 package com.nao20010128nao.Wisecraft;
 import android.content.*;
 import android.graphics.*;
+import android.graphics.drawable.*;
 import android.net.*;
 import android.os.*;
 import android.support.v4.app.*;
@@ -441,6 +442,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		FileSelectFragment fsf;
 		Bitmap loadedBitmap;
 		int selectedColor=Color.BLACK;
+		boolean didOnceColorSelected=false;
 		
 		
 		@Override
@@ -506,6 +508,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 						cpd.setOnColorPickedListener(new ColorPickerDialog.OnColorPickedListener(){
 								public void onColorPicked(int color,String hex){
 									selectedColor=color;
+									didOnceColorSelected=true;
 								}
 							});
 						cpd.setOnClosedListener(new ColorPickerDialog.OnClosedListener(){
@@ -539,7 +542,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 							public void onPostExcecute(Bitmap bmp){
 								loadedBitmap=bmp;
 							}
-						}.execute(fsf.getLastResult());
+						}.execute(fsf.getResult());
 					}
 				});
 			apply.setOnClickListener(new View.OnClickListener(){
@@ -567,7 +570,32 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 					}
 				});
 		}
-		
+
+		@Override
+		public void onSaveInstanceState(Bundle outState) {
+			// TODO: Implement this method
+			super.onSaveInstanceState(outState);
+			outState.putInt("checked",rdGrp.getCheckedRadioButtonId());
+			if(didOnceColorSelected)outState.putInt("color",selectedColor);
+			if(loadedBitmap!=null)outState.putParcelable("bitmap",loadedBitmap);
+		}
+
+		@Override
+		public void onActivityCreated(Bundle savedInstanceState) {
+			// TODO: Implement this method
+			super.onActivityCreated(savedInstanceState);
+			if(savedInstanceState==null)return;
+			rdGrp.check(savedInstanceState.getInt("checked"));
+			if(savedInstanceState.containsKey("color")){
+				selectedColor=savedInstanceState.get("color");
+				color.setImageDrawable(new ColorDrawable(selectedColor));
+			}
+			if(savedInstanceState.containsKey("bitmap")){
+				loadedBitmap=savedInstanceState.getParcelable("bitmap");
+				image.setImageBitmap(loadedBitmap);
+			}
+		}
+
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
@@ -825,7 +853,6 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 				Menu menu=tb.getMenu();
 				MenuItem updateBtn,seeTitleButton;
 				
-				int color= ContextCompat.getColor(getContext(), R.color.mainColor);
 				seeTitleButton = menu.add(Menu.NONE, 0, 0, R.string.seeTitle);
 				seeTitleButton.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_open_in_new_black_48dp, slsl.getTextColor()));
 				MenuItemCompat.setShowAsAction(seeTitleButton, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);

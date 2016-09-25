@@ -132,6 +132,32 @@ public class FileSelectFragment extends BaseFragment<AppCompatActivity>
 		else
 			super.startActivityForResult(intent, requestCode);
 	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		// TODO: Implement this method
+		super.onSaveInstanceState(outState);
+		Object last=getResult();
+		if(last instanceof File)
+			outState.putSerializable("file",(File)last);
+		else if(last instanceof Uri)
+			outState.putParcelable("uri",(Uri)last);
+	}
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		// TODO: Implement this method
+		super.onActivityCreated(savedInstanceState);
+		if(savedInstanceState==null)return;
+		if(savedInstanceState.containsKey("file")){
+			lastResult=savedInstanceState.getSerializable("file");
+			path.setText(lastResult.toString());
+		}else if(savedInstanceState.containsKey("uri")){
+			lastResult=savedInstanceState.<Uri>getParcelable("uri");
+			path.setText("");
+			path.setEnabled(false);
+		}
+	}
 	
 	
 	
