@@ -523,7 +523,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 					public void onClick(View v){
 						new AsyncTask<Object,Void,Bitmap>(){
 							public Bitmap doInBackground(Object... a){
-								Log.d("slse_image",a[0]+"");
+								Log.d("slse image",a[0]+"");
 								String path=ServerListStyleEditor.toString(a[0]);
 								InputStream is=null;
 								try{
@@ -541,10 +541,11 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 									}
 								}
 							}
-							public void onPostExcecute(Bitmap bmp){
+							public void onPostExecute(Bitmap bmp){
 								loadedBitmap=bmp;
 								image.setImageBitmap(loadedBitmap);
 								apply.setEnabled(loadedBitmap!=null);
+								Log.d("slse image","loaded:"+bmp);
 							}
 						}.execute(getResult());
 					}
