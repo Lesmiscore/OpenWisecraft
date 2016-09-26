@@ -38,7 +38,6 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			put("features",Features.class);
 			put("asfsls",Asfsls.class);
 			put("versionInfo",VersionInfoFragmentLocal.class);
-			put("serverListStyleEditor",ServerListStyleEditor.class);
 	}};
 	public static final String DIALOG_FRAGMENT_TAG_PREFIX="settings@com.nao20010128nao.Wisecraft#";
 	
@@ -337,15 +336,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 				});
 			sH("serverListLooks", new HandledPreference.OnClickListener(){
 					public void onClick(String a, String b, String c) {
-						ServerListStyleEditor slse=new ServerListStyleEditor();
-						slse.setRetainInstance(true);
-						getActivity()
-							.getSupportFragmentManager()
-							.beginTransaction()
-							.replace(R.id.preference,slse)
-							.addToBackStack("serverListStyleEditor")
-							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-							.commit();
+						startActivity(new Intent(getActivity(),ServerListStyleEditor.class));
 					}
 				});
 		}
@@ -434,7 +425,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		}
 	}
 	
-	public static class ServerListStyleEditor extends com.nao20010128nao.Wisecraft.misc.BaseFragment<FragmentSettingsActivity> {
+	public static class ServerListStyleEditor extends AppCompatActivity {
 		ServerListStyleLoader slsl;
 		RadioGroup rdGrp;
 		ImageView color,image;
@@ -446,10 +437,11 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		
 		
 		@Override
-		public void onStart() {
+		public void onCreate(Bundle savedInstanceState) {
 			// TODO: Implement this method
-			super.onStart();
-			slsl=new ServerListStyleLoader(getActivity());
+			super.onCreate(savedInstanceState);
+			setContentView(R.layout.settings_server_list_style_editor);
+			slsl=new ServerListStyleLoader(this);
 			rdGrp=(RadioGroup)findViewById(R.id.checkGroup);
 			color=(ImageView)findViewById(R.id.singleColorIndicate);
 			image=(ImageView)findViewById(R.id.imagePreview);
@@ -459,7 +451,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			
 			fsf=new FileSelectFragment();
 			fsf.setRetainInstance(true);
-			getChildFragmentManager()
+			getSupportFragmentManager()
 				.beginTransaction()
 				.replace(R.id.fileSelectFrg,fsf)
 				.commit();
@@ -503,7 +495,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 				});
 			selectColor.setOnClickListener(new View.OnClickListener(){
 					public void onClick(View v){
-						ColorPickerDialog cpd=ColorPickerDialog.createColorPickerDialog(getActivity(),ColorPickerDialog.LIGHT_THEME);
+						ColorPickerDialog cpd=ColorPickerDialog.createColorPickerDialog(ServerListStyleEditor.this,ColorPickerDialog.LIGHT_THEME);
 						cpd.setLastColor(selectedColor);
 						cpd.setOnColorPickedListener(new ColorPickerDialog.OnColorPickedListener(){
 								public void onColorPicked(int c,String hex){
@@ -569,7 +561,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 								else return;
 								break;
 						}
-						getParentActivity().getSupportFragmentManager().popBackStack();
+						getSupportFragmentManager().popBackStack();
 					}
 				});
 		}
@@ -584,9 +576,9 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		}
 
 		@Override
-		public void onActivityCreated(Bundle savedInstanceState) {
+		public void onRestoreInstanceState(Bundle savedInstanceState) {
 			// TODO: Implement this method
-			super.onActivityCreated(savedInstanceState);
+			super.onRestoreInstanceState(savedInstanceState);
 			if(savedInstanceState==null)return;
 			rdGrp.check(savedInstanceState.getInt("checked"));
 			if(savedInstanceState.containsKey("color")){
@@ -599,23 +591,10 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			}
 		}
 
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-			// TODO: Implement this method
-			return inflater.inflate(R.layout.settings_server_list_style_editor,container,false);
-		}
-
-		@Override
-		public void onActivityResult(int requestCode, int resultCode, Intent data) {
-			// TODO: Implement this method
-			super.onActivityResult(requestCode, resultCode, data);
-			fsf.onActivityResult(requestCode, resultCode, data);
-		}
-		
 		public InputStream tryOpen(String uri) throws IOException {
 			Log.d("dbg", "tryOpen:" + uri);
 			if (uri.startsWith("content://")) {
-				return getActivity().getContentResolver().openInputStream(Uri.parse(uri));
+				return getContentResolver().openInputStream(Uri.parse(uri));
 			} else if (uri.startsWith("/")) {
 				return new FileInputStream(uri);
 			} else {
@@ -626,7 +605,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		public OutputStream trySave(String uri) throws IOException {
 			Log.d("dbg", "trySave:" + uri);
 			if (uri.startsWith("content://")) {
-				return getActivity().getContentResolver().openOutputStream(Uri.parse(uri));
+				return getContentResolver().openOutputStream(Uri.parse(uri));
 			} else if (uri.startsWith("/")) {
 				return new FileOutputStream(uri);
 			} else {

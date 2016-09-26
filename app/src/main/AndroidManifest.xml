@@ -99,6 +99,12 @@
 			android:exported="false"
 			android:fitsSystemWindows="false">
         </activity>
+		<activity
+			android:label="@string/serverListLooks"
+			android:name=".FragmentSettingsActivity$ServerListStyleEditor"
+			android:exported="false"
+			android:fitsSystemWindows="false">
+        </activity>
 		
         <activity
 			android:label="@string/serverFinder"
