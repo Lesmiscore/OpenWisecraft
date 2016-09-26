@@ -430,11 +430,12 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 	public static class ServerListStyleEditor extends AppCompatActivity {
 		ServerListStyleLoader slsl;
 		RadioGroup rdGrp;
-		ImageView color,image;
-		Button selectColor,selectImage,apply;
+		ImageView color,image,textColor;
+		Button selectColor,selectImage,apply,selectTextColor;
 		Bitmap loadedBitmap;
-		int selectedColor=Color.BLACK;
+		int selectedColor=Color.BLACK,selectedTextColor;
 		boolean didOnceColorSelected=false;
+		
 		
 		//FSF
 		Map<Integer,ServerListActivityBase5.ChooserResult> results=new HashMap<>();
@@ -455,8 +456,10 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			rdGrp=(RadioGroup)findViewById(R.id.checkGroup);
 			color=(ImageView)findViewById(R.id.singleColorIndicate);
 			image=(ImageView)findViewById(R.id.imagePreview);
+			textColor=(ImageView)findViewById(R.id.textColorIndicate);
 			selectColor=(Button)findViewById(R.id.selectColor);
 			selectImage=(Button)findViewById(R.id.selectImage);
+			selectTextColor=(Button)findViewById(R.id.selectTextColor);
 			apply=(Button)findViewById(R.id.apply);
 			
 			switch(slsl.getBgId()){
@@ -480,6 +483,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 					image.setImageBitmap(loadedBitmap);
 					break;
 			}
+			selectedTextColor=slsl.getTextColor();
 			
 			rdGrp.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
 					public void onCheckedChanged(RadioGroup p1, int p2){
@@ -543,6 +547,24 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 								apply.setEnabled(loadedBitmap!=null);
 							}
 						}.execute(getResult());
+					}
+				});
+			selectTextColor.setOnClickListener(new View.OnClickListener(){
+					public void onClick(View v){
+						ColorPickerDialog cpd=ColorPickerDialog.createColorPickerDialog(ServerListStyleEditor.this,ColorPickerDialog.LIGHT_THEME);
+						cpd.setLastColor(selectedColor);
+						cpd.setOnColorPickedListener(new ColorPickerDialog.OnColorPickedListener(){
+								public void onColorPicked(int c,String hex){
+									selectedTextColor=c;
+									textColor.setImageDrawable(new ColorDrawable(selectedTextColor));
+								}
+							});
+						cpd.setOnClosedListener(new ColorPickerDialog.OnClosedListener(){
+								public void onClosed(){
+
+								}
+							});
+						cpd.show();
 					}
 				});
 			apply.setOnClickListener(new View.OnClickListener(){
