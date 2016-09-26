@@ -630,6 +630,11 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			
 		}
 
+		@Override
+		protected void attachBaseContext(Context newBase) {
+			super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
+		}
+		
 		public InputStream tryOpen(String uri) throws IOException {
 			Log.d("dbg", "tryOpen:" + uri);
 			if (uri.startsWith("content://")) {
