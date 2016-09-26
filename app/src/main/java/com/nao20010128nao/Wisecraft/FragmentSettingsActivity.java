@@ -519,6 +519,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 					public void onClick(View v){
 						new AsyncTask<Object,Void,Bitmap>(){
 							public Bitmap doInBackground(Object... a){
+								Log.d("slse image",a+"");
 								String path=ServerListStyleEditor.toString(a[0]);
 								InputStream is=null;
 								try{
