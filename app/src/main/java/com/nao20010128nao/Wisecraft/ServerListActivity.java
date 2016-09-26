@@ -842,7 +842,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 						final String title;
 						if (s.response instanceof FullStat) {//PE
 							FullStat fs = (FullStat) s.response;
-							Map<String, String> m = fs.getData();
+							Map<String, String> m = fs.getDataAsMap();
 							if (m.containsKey("hostname")) {
 								title = m.get("hostname");
 							} else if (m.containsKey("motd")) {
@@ -850,7 +850,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							} else {
 								title = s.toString();
 							}
-							viewHolder.setServerPlayers(fs.getData().get("numplayers"), fs.getData().get("maxplayers"));
+							viewHolder.setServerPlayers(m.get("numplayers"), m.get("maxplayers"));
 						} else if (s.response instanceof Reply19) {//PC 1.9~
 							Reply19 rep = (Reply19) s.response;
 							if (rep.description == null) {
@@ -875,7 +875,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 								viewHolder.setServerPlayers(res.getPlayersCount(), res.getMaxPlayers());
 							} else if (sp.getA() instanceof FullStat) {
 								FullStat fs = (FullStat) sp.getA();
-								Map<String, String> m = fs.getData();
+								Map<String, String> m = fs.getDataAsMap();
 								if (m.containsKey("hostname")) {
 									title = m.get("hostname");
 								} else if (m.containsKey("motd")) {
@@ -883,7 +883,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 								} else {
 									title = s.toString();
 								}
-								viewHolder.setServerPlayers(fs.getData().get("numplayers"), fs.getData().get("maxplayers"));
+								viewHolder.setServerPlayers(m.get("numplayers"), m.get("maxplayers"));
 							} else {
 								title = s.toString();
 								viewHolder.setServerPlayers();

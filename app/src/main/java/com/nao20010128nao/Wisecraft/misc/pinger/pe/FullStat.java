@@ -1,17 +1,19 @@
 package com.nao20010128nao.Wisecraft.misc.pinger.pe;
 
 import android.annotation.*;
-import com.nao20010128nao.OTC.*;
+import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import java.util.*;
+import com.nao20010128nao.OTC.*;
 
 public class FullStat implements ServerPingResult,PEPingResult {
 	static byte NULL = '\0';
 	static byte SPACE = ' ';
 
-	private Map<String, String> datas = new OrderTrustedMap<>();
-	private ArrayList<String> playerList = new ArrayList<>();
+	private List<Map.Entry<String, String>> datas = new ArrayList<>();
+	private Map<String, String> mapDatas = new OrderTrustedMap<>();
+	private List<String> playerList = new ArrayList<>();
 	private byte[] raw;
 
 	@TargetApi(9)
@@ -36,27 +38,23 @@ public class FullStat implements ServerPingResult,PEPingResult {
 			String v = new String(temp[i + 1], CompatCharsets.UTF_8).trim();
 			if ("".equals(k) | "".equals(v))
 				continue;
-			datas.put(k, v);
+			datas.add(new KVP<String,String>(k, v));
+			mapDatas.put(k,v);
 		}
 
 		playerList = new ArrayList<String>();
 		for (int i = dataEnds + 2; i < temp.length; i++)
 			playerList.add(new String(temp[i], CompatCharsets.UTF_8).trim());
-			
-		/*{
-			for(Map.Entry<String,String> dat:datas.entrySet()){
-				Log.d("fullStat",dat.getKey()+":"+dat.getValue());
-			}
-			for(String s:playerList){
-				Log.d("fullStat",s);
-			}
-		}*/
 	}
 
-	public Map<String, String> getData() {
-		return Collections.unmodifiableMap(datas);
+	public List<Map.Entry<String, String>> getData() {
+		return Collections.unmodifiableList(datas);
 	}
-
+	
+	public Map<String, String> getDataAsMap() {
+		return Collections.unmodifiableMap(mapDatas);
+	}
+	
 	public List<String> getPlayerList() {
 		return Collections.unmodifiableList(playerList);
 	}

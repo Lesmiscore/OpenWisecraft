@@ -240,7 +240,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		if (resp instanceof FullStat) {
 			FullStat fs=(FullStat)resp;
 			final String title;
-			Map<String,String> m=fs.getData();
+			Map<String,String> m=fs.getDataAsMap();
 			if (m.containsKey("hostname")) {
 				title = m.get("hostname");
 			} else if (m.containsKey("motd")) {
@@ -769,7 +769,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 				else if (resp instanceof SprPair)
 					fs = (FullStat)((SprPair)resp).getA();
 				infos.clear();
-				infos.addAll(fs.getData().entrySet());
+				infos.addAll(fs.getData());
 			} 
 		}
 
@@ -889,8 +889,8 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 				else if (resp instanceof SprPair)
 					fs = (FullStat)((SprPair)resp).getA();
 				pluginNames.clear();
-				if (fs.getData().containsKey("plugins")) {
-					String[] data=fs.getData().get("plugins").split("\\: ");
+				if (fs.getDataAsMap().containsKey("plugins")) {
+					String[] data=fs.getDataAsMap().get("plugins").split("\\: ");
 					if (data.length >= 2) {
 						ArrayList<String> plugins=new ArrayList<>(Arrays.<String>asList(data[1].split("\\; ")));
 						if (pref.getBoolean("sortPluginNames", false))

@@ -111,7 +111,7 @@ public class ServerListRecyclerAdapter extends ListRecyclerViewAdapter<ServerSta
 				final String title;
 				if (sv.response instanceof FullStat) {//PE
 					FullStat fs=(FullStat)sv.response;
-					Map<String,String> m=fs.getData();
+					Map<String,String> m=fs.getDataAsMap();
 					if (m.containsKey("hostname")) {
 						title = m.get("hostname");
 					} else if (m.containsKey("motd")) {
@@ -119,7 +119,7 @@ public class ServerListRecyclerAdapter extends ListRecyclerViewAdapter<ServerSta
 					} else {
 						title = sv.toString();
 					}
-					viewHolder.setServerPlayers(fs.getData().get("numplayers"), fs.getData().get("maxplayers"));
+					viewHolder.setServerPlayers(m.get("numplayers"), m.get("maxplayers"));
 				} else if (sv.response instanceof Reply19) {//PC 1.9~
 					Reply19 rep=(Reply19)sv.response;
 					if (rep.description == null) {
@@ -144,7 +144,7 @@ public class ServerListRecyclerAdapter extends ListRecyclerViewAdapter<ServerSta
 						viewHolder.setServerPlayers(res.getPlayersCount(), res.getMaxPlayers());
 					} else if (sp.getA() instanceof FullStat) {
 						FullStat fs=(FullStat)sp.getA();
-						Map<String,String> m=fs.getData();
+						Map<String,String> m=fs.getDataAsMap();
 						if (m.containsKey("hostname")) {
 							title = m.get("hostname");
 						} else if (m.containsKey("motd")) {
@@ -152,7 +152,7 @@ public class ServerListRecyclerAdapter extends ListRecyclerViewAdapter<ServerSta
 						} else {
 							title = sv.toString();
 						}
-						viewHolder.setServerPlayers(fs.getData().get("numplayers"), fs.getData().get("maxplayers"));
+						viewHolder.setServerPlayers(m.get("numplayers"), m.get("maxplayers"));
 					} else {
 						title = sv.toString();
 						viewHolder.setServerPlayers();
