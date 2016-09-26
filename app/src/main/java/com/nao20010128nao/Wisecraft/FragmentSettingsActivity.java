@@ -561,7 +561,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 								else return;
 								break;
 						}
-						getSupportFragmentManager().popBackStack();
+						finish();
 					}
 				});
 		}

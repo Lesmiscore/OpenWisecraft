@@ -125,15 +125,6 @@ public class FileSelectFragment extends BaseFragment<AppCompatActivity>
 	}
 
 	@Override
-	public void startActivityForResult(Intent intent, int requestCode) {
-		// TODO: Implement this method
-		if(getParentFragment()!=null)
-			getParentFragment().startActivityForResult(intent, requestCode);
-		else
-			super.startActivityForResult(intent, requestCode);
-	}
-
-	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		// TODO: Implement this method
 		super.onSaveInstanceState(outState);
