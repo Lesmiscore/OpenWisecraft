@@ -484,6 +484,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 					break;
 			}
 			selectedTextColor=slsl.getTextColor();
+			textColor.setImageDrawable(new ColorDrawable(selectedTextColor));
 			
 			rdGrp.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
 					public void onCheckedChanged(RadioGroup p1, int p2){
@@ -989,6 +990,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			
 			{
 				Menu menu=tb.getMenu();
+				menu.clear();
 				MenuItem updateBtn,seeTitleButton;
 				
 				seeTitleButton = menu.add(Menu.NONE, 0, 0, R.string.seeTitle);
