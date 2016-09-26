@@ -432,7 +432,6 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		RadioGroup rdGrp;
 		ImageView color,image;
 		Button selectColor,selectImage,apply;
-		FileSelectFragment fsf;
 		Bitmap loadedBitmap;
 		int selectedColor=Color.BLACK;
 		boolean didOnceColorSelected=false;
@@ -541,7 +540,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 								image.setImageBitmap(loadedBitmap);
 								apply.setEnabled(loadedBitmap!=null);
 							}
-						}.execute(fsf.getResult());
+						}.execute(getResult());
 					}
 				});
 			apply.setOnClickListener(new View.OnClickListener(){
