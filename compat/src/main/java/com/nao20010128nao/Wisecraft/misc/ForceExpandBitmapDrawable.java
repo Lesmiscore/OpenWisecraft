@@ -39,6 +39,7 @@ public class ForceExpandBitmapDrawable extends Drawable
 	
 	public void setBitmap(Bitmap bitmap) {
 		this.bitmap = bitmap;
+		invalidateSelf();
 	}
 
 	public Bitmap getBitmap() {
