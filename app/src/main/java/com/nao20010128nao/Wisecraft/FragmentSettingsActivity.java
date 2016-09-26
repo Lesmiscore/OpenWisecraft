@@ -588,6 +588,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 								else return;
 								break;
 						}
+						slsl.setTextColor(selectedTextColor);
 						finish();
 					}
 				});
