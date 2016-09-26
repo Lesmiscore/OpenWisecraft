@@ -60,8 +60,8 @@ public class ServerListStyleLoader {
 				return new ColorDrawable(pref.getInt("serverListBgColor",0));
 			case BACKGROUND_IMAGE:
 				Bitmap bmp=getImageBgBitmap();
-				BitmapDrawable last=new BitmapDrawable(bmp);
-				last.setTargetDensity(ctx.getResources().getDisplayMetrics());
+				ForceExpandBitmapDrawable last=new ForceExpandBitmapDrawable(bmp);
+				//last.setTargetDensity(ctx.getResources().getDisplayMetrics());
 				return last;
 		}
 		return null;
