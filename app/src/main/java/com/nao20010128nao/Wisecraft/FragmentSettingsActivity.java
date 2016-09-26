@@ -519,7 +519,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 					public void onClick(View v){
 						new AsyncTask<Object,Void,Bitmap>(){
 							public Bitmap doInBackground(Object... a){
-								Log.d("slse image",a+"");
+								Log.d("slse_image",a[0]+"");
 								String path=ServerListStyleEditor.toString(a[0]);
 								InputStream is=null;
 								try{
@@ -527,6 +527,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 									return BitmapFactory.decodeStream(is);
 								}catch(Throwable e){
 									WisecraftError.report("slse image",e);
+									DebugWriter.writeToE("slse image",e);
 									return null;
 								}finally{
 									try {
