@@ -683,6 +683,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 							((ServerListActivityBase5.UriFileChooserResult)results.get(requestCode))
 								.onSelected((Uri)(lastResult=data.getData()));
 						}
+						Log.d("slse","select:"+lastResult);
 						break;
 					case RESULT_CANCELED:
 						results.get(requestCode).onSelectCancelled();
@@ -726,6 +727,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			int call = nextCallId();
 			Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 			intent.setType("*/*");
+			results.put(call,Utils.requireNonNull(result));
 			startActivityForResult(intent, call);
 		}
 
