@@ -70,18 +70,23 @@ public class ServerListStyleLoader {
 	public int getBackgroundSimpleColor(){
 		switch(getBgId()){
 			case BACKGROUND_WHITE:
-				return Color.WHITE;
+				return ServerInfoActivity.darker(Color.WHITE);
 			case BACKGROUND_BLACK:
 				return Color.BLACK;
 			case BACKGROUND_DIRT:
 				return ServerInfoActivity.DIRT_DARK;
 			case BACKGROUND_SINGLE_COLOR:
-				return pref.getInt("serverListBgColor",Color.BLACK);
+				return ServerInfoActivity.darker(pref.getInt("serverListBgColor",Color.BLACK));
 			case BACKGROUND_IMAGE:
-				Bitmap bmp=getImageBgBitmap();
-				Palette palette=Palette.generate(bmp);
-				palette.getDarkVibrantColor(Color.BLACK);
-				bmp.recycle();
+				Bitmap bmp=null;
+				try{
+					bmp=getImageBgBitmap();
+					Palette palette=Palette.generate(bmp);
+					return ServerInfoActivity.darker(palette.getDarkVibrantColor(Color.BLACK));
+				}finally{
+					if(bmp!=null)bmp.recycle();
+				}
+				
 		}
 		return 0;
 	}

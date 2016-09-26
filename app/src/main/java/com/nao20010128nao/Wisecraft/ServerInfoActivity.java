@@ -1017,4 +1017,10 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 
 		return Color.argb(a, r, g, b);
 	}
+	public static int darker(int base){
+		float[] hsv=new float[3];
+		Color.RGBToHSV(Color.red(base), Color.green(base), Color.blue(base), hsv);
+		hsv[2]-=0.20f;
+		return Color.HSVToColor(hsv);
+	}
 }
