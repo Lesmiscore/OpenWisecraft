@@ -153,7 +153,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			for (int i=0;i < list.size();i++)
 				dryUpdate(list.get(i), false);
 		}
-		rv.setBackground(slsl.load());
+		findViewById(android.R.id.content).setBackgroundDrawable(slsl.load());
         ddManager=new SimpleCallback(0,0) {
             @Override
             public boolean onMove(RecyclerView recyclerView, ViewHolder viewHolder, ViewHolder target) {

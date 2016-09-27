@@ -85,7 +85,7 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 		((CheckBox)dialog.findViewById(R.id.pc)).setChecked(mode == 0 ?false: true);
 		slsl=(ServerListStyleLoader)getSystemService(ContextWrappingExtender.SERVER_LIST_STYLE_LOADER);
 		
-		rv.setBackgroundDrawable(slsl.load());
+		findViewById(android.R.id.content).setBackgroundDrawable(slsl.load());
 	}
 	private void startFinding(final String ip, final int startPort, final int endPort, final boolean isPC) {
 		final PopupWindow pw=new PopupWindow(this);

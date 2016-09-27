@@ -143,7 +143,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 				.show();
 		}
 
-		rv.setBackground(slsl.load());
+		findViewById(android.R.id.content).setBackgroundDrawable(slsl.load());
 	}
 	@Override
 	protected void attachBaseContext(Context newBase) {
