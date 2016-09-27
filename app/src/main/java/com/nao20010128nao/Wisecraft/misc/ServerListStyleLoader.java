@@ -5,10 +5,10 @@ import android.graphics.*;
 import android.graphics.drawable.*;
 import android.preference.*;
 import android.support.v4.content.*;
+import android.support.v7.graphics.*;
 import android.util.*;
 import com.nao20010128nao.Wisecraft.*;
 import java.io.*;
-import android.support.v7.graphics.*;
 
 public class ServerListStyleLoader {
 	public static final int BACKGROUND_WHITE=0;
@@ -70,7 +70,8 @@ public class ServerListStyleLoader {
 	public int getBackgroundSimpleColor(){
 		switch(getBgId()){
 			case BACKGROUND_WHITE:
-				return ServerInfoActivity.darker(Color.WHITE);
+				//return ServerInfoActivity.darker(Color.WHITE);
+				return ContextCompat.getColor(ctx,R.color.material_grey_600);
 			case BACKGROUND_BLACK:
 				return Color.BLACK;
 			case BACKGROUND_DIRT:
