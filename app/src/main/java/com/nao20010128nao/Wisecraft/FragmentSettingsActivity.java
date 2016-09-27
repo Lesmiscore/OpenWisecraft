@@ -650,11 +650,9 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 						return false;
 					}
 				});
-			String s=Environment.getExternalStorageDirectory().toString();
-			path.setText(s);
+			path.setText(Environment.getExternalStorageDirectory().toString());
 			fileLocal.setImageDrawable(TheApplication.getTintedDrawable(R.drawable.ic_file,Color.WHITE,this));
-			fileProvided.setImageDrawable(TheApplication.getTintedDrawable(R.drawable.ic_open_in_new_black_48dp,Color.WHITE,this));
-			
+			fileProvided.setImageDrawable(TheApplication.getTintedDrawable(R.drawable.ic_launch_black_36dp,Color.WHITE,this));
 		}
 
 		@Override
