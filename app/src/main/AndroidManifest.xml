@@ -147,6 +147,13 @@
 			android:name=".GenerateWisecraftOpenLinkActivity"
 			android:exported="false">
         </activity>
+		
+		<activity
+			android:label="@string/select"
+			android:name=".widget.WidgetServerSelectActivity"
+			android:exported="false"
+			android:fitsSystemWindows="false">
+        </activity>
 
         <service
 			android:label="@string/app_name"
@@ -163,5 +170,14 @@
 			android:name=".services.MCProxyService"
 			android:exported="false">
         </service>
+		
+		<receiver android:name=".widget.PingWidget" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/ping_widget" />
+        </receiver>
+		<receiver android:name=".widget.PingWidget$PingHandler"/>
     </application>
 </manifest>
