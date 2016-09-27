@@ -99,7 +99,7 @@ public class FileSelectFragment extends BaseFragment<AppCompatActivity>
 		}
 		path.setText(s);
 		fileLocal.setImageDrawable(TheApplication.getTintedDrawable(R.drawable.ic_file,Color.WHITE,getActivity()));
-		fileProvided.setImageDrawable(TheApplication.getTintedDrawable(R.drawable.ic_launch_black_36dp,Color.WHITE,this));
+		fileProvided.setImageDrawable(TheApplication.getTintedDrawable(R.drawable.ic_launch_black_36dp,Color.WHITE,getActivity()));
 	}
 
 	@Override
