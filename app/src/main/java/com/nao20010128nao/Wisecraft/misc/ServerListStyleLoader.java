@@ -168,11 +168,4 @@ public class ServerListStyleLoader {
 		Bitmap bmp=BitmapFactory.decodeByteArray(data,0,data.length);
 		return bmp;
 	}
-	
-	public boolean isDarkerTextColor(){
-		float[] hsv=new float[3];
-		Color.colorToHSV(getTextColor(),hsv);
-		float v=hsv[2];
-		return v<=0.4;
-	}
 }
