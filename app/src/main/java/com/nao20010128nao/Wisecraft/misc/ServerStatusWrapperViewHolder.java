@@ -9,7 +9,7 @@ import com.nao20010128nao.Wisecraft.misc.view.*;
 
 import android.support.v7.view.ContextThemeWrapper;
 
-public class ServerStatusWrapperViewHolder extends FindableViewHolder
+public class ServerStatusWrapperViewHolder extends FindableViewHolder implements ServerStatusViewController<ServerStatusWrapperViewHolder>
 {
 	public static final int[] COLORED_TEXTVIEWS=new int[]{R.id.serverPlayers,R.id.serverAddress,R.id.pingMillis,R.id.serverName,R.id.target,R.id.serverTitle};
 	public static final int[] ALL_VIEWS=new int[]{R.id.serverPlayers,R.id.serverAddress,R.id.pingMillis,R.id.serverName,R.id.target,R.id.serverTitle,R.id.statColor};
