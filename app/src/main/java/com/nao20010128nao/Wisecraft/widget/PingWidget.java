@@ -61,7 +61,7 @@ public class PingWidget extends AppWidgetProvider
 		NormalServerPingProvider nspp=new NormalServerPingProvider();
 		for(int wid:appWidgetIds){
 			if(!widgetPref.contains(wid+"")){
-				context.startActivity(new Intent(context,WidgetServerSelectActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).putExtra("wid",wid));
+				context.startActivity(new Intent(context,WidgetServerSelectActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).putExtra("wid",wid));
 				continue;
 			}
 			Server s=gson.fromJson(widgetPref.getString(wid+"","{}"),Server.class);
