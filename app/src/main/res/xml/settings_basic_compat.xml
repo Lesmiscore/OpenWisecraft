@@ -52,7 +52,7 @@
 	/>
 	<com.nao20010128nao.Wisecraft.misc.pref.StartPrefCompat
 		android:title="@string/serverListStyle"
-		android:key="serverListStyleEdito"
+		android:key="serverListStyle"
 	/>
 	<com.nao20010128nao.Wisecraft.misc.pref.CheckBoxPreferenceCompat
 		android:title="@string/showStatusesBar"
