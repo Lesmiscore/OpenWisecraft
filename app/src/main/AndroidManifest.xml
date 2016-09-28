@@ -187,6 +187,10 @@
             <meta-data android:name="android.appwidget.provider"
                 android:resource="@xml/ping_widget" />
         </receiver>
-		<receiver android:name=".widget.PingWidget$PingHandler"/>
+		<receiver android:name=".widget.PingWidget$PingHandler">
+			<intent-filter>
+                <action android:name="update" />
+            </intent-filter>
+		</receiver>
     </application>
 </manifest>

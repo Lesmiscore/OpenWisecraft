@@ -79,7 +79,7 @@ public class PingWidget extends AppWidgetProvider
 			ServerStatusRemoteViewsWrapper viewHolder=new ServerStatusRemoteViewsWrapper(context);
 			RemoteViews rvs=(RemoteViews)viewHolder.getTag();
 			viewHolder.pending(s,context);
-			rvs.setOnClickPendingIntent(R.id.update,PendingIntent.getBroadcast(context,0,new Intent(context,PingHandler.class).putExtra("wid",wid),0));
+			rvs.setOnClickPendingIntent(R.id.update,PendingIntent.getBroadcast(context,0,new Intent(context,PingHandler.class).setAction("update").putExtra("wid",wid),0));
 			appWidgetManager.updateAppWidget(wid,rvs);
 			Log.d("WisecraftWidgets","with: "+wid+": "+s);
 		}
