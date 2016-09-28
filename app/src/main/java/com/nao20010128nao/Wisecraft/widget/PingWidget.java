@@ -61,7 +61,10 @@ public class PingWidget extends AppWidgetProvider
 		NormalServerPingProvider nspp=new NormalServerPingProvider();
 		for(int wid:appWidgetIds){
 			if(!widgetPref.contains(wid+"")){
-				context.startActivity(new Intent(context,WidgetServerSelectActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).putExtra("wid",wid));
+				//context.startActivity(new Intent(context,WidgetServerSelectActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).putExtra("wid",wid));
+				RemoteViews rvs=new RemoteViews(context.getPackageName(),R.layout.ping_widget_init);
+				rvs.setOnClickPendingIntent(R.id.configure,PendingIntent.getActivity(context,0,new Intent(context,WidgetServerSelectActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).putExtra("wid",wid),0));
+				appWidgetManager.updateAppWidget(wid,rvs);
 				continue;
 			}
 			Server s=gson.fromJson(widgetPref.getString(wid+"","{}"),Server.class);
