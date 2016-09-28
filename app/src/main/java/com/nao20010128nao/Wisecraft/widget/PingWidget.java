@@ -126,6 +126,7 @@ public class PingWidget extends AppWidgetProvider
 		@Override
 		public void onReceive(Context p1, Intent p2) {
 			int wid=p2.getIntExtra("wid",0);
+			Log.d("WisecraftWidgets","Update Issued: "+wid);
 			SharedPreferences widgetPref=p1.getSharedPreferences("widgets",Context.MODE_PRIVATE);
 			Gson gson=new Gson();
 			Server s=gson.fromJson(widgetPref.getString(wid+"","{}"),Server.class);
@@ -147,6 +148,7 @@ public class PingWidget extends AppWidgetProvider
 		int id;Context c;AppWidgetManager awm;
 		@Override
 		public void onPingArrives(ServerStatus s) {
+			Log.d("WisecraftWidgets","Ping OK for: "+id);
 			SharedPreferences pref=PreferenceManager.getDefaultSharedPreferences(c);
 			
 			ServerStatusRemoteViewsWrapper viewHolder=new ServerStatusRemoteViewsWrapper(c);
@@ -225,6 +227,7 @@ public class PingWidget extends AppWidgetProvider
 
 		@Override
 		public void onPingFailed(Server server) {
+			Log.d("WisecraftWidgets","Ping NG for: "+id);
 			ServerStatusRemoteViewsWrapper viewHolder=new ServerStatusRemoteViewsWrapper(c);
 			RemoteViews rvs=(RemoteViews)viewHolder.getTag();
 			viewHolder.offline(server,c);

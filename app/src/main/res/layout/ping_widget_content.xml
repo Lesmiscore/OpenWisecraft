@@ -85,7 +85,13 @@
 				android:layout_height="match_parent"
 				android:layout_width="match_parent"
 				android:orientation="vertical"
-				android:id="@+id/remaining"/>
+				android:id="@+id/remaining">
+
+				<ImageView
+					android:layout_height="match_parent"
+					android:layout_width="match_parent"/>
+
+			</LinearLayout>
 
 		</LinearLayout>
 
@@ -101,7 +107,8 @@
 				android:src="@drawable/ic_menu_refresh"
 				android:layout_weight="1.0"
 				android:textColor="#FFFFFF"
-				android:id="@+id/update"/>
+				android:id="@+id/update"
+				android:scaleType="center"/>
 
 		</LinearLayout>
 
