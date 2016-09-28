@@ -12,10 +12,9 @@
 		android:layout_margin="4dp">
 
 		<LinearLayout
-			android:layout_height="match_parent"
+			android:layout_height="wrap_content"
 			android:layout_width="match_parent"
-			android:orientation="vertical"
-			android:layout_weight="1.0">
+			android:orientation="vertical">
 
 			<LinearLayout
 				android:layout_height="wrap_content"
@@ -81,31 +80,20 @@
 
 			</LinearLayout>
 
-			<LinearLayout
-				android:layout_height="match_parent"
-				android:layout_width="match_parent"
-				android:orientation="vertical"
-				android:id="@+id/remaining">
-
-				<ImageView
-					android:layout_height="match_parent"
-					android:layout_width="match_parent"/>
-
-			</LinearLayout>
-
 		</LinearLayout>
 
 		<LinearLayout
-			android:layout_height="wrap_content"
+			android:layout_height="match_parent"
 			android:layout_width="match_parent"
-			android:orientation="vertical">
+			android:orientation="vertical"
+			android:layout_weight="1.0"
+			android:gravity="bottom">
 
 			<ImageButton
 				style="?android:attr/buttonBarButtonStyle"
 				android:layout_height="wrap_content"
 				android:layout_width="match_parent"
 				android:src="@drawable/ic_menu_refresh"
-				android:layout_weight="1.0"
 				android:textColor="#FFFFFF"
 				android:id="@+id/update"
 				android:scaleType="center"/>
