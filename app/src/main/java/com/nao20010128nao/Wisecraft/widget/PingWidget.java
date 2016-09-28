@@ -1,9 +1,12 @@
 package com.nao20010128nao.Wisecraft.widget;
 
+import android.app.*;
 import android.appwidget.*;
 import android.content.*;
 import android.graphics.*;
+import android.preference.*;
 import android.support.v4.content.*;
+import android.util.*;
 import android.widget.*;
 import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.*;
@@ -14,8 +17,6 @@ import com.nao20010128nao.Wisecraft.misc.provider.*;
 import java.util.*;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
-import android.preference.*;
-import android.app.*;
 
 public class PingWidget extends AppWidgetProvider 
 {
@@ -60,11 +61,13 @@ public class PingWidget extends AppWidgetProvider
 		}
 		NormalServerPingProvider nspp=new NormalServerPingProvider();
 		for(int wid:appWidgetIds){
+			Log.d("WisecraftWidgets","onUpdate: "+wid);
 			if(!widgetPref.contains(wid+"")){
 				//context.startActivity(new Intent(context,WidgetServerSelectActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).putExtra("wid",wid));
 				RemoteViews rvs=new RemoteViews(context.getPackageName(),R.layout.ping_widget_init);
 				rvs.setOnClickPendingIntent(R.id.configure,PendingIntent.getActivity(context,0,new Intent(context,WidgetServerSelectActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).putExtra("wid",wid),0));
 				appWidgetManager.updateAppWidget(wid,rvs);
+				Log.d("WisecraftWidgets","none: "+wid);
 				continue;
 			}
 			Server s=gson.fromJson(widgetPref.getString(wid+"","{}"),Server.class);
@@ -78,11 +81,13 @@ public class PingWidget extends AppWidgetProvider
 			viewHolder.pending(s,context);
 			rvs.setOnClickPendingIntent(R.id.update,PendingIntent.getBroadcast(context,0,new Intent(context,PingHandler.class).putExtra("wid",wid),0));
 			appWidgetManager.updateAppWidget(wid,rvs);
+			Log.d("WisecraftWidgets","with: "+wid+": "+s);
 		}
 	}
 
 	@Override
 	public void onDeleted(Context context, int[] appWidgetIds) {
+		for(int i:appWidgetIds)Log.d("WisecraftWidgets","onDeleted: "+i);;
 		SharedPreferences widgetPref=context.getSharedPreferences("widgets",Context.MODE_PRIVATE);
 		SharedPreferences.Editor edt=widgetPref.edit();
 		for(int i:appWidgetIds)edt.remove(i+"");
@@ -95,6 +100,7 @@ public class PingWidget extends AppWidgetProvider
 		Map<String,Object> datas=new HashMap<>(widgetPref.getAll());
 		SharedPreferences.Editor edt=widgetPref.edit();
 		for(int i=0;i<oldWidgetIds.length;i++){
+			Log.d("WisecraftWidgets","onRestored: "+oldWidgetIds[i]+"=>"+newWidgetIds[i]);
 			edt.remove(oldWidgetIds[i]+"")
 				.putString(newWidgetIds[i]+"",datas.get(oldWidgetIds[i]+"")+"");
 		}

@@ -173,7 +173,16 @@
 		
 		<receiver android:name=".widget.PingWidget" >
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_BIND" />
+				<action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+				<action android:name="android.appwidget.action.APPWIDGET_DELETED" />
+				<action android:name="android.appwidget.action.APPWIDGET_DISABLED" />
+				<action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
+				<action android:name="android.appwidget.action.APPWIDGET_HOST_RESTORED" />
+				<action android:name="android.appwidget.action.APPWIDGET_UPDATE_OPTIONS" />
+				<action android:name="android.appwidget.action.APPWIDGET_PICK" />
+				<action android:name="android.appwidget.action.APPWIDGET_RESTORED" />
+				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
                 android:resource="@xml/ping_widget" />
