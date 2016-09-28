@@ -80,6 +80,7 @@ def download(String url,String dir){
 	}
 }
 
+/*
 def jars=[
 	"https://repo.eclipse.org/content/groups/releases/org/eclipse/mylyn/github/org.eclipse.egit.github.core/4.4.0.201606070830-r/org.eclipse.egit.github.core-4.4.0.201606070830-r.jar",
 	"http://central.maven.org/maven2/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar",
@@ -92,6 +93,7 @@ for(String s:jars)
 def classLoader=LocalClass.class.getClassLoader();
 for(File f:outputs)
 	classLoader.addURL(f.toURI().toURL());
+*/
 
 class LocalClass{}
 
