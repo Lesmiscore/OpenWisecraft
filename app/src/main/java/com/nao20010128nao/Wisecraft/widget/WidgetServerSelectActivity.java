@@ -69,6 +69,7 @@ public class WidgetServerSelectActivity extends AppCompatActivity
 			public void onClick(View p1) {
 				widgetPref.edit().putString(wid+"",gson.toJson(getItem(ofs))).commit();
 				sendBroadcast(new Intent(WidgetServerSelectActivity.this,PingWidget.PingHandler.class).putExtra("wid",wid));
+				setResult(RESULT_OK,new Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, wid));
 				finish();
 			}
 		}
