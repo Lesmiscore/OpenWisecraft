@@ -153,6 +153,9 @@
 			android:name=".widget.WidgetServerSelectActivity"
 			android:exported="false"
 			android:fitsSystemWindows="false">
+			<intent-filter>  
+				<action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>  
+			</intent-filter> 
         </activity>
 
         <service

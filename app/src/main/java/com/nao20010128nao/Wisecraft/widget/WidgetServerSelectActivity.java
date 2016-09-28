@@ -1,7 +1,10 @@
 package com.nao20010128nao.Wisecraft.widget;
 
+import android.appwidget.*;
 import android.content.*;
+import android.content.res.*;
 import android.os.*;
+import android.preference.*;
 import android.support.v7.app.*;
 import android.support.v7.widget.*;
 import android.view.*;
@@ -9,9 +12,6 @@ import android.widget.*;
 import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
-import android.preference.*;
-import android.content.res.*;
-import android.view.View.*;
 
 public class WidgetServerSelectActivity extends AppCompatActivity 
 {
@@ -27,7 +27,15 @@ public class WidgetServerSelectActivity extends AppCompatActivity
 		setContentView(R.layout.recycler_view_content);
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
 		rv=(RecyclerView)findViewById(android.R.id.list);
-		wid=getIntent().getIntExtra("wid",0);
+		Intent values=getIntent();
+		if(values.hasExtra(AppWidgetManager.EXTRA_APPWIDGET_ID)){
+			wid = getIntent().getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+		}else if(values.hasExtra("wid")){
+			wid=getIntent().getIntExtra("wid",0);
+		}else{
+			finish();
+			return;
+		}
 		widgetPref=getSharedPreferences("widgets",Context.MODE_PRIVATE);
 		//We won't apply any style here, because this is only to select.
 		rv.setLayoutManager(new LinearLayoutManager(this));

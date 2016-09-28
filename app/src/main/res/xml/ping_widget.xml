@@ -6,5 +6,6 @@
     android:minWidth="292dp"
     android:previewImage="@drawable/ic_launcher"
     android:updatePeriodMillis="100000"
-	android:resizeMode="horizontal|vertical">
+	android:resizeMode="horizontal|vertical"
+	android:configure="com.nao20010128nao.Wisecraft.widget.WidgetServerSelectActivity">
 </appwidget-provider>

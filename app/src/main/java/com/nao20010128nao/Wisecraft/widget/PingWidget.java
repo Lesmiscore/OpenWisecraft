@@ -106,6 +106,18 @@ public class PingWidget extends AppWidgetProvider
 		}
 		edt.commit();
 	}
+
+	@Override
+	public void onDisabled(Context context) {
+		SharedPreferences widgetPref=context.getSharedPreferences("widgets",Context.MODE_PRIVATE);
+		SharedPreferences.Editor edt=widgetPref.edit();
+		for(String key:new HashSet<String>(widgetPref.getAll().keySet())){
+			if("_version".equals(key))continue;
+			edt.remove(key);
+		}
+		edt.commit();
+	}
+	
 	
 	
 	
