@@ -91,7 +91,7 @@
 
 			<ImageButton
 				style="?android:attr/buttonBarButtonStyle"
-				android:layout_height="wrap_content"
+				android:layout_height="60dp"
 				android:layout_width="match_parent"
 				android:src="@drawable/ic_menu_refresh"
 				android:textColor="#FFFFFF"
