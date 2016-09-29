@@ -87,7 +87,7 @@ public class PingWidget extends AppWidgetProvider
 
 	@Override
 	public void onDeleted(Context context, int[] appWidgetIds) {
-		for(int i:appWidgetIds)Log.d("WisecraftWidgets","onDeleted: "+i);;
+		for(int i:appWidgetIds)Log.d("WisecraftWidgets","onDeleted: "+i);
 		SharedPreferences widgetPref=context.getSharedPreferences("widgets",Context.MODE_PRIVATE);
 		SharedPreferences.Editor edt=widgetPref.edit();
 		for(int i:appWidgetIds)edt.remove(i+"");
