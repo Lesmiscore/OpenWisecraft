@@ -40,9 +40,9 @@ public class MCProxyService extends Service
 		style.addLine(getResources().getString(R.string.connect_to)+"localhost:64321");
 		style.addLine(getResources().getString(R.string.connecting_colon)+ip+":"+port);
 		nb.setStyle(style);
-		nb.setContentIntent(PendingIntent.getActivity(this,0,new Intent(this,ProxyActivity.class).setAction("status"),0));
+		nb.setContentIntent(PendingIntent.getActivity(this,hashCode(),new Intent(this,ProxyActivity.class).setAction("status"),0));
 		nb.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
-		nb.setColor(ContextCompat.getColor(this,R.color.upd_2));
+		nb.setColor(ContextCompat.getColor(this,R.color.mainColor));
 		nb.setSmallIcon(R.drawable.ic_launcher);
 		startForeground(ntfId,nb.build());
 		
