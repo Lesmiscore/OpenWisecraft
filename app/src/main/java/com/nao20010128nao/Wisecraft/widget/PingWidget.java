@@ -100,13 +100,13 @@ public class PingWidget extends AppWidgetProvider
 		Map<String,Object> datas=new HashMap<String,Object>(widgetPref.getAll());
 		SharedPreferences.Editor edt=widgetPref.edit();
 		for(int i=0;i<oldWidgetIds.length;i++){
-			Log.d("WisecraftWidgets","onRestored: "+oldWidgetIds[i]+"=>"+newWidgetIds[i]);
+			Log.d("WisecraftWidgets","onRestored(1): "+oldWidgetIds[i]+"=>"+newWidgetIds[i]);
 			edt.remove(oldWidgetIds[i]+"");
 		}
 		edt.commit();
 		edt=widgetPref.edit();
 		for(int i=0;i<oldWidgetIds.length;i++){
-			Log.d("WisecraftWidgets","onRestored: "+oldWidgetIds[i]+"=>"+newWidgetIds[i]);
+			Log.d("WisecraftWidgets","onRestored(2): "+oldWidgetIds[i]+"=>"+newWidgetIds[i]);
 			edt.putString(newWidgetIds[i]+"",datas.get(oldWidgetIds[i]+"")+"");
 		}
 		edt.commit();
