@@ -7,6 +7,7 @@ import android.os.*;
 import android.preference.*;
 import android.support.v7.app.*;
 import android.support.v7.widget.*;
+import android.text.*;
 import android.view.*;
 import android.widget.*;
 import com.google.gson.*;
@@ -48,7 +49,7 @@ public class WidgetServerSelectActivity extends AppCompatActivity
 
 		@Override
 		public void onBindViewHolder(FindableViewHolder parent, int offset) {
-			((TextView)parent.findViewById(android.R.id.text1)).setText(getItem(offset).toString());
+			((TextView)parent.findViewById(android.R.id.text1)).setText(makeServerTitle(getItem(offset)));
 			TypedArray ta=obtainStyledAttributes(new int[]{R.attr.selectableItemBackground});
 			parent.itemView.setBackground(ta.getDrawable(0));
 			ta.recycle();
@@ -61,9 +62,19 @@ public class WidgetServerSelectActivity extends AppCompatActivity
 			return new FindableViewHolder(getLayoutInflater().inflate(android.R.layout.simple_list_item_1,parent,false));
 		}
 		
+		String makeServerTitle(Server sv){
+			StringBuilder sb=new StringBuilder();
+			if(TextUtils.isEmpty(sv.name)||sv.toString().equals(sv.name)){
+				sb.append(sv).append(" ");
+			}else{
+				sb.append(sv.name).append(" (").append(sv).append(") ");
+			}
+			sb.append(sv.mode==0?"PE":"PC");
+			return sb.toString();
+		}
+		
 		class OnClickListener implements View.OnClickListener{
 			int ofs;
-			public OnClickListener(){}
 			public OnClickListener(int i){ofs=i;}
 			@Override
 			public void onClick(View p1) {
