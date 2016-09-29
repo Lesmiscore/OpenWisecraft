@@ -8,11 +8,12 @@ import android.support.v7.widget.*;
 import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+import java.util.*;
 
 public class WidgetStateInspector extends AppCompatActivity 
 {
 	RecyclerView rv;
-	KVRecyclerAdapter<String,?> a;
+	KVRecyclerAdapter<String,Object> a;
 	Gson gson=new Gson();
 	SharedPreferences pref,widgetPref;
 	@Override
@@ -26,7 +27,8 @@ public class WidgetStateInspector extends AppCompatActivity
 		
 		rv.setLayoutManager(new LinearLayoutManager(this));
 		a=new KVRecyclerAdapter<String,Object>(this);
-		a.addAll(widgetPref.getAll().entrySet());
+		for(Map.Entry<String,?> ent:widgetPref.getAll().entrySet())
+			a.add(new KVP<String,Object>(ent.getKey(),ent.getValue()));
 		rv.setAdapter(a);
 	}
 }
