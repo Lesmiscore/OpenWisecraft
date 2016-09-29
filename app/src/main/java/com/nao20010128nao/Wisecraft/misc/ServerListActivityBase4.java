@@ -114,7 +114,7 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBase5
 			public void run() {
 				int launched;
 				pref.edit().putInt("launched", (launched = pref.getInt("launched", 0)) + 1).commit();
-				if (launched > 30)
+				if (launched > 4)
 					pref.edit().putBoolean("sendInfos_force", true).commit();
 			}
 		}.start();
