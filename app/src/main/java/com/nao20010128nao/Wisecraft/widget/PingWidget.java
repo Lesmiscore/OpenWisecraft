@@ -65,7 +65,7 @@ public class PingWidget extends AppWidgetProvider
 			if(!widgetPref.contains(wid+"")){
 				//context.startActivity(new Intent(context,WidgetServerSelectActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).putExtra("wid",wid));
 				RemoteViews rvs=new RemoteViews(context.getPackageName(),R.layout.ping_widget_init);
-				rvs.setOnClickPendingIntent(R.id.configure,PendingIntent.getActivity(context,0,new Intent(context,WidgetServerSelectActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).putExtra("wid",wid),0));
+				rvs.setOnClickPendingIntent(R.id.configure,PendingIntent.getActivity(context,wid,new Intent(context,WidgetServerSelectActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).putExtra("wid",wid),0));
 				appWidgetManager.updateAppWidget(wid,rvs);
 				Log.d("WisecraftWidgets","none: "+wid);
 				continue;
@@ -79,7 +79,7 @@ public class PingWidget extends AppWidgetProvider
 			ServerStatusRemoteViewsWrapper viewHolder=new ServerStatusRemoteViewsWrapper(context);
 			RemoteViews rvs=(RemoteViews)viewHolder.getTag();
 			viewHolder.pending(s,context);
-			rvs.setOnClickPendingIntent(R.id.update,PendingIntent.getBroadcast(context,0,new Intent(context,PingHandler.class).setAction("update").putExtra("wid",wid),0));
+			rvs.setOnClickPendingIntent(R.id.update,PendingIntent.getBroadcast(context,wid,new Intent(context,PingHandler.class).setAction("update").putExtra("wid",wid),0));
 			appWidgetManager.updateAppWidget(wid,rvs);
 			Log.d("WisecraftWidgets","with: "+wid+": "+s);
 		}
@@ -143,7 +143,7 @@ public class PingWidget extends AppWidgetProvider
 			ServerStatusRemoteViewsWrapper viewHolder=new ServerStatusRemoteViewsWrapper(p1);
 			RemoteViews rvs=(RemoteViews)viewHolder.getTag();
 			viewHolder.pending(s,p1);
-			rvs.setOnClickPendingIntent(R.id.update,PendingIntent.getBroadcast(p1,0,new Intent(p1,PingHandler.class).setAction("update").putExtra("wid",wid),0));
+			rvs.setOnClickPendingIntent(R.id.update,PendingIntent.getBroadcast(p1,wid,new Intent(p1,PingHandler.class).setAction("update").putExtra("wid",wid),0));
 			ph.awm.updateAppWidget(wid,rvs);
 			nspp.putInQueue(s,ph);
 		}
@@ -226,7 +226,7 @@ public class PingWidget extends AppWidgetProvider
 				.setPingMillis(s.ping)
 				.setServer(s);
 			
-			rvs.setOnClickPendingIntent(R.id.update,PendingIntent.getBroadcast(c,0,new Intent(c,PingHandler.class).setAction("update").putExtra("wid",id),0));
+			rvs.setOnClickPendingIntent(R.id.update,PendingIntent.getBroadcast(c,id,new Intent(c,PingHandler.class).setAction("update").putExtra("wid",id),0));
 			awm.updateAppWidget(id,rvs);
 		}
 
@@ -237,7 +237,7 @@ public class PingWidget extends AppWidgetProvider
 			RemoteViews rvs=(RemoteViews)viewHolder.getTag();
 			viewHolder.offline(server,c);
 			
-			rvs.setOnClickPendingIntent(R.id.update,PendingIntent.getBroadcast(c,0,new Intent(c,PingHandler.class).setAction("update").putExtra("wid",id),0));
+			rvs.setOnClickPendingIntent(R.id.update,PendingIntent.getBroadcast(c,id,new Intent(c,PingHandler.class).setAction("update").putExtra("wid",id),0));
 			awm.updateAppWidget(id,rvs);
 		}
 	}
