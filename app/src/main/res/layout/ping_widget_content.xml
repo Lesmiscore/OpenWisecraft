@@ -93,7 +93,7 @@
 				style="?android:attr/buttonBarButtonStyle"
 				android:layout_height="60dp"
 				android:layout_width="match_parent"
-				android:src="@drawable/ic_menu_refresh"
+				android:src="@drawable/ic_sync_white_36dp"
 				android:textColor="#FFFFFF"
 				android:id="@+id/update"
 				android:scaleType="center"/>
