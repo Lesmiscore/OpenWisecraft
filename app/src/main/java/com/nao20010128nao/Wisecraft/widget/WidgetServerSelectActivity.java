@@ -78,7 +78,9 @@ public class WidgetServerSelectActivity extends AppCompatActivity
 			public OnClickListener(int i){ofs=i;}
 			@Override
 			public void onClick(View p1) {
-				widgetPref.edit().putString(wid+"",gson.toJson(getItem(ofs))).commit();
+				Server s=getItem(ofs).cloneAsServer();
+				s.name=null;
+				widgetPref.edit().putString(wid+"",gson.toJson(s)).commit();
 				sendBroadcast(new Intent(WidgetServerSelectActivity.this,PingWidget.PingHandler.class).putExtra("wid",wid));
 				setResult(RESULT_OK,new Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, wid));
 				finish();

@@ -140,9 +140,9 @@ public class PingWidget extends AppWidgetProvider
 			ph.id=wid;
 			ph.c=p1;
 			ph.awm=AppWidgetManager.getInstance(p1);
-			ServerStatusRemoteViewsWrapper viewHolder=new ServerStatusRemoteViewsWrapper(p1);
-			RemoteViews rvs=(RemoteViews)viewHolder.getTag();
-			viewHolder.pending(s,p1);
+			ServerStatusRemoteViewsWrapper ssrvw=new ServerStatusRemoteViewsWrapper(p1);
+			RemoteViews rvs=(RemoteViews)ssrvw.getTag();
+			ssrvw.pending(s,p1);
 			rvs.setOnClickPendingIntent(R.id.update,PendingIntent.getBroadcast(p1,wid,new Intent(p1,PingHandler.class).setAction("update").putExtra("wid",wid),0));
 			ph.awm.updateAppWidget(wid,rvs);
 			nspp.putInQueue(s,ph);
@@ -156,10 +156,10 @@ public class PingWidget extends AppWidgetProvider
 			Log.d("WisecraftWidgets","Ping OK for: "+id);
 			SharedPreferences pref=PreferenceManager.getDefaultSharedPreferences(c);
 			
-			ServerStatusRemoteViewsWrapper viewHolder=new ServerStatusRemoteViewsWrapper(c);
-			RemoteViews rvs=(RemoteViews)viewHolder.getTag();
+			ServerStatusRemoteViewsWrapper ssrvw=new ServerStatusRemoteViewsWrapper(c);
+			RemoteViews rvs=(RemoteViews)ssrvw.getTag();
 			
-			viewHolder.setStatColor(ContextCompat.getColor(c, R.color.stat_ok));
+			ssrvw.setStatColor(ContextCompat.getColor(c, R.color.stat_ok));
 			final String title;
 			if (s.response instanceof FullStat) {//PE
 				FullStat fs = (FullStat) s.response;
@@ -171,7 +171,7 @@ public class PingWidget extends AppWidgetProvider
 				} else {
 					title = s.toString();
 				}
-				viewHolder.setServerPlayers(m.get("numplayers"), m.get("maxplayers"));
+				ssrvw.setServerPlayers(m.get("numplayers"), m.get("maxplayers"));
 			} else if (s.response instanceof Reply19) {//PC 1.9~
 				Reply19 rep = (Reply19) s.response;
 				if (rep.description == null) {
@@ -179,7 +179,7 @@ public class PingWidget extends AppWidgetProvider
 				} else {
 					title = rep.description.text;
 				}
-				viewHolder.setServerPlayers(rep.players.online, rep.players.max);
+				ssrvw.setServerPlayers(rep.players.online, rep.players.max);
 			} else if (s.response instanceof Reply) {//PC
 				Reply rep = (Reply) s.response;
 				if (rep.description == null) {
@@ -187,13 +187,13 @@ public class PingWidget extends AppWidgetProvider
 				} else {
 					title = rep.description;
 				}
-				viewHolder.setServerPlayers(rep.players.online, rep.players.max);
+				ssrvw.setServerPlayers(rep.players.online, rep.players.max);
 			} else if (s.response instanceof SprPair) {//PE?
 				SprPair sp = ((SprPair) s.response);
 				if (sp.getB() instanceof UnconnectedPing.UnconnectedPingResult) {
 					UnconnectedPing.UnconnectedPingResult res = (UnconnectedPing.UnconnectedPingResult) sp.getB();
 					title = res.getServerName();
-					viewHolder.setServerPlayers(res.getPlayersCount(), res.getMaxPlayers());
+					ssrvw.setServerPlayers(res.getPlayersCount(), res.getMaxPlayers());
 				} else if (sp.getA() instanceof FullStat) {
 					FullStat fs = (FullStat) sp.getA();
 					Map<String, String> m = fs.getDataAsMap();
@@ -204,25 +204,25 @@ public class PingWidget extends AppWidgetProvider
 					} else {
 						title = s.toString();
 					}
-					viewHolder.setServerPlayers(m.get("numplayers"), m.get("maxplayers"));
+					ssrvw.setServerPlayers(m.get("numplayers"), m.get("maxplayers"));
 				} else {
 					title = s.toString();
-					viewHolder.setServerPlayers();
+					ssrvw.setServerPlayers();
 				}
 			} else if (s.response instanceof UnconnectedPing.UnconnectedPingResult) {//PE
 				UnconnectedPing.UnconnectedPingResult res = (UnconnectedPing.UnconnectedPingResult) s.response;
 				title = res.getServerName();
-				viewHolder.setServerPlayers(res.getPlayersCount(), res.getMaxPlayers());
+				ssrvw.setServerPlayers(res.getPlayersCount(), res.getMaxPlayers());
 			} else {//Unreachable
 				title = s.toString();
-				viewHolder.setServerPlayers();
+				ssrvw.setServerPlayers();
 			}
 			if (pref.getBoolean("serverListColorFormattedText", false)) {
-				viewHolder.setServerName(parseMinecraftFormattingCode(title,Color.WHITE));
+				ssrvw.setServerName(parseMinecraftFormattingCode(title,Color.WHITE));
 			} else {
-				viewHolder.setServerName(deleteDecorations(title));
+				ssrvw.setServerName(deleteDecorations(title));
 			}
-			viewHolder
+			ssrvw
 				.setPingMillis(s.ping)
 				.setServer(s);
 			
@@ -233,9 +233,9 @@ public class PingWidget extends AppWidgetProvider
 		@Override
 		public void onPingFailed(Server server) {
 			Log.d("WisecraftWidgets","Ping NG for: "+id);
-			ServerStatusRemoteViewsWrapper viewHolder=new ServerStatusRemoteViewsWrapper(c);
-			RemoteViews rvs=(RemoteViews)viewHolder.getTag();
-			viewHolder.offline(server,c);
+			ServerStatusRemoteViewsWrapper ssrvw=new ServerStatusRemoteViewsWrapper(c);
+			RemoteViews rvs=(RemoteViews)ssrvw.getTag();
+			ssrvw.offline(server,c);
 			
 			rvs.setOnClickPendingIntent(R.id.update,PendingIntent.getBroadcast(c,id,new Intent(c,PingHandler.class).setAction("update").putExtra("wid",id),0));
 			awm.updateAppWidget(id,rvs);
