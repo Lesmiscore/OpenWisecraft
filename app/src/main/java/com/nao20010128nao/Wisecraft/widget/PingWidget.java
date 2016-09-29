@@ -97,12 +97,17 @@ public class PingWidget extends AppWidgetProvider
 	@Override
 	public void onRestored(Context context, int[] oldWidgetIds, int[] newWidgetIds) {
 		SharedPreferences widgetPref=context.getSharedPreferences("widgets",Context.MODE_PRIVATE);
-		Map<String,Object> datas=new HashMap<>(widgetPref.getAll());
+		Map<String,Object> datas=new HashMap<String,Object>(widgetPref.getAll());
 		SharedPreferences.Editor edt=widgetPref.edit();
 		for(int i=0;i<oldWidgetIds.length;i++){
 			Log.d("WisecraftWidgets","onRestored: "+oldWidgetIds[i]+"=>"+newWidgetIds[i]);
-			edt.remove(oldWidgetIds[i]+"")
-				.putString(newWidgetIds[i]+"",datas.get(oldWidgetIds[i]+"")+"");
+			edt.remove(oldWidgetIds[i]+"");
+		}
+		edt.commit();
+		edt=widgetPref.edit();
+		for(int i=0;i<oldWidgetIds.length;i++){
+			Log.d("WisecraftWidgets","onRestored: "+oldWidgetIds[i]+"=>"+newWidgetIds[i]);
+			edt.putString(newWidgetIds[i]+"",datas.get(oldWidgetIds[i]+"")+"");
 		}
 		edt.commit();
 	}
