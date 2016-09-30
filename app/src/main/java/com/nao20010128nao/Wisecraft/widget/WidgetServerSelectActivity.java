@@ -5,6 +5,7 @@ import android.content.*;
 import android.content.res.*;
 import android.os.*;
 import android.preference.*;
+import android.support.design.widget.*;
 import android.support.v7.app.*;
 import android.support.v7.widget.*;
 import android.text.*;
@@ -13,6 +14,10 @@ import android.widget.*;
 import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+import com.nao20010128nao.Wisecraft.misc.compat.*;
+import java.util.*;
+
+import com.nao20010128nao.Wisecraft.R;
 
 public class WidgetServerSelectActivity extends AppCompatActivity 
 {
@@ -43,6 +48,86 @@ public class WidgetServerSelectActivity extends AppCompatActivity
 		rv.setAdapter(a=new Adapter());
 		Server[] servers=gson.fromJson(pref.getString("servers","[]"),Server[].class);
 		a.addAll(servers);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		menu.add(Menu.NONE, 0, 0, R.string.typeServer);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()){
+			case 0:
+				View dialog=getLayoutInflater().inflate(R.layout.server_add_dialog_new, null);
+				final LinearLayout peFrame=(LinearLayout)dialog.findViewById(R.id.pe);
+				final LinearLayout pcFrame=(LinearLayout)dialog.findViewById(R.id.pc);
+				final EditText pe_ip=(EditText)dialog.findViewById(R.id.pe).findViewById(R.id.serverIp);
+				final EditText pe_port=(EditText)dialog.findViewById(R.id.pe).findViewById(R.id.serverPort);
+				final EditText pc_ip=(EditText)dialog.findViewById(R.id.pc).findViewById(R.id.serverIp);
+				final CheckBox split=(CheckBox)dialog.findViewById(R.id.switchFirm);
+				final EditText serverName=(EditText)dialog.findViewById(R.id.serverName);
+				serverName.setVisibility(View.GONE);
+
+				pe_ip.setText("localhost");
+				pe_port.setText("19132");
+				split.setChecked(false);
+
+				split.setOnClickListener(new View.OnClickListener(){
+						public void onClick(View v) {
+							if (split.isChecked()) {
+								//PE->PC
+								peFrame.setVisibility(View.GONE);
+								pcFrame.setVisibility(View.VISIBLE);
+								split.setText(R.string.pc);
+								StringBuilder result=new StringBuilder();
+								result.append(pe_ip.getText());
+								int port=Integer.valueOf(pe_port.getText().toString()).intValue();
+								if (!(port == 25565 | port == 19132))
+									result.append(':').append(pe_port.getText());
+								pc_ip.setText(result);
+							} else {
+								//PC->PE
+								pcFrame.setVisibility(View.GONE);
+								peFrame.setVisibility(View.VISIBLE);
+								split.setText(R.string.pe);
+								Server s=Utils.convertServerObject(Arrays.asList(com.nao20010128nao.McServerList.Server.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
+								pe_ip.setText(s.ip);
+								pe_port.setText(s.port + "");
+							}
+						}
+					});
+
+				new AppCompatAlertDialog.Builder(this, R.style.AppAlertDialog).
+					setView(dialog).
+					setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener(){
+						public void onClick(DialogInterface d, int sel) {
+							Server s;
+							if (split.isChecked()) {
+								s = Utils.convertServerObject(Arrays.asList(com.nao20010128nao.McServerList.Server.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
+							} else {
+								s = new Server();
+								s.ip = pe_ip.getText().toString();
+								s.port = Integer.valueOf(pe_port.getText().toString());
+								s.mode = split.isChecked() ?1: 0;
+							}
+							
+							widgetPref.edit().putString(wid+"",gson.toJson(s)).commit();
+							sendBroadcast(new Intent(WidgetServerSelectActivity.this,PingWidget.PingHandler.class).putExtra("wid",wid));
+							setResult(RESULT_OK,new Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, wid));
+							finish();
+						}
+					}).
+					setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener(){
+						public void onClick(DialogInterface d, int sel) {
+
+						}
+					}).
+					show();
+				return true;
+		}
+		return false;
 	}
 	
 	class Adapter extends ListRecyclerViewAdapter<FindableViewHolder,Server> {
