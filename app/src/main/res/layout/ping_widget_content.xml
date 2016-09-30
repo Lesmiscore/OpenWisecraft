@@ -85,9 +85,19 @@
 		<LinearLayout
 			android:layout_height="match_parent"
 			android:layout_width="match_parent"
-			android:orientation="vertical"
+			android:orientation="horizontal"
 			android:layout_weight="1.0"
 			android:gravity="bottom">
+
+			<ImageButton
+				style="?android:attr/buttonBarButtonStyle"
+				android:layout_height="60dp"
+				android:layout_width="match_parent"
+				android:src="@drawable/ic_launch_white_36dp"
+				android:textColor="#FFFFFF"
+				android:id="@+id/openServerStatus"
+				android:scaleType="center"
+				android:layout_weight="1.0"/>
 
 			<ImageButton
 				style="?android:attr/buttonBarButtonStyle"
@@ -96,7 +106,8 @@
 				android:src="@drawable/ic_sync_white_36dp"
 				android:textColor="#FFFFFF"
 				android:id="@+id/update"
-				android:scaleType="center"/>
+				android:scaleType="center"
+				android:layout_weight="1.0"/>
 
 		</LinearLayout>
 
