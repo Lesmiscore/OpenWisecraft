@@ -48,7 +48,8 @@
 
         <activity
 			android:label="@string/app_name"
-			android:name=".api.RequestedServerInfoActivity" >
+			android:name=".api.RequestedServerInfoActivity"
+			android:theme="@style/AppTheme.Translucent">
             <intent-filter >
                 <action android:name="com.nao20010128nao.Wisecraft.SERVER_INFO" />
                 <category android:name="android.intent.category.LAUNCHER" />
