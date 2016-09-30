@@ -206,7 +206,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			}
 		}else{
 			if (Build.VERSION.SDK_INT >= 21) {
-				background.setBackgroundColor(slsl.getBackgroundSimpleColor());
+				getWindow().setStatusBarColor(slsl.getBackgroundSimpleColor());
 			}
 		}
 		tabs.setBackgroundColor(Color.WHITE);
