@@ -4,12 +4,14 @@ import android.app.*;
 import android.appwidget.*;
 import android.content.*;
 import android.graphics.*;
+import android.net.*;
 import android.preference.*;
 import android.support.v4.content.*;
 import android.util.*;
 import android.widget.*;
 import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.api.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
@@ -17,7 +19,6 @@ import com.nao20010128nao.Wisecraft.misc.provider.*;
 import java.util.*;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
-import android.net.*;
 
 public class PingWidget extends AppWidgetProvider 
 {
@@ -98,7 +99,7 @@ public class PingWidget extends AppWidgetProvider
 			.toString();
 			
 		rvs.setOnClickPendingIntent(R.id.update, PendingIntent.getBroadcast(context, wid, new Intent(context, PingHandler.class).setAction("update").putExtra("wid", wid), 0));
-		rvs.setOnClickPendingIntent(R.id.openServerStatus, PendingIntent.getBroadcast(context, wid*100, new Intent().setAction(Intent.ACTION_VIEW).addCategory(Intent.CATEGORY_BROWSABLE).setData(Uri.parse(addr)), 0));
+		rvs.setOnClickPendingIntent(R.id.openServerStatus, PendingIntent.getActivity(context, wid*100, new Intent(context,RequestedServerInfoActivity.class).setData(Uri.parse(addr)), 0));
 	}
 
 	@Override
