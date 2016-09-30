@@ -4,27 +4,24 @@ import android.content.pm.*;
 import android.os.*;
 import android.preference.*;
 import android.util.*;
+import com.google.firebase.crash.*;
+import com.google.firebase.remoteconfig.*;
 import com.google.gson.*;
 import com.google.gson.reflect.*;
 import com.nao20010128nao.OTC.*;
-import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.WRcon.*;
+import com.nao20010128nao.WRcon.misc.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import java.io.*;
+import java.net.*;
 import java.security.*;
 import java.util.*;
-import org.apache.http.client.methods.*;
-import org.apache.http.impl.client.*;
-import org.apache.http.util.*;
 import org.eclipse.egit.github.core.*;
 import org.eclipse.egit.github.core.client.*;
 import org.eclipse.egit.github.core.service.*;
-import com.nao20010128nao.WRcon.TheApplication;
-import com.nao20010128nao.WRcon.misc.Constant;
-import com.nao20010128nao.WRcon.misc.Utils;
+
 import com.nao20010128nao.WRcon.Server;
-import com.google.firebase.crash.*;
-import com.google.firebase.remoteconfig.*;
 
 
 public class CollectorMain extends ContextWrapper implements Runnable {
