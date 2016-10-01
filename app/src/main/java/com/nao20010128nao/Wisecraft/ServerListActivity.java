@@ -338,6 +338,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 															svr.ip = s[2];
 															svr.port = Integer.valueOf(s[3]);
 															svr.mode = 0;
+															svr.name = s[1];
 															sv.add(svr);
 														} catch (NumberFormatException e) {}
 													}
