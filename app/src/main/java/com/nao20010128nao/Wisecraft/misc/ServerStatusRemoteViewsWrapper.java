@@ -5,16 +5,15 @@ import android.support.v4.content.*;
 import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.widget.*;
 
 public class ServerStatusRemoteViewsWrapper implements ServerStatusViewController<ServerStatusRemoteViewsWrapper> 
 {
-	RemoteViews control;Context c;
-	public ServerStatusRemoteViewsWrapper(Context c){
+	RemoteViews control;Context c;int mode;
+	public ServerStatusRemoteViewsWrapper(Context c,int wid){
+		SharedPreferences widgetPref=PingWidget.getWidgetPref(c);
+		mode=widgetPref.getInt(wid+".data",0);
 		control=new RemoteViews(c.getPackageName(),R.layout.ping_widget_content);
-		this.c=c;
-	}
-	public ServerStatusRemoteViewsWrapper(Context c,RemoteViews ctrl){
-		control=ctrl;
 		this.c=c;
 	}
 	public ServerStatusRemoteViewsWrapper setStatColor(int color){

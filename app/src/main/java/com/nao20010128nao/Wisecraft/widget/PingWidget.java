@@ -25,15 +25,15 @@ public class PingWidget extends AppWidgetProvider
 
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-		SharedPreferences widgetPref=context.getSharedPreferences("widgets",Context.MODE_PRIVATE);
+		SharedPreferences widgetPref = getWidgetPref(context);
 		Gson gson=new Gson();
-		widgetPref.edit().putInt("_version",2).commit();
+		widgetPref.edit().putInt("_version",2).putInt("_version.data",0).commit();
 		{/*
 			int version=widgetPref.getInt("_version", 2);
 			switch (version) {
 				case 0:{
 						for(String key:new HashSet<>(widgetPref.getAll().keySet())){
-							if("_version".equals(key))continue;
+			 				if("_version".startsWith(key))continue;
 							
 						}
 						OldServer19[] sa=gson.fromJson(pref.getString("servers", "[]"), OldServer19[].class);
@@ -65,9 +65,7 @@ public class PingWidget extends AppWidgetProvider
 		for(int wid:appWidgetIds){
 			Log.d("WisecraftWidgets","onUpdate: "+wid);
 			if(!widgetPref.contains(wid+"")){
-				//context.startActivity(new Intent(context,WidgetServerSelectActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).putExtra("wid",wid));
 				RemoteViews rvs=new RemoteViews(context.getPackageName(),R.layout.ping_widget_init);
-				rvs.setOnClickPendingIntent(R.id.configure,PendingIntent.getActivity(context,wid*10,new Intent(context,WidgetServerSelectActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).putExtra("wid",wid),0));
 				appWidgetManager.updateAppWidget(wid,rvs);
 				Log.d("WisecraftWidgets","none: "+wid);
 				continue;
@@ -78,7 +76,7 @@ public class PingWidget extends AppWidgetProvider
 			ph.c=context;
 			ph.awm=appWidgetManager;
 			nspp.putInQueue(s,ph);
-			ServerStatusRemoteViewsWrapper viewHolder=new ServerStatusRemoteViewsWrapper(context);
+			ServerStatusRemoteViewsWrapper viewHolder=new ServerStatusRemoteViewsWrapper(context,wid);
 			RemoteViews rvs=(RemoteViews)viewHolder.getTag();
 			viewHolder.pending(s,context);
 			setupHandlers(rvs, context, wid);
@@ -87,8 +85,12 @@ public class PingWidget extends AppWidgetProvider
 		}
 	}
 
+	public static SharedPreferences getWidgetPref(Context context) {
+		return context.getSharedPreferences("widgets", Context.MODE_PRIVATE);
+	}
+
 	static void setupHandlers(RemoteViews rvs, Context context, int wid) {
-		SharedPreferences widgetPref=context.getSharedPreferences("widgets",Context.MODE_PRIVATE);
+		SharedPreferences widgetPref=getWidgetPref(context);
 		Server s=new Gson().fromJson(widgetPref.getString(""+wid,"{}"),Server.class);
 		String addr=new StringBuilder("wisecraft://info/")
 			.append(s.ip)
@@ -105,7 +107,7 @@ public class PingWidget extends AppWidgetProvider
 	@Override
 	public void onDeleted(Context context, int[] appWidgetIds) {
 		for(int i:appWidgetIds)Log.d("WisecraftWidgets","onDeleted: "+i);
-		SharedPreferences widgetPref=context.getSharedPreferences("widgets",Context.MODE_PRIVATE);
+		SharedPreferences widgetPref=getWidgetPref(context);
 		SharedPreferences.Editor edt=widgetPref.edit();
 		for(int i:appWidgetIds)edt.remove(i+"");
 		edt.commit();
@@ -113,7 +115,7 @@ public class PingWidget extends AppWidgetProvider
 
 	@Override
 	public void onRestored(Context context, int[] oldWidgetIds, int[] newWidgetIds) {
-		SharedPreferences widgetPref=context.getSharedPreferences("widgets",Context.MODE_PRIVATE);
+		SharedPreferences widgetPref=getWidgetPref(context);
 		Map<String,Object> datas=new HashMap<String,Object>(widgetPref.getAll());
 		SharedPreferences.Editor edt=widgetPref.edit();
 		for(int i=0;i<oldWidgetIds.length;i++){
@@ -131,13 +133,20 @@ public class PingWidget extends AppWidgetProvider
 
 	@Override
 	public void onDisabled(Context context) {
-		SharedPreferences widgetPref=context.getSharedPreferences("widgets",Context.MODE_PRIVATE);
+		SharedPreferences widgetPref=getWidgetPref(context);
 		SharedPreferences.Editor edt=widgetPref.edit();
 		for(String key:new HashSet<String>(widgetPref.getAll().keySet())){
-			if("_version".equals(key))continue;
+			if("_version".startsWith(key))continue;
 			edt.remove(key);
 		}
 		edt.commit();
+	}
+	
+	public static int styleToId(int style){
+		switch(style){
+			case 0:return R.layout.ping_widget_content;
+		}
+		return 0;
 	}
 	
 	
@@ -149,7 +158,7 @@ public class PingWidget extends AppWidgetProvider
 		public void onReceive(Context p1, Intent p2) {
 			int wid=p2.getIntExtra("wid",0);
 			Log.d("WisecraftWidgets","Update Issued: "+wid);
-			SharedPreferences widgetPref=p1.getSharedPreferences("widgets",Context.MODE_PRIVATE);
+			SharedPreferences widgetPref=getWidgetPref(p1);
 			Gson gson=new Gson();
 			Server s=gson.fromJson(widgetPref.getString(wid+"","{}"),Server.class);
 			NormalServerPingProvider nspp=new NormalServerPingProvider();
@@ -157,7 +166,7 @@ public class PingWidget extends AppWidgetProvider
 			ph.id=wid;
 			ph.c=p1;
 			ph.awm=AppWidgetManager.getInstance(p1);
-			ServerStatusRemoteViewsWrapper ssrvw=new ServerStatusRemoteViewsWrapper(p1);
+			ServerStatusRemoteViewsWrapper ssrvw=new ServerStatusRemoteViewsWrapper(p1,wid);
 			RemoteViews rvs=(RemoteViews)ssrvw.getTag();
 			ssrvw.pending(s,p1);
 			setupHandlers(rvs, p1, wid);
@@ -173,7 +182,7 @@ public class PingWidget extends AppWidgetProvider
 			Log.d("WisecraftWidgets","Ping OK for: "+id);
 			SharedPreferences pref=PreferenceManager.getDefaultSharedPreferences(c);
 			
-			ServerStatusRemoteViewsWrapper ssrvw=new ServerStatusRemoteViewsWrapper(c);
+			ServerStatusRemoteViewsWrapper ssrvw=new ServerStatusRemoteViewsWrapper(c,id);
 			RemoteViews rvs=(RemoteViews)ssrvw.getTag();
 			
 			ssrvw.setStatColor(ContextCompat.getColor(c, R.color.stat_ok));
@@ -250,12 +259,16 @@ public class PingWidget extends AppWidgetProvider
 		@Override
 		public void onPingFailed(Server server) {
 			Log.d("WisecraftWidgets","Ping NG for: "+id);
-			ServerStatusRemoteViewsWrapper ssrvw=new ServerStatusRemoteViewsWrapper(c);
+			ServerStatusRemoteViewsWrapper ssrvw=new ServerStatusRemoteViewsWrapper(c,id);
 			RemoteViews rvs=(RemoteViews)ssrvw.getTag();
 			ssrvw.offline(server,c);
 			
 			setupHandlers(rvs, c, id);
 			awm.updateAppWidget(id,rvs);
 		}
+	}
+	
+	public static class WidgetData{
+		public int style;
 	}
 }
