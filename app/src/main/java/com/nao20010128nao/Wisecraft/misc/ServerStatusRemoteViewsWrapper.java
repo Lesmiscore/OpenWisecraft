@@ -9,11 +9,11 @@ import com.nao20010128nao.Wisecraft.widget.*;
 
 public class ServerStatusRemoteViewsWrapper implements ServerStatusViewController<ServerStatusRemoteViewsWrapper> 
 {
-	RemoteViews control;Context c;int mode;
+	RemoteViews control;Context c;int style;
 	public ServerStatusRemoteViewsWrapper(Context c,int wid){
-		SharedPreferences widgetPref=PingWidget.getWidgetPref(c);
-		mode=widgetPref.getInt(wid+".data",0);
-		control=new RemoteViews(c.getPackageName(),R.layout.ping_widget_content);
+		PingWidget.WidgetData widgetData=PingWidget.getWidgetData(c,wid);
+		style=widgetData.style;
+		control=new RemoteViews(c.getPackageName(),PingWidget.styleToId(style));
 		this.c=c;
 	}
 	public ServerStatusRemoteViewsWrapper setStatColor(int color){

@@ -166,10 +166,17 @@ public class WidgetServerSelectActivity extends AppCompatActivity
 				Server s=getItem(ofs).cloneAsServer();
 				s.name=null;
 				widgetPref.edit().putString(wid+"",gson.toJson(s)).commit();
+				PingWidget.setWidgetData(WidgetServerSelectActivity.this,wid,newWidgetDataInstance());
 				sendBroadcast(new Intent(WidgetServerSelectActivity.this,PingWidget.PingHandler.class).putExtra("wid",wid));
 				setResult(RESULT_OK,new Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, wid));
 				finish();
 			}
 		}
+	}
+	
+	public PingWidget.WidgetData newWidgetDataInstance(){
+		PingWidget.WidgetData wd=new PingWidget.WidgetData();
+		wd.style=0;
+		return wd;
 	}
 }

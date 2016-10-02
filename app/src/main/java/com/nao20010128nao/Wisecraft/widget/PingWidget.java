@@ -88,6 +88,14 @@ public class PingWidget extends AppWidgetProvider
 	public static SharedPreferences getWidgetPref(Context context) {
 		return context.getSharedPreferences("widgets", Context.MODE_PRIVATE);
 	}
+	
+	public static WidgetData getWidgetData(Context c,int wid){
+		return new Gson().fromJson(getWidgetPref(c).getString(wid+".data","{}"),WidgetData.class);
+	}
+	
+	public static void setWidgetData(Context c,int wid,WidgetData data){
+		getWidgetPref(c).edit().putString(wid+".data",new Gson().toJson(data)).commit();
+	}
 
 	static void setupHandlers(RemoteViews rvs, Context context, int wid) {
 		SharedPreferences widgetPref=getWidgetPref(context);
@@ -269,6 +277,6 @@ public class PingWidget extends AppWidgetProvider
 	}
 	
 	public static class WidgetData{
-		public int style;
+		public int style=0;
 	}
 }
