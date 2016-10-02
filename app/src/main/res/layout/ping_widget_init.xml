@@ -12,19 +12,12 @@
 		android:layout_margin="4dp"
 		android:gravity="center">
 
-		<ImageButton
-			style="?android:attr/buttonBarButtonStyle"
+		<ImageView
 			android:layout_height="50dp"
 			android:layout_width="80dp"
 			android:src="@drawable/ic_launcher"
 			android:scaleType="center"
 			android:id="@+id/configure"/>
-
-		<TextView
-			android:layout_height="wrap_content"
-			android:textAppearance="?android:attr/textAppearanceSmall"
-			android:layout_width="wrap_content"
-			android:text="@string/tapToSelectServer"/>
 
 	</LinearLayout>
 
