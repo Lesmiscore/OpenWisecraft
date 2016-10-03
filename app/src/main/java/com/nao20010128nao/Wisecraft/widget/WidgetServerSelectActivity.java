@@ -130,6 +130,12 @@ public class WidgetServerSelectActivity extends AppCompatActivity
 		}
 		return false;
 	}
+
+	@Override
+	protected void attachBaseContext(Context newBase) {
+		TheApplication.instance.initForActivities();
+		super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
+	}
 	
 	class Adapter extends ListRecyclerViewAdapter<FindableViewHolder,Server> {
 
