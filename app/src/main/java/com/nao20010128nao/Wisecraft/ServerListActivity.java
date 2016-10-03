@@ -630,11 +630,17 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 															sv.mode=1;
 														}
 													}
-													final String stat=Utils.encodeForServerInfo(sv);
+													String _stat=null;
+													try{
+														_stat=Utils.encodeForServerInfo(sv);
+													}catch(Throwable e){
+														WisecraftError.report("ServerListActivity#execOption#8",e);
+													}
+													final String stat=_stat;
 													runOnUiThread(new Runnable(){
 															public void run() {
 																wd.hideWorkingDialog();
-																if(sv.response==null){
+																if(sv.response==null|stat==null){
 																	Utils.makeNonClickableSB(ServerListActivityImpl.this,R.string.loadPing_loadError,Snackbar.LENGTH_SHORT).show();
 																}else{
 																	startActivity(new Intent(ServerListActivityImpl.this, ServerInfoActivity.class).putExtra("stat", stat).putExtra("noExport",true).putExtra("nonUpd",true));
