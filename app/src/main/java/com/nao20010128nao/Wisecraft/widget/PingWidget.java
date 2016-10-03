@@ -153,6 +153,7 @@ public class PingWidget extends AppWidgetProvider
 	public static int styleToId(int style){
 		switch(style){
 			case 0:return R.layout.ping_widget_content;
+			case 1:return R.layout.ping_widget_content_2;
 		}
 		return 0;
 	}
