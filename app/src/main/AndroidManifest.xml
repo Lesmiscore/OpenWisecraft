@@ -158,6 +158,15 @@
 			</intent-filter> 
         </activity>
 		<activity
+			android:label="@string/select"
+			android:name=".widget.WidgetServerSelectActivity$Type2"
+			android:exported="false"
+			android:fitsSystemWindows="false">
+			<intent-filter>  
+				<action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>  
+			</intent-filter> 
+        </activity>
+		<activity
 			android:label="WidgetStateInspector"
 			android:name=".widget.WidgetStateInspector"
 			android:exported="true"
@@ -200,6 +209,22 @@
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
                 android:resource="@xml/ping_widget" />
+        </receiver>
+		<receiver android:name=".widget.PingWidget$Type2" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_BIND" />
+				<action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+				<action android:name="android.appwidget.action.APPWIDGET_DELETED" />
+				<action android:name="android.appwidget.action.APPWIDGET_DISABLED" />
+				<action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
+				<action android:name="android.appwidget.action.APPWIDGET_HOST_RESTORED" />
+				<action android:name="android.appwidget.action.APPWIDGET_UPDATE_OPTIONS" />
+				<action android:name="android.appwidget.action.APPWIDGET_PICK" />
+				<action android:name="android.appwidget.action.APPWIDGET_RESTORED" />
+				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/ping_widget_2" />
         </receiver>
 		<receiver android:name=".widget.PingWidget$PingHandler">
 			<intent-filter>

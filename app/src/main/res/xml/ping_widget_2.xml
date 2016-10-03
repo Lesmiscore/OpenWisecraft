@@ -2,10 +2,9 @@
 <appwidget-provider 
 	xmlns:android="http://schemas.android.com/apk/res/android"
     android:initialLayout="@layout/ping_widget_init"
-    android:minHeight="@dimen/widget_2cell"
+    android:minHeight="@dimen/widget_1cell"
     android:minWidth="@dimen/widget_4cell"
     android:previewImage="@drawable/ic_launcher"
     android:updatePeriodMillis="100000"
-	android:resizeMode="horizontal|vertical"
-	android:configure="com.nao20010128nao.Wisecraft.widget.WidgetServerSelectActivity">
+	android:configure="com.nao20010128nao.Wisecraft.widget.WidgetServerSelectActivity$Type2">
 </appwidget-provider>
