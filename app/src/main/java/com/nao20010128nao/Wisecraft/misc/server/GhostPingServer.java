@@ -100,7 +100,7 @@ public class GhostPingServer extends Thread {
 
 			List<String> datas=new ArrayList<>();
 			datas.add("MCPE");//MCPE
-			datas.add("§2Wisecraft");//Server name
+			datas.add("§3Wisecraft");//Server name
 			datas.add("81");//Protocol (81=0.15.2)
 			datas.add("0.15.2");//Version (Displayed on MCPE)
 			datas.add(Integer.MAX_VALUE + "");//Players count
