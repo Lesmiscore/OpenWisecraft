@@ -279,4 +279,6 @@ public class PingWidget extends AppWidgetProvider
 	public static class WidgetData{
 		public int style=0;
 	}
+	
+	public static class Type2 extends PingWidget{}
 }

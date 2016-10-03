@@ -18,6 +18,7 @@ import com.nao20010128nao.Wisecraft.misc.compat.*;
 import java.util.*;
 
 import com.nao20010128nao.Wisecraft.R;
+import com.nao20010128nao.Wisecraft.widget.PingWidget.*;
 
 public class WidgetServerSelectActivity extends AppCompatActivity 
 {
@@ -178,5 +179,17 @@ public class WidgetServerSelectActivity extends AppCompatActivity
 		PingWidget.WidgetData wd=new PingWidget.WidgetData();
 		wd.style=0;
 		return wd;
+	}
+	
+	
+	public static class Type2 extends WidgetServerSelectActivity {
+
+		@Override
+		public PingWidget.WidgetData newWidgetDataInstance() {
+			// TODO: Implement this method
+			PingWidget.WidgetData  data=super.newWidgetDataInstance();
+			data.style=1;
+			return data;
+		}
 	}
 }
