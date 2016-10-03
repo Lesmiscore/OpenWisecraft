@@ -117,7 +117,7 @@ public class PingWidget extends AppWidgetProvider
 		for(int i:appWidgetIds)Log.d("WisecraftWidgets","onDeleted: "+i);
 		SharedPreferences widgetPref=getWidgetPref(context);
 		SharedPreferences.Editor edt=widgetPref.edit();
-		for(int i:appWidgetIds)edt.remove(i+"");
+		for(int i:appWidgetIds)edt.remove(i+"").remove(i+".data");
 		edt.commit();
 	}
 
@@ -128,13 +128,14 @@ public class PingWidget extends AppWidgetProvider
 		SharedPreferences.Editor edt=widgetPref.edit();
 		for(int i=0;i<oldWidgetIds.length;i++){
 			Log.d("WisecraftWidgets","onRestored(1): "+oldWidgetIds[i]+"=>"+newWidgetIds[i]);
-			edt.remove(oldWidgetIds[i]+"");
+			edt.remove(oldWidgetIds[i]+"").remove(oldWidgetIds[i]+".data");
 		}
 		edt.commit();
 		edt=widgetPref.edit();
 		for(int i=0;i<oldWidgetIds.length;i++){
 			Log.d("WisecraftWidgets","onRestored(2): "+oldWidgetIds[i]+"=>"+newWidgetIds[i]);
-			edt.putString(newWidgetIds[i]+"",datas.get(oldWidgetIds[i]+"")+"");
+			edt.putString(newWidgetIds[i]+"",datas.get(oldWidgetIds[i]+"")+"")
+				.putString(newWidgetIds[i]+".data",datas.get(oldWidgetIds[i]+".data")+"");
 		}
 		edt.commit();
 	}
