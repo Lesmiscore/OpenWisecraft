@@ -155,7 +155,7 @@ public class GhostPingServer extends Thread {
 				kv.put("hostport", localPort + "");
 				kv.put("whitelist", "on");
 				kv.put("plugins", "Wisecraft Ghost Ping" + buildPlugins());
-				kv.put("hostname", "§2Wisecraft");
+				kv.put("hostname", "§3Wisecraft");
 				kv.put("numplayers", Integer.MAX_VALUE + "");
 				kv.put("version", "v0.15.2 alpha");
 				kv.put("game_id", "MINECRAFTPE");
