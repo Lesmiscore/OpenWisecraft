@@ -36,9 +36,9 @@ public class WidgetServerSelectActivity extends AppCompatActivity
 		rv=(RecyclerView)findViewById(android.R.id.list);
 		Intent values=getIntent();
 		if(values.hasExtra(AppWidgetManager.EXTRA_APPWIDGET_ID)){
-			wid = getIntent().getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+			wid = values.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
 		}else if(values.hasExtra("wid")){
-			wid=getIntent().getIntExtra("wid",0);
+			wid=values.getIntExtra("wid",0);
 		}else{
 			finish();
 			return;
