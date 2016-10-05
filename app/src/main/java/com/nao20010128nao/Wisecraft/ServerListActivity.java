@@ -171,8 +171,12 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
             @Override
             public boolean isItemViewSwipeEnabled(){
-                return isEditing;
+                return false;
             }
+			@Override
+            public boolean isLongPressDragEnabled(){
+				return isEditing;
+			}
         };
         am=new ActionMode.Callback(){
             public boolean onCreateActionMode(ActionMode p1, Menu p2) {
