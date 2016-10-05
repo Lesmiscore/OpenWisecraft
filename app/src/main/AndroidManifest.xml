@@ -150,7 +150,7 @@
 		
 		<activity
 			android:label="@string/select"
-			android:name=".widget.WidgetServerSelectActivity"
+			android:name=".widget.WidgetServerSelectActivity$Type1"
 			android:exported="false"
 			android:fitsSystemWindows="false">
 			<intent-filter>  
