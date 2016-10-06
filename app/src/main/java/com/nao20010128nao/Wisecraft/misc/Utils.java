@@ -11,7 +11,6 @@ import android.preference.*;
 import android.support.design.widget.*;
 import android.support.v7.widget.*;
 import android.text.*;
-import android.text.style.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
@@ -53,11 +52,7 @@ public class Utils extends PingerUtils{
 		}
 	}
 	public static boolean isNullString(String s) {
-		if (s == null) 
-			return true;
-		if ("".equals(s)) 
-			return true;
-		return false;
+		return TextUtils.isEmpty(s);
 	}
 	public static String[] lines(String s) {
 		try {
