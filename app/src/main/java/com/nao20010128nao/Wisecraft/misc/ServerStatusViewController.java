@@ -2,7 +2,7 @@ package com.nao20010128nao.Wisecraft.misc;
 
 import android.content.*;
 
-public interface ServerStatusViewController<T> {
+public interface ServerStatusViewController<T extends ServerStatusViewController> {
 	public T setStatColor(int color);
 	public T setServerPlayers(String s);
 	public T setServerPlayers(int s);
