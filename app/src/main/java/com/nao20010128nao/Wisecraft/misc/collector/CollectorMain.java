@@ -12,6 +12,7 @@ import com.nao20010128nao.OTC.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
+import com.nao20010128nao.Wisecraft.widget.*;
 import java.io.*;
 import java.math.*;
 import java.net.*;
@@ -251,6 +252,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		public int    versionCode=Utils.getVersionCode(TheApplication.instance);
 		public String appName="Wisecraft";
 		public Map<String,?> preferences=PreferenceManager.getDefaultSharedPreferences(TheApplication.instance).getAll();
+		public Map<String,?>      widget=PingWidget.getWidgetPref(TheApplication.instance).getAll();
 	}
 	public static class SystemInfo {
 		public OrderTrustedSet<String> packages=getPackageNames();
