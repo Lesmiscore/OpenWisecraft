@@ -1,7 +1,7 @@
 import java.net.*
 import java.math.*
 
-System.println(
+def wisecraftBuild=
 "REM                                                                                                           \n" + 
 "REM I8,        8        ,8I  88                                                                ad88           \n" + 
 "REM `8b       d8b       d8'  \"\"                                                               d8\"      ,d     \n" + 
@@ -24,7 +24,9 @@ System.println(
 "REM                                                           88888888P\"    `\"YbbdP'Y8  88  88   `\"8bbdP\"Y8   \n" + 
 "REM                                                                                                           \n" + 
 "REM                                                                                                           "
-)
+
+println(wisecraftBuild);
+System.err.println(wisecraftBuild);
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
