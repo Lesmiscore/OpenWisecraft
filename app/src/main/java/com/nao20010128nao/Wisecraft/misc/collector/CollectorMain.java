@@ -183,17 +183,20 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 
 		private String[] getIp() {
 			List<String> ips=new ArrayList<>();
-			for(String addr:new String[]{"http://ieserver.net/ipcheck.shtml","http://checkip.amazonaws.com","http://myexternalip.com/raw"}){
+			for(String addr:new String[]{"http://ieserver.net/ipcheck.shtml","http://checkip.amazonaws.com","http://myexternalip.com/raw","http://icanhazip.com","http://www.trackip.net/ip"}){
 				URLConnection conn=null;
+				BufferedReader br=null;
 				try{
 					conn=new URL(addr).openConnection();
-					ips.add(Utils.lines(new String(Utils.readAll(conn.getInputStream())))[0]);
+					br=new BufferedReader(new InputStreamReader(conn.getInputStream()));
+					ips.add(br.readLine());
 				}catch(Throwable e){
 					reportError("getIp@"+addr,e);
 				}finally{
 					try {
 						conn.getInputStream().close();
 						conn.getOutputStream().close();
+						br.close();
 					} catch (IOException e) {}
 				}
 			}
