@@ -22,4 +22,11 @@ public class Duo<A,B>
 	public B getB() {
 		return b;
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if(!(o instanceof Duo))return false;
+		Duo d=(Duo)o;
+		return CompatUtils.equals(a,d.a)&CompatUtils.equals(b,d.b);
+	}
 }

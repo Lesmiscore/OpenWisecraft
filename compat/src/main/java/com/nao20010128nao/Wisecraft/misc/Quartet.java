@@ -14,4 +14,11 @@ public class Quartet<A,B,C,D> extends Trio<A,B,C>
 	public D getD() {
 		return d;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if(!(o instanceof Quartet))return false;
+		Quartet q=(Quartet)o;
+		return super.equals(o)&CompatUtils.equals(d,q.d);
+	}
 }

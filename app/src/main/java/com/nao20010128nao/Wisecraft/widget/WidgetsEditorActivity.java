@@ -68,6 +68,10 @@ public class WidgetsEditorActivity extends AppCompatActivity {
 					}
 				});
 		}
+		
+		public void updated(int wid){
+			for(Trio<Server,PingWidget.WidgetData,Integer> e:this)if(e.getC().equals(wid))notifyItemChanged(indexOf(e));
+		}
 	}
 	
 	public void doEdit(final int wid){
@@ -139,6 +143,7 @@ public class WidgetsEditorActivity extends AppCompatActivity {
 
 					PingWidget.setServer(WidgetsEditorActivity.this,wid,s);
 					doUpdate(wid);
+					adap.updated(wid);
 				}
 			}).
 			setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener(){
