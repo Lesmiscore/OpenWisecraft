@@ -4,7 +4,9 @@ import android.content.*;
 import android.os.*;
 import android.support.v7.app.*;
 import android.support.v7.widget.*;
+import android.view.*;
 import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.misc.*;
 import java.util.*;
 
 public class WidgetsEditorActivity extends AppCompatActivity {
@@ -27,5 +29,18 @@ public class WidgetsEditorActivity extends AppCompatActivity {
 			else if(s.startsWith("_version"))continue;
 			else list.add(s);
 		return list;
-	} 
+	}
+	
+	class Adapter extends ListRecyclerViewAdapter<PingWidgetEditorViewHolder,Duo<Server,PingWidget.WidgetData>> {
+
+		@Override
+		public PingWidgetEditorViewHolder onCreateViewHolder(ViewGroup p1, int p2) {
+			return new PingWidgetEditorViewHolder(WidgetsEditorActivity.this,p1);
+		}
+
+		@Override
+		public void onBindViewHolder(PingWidgetEditorViewHolder p1, int p2) {
+			
+		}
+	}
 }
