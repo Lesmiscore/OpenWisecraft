@@ -177,6 +177,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+		<activity
+			android:label="@string/widgetEditor"
+			android:name=".widget.WidgetsEditorActivity"
+			android:exported="false"
+			android:fitsSystemWindows="false">
+        </activity>
 
         <service
 			android:label="@string/app_name"
