@@ -27,6 +27,8 @@ public class WidgetsEditorActivity extends AppCompatActivity {
 		setContentView(R.layout.recycler_view_content);
 		rv=(RecyclerView)findViewById(android.R.id.list);
 		adap=new Adapter();
+		rv.setLayoutManager(new LinearLayoutManager(this));
+		rv.setAdapter(adap);
 		reload();
 	}
 
