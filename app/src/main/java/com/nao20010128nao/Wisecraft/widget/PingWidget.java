@@ -96,7 +96,15 @@ public class PingWidget extends AppWidgetProvider
 	public static void setWidgetData(Context c,int wid,WidgetData data){
 		getWidgetPref(c).edit().putString(wid+".data",new Gson().toJson(data)).commit();
 	}
-
+	
+	public static Server getServer(Context c,int wid){
+		return new Gson().fromJson(getWidgetPref(c).getString(wid+"","{}"),Server.class);
+	}
+	
+	public static void setServer(Context c,int wid,Server data){
+		getWidgetPref(c).edit().putString(wid+".data",new Gson().toJson(data)).commit();
+	}
+	
 	static void setupHandlers(RemoteViews rvs, Context context, int wid) {
 		SharedPreferences widgetPref=getWidgetPref(context);
 		Server s=new Gson().fromJson(widgetPref.getString(""+wid,"{}"),Server.class);

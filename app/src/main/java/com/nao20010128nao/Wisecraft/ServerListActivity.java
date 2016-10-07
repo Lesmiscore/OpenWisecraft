@@ -1078,7 +1078,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 													s = new Server();
 													s.ip = pe_ip.getText().toString();
 													s.port = Integer.valueOf(pe_port.getText().toString());
-													s.mode = split.isChecked() ?1: 0;
+													s.mode = 0;
 												}
 												if(!TextUtils.isEmpty(serverName.getText()))
 													s.name=serverName.getText().toString();
