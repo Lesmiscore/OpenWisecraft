@@ -29,4 +29,9 @@ public class Duo<A,B>
 		Duo d=(Duo)o;
 		return CompatUtils.equals(a,d.a)&CompatUtils.equals(b,d.b);
 	}
+
+	@Override
+	public int hashCode() {
+		return CompatUtils.hash(a,b);
+	}
 }

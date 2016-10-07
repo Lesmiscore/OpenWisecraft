@@ -21,4 +21,9 @@ public class Trio<A,B,C> extends Duo<A,B>{
 		Trio t=(Trio)o;
 		return super.equals(o)&CompatUtils.equals(c,t.c);
 	}
+
+	@Override
+	public int hashCode() {
+		return CompatUtils.hash(a,b,c);
+	}
 }
