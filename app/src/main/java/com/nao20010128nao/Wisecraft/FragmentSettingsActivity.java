@@ -24,6 +24,7 @@ import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
 import com.nao20010128nao.Wisecraft.misc.pref.*;
+import com.nao20010128nao.Wisecraft.widget.*;
 import java.io.*;
 import java.net.*;
 import java.security.*;
@@ -339,6 +340,11 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			sH("serverListLooks", new HandledPreference.OnClickListener(){
 					public void onClick(String a, String b, String c) {
 						startActivity(new Intent(getActivity(),ServerListStyleEditor.class));
+					}
+				});
+			sH("widgetEditor", new HandledPreference.OnClickListener(){
+					public void onClick(String a, String b, String c) {
+						startActivity(new Intent(getActivity(),WidgetsEditorActivity.class));
 					}
 				});
 		}
