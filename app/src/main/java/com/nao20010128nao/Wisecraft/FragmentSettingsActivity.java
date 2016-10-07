@@ -803,26 +803,22 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		LinearLayout miscContent;
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
-			// TODO: Implement this method
 			pref=PreferenceManager.getDefaultSharedPreferences(getContext());
 			super.onCreate(savedInstanceState);
 		}
 
 		@Override
 		public LayoutInflater getLayoutInflater(Bundle savedInstanceState) {
-			// TODO: Implement this method
 			return getActivity().getLayoutInflater().cloneInContext(super.getLayoutInflater(savedInstanceState).getContext());
 		}
 
 		@Override
 		public Context getContext() {
-			// TODO: Implement this method
 			return TheApplication.injectContextSpecial(super.getContext());
 		}
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-			// TODO: Implement this method
 			View v=super.onCreateView(getActivity().getLayoutInflater(), container, savedInstanceState);
 			miscContent=(LinearLayout)v.findViewById(R.id.misc);
 			if(miscContent!=null)onMiscPartAvailable(miscContent);
@@ -831,11 +827,16 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 
 		@Override
 		public RecyclerView onCreateRecyclerView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-			// TODO: Implement this method
 			return super.onCreateRecyclerView(Utils.fixLayoutInflaterIfNeeded(CalligraphyContextWrapper.wrap(inflater.getContext()),getActivity()),
 				parent, 
 				savedInstanceState);
 		}
+
+		@Override
+		public void onModifyPreferenceViewHolder(PreferenceViewHolder viewHolder, Preference pref) {
+			PreferenceUtils.onBindViewHolder(getActivity(),pref,viewHolder);
+		}
+		
 		
 		
 		
