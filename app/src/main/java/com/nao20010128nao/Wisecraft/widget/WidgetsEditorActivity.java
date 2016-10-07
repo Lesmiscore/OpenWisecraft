@@ -30,6 +30,25 @@ public class WidgetsEditorActivity extends AppCompatActivity {
 		reload();
 	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		menu.add(Menu.NONE,0,0,R.string.update_all);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()){
+			case 0:
+				for (String s:listWidgets()) {
+					int wid=Integer.valueOf(s);
+					doUpdate(wid);
+				}
+				return true;
+		}
+		return false;
+	}
+
 	private void reload() throws NumberFormatException {
 		adap.clear();
 		for (String s:listWidgets()) {
