@@ -24,6 +24,7 @@ public class PingWidget extends AppWidgetProvider {
 	public static final int STATUS_ONLINE=0;
 	public static final int STATUS_OFFLINE=1;
 	public static final int STATUS_PENDING=2;
+	public static final String STATUS_OBSERVE_ACTION="com.nao20010128nao.Wisecraft.PING_RESULT_WIDGET";
 
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -109,7 +110,8 @@ public class PingWidget extends AppWidgetProvider {
 	
 	public static void setWidgetStatus(Context c,int wid,int status,boolean notify){
 		getWidgetPref(c).edit().putInt(wid+".status",status).commit();
-		if(notify);
+		if(notify)
+			c.sendBroadcast(new Intent(STATUS_OBSERVE_ACTION).putExtra("wid",wid).putExtra("status",status));
 	}
 	
 	public static void setWidgetStatus(Context c,int wid,int status){

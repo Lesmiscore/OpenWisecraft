@@ -18,6 +18,7 @@ public class WidgetsEditorActivity extends AppCompatActivity {
 	SharedPreferences widgetPref;
 	RecyclerView rv;
 	Adapter adap;
+	BroadcastHandler bh;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +31,15 @@ public class WidgetsEditorActivity extends AppCompatActivity {
 		rv.setLayoutManager(new LinearLayoutManager(this));
 		rv.setAdapter(adap);
 		reload();
+		IntentFilter inf=new IntentFilter();
+		inf.addAction(PingWidget.STATUS_OBSERVE_ACTION);
+		registerReceiver(bh=new BroadcastHandler(),inf);
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		unregisterReceiver(bh);
 	}
 
 	@Override
@@ -88,6 +98,14 @@ public class WidgetsEditorActivity extends AppCompatActivity {
 						doEdit(getItem(p2).getC());
 					}
 				});
+		}
+	}
+	
+	class BroadcastHandler extends BroadcastReceiver {
+
+		@Override
+		public void onReceive(Context p1, Intent p2) {
+			adap.notifyItemRangeChanged(0,adap.size());
 		}
 	}
 	
