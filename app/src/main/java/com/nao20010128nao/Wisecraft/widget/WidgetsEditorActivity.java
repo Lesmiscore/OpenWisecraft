@@ -110,10 +110,14 @@ public class WidgetsEditorActivity extends AppCompatActivity {
 				pe_ip.setText(sv.ip);
 				pe_port.setText(sv.port+"");
 				split.setChecked(false);
+				pcFrame.setVisibility(View.GONE);
+				peFrame.setVisibility(View.VISIBLE);
 				break;
 			case 1://PC
 				pc_ip.setText(sv.toString());
 				split.setChecked(true);
+				peFrame.setVisibility(View.GONE);
+				pcFrame.setVisibility(View.VISIBLE);
 				break;
 		}
 

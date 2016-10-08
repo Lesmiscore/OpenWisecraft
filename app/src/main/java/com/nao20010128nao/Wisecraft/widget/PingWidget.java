@@ -102,7 +102,7 @@ public class PingWidget extends AppWidgetProvider
 	}
 	
 	public static void setServer(Context c,int wid,Server data){
-		getWidgetPref(c).edit().putString(wid+".data",new Gson().toJson(data)).commit();
+		getWidgetPref(c).edit().putString(wid+"",new Gson().toJson(data)).commit();
 	}
 	
 	static void setupHandlers(RemoteViews rvs, Context context, int wid) {
