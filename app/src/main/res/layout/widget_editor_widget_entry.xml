@@ -41,6 +41,11 @@
 
 		</LinearLayout>
 
+		<com.nao20010128nao.Wisecraft.misc.view.ExtendedImageView
+			android:layout_height="4dp"
+			android:layout_width="match_parent"
+			android:id="@+id/statColor"/>
+
 		<LinearLayout
 			android:layout_height="match_parent"
 			android:layout_width="match_parent"

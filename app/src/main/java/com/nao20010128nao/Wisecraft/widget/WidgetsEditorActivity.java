@@ -22,7 +22,6 @@ public class WidgetsEditorActivity extends AppCompatActivity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		widgetPref=PingWidget.getWidgetPref(this);
 		setContentView(R.layout.recycler_view_content);
@@ -75,6 +74,7 @@ public class WidgetsEditorActivity extends AppCompatActivity {
 			if(s.endsWith(".data"))continue;
 			else if(s.startsWith("_version"))continue;
 			else list.add(s);
+		Collections.sort(list);
 		return list;
 	}
 	

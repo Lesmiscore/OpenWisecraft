@@ -1,9 +1,11 @@
 package com.nao20010128nao.Wisecraft.widget;
 import android.content.*;
+import android.support.v4.content.*;
 import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+import com.nao20010128nao.Wisecraft.misc.view.*;
 
 public class PingWidgetEditorViewHolder extends FindableViewHolder implements ServerStatusViewController<PingWidgetEditorViewHolder>
 {
@@ -11,6 +13,7 @@ public class PingWidgetEditorViewHolder extends FindableViewHolder implements Se
 		super(LayoutInflater.from(context).inflate(R.layout.widget_editor_widget_entry,parent,false));
 	}
 	public PingWidgetEditorViewHolder setStatColor(int color){
+		((ExtendedImageView)findViewById(R.id.statColor)).setColor(color);
 		return this;
 	}
 	public PingWidgetEditorViewHolder setServerPlayers(String s){
@@ -92,14 +95,14 @@ public class PingWidgetEditorViewHolder extends FindableViewHolder implements Se
 	}
 	
 	public PingWidgetEditorViewHolder pending(Server sv,Context sla){
-		return this;
+		return setStatColor(ContextCompat.getColor(sla, R.color.stat_pending)).setServer(sv);
 	}
-	
+
 	public PingWidgetEditorViewHolder offline(Server sv,Context sla){
-		return this;
+		return setStatColor(ContextCompat.getColor(sla, R.color.stat_error)).setServer(sv);
 	}
-	
+
 	public PingWidgetEditorViewHolder online(Context context){
-		return this;
+		return setStatColor(ContextCompat.getColor(context, R.color.stat_ok));
 	}
 }
