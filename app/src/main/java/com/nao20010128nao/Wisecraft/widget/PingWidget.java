@@ -20,8 +20,10 @@ import java.util.*;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 
-public class PingWidget extends AppWidgetProvider 
-{
+public class PingWidget extends AppWidgetProvider {
+	public static final int STATUS_ONLINE=0;
+	public static final int STATUS_OFFLINE=1;
+	public static final int STATUS_PENDING=2;
 
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -103,6 +105,19 @@ public class PingWidget extends AppWidgetProvider
 	
 	public static void setServer(Context c,int wid,Server data){
 		getWidgetPref(c).edit().putString(wid+"",new Gson().toJson(data)).commit();
+	}
+	
+	public static void setWidgetStatus(Context c,int wid,int status,boolean notify){
+		getWidgetPref(c).edit().putInt(wid+".status",status).commit();
+		if(notify);
+	}
+	
+	public static void setWidgetStatus(Context c,int wid,int status){
+		setWidgetStatus(c,wid,status,false);
+	}
+	
+	public static int getWidgetStatus(Context c,int wid){
+		return getWidgetPref(c).getInt(wid+".status",STATUS_PENDING);
 	}
 	
 	static void setupHandlers(RemoteViews rvs, Context context, int wid) {
@@ -189,6 +204,7 @@ public class PingWidget extends AppWidgetProvider
 			ssrvw.pending(s,p1);
 			setupHandlers(rvs, p1, wid);
 			ph.awm.updateAppWidget(wid,rvs);
+			setWidgetStatus(p1,wid,STATUS_PENDING,true);
 			nspp.putInQueue(s,ph);
 		}
 	}
@@ -271,6 +287,7 @@ public class PingWidget extends AppWidgetProvider
 				.setServer(s);
 			
 			setupHandlers(rvs, c, id);
+			setWidgetStatus(c,id,STATUS_ONLINE,true);
 			awm.updateAppWidget(id,rvs);
 		}
 
@@ -282,6 +299,7 @@ public class PingWidget extends AppWidgetProvider
 			ssrvw.offline(server,c);
 			
 			setupHandlers(rvs, c, id);
+			setWidgetStatus(c,id,STATUS_ONLINE,true);
 			awm.updateAppWidget(id,rvs);
 		}
 	}
