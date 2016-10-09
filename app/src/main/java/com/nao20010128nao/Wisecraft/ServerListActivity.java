@@ -388,40 +388,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 						},null));//1
 		appMenu.add(new Quintet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem>(R.string.update_all, R.drawable.ic_refresh_black_48dp, new Treatment<ServerListActivity>(){
 							public void process(ServerListActivity a) {
-								for (int i=0;i < list.size();i++) {
-									if (pinging.get(list.get(i)))
-										continue;
-									statLayout.setStatusAt(i, 1);
-									if (!srl.isRefreshing())
-										srl.setRefreshing(true);
-								}
-								new Thread(){
-									public void run() {
-										for (int i=0;i < list.size();i++) {
-											if (pinging.get(list.get(i)))
-												continue;
-											spp.putInQueue(list.get(i), new PingHandlerImpl(false, -1, false){
-													public void onPingFailed(final Server s) {
-														super.onPingFailed(s);
-														runOnUiThread(new Runnable(){
-																public void run() {			
-																	wd.hideWorkingDialog();
-																}
-															});
-													}
-													public void onPingArrives(final ServerStatus s) {
-														super.onPingArrives(s);
-														runOnUiThread(new Runnable(){
-																public void run() {
-																	wd.hideWorkingDialog();
-																}
-															});
-													}
-												});
-											pinging.put(list.get(i), true);
-										}
-									}
-								}.start();
+								updateAllWithConditions(new Predicate<Server>(){public boolean process(Server a){return true;}});
 							}
 						},new Treatment<ServerListActivity>(){
 							public void process(ServerListActivity a) {
@@ -434,58 +401,10 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 													appMenu.findByA(R.string.update_all).getC().process(ServerListActivity.instance.get());
 													break;
 												case 1://update onlines
-													for (int i=0;i < list.size();i++) {
-														if (pinging.get(list.get(i)))
-															continue;
-														if(!(list.get(i) instanceof ServerStatus))
-															continue;
-														spp.putInQueue(list.get(i), new PingHandlerImpl(false, -1, false){
-																public void onPingFailed(final Server s) {
-																	super.onPingFailed(s);
-																	runOnUiThread(new Runnable(){
-																			public void run() {			
-																				wd.hideWorkingDialog();
-																			}
-																		});
-																}
-																public void onPingArrives(final ServerStatus s) {
-																	super.onPingArrives(s);
-																	runOnUiThread(new Runnable(){
-																			public void run() {
-																				wd.hideWorkingDialog();
-																			}
-																		});
-																}
-															});
-														pinging.put(list.get(i), true);
-													}
+													updateAllWithConditions(new Predicate<Server>(){public boolean process(Server a){return a instanceof ServerStatus;}});
 													break;
 												case 2://update offlines
-													for (int i=0;i < list.size();i++) {
-														if (pinging.get(list.get(i)))
-															continue;
-														if(list.get(i) instanceof ServerStatus)
-															continue;
-														spp.putInQueue(list.get(i), new PingHandlerImpl(false, -1, false){
-																public void onPingFailed(final Server s) {
-																	super.onPingFailed(s);
-																	runOnUiThread(new Runnable(){
-																			public void run() {			
-																				wd.hideWorkingDialog();
-																			}
-																		});
-																}
-																public void onPingArrives(final ServerStatus s) {
-																	super.onPingArrives(s);
-																	runOnUiThread(new Runnable(){
-																			public void run() {
-																				wd.hideWorkingDialog();
-																			}
-																		});
-																}
-															});
-														pinging.put(list.get(i), true);
-													}
+													updateAllWithConditions(new Predicate<Server>(){public boolean process(Server a){return !(a instanceof ServerStatus);}});
 													break;
 												case 3://select
 													//no-op
@@ -869,7 +788,45 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		pinging.put(s, true);
 		sl.notifyItemChanged(list.indexOf(s));
 	}
-
+	
+	private void updateAllWithConditions(final Predicate<Server> pred) {
+		for (int i=0;i < list.size();i++) {
+			if (pinging.get(list.get(i)))
+				continue;
+			statLayout.setStatusAt(i, 1);
+			sl.notifyItemChanged(i);
+			if (!srl.isRefreshing())
+				srl.setRefreshing(true);
+		}
+		new Thread(){
+			public void run() {
+				for (int i=0;i < list.size();i++) {
+					if (pinging.get(list.get(i)) || pred.process(list.get(i)))
+						continue;
+					spp.putInQueue(list.get(i), new PingHandlerImpl(false, -1, false){
+							public void onPingFailed(final Server s) {
+								super.onPingFailed(s);
+								runOnUiThread(new Runnable(){
+										public void run() {			
+											wd.hideWorkingDialog();
+										}
+									});
+							}
+							public void onPingArrives(final ServerStatus s) {
+								super.onPingArrives(s);
+								runOnUiThread(new Runnable(){
+										public void run() {
+											wd.hideWorkingDialog();
+										}
+									});
+							}
+						});
+					pinging.put(list.get(i), true);
+				}
+			}
+		}.start();
+	}
+	
 	public List<Server> getServers() {
 		return new ArrayList<Server>(list);
 	}
