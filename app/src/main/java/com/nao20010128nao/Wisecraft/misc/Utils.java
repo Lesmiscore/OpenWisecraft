@@ -193,42 +193,6 @@ public class Utils extends PingerUtils{
 				lst.add(all[i]);
 		return lst.toArray((T[])Array.newInstance(all.getClass().getComponentType(),lst.size()));
 	}
-	public static void applyHandlersForViewTree(View v,View.OnClickListener click,View.OnLongClickListener longer){
-		if(v!=null){
-			v.setOnClickListener(click);
-			v.setOnLongClickListener(longer);
-			v.setLongClickable(true);
-			if(v instanceof ViewGroup){
-				ViewGroup vg=(ViewGroup)v;
-				for(int i=0;i<vg.getChildCount();i++){
-					applyHandlersForViewTree(vg.getChildAt(i),click,longer);
-				}
-			}
-		}
-	}
-	public static void applyHandlersForViewTree(View v,View.OnClickListener click){
-		if(v!=null){
-			v.setOnClickListener(click);
-			if(v instanceof ViewGroup){
-				ViewGroup vg=(ViewGroup)v;
-				for(int i=0;i<vg.getChildCount();i++){
-					applyHandlersForViewTree(vg.getChildAt(i),click);
-				}
-			}
-		}
-	}
-	public static void applyHandlersForViewTree(View v,View.OnLongClickListener longer){
-		if(v!=null){
-			v.setOnLongClickListener(longer);
-			v.setLongClickable(true);
-			if(v instanceof ViewGroup){
-				ViewGroup vg=(ViewGroup)v;
-				for(int i=0;i<vg.getChildCount();i++){
-					applyHandlersForViewTree(vg.getChildAt(i),longer);
-				}
-			}
-		}
-	}
 	public static TextView getActionBarTextView(Toolbar mToolBar) {
 		try {
 			Field f = mToolBar.getClass().getDeclaredField("mTitleTextView");
@@ -533,9 +497,6 @@ public class Utils extends PingerUtils{
 		byte[] data=PingSerializeProvider.dumpServerForFile(s);
 		return Base64.encodeToString(data,ServerInfoActivity.BASE64_FLAGS);
 	}
-	public static boolean equals(Object a, Object b) {
-        return (a == b) || (a != null && a.equals(b));
-    }
 	public static Snackbar makeSB(Activity a,int t,int l){
 		return Snackbar.make(a.findViewById(android.R.id.content),t,l);
 	}

@@ -1,6 +1,8 @@
 package com.nao20010128nao.Wisecraft.misc;
 
-public class CompatUtils{
+import android.view.*;
+
+public class CompatUtils {
 	public static boolean equals(Object a, Object b) {
         return (a == b) || (a != null && a.equals(b));
     }
@@ -131,4 +133,40 @@ public class CompatUtils{
         }
         return hashCode;
     }
+	public static void applyHandlersForViewTree(View v,View.OnClickListener click,View.OnLongClickListener longer){
+		if(v!=null){
+			v.setOnClickListener(click);
+			v.setOnLongClickListener(longer);
+			v.setLongClickable(true);
+			if(v instanceof ViewGroup){
+				ViewGroup vg=(ViewGroup)v;
+				for(int i=0;i<vg.getChildCount();i++){
+					applyHandlersForViewTree(vg.getChildAt(i),click,longer);
+				}
+			}
+		}
+	}
+	public static void applyHandlersForViewTree(View v,View.OnClickListener click){
+		if(v!=null){
+			v.setOnClickListener(click);
+			if(v instanceof ViewGroup){
+				ViewGroup vg=(ViewGroup)v;
+				for(int i=0;i<vg.getChildCount();i++){
+					applyHandlersForViewTree(vg.getChildAt(i),click);
+				}
+			}
+		}
+	}
+	public static void applyHandlersForViewTree(View v,View.OnLongClickListener longer){
+		if(v!=null){
+			v.setOnLongClickListener(longer);
+			v.setLongClickable(true);
+			if(v instanceof ViewGroup){
+				ViewGroup vg=(ViewGroup)v;
+				for(int i=0;i<vg.getChildCount();i++){
+					applyHandlersForViewTree(vg.getChildAt(i),longer);
+				}
+			}
+		}
+	}
 }

@@ -27,7 +27,7 @@ public abstract class ServerListActivityBaseFields extends ServerListActivityBas
     //impl
     protected static final File mcpeServerList=new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt");
 
-    protected final QuartetWalker<Integer,Integer,Treatment<ServerListActivity>,IDrawerItem> appMenu=new QuartetWalker<>();
+    protected final QuintetWalker<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem> appMenu=new QuintetWalker<>();
     protected ServerPingProvider spp,updater;
     protected Gson gson=new Gson();
     protected int clicked=-1;

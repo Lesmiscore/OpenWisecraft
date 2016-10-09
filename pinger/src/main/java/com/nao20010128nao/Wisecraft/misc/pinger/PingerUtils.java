@@ -4,8 +4,9 @@ import java.io.*;
 import java.lang.reflect.*;
 import java.nio.*;
 import java.util.*;
+import com.nao20010128nao.Wisecraft.misc.*;
 
-public class PingerUtils {
+public class PingerUtils extends CompatUtils{
 
 	public static byte PACKET_HANDSHAKE = 0x00, PACKET_STATUSREQUEST = 0x00,
 	PACKET_PING = 0x01;
