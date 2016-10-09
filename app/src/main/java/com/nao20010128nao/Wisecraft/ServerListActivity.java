@@ -62,7 +62,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							return false;
 						}
 					});
-				class OLC implements View.OnLongClickListener(){
+				class OLC implements View.OnLongClickListener{
 					LongClickablePrimaryDrawerItem item;
 					public boolean onLongClick(View v){
 						Treatment<ServerListActivity> d=appMenu.findByE(item).getD();
