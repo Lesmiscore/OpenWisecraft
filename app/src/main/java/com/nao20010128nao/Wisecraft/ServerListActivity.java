@@ -4,6 +4,7 @@ import android.os.*;
 import android.support.design.widget.*;
 import android.support.v4.content.*;
 import android.support.v4.widget.*;
+import android.support.v7.app.*;
 import android.support.v7.view.*;
 import android.support.v7.widget.*;
 import android.support.v7.widget.RecyclerView.*;
@@ -14,7 +15,6 @@ import android.util.*;
 import android.view.*;
 import android.widget.*;
 import com.mikepenz.materialdrawer.*;
-import com.mikepenz.materialdrawer.model.*;
 import com.mikepenz.materialdrawer.model.interfaces.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
@@ -62,21 +62,23 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							return false;
 						}
 					});
-				class OLC implements View.OnLongClickListener{
-					LongClickablePrimaryDrawerItem item;
-					public boolean onLongClick(View v){
-						Treatment<ServerListActivity> d=appMenu.findByE(item).getD();
-						if(d!=null){
-							d.process(ServerListActivity.instance.get());
-							return true;
-						}else{
-							return false;
+				if(s.getD()!=null){
+					class OLC implements View.OnLongClickListener{
+						LongClickablePrimaryDrawerItem item;
+						public boolean onLongClick(View v){
+							Treatment<ServerListActivity> d=appMenu.findByE(item).getD();
+							if(d!=null){
+								d.process(ServerListActivity.instance.get());
+								return true;
+							}else{
+								return false;
+							}
 						}
 					}
+					OLC olc=new OLC();
+					olc.item=pdi;
+					pdi.withOnLongClickClickListener(olc);
 				}
-				OLC olc=new OLC();
-				olc.item=pdi;
-				pdi.withOnLongClickClickListener(olc);
 				drawer.addItem(pdi.withIconTintingEnabled(true));
 				s.setE(pdi);
 			}
@@ -421,7 +423,79 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 									}
 								}.start();
 							}
-						},null));//2
+						},new Treatment<ServerListActivity>(){
+							public void process(ServerListActivity a) {
+								new AlertDialog.Builder(a)
+									.setTitle(R.string.update_all)
+									.setItems(R.array.serverUpdateAllSubMenu,new DialogInterface.OnClickListener(){
+										public void onClick(DialogInterface di, int w) {
+											switch(w){
+												case 0://update all
+													appMenu.findByA(R.string.update_all).getC().process(ServerListActivity.instance.get());
+													break;
+												case 1://update onlines
+													for (int i=0;i < list.size();i++) {
+														if (pinging.get(list.get(i)))
+															continue;
+														if(!(list.get(i) instanceof ServerStatus))
+															continue;
+														spp.putInQueue(list.get(i), new PingHandlerImpl(false, -1, false){
+																public void onPingFailed(final Server s) {
+																	super.onPingFailed(s);
+																	runOnUiThread(new Runnable(){
+																			public void run() {			
+																				wd.hideWorkingDialog();
+																			}
+																		});
+																}
+																public void onPingArrives(final ServerStatus s) {
+																	super.onPingArrives(s);
+																	runOnUiThread(new Runnable(){
+																			public void run() {
+																				wd.hideWorkingDialog();
+																			}
+																		});
+																}
+															});
+														pinging.put(list.get(i), true);
+													}
+													break;
+												case 2://update offlines
+													for (int i=0;i < list.size();i++) {
+														if (pinging.get(list.get(i)))
+															continue;
+														if(list.get(i) instanceof ServerStatus)
+															continue;
+														spp.putInQueue(list.get(i), new PingHandlerImpl(false, -1, false){
+																public void onPingFailed(final Server s) {
+																	super.onPingFailed(s);
+																	runOnUiThread(new Runnable(){
+																			public void run() {			
+																				wd.hideWorkingDialog();
+																			}
+																		});
+																}
+																public void onPingArrives(final ServerStatus s) {
+																	super.onPingArrives(s);
+																	runOnUiThread(new Runnable(){
+																			public void run() {
+																				wd.hideWorkingDialog();
+																			}
+																		});
+																}
+															});
+														pinging.put(list.get(i), true);
+													}
+													break;
+												case 3://select
+													//no-op
+													break;
+											}
+										}
+									})
+									.show();
+							}
+						}));//2
 		appMenu.add(new Quintet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem>(R.string.export, R.drawable.ic_file_upload_black_48dp, new Treatment<ServerListActivity>(){
 							public void process(ServerListActivity a) {
 								View dialogView_=getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
