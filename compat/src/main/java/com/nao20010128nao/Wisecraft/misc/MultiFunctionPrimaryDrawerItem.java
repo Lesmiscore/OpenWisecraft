@@ -1,11 +1,11 @@
 package com.nao20010128nao.Wisecraft.misc;
-import com.mikepenz.materialdrawer.model.interfaces.*;
 import android.view.*;
-import com.nao20010128nao.Wisecraft.misc.compat.*;
-import android.view.View.*;
-import com.mikepenz.materialdrawer.*;
 import android.widget.*;
-import java.lang.ref.*;
+import com.mikepenz.materialdrawer.*;
+import com.mikepenz.materialdrawer.model.interfaces.*;
+import com.nao20010128nao.Wisecraft.misc.compat.*;
+
+import com.nao20010128nao.Wisecraft.misc.compat.R;
 
 public class MultiFunctionPrimaryDrawerItem extends LineWrappingPrimaryDrawerItem implements View.OnClickListener
 {

@@ -5,7 +5,6 @@ import android.content.*;
 import android.content.res.*;
 import android.os.*;
 import android.preference.*;
-import android.support.design.widget.*;
 import android.support.v7.app.*;
 import android.support.v7.widget.*;
 import android.text.*;
@@ -18,7 +17,6 @@ import com.nao20010128nao.Wisecraft.misc.compat.*;
 import java.util.*;
 
 import com.nao20010128nao.Wisecraft.R;
-import com.nao20010128nao.Wisecraft.widget.PingWidget.*;
 
 public abstract class WidgetServerSelectActivity extends AppCompatActivity 
 {
