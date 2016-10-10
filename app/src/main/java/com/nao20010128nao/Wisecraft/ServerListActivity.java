@@ -63,7 +63,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 						}
 					});
 				if(s.getD()!=null){
-					class OLC implements View.OnLongClickListener{
+					class OLC implements View.OnLongClickListener,Drawer.OnDrawerItemClickListener{
 						MultiFunctionPrimaryDrawerItem item;
 						public boolean onLongClick(View v){
 							Treatment<ServerListActivity> d=appMenu.findByE(item).getD();
@@ -74,10 +74,14 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 								return false;
 							}
 						}
+						@Override
+						public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+							return false&onLongClick(view);
+						}
 					}
 					OLC olc=new OLC();
 					olc.item=pdi;
-					pdi.withOnLongClickClickListener(olc);
+					pdi.withAnotherClickListener(olc);
 				}
 				drawer.addItem(pdi.withIconTintingEnabled(true));
 				s.setE(pdi);

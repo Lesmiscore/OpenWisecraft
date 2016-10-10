@@ -3,38 +3,46 @@ import com.mikepenz.materialdrawer.model.interfaces.*;
 import android.view.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import android.view.View.*;
+import com.mikepenz.materialdrawer.*;
+import android.widget.*;
+import java.lang.ref.*;
 
-public class MultiFunctionPrimaryDrawerItem extends LineWrappingPrimaryDrawerItem implements View.OnLongClickListener
+public class MultiFunctionPrimaryDrawerItem extends LineWrappingPrimaryDrawerItem implements View.OnClickListener
 {
-	View.OnLongClickListener clickListener;
-
+	Drawer.OnDrawerItemClickListener clickListener;
 	@Override
 	public void onPostBindView(IDrawerItem drawerItem, View view) {
 		super.onPostBindView(drawerItem, view);
-		CompatUtils.applyHandlersForViewTree(view,this);
+		if(clickListener!=null){
+			LinearLayout ll=(LinearLayout)view.findViewById(R.id.imageFrame);
+			ll.setVisibility(View.VISIBLE);
+			CompatUtils.applyHandlersForViewTree(view.findViewById(R.id.imageFrame),this);
+		}else{
+			view.findViewById(R.id.imageFrame).setVisibility(View.GONE);
+		}
 	}
 
 	@Override
-	public boolean onLongClick(View p1) {
-		if(clickListener!=null)return clickListener.onLongClick(p1);
-		else return false;
+	public void onClick(View p1) {
+		View decor=(View)((View)(p1.getId()==R.id.image?p1.getParent():p1)).getParent();
+		if(clickListener!=null)clickListener.onItemClick(decor,-1,this);
 	}
-
+	
 	@Override
 	public int getLayoutRes() {
 		return R.layout.drawer_item_primary_twofunc;
 	}
 	
-	public MultiFunctionPrimaryDrawerItem withOnLongClickClickListener(View.OnLongClickListener clickListener) {
+	public MultiFunctionPrimaryDrawerItem withAnotherClickListener(Drawer.OnDrawerItemClickListener clickListener) {
 		this.clickListener = clickListener;
 		return this;
 	}
 
-	public View.OnLongClickListener getOnLongClickListener() {
+	public Drawer.OnDrawerItemClickListener getAnotherClickListener() {
 		return clickListener;
 	}
 	
-	public MultiFunctionPrimaryDrawerItem withNoOnLongClickListener(){
+	public MultiFunctionPrimaryDrawerItem withNoAnotherClickListener(){
 		clickListener=null;
 		return this;
 	}
