@@ -14,7 +14,8 @@
 		android:paddingLeft="@dimen/material_drawer_vertical_padding"
 		android:paddingRight="@dimen/material_drawer_vertical_padding"
 		android:paddingStart="@dimen/material_drawer_vertical_padding"
-		android:layout_weight="1.0">
+		android:layout_weight="1.0"
+		android:id="@+id/main">
 
 		<ImageView
 			android:id="@+id/material_drawer_icon"
