@@ -4,7 +4,7 @@ import android.view.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import android.view.View.*;
 
-public class LongClickablePrimaryDrawerItem extends LineWrappingPrimaryDrawerItem implements View.OnLongClickListener
+public class MultiFunctionPrimaryDrawerItem extends LineWrappingPrimaryDrawerItem implements View.OnLongClickListener
 {
 	View.OnLongClickListener clickListener;
 
@@ -19,8 +19,13 @@ public class LongClickablePrimaryDrawerItem extends LineWrappingPrimaryDrawerIte
 		if(clickListener!=null)return clickListener.onLongClick(p1);
 		else return false;
 	}
+
+	@Override
+	public int getLayoutRes() {
+		return R.layout.drawer_item_primary_twofunc;
+	}
 	
-	public LongClickablePrimaryDrawerItem withOnLongClickClickListener(View.OnLongClickListener clickListener) {
+	public MultiFunctionPrimaryDrawerItem withOnLongClickClickListener(View.OnLongClickListener clickListener) {
 		this.clickListener = clickListener;
 		return this;
 	}
@@ -29,7 +34,7 @@ public class LongClickablePrimaryDrawerItem extends LineWrappingPrimaryDrawerIte
 		return clickListener;
 	}
 	
-	public LongClickablePrimaryDrawerItem withNoOnLongClickListener(){
+	public MultiFunctionPrimaryDrawerItem withNoOnLongClickListener(){
 		clickListener=null;
 		return this;
 	}

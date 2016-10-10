@@ -51,7 +51,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
 		{
 			for (Quintet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem> s:appMenu) {
-				LongClickablePrimaryDrawerItem pdi=new LongClickablePrimaryDrawerItem();
+				MultiFunctionPrimaryDrawerItem pdi=new MultiFunctionPrimaryDrawerItem();
 				pdi.withName(s.getA()).withIcon(s.getB());
 				pdi.withSetSelected(false);((IdContainer)pdi).setIntId(appMenu.indexOf(s));
 				pdi.withIconColorRes(R.color.mainColor).withIconTinted(true);
@@ -64,7 +64,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					});
 				if(s.getD()!=null){
 					class OLC implements View.OnLongClickListener{
-						LongClickablePrimaryDrawerItem item;
+						MultiFunctionPrimaryDrawerItem item;
 						public boolean onLongClick(View v){
 							Treatment<ServerListActivity> d=appMenu.findByE(item).getD();
 							if(d!=null){
