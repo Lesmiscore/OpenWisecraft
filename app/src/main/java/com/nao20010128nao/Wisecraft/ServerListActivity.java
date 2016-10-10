@@ -105,7 +105,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                                 if(event.getX()==0){
                                     dest=0;
                                 }else{
-                                    dest=(int)Math.floor(event.getX() / (statLayout.getWidth() / sl.getItemCount()));
+                                    dest=(int)Math.floor(event.getX() * sl.getItemCount() / statLayout.getWidth());
                                 }
 								rv.smoothScrollToPosition(dest);
 								break;
