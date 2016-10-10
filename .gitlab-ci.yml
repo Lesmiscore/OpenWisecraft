@@ -23,12 +23,12 @@ main:
   script:
     - gradle-2.14.1/bin/gradle build --info --stacktrace > build.log
     - mv */build/outputs/apk/*.apk .
-    #- unzip app-release.apk -d unzippedApkA > /dev/null
-    #- android-sdk-linux/build-tools/24.0.0/dexdump -d unzippedApkA/classes.dex > dexdump-app.txt
-    #- unzip rconApp-release.apk -d unzippedApkB > /dev/null
-    #- android-sdk-linux/build-tools/24.0.0/dexdump -d unzippedApkB/classes.dex > dexdump-rcon.txt
-    #- unzip rconPassCrack-release.apk -d unzippedApkC > /dev/null
-    #- android-sdk-linux/build-tools/24.0.0/dexdump -d unzippedApkC/classes.dex > dexdump-rconPC.txt
+    - unzip app-release.apk -d unzippedApkA > /dev/null
+    - android-sdk-linux/build-tools/24.0.0/dexdump -d unzippedApkA/classes.dex > dexdump-app.txt
+    - unzip rconApp-release.apk -d unzippedApkB > /dev/null
+    - android-sdk-linux/build-tools/24.0.0/dexdump -d unzippedApkB/classes.dex > dexdump-rcon.txt
+    - unzip rconPassCrack-release.apk -d unzippedApkC > /dev/null
+    - android-sdk-linux/build-tools/24.0.0/dexdump -d unzippedApkC/classes.dex > dexdump-rconPC.txt
     - grep "Git\sRevision" build.log
   artifacts:
     paths:
