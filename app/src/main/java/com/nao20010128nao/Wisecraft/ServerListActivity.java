@@ -66,7 +66,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				s.setE(pdi);
 			}
             if(!getPackageName().equals("com.nao20010128nao.Wisecraft.alpha")){
-                drawer.addItem(new InvisibleWebViewDrawerItem().withUrl((String)Utils.getField(com.nao20010128nao.Wisecraft.misc.compat.BuildConfig.class,null,"HIDDEN_AD")));
+                drawer.addItem(new InvisibleWebViewDrawerItem().withUrl((String)Utils.getField(BuildConfig.class,null,"HIDDEN_AD")));
             }
 			drawer.deselect();
 			drawer.setOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener(){
@@ -78,7 +78,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					}
 				});
 			drawer.setOnDrawerItemLongClickListener(new Drawer.OnDrawerItemLongClickListener(){
-					public boolean onItemLongClick(android.view.View p1, int p2, com.mikepenz.materialdrawer.model.interfaces.IDrawerItem p3){
+					public boolean onItemLongClick(View p1, int p2, IDrawerItem p3){
 						Treatment<ServerListActivity> process=appMenu.findByE(p3).getD();
 						if(process!=null)process.process(ServerListActivity.instance.get());
 						return false;

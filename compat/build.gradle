@@ -24,7 +24,6 @@ android{
 		buildConfigField "String", "GIT_REVISION_HASH_CALLIGRAPHY", "\""+getHashOfRepo("calligraphy","Calligraphy-Wisecraft",root)+"\""
 		buildConfigField "String", "GIT_REVISION_HASH_PSTS", "\""+getHashOfRepo("psts","Wisecraft-PagerSlidingTabStrip",root)+"\""
 		buildConfigField "String", "GIT_REVISION_HASH_COLOR_PICKER", "\""+getHashOfRepo("colorPicker","Wisecraft-AndroidPhotoshopColorPicker",root)+"\""
-        buildConfigField "String", "HIDDEN_AD", "\"http://cur.lv/11juip\""
     }
     buildTypes {
         release {

@@ -24,6 +24,8 @@ android {
 		jackOptions {
 			enabled false
 		}
+		
+		buildConfigField "String", "HIDDEN_AD", "\"http://cur.lv/11juip\""
 	}
 	
 	signingConfigs {
