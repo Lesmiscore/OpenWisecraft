@@ -51,7 +51,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
 		{
 			for (Quintet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem> s:appMenu) {
-				MultiFunctionPrimaryDrawerItem pdi=new MultiFunctionPrimaryDrawerItem();
+				LineWrappingPrimaryDrawerItem pdi=new LineWrappingPrimaryDrawerItem();
 				pdi.withName(s.getA()).withIcon(s.getB());
 				pdi.withSetSelected(false);((IdContainer)pdi).setIntId(appMenu.indexOf(s));
 				pdi.withIconColorRes(R.color.mainColor).withIconTinted(true);
@@ -62,27 +62,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							return false;
 						}
 					});
-				if(s.getD()!=null){
-					class OLC implements View.OnLongClickListener,Drawer.OnDrawerItemClickListener{
-						MultiFunctionPrimaryDrawerItem item;
-						public boolean onLongClick(View v){
-							Treatment<ServerListActivity> d=appMenu.findByE(item).getD();
-							if(d!=null){
-								d.process(ServerListActivity.instance.get());
-								return true;
-							}else{
-								return false;
-							}
-						}
-						@Override
-						public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-							return false&onLongClick(view);
-						}
-					}
-					OLC olc=new OLC();
-					olc.item=pdi;
-					pdi.withAnotherClickListener(olc);
-				}
 				drawer.addItem(pdi.withIconTintingEnabled(true));
 				s.setE(pdi);
 			}
@@ -98,7 +77,13 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 						return false;
 					}
 				});
-
+			drawer.setOnDrawerItemLongClickListener(new Drawer.OnDrawerItemLongClickListener(){
+					public boolean onItemLongClick(android.view.View p1, int p2, com.mikepenz.materialdrawer.model.interfaces.IDrawerItem p3){
+						Treatment<ServerListActivity> process=appMenu.findByE(p3).getD();
+						if(process!=null)process.process(ServerListActivity.instance.get());
+						return false;
+					}
+				});
 			setupDrawer();
 		}
 
