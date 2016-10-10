@@ -780,7 +780,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	
 	private void updateAllWithConditions(final Predicate<Server> pred) {
 		for (int i=0;i < list.size();i++) {
-			if (pinging.get(list.get(i)))
+			if (pinging.get(list.get(i)) || pred.process(list.get(i)))
 				continue;
 			statLayout.setStatusAt(i, 1);
 			sl.notifyItemChanged(i);
