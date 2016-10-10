@@ -65,8 +65,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				drawer.addItem(pdi.withIconTintingEnabled(true));
 				s.setE(pdi);
 			}
-            if(!getPackageName().equals("com.nao20010128nao.Wisecraft.alpha")){
-                drawer.addItem(new InvisibleWebViewDrawerItem().withUrl((String)Utils.getField(BuildConfig.class,null,"HIDDEN_AD")));
+            if (!getPackageName().equals("com.nao20010128nao.Wisecraft.alpha")) {
+                drawer.addItem(new InvisibleWebViewDrawerItem().withUrl((String)Utils.getField(BuildConfig.class, null, "HIDDEN_AD")));
             }
 			drawer.deselect();
 			drawer.setOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener(){
@@ -78,9 +78,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					}
 				});
 			drawer.setOnDrawerItemLongClickListener(new Drawer.OnDrawerItemLongClickListener(){
-					public boolean onItemLongClick(View p1, int p2, IDrawerItem p3){
+					public boolean onItemLongClick(View p1, int p2, IDrawerItem p3) {
 						Treatment<ServerListActivity> process=appMenu.findByE(p3).getD();
-						if(process!=null)process.process(ServerListActivity.instance.get());
+						if (process != null)process.process(ServerListActivity.instance.get());
 						return false;
 					}
 				});
@@ -102,10 +102,10 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							case MotionEvent.ACTION_MOVE:
 							case MotionEvent.ACTION_UP:
                                 int dest;
-                                if(event.getX()==0){
-                                    dest=0;
-                                }else{
-                                    dest=(int)Math.floor(event.getX() * sl.getItemCount() / statLayout.getWidth());
+                                if (event.getX() == 0) {
+                                    dest = 0;
+                                } else {
+                                    dest = (int)Math.floor(event.getX() * sl.getItemCount() / statLayout.getWidth());
                                 }
 								rv.smoothScrollToPosition(dest);
 								break;
@@ -123,23 +123,23 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			clicked = instance.get().clicked;
 			statLayout.setStatuses(instance.get().statLayout.getStatuses());
 			instance.get().statLayout = statLayout;
-            isEditing=instance.get().isEditing;
-            instance.get().isEditing=false;
+            editMode = instance.get().editMode;
+            instance.get().editMode = EDIT_MODE_NULL;
 			usesOldInstance = true;
 
 			sl.attachNewActivity(this);
 		}
 		instance = new WeakReference(this);
-		slsl=(ServerListStyleLoader)getSystemService(ContextWrappingExtender.SERVER_LIST_STYLE_LOADER);
+		slsl = (ServerListStyleLoader)getSystemService(ContextWrappingExtender.SERVER_LIST_STYLE_LOADER);
 		if (usesOldInstance) {
 			rv.setAdapter(sl);
 		} else {
-            if(true){
+            if (true) {
                 spp = updater = new MultiServerPingProvider(Integer.valueOf(pref.getString("parallels", "6")));
                 if (pref.getBoolean("updAnotherThread", false))
 				    updater = new NormalServerPingProvider();
-            }else{
-                spp = updater = new HttpMultiServerPingProvider("http://192.168.3.100:15687/",Integer.valueOf(pref.getString("parallels", "6")));
+            } else {
+                spp = updater = new HttpMultiServerPingProvider("http://192.168.3.100:15687/", Integer.valueOf(pref.getString("parallels", "6")));
                 if (pref.getBoolean("updAnotherThread", false))
 				    updater = new HttpServerPingProvider("http://192.168.3.100:15687/");
             }
@@ -147,9 +147,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		}
 		rv.setLongClickable(true);
 		wd = new WorkingDialog(this);
-        if(fetchNetworkState2()==FetchNetworkStateResult.WIFI)
+        if (fetchNetworkState2() == FetchNetworkStateResult.WIFI)
             spp.online();
-        else if(pref.getBoolean("noCellular",false))
+        else if (pref.getBoolean("noCellular", false))
             spp.offline();
 		if (!usesOldInstance) {
 			loadServers();
@@ -158,33 +158,33 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				dryUpdate(list.get(i), false);
 		}
 		findViewById(android.R.id.content).setBackgroundDrawable(slsl.load());
-        ddManager=new SimpleCallback(0,0) {
+        ddManager = new SimpleCallback(0, 0) {
             @Override
             public boolean onMove(RecyclerView recyclerView, ViewHolder viewHolder, ViewHolder target) {
-                if(!isEditing)return false;
+                if (editMode == EDIT_MODE_NULL)return false;
                 final int fromPos = viewHolder.getAdapterPosition();
                 final int toPos = target.getAdapterPosition();
                 sl.notifyItemMoved(fromPos, toPos);
-                list.add(toPos,list.remove(fromPos));
-                statLayout.moveStatus(fromPos,toPos);
+                list.add(toPos, list.remove(fromPos));
+                statLayout.moveStatus(fromPos, toPos);
                 return true;
             }
 
             @Override
             public void onSwiped(ViewHolder viewHolder, int direction) {
-                
+
             }
 
             @Override
-            public boolean isItemViewSwipeEnabled(){
+            public boolean isItemViewSwipeEnabled() {
                 return false;
             }
 			@Override
-            public boolean isLongPressDragEnabled(){
-				return isEditing;
+            public boolean isLongPressDragEnabled() {
+				return editMode != EDIT_MODE_NULL;
 			}
         };
-        am=new ActionMode.Callback(){
+        editAm = new ActionMode.Callback(){
             public boolean onCreateActionMode(ActionMode p1, Menu p2) {
                 itemDecor.attachToRecyclerView(rv);
                 srl.setEnabled(false);
@@ -193,7 +193,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             }
 
             public boolean onPrepareActionMode(ActionMode p1, Menu p2) {
-                isEditing=true;
+                editMode = EDIT_MODE_EDIT;
                 return true;
             }
 
@@ -202,28 +202,53 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             }
 
             public void onDestroyActionMode(ActionMode p1) {
-                isEditing=false;
+                editMode = EDIT_MODE_NULL;
                 itemDecor.attachToRecyclerView(null);
                 srl.setEnabled(true);
                 dl.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                 saveServers();
             }
         };
-        switch(pref.getInt("serverListStyle2",0)){
+		selectUpdateAm = new ActionMode.Callback(){
+            public boolean onCreateActionMode(ActionMode p1, Menu p2) {
+                srl.setEnabled(false);
+                dl.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                return true;
+            }
+
+            public boolean onPrepareActionMode(ActionMode p1, Menu p2) {
+                editMode = EDIT_MODE_SELECT_UPDATE;
+                return true;
+            }
+
+            public boolean onActionItemClicked(ActionMode p1, MenuItem p2) {
+                return true;
+            }
+
+            public void onDestroyActionMode(ActionMode p1) {
+                editMode = EDIT_MODE_NULL;
+                srl.setEnabled(true);
+                dl.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                saveServers();
+            }
+        };
+        switch (pref.getInt("serverListStyle2", 0)) {
             case 0:
                 ddManager.setDefaultDragDirs(ItemTouchHelper.UP | ItemTouchHelper.DOWN);
                 break;
             case 1:case 2:default:
-                ddManager.setDefaultDragDirs(ItemTouchHelper.UP | ItemTouchHelper.DOWN|ItemTouchHelper.RIGHT|ItemTouchHelper.LEFT);
+                ddManager.setDefaultDragDirs(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT);
                 break;
         }
         itemDecor = new ItemTouchHelper(ddManager);
-        if(isEditing)
-            startEditMode();
-			
+		switch (editMode) {
+			case EDIT_MODE_EDIT:startEditMode();break;
+			case EDIT_MODE_SELECT_UPDATE:startSelectUpdateMode();break;
+		}
+
 		addActivityResultReceiver(new DispatchActivityResult(){
 				@Override
-				public boolean dispatchActivityResult(int requestCode, int resultCode, Intent data,boolean consumed) {
+				public boolean dispatchActivityResult(int requestCode, int resultCode, Intent data, boolean consumed) {
 					// TODO: Implement this method
 					if (consumed)return true;
 					switch (requestCode) {
@@ -837,7 +862,12 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
     
     private void startEditMode() {
         //start action mode here
-        startSupportActionMode(am);
+        startSupportActionMode(editAm);
+    }
+	
+	private void startSelectUpdateMode() {
+        //start action mode here
+        startSupportActionMode(selectUpdateAm);
     }
 
 	
@@ -987,7 +1017,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		@Override
 		public void onItemClick(AdapterView<?> p1, View p2, int p3, long p4) {
 			// TODO: Implement this method
-            if(sla.isEditing)return;
+            if(sla.editMode!=EDIT_MODE_NULL)return;
 			Server s=getItem(p3);
 			sla.clicked = p3;
 			if (sla.pinging.get(s))return;
@@ -1006,7 +1036,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		@Override
 		public boolean onItemLongClick(AdapterView<?> p1, View p2, final int p3, long p4) {
 			// TODO: Implement this method
-            if(sla.isEditing)return true;
+            if(sla.editMode!=EDIT_MODE_NULL)return true;
 			sla.clicked = p3;
 			new AppCompatAlertDialog.Builder(sla)
 				.setTitle(getItem(p3).resolveVisibleTitle())

@@ -24,6 +24,10 @@ import android.support.v7.view.ActionMode;
 //Fields
 public abstract class ServerListActivityBaseFields extends ServerListActivityBaseGrand
 {
+	public static final int EDIT_MODE_NULL=0;
+	public static final int EDIT_MODE_EDIT=1;
+	public static final int EDIT_MODE_SELECT_UPDATE=2;
+	
     //impl
     protected static final File mcpeServerList=new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt");
 
@@ -39,10 +43,10 @@ public abstract class ServerListActivityBaseFields extends ServerListActivityBas
     protected boolean skipSave=false;
 	protected Map<Server,Boolean> pinging=new NonNullableMap<Server>();
 
-    protected boolean isEditing=false;
+    protected int editMode=EDIT_MODE_NULL;
     protected ItemTouchHelper itemDecor;
     protected SimpleCallback ddManager;
-    protected ActionMode.Callback am;
+    protected ActionMode.Callback editAm,selectUpdateAm;
     
     //base2,3,5
     protected SecureRandom sr=new SecureRandom();
