@@ -805,7 +805,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	
 	private void updateAllWithConditions(final Predicate<Server> pred) {
 		for (int i=0;i < list.size();i++) {
-			if (pinging.get(list.get(i)) || pred.process(list.get(i)))
+			if (pinging.get(list.get(i)) || !pred.process(list.get(i)))
 				continue;
 			statLayout.setStatusAt(i, 1);
 			sl.notifyItemChanged(i);
@@ -815,7 +815,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		new Thread(){
 			public void run() {
 				for (int i=0;i < list.size();i++) {
-					if (pinging.get(list.get(i)) || pred.process(list.get(i)))
+					if (pinging.get(list.get(i)) || !pred.process(list.get(i)))
 						continue;
 					spp.putInQueue(list.get(i), new PingHandlerImpl(false, -1, false){
 							public void onPingFailed(final Server s) {
