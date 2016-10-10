@@ -4,6 +4,11 @@ apply plugin: 'com.google.gms.google-services'
 import java.security.SecureRandom;
 
 android {
+	productFlavors {
+		normal {
+		}
+	}
+
 	def getRandomBetaSuffix={->
 		def suffix=["BETA","Beta","beta","Soyokaze","Tokikaze","Throne"]
 		def rand=new SecureRandom();
@@ -66,6 +71,16 @@ android {
 			resValue "bool", "inspectorEnabled", "true"
 			minifyEnabled true
 			proguardFile file('../proguard-rules.pro')
+		}
+		jack {
+        	applicationIdSuffix = '.alpha'  
+            versionNameSuffix = ' Pre'
+			signingConfig signingConfigs.release
+			resValue "string", "app_name", "Wisecraft "+getRandomBetaSuffix()
+			resValue "bool", "inspectorEnabled", "true"
+			jackOptions {
+				enabled false
+			}
 		}
     }
 	
