@@ -145,7 +145,7 @@ def dir,f,sb
 		if(f!=null)f.close()
 		f=null
 	}
-}()
+}();
 {->
 	dir="./app/src/main/res/values/values.xml"
 	System.err.println("Editing "+dir);
@@ -170,7 +170,7 @@ def dir,f,sb
 		if(f!=null)f.close()
 		f=null
 	}
-}()
+}();
 
 
 
