@@ -121,7 +121,7 @@ t.setDaemon(true);
 t.start();
 
 def dir,f,sb
-{
+{->
 	dir="./app/src/main/res/values/booleans.xml"
 	System.err.println("Editing "+dir);
 	f=null;
@@ -145,8 +145,8 @@ def dir,f,sb
 		if(f!=null)f.close()
 		f=null
 	}
-}
-{
+}()
+{->
 	dir="./app/src/main/res/values/values.xml"
 	System.err.println("Editing "+dir);
 	f=null;
@@ -170,7 +170,7 @@ def dir,f,sb
 		if(f!=null)f.close()
 		f=null
 	}
-}
+}()
 
 
 
