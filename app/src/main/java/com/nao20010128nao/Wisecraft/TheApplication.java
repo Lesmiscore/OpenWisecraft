@@ -63,7 +63,7 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 			.remove("useBright")
 			.commit();
 			
-		Log.d("Tesuya",(String)Utils.getField(com.nao20010128nao.Wisecraft.misc.compat.BuildConfig.class,null,"HIDDEN_AD"));
+		Log.d("Tesuya",(String)Utils.getField(BuildConfig.class,null,"HIDDEN_AD"));
 	}
 	public Typeface getLocalizedFont() {
 		try {
