@@ -10,6 +10,7 @@ android {
 		def where=Math.abs(rand.nextInt())%suffix.size();
 		return suffix[where]
 	}
+	def wsi="Widget Status Inspector"
 
     compileSdkVersion 24
     buildToolsVersion "24.0.0"
@@ -38,48 +39,45 @@ android {
             minifyEnabled false
             proguardFiles '../proguard-rules.pro'
 			signingConfig signingConfigs.release
+			resValue "string", "wsi", ""
 			resValue "bool", "inspectorEnabled", "false"
         }
         debug {
         	applicationIdSuffix = '.alpha'  
             versionNameSuffix = 'd'
+			resValue "string", "wsi", ""
 			resValue "bool", "inspectorEnabled", "false"
 		}
 		pre {
         	versionNameSuffix = ' Pre'
 			signingConfig signingConfigs.release
 			resValue "string", "app_name", "Wisecraft "+getRandomBetaSuffix()
+			resValue "string", "wsi", ""
 			resValue "bool", "inspectorEnabled", "false"
 		}
 		debug2 {
         	applicationIdSuffix = '.alpha'  
             versionNameSuffix = ' Pre'
 			signingConfig signingConfigs.release
-			resValue "string", "app_name", "Wisecraft "+getRandomBetaSuffix()
+			resValue "string", "app_name", "[DEBUG2] Wisecraft "+getRandomBetaSuffix()
+			resValue "string", "wsi", "[DEBUG2] "+wsi
 			resValue "bool", "inspectorEnabled", "true"
 		}
 		debug3 {
         	applicationIdSuffix = '.alpha2'  
             versionNameSuffix = ' Pre'
 			signingConfig signingConfigs.release
-			resValue "string", "app_name", "Wisecraft "+getRandomBetaSuffix()
+			resValue "string", "app_name", "[DEBUG3] Wisecraft "+getRandomBetaSuffix()
+			resValue "string", "wsi", "[DEBUG3] "+wsi
 			resValue "bool", "inspectorEnabled", "true"
 		}
 		debug4 {
         	applicationIdSuffix = '.alpha3'  
             versionNameSuffix = ' Pre'
 			signingConfig signingConfigs.release
-			resValue "string", "app_name", "Wisecraft "+getRandomBetaSuffix()
+			resValue "string", "app_name", "[DEBUG3] Wisecraft "+getRandomBetaSuffix()
+			resValue "string", "wsi", "[DEBUG4] "+wsi
 			resValue "bool", "inspectorEnabled", "true"
-		}
-		pg {
-        	applicationIdSuffix = '.alpha'  
-            versionNameSuffix = ' Pre'
-			signingConfig signingConfigs.release
-			resValue "string", "app_name", "Wisecraft "+getRandomBetaSuffix()
-			resValue "bool", "inspectorEnabled", "true"
-			minifyEnabled true
-			proguardFile file('../proguard-rules.pro')
 		}
     }
 	
