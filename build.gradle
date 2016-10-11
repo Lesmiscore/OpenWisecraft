@@ -120,36 +120,65 @@ def t=new PowOf2();
 t.setDaemon(true);
 t.start();
 
-def dir="./app/src/main/res/values/booleans.xml"
-System.err.println("Editing "+dir);
-def f=null;
-def sb=new StringBuilder();
-try{
-	f=new BufferedReader(new FileReader(dir));
-	def line=null;
-	while((line=f.readLine())!=null){
-		if(line.contains("bool name=\"inspectorEnabled\""))continue;
-		sb.append(line).append('\n');
+def dir,f,sb
+{
+	dir="./app/src/main/res/values/booleans.xml"
+	System.err.println("Editing "+dir);
+	f=null;
+	sb=new StringBuilder();
+	try{
+		f=new BufferedReader(new FileReader(dir));
+		def line=null;
+		while((line=f.readLine())!=null){
+			if(line.contains("bool name=\"inspectorEnabled\""))continue;
+			sb.append(line).append('\n');
+		}
+	}finally{
+		if(f!=null)f.close()
+		f=null
 	}
-}finally{
-	if(f!=null)f.close()
-	f=null
+	new File(dir).delete();
+	try{
+		f=new FileWriter(dir);
+		f.write(sb.toString());
+	}finally{
+		if(f!=null)f.close()
+		f=null
+	}
 }
-new File(dir).delete();
-try{
-	f=new FileWriter(dir);
-	f.write(sb.toString());
-}finally{
-	if(f!=null)f.close()
-	f=null
+{
+	dir="./app/src/main/res/values/values.xml"
+	System.err.println("Editing "+dir);
+	f=null;
+	sb=new StringBuilder();
+	try{
+		f=new BufferedReader(new FileReader(dir));
+		def line=null;
+		while((line=f.readLine())!=null){
+			if(line.contains("string name=\"wsi\""))continue;
+			sb.append(line).append('\n');
+		}
+	}finally{
+		if(f!=null)f.close()
+		f=null
+	}
+	new File(dir).delete();
+	try{
+		f=new FileWriter(dir);
+		f.write(sb.toString());
+	}finally{
+		if(f!=null)f.close()
+		f=null
+	}
 }
+
 
 
 class FileRollbackWithGit{
 	public static final FileRollbackWithGit INSTANCE=new FileRollbackWithGit();
 	public void finalize(){
-		System.err.println("Rolling back "+dir);
-		["git","checkout","--",dir].execute(null,dir).in.text.trim()
+		System.err.println("Rolling back ");
+		["git","checkout","--","."].execute(null,dir).in.text.trim()
 	}
 }
 
