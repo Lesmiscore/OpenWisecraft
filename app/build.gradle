@@ -5,7 +5,7 @@ import java.security.SecureRandom;
 
 android {
 	def getRandomBetaSuffix={->
-		def suffix=["BETA","Beta","beta","Soyokaze","Tokikaze","Throne"]
+		def suffix=["BETA","Kabuki","Sakura","Soyokaze","Tokikaze","Matsu"]
 		def rand=new SecureRandom();
 		def where=Math.abs(rand.nextInt())%suffix.size();
 		return suffix[where]
