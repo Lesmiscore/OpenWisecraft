@@ -24,7 +24,7 @@ public abstract class ScrollingActivity extends AppCompatActivity {
 		// TODO: Implement this method
 		content.removeAllViews();
 		ViewGroup.LayoutParams lp=view.getLayoutParams();
-		if(lp==null)lp=tryInstantinateLayoutParams(view);
+		if(lp==null)lp=new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
 		lp.height=lp.width=ViewGroup.LayoutParams.MATCH_PARENT;
 		view.setLayoutParams(lp);
 		content.addView(view);
@@ -33,7 +33,7 @@ public abstract class ScrollingActivity extends AppCompatActivity {
 	@Override
 	public void setContentView(int layoutResID) {
 		// TODO: Implement this method
-		setContentView(getLayoutInflater().inflate(layoutResID,null));
+		setContentView(getLayoutInflater().inflate(layoutResID,content,false));
 	}
 
 	@Override
@@ -44,33 +44,5 @@ public abstract class ScrollingActivity extends AppCompatActivity {
 	
 	protected int getLayoutResId(){
 		return R.layout.activity_scrolling;
-	}
-	
-	private ViewGroup.LayoutParams tryInstantinateLayoutParams(View v){
-		Class viewClass=v.getClass();
-		if(viewClass==FrameLayout.class){
-			return new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
-		}
-		if(viewClass==LinearLayout.class){
-			return new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
-		}
-		while(true){
-			if(viewClass==View.class){
-				return new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
-			}
-			Class lp;
-			try {
-				lp = Class.forName(viewClass.getName() + "$LayoutParams");
-			} catch (ClassNotFoundException e) {
-				viewClass=viewClass.getSuperclass();
-				continue;
-			}
-			try {
-				return (ViewGroup.LayoutParams)lp.getConstructor(int.class,int.class).newInstance(-1,-1);
-			} catch (Throwable e) {
-				
-			}
-			viewClass=viewClass.getSuperclass();
-		}
 	}
 }
