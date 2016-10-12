@@ -1,48 +1,45 @@
 package com.nao20010128nao.TESTAPP;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.widget.FrameLayout;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.os.*;
+import android.support.v7.app.*;
+import android.view.*;
+import android.widget.*;
 
-public abstract class ScrollingActivity extends AppCompatActivity {
+public abstract class ScrollingActivity extends AppCompatActivity implements ScrollingActivityDelegate.Callback{
 	FrameLayout content;
+	ScrollingActivityDelegate sad;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        super.setContentView(getLayoutResId());
-        Toolbar toolbar = (Toolbar) super.findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-		content=(FrameLayout)super.findViewById(R.id.content);
+        getSDelegate().onCreate(savedInstanceState);
     }
 
 	@Override
 	public void setContentView(View view) {
-		// TODO: Implement this method
-		content.removeAllViews();
-		ViewGroup.LayoutParams lp=view.getLayoutParams();
-		if(lp==null)lp=new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
-		lp.height=lp.width=ViewGroup.LayoutParams.MATCH_PARENT;
-		view.setLayoutParams(lp);
-		content.addView(view);
+		getSDelegate().setContentView(view);
 	}
 
 	@Override
 	public void setContentView(int layoutResID) {
-		// TODO: Implement this method
-		setContentView(getLayoutInflater().inflate(layoutResID,content,false));
+		getSDelegate().setContentView(layoutResID);
+	}
+
+	@Override
+	public void setContentView(View view, ViewGroup.LayoutParams params) {
+		getSDelegate().setContentView(view, params);
 	}
 
 	@Override
 	public View findViewById(int id) {
-		// TODO: Implement this method
-		return content.findViewById(id);
+		return getSDelegate().findViewById(id);
 	}
 	
-	protected int getLayoutResId(){
+	protected ScrollingActivityDelegate getSDelegate(){
+		if(sad==null)sad=new ScrollingActivityDelegate(this,getDelegate(),this);
+		return sad;
+	}
+	
+	public int getLayoutResId(){
 		return R.layout.activity_scrolling;
 	}
 }

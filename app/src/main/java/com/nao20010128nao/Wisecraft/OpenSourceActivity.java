@@ -24,7 +24,7 @@ public class OpenSourceActivity extends ScrollingActivity
 	}
 
 	@Override
-	protected int getLayoutResId() {
+	public int getLayoutResId() {
 		// TODO: Implement this method
 		return R.layout.osl_decor;
 	}

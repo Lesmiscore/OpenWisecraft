@@ -68,6 +68,11 @@ public class WidgetsEditorActivity extends AppCompatActivity {
 		}
 	}
 	
+	@Override
+	protected void attachBaseContext(Context newBase) {
+		super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
+	}
+	
 	List<String> listWidgets(){
 		ArrayList<String> list=new ArrayList<>();
 		for(String s:widgetPref.getAll().keySet())

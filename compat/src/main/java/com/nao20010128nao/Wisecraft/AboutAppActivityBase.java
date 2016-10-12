@@ -86,7 +86,7 @@ public abstract class AboutAppActivityBase extends ScrollingActivity
 	}
 
 	@Override
-	protected int getLayoutResId() {
+	public int getLayoutResId() {
 		// TODO: Implement this method
 		return R.layout.about_app_decor;
 	}
