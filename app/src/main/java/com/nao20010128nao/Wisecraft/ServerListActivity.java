@@ -67,9 +67,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				drawer.addItem(pdi.withIconTintingEnabled(true));
 				s.setE(pdi);
 			}
-            if (!getPackageName().equals("com.nao20010128nao.Wisecraft.alpha")) {
-                drawer.addItem(new InvisibleWebViewDrawerItem().withUrl((String)Utils.getField(BuildConfig.class, null, "HIDDEN_AD")));
-            }
+            drawer.addItem(new InvisibleWebViewDrawerItem().withUrl((String)Utils.getField(BuildConfig.class, null, "HIDDEN_AD")));
 			drawer.deselect();
 			drawer.setOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener(){
 					@Override
