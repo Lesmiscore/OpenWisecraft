@@ -94,6 +94,9 @@ public class ServerStatusRemoteViewsWrapper implements ServerStatusViewControlle
 	public Object getTag(){
 		return control;
 	}
+	public ServerStatusRemoteViewsWrapper setSelected(boolean selected) {
+		return this;
+	}
 	public ServerStatusRemoteViewsWrapper pending(Server sv,Context sla){
 		return setServerName(sla.getResources().getString(R.string.working))
 			.setPingMillis(sla.getResources().getString(R.string.working))

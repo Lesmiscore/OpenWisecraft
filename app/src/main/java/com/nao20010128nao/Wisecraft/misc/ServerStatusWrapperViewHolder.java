@@ -12,13 +12,15 @@ import android.support.v7.view.ContextThemeWrapper;
 public class ServerStatusWrapperViewHolder extends FindableViewHolder implements ServerStatusViewController<ServerStatusWrapperViewHolder>
 {
 	public static final int[] COLORED_TEXTVIEWS=new int[]{R.id.serverPlayers,R.id.serverAddress,R.id.pingMillis,R.id.serverName,R.id.target,R.id.serverTitle};
-	public static final int[] ALL_VIEWS=new int[]{R.id.serverPlayers,R.id.serverAddress,R.id.pingMillis,R.id.serverName,R.id.target,R.id.serverTitle,R.id.statColor};
+	public static final int[] ALL_VIEWS=new int[]{R.id.serverPlayers,R.id.serverAddress,R.id.pingMillis,R.id.serverName,R.id.target,R.id.serverTitle,R.id.statColor,R.id.checkMark,R.id.checkBackground};
 	
 	PreloadedViews preload;
 	
 	public ServerStatusWrapperViewHolder(Context context,boolean isGrid,ViewGroup parent){
 		super(LayoutInflater.from(context).inflate(isGrid?R.layout.quickstatus_grid:R.layout.quickstatus,parent,false));
 		preload=new PreloadedViews((ViewGroup)itemView,ALL_VIEWS);
+		preload.getView(R.id.checkBackground).setBackgroundColor(ServerInfoActivity.translucent(ContextCompat.getColor(context,R.color.mainColor)));
+		preload.getView(R.id.checkMark).setBackgroundDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_check_black_48dp,ContextCompat.getColor(context,R.color.mainColor)));
 	}
 	public ServerStatusWrapperViewHolder(Context context,int theme,boolean isGrid,ViewGroup parent){
 		this(new ContextThemeWrapper(context,theme),isGrid,parent);
@@ -133,5 +135,14 @@ public class ServerStatusWrapperViewHolder extends FindableViewHolder implements
 	
 	public ServerStatusWrapperViewHolder online(Context context){
 		return setStatColor(ContextCompat.getColor(context, R.color.stat_ok));
+	}
+	
+	public ServerStatusWrapperViewHolder setSelected(boolean selected) {
+		if(selected){
+			preload.getView(R.id.checkBackground).setVisibility(View.VISIBLE);
+		}else{
+			preload.getView(R.id.checkBackground).setVisibility(View.GONE);
+		}
+		return this;
 	}
 }

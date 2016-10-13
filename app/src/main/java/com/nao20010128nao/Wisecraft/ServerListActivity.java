@@ -996,11 +996,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					}
 				}
 				if(sla.editMode==EDIT_MODE_SELECT_UPDATE){
-					if(sla.selected.contains(sv)){
-
-					}else{
-						
-					}
+					viewHolder.setSelected(sla.selected.contains(sv));
+				}else{
+					viewHolder.setSelected(false);
 				}
 
 				applyHandlersForViewTree(viewHolder.itemView,
@@ -1037,7 +1035,11 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		public void onItemClick(AdapterView<?> p1, View p2, int p3, long p4) {
 			// TODO: Implement this method
 			if(sla.editMode==EDIT_MODE_SELECT_UPDATE){
-				sla.selected.add(getItem(p3));
+				if(sla.selected.contains(getItem(p3))){
+					sla.selected.remove(getItem(p3));
+				}else{
+					sla.selected.add(getItem(p3));
+				}
 				notifyItemChanged(p3);
 			}
             if(sla.editMode!=EDIT_MODE_NULL)return;

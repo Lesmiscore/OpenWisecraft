@@ -105,4 +105,8 @@ public class PingWidgetEditorViewHolder extends FindableViewHolder implements Se
 	public PingWidgetEditorViewHolder online(Context context){
 		return setStatColor(ContextCompat.getColor(context, R.color.stat_ok));
 	}
+	
+	public PingWidgetEditorViewHolder setSelected(boolean selected) {
+		return this;
+	}
 }

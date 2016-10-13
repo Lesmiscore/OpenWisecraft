@@ -28,5 +28,6 @@ public interface ServerStatusViewController<T extends ServerStatusViewController
 	public T offline(Server sv,Context sla);
 	public T online(Context context);
 	public T setTag(Object o);
+	public T setSelected(boolean selected);
 	public Object getTag();
 }
