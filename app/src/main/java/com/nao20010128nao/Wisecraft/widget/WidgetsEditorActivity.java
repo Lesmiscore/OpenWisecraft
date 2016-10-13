@@ -77,6 +77,7 @@ public class WidgetsEditorActivity extends AppCompatActivity {
 		ArrayList<String> list=new ArrayList<>();
 		for(String s:widgetPref.getAll().keySet())
 			if(s.endsWith(".data"))continue;
+			else if(s.endsWith(".status"))continue;
 			else if(s.startsWith("_version"))continue;
 			else list.add(s);
 		Collections.sort(list);
