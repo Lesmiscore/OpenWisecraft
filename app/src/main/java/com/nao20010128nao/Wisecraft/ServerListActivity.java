@@ -783,16 +783,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					pref.edit().putInt("serversJsonVersion", 1).putString("servers", gson.toJson(ns)).commit();
 				}
 			case 1:{
-					OldServer35[] sa=gson.fromJson(pref.getString("servers", "[]"), OldServer35[].class);
-					List<Server> ns=new ArrayList<>();
-					for (OldServer35 s:sa) {
-						Server nso=new Server();
-						nso.ip = s.ip;
-						nso.port = s.port;
-						nso.mode = s.mode;
-						ns.add(nso);
-					}
-					pref.edit().putInt("serversJsonVersion", 2).putString("servers", gson.toJson(ns)).commit();
+					pref.edit().putInt("serversJsonVersion", 2).commit();
 				}
 			case 2:{
 					Server[] sa=gson.fromJson(pref.getString("servers", "[]"), Server[].class);
