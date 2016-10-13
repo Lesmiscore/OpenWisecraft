@@ -229,7 +229,12 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             public boolean onActionItemClicked(ActionMode p1, MenuItem p2) {
 				switch(p2.getItemId()){
 					case 0:
-						for(Server s:selected)dryUpdate(s,true);
+						for(Server s:selected){
+							dryUpdate(s,true);
+							if(list.indexOf(s)!=-1){
+								statLayout.setStatusAt(list.indexOf(s),1);
+							}
+						}
 						p1.finish();
 						break;
 				}
@@ -241,6 +246,11 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                 srl.setEnabled(true);
                 dl.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                 saveServers();
+				for(Server s:selected){
+					if(list.indexOf(s)!=-1){
+						sl.notifyItemChanged(list.indexOf(s));
+					}
+				}
 				selected.clear();
             }
         };
