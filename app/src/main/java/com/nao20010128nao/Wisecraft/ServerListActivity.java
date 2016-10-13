@@ -34,6 +34,7 @@ import android.support.v7.view.ActionMode;
 import com.nao20010128nao.Wisecraft.R;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
+import android.support.v4.view.*;
 
 //Full implement for user interface (Some part is available at ServerListActivityBase4)
 abstract class ServerListActivityImpl extends ServerListActivityBase1 implements ServerListActivityInterface,ServerListProvider {
@@ -42,6 +43,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
     RecycleServerList sl;
     List<Server> list;
 	ServerListStyleLoader slsl;
+	Set<Server> selected=new HashSet<>();
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -213,15 +215,24 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             public boolean onCreateActionMode(ActionMode p1, Menu p2) {
                 srl.setEnabled(false);
                 dl.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+				selected.clear();
                 return true;
             }
 
             public boolean onPrepareActionMode(ActionMode p1, Menu p2) {
                 editMode = EDIT_MODE_SELECT_UPDATE;
+				MenuItem mi=p2.add(Menu.NONE,0,0,R.id.update).setIcon(R.drawable.ic_refresh_black_48dp);
+				MenuItemCompat.setShowAsAction(mi,MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
                 return true;
             }
 
             public boolean onActionItemClicked(ActionMode p1, MenuItem p2) {
+				switch(p2.getItemId()){
+					case 0:
+						for(Server s:selected)dryUpdate(s,true);
+						p1.finish();
+						break;
+				}
                 return true;
             }
 
@@ -230,6 +241,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                 srl.setEnabled(true);
                 dl.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                 saveServers();
+				selected.clear();
             }
         };
         switch (pref.getInt("serverListStyle2", 0)) {
@@ -421,7 +433,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 													updateAllWithConditions(new Predicate<Server>(){public boolean process(Server a){return !(a instanceof ServerStatus);}});
 													break;
 												case 3://select
-													//no-op
+													startSelectUpdateMode();
 													break;
 											}
 										}
@@ -983,23 +995,30 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 						viewHolder.offline(sv,sla);
 					}
 				}
-			}
+				if(sla.editMode==EDIT_MODE_SELECT_UPDATE){
+					if(sla.selected.contains(sv)){
 
-			applyHandlersForViewTree(viewHolder.itemView,
-				new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						onItemClick(null, null, sla.list.indexOf(viewHolder.itemView.getTag()), Long.MIN_VALUE);
+					}else{
+						
 					}
 				}
-				,
-				new View.OnLongClickListener() {
-					@Override
-					public boolean onLongClick(View v) {
-						return onItemLongClick(null, null, sla.list.indexOf(viewHolder.itemView.getTag()), Long.MIN_VALUE);
+
+				applyHandlersForViewTree(viewHolder.itemView,
+					new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							onItemClick(null, null, sla.list.indexOf(viewHolder.itemView.getTag()), Long.MIN_VALUE);
+						}
 					}
-				}
-			);
+					,
+					new View.OnLongClickListener() {
+						@Override
+						public boolean onLongClick(View v) {
+							return onItemLongClick(null, null, sla.list.indexOf(viewHolder.itemView.getTag()), Long.MIN_VALUE);
+						}
+					}
+				);
+			}
 		}
 
 		@Override
@@ -1017,6 +1036,10 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		@Override
 		public void onItemClick(AdapterView<?> p1, View p2, int p3, long p4) {
 			// TODO: Implement this method
+			if(sla.editMode==EDIT_MODE_SELECT_UPDATE){
+				sla.selected.add(getItem(p3));
+				notifyItemChanged(p3);
+			}
             if(sla.editMode!=EDIT_MODE_NULL)return;
 			Server s=getItem(p3);
 			sla.clicked = p3;
