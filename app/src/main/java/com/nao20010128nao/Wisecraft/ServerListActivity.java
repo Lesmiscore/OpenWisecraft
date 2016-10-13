@@ -124,6 +124,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			statLayout.setStatuses(instance.get().statLayout.getStatuses());
 			instance.get().statLayout = statLayout;
             editMode = instance.get().editMode;
+			selected = instance.get().selected;
             instance.get().editMode = EDIT_MODE_NULL;
 			usesOldInstance = true;
 
