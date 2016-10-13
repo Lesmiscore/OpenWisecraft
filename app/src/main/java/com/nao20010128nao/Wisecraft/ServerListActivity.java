@@ -230,6 +230,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				switch(p2.getItemId()){
 					case 0:
 						for(Server s:selected){
+							if(pinging.get(s))continue;
 							dryUpdate(s,true);
 							if(list.indexOf(s)!=-1){
 								statLayout.setStatusAt(list.indexOf(s),1);
