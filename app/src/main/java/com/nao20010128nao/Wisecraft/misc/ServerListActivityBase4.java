@@ -54,7 +54,7 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBase5
 			sldLp.setBehavior(Utils.newBehavior(getResources().getString(R.string.appbar_scrolling_view_behavior)));
 			sldLp.width=sldLp.height=sldLp.MATCH_PARENT;
 			sliding.setLayoutParams(sldLp);
-			cood.addView(sliding,1);
+			cood.addView(sliding);
 			Log.i("ServerListActivityBase4","done");
 		}
 		rv = (RecyclerView)findViewById(android.R.id.list);
