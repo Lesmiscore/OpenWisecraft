@@ -4,6 +4,7 @@ import android.net.*;
 import android.os.*;
 import android.support.design.widget.*;
 import android.support.v4.view.*;
+import android.support.v4.widget.*;
 import android.support.v7.widget.*;
 import android.util.*;
 import android.view.*;
@@ -41,6 +42,20 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBase5
 				.withDrawerLayout(R.layout.drawer_single_for_builder);
 			
 			drawer=bld.build();
+			
+			Log.i("ServerListActivityBase4","inserting CoordinatorLayout into DrawerLayout...");
+			DrawerLayout dl=drawer.getDrawerLayout();
+			View sliding=dl.getChildAt(1);
+			dl.removeViewAt(1);
+			CoordinatorLayout cood=new CoordinatorLayout(this);
+			cood.setLayoutParams(sliding.getLayoutParams());
+			dl.addView(cood);
+			CoordinatorLayout.LayoutParams sldLp=new CoordinatorLayout.LayoutParams(sliding.getLayoutParams());
+			sldLp.setBehavior(Utils.newBehavior(getResources().getString(R.string.appbar_scrolling_view_behavior)));
+			sldLp.width=sldLp.height=sldLp.MATCH_PARENT;
+			sliding.setLayoutParams(sldLp);
+			cood.addView(sliding,1);
+			Log.i("ServerListActivityBase4","done");
 		}
 		rv = (RecyclerView)findViewById(android.R.id.list);
 		switch(pref.getInt("serverListStyle2",0)){

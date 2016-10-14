@@ -513,4 +513,12 @@ public class Utils extends PingerUtils{
 		sb.getView().setClickable(false);
 		return sb;
 	}
+	public static CoordinatorLayout.Behavior newBehavior(String clazz){
+		try {
+			return (CoordinatorLayout.Behavior)Class.forName(clazz).newInstance();
+		} catch (Throwable e) {
+			WisecraftError.report("Utils#newBehavior",e);
+			return null;
+		}
+	}
 }
