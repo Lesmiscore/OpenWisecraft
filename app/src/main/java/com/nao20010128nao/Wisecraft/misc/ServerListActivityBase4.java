@@ -42,21 +42,6 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBase5
 				.withDrawerLayout(R.layout.drawer_single_for_builder);
 			
 			drawer=bld.build();
-			
-			Log.i("ServerListActivityBase4","inserting CoordinatorLayout into DrawerLayout...");
-			DrawerLayout dl=drawer.getDrawerLayout();
-			View sliding=dl.getChildAt(1);
-			dl.removeViewAt(1);
-			CoordinatorLayout cood=new CoordinatorLayout(this);
-			cood.setLayoutParams(/*sliding.getLayoutParams()*/new DrawerLayout.LayoutParams(sliding.getLayoutParams().width,sliding.getLayoutParams().height));
-			//cood.setPadding(sliding.getPaddingLeft(),sliding.getPaddingTop(),sliding.getPaddingRight(),sliding.getPaddingBottom());
-			dl.addView(cood);
-			CoordinatorLayout.LayoutParams sldLp=new CoordinatorLayout.LayoutParams(CoordinatorLayout.LayoutParams.MATCH_PARENT,CoordinatorLayout.LayoutParams.MATCH_PARENT);
-			sldLp.setBehavior(Utils.newBehavior(getResources().getString(R.string.appbar_scrolling_view_behavior)));
-			sliding.setPadding(0,0,0,0);
-			sliding.setLayoutParams(sldLp);
-			cood.addView(sliding);
-			Log.i("ServerListActivityBase4","done");
 		}
 		rv = (RecyclerView)findViewById(android.R.id.list);
 		switch(pref.getInt("serverListStyle2",0)){
