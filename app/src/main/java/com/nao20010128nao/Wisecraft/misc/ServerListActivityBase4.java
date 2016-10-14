@@ -50,9 +50,8 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBase5
 			CoordinatorLayout cood=new CoordinatorLayout(this);
 			cood.setLayoutParams(sliding.getLayoutParams());
 			dl.addView(cood);
-			CoordinatorLayout.LayoutParams sldLp=new CoordinatorLayout.LayoutParams(sliding.getLayoutParams());
+			CoordinatorLayout.LayoutParams sldLp=new CoordinatorLayout.LayoutParams(CoordinatorLayout.LayoutParams.MATCH_PARENT,CoordinatorLayout.LayoutParams.MATCH_PARENT);
 			sldLp.setBehavior(Utils.newBehavior(getResources().getString(R.string.appbar_scrolling_view_behavior)));
-			sldLp.width=sldLp.height=sldLp.MATCH_PARENT;
 			sliding.setLayoutParams(sldLp);
 			cood.addView(sliding);
 			Log.i("ServerListActivityBase4","done");
