@@ -220,7 +220,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
             public boolean onPrepareActionMode(ActionMode p1, Menu p2) {
                 editMode = EDIT_MODE_SELECT_UPDATE;
-				MenuItem mi=p2.add(Menu.NONE,0,0,R.id.update).setIcon(R.drawable.ic_refresh_black_48dp);
+				MenuItem mi=p2.add(Menu.NONE,0,0,R.string.update).setIcon(R.drawable.ic_refresh_black_48dp);
 				MenuItemCompat.setShowAsAction(mi,MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
                 return true;
             }
