@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<style name="AppTheme.Dark" parent="@style/Theme.AppCompat">
-		<item name="colorPrimary">@color/primary</item>
 		<item name="colorAccent">@color/mainColor</item>
 		<item name="android:windowContentOverlay">@null</item>
 		<item name="preferenceTheme">@style/AppTheme.Preference</item>
@@ -11,14 +10,12 @@
 		<item name="wcToolbarTheme">@style/AppTheme.Toolbar.Dark</item>
 	</style>
 	<style name="AppDialog.Dark" parent="@style/Theme.AppCompat.Dialog">
-		<item name="colorPrimary">@color/primary</item>
 		<item name="colorAccent">@color/mainColor</item>
 		<item name="android:windowContentOverlay">@null</item>
 		<item name="preferenceTheme">@style/AppTheme.Preference</item>
 		<item name="wcToolbarTheme">@style/AppTheme.Toolbar.Dark</item>
 	</style>
 	<style name="AppAlertDialog.Dark" parent="@style/Theme.AppCompat.Dialog.Alert">
-		<item name="colorPrimary">@color/primary</item>
 		<item name="colorAccent">@color/mainColor</item>
 		<item name="preferenceTheme">@style/AppTheme.Preference</item>
 		<item name="wcToolbarTheme">@style/AppTheme.Toolbar.Dark</item>
