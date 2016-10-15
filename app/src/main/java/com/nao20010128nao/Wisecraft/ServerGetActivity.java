@@ -22,7 +22,7 @@ public class ServerGetActivity extends CompatWebViewActivity {
 		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
 		if(!Utils.isOnline(this)){
-			new AppCompatAlertDialog.Builder(this)
+			new AppCompatAlertDialog.Builder(this,ThemePatcher.getDefaultStyle(this))
 				.setMessage(R.string.offline)
 				.setTitle(R.string.error)
 				.setOnCancelListener(new DialogInterface.OnCancelListener(){
@@ -41,7 +41,7 @@ public class ServerGetActivity extends CompatWebViewActivity {
 			return;
 		}
 		serverList = createServerListDomains();
-		new AppCompatAlertDialog.Builder(this)
+		new AppCompatAlertDialog.Builder(this,ThemePatcher.getDefaultStyle(this))
 			.setSingleChoiceItems(serverList, -1, new DialogInterface.OnClickListener(){
 				public void onClick(DialogInterface di, int w) {
 					di.dismiss();
@@ -105,7 +105,7 @@ public class ServerGetActivity extends CompatWebViewActivity {
 							for (int i=0;i < servSel.length;i++) {
 								servSel[i] = serv.get(i).toString();
 							}
-							new AppCompatAlertDialog.Builder(ServerGetActivity.this)
+							new AppCompatAlertDialog.Builder(ServerGetActivity.this,ThemePatcher.getDefaultStyle(ServerGetActivity.this))
 								.setTitle(R.string.selectServers)
 								.setMultiChoiceItems(servSel, selections = new boolean[servSel.length], new DialogInterface.OnMultiChoiceClickListener(){
 									public void onClick(DialogInterface di, int w, boolean c) {
@@ -132,7 +132,7 @@ public class ServerGetActivity extends CompatWebViewActivity {
 								dialogMsg = getResources().getString(R.string.msl_unsupportedWebpage) + url;
 							}
 
-							new AppCompatAlertDialog.Builder(ServerGetActivity.this)
+							new AppCompatAlertDialog.Builder(ServerGetActivity.this,ThemePatcher.getDefaultStyle(ServerGetActivity.this))
 								.setTitle(R.string.error)
 								.setMessage(dialogMsg)
 								.setPositiveButton(android.R.string.ok, Constant.BLANK_DIALOG_CLICK_LISTENER)

@@ -1,9 +1,11 @@
 package com.nao20010128nao.Wisecraft.misc;
 import android.app.*;
+import android.content.*;
 import android.util.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.api.*;
 import java.util.*;
+import android.support.v7.view.*;
 
 public class ThemePatcher{
 	private ThemePatcher(){}
@@ -109,6 +111,30 @@ public class ThemePatcher{
 				break;
 		}
 		Log.d("ThemePatcher","Done. How is it?");
+	}
+	
+	public static int getDefaultStyle(Context a){
+		int themeMode=Utils.getPreferences(a).getInt("4.0themeMode",THEME_MODE_LIGHT);
+		Themes themes=THEMES.get(Activity.class);
+		switch(themeMode){
+			default:
+				Log.d("ThemePatcher","Invalid themeMode detected. Using THEME_MODE_LIGHT instead.");
+				themeMode=THEME_MODE_LIGHT;
+				Utils.getPreferences(a).edit().putInt("4.0themeMode",THEME_MODE_LIGHT).commit();
+			case THEME_MODE_LIGHT:
+				Log.d("ThemePatcher","Using THEME_MODE_LIGHT.");
+				return themes.light;
+			case THEME_MODE_DARK:
+				Log.d("ThemePatcher","Using THEME_MODE_DARK.");
+				return themes.dark;
+			case THEME_MODE_DAYNIGHT:
+				Log.d("ThemePatcher","Using THEME_MODE_DAYNIGHT.");
+				return themes.dayNight;
+		}
+	}
+	
+	public static Context getStyledContext(Context c){
+		return new ContextThemeWrapper(c,getDefaultStyle(c));
 	}
 
 	private static void setTheme(Activity a, int theme) {

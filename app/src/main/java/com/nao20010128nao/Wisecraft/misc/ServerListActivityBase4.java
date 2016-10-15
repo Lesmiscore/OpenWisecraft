@@ -146,7 +146,7 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBase5
 		super.onResume();
 		if(newVersionAnnounce!=0){
 			pref.edit().putInt("announcedFor",30).commit();
-			new AppCompatAlertDialog.Builder(this)
+			new AppCompatAlertDialog.Builder(this,ThemePatcher.getDefaultStyle(this))
 				.setTitle(R.string.newVersionAnnounceTitle_30)
 				.setMessage(R.string.newVersionAnnounceContent_30)
 				.setCancelable(false)

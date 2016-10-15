@@ -172,7 +172,7 @@ public class WidgetsEditorActivity extends AppCompatActivity {
 				}
 			});
 
-		new AppCompatAlertDialog.Builder(this).
+		new AppCompatAlertDialog.Builder(this,ThemePatcher.getDefaultStyle(this)).
 			setTitle(sv+" ("+wid+")").
 			setView(dialog).
 			setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener(){
