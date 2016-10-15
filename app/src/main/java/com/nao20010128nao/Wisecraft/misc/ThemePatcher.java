@@ -15,7 +15,7 @@ public class ThemePatcher{
 	static{
 		Map<Class<? extends Activity>,Themes> themes=new HashMap<>();
 		themes.put(
-			null,
+			Activity.class,
 			new Themes(
 				R.style.AppTheme,
 				R.style.AppTheme_Dark,
@@ -85,8 +85,8 @@ public class ThemePatcher{
 		Class<? extends Activity> clazz=Utils.requireNonNull(a).getClass();
 		Log.d("ThemePatcher","Applying theme for:"+clazz.getName());
 		if(!THEMES.containsKey(clazz)){
-			Log.d("ThemePatcher",clazz.getName()+" seems unregistered. Using null as key.");
-			clazz=null;
+			Log.d("ThemePatcher",clazz.getName()+" seems unregistered. Using Activity.class as key.");
+			clazz=Activity.class;
 		}
 		int themeMode=Utils.getPreferences(a).getInt("4.0themeMode",THEME_MODE_LIGHT);
 		Themes themes=THEMES.get(clazz);

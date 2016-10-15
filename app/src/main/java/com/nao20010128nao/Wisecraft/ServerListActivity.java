@@ -3,6 +3,7 @@ import android.content.*;
 import android.os.*;
 import android.support.design.widget.*;
 import android.support.v4.content.*;
+import android.support.v4.view.*;
 import android.support.v4.widget.*;
 import android.support.v7.app.*;
 import android.support.v7.view.*;
@@ -34,7 +35,6 @@ import android.support.v7.view.ActionMode;
 import com.nao20010128nao.Wisecraft.R;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
-import android.support.v4.view.*;
 
 //Full implement for user interface (Some part is available at ServerListActivityBase4)
 abstract class ServerListActivityImpl extends ServerListActivityBase1 implements ServerListActivityInterface,ServerListProvider {
@@ -48,6 +48,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
+		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
 		loadMenu();
 
@@ -220,7 +221,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
             public boolean onPrepareActionMode(ActionMode p1, Menu p2) {
                 editMode = EDIT_MODE_SELECT_UPDATE;
-				MenuItem mi=p2.add(Menu.NONE,0,0,R.id.update).setIcon(R.drawable.ic_refresh_black_48dp);
+				MenuItem mi=p2.add(Menu.NONE,0,0,R.string.update).setIcon(R.drawable.ic_refresh_black_48dp);
 				MenuItemCompat.setShowAsAction(mi,MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
                 return true;
             }

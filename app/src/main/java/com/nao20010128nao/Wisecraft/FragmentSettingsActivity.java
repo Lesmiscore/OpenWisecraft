@@ -56,6 +56,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
+		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_settings_with_preview);
 		if(savedInstanceState==null){

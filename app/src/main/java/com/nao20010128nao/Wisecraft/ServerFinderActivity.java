@@ -37,6 +37,7 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
+		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.recycler_view_content);
 		sl = new RecyclerServerList(this);

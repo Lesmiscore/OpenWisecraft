@@ -50,6 +50,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
+		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
 		boolean usesOldInstance=false;
 		if (instance.get() != null) {

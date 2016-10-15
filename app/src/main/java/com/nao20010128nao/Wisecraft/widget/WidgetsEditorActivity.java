@@ -22,6 +22,7 @@ public class WidgetsEditorActivity extends AppCompatActivity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
 		widgetPref=PingWidget.getWidgetPref(this);
 		setContentView(R.layout.recycler_view_content);

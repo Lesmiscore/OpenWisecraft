@@ -19,6 +19,7 @@ public class ServerGetActivity extends CompatWebViewActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
+		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
 		if(!Utils.isOnline(this)){
 			new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)

@@ -28,6 +28,7 @@ public abstract class WidgetServerSelectActivity extends AppCompatActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
+		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.recycler_view_content);
 		pref=PreferenceManager.getDefaultSharedPreferences(this);

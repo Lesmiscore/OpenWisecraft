@@ -75,6 +75,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
+		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
 		getWindow().requestFeature(Window.FEATURE_ACTION_MODE_OVERLAY);
 		instance = new WeakReference(this);

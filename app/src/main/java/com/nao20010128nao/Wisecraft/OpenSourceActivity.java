@@ -12,6 +12,7 @@ public class OpenSourceActivity extends ScrollingActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
+		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.osl_parent);
 		getSupportActionBar().setElevation(0f);
