@@ -248,7 +248,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 					public void onClick(String a, String b, String c) {
 						new AppCompatAlertDialog.Builder(getContext(),R.style.AppAlertDialog)
 							.setTitle(R.string.serverListStyle)
-							.setSingleChoiceItems(getResources().getStringArray(R.array.serverListStyles),pref.getInt("serverListStyle2",0),new DialogInterface.OnClickListener(){
+							.setSingleChoiceItems(getResources().getStringArray(R.array.serverListStyles),which=pref.getInt("serverListStyle2",0),new DialogInterface.OnClickListener(){
 								public void onClick(DialogInterface di,int w){
 									which=w;
 								}
@@ -346,6 +346,28 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			sH("widgetEditor", new HandledPreference.OnClickListener(){
 					public void onClick(String a, String b, String c) {
 						startActivity(new Intent(getActivity(),WidgetsEditorActivity.class));
+					}
+				});
+			sH("4.0themeMode", new HandledPreference.OnClickListener(){
+					public void onClick(String a, String b, String c) {
+						new AppCompatAlertDialog.Builder(getContext(),R.style.AppAlertDialog)
+							.setTitle("Theme Mode"/*R.string.serverListStyle*/)
+							.setSingleChoiceItems(new String[]{"Light","Dark","DayNight"}/*getResources().getStringArray(R.array.serverListStyles)*/,which=pref.getInt("4.0themeMode",ThemePatcher.THEME_MODE_LIGHT),new DialogInterface.OnClickListener(){
+								public void onClick(DialogInterface di,int w){
+									which=w;
+								}
+							})
+							.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+								public void onClick(DialogInterface di,int w){
+									pref.edit().putInt("4.0themeMode",which).commit();
+								}
+							})
+							.setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
+								public void onClick(DialogInterface di,int w){
+
+								}
+							})
+							.show();
 					}
 				});
 		}
