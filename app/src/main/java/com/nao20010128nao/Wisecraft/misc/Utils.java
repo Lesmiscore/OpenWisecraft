@@ -521,4 +521,10 @@ public class Utils extends PingerUtils{
 			return null;
 		}
 	}
+	public static int getMenuTintColor(Context context){
+		TypedArray ta=context.obtainStyledAttributes(new int[]{R.attr.wcMenuTintColor});
+		int color=ta.getColor(0,Color.BLACK);
+		ta.recycle();
+		return color;
+	}
 }

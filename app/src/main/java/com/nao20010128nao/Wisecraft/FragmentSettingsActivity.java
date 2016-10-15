@@ -97,7 +97,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO: Implement this method
 		MenuItem showPreview=menu.add(Menu.NONE,0,0,R.string.preview);
-		showPreview.setIcon(misc.getVisibility()==View.VISIBLE?R.drawable.ic_visibility_black_48dp:R.drawable.ic_visibility_off_black_48dp);
+		showPreview.setIcon(TheApplication.instance.getTintedDrawable(misc.getVisibility()==View.VISIBLE?R.drawable.ic_visibility_black_48dp:R.drawable.ic_visibility_off_black_48dp,Utils.getMenuTintColor(this)));
 		MenuItemCompat.setShowAsAction(showPreview,MenuItem.SHOW_AS_ACTION_ALWAYS);
 		return true;
 	}

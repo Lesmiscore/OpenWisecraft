@@ -9,6 +9,7 @@
 		<item name="android:windowAnimationStyle">@style/AppTheme.Transition</item>
 		<item name="wcToolbarTheme">@style/AppTheme.Toolbar.Dark</item>
 		<item name="wcDefaultPreferenceTextColor">#ffffff</item>
+		<item name="wcMenuTintColor">#ffffff</item>
 	</style>
 	<style name="AppDialog.Dark" parent="@style/Theme.AppCompat.Dialog">
 		<item name="colorAccent">@color/mainColor</item>
@@ -16,12 +17,14 @@
 		<item name="preferenceTheme">@style/AppTheme.Preference</item>
 		<item name="wcToolbarTheme">@style/AppTheme.Toolbar.Dark</item>
 		<item name="wcDefaultPreferenceTextColor">#ffffff</item>
+		<item name="wcMenuTintColor">#ffffff</item>
 	</style>
 	<style name="AppAlertDialog.Dark" parent="@style/Theme.AppCompat.Dialog.Alert">
 		<item name="colorAccent">@color/mainColor</item>
 		<item name="preferenceTheme">@style/AppTheme.Preference</item>
 		<item name="wcToolbarTheme">@style/AppTheme.Toolbar.Dark</item>
 		<item name="wcDefaultPreferenceTextColor">#ffffff</item>
+		<item name="wcMenuTintColor">#ffffff</item>
 	</style>
 
 	<style name="AppTheme.NoActionBar.Dark" parent="AppTheme.Dark">
