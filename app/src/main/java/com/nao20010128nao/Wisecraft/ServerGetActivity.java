@@ -22,7 +22,7 @@ public class ServerGetActivity extends CompatWebViewActivity {
 		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
 		if(!Utils.isOnline(this)){
-			new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
+			new AppCompatAlertDialog.Builder(this)
 				.setMessage(R.string.offline)
 				.setTitle(R.string.error)
 				.setOnCancelListener(new DialogInterface.OnCancelListener(){
@@ -41,7 +41,7 @@ public class ServerGetActivity extends CompatWebViewActivity {
 			return;
 		}
 		serverList = createServerListDomains();
-		new AppCompatAlertDialog.Builder(this, R.style.AppAlertDialog)
+		new AppCompatAlertDialog.Builder(this)
 			.setSingleChoiceItems(serverList, -1, new DialogInterface.OnClickListener(){
 				public void onClick(DialogInterface di, int w) {
 					di.dismiss();
@@ -105,7 +105,7 @@ public class ServerGetActivity extends CompatWebViewActivity {
 							for (int i=0;i < servSel.length;i++) {
 								servSel[i] = serv.get(i).toString();
 							}
-							new AppCompatAlertDialog.Builder(ServerGetActivity.this, R.style.AppAlertDialog)
+							new AppCompatAlertDialog.Builder(ServerGetActivity.this)
 								.setTitle(R.string.selectServers)
 								.setMultiChoiceItems(servSel, selections = new boolean[servSel.length], new DialogInterface.OnMultiChoiceClickListener(){
 									public void onClick(DialogInterface di, int w, boolean c) {

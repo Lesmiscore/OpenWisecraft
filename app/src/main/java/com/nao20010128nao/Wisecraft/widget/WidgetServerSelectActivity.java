@@ -99,7 +99,7 @@ public abstract class WidgetServerSelectActivity extends AppCompatActivity
 						}
 					});
 
-				new AppCompatAlertDialog.Builder(this, R.style.AppAlertDialog).
+				new AppCompatAlertDialog.Builder(this).
 					setView(dialog).
 					setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener(){
 						public void onClick(DialogInterface d, int sel) {

@@ -58,7 +58,7 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 		rv.setAdapter(sl);
 		ip = getIntent().getStringExtra("ip");
 		mode = getIntent().getIntExtra("mode", 0);
-		new AppCompatAlertDialog.Builder(this, R.style.AppAlertDialog)
+		new AppCompatAlertDialog.Builder(this)
 			.setTitle(R.string.serverFinder)
 			.setView(dialog = getLayoutInflater().inflate(R.layout.server_finder_start, null, false))
 			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){

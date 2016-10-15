@@ -11,6 +11,7 @@
 		<item name="wcToolbarTheme">@style/AppTheme.Toolbar</item>
 		<item name="wcDefaultPreferenceTextColor">#000000</item>
 		<item name="wcMenuTintColor">#000000</item>
+		<item name="dialogTheme">@style/AppAlertDialog</item>
 	</style>
 	<style name="AppDialog" parent="@style/Theme.AppCompat.Light.Dialog">
 		<item name="colorPrimary">@color/primary</item>

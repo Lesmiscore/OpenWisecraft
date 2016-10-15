@@ -49,7 +49,7 @@ public class PreferenceUtils
 		v.findViewById(android.R.id.message).setVisibility(View.GONE);
 		((EditText)v.findViewById(android.R.id.edit)).setText(pref.getString(preference.getKey(),defaultValue));
 		if(editor!=null)editor.process(v);
-		new AlertDialog.Builder(activity,R.style.AppAlertDialog)
+		new AlertDialog.Builder(activity)
 			.setTitle(preference.getTitle())
 			.setView(v)
 			.setCancelable(true)
