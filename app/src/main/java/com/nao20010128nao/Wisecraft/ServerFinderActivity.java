@@ -275,52 +275,11 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 		}
 	}
 }
-public class ServerFinderActivity extends CompatActivityGroup {
+public class ServerFinderActivity extends ServerFinderActivityImpl {
 	public static WeakReference<ServerFinderActivity> instance=new WeakReference(null);
-
-	boolean nonLoop=false;
-	SharedPreferences pref;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		instance = new WeakReference(this);
-		pref = PreferenceManager.getDefaultSharedPreferences(this);
-		super.onCreate(savedInstanceState);
-		getSupportActionBar().hide();
-		setContentView(getLocalActivityManager().startActivity("main", new Intent(this, Content.class).putExtras(getIntent())).getDecorView());
-	}
-	public static class Content extends ServerFinderActivityImpl {public static void deleteRef() {instance = new WeakReference<>(null);}}
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// TODO: Implement this method
-		if (nonLoop)
-			return true;
-		nonLoop = true;
-		boolean val= getLocalActivityManager().getActivity("main").onCreateOptionsMenu(menu);
-		nonLoop = false;
-		return val;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO: Implement this method
-		if (nonLoop)
-			return true;
-		nonLoop = true;
-		boolean val= getLocalActivityManager().getActivity("main").onOptionsItemSelected(item);
-		nonLoop = false;
-		return val;
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO: Implement this method
-		((ActivityResultInterface)getLocalActivityManager().getActivity("main")).onActivityResult(requestCode, resultCode, data);
-	}
-
-	@Override
-	protected void attachBaseContext(Context newBase) {
-		super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
 	}
 }
