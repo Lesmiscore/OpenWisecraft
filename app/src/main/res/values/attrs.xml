@@ -6,4 +6,5 @@
 	</declare-styleable>
 	<attr name="colorPickerPreferenceStyle" format="reference"/>
 	<attr name="wcToolbarTheme" format="reference"/>
+	<attr name="wcDefaultPreferenceTextColor" format="color"/>
 </resources>

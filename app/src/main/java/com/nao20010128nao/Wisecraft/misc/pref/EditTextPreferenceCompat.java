@@ -10,18 +10,22 @@ public class EditTextPreferenceCompat extends android.support.v7.preference.Edit
 	
 	public EditTextPreferenceCompat(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+		color=PreferenceUtils.getDefaultPreferenceTextColor(context);
     }
 
     public EditTextPreferenceCompat(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+		color=PreferenceUtils.getDefaultPreferenceTextColor(context);
     }
 
     public EditTextPreferenceCompat(Context context, AttributeSet attrs) {
         super(context, attrs);
+		color=PreferenceUtils.getDefaultPreferenceTextColor(context);
     }
 
     public EditTextPreferenceCompat(Context context) {
         super(context);
+		color=PreferenceUtils.getDefaultPreferenceTextColor(context);
     }
 
 	@Override

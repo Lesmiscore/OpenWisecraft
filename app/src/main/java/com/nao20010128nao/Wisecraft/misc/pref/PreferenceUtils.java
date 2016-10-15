@@ -1,6 +1,8 @@
 package com.nao20010128nao.Wisecraft.misc.pref;
 import android.app.*;
 import android.content.*;
+import android.content.res.*;
+import android.graphics.*;
 import android.preference.*;
 import android.support.v4.content.*;
 import android.support.v7.app.*;
@@ -31,6 +33,12 @@ public class PreferenceUtils
 	}
 	public static void onBindViewHolder(SetTextColor pref,PreferenceViewHolder holder){
 		((TextView)holder.findViewById(android.R.id.title)).setTextColor(pref.getTextColor());
+	}
+	public static int getDefaultPreferenceTextColor(Context context){
+		TypedArray ta=context.obtainStyledAttributes(new int[]{R.attr.wcDefaultPreferenceTextColor});
+		int color=ta.getColor(0,Color.BLACK);
+		ta.recycle();
+		return color;
 	}
 	//This is a relief measure of EditTextPreferenceDialogFragmentCompat. Will be deleted.
 	public static void showEditTextDialog(Activity activity,final Preference preference,String defaultValue,Treatment<View> editor){
