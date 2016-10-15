@@ -25,6 +25,8 @@ public class PreferenceUtils
 		holder.itemView.setMinimumHeight(context.getResources().getDimensionPixelOffset(R.dimen.settings_pref_height));
 		if(pref instanceof SetTextColor){
 			onBindViewHolder((SetTextColor)pref,holder);
+		}else{
+			((TextView)holder.findViewById(android.R.id.title)).setTextColor(getDefaultPreferenceTextColor(context));
 		}
 		if(!pref.isEnabled()){
 			((TextView)holder.findViewById(android.R.id.title)).setTextColor(ContextCompat.getColor(context,R.color.color888));
