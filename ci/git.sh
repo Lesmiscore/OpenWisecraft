@@ -20,4 +20,3 @@ cd ../colorPicker
 git pull origin master > /dev/null
 git checkout master > /dev/null
 cd ../
-  
