@@ -23,7 +23,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 	static WeakReference<ServerTestActivityImpl> instance=new WeakReference(null);
 
 	ServerPingProvider spp=new NormalServerPingProvider();
-	RecyclerServerList sl;
+	ServerList sl;
 	List<Server> list;
 	int clicked=-1;
 	ProgressDialog waitDialog;
@@ -59,7 +59,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 			list = instance.get().list;
 			usesOldInstance = true;
 		} else {
-			sl = new RecyclerServerList(this);
+			sl = new ServerList(this);
 		}
 		instance = new WeakReference(this);
         slsl=(ServerListStyleLoader)getSystemService(ContextWrappingExtender.SERVER_LIST_STYLE_LOADER);
@@ -183,10 +183,10 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
-	static class RecyclerServerList extends ListRecyclerViewAdapter<ServerStatusWrapperViewHolder,Server> implements AdapterView.OnItemClickListener {
+	static class ServerList extends ListRecyclerViewAdapter<ServerStatusWrapperViewHolder,Server> implements AdapterView.OnItemClickListener {
 		ServerTestActivityImpl sta;
 
-		public RecyclerServerList(ServerTestActivityImpl parent) {
+		public ServerList(ServerTestActivityImpl parent) {
 			super(parent.list = new ArrayList<Server>());
 			sta = parent;
 		}

@@ -40,7 +40,7 @@ import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 abstract class ServerListActivityImpl extends ServerListActivityBase1 implements ServerListActivityInterface,ServerListProvider {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
 	
-    RecycleServerList sl;
+    ServerList sl;
     List<Server> list;
 	ServerListStyleLoader slsl;
 	Set<Server> selected=new HashSet<>();
@@ -145,7 +145,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                 if (pref.getBoolean("updAnotherThread", false))
 				    updater = new TcpServerPingProvider("192.168.3.100",15687);
             }
-			rv.setAdapter(sl = new RecycleServerList(this));
+			rv.setAdapter(sl = new ServerList(this));
 		}
 		rv.setLongClickable(true);
 		wd = new WorkingDialog(this);
@@ -886,9 +886,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
 	
 	
-	static class RecycleServerList extends RecyclerView.Adapter<ServerStatusWrapperViewHolder> implements AdapterView.OnItemClickListener,AdapterView.OnItemLongClickListener {
+	static class ServerList extends RecyclerView.Adapter<ServerStatusWrapperViewHolder> implements AdapterView.OnItemClickListener,AdapterView.OnItemLongClickListener {
 		ServerListActivityImpl sla;
-		public RecycleServerList(ServerListActivityImpl sla) {
+		public ServerList(ServerListActivityImpl sla) {
 			sla.list = new ServerListArrayList();
 			this.sla = sla;
 		}

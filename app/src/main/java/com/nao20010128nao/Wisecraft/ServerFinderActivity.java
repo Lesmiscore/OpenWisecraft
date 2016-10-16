@@ -23,7 +23,7 @@ import java.util.*;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 class ServerFinderActivityImpl extends AppCompatActivity implements ServerListActivityInterface {
-	RecyclerServerList sl;
+	ServerList sl;
 	List<ServerStatus> list;
 	String ip;
 	int mode;
@@ -40,7 +40,7 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.recycler_view_content);
-		sl = new RecyclerServerList(this);
+		sl = new ServerList(this);
 		rv = (RecyclerView)findViewById(android.R.id.list);
 		switch(pref.getInt("serverListStyle2",0)){
 			case 0:default:
@@ -187,10 +187,10 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
-	class RecyclerServerList extends ListRecyclerViewAdapter<ServerStatusWrapperViewHolder,ServerStatus> implements AdapterView.OnItemClickListener {
+	class ServerList extends ListRecyclerViewAdapter<ServerStatusWrapperViewHolder,ServerStatus> implements AdapterView.OnItemClickListener {
 		ServerFinderActivityImpl sta;
 
-		public RecyclerServerList(ServerFinderActivityImpl parent) {
+		public ServerList(ServerFinderActivityImpl parent) {
 			super(parent.list = new ArrayList<ServerStatus>());
 			sta = parent;
 		}
