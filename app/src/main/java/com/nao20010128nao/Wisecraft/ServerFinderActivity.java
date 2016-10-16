@@ -37,6 +37,7 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
+		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.recycler_view_content);
 		sl = new RecyclerServerList(this);
@@ -57,7 +58,7 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 		rv.setAdapter(sl);
 		ip = getIntent().getStringExtra("ip");
 		mode = getIntent().getIntExtra("mode", 0);
-		new AppCompatAlertDialog.Builder(this, R.style.AppAlertDialog)
+		new AppCompatAlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
 			.setTitle(R.string.serverFinder)
 			.setView(dialog = getLayoutInflater().inflate(R.layout.server_finder_start, null, false))
 			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
@@ -256,7 +257,7 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			final Server s=getItem(position);
 			if (s instanceof ServerStatus) {
-				new AppCompatAlertDialog.Builder(ServerFinderActivityImpl.this)
+				new AppCompatAlertDialog.Builder(ServerFinderActivityImpl.this,ThemePatcher.getDefaultDialogStyle(ServerFinderActivityImpl.this))
 					.setTitle(s.toString())
 					.setItems(R.array.serverFinderMenu, new DialogInterface.OnClickListener(){
 						public void onClick(DialogInterface di, int w) {

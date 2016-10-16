@@ -22,6 +22,7 @@ public class WidgetsEditorActivity extends AppCompatActivity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
 		widgetPref=PingWidget.getWidgetPref(this);
 		setContentView(R.layout.recycler_view_content);
@@ -171,7 +172,7 @@ public class WidgetsEditorActivity extends AppCompatActivity {
 				}
 			});
 
-		new AppCompatAlertDialog.Builder(this, R.style.AppAlertDialog).
+		new AppCompatAlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this)).
 			setTitle(sv+" ("+wid+")").
 			setView(dialog).
 			setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener(){

@@ -28,6 +28,7 @@ public class ProxyActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
+		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
 		
 		try {
@@ -55,7 +56,7 @@ public class ProxyActivity extends AppCompatActivity {
 		String act=getIntent().getAction();
 		if(act.equals("start")){
 			if(isProxyRunning()){
-				new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
+				new AppCompatAlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
 					.setMessage(R.string.mtlIsAlreadyRunning)
 					.setCancelable(false)
 					.setTitle(R.string.error)
@@ -94,7 +95,7 @@ public class ProxyActivity extends AppCompatActivity {
 	}
 
 	public void dialog1() {
-		new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
+		new AppCompatAlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
 			.setMessage(R.string.mtl_attention_1)
 			.setCancelable(false)
 			.setPositiveButton(R.string.next, new AppCompatAlertDialog.OnClickListener(){
@@ -112,7 +113,7 @@ public class ProxyActivity extends AppCompatActivity {
 	}
 
 	public void dialog2() {
-		new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
+		new AppCompatAlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
 			.setMessage(R.string.mtl_attention_2)
 			.setCancelable(false)
 			.setPositiveButton(R.string.next, new AppCompatAlertDialog.OnClickListener(){

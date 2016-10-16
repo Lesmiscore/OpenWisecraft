@@ -184,8 +184,7 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 	
 	@Override
 	public int getDialogStyleId() {
-		// TODO: Implement this method
-		return R.style.AppAlertDialog;
+		return ThemePatcher.getDefaultDialogStyle(this);
 	}
 	
 	@Override

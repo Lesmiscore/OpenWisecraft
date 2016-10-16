@@ -28,6 +28,7 @@ public abstract class WidgetServerSelectActivity extends AppCompatActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
+		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.recycler_view_content);
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
@@ -98,7 +99,7 @@ public abstract class WidgetServerSelectActivity extends AppCompatActivity
 						}
 					});
 
-				new AppCompatAlertDialog.Builder(this, R.style.AppAlertDialog).
+				new AppCompatAlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this)).
 					setView(dialog).
 					setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener(){
 						public void onClick(DialogInterface d, int sel) {

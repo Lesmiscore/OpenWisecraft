@@ -56,6 +56,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
+		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_settings_with_preview);
 		if(savedInstanceState==null){
@@ -96,7 +97,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO: Implement this method
 		MenuItem showPreview=menu.add(Menu.NONE,0,0,R.string.preview);
-		showPreview.setIcon(misc.getVisibility()==View.VISIBLE?R.drawable.ic_visibility_black_48dp:R.drawable.ic_visibility_off_black_48dp);
+		showPreview.setIcon(TheApplication.instance.getTintedDrawable(misc.getVisibility()==View.VISIBLE?R.drawable.ic_visibility_black_48dp:R.drawable.ic_visibility_off_black_48dp,Utils.getMenuTintColor(this)));
 		MenuItemCompat.setShowAsAction(showPreview,MenuItem.SHOW_AS_ACTION_ALWAYS);
 		return true;
 	}
@@ -243,11 +244,24 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		public void onCreatePreferences(Bundle p1, String p2) {
 			// TODO: Implement this method
 			addPreferencesFromResource(R.xml.settings_basic_compat);
+			sH("parallels", new HandledPreference.OnClickListener(){
+					public void onClick(String a, String b, String c) {
+						PreferenceUtils.showEditTextDialog(getActivity(),findPreference("changeDpi"),"1.0",new Treatment<View>(){
+							public void process(View v){
+								EditText text=(EditText)v.findViewById(android.R.id.edit);
+								text.setInputType(InputType.TYPE_CLASS_NUMBER|
+																							InputType.TYPE_TEXT_VARIATION_NORMAL|
+																							InputType.TYPE_NUMBER_FLAG_DECIMAL);
+								text.setFilters(new InputFilter[]{new InputFilter.LengthFilter(3)});
+							}
+						});
+					}
+				});
 			sH("serverListStyle", new HandledPreference.OnClickListener(){
 					public void onClick(String a, String b, String c) {
-						new AppCompatAlertDialog.Builder(getContext(),R.style.AppAlertDialog)
+						new AppCompatAlertDialog.Builder(getContext(),ThemePatcher.getDefaultDialogStyle(getContext()))
 							.setTitle(R.string.serverListStyle)
-							.setSingleChoiceItems(getResources().getStringArray(R.array.serverListStyles),pref.getInt("serverListStyle2",0),new DialogInterface.OnClickListener(){
+							.setSingleChoiceItems(getResources().getStringArray(R.array.serverListStyles),which=pref.getInt("serverListStyle2",0),new DialogInterface.OnClickListener(){
 								public void onClick(DialogInterface di,int w){
 									which=w;
 								}
@@ -270,7 +284,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 						String[] choice=getFontChoices();
 						String[] display=TheApplication.instance.getDisplayFontNames(choice);
 						final List<String> choiceList=Arrays.<String>asList(choice);
-						new AppCompatAlertDialog.Builder(getContext(),R.style.AppAlertDialog)
+						new AppCompatAlertDialog.Builder(getContext(),ThemePatcher.getDefaultDialogStyle(getContext()))
 							.setSingleChoiceItems(display, choiceList.indexOf(TheApplication.instance.getFontFieldName())
 							, new DialogInterface.OnClickListener(){
 								public void onClick(DialogInterface di, int w) {
@@ -318,10 +332,10 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 								}
 								
 								{
-									onProgressChanged(null,0,false);
+									onProgressChanged(seekBar,0,false);
 								}
 						});
-						new AppCompatAlertDialog.Builder(getContext(),R.style.AppAlertDialog)
+						new AppCompatAlertDialog.Builder(getContext(),ThemePatcher.getDefaultDialogStyle(getContext()))
 							.setTitle(R.string.addLessRows)
 							.setView(v)
 							.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
@@ -345,6 +359,28 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			sH("widgetEditor", new HandledPreference.OnClickListener(){
 					public void onClick(String a, String b, String c) {
 						startActivity(new Intent(getActivity(),WidgetsEditorActivity.class));
+					}
+				});
+			sH("4.0themeMode", new HandledPreference.OnClickListener(){
+					public void onClick(String a, String b, String c) {
+						new AppCompatAlertDialog.Builder(getContext(),ThemePatcher.getDefaultDialogStyle(getContext()))
+							.setTitle("Theme Mode"/*R.string.serverListStyle*/)
+							.setSingleChoiceItems(new String[]{"Light","Dark","DayNight"}/*getResources().getStringArray(R.array.serverListStyles)*/,which=pref.getInt("4.0themeMode",ThemePatcher.THEME_MODE_LIGHT),new DialogInterface.OnClickListener(){
+								public void onClick(DialogInterface di,int w){
+									which=w;
+								}
+							})
+							.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+								public void onClick(DialogInterface di,int w){
+									pref.edit().putInt("4.0themeMode",which).commit();
+								}
+							})
+							.setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
+								public void onClick(DialogInterface di,int w){
+
+								}
+							})
+							.show();
 					}
 				});
 		}
@@ -456,6 +492,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			// TODO: Implement this method
+			ThemePatcher.applyThemeForActivity(this);
 			super.onCreate(savedInstanceState);
 			setContentView(R.layout.settings_server_list_style_editor);
 			slsl=new ServerListStyleLoader(this);

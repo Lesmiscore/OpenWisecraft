@@ -11,18 +11,22 @@ public class StartPrefCompat extends HandledPreferenceCompat implements SetTextC
 	
 	public StartPrefCompat(android.content.Context context, android.util.AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context,attrs,defStyleAttr,defStyleRes);
+		color=PreferenceUtils.getDefaultPreferenceTextColor(context);
     }
 
     public StartPrefCompat(android.content.Context context, android.util.AttributeSet attrs, int defStyleAttr) {
         super(context,attrs,defStyleAttr);
+		color=PreferenceUtils.getDefaultPreferenceTextColor(context);
     }
 
     public StartPrefCompat(android.content.Context context, android.util.AttributeSet attrs) {
         super(context,attrs);
+		color=PreferenceUtils.getDefaultPreferenceTextColor(context);
     }
 
     public StartPrefCompat(android.content.Context context) {
         super(context);
+		color=PreferenceUtils.getDefaultPreferenceTextColor(context);
     }
 	
 	@Override

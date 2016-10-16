@@ -5,4 +5,7 @@
 		<attr name="async" format="boolean"/>
 	</declare-styleable>
 	<attr name="colorPickerPreferenceStyle" format="reference"/>
+	<attr name="wcToolbarTheme" format="reference"/>
+	<attr name="wcDefaultPreferenceTextColor" format="color"/>
+	<attr name="wcMenuTintColor" format="color"/>
 </resources>

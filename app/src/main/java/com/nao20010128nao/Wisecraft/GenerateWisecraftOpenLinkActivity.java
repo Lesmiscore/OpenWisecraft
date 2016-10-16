@@ -6,7 +6,7 @@ import android.support.design.widget.*;
 import android.support.v7.app.*;
 import android.view.*;
 import android.widget.*;
-import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.misc.*;
 
 public class GenerateWisecraftOpenLinkActivity extends AppCompatActivity {
 	static final String PREFIX="wisecraft://";
@@ -24,6 +24,7 @@ public class GenerateWisecraftOpenLinkActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
+		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.create_wisecraft_open_link);
 		

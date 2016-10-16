@@ -75,6 +75,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
+		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
 		getWindow().requestFeature(Window.FEATURE_ACTION_MODE_OVERLAY);
 		instance = new WeakReference(this);
@@ -357,7 +358,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 								});
 						}
 					});
-				new AppCompatAlertDialog.Builder(this, R.style.AppAlertDialog)
+				new AppCompatAlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
 					.setTitle(R.string.export_typepath_simple)
 					.setView(dialogView_)
 					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
@@ -389,7 +390,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 				scheduleFinish();//ServerListActivity updates the stat
 				return true;
 			case 1://See the title for all
-				AppCompatAlertDialog.Builder ab=new AppCompatAlertDialog.Builder(this, R.style.AppAlertDialog);
+				AppCompatAlertDialog.Builder ab=new AppCompatAlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this));
 				LinearLayout ll;
 				boolean dark;
 				dark = pref.getBoolean("colorFormattedText", false) ?pref.getBoolean("darkBackgroundForServerName", false): false;

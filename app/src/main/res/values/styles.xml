@@ -8,17 +8,29 @@
 		<item name="alertDialogTheme">@style/AppAlertDialog</item>
         <item name="windowActionModeOverlay">true</item>
 		<item name="android:windowAnimationStyle">@style/AppTheme.Transition</item>
+		<item name="wcToolbarTheme">@style/AppTheme.Toolbar</item>
+		<item name="wcDefaultPreferenceTextColor">#000000</item>
+		<item name="wcMenuTintColor">#000000</item>
+		<item name="dialogTheme">@style/AppAlertDialog</item>
 	</style>
 	<style name="AppDialog" parent="@style/Theme.AppCompat.Light.Dialog">
 		<item name="colorPrimary">@color/primary</item>
 		<item name="colorAccent">@color/mainColor</item>
 		<item name="android:windowContentOverlay">@null</item>
 		<item name="preferenceTheme">@style/AppTheme.Preference</item>
+		<item name="wcToolbarTheme">@style/AppTheme.Toolbar</item>
+		<item name="wcDefaultPreferenceTextColor">#000000</item>
+		<item name="wcMenuTintColor">#000000</item>
+		<item name="dialogTheme">@style/AppAlertDialog</item>
 	</style>
 	<style name="AppAlertDialog" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
 		<item name="colorPrimary">@color/primary</item>
 		<item name="colorAccent">@color/mainColor</item>
 		<item name="preferenceTheme">@style/AppTheme.Preference</item>
+		<item name="wcToolbarTheme">@style/AppTheme.Toolbar</item>
+		<item name="wcDefaultPreferenceTextColor">#000000</item>
+		<item name="wcMenuTintColor">#000000</item>
+		<item name="dialogTheme">@style/AppAlertDialog</item>
 	</style>
 	
 	<style name="AppTheme.NoActionBar" parent="AppTheme">

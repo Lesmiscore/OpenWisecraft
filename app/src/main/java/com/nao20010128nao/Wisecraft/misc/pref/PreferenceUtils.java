@@ -1,6 +1,8 @@
 package com.nao20010128nao.Wisecraft.misc.pref;
 import android.app.*;
 import android.content.*;
+import android.content.res.*;
+import android.graphics.*;
 import android.preference.*;
 import android.support.v4.content.*;
 import android.support.v7.app.*;
@@ -23,6 +25,8 @@ public class PreferenceUtils
 		holder.itemView.setMinimumHeight(context.getResources().getDimensionPixelOffset(R.dimen.settings_pref_height));
 		if(pref instanceof SetTextColor){
 			onBindViewHolder((SetTextColor)pref,holder);
+		}else{
+			((TextView)holder.findViewById(android.R.id.title)).setTextColor(getDefaultPreferenceTextColor(context));
 		}
 		if(!pref.isEnabled()){
 			((TextView)holder.findViewById(android.R.id.title)).setTextColor(ContextCompat.getColor(context,R.color.color888));
@@ -32,6 +36,12 @@ public class PreferenceUtils
 	public static void onBindViewHolder(SetTextColor pref,PreferenceViewHolder holder){
 		((TextView)holder.findViewById(android.R.id.title)).setTextColor(pref.getTextColor());
 	}
+	public static int getDefaultPreferenceTextColor(Context context){
+		TypedArray ta=context.obtainStyledAttributes(new int[]{R.attr.wcDefaultPreferenceTextColor});
+		int color=ta.getColor(0,Color.BLACK);
+		ta.recycle();
+		return color;
+	}
 	//This is a relief measure of EditTextPreferenceDialogFragmentCompat. Will be deleted.
 	public static void showEditTextDialog(Activity activity,final Preference preference,String defaultValue,Treatment<View> editor){
 		final SharedPreferences pref=PreferenceManager.getDefaultSharedPreferences(activity);
@@ -39,7 +49,7 @@ public class PreferenceUtils
 		v.findViewById(android.R.id.message).setVisibility(View.GONE);
 		((EditText)v.findViewById(android.R.id.edit)).setText(pref.getString(preference.getKey(),defaultValue));
 		if(editor!=null)editor.process(v);
-		new AlertDialog.Builder(activity,R.style.AppAlertDialog)
+		new AlertDialog.Builder(activity,ThemePatcher.getDefaultDialogStyle(activity))
 			.setTitle(preference.getTitle())
 			.setView(v)
 			.setCancelable(true)
