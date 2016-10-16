@@ -210,7 +210,9 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 				getWindow().setStatusBarColor(slsl.getBackgroundSimpleColor());
 			}
 		}
-		tabs.setBackgroundColor(Color.WHITE);
+		TypedArray ta=ThemePatcher.getStyledContext(this).obtainStyledAttributes(new int[]{android.R.attr.windowBackground});
+		tabs.setBackgroundDrawable(ta.getDrawable(0));
+		ta.recycle();
 	}
 
 	public void onBackPressed() {
