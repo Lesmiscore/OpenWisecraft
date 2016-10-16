@@ -114,7 +114,8 @@
         <activity
 			android:label="@string/addServerFromServerListSite"
 			android:name=".ServerGetActivity"
-			android:exported="false">
+			android:exported="false"
+			android:theme="@style/AppTheme.NoActionBar">
         </activity>
 		
         <activity

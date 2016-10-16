@@ -50,6 +50,14 @@ public class ThemePatcher{
 			)
 		);
 		themes.put(
+			ServerGetActivity.class,
+			new Themes(
+				R.style.AppTheme_NoActionBar,
+				R.style.AppTheme_NoActionBar_Dark,
+				R.style.AppTheme_NoActionBar_DayNight
+			)
+		);
+		themes.put(
 			RequestedServerInfoActivity.class,
 			new Themes(
 				R.style.AppTheme_Translucent,

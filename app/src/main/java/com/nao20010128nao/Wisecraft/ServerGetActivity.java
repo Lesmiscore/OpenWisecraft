@@ -1,30 +1,48 @@
 package com.nao20010128nao.Wisecraft;
 import android.content.*;
+import android.content.res.*;
 import android.os.*;
 import android.support.design.widget.*;
+import android.support.v7.widget.*;
+import android.text.*;
 import android.util.*;
 import android.view.*;
 import android.webkit.*;
+import android.widget.*;
 import com.nao20010128nao.McServerList.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import java.net.*;
 import java.util.*;
 
+import android.support.v7.widget.Toolbar;
+import com.nao20010128nao.Wisecraft.misc.Server;
+
 public class ServerGetActivity extends CompatWebViewActivity {
 	public static List<String> addForServerList;
 	String domain;
 	String[] serverList;
 	Snackbar downloading;
+	BottomSheetBehavior bottomSheet;
+	RecyclerView loadedServerListRv;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.bottomsheet_base);
-		getLayoutInflater().inflate(R.layout.webview_activity_compat,(ViewGroup)findViewById(R.id.main));
-		getLayoutInflater().inflate(R.layout.recycler_view_content,(ViewGroup)findViewById(R.id.bottomSheet));
+		getLayoutInflater().inflate(R.layout.only_toolbar,(ViewGroup)findViewById(R.id.main));
+		getLayoutInflater().inflate(R.layout.webview_activity_compat,(ViewGroup)findViewById(R.id.toolbarCoordinator).findViewById(R.id.frame));
+		
+		getLayoutInflater().inflate(R.layout.yes_no,(ViewGroup)findViewById(R.id.bottomSheet));
+		getLayoutInflater().inflate(R.layout.recycler_view_content,(ViewGroup)findViewById(R.id.ynDecor).findViewById(R.id.frame));
 		scanWebView();
+		setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
+		findViewById(R.id.bottomSheet).setVisibility(View.GONE);
+		
+		bottomSheet=BottomSheetBehavior.from(findViewById(R.id.bottomSheet));
+		loadedServerListRv=(RecyclerView)findViewById(android.R.id.list);
+		loadedServerListRv.setLayoutManager(new LinearLayoutManager(this));
 		if(!Utils.isOnline(this)){
 			new AppCompatAlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
 				.setMessage(R.string.offline)
@@ -178,5 +196,56 @@ public class ServerGetActivity extends CompatWebViewActivity {
 	@Override
 	protected void attachBaseContext(Context newBase) {
 		super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
+	}
+	
+	
+	class Adapter extends ListRecyclerViewAdapter<FindableViewHolder,Server> {
+		Map<Server,Boolean> selected=new HashMap<>();
+		
+		@Override
+		public void onBindViewHolder(FindableViewHolder parent, int offset) {
+			((TextView)parent.findViewById(android.R.id.text1)).setText(makeServerTitle(getItem(offset)));
+			TypedArray ta=obtainStyledAttributes(new int[]{R.attr.selectableItemBackground});
+			parent.itemView.setBackground(ta.getDrawable(0));
+			ta.recycle();
+			parent.itemView.setTag(getItem(offset));
+			Utils.applyHandlersForViewTree(parent.itemView,new OnClickListener(offset));
+		}
+
+		@Override
+		public FindableViewHolder onCreateViewHolder(ViewGroup parent, int type) {
+			return new FindableViewHolder(getLayoutInflater().inflate(R.layout.checkable_list_item,parent,false));
+		}
+		
+		public void clearSelectedState(){
+			selected.clear();
+			notifyItemRangeChanged(0,size());
+		}
+		
+		public void deleteAll(){
+			clear();
+			selected.clear();
+		}
+
+		String makeServerTitle(Server sv){
+			StringBuilder sb=new StringBuilder();
+			if(TextUtils.isEmpty(sv.name)||sv.toString().equals(sv.name)){
+				sb.append(sv).append(" ");
+			}else{
+				sb.append(sv.name).append(" (").append(sv).append(") ");
+			}
+			sb.append(sv.mode==0?"PE":"PC");
+			return sb.toString();
+		}
+
+		class OnClickListener implements View.OnClickListener{
+			int ofs;
+			public OnClickListener(int i){ofs=i;}
+			@Override
+			public void onClick(View p1) {
+				Server s=getItem(ofs).cloneAsServer();
+				selected.put(s,true);
+			}
+		}
 	}
 }
