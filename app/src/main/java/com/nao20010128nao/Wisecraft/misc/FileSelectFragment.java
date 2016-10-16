@@ -90,9 +90,16 @@ public class FileSelectFragment extends BaseFragment<AppCompatActivity>
 				return false;
 			}
 		});
-		path.setText(getArguments().getString("default"));
+		Bundle args=getArguments();
+		String s=Environment.getExternalStorageDirectory().toString();
+		if(args==null){
+			//no-op
+		}else if(args.containsKey("default")){
+			s=args.getString("default");
+		}
+		path.setText(s);
 		fileLocal.setImageDrawable(TheApplication.getTintedDrawable(R.drawable.ic_file,Color.WHITE,getActivity()));
-		fileProvided.setImageDrawable(TheApplication.getTintedDrawable(R.drawable.ic_open_in_new_black_48dp,Color.WHITE,getActivity()));
+		fileProvided.setImageDrawable(TheApplication.getTintedDrawable(R.drawable.ic_launch_black_36dp,Color.WHITE,getActivity()));
 	}
 
 	@Override
@@ -116,6 +123,34 @@ public class FileSelectFragment extends BaseFragment<AppCompatActivity>
 			results.remove(requestCode);
 		}
 	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		// TODO: Implement this method
+		super.onSaveInstanceState(outState);
+		Object last=getResult();
+		if(last instanceof File)
+			outState.putSerializable("file",(File)last);
+		else if(last instanceof Uri)
+			outState.putParcelable("uri",(Uri)last);
+	}
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		// TODO: Implement this method
+		super.onActivityCreated(savedInstanceState);
+		if(savedInstanceState==null)return;
+		if(savedInstanceState.containsKey("file")){
+			lastResult=savedInstanceState.getSerializable("file");
+			path.setText(lastResult.toString());
+			path.setEnabled(true);
+		}else if(savedInstanceState.containsKey("uri")){
+			lastResult=savedInstanceState.<Uri>getParcelable("uri");
+			path.setText("");
+			path.setEnabled(false);
+		}
+	}
+	
 	
 	
 	

@@ -26,7 +26,7 @@ public class OldServer35 {
 	public String toString() {
 		// TODO: Implement this method
 		StringBuilder sb=new StringBuilder();
-		if(ip.matches(Constant.IPV6_PATTERN)){
+		if(/*ip.matches(Constant.IPV6_PATTERN)*/false){
 			sb.append('[').append(ip).append(']');//IPv6
 		}else{
 			sb.append(ip);//IPv4

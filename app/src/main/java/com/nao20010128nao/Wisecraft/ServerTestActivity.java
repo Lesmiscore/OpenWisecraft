@@ -1,8 +1,6 @@
 package com.nao20010128nao.Wisecraft;
 import android.app.*;
 import android.content.*;
-import android.graphics.*;
-import android.graphics.drawable.*;
 import android.os.*;
 import android.preference.*;
 import android.support.v4.content.*;
@@ -12,6 +10,7 @@ import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
+import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
 import com.nao20010128nao.Wisecraft.misc.provider.*;
@@ -34,6 +33,8 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 	View dialog;
 	SharedPreferences pref;
 	RecyclerView rv;
+	ServerListStyleLoader slsl;
+    
 	Map<Integer,Boolean> pinging=new HashMap<Integer,Boolean>(){
 		@Override
 		public Boolean get(Object key) {
@@ -49,6 +50,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
+		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
 		boolean usesOldInstance=false;
 		if (instance.get() != null) {
@@ -60,7 +62,8 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 			sl = new RecyclerServerList(this);
 		}
 		instance = new WeakReference(this);
-        setContentView(R.layout.recycler_view_content);
+        slsl=(ServerListStyleLoader)getSystemService(ContextWrappingExtender.SERVER_LIST_STYLE_LOADER);
+		setContentView(R.layout.recycler_view_content);
 		rv = (RecyclerView)findViewById(android.R.id.list);
 		switch(pref.getInt("serverListStyle2",0)){
 			case 0:default:
@@ -82,7 +85,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 		if (usesOldInstance & sl.getItemCount() != 0) {
 
 		} else {
-			new AppCompatAlertDialog.Builder(this, R.style.AppAlertDialog)
+			new AppCompatAlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
 				.setTitle(R.string.testServer)
 				.setView(dialog = getLayoutInflater().inflate(R.layout.test_server_dialog, null, false))
 				.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
@@ -141,12 +144,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 				.show();
 		}
 
-		if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
-			BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
-			bd.setTargetDensity(getResources().getDisplayMetrics());
-			bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
-			rv.setBackgroundDrawable(bd);
-		}
+		findViewById(android.R.id.content).setBackgroundDrawable(slsl.load());
 	}
 	@Override
 	protected void attachBaseContext(Context newBase) {
@@ -208,15 +206,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 			// TODO: Implement this method
 			Server s=getItem(offset);
 			viewHolder.setServer(s).setServerPlayers("-/-");
-			if (sta.pref.getBoolean("colorFormattedText", false)) {
-				if (sta.pref.getBoolean("darkBackgroundForServerName", false)) {
-					viewHolder.setDarkness(true);
-				} else {
-					viewHolder.setDarkness(false);
-				}
-			} else {
-				viewHolder.setDarkness(false);
-			}
+			sta.slsl.applyTextColorTo(viewHolder);
 			viewHolder.hideServerTitle();
             if (sta.pinging.get(offset)) {
 				viewHolder.pending(s,sta);
@@ -227,7 +217,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 					final String title;
 					if (sv.response instanceof FullStat) {//PE
 						FullStat fs=(FullStat)sv.response;
-						Map<String,String> m=fs.getData();
+						Map<String,String> m=fs.getDataAsMap();
 						if (m.containsKey("hostname")) {
 							title = m.get("hostname");
 						} else if (m.containsKey("motd")) {
@@ -235,7 +225,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 						} else {
 							title = sv.toString();
 						}
-                        viewHolder.setServerPlayers(fs.getData().get("numplayers"), fs.getData().get("maxplayers"));
+                        viewHolder.setServerPlayers(m.get("numplayers"), m.get("maxplayers"));
                     } else if (sv.response instanceof Reply19) {//PC 1.9~
 						Reply19 rep=(Reply19)sv.response;
 						if (rep.description == null) {
@@ -260,7 +250,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
                             viewHolder.setServerPlayers(res.getPlayersCount(), res.getMaxPlayers());
                         } else if (sp.getA() instanceof FullStat) {
 							FullStat fs=(FullStat)sp.getA();
-							Map<String,String> m=fs.getData();
+							Map<String,String> m=fs.getDataAsMap();
 							if (m.containsKey("hostname")) {
 								title = m.get("hostname");
 							} else if (m.containsKey("motd")) {
@@ -268,7 +258,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 							} else {
 								title = sv.toString();
 							}
-                            viewHolder.setServerPlayers(fs.getData().get("numplayers"), fs.getData().get("maxplayers"));
+                            viewHolder.setServerPlayers(m.get("numplayers"), m.get("maxplayers"));
                         } else {
 							title = sv.toString();
                             viewHolder.setServerPlayers();
@@ -281,12 +271,8 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 						title = sv.toString();
                         viewHolder.setServerPlayers();
                     }
-					if (sta.pref.getBoolean("colorFormattedText", false)) {
-						if (sta.pref.getBoolean("darkBackgroundForServerName", false)) {
-							viewHolder.setServerName(parseMinecraftFormattingCodeForDark(title));
-						} else {
-							viewHolder.setServerName(parseMinecraftFormattingCode(title));
-						}
+					if (sta.pref.getBoolean("serverListColorFormattedText", false)) {
+						viewHolder.setServerName(parseMinecraftFormattingCode(title,sta.slsl.getTextColor()));
 					} else {
 						viewHolder.setServerName(deleteDecorations(title));
 					}

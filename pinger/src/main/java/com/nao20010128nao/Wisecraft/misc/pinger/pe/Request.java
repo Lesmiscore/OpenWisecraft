@@ -47,6 +47,6 @@ public class Request {
 	}
 
 	public void setPayload(int load) {
-		this.payload = Utils.intToBytes(load);
+		this.payload = PingerUtils.intToBytes(load);
 	}
 }

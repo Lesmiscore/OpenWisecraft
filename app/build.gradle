@@ -5,11 +5,12 @@ import java.security.SecureRandom;
 
 android {
 	def getRandomBetaSuffix={->
-		def suffix=["BETA","Beta","beta","Soyokaze","Tokikaze","Throne"]
+		def suffix=["BETA","Kabuki","Sakura","Soyokaze","Tokikaze","Matsu"]
 		def rand=new SecureRandom();
 		def where=Math.abs(rand.nextInt())%suffix.size();
 		return suffix[where]
 	}
+	def wsi="Widget Status Inspector"
 
     compileSdkVersion 24
     buildToolsVersion "24.0.0"
@@ -18,12 +19,14 @@ android {
         applicationId 'com.nao20010128nao.Wisecraft'
         minSdkVersion 17
         targetSdkVersion 21
-        versionCode 35
-        versionName "3.2"
+        versionCode 36
+        versionName "4.0"
 		multiDexEnabled true
 		jackOptions {
 			enabled false
 		}
+		
+		buildConfigField "String", "HIDDEN_AD", "\"http://cur.lv/11juip\""
 	}
 	
 	signingConfigs {
@@ -36,22 +39,71 @@ android {
             minifyEnabled false
             proguardFiles '../proguard-rules.pro'
 			signingConfig signingConfigs.release
+			resValue "string", "wsi", ""
+			resValue "bool", "inspectorEnabled", "false"
         }
         debug {
         	applicationIdSuffix = '.alpha'  
             versionNameSuffix = 'd'
+			resValue "string", "wsi", ""
+			resValue "bool", "inspectorEnabled", "false"
 		}
 		pre {
         	versionNameSuffix = ' Pre'
 			signingConfig signingConfigs.release
 			resValue "string", "app_name", "Wisecraft "+getRandomBetaSuffix()
+			resValue "string", "wsi", ""
+			resValue "bool", "inspectorEnabled", "false"
 		}
 		debug2 {
         	applicationIdSuffix = '.alpha'  
             versionNameSuffix = ' Pre'
 			signingConfig signingConfigs.release
-			resValue "string", "app_name", "Wisecraft "+getRandomBetaSuffix()
+			resValue "string", "app_name", "[DEBUG2] Wisecraft "+getRandomBetaSuffix()
+			resValue "string", "wsi", "[DEBUG2] "+wsi
+			resValue "bool", "inspectorEnabled", "true"
 		}
+		debug3 {
+        	applicationIdSuffix = '.alpha2'  
+            versionNameSuffix = ' Pre'
+			signingConfig signingConfigs.release
+			resValue "string", "app_name", "[DEBUG3] Wisecraft "+getRandomBetaSuffix()
+			resValue "string", "wsi", "[DEBUG3] "+wsi
+			resValue "bool", "inspectorEnabled", "true"
+		}
+		debug4 {
+        	applicationIdSuffix = '.alpha3'  
+            versionNameSuffix = ' Pre'
+			signingConfig signingConfigs.release
+			resValue "string", "app_name", "[DEBUG3] Wisecraft "+getRandomBetaSuffix()
+			resValue "string", "wsi", "[DEBUG4] "+wsi
+			resValue "bool", "inspectorEnabled", "true"
+		}
+		
+		v1x.initWith(buildTypes.release)
+		v1x {
+            applicationIdSuffix = '.v1x'  
+            versionNameSuffix = ' Pre (Version 1.x theme color)'
+			resValue "color", "mainColor", "#FF67549C"
+        }
+		v2x.initWith(buildTypes.release)
+		v2x {
+            applicationIdSuffix = '.v2x'  
+            versionNameSuffix = ' Pre (Version 2.x theme color)'
+			resValue "color", "mainColor", "#ff723a"
+        }
+		v3x.initWith(buildTypes.release)
+		v3x {
+            applicationIdSuffix = '.v3x'  
+            versionNameSuffix = ' Pre (Version 3.x theme color)'
+			resValue "color", "mainColor", "#59A145"
+        }
+		v4x.initWith(buildTypes.release)
+		v4x {
+            applicationIdSuffix = '.v4x'  
+            versionNameSuffix = ' Pre (Version 4.x theme color)'
+			resValue "color", "mainColor", "#7986CB"
+        }
     }
 	
 	applicationVariants.all { variant ->
@@ -68,6 +120,7 @@ android {
 }
 
 dependencies {
+	compile project(':pinger')
 	compile project(':statusesLayout')   // https://github.com/nao20010128nao/StatusesLayout
 	compile project(':wisecraft-i18n')   // https://github.com/nao20010128nao/Wisecraft-Multilanguage
 	compile project(':MaterialIcons')    // https://github.com/nao20010128nao/MaterialIconsLight
@@ -78,6 +131,7 @@ dependencies {
 	compile project(':aFileChooser')
 	compile project(':calligraphy')
 	compile project(':colorPicker')
+	compile project(':pinger')
 	
 	compile 'com.android.support:recyclerview-v7:24.2.0'
 	compile 'com.android.support:design:24.2.0'
@@ -98,13 +152,11 @@ dependencies {
 	compile 'com.google.firebase:firebase-config:9.+'
 	compile 'com.google.firebase:firebase-crash:9.+'
 	compile "biz.laenger.android:vpbs:0.0.2"
+	compile 'it.sephiroth.android.library.bottomnavigation:bottom-navigation:1.0.7'
 	
 	compile files('libs/fsb.jar')
 	compile files('libs/mcprox.jar')
 	compile files('libs/mcservlst.jar')
-	compile files('libs/httpclient-4.5.2.jar')
-	compile files('libs/httpcore-4.4.4.jar')
-	compile files('libs/otc.jar')
 	compile files('libs/commons-codec-1.10.jar')
 	
 	compile('com.mikepenz:materialdrawer:+') {

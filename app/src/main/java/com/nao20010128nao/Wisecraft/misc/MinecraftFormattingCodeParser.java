@@ -27,14 +27,18 @@ public class MinecraftFormattingCodeParser
 	
 	public byte[] flags=null;
 	public char[] escaped=null;
-	public void loadFlags(String s,byte defaultFlag){
+	public boolean[] noColors=null;
+	public int defaultColor=Color.BLACK;
+	public void loadFlags(String s){
 		escaped=Utils.deleteDecorations(s).toCharArray();
 		flags=new byte[escaped.length];
+		noColors=new boolean[flags.length];
 		
 		char[] chars=s.toCharArray();
 		int offset=0;
 		int undecOffset=0;
-		byte flag=defaultFlag;
+		byte flag=0;
+		boolean noColor=true;
 		while (chars.length > offset) {
 			if (chars[offset] == '§') {
 				offset++;
@@ -42,52 +46,52 @@ public class MinecraftFormattingCodeParser
 				switch(keyChar){
 					/*Colors*/
 					case '0':
-						flag=0;
+						flag=0;noColor=false;
 						break;
 					case '1':
-						flag=1;
+						flag=1;noColor=false;
 						break;
 					case '2':
-						flag=2;
+						flag=2;noColor=false;
 						break;
 					case '3':
-						flag=3;
+						flag=3;noColor=false;
 						break;
 					case '4':
-						flag=4;
+						flag=4;noColor=false;
 						break;
 					case '5':
-						flag=5;
+						flag=5;noColor=false;
 						break;
 					case '6':
-						flag=6;
+						flag=6;noColor=false;
 						break;
 					case '7':
-						flag=7;
+						flag=7;noColor=false;
 						break;
 					case '8':
-						flag=8;
+						flag=8;noColor=false;
 						break;
 					case '9':
-						flag=9;
+						flag=9;noColor=false;
 						break;
 					case 'a':case 'A':
-						flag=10;
+						flag=10;noColor=false;
 						break;
 					case 'b':case 'B':
-						flag=11;
+						flag=11;noColor=false;
 						break;
 					case 'c':case 'C':
-						flag=12;
+						flag=12;noColor=false;
 						break;
 					case 'd':case 'D':
-						flag=13;
+						flag=13;noColor=false;
 						break;
 					case 'e':case 'E':
-						flag=14;
+						flag=14;noColor=false;
 						break;
 					case 'f':case 'F':
-						flag=15;
+						flag=15;noColor=false;
 						break;
 						
 					/*Styles*/
@@ -106,12 +110,13 @@ public class MinecraftFormattingCodeParser
 					
 					/*Reset*/
 					case 'r':case 'R':
-						flag=defaultFlag;
+						flag=0;noColor=true;
 						break;
 				}
 				continue;
 			}
 			flags[undecOffset]=flag;
+			noColors[undecOffset]=noColor;
 			offset++;
 			undecOffset++;
 		}
@@ -122,7 +127,13 @@ public class MinecraftFormattingCodeParser
 	public Spannable build(){
 		SpannableStringBuilder ssb=new SpannableStringBuilder();
 		for(int i=0;i<escaped.length;i++){
-			ForegroundColorSpan fcs=new ForegroundColorSpan(TEXT_COLORS[flags[i]&0xF]);
+			int textColor;
+			if(noColors[i]){
+				textColor=defaultColor;
+			}else{
+				textColor=TEXT_COLORS[flags[i]&0xF];
+			}
+			ForegroundColorSpan fcs=new ForegroundColorSpan(textColor);
 			ssb.append(escaped[i]);
 			ssb.setSpan(fcs,ssb.length()-1,ssb.length(),SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
 			if(0!=(flags[i]&0b00010000)){

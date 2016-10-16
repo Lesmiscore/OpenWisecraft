@@ -1,6 +1,7 @@
 import java.net.*
+import java.math.*
 
-System.println(
+def wisecraftBuild=
 "REM                                                                                                           \n" + 
 "REM I8,        8        ,8I  88                                                                ad88           \n" + 
 "REM `8b       d8b       d8'  \"\"                                                               d8\"      ,d     \n" + 
@@ -23,7 +24,9 @@ System.println(
 "REM                                                           88888888P\"    `\"YbbdP'Y8  88  88   `\"8bbdP\"Y8   \n" + 
 "REM                                                                                                           \n" + 
 "REM                                                                                                           "
-)
+
+println(wisecraftBuild);
+System.err.println(wisecraftBuild);
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
@@ -79,6 +82,7 @@ def download(String url,String dir){
 	}
 }
 
+/*
 def jars=[
 	"https://repo.eclipse.org/content/groups/releases/org/eclipse/mylyn/github/org.eclipse.egit.github.core/4.4.0.201606070830-r/org.eclipse.egit.github.core-4.4.0.201606070830-r.jar",
 	"http://central.maven.org/maven2/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar",
@@ -91,5 +95,90 @@ for(String s:jars)
 def classLoader=LocalClass.class.getClassLoader();
 for(File f:outputs)
 	classLoader.addURL(f.toURI().toURL());
+*/
 
 class LocalClass{}
+
+class PowOf2 extends Thread{
+	public void run(){
+		if(System.getenv("POW_OF_2")!="true"){
+			System.err.println("Pow of 2 thread is disabled.");
+			return;
+		}
+		FileWriter fw=new FileWriter(new File(System.getProperty("user.dir"),"powof2.txt"));
+		BigInteger bi=BigInteger.ONE;BigInteger loop=BigInteger.ZERO;
+		BigInteger TWO=BigInteger.valueOf(2);
+		while(true){
+			fw.append("2^"+loop+": "+bi+"\n");
+			bi=bi.multiply(TWO);
+			loop=loop.add(BigInteger.ONE);
+		}
+	}
+}
+
+def t=new PowOf2();
+t.setDaemon(true);
+t.start();
+
+def dir,f,sb
+{->
+	dir="./app/src/main/res/values/booleans.xml"
+	System.err.println("Editing "+dir);
+	f=null;
+	sb=new StringBuilder();
+	try{
+		f=new BufferedReader(new FileReader(dir));
+		def line=null;
+		while((line=f.readLine())!=null){
+			if(line.contains("bool name=\"inspectorEnabled\""))continue;
+			sb.append(line).append('\n');
+		}
+	}finally{
+		if(f!=null)f.close()
+		f=null
+	}
+	new File(dir).delete();
+	try{
+		f=new FileWriter(dir);
+		f.write(sb.toString());
+	}finally{
+		if(f!=null)f.close()
+		f=null
+	}
+}();
+{->
+	dir="./app/src/main/res/values/values.xml"
+	System.err.println("Editing "+dir);
+	f=null;
+	sb=new StringBuilder();
+	try{
+		f=new BufferedReader(new FileReader(dir));
+		def line=null;
+		while((line=f.readLine())!=null){
+			if(line.contains("string name=\"wsi\""))continue;
+			sb.append(line).append('\n');
+		}
+	}finally{
+		if(f!=null)f.close()
+		f=null
+	}
+	new File(dir).delete();
+	try{
+		f=new FileWriter(dir);
+		f.write(sb.toString());
+	}finally{
+		if(f!=null)f.close()
+		f=null
+	}
+}();
+
+
+
+class FileRollbackWithGit{
+	public static final FileRollbackWithGit INSTANCE=new FileRollbackWithGit();
+	public void finalize(){
+		System.err.println("Rolling back ");
+		["git","checkout","--","."].execute(null,dir).in.text.trim()
+	}
+}
+

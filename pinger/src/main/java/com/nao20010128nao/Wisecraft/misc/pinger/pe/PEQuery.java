@@ -27,7 +27,7 @@ public class PEQuery implements PingHost {
 		req.sessionID = generateSessionID();
 
 		int val = 11 - req.toBytes().length;
-		byte[] input = Utils.padArrayEnd(req.toBytes(), val);
+		byte[] input = PingerUtils.padArrayEnd(req.toBytes(), val);
 		byte[] result = sendUDP(input);
 
 		token = Integer.valueOf(new String(result).trim());
@@ -42,7 +42,7 @@ public class PEQuery implements PingHost {
 		req.type = STAT;
 		req.sessionID = generateSessionID();
 		req.setPayload(token);
-		req.payload = Utils.padArrayEnd(req.payload, 4);
+		req.payload = PingerUtils.padArrayEnd(req.payload, 4);
 
 		byte[] send = req.toBytes();
 

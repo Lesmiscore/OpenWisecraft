@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<dimen name="widget_1cell">40dp</dimen><!--70 × 1 − 30-->
+	<dimen name="widget_2cell">110dp</dimen><!--70 × 2 − 30-->
+	<dimen name="widget_3cell">180dp</dimen><!--70 × 3 − 30-->
+	<dimen name="widget_4cell">250dp</dimen><!--70 × 4 − 30-->
+</resources>

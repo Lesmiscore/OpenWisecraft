@@ -14,4 +14,16 @@ public class Trio<A,B,C> extends Duo<A,B>{
 	public C getC() {
 		return c;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if(!(o instanceof Trio))return false;
+		Trio t=(Trio)o;
+		return super.equals(o)&CompatUtils.equals(c,t.c);
+	}
+
+	@Override
+	public int hashCode() {
+		return CompatUtils.hash(a,b,c);
+	}
 }

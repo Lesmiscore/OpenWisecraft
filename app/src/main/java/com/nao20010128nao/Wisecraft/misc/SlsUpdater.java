@@ -9,11 +9,9 @@ import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.services.*;
 import dalvik.system.*;
 import java.io.*;
+import java.net.*;
 import java.util.*;
 import org.apache.commons.codec.binary.*;
-import org.apache.http.client.methods.*;
-import org.apache.http.impl.client.*;
-import org.apache.http.util.*;
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -68,16 +66,21 @@ public class SlsUpdater extends Thread
 			File tmp=new File(ctx.getFilesDir(), "mcserverlist/tmp.dex");
 			File dat=new File(ctx.getFilesDir(), "mcserverlist/dat.dex");
 			tmp.delete();
-			HttpGet get=new HttpGet("http://nao20010128nao.github.io/wisecraft/todaiji.dex");
-			DefaultHttpClient dhc=new DefaultHttpClient();
-			try {
-				Utils.writeToFileByBytes(tmp,EntityUtils.toByteArray(dhc.execute(get).getEntity()));
-			} catch (Throwable e) {
+			InputStream is=null;
+			try{
+				byte[] buf=new byte[4096];
+				ByteArrayOutputStream baos=new ByteArrayOutputStream();
+				is=new URL("http://nao20010128nao.github.io/wisecraft/todaiji.dex").openConnection().getInputStream();
+				while(true){
+					int r=is.read(buf);
+					if(r<=0)break;
+					baos.write(buf,0,r);
+				}
+				Utils.writeToFileByBytes(tmp,baos.toByteArray());
+			}catch(Throwable e){
 				DebugWriter.writeToE("slsupd",e);
-			} finally {
-				try {
-					dhc.getConnectionManager().shutdown();
-				} catch (Throwable e) {}
+			}finally{
+				if(is!=null)is.close();
 				writeVersions(cache);
 			}
 			if (!(cache.contains("tmp.minwc")|cache.contains("dat.minwc"))) {

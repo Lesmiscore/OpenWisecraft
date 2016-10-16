@@ -18,12 +18,14 @@ public class ServerListFragment<T extends FragmentActivity> extends BaseFragment
 	
 	RecyclerView rv;
 	ServerListRecyclerAdapter slra;
+	ServerListStyleLoader slsl;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		slra=new ServerListRecyclerAdapter(getActivity());
+		slsl=new ServerListStyleLoader(getActivity());
 	}
 	
 	@Override
@@ -32,7 +34,7 @@ public class ServerListFragment<T extends FragmentActivity> extends BaseFragment
 		super.onResume();
 		rv.setAdapter(slra);
 		setLayoutModeInternal(pref.getInt("serverListStyle2",0));
-		setDarkBackground(pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false));
+		rv.setBackgroundDrawable(slsl.load());
 	}
 
 	@Override
@@ -43,29 +45,12 @@ public class ServerListFragment<T extends FragmentActivity> extends BaseFragment
 		return v;
 	}
 	
-	public void setDarkBackground(boolean dark){
-		if (dark) {
-			BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
-			bd.setTargetDensity(getResources().getDisplayMetrics());
-			bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
-			rv.setBackgroundDrawable(bd);
-		}else{
-			rv.setBackgroundDrawable(null);
-		}
-	}
-	
 	public RecyclerView getRecyclerView(){
 		return rv;
 	}
 	
 	public ServerListRecyclerAdapter getAdapter(){
 		return slra;
-	}
-	
-	public void setDarkness(boolean dark){
-		setDarkBackground(dark);
-		slra.setDarkness(dark);
-		slra.setForceDarkness(true);
 	}
 	
 	public void setLayoutMode(int mode){

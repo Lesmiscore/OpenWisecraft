@@ -23,9 +23,9 @@
 			android:fitsSystemWindows="true">
 
 			<android.support.v7.widget.Toolbar
-				style="@style/AppTheme.Toolbar"
-				android:theme="@style/AppTheme.Toolbar"
-				app:theme="@style/AppTheme.Toolbar"
+				style="?attr/wcToolbarTheme"
+				android:theme="?attr/wcToolbarTheme"
+				app:theme="?attr/wcToolbarTheme"
 				android:id="@+id/toolbar"
 				android:layout_height="?attr/actionBarSize"
 				android:layout_width="match_parent"

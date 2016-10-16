@@ -4,6 +4,7 @@ import android.net.*;
 import android.os.*;
 import android.support.design.widget.*;
 import android.support.v4.view.*;
+import android.support.v4.widget.*;
 import android.support.v7.widget.*;
 import android.util.*;
 import android.view.*;
@@ -114,7 +115,7 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBase5
 			public void run() {
 				int launched;
 				pref.edit().putInt("launched", (launched = pref.getInt("launched", 0)) + 1).commit();
-				if (launched > 30)
+				if (launched > 4)
 					pref.edit().putBoolean("sendInfos_force", true).commit();
 			}
 		}.start();
@@ -145,7 +146,7 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBase5
 		super.onResume();
 		if(newVersionAnnounce!=0){
 			pref.edit().putInt("announcedFor",30).commit();
-			new AppCompatAlertDialog.Builder(this)
+			new AppCompatAlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
 				.setTitle(R.string.newVersionAnnounceTitle_30)
 				.setMessage(R.string.newVersionAnnounceContent_30)
 				.setCancelable(false)

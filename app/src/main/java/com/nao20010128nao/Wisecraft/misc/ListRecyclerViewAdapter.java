@@ -5,8 +5,9 @@ import java.util.*;
 public abstract class ListRecyclerViewAdapter<VH extends RecyclerView.ViewHolder,LType> extends RecyclerView.Adapter<VH> implements List<LType>
 {
 	List<LType> list;
+	List<LType> unmodifiableList;
 	public ListRecyclerViewAdapter(List<LType> lst){
-		list=new ArrayList<LType>(lst);
+		unmodifiableList=Collections.unmodifiableList(list=new ArrayList<LType>(lst));
 	}
 	public ListRecyclerViewAdapter(){
 		this(new ArrayList<LType>());
@@ -84,13 +85,13 @@ public abstract class ListRecyclerViewAdapter<VH extends RecyclerView.ViewHolder
 	@Override
 	public ListIterator<LType> listIterator(int p1) {
 		// TODO: Implement this method
-		return null;
+		return unmodifiableList.listIterator(p1);
 	}
 
 	@Override
 	public ListIterator<LType> listIterator() {
 		// TODO: Implement this method
-		return null;
+		return unmodifiableList.listIterator();
 	}
 
 	@Override
@@ -154,7 +155,7 @@ public abstract class ListRecyclerViewAdapter<VH extends RecyclerView.ViewHolder
 	@Override
 	public Iterator<LType> iterator() {
 		// TODO: Implement this method
-		return null;
+		return unmodifiableList.iterator();
 	}
 
 	@Override

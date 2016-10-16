@@ -63,7 +63,7 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 			.remove("useBright")
 			.commit();
 			
-		Log.d("Tesuya",(String)Utils.getField(com.nao20010128nao.Wisecraft.misc.compat.BuildConfig.class,null,"HIDDEN_AD"));
+		Log.d("Tesuya",(String)Utils.getField(BuildConfig.class,null,"HIDDEN_AD"));
 	}
 	public Typeface getLocalizedFont() {
 		try {
@@ -184,8 +184,7 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 	
 	@Override
 	public int getDialogStyleId() {
-		// TODO: Implement this method
-		return R.style.AppAlertDialog;
+		return ThemePatcher.getDefaultDialogStyle(this);
 	}
 	
 	@Override

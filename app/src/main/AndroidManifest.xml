@@ -20,7 +20,6 @@
 			android:theme="@style/AppTheme.NoActionBar">
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -49,7 +48,8 @@
 
         <activity
 			android:label="@string/app_name"
-			android:name=".api.RequestedServerInfoActivity" >
+			android:name=".api.RequestedServerInfoActivity"
+			android:theme="@style/AppTheme.Translucent">
             <intent-filter >
                 <action android:name="com.nao20010128nao.Wisecraft.SERVER_INFO" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -99,6 +99,12 @@
 			android:exported="false"
 			android:fitsSystemWindows="false">
         </activity>
+		<activity
+			android:label="@string/serverListLooks"
+			android:name=".FragmentSettingsActivity$ServerListStyleEditor"
+			android:exported="false"
+			android:fitsSystemWindows="false">
+        </activity>
 		
         <activity
 			android:label="@string/serverFinder"
@@ -141,6 +147,42 @@
 			android:name=".GenerateWisecraftOpenLinkActivity"
 			android:exported="false">
         </activity>
+		
+		<activity
+			android:label="@string/select"
+			android:name=".widget.WidgetServerSelectActivity$Type1"
+			android:exported="false"
+			android:fitsSystemWindows="false">
+			<intent-filter>  
+				<action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>  
+			</intent-filter> 
+        </activity>
+		<activity
+			android:label="@string/select"
+			android:name=".widget.WidgetServerSelectActivity$Type2"
+			android:exported="false"
+			android:fitsSystemWindows="false">
+			<intent-filter>  
+				<action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>  
+			</intent-filter> 
+        </activity>
+		<activity
+			android:label="@string/wsi"
+			android:name=".widget.WidgetStateInspector"
+			android:exported="true"
+			android:fitsSystemWindows="false"
+			android:enabled="@bool/inspectorEnabled">
+			<intent-filter >
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+		<activity
+			android:label="@string/widgetEditor"
+			android:name=".widget.WidgetsEditorActivity"
+			android:exported="false"
+			android:fitsSystemWindows="false">
+        </activity>
 
         <service
 			android:label="@string/app_name"
@@ -157,5 +199,43 @@
 			android:name=".services.MCProxyService"
 			android:exported="false">
         </service>
+		
+		<receiver android:name=".widget.PingWidget" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_BIND" />
+				<action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+				<action android:name="android.appwidget.action.APPWIDGET_DELETED" />
+				<action android:name="android.appwidget.action.APPWIDGET_DISABLED" />
+				<action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
+				<action android:name="android.appwidget.action.APPWIDGET_HOST_RESTORED" />
+				<action android:name="android.appwidget.action.APPWIDGET_UPDATE_OPTIONS" />
+				<action android:name="android.appwidget.action.APPWIDGET_PICK" />
+				<action android:name="android.appwidget.action.APPWIDGET_RESTORED" />
+				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/ping_widget" />
+        </receiver>
+		<receiver android:name=".widget.PingWidget$Type2" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_BIND" />
+				<action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+				<action android:name="android.appwidget.action.APPWIDGET_DELETED" />
+				<action android:name="android.appwidget.action.APPWIDGET_DISABLED" />
+				<action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
+				<action android:name="android.appwidget.action.APPWIDGET_HOST_RESTORED" />
+				<action android:name="android.appwidget.action.APPWIDGET_UPDATE_OPTIONS" />
+				<action android:name="android.appwidget.action.APPWIDGET_PICK" />
+				<action android:name="android.appwidget.action.APPWIDGET_RESTORED" />
+				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/ping_widget_2" />
+        </receiver>
+		<receiver android:name=".widget.PingWidget$PingHandler">
+			<intent-filter>
+                <action android:name="update" />
+            </intent-filter>
+		</receiver>
     </application>
 </manifest>

@@ -3,7 +3,7 @@ image: maven:3-jdk-8
 before_script:
   - apt-get --quiet update --yes > /dev/null
   - apt-get --quiet upgrade --yes > /dev/null
-  - apt-get --quiet install --yes --force-yes wget tar unzip lib32stdc++6 lib32z1 > /dev/null
+  - apt-get --quiet install --yes --force-yes wget tar unzip lib32stdc++6 lib32z1 gzip > /dev/null
   - chmod a+x ./ci/git.sh
   - ./ci/git.sh 2> /dev/null
   - wget --quiet --output-document=android-sdk.tgz https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz
@@ -12,6 +12,7 @@ before_script:
   - wget --quiet --output-document=gradle.zip https://services.gradle.org/distributions/gradle-2.14.1-bin.zip
   - unzip -q gradle.zip
   - export ANDROID_HOME=$PWD/android-sdk-linux
+  - export POW_OF_2=false
   - java -version
 
 stages:
@@ -34,3 +35,5 @@ main:
       - "*.apk"
       - dexdump*.txt
       - build.log
+      - powof2.txt
+

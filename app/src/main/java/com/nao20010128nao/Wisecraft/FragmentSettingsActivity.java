@@ -2,6 +2,7 @@ package com.nao20010128nao.Wisecraft;
 import android.content.*;
 import android.graphics.*;
 import android.graphics.drawable.*;
+import android.net.*;
 import android.os.*;
 import android.support.v4.app.*;
 import android.support.v4.content.*;
@@ -14,13 +15,19 @@ import android.util.*;
 import android.view.*;
 import android.widget.*;
 import com.astuetz.*;
+import com.azeesoft.lib.colorpicker.*;
+import com.ipaulpro.afilechooser.*;
 import com.nao20010128nao.ToolBox.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
+import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
 import com.nao20010128nao.Wisecraft.misc.pref.*;
+import com.nao20010128nao.Wisecraft.widget.*;
 import java.io.*;
+import java.net.*;
+import java.security.*;
 import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
 
@@ -49,6 +56,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
+		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_settings_with_preview);
 		if(savedInstanceState==null){
@@ -89,7 +97,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO: Implement this method
 		MenuItem showPreview=menu.add(Menu.NONE,0,0,R.string.preview);
-		showPreview.setIcon(misc.getVisibility()==View.VISIBLE?R.drawable.ic_visibility_black_48dp:R.drawable.ic_visibility_off_black_48dp);
+		showPreview.setIcon(TheApplication.instance.getTintedDrawable(misc.getVisibility()==View.VISIBLE?R.drawable.ic_visibility_black_48dp:R.drawable.ic_visibility_off_black_48dp,Utils.getMenuTintColor(this)));
 		MenuItemCompat.setShowAsAction(showPreview,MenuItem.SHOW_AS_ACTION_ALWAYS);
 		return true;
 	}
@@ -236,11 +244,24 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		public void onCreatePreferences(Bundle p1, String p2) {
 			// TODO: Implement this method
 			addPreferencesFromResource(R.xml.settings_basic_compat);
+			sH("parallels", new HandledPreference.OnClickListener(){
+					public void onClick(String a, String b, String c) {
+						PreferenceUtils.showEditTextDialog(getActivity(),findPreference("changeDpi"),"1.0",new Treatment<View>(){
+							public void process(View v){
+								EditText text=(EditText)v.findViewById(android.R.id.edit);
+								text.setInputType(InputType.TYPE_CLASS_NUMBER|
+																							InputType.TYPE_TEXT_VARIATION_NORMAL|
+																							InputType.TYPE_NUMBER_FLAG_DECIMAL);
+								text.setFilters(new InputFilter[]{new InputFilter.LengthFilter(3)});
+							}
+						});
+					}
+				});
 			sH("serverListStyle", new HandledPreference.OnClickListener(){
 					public void onClick(String a, String b, String c) {
-						new AppCompatAlertDialog.Builder(getContext(),R.style.AppAlertDialog)
+						new AppCompatAlertDialog.Builder(getContext(),ThemePatcher.getDefaultDialogStyle(getContext()))
 							.setTitle(R.string.serverListStyle)
-							.setSingleChoiceItems(getResources().getStringArray(R.array.serverListStyles),pref.getInt("serverListStyle2",0),new DialogInterface.OnClickListener(){
+							.setSingleChoiceItems(getResources().getStringArray(R.array.serverListStyles),which=pref.getInt("serverListStyle2",0),new DialogInterface.OnClickListener(){
 								public void onClick(DialogInterface di,int w){
 									which=w;
 								}
@@ -263,7 +284,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 						String[] choice=getFontChoices();
 						String[] display=TheApplication.instance.getDisplayFontNames(choice);
 						final List<String> choiceList=Arrays.<String>asList(choice);
-						new AppCompatAlertDialog.Builder(getContext(),R.style.AppAlertDialog)
+						new AppCompatAlertDialog.Builder(getContext(),ThemePatcher.getDefaultDialogStyle(getContext()))
 							.setSingleChoiceItems(display, choiceList.indexOf(TheApplication.instance.getFontFieldName())
 							, new DialogInterface.OnClickListener(){
 								public void onClick(DialogInterface di, int w) {
@@ -311,15 +332,47 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 								}
 								
 								{
-									onProgressChanged(null,0,false);
+									onProgressChanged(seekBar,0,false);
 								}
 						});
-						new AppCompatAlertDialog.Builder(getContext(),R.style.AppAlertDialog)
+						new AppCompatAlertDialog.Builder(getContext(),ThemePatcher.getDefaultDialogStyle(getContext()))
 							.setTitle(R.string.addLessRows)
 							.setView(v)
 							.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
 								public void onClick(DialogInterface di,int w){
 									pref.edit().putInt("addLessRows",seekBar.getProgress()-5).commit();
+								}
+							})
+							.setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
+								public void onClick(DialogInterface di,int w){
+
+								}
+							})
+							.show();
+					}
+				});
+			sH("serverListLooks", new HandledPreference.OnClickListener(){
+					public void onClick(String a, String b, String c) {
+						startActivity(new Intent(getActivity(),ServerListStyleEditor.class));
+					}
+				});
+			sH("widgetEditor", new HandledPreference.OnClickListener(){
+					public void onClick(String a, String b, String c) {
+						startActivity(new Intent(getActivity(),WidgetsEditorActivity.class));
+					}
+				});
+			sH("4.0themeMode", new HandledPreference.OnClickListener(){
+					public void onClick(String a, String b, String c) {
+						new AppCompatAlertDialog.Builder(getContext(),ThemePatcher.getDefaultDialogStyle(getContext()))
+							.setTitle("Theme Mode"/*R.string.serverListStyle*/)
+							.setSingleChoiceItems(new String[]{"Light","Dark","DayNight"}/*getResources().getStringArray(R.array.serverListStyles)*/,which=pref.getInt("4.0themeMode",ThemePatcher.THEME_MODE_LIGHT),new DialogInterface.OnClickListener(){
+								public void onClick(DialogInterface di,int w){
+									which=w;
+								}
+							})
+							.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+								public void onClick(DialogInterface di,int w){
+									pref.edit().putInt("4.0themeMode",which).commit();
 								}
 							})
 							.setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
@@ -416,6 +469,366 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		}
 	}
 	
+	public static class ServerListStyleEditor extends AppCompatActivity {
+		ServerListStyleLoader slsl;
+		RadioGroup rdGrp;
+		ImageView color,image,textColor;
+		Button selectColor,selectImage,apply,selectTextColor;
+		Bitmap loadedBitmap;
+		int selectedColor=Color.BLACK,selectedTextColor;
+		boolean didOnceColorSelected=false;
+		
+		
+		//FSF
+		Map<Integer,ServerListActivityBase5.ChooserResult> results=new HashMap<>();
+		SecureRandom sr=new SecureRandom();
+		Object lastResult=null;
+
+		Button select;
+		ImageButton fileLocal,fileProvided;
+		EditText path;
+		LinearLayout pathForm,modeForm;
+		
+		@Override
+		public void onCreate(Bundle savedInstanceState) {
+			// TODO: Implement this method
+			ThemePatcher.applyThemeForActivity(this);
+			super.onCreate(savedInstanceState);
+			setContentView(R.layout.settings_server_list_style_editor);
+			slsl=new ServerListStyleLoader(this);
+			rdGrp=(RadioGroup)findViewById(R.id.checkGroup);
+			color=(ImageView)findViewById(R.id.singleColorIndicate);
+			image=(ImageView)findViewById(R.id.imagePreview);
+			textColor=(ImageView)findViewById(R.id.textColorIndicate);
+			selectColor=(Button)findViewById(R.id.selectColor);
+			selectImage=(Button)findViewById(R.id.selectImage);
+			selectTextColor=(Button)findViewById(R.id.selectTextColor);
+			apply=(Button)findViewById(R.id.apply);
+			
+			switch(slsl.getBgId()){
+				case ServerListStyleLoader.BACKGROUND_WHITE:
+					rdGrp.check(R.id.white);
+					break;
+				case ServerListStyleLoader.BACKGROUND_BLACK:
+					rdGrp.check(R.id.black);
+					break;
+				case ServerListStyleLoader.BACKGROUND_DIRT:
+					rdGrp.check(R.id.dirt);
+					break;
+				case ServerListStyleLoader.BACKGROUND_SINGLE_COLOR:
+					rdGrp.check(R.id.singleColor);
+					color.setImageDrawable(slsl.load());
+					selectedColor=slsl.getBackgroundSimpleColor();
+					break;
+				case ServerListStyleLoader.BACKGROUND_IMAGE:
+					rdGrp.check(R.id.image);
+					loadedBitmap=slsl.getImageBgBitmap();
+					image.setImageBitmap(loadedBitmap);
+					break;
+			}
+			selectedTextColor=slsl.getTextColor();
+			textColor.setImageDrawable(new ColorDrawable(selectedTextColor));
+			
+			rdGrp.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
+					public void onCheckedChanged(RadioGroup p1, int p2){
+						switch(rdGrp.getCheckedRadioButtonId()){
+							case R.id.white:
+							case R.id.black:
+							case R.id.dirt:
+							case R.id.singleColor:
+								apply.setEnabled(true);
+								break;
+							case R.id.image:
+								apply.setEnabled(loadedBitmap!=null);
+								break;
+						}
+					}
+				});
+			selectColor.setOnClickListener(new View.OnClickListener(){
+					public void onClick(View v){
+						ColorPickerDialog cpd=ColorPickerDialog.createColorPickerDialog(ServerListStyleEditor.this,ColorPickerDialog.LIGHT_THEME);
+						cpd.setLastColor(selectedColor);
+						cpd.setOnColorPickedListener(new ColorPickerDialog.OnColorPickedListener(){
+								public void onColorPicked(int c,String hex){
+									selectedColor=c;
+									didOnceColorSelected=true;
+									color.setImageDrawable(new ColorDrawable(selectedColor));
+								}
+							});
+						cpd.setOnClosedListener(new ColorPickerDialog.OnClosedListener(){
+								public void onClosed(){
+
+								}
+							});
+						cpd.show();
+					}
+				});
+			selectImage.setOnClickListener(new View.OnClickListener(){
+					public void onClick(View v){
+						new AsyncTask<Object,Void,Bitmap>(){
+							public Bitmap doInBackground(Object... a){
+								Log.d("slse image",a[0]+"");
+								String path=ServerListStyleEditor.toString(a[0]);
+								InputStream is=null;
+								try{
+									is=tryOpen(path);
+									return BitmapFactory.decodeStream(is);
+								}catch(Throwable e){
+									WisecraftError.report("slse image",e);
+									DebugWriter.writeToE("slse image",e);
+									return null;
+								}finally{
+									try {
+										if (is != null)is.close();
+									} catch (IOException e) {
+										WisecraftError.report("slse image",e);
+									}
+								}
+							}
+							public void onPostExecute(Bitmap bmp){
+								loadedBitmap=bmp;
+								image.setImageBitmap(loadedBitmap);
+								apply.setEnabled(loadedBitmap!=null);
+								Log.d("slse image","loaded:"+bmp);
+							}
+						}.execute(getResult());
+					}
+				});
+			selectTextColor.setOnClickListener(new View.OnClickListener(){
+					public void onClick(View v){
+						ColorPickerDialog cpd=ColorPickerDialog.createColorPickerDialog(ServerListStyleEditor.this,ColorPickerDialog.LIGHT_THEME);
+						cpd.setLastColor(selectedColor);
+						cpd.setOnColorPickedListener(new ColorPickerDialog.OnColorPickedListener(){
+								public void onColorPicked(int c,String hex){
+									selectedTextColor=c;
+									textColor.setImageDrawable(new ColorDrawable(selectedTextColor));
+								}
+							});
+						cpd.setOnClosedListener(new ColorPickerDialog.OnClosedListener(){
+								public void onClosed(){
+
+								}
+							});
+						cpd.show();
+					}
+				});
+			apply.setOnClickListener(new View.OnClickListener(){
+					public void onClick(View v){
+						switch(rdGrp.getCheckedRadioButtonId()){
+							case R.id.white:
+								slsl.setWhiteBg();
+								break;
+							case R.id.black:
+								slsl.setBlackBg();
+								break;
+							case R.id.dirt:
+								slsl.setDirtBg();
+								break;
+							case R.id.singleColor:
+								slsl.setSingleColorBg(selectedColor);
+								break;
+							case R.id.image:
+								if(loadedBitmap!=null)
+									slsl.setImageBg(loadedBitmap);
+								else return;
+								break;
+						}
+						slsl.setTextColor(selectedTextColor);
+						finish();
+					}
+				});
+			
+			//FSF
+			getLayoutInflater().inflate(R.layout.server_list_imp_exp,(ViewGroup)findViewById(R.id.fileSelectFrg));
+			select=(Button)findViewById(R.id.selectFile);
+			fileLocal=(ImageButton)findViewById(R.id.openLocalChooser);
+			fileProvided=(ImageButton)findViewById(R.id.openProvidedChooser);
+			path=(EditText)findViewById(R.id.filePath);
+			pathForm=(LinearLayout)findViewById(R.id.pathForm);
+			modeForm=(LinearLayout)findViewById(R.id.modeForm);
+
+			select.setOnClickListener(new View.OnClickListener(){
+					public void onClick(View v){
+						pathForm.setVisibility(View.GONE);
+						modeForm.setVisibility(View.VISIBLE);
+					}
+				});
+			fileLocal.setOnClickListener(new View.OnClickListener(){
+					public void onClick(View v){
+						modeForm.setVisibility(View.GONE);
+						pathForm.setVisibility(View.VISIBLE);
+
+						File f=new File(path.getText().toString());
+						if ((!f.exists())|f.isFile())f = f.getParentFile();
+						startChooseFileForSelect(f, new ServerListActivityBase5.FileChooserResult(){
+								public void onSelected(File f) {
+									path.setText(f.toString());
+									path.setEnabled(true);
+								}
+								public void onSelectCancelled() {/*No-op*/}
+							});
+					}
+				});
+			fileProvided.setOnClickListener(new View.OnClickListener(){
+					public void onClick(View v){
+						modeForm.setVisibility(View.GONE);
+						pathForm.setVisibility(View.VISIBLE);
+						startExtChooseFile(new ServerListActivityBase5.UriFileChooserResult(){
+								public void onSelected(Uri f) {
+									path.setText("");
+									path.setEnabled(false);
+								}
+								public void onSelectCancelled() {/*No-op*/}
+							});
+					}
+				});
+			path.setOnTouchListener(new View.OnTouchListener(){
+					public boolean onTouch(View v,MotionEvent ev){
+						if(ev.getAction()!=MotionEvent.ACTION_UP)return false;
+						if(!v.isEnabled()){
+							v.setEnabled(true);
+							path.setText(Environment.getExternalStorageDirectory().toString());
+							lastResult=null;
+						}
+						return false;
+					}
+				});
+			path.setText(Environment.getExternalStorageDirectory().toString());
+			fileLocal.setImageDrawable(TheApplication.getTintedDrawable(R.drawable.ic_file,Color.WHITE,this));
+			fileProvided.setImageDrawable(TheApplication.getTintedDrawable(R.drawable.ic_launch_black_36dp,Color.WHITE,this));
+		}
+
+		@Override
+		protected void attachBaseContext(Context newBase) {
+			super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
+		}
+		
+		public InputStream tryOpen(String uri) throws IOException {
+			Log.d("dbg", "tryOpen:" + uri);
+			if (uri.startsWith("content://")) {
+				return getContentResolver().openInputStream(Uri.parse(uri));
+			} else if (uri.startsWith("/")) {
+				return new FileInputStream(uri);
+			} else {
+				return URI.create(uri).toURL().openConnection().getInputStream();
+			}
+		}
+		
+		public OutputStream trySave(String uri) throws IOException {
+			Log.d("dbg", "trySave:" + uri);
+			if (uri.startsWith("content://")) {
+				return getContentResolver().openOutputStream(Uri.parse(uri));
+			} else if (uri.startsWith("/")) {
+				return new FileOutputStream(uri);
+			} else {
+				return URI.create(uri).toURL().openConnection().getOutputStream();
+			}
+		}
+		
+		public static String toUri(Object o) throws IOException,URISyntaxException{
+			if(o instanceof File)
+				return toUri(((File)o).toURL());
+			else if(o instanceof Uri)
+				return ((Uri)o).toString();
+			else if(o instanceof URL)
+				return toUri(((URL)o).toURI());
+			else if(o instanceof URI)
+				return ((URI)o).toString();
+			else
+				return null;
+		}
+		
+		public static String toString(Object o) {
+			return o==null?"null":o.toString();
+		}
+		
+		//FSF
+		@Override
+		public void onActivityResult(int requestCode, int resultCode, Intent data) {
+			// TODO: Implement this method
+			if(results.containsKey(requestCode)){
+				switch(resultCode){
+					case RESULT_OK:
+						if(results.get(requestCode) instanceof ServerListActivityBase5.FileChooserResult){
+							((ServerListActivityBase5.FileChooserResult)results.get(requestCode))
+								.onSelected((File)(lastResult=new File(data.getStringExtra("path"))));
+						}else if(results.get(requestCode) instanceof ServerListActivityBase5.UriFileChooserResult){
+							((ServerListActivityBase5.UriFileChooserResult)results.get(requestCode))
+								.onSelected((Uri)(lastResult=data.getData()));
+						}
+						Log.d("slse","select:"+lastResult);
+						break;
+					case RESULT_CANCELED:
+						results.get(requestCode).onSelectCancelled();
+						break;
+				}
+				results.remove(requestCode);
+			}
+		}
+		
+		public void startChooseFileForOpen(File startDir,ServerListActivityBase5.FileChooserResult result){
+			int call = nextCallId();
+			Intent intent=new Intent(this,FileOpenChooserActivity.class);
+			if(startDir!=null){
+				intent.putExtra("path",startDir.toString());
+			}
+			results.put(call,Utils.requireNonNull(result));
+			startActivityForResult(intent,call);
+		}
+
+		public void startChooseFileForSelect(File startDir,ServerListActivityBase5.FileChooserResult result){
+			int call = nextCallId();
+			Intent intent=new Intent(this,FileChooserActivity.class);
+			if(startDir!=null){
+				intent.putExtra("path",startDir.toString());
+			}
+			results.put(call,Utils.requireNonNull(result));
+			startActivityForResult(intent,call);
+		}
+
+		public void startChooseDirectory(File startDir,ServerListActivityBase5.FileChooserResult result){
+			int call = nextCallId();
+			Intent intent=new Intent(this,DirectoryChooserActivity.class);
+			if(startDir!=null){
+				intent.putExtra("path",startDir.toString());
+			}
+			results.put(call,Utils.requireNonNull(result));
+			startActivityForResult(intent,call);
+		}
+
+		public void startExtChooseFile(ServerListActivityBase5.UriFileChooserResult result){
+			int call = nextCallId();
+			Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+			intent.setType("*/*");
+			results.put(call,Utils.requireNonNull(result));
+			startActivityForResult(intent, call);
+		}
+
+		private int nextCallId() {
+			int call=Math.abs(sr.nextInt()) & 0xff;
+			while (results.containsKey(call)) {
+				call = Math.abs(sr.nextInt()) & 0xff;
+			}
+			return call;
+		}
+
+		public Object getLastResult() {
+			return lastResult;
+		}
+		public Object getResult(){
+			if(lastResult==null){
+				//no choose, so file
+				return new File(path.getText().toString());
+			}else if(lastResult instanceof File){
+				//file choosen, so file
+				return new File(path.getText().toString());
+			}else{
+				//uri retrived, return last result
+				return lastResult;
+			}
+		}
+	}
+	
 	
 	
 	
@@ -427,26 +840,22 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		LinearLayout miscContent;
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
-			// TODO: Implement this method
 			pref=PreferenceManager.getDefaultSharedPreferences(getContext());
 			super.onCreate(savedInstanceState);
 		}
 
 		@Override
 		public LayoutInflater getLayoutInflater(Bundle savedInstanceState) {
-			// TODO: Implement this method
 			return getActivity().getLayoutInflater().cloneInContext(super.getLayoutInflater(savedInstanceState).getContext());
 		}
 
 		@Override
 		public Context getContext() {
-			// TODO: Implement this method
 			return TheApplication.injectContextSpecial(super.getContext());
 		}
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-			// TODO: Implement this method
 			View v=super.onCreateView(getActivity().getLayoutInflater(), container, savedInstanceState);
 			miscContent=(LinearLayout)v.findViewById(R.id.misc);
 			if(miscContent!=null)onMiscPartAvailable(miscContent);
@@ -455,11 +864,16 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 
 		@Override
 		public RecyclerView onCreateRecyclerView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-			// TODO: Implement this method
 			return super.onCreateRecyclerView(Utils.fixLayoutInflaterIfNeeded(CalligraphyContextWrapper.wrap(inflater.getContext()),getActivity()),
 				parent, 
 				savedInstanceState);
 		}
+
+		@Override
+		public void onModifyPreferenceViewHolder(PreferenceViewHolder viewHolder, Preference pref) {
+			PreferenceUtils.onBindViewHolder(getActivity(),pref,viewHolder);
+		}
+		
 		
 		
 		
@@ -583,12 +997,14 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 	public static class ServerInfoToolbarFragment extends com.nao20010128nao.Wisecraft.misc.BaseFragment<FragmentSettingsActivity> {
 		UsefulPagerAdapter adapter;
 		ViewPager tabs;
+		ServerListStyleLoader slsl;
 		
 		@Override
 		public void onResume() {
 			// TODO: Implement this method
 			super.onResume();
 			Toolbar tb=(Toolbar)findViewById(R.id.toolbar);
+			slsl=(ServerListStyleLoader)getActivity().getSystemService(ContextWrappingExtender.SERVER_LIST_STYLE_LOADER);
 			
 			tabs = (ViewPager)findViewById(R.id.pager);
 			tabs.setAdapter(adapter = new UsefulPagerAdapter(getChildFragmentManager()));
@@ -599,28 +1015,16 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			adapter.addTab(BlankFragment.class,"B");
 			adapter.addTab(BlankFragment.class,"C");
 			
-			if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
-				BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
-				bd.setTargetDensity(getResources().getDisplayMetrics());
-				bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
-				findViewById(R.id.appbar).setBackgroundDrawable(bd);
-				psts.setIndicatorColor(Color.WHITE);
-				psts.setTextColor(Color.WHITE);
-				psts.setOnPageChangeListener(new ColorUpdater(Color.WHITE, ServerInfoActivity.DIRT_BRIGHT, tabs, psts));
-			} else {
-				psts.setIndicatorColor(ContextCompat.getColor(getActivity(), R.color.mainColor));
-				psts.setTextColor(ContextCompat.getColor(getActivity(), R.color.mainColor));
-				psts.setOnPageChangeListener(new ColorUpdater(ContextCompat.getColor(getActivity(), R.color.mainColor), ServerInfoActivity.PALE_PRIMARY, tabs, psts));
-			}
+			psts.setIndicatorColor(slsl.getTextColor());
+			psts.setTextColor(slsl.getTextColor());
+			psts.setOnPageChangeListener(new ColorUpdater(slsl.getTextColor(), ServerInfoActivity.translucent(slsl.getTextColor()), tabs, psts));
+
+			findViewById(R.id.appbar).setBackgroundDrawable(slsl.load());
 			
 			{
 				String title="§0W§1i§2s§3e§4c§5r§6a§7f§8t §9P§aE §bS§ce§dr§ev§fe§rr";
-				if (pref.getBoolean("colorFormattedText", false)) {
-					if (pref.getBoolean("darkBackgroundForServerName", false)) {
-						tb.setTitle(Utils.parseMinecraftFormattingCodeForDark(title.toString()));
-					} else {
-						tb.setTitle(Utils.parseMinecraftFormattingCode(title.toString()));
-					}
+				if (pref.getBoolean("serverListColorFormattedText", false)) {
+					tb.setTitle(Utils.parseMinecraftFormattingCode(title.toString(),slsl.getTextColor()));
 				} else {
 					tb.setTitle(Utils.deleteDecorations(title.toString()));
 				}
@@ -628,24 +1032,15 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			
 			{
 				Menu menu=tb.getMenu();
+				menu.clear();
 				MenuItem updateBtn,seeTitleButton;
-				boolean isDark;
-				if (pref.getBoolean("colorFormattedText", false)) {
-					if (pref.getBoolean("darkBackgroundForServerName", false)) {
-						isDark = true;
-					} else {
-						isDark = false;
-					}
-				} else {
-					isDark = false;
-				}
-				int color= ContextCompat.getColor(getContext(), R.color.mainColor);
+				
 				seeTitleButton = menu.add(Menu.NONE, 0, 0, R.string.seeTitle);
-				seeTitleButton.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_open_in_new_black_48dp, isDark ?Color.WHITE: color));
+				seeTitleButton.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_open_in_new_black_48dp, slsl.getTextColor()));
 				MenuItemCompat.setShowAsAction(seeTitleButton, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
 
 				updateBtn = menu.add(Menu.NONE, 1, 1, R.string.update);
-				updateBtn.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_refresh_black_48dp, isDark ?Color.WHITE: color));
+				updateBtn.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_refresh_black_48dp, slsl.getTextColor()));
 				MenuItemCompat.setShowAsAction(updateBtn, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
 			}
 		}

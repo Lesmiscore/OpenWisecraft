@@ -33,13 +33,14 @@ import java.math.*;
 import java.util.*;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
+import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
 
 public class ServerInfoActivity extends ServerInfoActivityBase1 {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
 	//public static List<ServerStatus> stat=new ArrayList<>();
 	public static Map<String,Bitmap> faces=new HashMap<>();
 
-	public static int DIRT_BRIGHT,DIRT_DARK,PALE_PRIMARY;
+	public static int DIRT_BRIGHT,DIRT_DARK;
 	public static final int BASE64_FLAGS=Base64.NO_WRAP|Base64.NO_PADDING;
 
 	SharedPreferences pref;
@@ -63,6 +64,8 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 	ViewPagerBottomSheetBehavior behavior;
 	boolean useBottomSheet=false;
 	View background;//it is actually CoordinatorLayout
+	
+	ServerListStyleLoader slsl;
 
 	/*Only for PC servers*/
 	Drawable serverIconObj;
@@ -72,10 +75,11 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
+		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
-		calculatePalePrimary();
 		getWindow().requestFeature(Window.FEATURE_ACTION_MODE_OVERLAY);
 		instance = new WeakReference(this);
+		slsl=(ServerListStyleLoader)getSystemService(ContextWrappingExtender.SERVER_LIST_STYLE_LOADER);
 
 		String stat=getIntent().getStringExtra("stat");
 		if(stat==null){finish();return;}
@@ -140,19 +144,11 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 
 		update(localStat.response);
 
-		if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
-			BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
-			bd.setTargetDensity(getResources().getDisplayMetrics());
-			bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
-			findViewById(R.id.appbar).setBackgroundDrawable(bd);
-			psts.setIndicatorColor(Color.WHITE);
-			psts.setTextColor(Color.WHITE);
-			psts.setOnPageChangeListener(new ColorUpdater(Color.WHITE, DIRT_BRIGHT, tabs, psts));
-		} else {
-			psts.setIndicatorColor(ContextCompat.getColor(this, R.color.mainColor));
-			psts.setTextColor(ContextCompat.getColor(this, R.color.mainColor));
-			psts.setOnPageChangeListener(new ColorUpdater(ContextCompat.getColor(this, R.color.mainColor), PALE_PRIMARY, tabs, psts));
-		}
+		psts.setIndicatorColor(slsl.getTextColor());
+		psts.setTextColor(slsl.getTextColor());
+		psts.setOnPageChangeListener(new ColorUpdater(slsl.getTextColor(), translucent(slsl.getTextColor()), tabs, psts));
+		
+		findViewById(R.id.appbar).setBackgroundDrawable(slsl.load());
 
 		int offset=getIntent().getIntExtra("offset", 0);
 		if (adapter.getCount() >= 2 & offset == 0)tabs.setCurrentItem(1);
@@ -167,12 +163,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			behavior.setBottomSheetCallback(new ViewPagerBottomSheetBehavior.BottomSheetCallback() {
 				int r,g,b;
 				{
-					int color;
-					if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
-						color=DIRT_DARK;
-					}else{
-						color=ContextCompat.getColor(ServerInfoActivity.this,R.color.material_grey_600);
-					}
+					int color=slsl.getBackgroundSimpleColor();
 					r=Color.red(color);
 					g=Color.green(color);
 					b=Color.blue(color);
@@ -210,21 +201,13 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 					behavior.setState(ViewPagerBottomSheetBehavior.STATE_HIDDEN);
 				}
 			});
-			if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
-				background.setBackgroundColor(DIRT_DARK);
-			}else{
-				background.setBackgroundColor(ContextCompat.getColor(ServerInfoActivity.this,R.color.material_grey_600));
-			}
+			background.setBackgroundColor(slsl.getBackgroundSimpleColor());
 			if (Build.VERSION.SDK_INT >= 21) {
 				getWindow().setStatusBarColor(0);
 			}
 		}else{
 			if (Build.VERSION.SDK_INT >= 21) {
-				if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
-					getWindow().setStatusBarColor(DIRT_DARK);
-				}else{
-					getWindow().setStatusBarColor(ContextCompat.getColor(ServerInfoActivity.this,R.color.material_grey_600));
-				}
+				getWindow().setStatusBarColor(slsl.getBackgroundSimpleColor());
 			}
 		}
 		tabs.setBackgroundColor(Color.WHITE);
@@ -258,7 +241,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		if (resp instanceof FullStat) {
 			FullStat fs=(FullStat)resp;
 			final String title;
-			Map<String,String> m=fs.getData();
+			Map<String,String> m=fs.getDataAsMap();
 			if (m.containsKey("hostname")) {
 				title = m.get("hostname");
 			} else if (m.containsKey("motd")) {
@@ -339,28 +322,17 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		boolean isDark;
-		if (pref.getBoolean("colorFormattedText", false)) {
-			if (pref.getBoolean("darkBackgroundForServerName", false)) {
-				isDark = true;
-			} else {
-				isDark = false;
-			}
-		} else {
-			isDark = false;
-		}
-		int color= ContextCompat.getColor(this, R.color.mainColor);
 		if (!noExport) {
 			exportButton = menu.add(Menu.NONE, 0, 0, R.string.exportPing);
-			exportButton.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_file_upload_black_48dp, isDark ?Color.WHITE: color));
+			exportButton.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_file_upload_black_48dp, slsl.getTextColor()));
 			MenuItemCompat.setShowAsAction(exportButton, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
 		}
 		seeTitleButton = menu.add(Menu.NONE, 1, 1, R.string.seeTitle);
-		seeTitleButton.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_open_in_new_black_48dp, isDark ?Color.WHITE: color));
+		seeTitleButton.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_open_in_new_black_48dp, slsl.getTextColor()));
 		MenuItemCompat.setShowAsAction(seeTitleButton, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
 		if (!nonUpd) {
 			updateBtn = menu.add(Menu.NONE, 2, 2, R.string.update);
-			updateBtn.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_refresh_black_48dp, isDark ?Color.WHITE: color));
+			updateBtn.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_refresh_black_48dp, slsl.getTextColor()));
 			MenuItemCompat.setShowAsAction(updateBtn, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
 		}
 		return true;
@@ -386,7 +358,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 								});
 						}
 					});
-				new AppCompatAlertDialog.Builder(this, R.style.AppAlertDialog)
+				new AppCompatAlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
 					.setTitle(R.string.export_typepath_simple)
 					.setView(dialogView_)
 					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
@@ -418,7 +390,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 				scheduleFinish();//ServerListActivity updates the stat
 				return true;
 			case 1://See the title for all
-				AppCompatAlertDialog.Builder ab=new AppCompatAlertDialog.Builder(this, R.style.AppAlertDialog);
+				AppCompatAlertDialog.Builder ab=new AppCompatAlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this));
 				LinearLayout ll;
 				boolean dark;
 				dark = pref.getBoolean("colorFormattedText", false) ?pref.getBoolean("darkBackgroundForServerName", false): false;
@@ -428,14 +400,11 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 					} else {
 						ll = (LinearLayout)TheApplication.instance.getLayoutInflater().inflate(R.layout.server_info_show_title, null);
 					}
-					BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
-					bd.setTargetDensity(getResources().getDisplayMetrics());
-					bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
-					if (!dark)bd.setAlpha(0);
-					ll.setBackgroundDrawable(bd);
+					ll.setBackgroundDrawable(slsl.load());
 				}
 				TextView serverNameView=(TextView)ll.findViewById(R.id.serverName);
 				serverNameView.setText(getTitle());
+				serverNameView.setTextColor(slsl.getTextColor());
 				ab.setView(ll).show();
 				break;
 		}
@@ -451,25 +420,17 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 	public void setTitle(CharSequence title) {
 		// TODO: Implement this method
 		if (title == null) {
-			if (pref.getBoolean("colorFormattedText", false)) {
+			if (pref.getBoolean("serverListColorFormattedText", false)) {
 				SpannableStringBuilder ssb=new SpannableStringBuilder();
 				ssb.append(localStat.toString());
-				if (pref.getBoolean("darkBackgroundForServerName", false)) {
-					ssb.setSpan(new ForegroundColorSpan(0xff_ffffff), 0, ssb.length() - 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-				} else {
-					ssb.setSpan(new ForegroundColorSpan(0xff_000000), 0, ssb.length() - 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-				}
+				ssb.setSpan(new ForegroundColorSpan(slsl.getTextColor()), 0, ssb.length() - 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 				super.setTitle(ssb);
 			} else {
 				super.setTitle(localStat.toString());
 			}
 		} else {
-			if (pref.getBoolean("colorFormattedText", false)) {
-				if (pref.getBoolean("darkBackgroundForServerName", false)) {
-					super.setTitle(Utils.parseMinecraftFormattingCodeForDark(title.toString()));
-				} else {
-					super.setTitle(Utils.parseMinecraftFormattingCode(title.toString()));
-				}
+			if (pref.getBoolean("serverListColorFormattedText", false)) {
+				super.setTitle(Utils.parseMinecraftFormattingCode(title.toString(),slsl.getTextColor()));
 			} else {
 				super.setTitle(Utils.deleteDecorations(title.toString()));
 			}
@@ -809,7 +770,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 				else if (resp instanceof SprPair)
 					fs = (FullStat)((SprPair)resp).getA();
 				infos.clear();
-				infos.addAll(fs.getData().entrySet());
+				infos.addAll(fs.getData());
 			} 
 		}
 
@@ -847,12 +808,8 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			ServerPingResult resp=localStat.response;
 			if (resp instanceof Reply) {
 				Reply rep=(Reply)resp;
-				if (pref.getBoolean("colorFormattedText", false)) {
-					if (pref.getBoolean("darkBackgroundForServerName", false)) {
-						serverNameStr = Utils.parseMinecraftFormattingCodeForDark(rep.description);
-					} else {
-						serverNameStr = Utils.parseMinecraftFormattingCode(rep.description);
-					}
+				if (pref.getBoolean("serverListColorFormattedText", false)) {
+					serverNameStr = Utils.parseMinecraftFormattingCode(rep.description,getParentActivity().slsl.getTextColor());
 				} else {
 					serverNameStr = Utils.deleteDecorations(rep.description);
 				}
@@ -874,12 +831,8 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 				}
 			} else if (resp instanceof Reply19) {
 				Reply19 rep=(Reply19)resp;
-				if (pref.getBoolean("colorFormattedText", false)) {
-					if (pref.getBoolean("darkBackgroundForServerName", false)) {
-						serverNameStr = Utils.parseMinecraftFormattingCodeForDark(rep.description.text);
-					} else {
-						serverNameStr = Utils.parseMinecraftFormattingCode(rep.description.text);
-					}
+				if (pref.getBoolean("serverListColorFormattedText", false)) {
+					serverNameStr = Utils.parseMinecraftFormattingCode(rep.description.text,getParentActivity().slsl.getTextColor());
 				} else {
 					serverNameStr = Utils.deleteDecorations(rep.description.text);
 				}
@@ -908,12 +861,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			// TODO: Implement this method
 			View lv= inflater.inflate(R.layout.data_tab_pc, container, false);
-			if (pref.getBoolean("colorFormattedText", false) & pref.getBoolean("darkBackgroundForServerName", false)) {
-				BitmapDrawable bd=(BitmapDrawable)getResources().getDrawable(R.drawable.soil);
-				bd.setTargetDensity(getResources().getDisplayMetrics());
-				bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
-				lv.findViewById(R.id.serverImageAndName).setBackgroundDrawable(bd);
-			}
+			lv.findViewById(R.id.serverImageAndName).setBackgroundDrawable(getParentActivity().slsl.load());
 			((RecyclerView)lv.findViewById(R.id.data)).addItemDecoration(new DividerItemDecoration(getContext()));
 			return lv;
 		}
@@ -942,8 +890,8 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 				else if (resp instanceof SprPair)
 					fs = (FullStat)((SprPair)resp).getA();
 				pluginNames.clear();
-				if (fs.getData().containsKey("plugins")) {
-					String[] data=fs.getData().get("plugins").split("\\: ");
+				if (fs.getDataAsMap().containsKey("plugins")) {
+					String[] data=fs.getDataAsMap().get("plugins").split("\\: ");
 					if (data.length >= 2) {
 						ArrayList<String> plugins=new ArrayList<>(Arrays.<String>asList(data[1].split("\\; ")));
 						if (pref.getBoolean("sortPluginNames", false))
@@ -1060,19 +1008,20 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		
 		Log.d("DirtBright",Integer.toHexString(DIRT_BRIGHT));
 		Log.d("DirtDark",Integer.toHexString(DIRT_DARK));
-		
-		calculatePalePrimary();
 	}
 	
-	public static void calculatePalePrimary(){
-		int palePrimary=ContextCompat.getColor(TheApplication.instance, R.color.mainColor);
+	public static int translucent(int palePrimary){
 		int r=Color.red(palePrimary);
 		int g=Color.green(palePrimary);
 		int b=Color.blue(palePrimary);
 		int a=new BigDecimal(0xff).multiply(new BigDecimal("0.3")).intValue();
 
-		PALE_PRIMARY = Color.argb(a, r, g, b);
-		
-		Log.d("PalePrimary",Integer.toHexString(PALE_PRIMARY));
+		return Color.argb(a, r, g, b);
+	}
+	public static int darker(int base){
+		float[] hsv=new float[3];
+		Color.RGBToHSV(Color.red(base), Color.green(base), Color.blue(base), hsv);
+		hsv[2]-=0.20f;
+		return Color.HSVToColor(hsv);
 	}
 }

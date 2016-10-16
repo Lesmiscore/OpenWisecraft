@@ -10,7 +10,6 @@ import java.io.*;
 
 public class RawResourceTextView extends AppCompatTextView
 {
-	Handler handler;
 	public RawResourceTextView(android.content.Context context) {
 		super(context);
 	}
@@ -26,7 +25,6 @@ public class RawResourceTextView extends AppCompatTextView
 	}
 	
 	private void loadAttrs(final Context context,AttributeSet attrs){
-		handler=new Handler();
 		TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.RawResourceTextView);
 		final String rawRes = array.getString(R.styleable.RawResourceTextView_rawRes);
 		final boolean async=array.getBoolean(R.styleable.RawResourceTextView_async,false);
@@ -37,11 +35,13 @@ public class RawResourceTextView extends AppCompatTextView
 				try {
 					rawResId = (int)R.raw.class.getField(rawRes).get(null);
 				} catch (Throwable e) {
-					throw new RuntimeException(e);
+					WisecraftError.report("RawResourceTextView",e);
+					return;
 				}
-				handler.post(new Runnable(){
+				final String txt=readAllData(context.getResources().openRawResource(rawResId));
+				post(new Runnable(){
 					public void run(){
-						setText(readAllData(context.getResources().openRawResource(rawResId)));
+						setText(txt);
 					}
 				});
 			}

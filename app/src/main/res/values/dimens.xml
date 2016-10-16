@@ -10,4 +10,8 @@
 	<dimen name="settings_pref_height">55dp</dimen>
 	<dimen name="one_dp">1dp</dimen>
 	<dimen name="bottomSheet_peek">200dp</dimen>
+	<dimen name="widget_1cell">72dp</dimen><!--74 × 1 - 2-->
+	<dimen name="widget_2cell">146dp</dimen><!--74 × 2 - 2-->
+	<dimen name="widget_3cell">220dp</dimen><!--74 × 3 - 2-->
+	<dimen name="widget_4cell">294dp</dimen><!--74 × 4 - 2-->
 </resources>

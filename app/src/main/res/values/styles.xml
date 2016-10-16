@@ -8,17 +8,29 @@
 		<item name="alertDialogTheme">@style/AppAlertDialog</item>
         <item name="windowActionModeOverlay">true</item>
 		<item name="android:windowAnimationStyle">@style/AppTheme.Transition</item>
+		<item name="wcToolbarTheme">@style/AppTheme.Toolbar</item>
+		<item name="wcDefaultPreferenceTextColor">#000000</item>
+		<item name="wcMenuTintColor">#000000</item>
+		<item name="dialogTheme">@style/AppAlertDialog</item>
 	</style>
 	<style name="AppDialog" parent="@style/Theme.AppCompat.Light.Dialog">
 		<item name="colorPrimary">@color/primary</item>
 		<item name="colorAccent">@color/mainColor</item>
 		<item name="android:windowContentOverlay">@null</item>
 		<item name="preferenceTheme">@style/AppTheme.Preference</item>
+		<item name="wcToolbarTheme">@style/AppTheme.Toolbar</item>
+		<item name="wcDefaultPreferenceTextColor">#000000</item>
+		<item name="wcMenuTintColor">#000000</item>
+		<item name="dialogTheme">@style/AppAlertDialog</item>
 	</style>
 	<style name="AppAlertDialog" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
 		<item name="colorPrimary">@color/primary</item>
 		<item name="colorAccent">@color/mainColor</item>
 		<item name="preferenceTheme">@style/AppTheme.Preference</item>
+		<item name="wcToolbarTheme">@style/AppTheme.Toolbar</item>
+		<item name="wcDefaultPreferenceTextColor">#000000</item>
+		<item name="wcMenuTintColor">#000000</item>
+		<item name="dialogTheme">@style/AppAlertDialog</item>
 	</style>
 	
 	<style name="AppTheme.NoActionBar" parent="AppTheme">
@@ -43,6 +55,16 @@
 	<style name="AppTheme.ServerInfo" parent="AppTheme.NoActionBar">
 		<item name="android:windowIsTranslucent">true</item>
 		<item name="android:windowBackground">@android:color/transparent</item>
+	</style>
+	
+	<style name="AppTheme.Translucent" parent="AppTheme.NoActionBar">
+		<item name="android:windowBackground">@color/transparent</item>
+		<item name="android:colorBackgroundCacheHint">@null</item>
+		<item name="android:windowIsTranslucent">true</item>
+		<item name="android:windowContentOverlay">@null</item>
+		<item name="colorPrimary">@android:color/transparent</item>
+		<item name="colorPrimaryDark">@android:color/transparent</item>
+		<item name="colorAccent">@android:color/transparent</item>
 	</style>
 	
 	

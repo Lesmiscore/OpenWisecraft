@@ -2,7 +2,7 @@
 <PreferenceScreen
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:title="@string/basics">
-	<com.nao20010128nao.Wisecraft.misc.pref.EditTextPreferenceCompat 
+	<com.nao20010128nao.Wisecraft.misc.pref.StartPrefCompat 
 		android:key="parallels" 
 		android:title="@string/pingThreads"
 		android:inputType="number" 
@@ -43,14 +43,16 @@
 	/>
 	<com.nao20010128nao.Wisecraft.misc.pref.CheckBoxPreferenceCompat
 		android:title="@string/colorFormattedText"
-		android:key="colorFormattedText"
+		android:key="serverListColorFormattedText"
 		android:defaultValue="false"
 	/>
-	<com.nao20010128nao.Wisecraft.misc.pref.CheckBoxPreferenceCompat
-		android:title="@string/darkBackgroundForServerName"
-		android:key="darkBackgroundForServerName"
-		android:defaultValue="false"
-		android:dependency="colorFormattedText"
+	<com.nao20010128nao.Wisecraft.misc.pref.StartPrefCompat
+		android:title="@string/serverListLooks"
+		android:key="serverListLooks"
+	/>
+	<com.nao20010128nao.Wisecraft.misc.pref.StartPrefCompat
+		android:title="@string/serverListStyle"
+		android:key="serverListStyle"
 	/>
 	<com.nao20010128nao.Wisecraft.misc.pref.CheckBoxPreferenceCompat
 		android:title="@string/showStatusesBar"
@@ -67,10 +69,6 @@
 		android:title="@string/deleteDecoPlayerName"
 		android:key="deleteDecoPlayerName"
 		android:defaultValue="false"
-	/>
-	<com.nao20010128nao.Wisecraft.misc.pref.StartPrefCompat
-		android:title="@string/serverListStyle"
-		android:key="serverListStyle"
 	/>
 	<com.nao20010128nao.Wisecraft.misc.pref.StartPrefCompat
 		android:title="@string/changeDpi"
@@ -90,5 +88,13 @@
 		android:title="@string/noScrollServerInfo"
 		android:key="noScrollServerInfo"
 		android:defaultValue="false"
+	/>
+	<com.nao20010128nao.Wisecraft.misc.pref.StartPrefCompat
+		android:title="@string/widgetEditor"
+		android:key="widgetEditor"
+	/>
+	<com.nao20010128nao.Wisecraft.misc.pref.StartPrefCompat
+		android:title="themeMode"
+		android:key="4.0themeMode"
 	/>
 </PreferenceScreen>

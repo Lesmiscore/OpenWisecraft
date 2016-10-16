@@ -11,7 +11,6 @@ import android.preference.*;
 import android.support.design.widget.*;
 import android.support.v7.widget.*;
 import android.text.*;
-import android.text.style.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
@@ -42,36 +41,18 @@ public class Utils extends PingerUtils{
 		}
 		return sb.toString();
 	}
-	public static CharSequence parseMinecraftFormattingCode(String s){
+	public static CharSequence parseMinecraftFormattingCode(String s,int defColor){
 		try {
 			MinecraftFormattingCodeParser mfcp=new MinecraftFormattingCodeParser();
-			mfcp.loadFlags(s, (byte)0);
+			mfcp.loadFlags(s);
+			mfcp.defaultColor=defColor;
 			return mfcp.build();
 		} catch (Throwable e) {
-			SpannableStringBuilder ssb=new SpannableStringBuilder();
-			ssb.append(deleteDecorations(s));
-			if(ssb.length()!=0)ssb.setSpan(new ForegroundColorSpan(Color.BLACK),0,ssb.length()-1,SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
-			return ssb;
-		}
-	}
-	public static CharSequence parseMinecraftFormattingCodeForDark(String s){
-		try {
-			MinecraftFormattingCodeParser mfcp=new MinecraftFormattingCodeParser();
-			mfcp.loadFlags(s, (byte)15);
-			return mfcp.build();
-		} catch (Throwable e) {
-			SpannableStringBuilder ssb=new SpannableStringBuilder();
-			ssb.append(deleteDecorations(s));
-			if(ssb.length()!=0)ssb.setSpan(new ForegroundColorSpan(Color.WHITE),0,ssb.length()-1,SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
-			return ssb;
+			return s;
 		}
 	}
 	public static boolean isNullString(String s) {
-		if (s == null) 
-			return true;
-		if ("".equals(s)) 
-			return true;
-		return false;
+		return TextUtils.isEmpty(s);
 	}
 	public static String[] lines(String s) {
 		try {
@@ -211,42 +192,6 @@ public class Utils extends PingerUtils{
 			if (balues[i])
 				lst.add(all[i]);
 		return lst.toArray((T[])Array.newInstance(all.getClass().getComponentType(),lst.size()));
-	}
-	public static void applyHandlersForViewTree(View v,View.OnClickListener click,View.OnLongClickListener longer){
-		if(v!=null){
-			v.setOnClickListener(click);
-			v.setOnLongClickListener(longer);
-			v.setLongClickable(true);
-			if(v instanceof ViewGroup){
-				ViewGroup vg=(ViewGroup)v;
-				for(int i=0;i<vg.getChildCount();i++){
-					applyHandlersForViewTree(vg.getChildAt(i),click,longer);
-				}
-			}
-		}
-	}
-	public static void applyHandlersForViewTree(View v,View.OnClickListener click){
-		if(v!=null){
-			v.setOnClickListener(click);
-			if(v instanceof ViewGroup){
-				ViewGroup vg=(ViewGroup)v;
-				for(int i=0;i<vg.getChildCount();i++){
-					applyHandlersForViewTree(vg.getChildAt(i),click);
-				}
-			}
-		}
-	}
-	public static void applyHandlersForViewTree(View v,View.OnLongClickListener longer){
-		if(v!=null){
-			v.setOnLongClickListener(longer);
-			v.setLongClickable(true);
-			if(v instanceof ViewGroup){
-				ViewGroup vg=(ViewGroup)v;
-				for(int i=0;i<vg.getChildCount();i++){
-					applyHandlersForViewTree(vg.getChildAt(i),longer);
-				}
-			}
-		}
 	}
 	public static TextView getActionBarTextView(Toolbar mToolBar) {
 		try {
@@ -552,9 +497,6 @@ public class Utils extends PingerUtils{
 		byte[] data=PingSerializeProvider.dumpServerForFile(s);
 		return Base64.encodeToString(data,ServerInfoActivity.BASE64_FLAGS);
 	}
-	public static boolean equals(Object a, Object b) {
-        return (a == b) || (a != null && a.equals(b));
-    }
 	public static Snackbar makeSB(Activity a,int t,int l){
 		return Snackbar.make(a.findViewById(android.R.id.content),t,l);
 	}
@@ -570,5 +512,19 @@ public class Utils extends PingerUtils{
 		Snackbar sb=makeSB(a,t,l);
 		sb.getView().setClickable(false);
 		return sb;
+	}
+	public static CoordinatorLayout.Behavior newBehavior(String clazz){
+		try {
+			return (CoordinatorLayout.Behavior)Class.forName(clazz).newInstance();
+		} catch (Throwable e) {
+			WisecraftError.report("Utils#newBehavior",e);
+			return null;
+		}
+	}
+	public static int getMenuTintColor(Context context){
+		TypedArray ta=context.obtainStyledAttributes(new int[]{R.attr.wcMenuTintColor});
+		int color=ta.getColor(0,Color.BLACK);
+		ta.recycle();
+		return color;
 	}
 }
