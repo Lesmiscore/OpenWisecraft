@@ -131,9 +131,4 @@
 	<style name="Preference.ColorPickerPreference">
         <item name="android:widgetLayout">@layout/color_picker_preference</item>
     </style>
-	
-	
-	<declare-styleable name="ColorPickerPreferenceCompat">
-		<attr name="color"/>
-	</declare-styleable>
 </resources>

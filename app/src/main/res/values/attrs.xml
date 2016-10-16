@@ -4,6 +4,10 @@
 		<attr name="rawRes" format="string"/>
 		<attr name="async" format="boolean"/>
 	</declare-styleable>
+	<declare-styleable name="ColorPickerPreferenceCompat">
+		<attr name="color"/>
+	</declare-styleable>
+	
 	<attr name="colorPickerPreferenceStyle" format="reference"/>
 	<attr name="wcToolbarTheme" format="reference"/>
 	<attr name="wcDefaultPreferenceTextColor" format="color"/>
