@@ -19,6 +19,7 @@
 		<item name="wcToolbarTheme">@style/AppTheme.Toolbar.Dark</item>
 		<item name="wcDefaultPreferenceTextColor">#ffffff</item>
 		<item name="wcMenuTintColor">#ffffff</item>
+		<item name="dialogTheme">@style/AppAlertDialog.Dark</item>
 	</style>
 	<style name="AppAlertDialog.Dark" parent="@style/Theme.AppCompat.Dialog.Alert">
 		<item name="colorAccent">@color/mainColor</item>
@@ -26,6 +27,7 @@
 		<item name="wcToolbarTheme">@style/AppTheme.Toolbar.Dark</item>
 		<item name="wcDefaultPreferenceTextColor">#ffffff</item>
 		<item name="wcMenuTintColor">#ffffff</item>
+		<item name="dialogTheme">@style/AppAlertDialog.Dark</item>
 	</style>
 
 	<style name="AppTheme.NoActionBar.Dark" parent="AppTheme.Dark">

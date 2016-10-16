@@ -246,7 +246,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			addPreferencesFromResource(R.xml.settings_basic_compat);
 			sH("serverListStyle", new HandledPreference.OnClickListener(){
 					public void onClick(String a, String b, String c) {
-						new AppCompatAlertDialog.Builder(getContext(),ThemePatcher.getDefaultStyle(getContext()))
+						new AppCompatAlertDialog.Builder(getContext(),ThemePatcher.getDefaultDialogStyle(getContext()))
 							.setTitle(R.string.serverListStyle)
 							.setSingleChoiceItems(getResources().getStringArray(R.array.serverListStyles),which=pref.getInt("serverListStyle2",0),new DialogInterface.OnClickListener(){
 								public void onClick(DialogInterface di,int w){
@@ -271,7 +271,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 						String[] choice=getFontChoices();
 						String[] display=TheApplication.instance.getDisplayFontNames(choice);
 						final List<String> choiceList=Arrays.<String>asList(choice);
-						new AppCompatAlertDialog.Builder(getContext(),ThemePatcher.getDefaultStyle(getContext()))
+						new AppCompatAlertDialog.Builder(getContext(),ThemePatcher.getDefaultDialogStyle(getContext()))
 							.setSingleChoiceItems(display, choiceList.indexOf(TheApplication.instance.getFontFieldName())
 							, new DialogInterface.OnClickListener(){
 								public void onClick(DialogInterface di, int w) {
@@ -322,7 +322,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 									onProgressChanged(seekBar,0,false);
 								}
 						});
-						new AppCompatAlertDialog.Builder(getContext(),ThemePatcher.getDefaultStyle(getContext()))
+						new AppCompatAlertDialog.Builder(getContext(),ThemePatcher.getDefaultDialogStyle(getContext()))
 							.setTitle(R.string.addLessRows)
 							.setView(v)
 							.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
@@ -350,7 +350,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 				});
 			sH("4.0themeMode", new HandledPreference.OnClickListener(){
 					public void onClick(String a, String b, String c) {
-						new AppCompatAlertDialog.Builder(getContext(),ThemePatcher.getDefaultStyle(getContext()))
+						new AppCompatAlertDialog.Builder(getContext(),ThemePatcher.getDefaultDialogStyle(getContext()))
 							.setTitle("Theme Mode"/*R.string.serverListStyle*/)
 							.setSingleChoiceItems(new String[]{"Light","Dark","DayNight"}/*getResources().getStringArray(R.array.serverListStyles)*/,which=pref.getInt("4.0themeMode",ThemePatcher.THEME_MODE_LIGHT),new DialogInterface.OnClickListener(){
 								public void onClick(DialogInterface di,int w){

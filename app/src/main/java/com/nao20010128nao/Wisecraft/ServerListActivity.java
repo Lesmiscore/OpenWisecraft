@@ -334,7 +334,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 										}
 									});
 
-								new AppCompatAlertDialog.Builder(a,ThemePatcher.getDefaultStyle(a)).
+								new AppCompatAlertDialog.Builder(a,ThemePatcher.getDefaultDialogStyle(a)).
 									setView(dialog).
 									setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener(){
 										public void onClick(DialogInterface d, int sel) {
@@ -370,7 +370,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 						},null));//0
 		appMenu.add(new Quintet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem>(R.string.addFromMCPE, R.drawable.ic_add_black_48dp, new Treatment<ServerListActivity>(){
 							public void process(ServerListActivity a) {
-								new AppCompatAlertDialog.Builder(a,ThemePatcher.getDefaultStyle(a))
+								new AppCompatAlertDialog.Builder(a,ThemePatcher.getDefaultDialogStyle(a))
 									.setTitle(R.string.addFromMCPE)
 									.setMessage(R.string.auSure)
 									.setPositiveButton(android.R.string.yes,new DialogInterface.OnClickListener(){
@@ -429,7 +429,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							}
 						},new Treatment<ServerListActivity>(){
 							public void process(ServerListActivity a) {
-								new AlertDialog.Builder(a,ThemePatcher.getDefaultStyle(a))
+								new AlertDialog.Builder(a,ThemePatcher.getDefaultDialogStyle(a))
 									.setTitle(R.string.update_all)
 									.setItems(R.array.serverUpdateAllSubMenu,new DialogInterface.OnClickListener(){
 										public void onClick(DialogInterface di, int w) {
@@ -469,7 +469,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 												});
 										}
 									});
-								new AppCompatAlertDialog.Builder(a,ThemePatcher.getDefaultStyle(a))
+								new AppCompatAlertDialog.Builder(a,ThemePatcher.getDefaultDialogStyle(a))
 									.setTitle(R.string.export_typepath)
 									.setView(dialogView_)
 									.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
@@ -517,7 +517,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 												});
 										}
 									});
-								new AppCompatAlertDialog.Builder(a,ThemePatcher.getDefaultStyle(a))
+								new AppCompatAlertDialog.Builder(a,ThemePatcher.getDefaultDialogStyle(a))
 									.setTitle(R.string.import_typepath)
 									.setView(dialogView)
 									.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
@@ -568,7 +568,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		if(pref.getBoolean("feature_bott", true)){
 			appMenu.add(new Quintet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem>(R.string.sort, R.drawable.ic_compare_arrows_black_48dp, new Treatment<ServerListActivity>(){
 								public void process(ServerListActivity a) {
-									new AppCompatAlertDialog.Builder(a,ThemePatcher.getDefaultStyle(a))
+									new AppCompatAlertDialog.Builder(a,ThemePatcher.getDefaultDialogStyle(a))
 										.setTitle(R.string.sort)
 										.setItems(R.array.serverSortMenu, new DialogInterface.OnClickListener(){
 											public void onClick(DialogInterface di, int w) {
@@ -648,7 +648,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 												});
 										}
 									});
-								new AppCompatAlertDialog.Builder(a,ThemePatcher.getDefaultStyle(a))
+								new AppCompatAlertDialog.Builder(a,ThemePatcher.getDefaultDialogStyle(a))
 									.setTitle(R.string.load_typepath_simple)
 									.setView(dialogView)
 									.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
@@ -1065,14 +1065,14 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			// TODO: Implement this method
             if(sla.editMode!=EDIT_MODE_NULL)return true;
 			sla.clicked = p3;
-			new AppCompatAlertDialog.Builder(sla,ThemePatcher.getDefaultStyle(sla))
+			new AppCompatAlertDialog.Builder(sla,ThemePatcher.getDefaultDialogStyle(sla))
 				.setTitle(getItem(p3).resolveVisibleTitle())
 				.setItems(generateSubMenu(getItem(p3).mode == 1), new DialogInterface.OnClickListener(){
 					public void onClick(DialogInterface di, int which) {
 						List<Runnable> executes=new ArrayList<>();
 						executes.add(0, new Runnable(){
 								public void run() {
-									new AppCompatAlertDialog.Builder(sla,ThemePatcher.getDefaultStyle(sla))
+									new AppCompatAlertDialog.Builder(sla,ThemePatcher.getDefaultDialogStyle(sla))
 										.setMessage(R.string.auSure)
 										.setNegativeButton(android.R.string.yes, new DialogInterface.OnClickListener(){
 											public void onClick(DialogInterface di, int i) {
@@ -1159,7 +1159,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 											}
 										});
 
-									new AppCompatAlertDialog.Builder(sla,ThemePatcher.getDefaultStyle(sla)).
+									new AppCompatAlertDialog.Builder(sla,ThemePatcher.getDefaultDialogStyle(sla)).
 										setView(dialog).
 										setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener(){
 											public void onClick(DialogInterface d, int sel) {

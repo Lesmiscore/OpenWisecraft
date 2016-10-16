@@ -185,7 +185,7 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 	@Override
 	public int getDialogStyleId() {
 		TypedArray ta=ThemePatcher.getStyledContext(this).obtainStyledAttributes(new int[]{R.attr.dialogTheme});
-		int color=ta.getResourceId(0,R.style.AppTheme);
+		int color=ta.getResourceId(0,R.style.AppAlertDialog);
 		ta.recycle();
 		return color;
 	}
