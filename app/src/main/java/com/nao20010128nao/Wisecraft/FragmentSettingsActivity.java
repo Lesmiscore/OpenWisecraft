@@ -479,6 +479,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			// TODO: Implement this method
+			ThemePatcher.applyThemeForActivity(this);
 			super.onCreate(savedInstanceState);
 			setContentView(R.layout.settings_server_list_style_editor);
 			slsl=new ServerListStyleLoader(this);
