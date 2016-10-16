@@ -21,6 +21,10 @@ public class ServerGetActivity extends CompatWebViewActivity {
 		// TODO: Implement this method
 		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.bottomsheet_base);
+		getLayoutInflater().inflate(R.layout.webview_activity_compat,(ViewGroup)findViewById(R.id.main));
+		getLayoutInflater().inflate(R.layout.recycler_view_content,(ViewGroup)findViewById(R.id.bottomSheet));
+		scanWebView();
 		if(!Utils.isOnline(this)){
 			new AppCompatAlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
 				.setMessage(R.string.offline)
