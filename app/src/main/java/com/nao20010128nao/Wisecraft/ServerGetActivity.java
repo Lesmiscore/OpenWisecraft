@@ -25,13 +25,14 @@ public class ServerGetActivity extends CompatWebViewActivity {
 	Snackbar downloading;
 	BottomSheetBehavior bottomSheet;
 	RecyclerView loadedServerListRv;
+	Adapter adapter;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO: Implement this method
 		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.bottomsheet_base);
-		getLayoutInflater().inflate(R.layout.only_toolbar,(ViewGroup)findViewById(R.id.main));
+		getLayoutInflater().inflate(R.layout.only_toolbar_cood,(ViewGroup)findViewById(R.id.main));
 		getLayoutInflater().inflate(R.layout.webview_activity_compat,(ViewGroup)findViewById(R.id.toolbarCoordinator).findViewById(R.id.frame));
 		
 		getLayoutInflater().inflate(R.layout.yes_no,(ViewGroup)findViewById(R.id.bottomSheet));
@@ -41,8 +42,38 @@ public class ServerGetActivity extends CompatWebViewActivity {
 		findViewById(R.id.bottomSheet).setVisibility(View.GONE);
 		
 		bottomSheet=BottomSheetBehavior.from(findViewById(R.id.bottomSheet));
+		bottomSheet.setHideable(false);
+		bottomSheet.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback(){
+				public void onStateChanged(android.view.View p1, int p2){
+					switch(p2){
+						case BottomSheetBehavior.STATE_HIDDEN:
+							adapter.deleteAll();
+							findViewById(R.id.bottomSheet).setVisibility(View.GONE);
+							break;
+					}
+				}
+				public void onSlide(android.view.View p1, float p2){
+					
+				}
+			});
+		
 		loadedServerListRv=(RecyclerView)findViewById(android.R.id.list);
 		loadedServerListRv.setLayoutManager(new LinearLayoutManager(this));
+		loadedServerListRv.setAdapter(adapter=new Adapter());
+		
+		findViewById(R.id.yes).setOnClickListener(new View.OnClickListener(){
+				public void onClick(View v){
+					for(Server s:adapter.getSelection())
+						ServerListActivity.instance.get().addIntoList(s);
+					bottomSheet.setState(BottomSheetBehavior.STATE_HIDDEN);
+				}
+			});
+		findViewById(R.id.no).setOnClickListener(new View.OnClickListener(){
+				public void onClick(View v){
+					bottomSheet.setState(BottomSheetBehavior.STATE_HIDDEN);
+				}
+			});
+		
 		if(!Utils.isOnline(this)){
 			new AppCompatAlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
 				.setMessage(R.string.offline)
@@ -91,7 +122,6 @@ public class ServerGetActivity extends CompatWebViewActivity {
 				}
 			});
 		downloading = Snackbar.make(findViewById(android.R.id.content), R.string.serverGetFetch, Snackbar.LENGTH_INDEFINITE);
-		//Utils.getToolbar(this).setOverflowIcon(TheApplication.instance.getTintedDrawable(R.drawable.abc_ic_menu_moreoverflow_mtrl_alpha, ContextCompat.getColor(this, R.color.upd_2)));
 	}
 
 	@Override
@@ -123,26 +153,10 @@ public class ServerGetActivity extends CompatWebViewActivity {
 						if (o instanceof List) {
 							//Server list
 							final List<com.nao20010128nao.McServerList.Server> serv=(List<com.nao20010128nao.McServerList.Server>)o;
-							String[] servSel=new String[serv.size()];
-							for (int i=0;i < servSel.length;i++) {
-								servSel[i] = serv.get(i).toString();
-							}
-							new AppCompatAlertDialog.Builder(ServerGetActivity.this,ThemePatcher.getDefaultDialogStyle(ServerGetActivity.this))
-								.setTitle(R.string.selectServers)
-								.setMultiChoiceItems(servSel, selections = new boolean[servSel.length], new DialogInterface.OnMultiChoiceClickListener(){
-									public void onClick(DialogInterface di, int w, boolean c) {
-										selections[w] = c;
-									}
-								})
-								.setPositiveButton(R.string.add, new DialogInterface.OnClickListener(){
-									public void onClick(DialogInterface di, int w) {
-										List<com.nao20010128nao.McServerList.Server> selected=getServers(serv, selections);
-										for (com.nao20010128nao.Wisecraft.misc.Server s:Utils.convertServerObject(selected))
-											((ServerListActivityInterface)ServerListActivity.instance.get()/*.getLocalActivityManager().getActivity("main")*/).addIntoList(s);
-										di.dismiss();
-									}
-								})
-								.show();
+							adapter.deleteAll();
+							adapter.addAll(serv);
+							bottomSheet.setState(BottomSheetBehavior.STATE_COLLAPSED);
+							findViewById(R.id.bottomSheet).setVisibility(View.VISIBLE);
 						} else {
 							//Throwable
 							String msg=((Throwable)o).getMessage();
@@ -199,17 +213,19 @@ public class ServerGetActivity extends CompatWebViewActivity {
 	}
 	
 	
-	class Adapter extends ListRecyclerViewAdapter<FindableViewHolder,Server> {
-		Map<Server,Boolean> selected=new HashMap<>();
+	class Adapter extends ListRecyclerViewAdapter<FindableViewHolder,com.nao20010128nao.McServerList.Server> {
+		Map<com.nao20010128nao.McServerList.Server,Boolean> selected=new NonNullableMap<com.nao20010128nao.McServerList.Server>();
 		
 		@Override
 		public void onBindViewHolder(FindableViewHolder parent, int offset) {
 			((TextView)parent.findViewById(android.R.id.text1)).setText(makeServerTitle(getItem(offset)));
-			TypedArray ta=obtainStyledAttributes(new int[]{R.attr.selectableItemBackground});
-			parent.itemView.setBackground(ta.getDrawable(0));
-			ta.recycle();
 			parent.itemView.setTag(getItem(offset));
 			Utils.applyHandlersForViewTree(parent.itemView,new OnClickListener(offset));
+			if(selected.get(getItem(offset))){
+				parent.findViewById(R.id.check).setVisibility(View.VISIBLE);
+			}else{
+				parent.findViewById(R.id.check).setVisibility(View.GONE);
+			}
 		}
 
 		@Override
@@ -226,15 +242,19 @@ public class ServerGetActivity extends CompatWebViewActivity {
 			clear();
 			selected.clear();
 		}
+		
+		public List<Server> getSelection(){
+			List<com.nao20010128nao.McServerList.Server> result=new ArrayList<>();
+			for(com.nao20010128nao.McServerList.Server srv:new ArrayList<com.nao20010128nao.McServerList.Server>(this))
+				if(selected.get(srv))
+					result.add(srv);
+			return Utils.convertServerObject(result);
+		}
 
-		String makeServerTitle(Server sv){
+		String makeServerTitle(com.nao20010128nao.McServerList.Server sv){
 			StringBuilder sb=new StringBuilder();
-			if(TextUtils.isEmpty(sv.name)||sv.toString().equals(sv.name)){
-				sb.append(sv).append(" ");
-			}else{
-				sb.append(sv.name).append(" (").append(sv).append(") ");
-			}
-			sb.append(sv.mode==0?"PE":"PC");
+			sb.append(sv.ip).append(':').append(sv.port).append(" ");
+			sb.append(sv.isPE?"PE":"PC");
 			return sb.toString();
 		}
 
@@ -243,8 +263,9 @@ public class ServerGetActivity extends CompatWebViewActivity {
 			public OnClickListener(int i){ofs=i;}
 			@Override
 			public void onClick(View p1) {
-				Server s=getItem(ofs).cloneAsServer();
-				selected.put(s,true);
+				com.nao20010128nao.McServerList.Server s=getItem(ofs);
+				selected.put(s,!selected.get(s));
+				notifyItemChanged(ofs);
 			}
 		}
 	}
