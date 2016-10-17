@@ -70,5 +70,13 @@
 
 	</LinearLayout>
 
+	<FrameLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		app:layout_behavior="@string/bottom_sheet_behavior"
+		app:behavior_peekHeight="@dimen/bottomSheet_peek"
+		android:id="@+id/bottomSheet"
+		android:background="?android:attr/windowBackground"/>
+
 </android.support.design.widget.CoordinatorLayout>
 
