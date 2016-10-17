@@ -187,7 +187,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 					public void onSlide(View bottomSheet, float slideOffset) {
 						if(Build.VERSION.SDK_INT>=11){
 							BigDecimal val=slideOffset<0?BigDecimal.ZERO:new BigDecimal(slideOffset);
-							ViewCompat.setAlpha(background,val.floatValue());background.setAlpha(0);
+							ViewCompat.setAlpha(background,val.floatValue());
 
 							if (Build.VERSION.SDK_INT >= 21) {
 								int alpha=val.multiply(new BigDecimal(255)).intValue();
