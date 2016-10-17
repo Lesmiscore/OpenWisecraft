@@ -182,18 +182,19 @@ class FileRollbackWithGit{
 	}
 }
 
-task("eliminateImplementTodo") {
-    def finder={list,fille,suffix->
-    	if(fille.isFile()){
-    		if(fille.toString().endsWith(suffix)){
-    			list.add(fille)
-			}
-		}else if(fille.isDirectory()){
-			fille.listFiles().each {File fiile->
-				finder(list,fiile,suffix)
-			}
+def finder(list,fille,suffix){
+	if(fille.isFile()){
+    	if(fille.toString().endsWith(suffix)){
+    		list.add(fille)
+		}
+	}else if(fille.isDirectory()){
+		fille.listFiles().each {File fiile->
+			finder(list,fiile,suffix)
 		}
 	}
+}
+
+task("eliminateImplementTodo") {
 	def list=new ArrayList<File>();
 	println "Finding .java files..."
 	finder(list,new File("."),".java");
