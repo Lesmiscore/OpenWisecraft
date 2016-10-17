@@ -183,14 +183,14 @@ class FileRollbackWithGit{
 }
 
 task("eliminateImplementTodo") {
-    def finder={list,dir,suffix->
-    	if(dir.isFile()){
-    		if(dir.toString().endsWith(suffix)){
-    			list.add(dir)
+    def finder={list,fille,suffix->
+    	if(fille.isFile()){
+    		if(fille.toString().endsWith(suffix)){
+    			list.add(fille)
 			}
-		}else if(dir.isDirectory()){
-			dir.listFiles().each {File f->
-				finder(list,f,suffix)
+		}else if(fille.isDirectory()){
+			fille.listFiles().each {File fiile->
+				finder(list,fiile,suffix)
 			}
 		}
 	}
@@ -199,15 +199,15 @@ task("eliminateImplementTodo") {
 	finder(list,new File("."),".java");
 	list=list.sort()
 	println "Found "+list.length()+" files."
-	list.each{File f->
-		println f
+	list.each{File listingF->
+		println listingF
 	}
 	println "Eliminating TODO lines... (only implement todo)"
 	def eliminated=0
 	list.each{File dir->
 		println "Editing "+dir
 		def f=null
-		def sb=new StringBuilder()
+		def sbld=new StringBuilder()
 		try{
 			f=new BufferedReader(new FileReader(dir))
 			def line=null
@@ -216,7 +216,7 @@ task("eliminateImplementTodo") {
 					eliminated++
 					continue;
 				}
-				sb.append(line).append('\n')
+				sbld.append(line).append('\n')
 			}
 		}finally{
 			if(f!=null)f.close()
@@ -225,7 +225,7 @@ task("eliminateImplementTodo") {
 		new File(dir).delete()
 		try{
 			f=new FileWriter(dir)
-			f.write(sb.toString())
+			f.write(sbld.toString())
 		}finally{
 			if(f!=null)f.close()
 			f=null
