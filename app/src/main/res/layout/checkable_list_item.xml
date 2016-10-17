@@ -11,8 +11,8 @@
 		android:layout_height="wrap_content"
 		android:layout_width="wrap_content"
 		android:src="@drawable/ic_check_black_48dp"
-		android:minHeight="?android:attr/listPreferredItemHeightSmall"
-		android:minWidth="?android:attr/listPreferredItemHeightSmall"
+		android:maxHeight="?android:attr/listPreferredItemHeightSmall"
+		android:maxWidth="?android:attr/listPreferredItemHeightSmall"
 		android:padding="2dp"
 		android:id="@+id/check"/>
 
