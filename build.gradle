@@ -199,7 +199,7 @@ task("eliminateImplementTodo") {
 	println "Finding .java files..."
 	finder(list,new File("."),".java");
 	list=list.sort()
-	println "Found "+list.length()+" files."
+	println "Found "+list.size()+" files."
 	list.each{File listingF->
 		println listingF
 	}
@@ -232,5 +232,5 @@ task("eliminateImplementTodo") {
 			fr=null
 		}
 	}
-	println "Done. "+eliminated+" lines are eliminated in "+list.length()+" files."
+	println "Done. "+eliminated+" lines are eliminated in "+list.size()+" files."
 }
