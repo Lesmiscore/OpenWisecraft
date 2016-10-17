@@ -204,14 +204,14 @@ task("eliminateImplementTodo") {
 	}
 	println "Eliminating TODO lines... (only implement todo)"
 	def eliminated=0
-	list.each{File dir->
-		println "Editing "+dir
-		def f=null
+	list.each{File ddir->
+		println "Editing "+ddir
+		def fr=null
 		def sbld=new StringBuilder()
 		try{
-			f=new BufferedReader(new FileReader(dir))
+			fr=new BufferedReader(new FileReader(ddir))
 			def line=null
-			while((line=f.readLine())!=null){
+			while((line=fr.readLine())!=null){
 				if(line.trim().contains("// TODO: Implement this method")){
 					eliminated++
 					continue;
@@ -219,16 +219,16 @@ task("eliminateImplementTodo") {
 				sbld.append(line).append('\n')
 			}
 		}finally{
-			if(f!=null)f.close()
-			f=null
+			if(fr!=null)f.close()
+			fr=null
 		}
-		new File(dir).delete()
+		new File(ddir).delete()
 		try{
-			f=new FileWriter(dir)
-			f.write(sbld.toString())
+			fr=new FileWriter(ddir)
+			fr.write(sbld.toString())
 		}finally{
-			if(f!=null)f.close()
-			f=null
+			if(fr!=null)fr.close()
+			fr=null
 		}
 	}
 	println "Done. "+eliminated+" lines are eliminated in "+list.length()+" files."
