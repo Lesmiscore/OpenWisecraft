@@ -223,7 +223,7 @@ task("eliminateImplementTodo") {
 			if(fr!=null)fr.close()
 			fr=null
 		}
-		new File(ddir.toAbsolutePath()).delete()
+		ddir.delete()
 		try{
 			fr=new FileWriter(ddir)
 			fr.write(sbld.toString())
