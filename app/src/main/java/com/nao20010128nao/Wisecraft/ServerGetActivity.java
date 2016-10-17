@@ -226,6 +226,7 @@ public class ServerGetActivity extends CompatWebViewActivity {
 			}else{
 				parent.findViewById(R.id.check).setVisibility(View.GONE);
 			}
+			((ImageView)parent.findViewById(R.id.check)).setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_check_black_48dp,Utils.getMenuTintColor(ServerGetActivity.this)));
 		}
 
 		@Override
