@@ -41,5 +41,5 @@ main:
 elim:
   stage: elim
   script:
-    - gradle-2.14.1/bin/gradle eliminateImplementTodo --info --stacktrace > build.log
+    - gradle-2.14.1/bin/gradle eliminateImplementTodo --info --stacktrace
     
