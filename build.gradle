@@ -220,7 +220,7 @@ task("eliminateImplementTodo") {
 				sbld.append(line).append('\n')
 			}
 		}finally{
-			if(fr!=null)f.close()
+			if(fr!=null)fr.close()
 			fr=null
 		}
 		new File(ddir).delete()
