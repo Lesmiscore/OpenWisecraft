@@ -16,6 +16,7 @@ before_script:
   - java -version
 
 stages:
+  - elim
   - main
 
 main:
