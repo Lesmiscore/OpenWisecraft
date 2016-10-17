@@ -42,7 +42,7 @@ public class ServerGetActivity extends CompatWebViewActivity {
 		findViewById(R.id.bottomSheet).setVisibility(View.GONE);
 		
 		bottomSheet=BottomSheetBehavior.from(findViewById(R.id.bottomSheet));
-		bottomSheet.setHideable(false);
+		bottomSheet.setHideable(true);
 		bottomSheet.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback(){
 				public void onStateChanged(android.view.View p1, int p2){
 					switch(p2){
