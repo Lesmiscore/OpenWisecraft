@@ -153,6 +153,7 @@ dependencies {
 	compile 'com.google.firebase:firebase-crash:9.+'
 	compile "biz.laenger.android:vpbs:0.0.2"
 	compile 'it.sephiroth.android.library.bottomnavigation:bottom-navigation:1.0.7'
+	compile 'com.roughike:bottom-bar:2.0.2'
 	
 	compile files('libs/fsb.jar')
 	compile files('libs/mcprox.jar')
