@@ -96,7 +96,7 @@
 		android:key="widgetEditor"
 	/>
 	<com.nao20010128nao.Wisecraft.misc.pref.StartPrefCompat
-		android:title="themeMode"
+		android:title="@string/themeMode"
 		android:key="4.0themeMode"
 	/>
 </PreferenceScreen>

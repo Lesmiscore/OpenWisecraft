@@ -354,8 +354,8 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			sH("4.0themeMode", new HandledPreference.OnClickListener(){
 					public void onClick(String a, String b, String c) {
 						new AppCompatAlertDialog.Builder(getContext(),ThemePatcher.getDefaultDialogStyle(getContext()))
-							.setTitle("Theme Mode"/*R.string.serverListStyle*/)
-							.setSingleChoiceItems(new String[]{"Light","Dark","DayNight"}/*getResources().getStringArray(R.array.serverListStyles)*/,which=pref.getInt("4.0themeMode",ThemePatcher.THEME_MODE_LIGHT),new DialogInterface.OnClickListener(){
+							.setTitle(R.string.themeMode)
+							.setSingleChoiceItems(getResources().getStringArray(R.array.themeMode),which=pref.getInt("4.0themeMode",ThemePatcher.THEME_MODE_LIGHT),new DialogInterface.OnClickListener(){
 								public void onClick(DialogInterface di,int w){
 									which=w;
 								}
