@@ -27,7 +27,6 @@ public abstract class WidgetServerSelectActivity extends AppCompatActivity
 	int wid;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.recycler_view_content);
@@ -186,7 +185,6 @@ public abstract class WidgetServerSelectActivity extends AppCompatActivity
 
 		@Override
 		public PingWidget.WidgetData newWidgetDataInstance() {
-			// TODO: Implement this method
 			PingWidget.WidgetData wd=new PingWidget.WidgetData();
 			wd.style=0;
 			return wd;
@@ -196,7 +194,6 @@ public abstract class WidgetServerSelectActivity extends AppCompatActivity
 
 		@Override
 		public PingWidget.WidgetData newWidgetDataInstance() {
-			// TODO: Implement this method
 			PingWidget.WidgetData  data=new PingWidget.WidgetData();
 			data.style=1;
 			return data;

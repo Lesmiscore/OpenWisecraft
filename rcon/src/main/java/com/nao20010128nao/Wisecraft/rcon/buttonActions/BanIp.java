@@ -14,7 +14,6 @@ public class BanIp extends NameSelectAction {
 
 	@Override
 	public void onSelected(final String s) {
-		// TODO: Implement this method
 		new AppCompatAlertDialog.Builder(this,getActivity().getPresenter().getDialogStyleId())
 			.setMessage(getResString(R.string.banIpAsk).replace("[PLAYER]", s))
 			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
@@ -28,19 +27,16 @@ public class BanIp extends NameSelectAction {
 
 	@Override
 	public String onPlayerNameHint() {
-		// TODO: Implement this method
 		return getResString(R.string.banIpHint);
 	}
 
 	@Override
 	public int getViewId() {
-		// TODO: Implement this method
 		return R.id.banip;
 	}
 
 	@Override
 	public int getTitleId() {
-		// TODO: Implement this method
 		return R.string.ban_ip;
 	}
 }

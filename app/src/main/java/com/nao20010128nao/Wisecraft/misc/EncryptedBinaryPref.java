@@ -13,22 +13,22 @@ public class EncryptedBinaryPref extends BinaryPrefImpl
 	private static final byte[] PREF_IV = new byte[16];
 	
 	public EncryptedBinaryPref() {
-		// TODO 自動生成されたコンストラクター・スタブ
+		// TODO 自動生成されたコンストラクター・スタ�?
 		super();
 	}
 
 	public EncryptedBinaryPref(Map<String, ?> map) {
-		// TODO 自動生成されたコンストラクター・スタブ
+		// TODO 自動生成されたコンストラクター・スタ�?
 		super(map);
 	}
 
 	public EncryptedBinaryPref(File f) throws IOException {
-		// TODO 自動生成されたコンストラクター・スタブ
+		// TODO 自動生成されたコンストラクター・スタ�?
 		this(readAllFromFile(f));
 	}
 
 	public EncryptedBinaryPref(byte[] b) throws IOException {
-		// TODO 自動生成されたコンストラクター・スタブ
+		// TODO 自動生成されたコンストラクター・スタ�?
 		this(readAllFromBytes(b));
 	}
 
@@ -42,7 +42,6 @@ public class EncryptedBinaryPref extends BinaryPrefImpl
 
 	@Override
 	public byte[] toBytes() {
-		// TODO: Implement this method
 		try {
 			byte[] base= super.toBytes();
 			ByteArrayOutputStream fos=new ByteArrayOutputStream();
@@ -139,7 +138,7 @@ public class EncryptedBinaryPref extends BinaryPrefImpl
 		try {
 			return readAllFromStream(new ByteArrayInputStream(array), true);
 		} catch (IOException e) {
-			// TODO 自動生成された catch ブロック
+			// TODO 自動生成された catch ブロ�?ク
 			return null;
 		}
 	}

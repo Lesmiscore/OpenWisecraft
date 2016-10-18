@@ -33,7 +33,6 @@ public class Give extends NameSelectAction {
 
 	@Override
 	public void onClick(View p1) {
-		// TODO: Implement this method
 		dialog = new AppCompatAlertDialog.Builder(this,getActivity().getPresenter().getDialogStyleId())
 			.setView(inflateDialogView())
 			.show();
@@ -41,13 +40,11 @@ public class Give extends NameSelectAction {
 
 	@Override
 	public int getViewId() {
-		// TODO: Implement this method
 		return R.id.give;
 	}
 
 	@Override
 	public void onSelected(String s) {
-		// TODO: Implement this method
 		switch (selecting) {
 			case 0:
 				amount = s;
@@ -129,7 +126,6 @@ public class Give extends NameSelectAction {
 
 	@Override
 	public String[] onPlayersList() throws IOException,AuthenticationException {
-		// TODO: Implement this method
 		if (list == null) {
 			return super.onPlayersList();
 		} else {
@@ -139,13 +135,11 @@ public class Give extends NameSelectAction {
 
 	@Override
 	public String onPlayerNameHint() {
-		// TODO: Implement this method
 		return hint;
 	}
 
 	@Override
 	public int getTitleId() {
-		// TODO: Implement this method
 		return R.string.give;
 	}
 }

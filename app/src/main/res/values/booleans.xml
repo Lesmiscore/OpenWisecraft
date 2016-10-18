@@ -5,5 +5,4 @@
 	<bool name="shouldExpandTab">false</bool>
 	<bool name="padMiddle">true</bool>
 	
-	<bool name="inspectorEnabled">false</bool>
 </resources>

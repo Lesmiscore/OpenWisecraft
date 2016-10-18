@@ -39,7 +39,6 @@ public class ColorPickerPreferenceCompat extends Preference
 	
 	@Override
 	public void onBindViewHolder(PreferenceViewHolder holder) {
-		// TODO: Implement this method
 		super.onBindViewHolder(holder);
 		PreferenceUtils.onBindViewHolder(getContext(),this,holder);
 		LinearLayout widgetFrame=(LinearLayout)holder.findViewById(android.R.id.widget_frame);
@@ -52,7 +51,6 @@ public class ColorPickerPreferenceCompat extends Preference
 
 	@Override
 	protected void onClick() {
-		// TODO: Implement this method
 		super.onClick();
 		ColorPickerDialog cpd=ColorPickerDialog.createColorPickerDialog(getContext(),ColorPickerDialog.LIGHT_THEME);
 		cpd.setLastColor(getPersistedInt(defaultColor));

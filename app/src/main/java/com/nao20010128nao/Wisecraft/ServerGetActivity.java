@@ -28,7 +28,6 @@ public class ServerGetActivity extends CompatWebViewActivity {
 	Adapter adapter;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.bottomsheet_base);
@@ -126,14 +125,12 @@ public class ServerGetActivity extends CompatWebViewActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// TODO: Implement this method
 		menu.add(Menu.NONE, 0, 0, R.string.findServers);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO: Implement this method
 		switch (item.getItemId()) {
 			case 0:
 				//List<com.nao20010128nao.McServerList.Server>
@@ -192,7 +189,6 @@ public class ServerGetActivity extends CompatWebViewActivity {
 
 	@Override
 	public void onBackPressed() {
-		// TODO: Implement this method
 		if (getWebView().canGoBack()) {
 			getWebView().goBack();
 		} else {

@@ -14,24 +14,20 @@ public class InvisibleWebViewDrawerItem extends AbstractDrawerItem<InvisibleWebV
     
     @Override
     public int getLayoutRes() {
-        // TODO: Implement this method
         return R.layout.drawer_item_invisible_webview;
     }
 
     @Override
     public ViewHolderFactory<InvisibleWebViewDrawerItem.ViewHolder> getFactory() {
-        // TODO: Implement this method
         return new ItemFactory();//v->new ViewHolder(v)
     }
 
     @Override
     public int getType() {
-        // TODO: Implement this method
         return getLayoutRes();
     }
 
     public void bindView(InvisibleWebViewDrawerItem.ViewHolder p1,List payload) {
-        // TODO: Implement this method
         p1.webView.loadUrl(url);
         p1.itemView.setId(hashCode());
         p1.itemView.setClickable(false);

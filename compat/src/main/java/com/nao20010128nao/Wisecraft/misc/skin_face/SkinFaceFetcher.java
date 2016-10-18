@@ -20,7 +20,6 @@ public class SkinFaceFetcher implements SkinFetcherInterface
 
 		@Override
 		public void onError(String player) {
-			// TODO: Implement this method
 			lis.onError(player);
 		}
 

@@ -15,13 +15,11 @@ public class VersionInfoFragment extends ViewHolderCatchablePreferenceFragment
 
 	@Override
 	public void onResume() {
-		// TODO: Implement this method
 		super.onResume();
 	}
 	
 	@Override
 	public void onCreatePreferences(Bundle p1, String p2) {
-		// TODO: Implement this method
 		Class d=getBuildConfigClass();
 		addPreferencesFromResource(R.xml.libcompat_version_fragment);
 		findPreference("versionInfo_wisecraft").setSummary(getVersionName(getContext()));

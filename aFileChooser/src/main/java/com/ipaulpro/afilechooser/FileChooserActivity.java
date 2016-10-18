@@ -225,7 +225,6 @@ public class FileChooserActivity extends AppCompatActivity implements
 	
 	@Override
 	public void onBackPressed() {
-		// TODO: Implement this method
 		boolean hasBackStack = !mPath.equals(EXTERNAL_BASE_PATH);
 		if(hasBackStack){
 			replaceFragment(mPath.getParentFile());

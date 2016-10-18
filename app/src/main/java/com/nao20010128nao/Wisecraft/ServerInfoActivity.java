@@ -73,7 +73,6 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 	CharSequence serverNameStr;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
 		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
@@ -220,7 +219,6 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 	}
 
 	public void onBackPressed() {
-		// TODO: Implement this method
 		if(useBottomSheet){
 			switch(behavior.getState()){
 				case ViewPagerBottomSheetBehavior.STATE_EXPANDED:
@@ -346,7 +344,6 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO: Implement this method
 		switch (item.getItemId()) {
 			case 0://Export this ping result
 				View dialogView_=getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
@@ -418,13 +415,11 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 	}
 
 	public void setResultInstead(int resultCode, Intent data) {
-		// TODO: Implement this method
 		setResult(resultCode, data.putExtra("object", keeping));
 	}
 
 	@Override
 	public void setTitle(CharSequence title) {
-		// TODO: Implement this method
 		if (title == null) {
 			if (pref.getBoolean("serverListColorFormattedText", false)) {
 				SpannableStringBuilder ssb=new SpannableStringBuilder();
@@ -445,7 +440,6 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 
 	@Override
 	protected void onDestroy() {
-		// TODO: Implement this method
 		super.onDestroy();
 		new Thread(){
 			public void run() {
@@ -475,13 +469,11 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		
 		@Override
 		public FindableViewHolder onCreateViewHolder(ViewGroup parent, int type) {
-			// TODO: Implement this method
 			return new VH(getLayoutInflater().inflate(R.layout.simple_list_item_with_image,parent,false));
 		}
 
 		@Override
 		public void onBindViewHolder(FindableViewHolder holder, int position, List<Object> payloads) {
-			// TODO: Implement this method
 			View convertView=holder.itemView;
 			String playerName=getItem(position);
 			((TextView)convertView.findViewById(android.R.id.text1)).setText(playerName);
@@ -507,13 +499,11 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		class Handler implements SkinFetcher.SkinFetchListener {
 			@Override
 			public void onError(String player) {
-				// TODO: Implement this method
 				Log.d("face", "err:" + player);
 			}
 
 			@Override
 			public void onSuccess(final Bitmap bmp, final String player) {
-				// TODO: Implement this method
 				skinFaceImages.add(bmp);
 				new AsyncTask<Bitmap,Void,Bitmap>(){
 					public Bitmap doInBackground(Bitmap... datas) {
@@ -538,13 +528,11 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 	class ModInfoListAdapter extends ListRecyclerViewAdapter<FindableViewHolder,Object> {
 		@Override
 		public int getItemCount() {
-			// TODO: Implement this method
 			return super.getItemCount()+1;
 		}
 
 		@Override
 		public FindableViewHolder onCreateViewHolder(ViewGroup parent, int type) {
-			// TODO: Implement this method
 			if(type==0)
 				return new VH(getLayoutInflater().inflate(R.layout.void_view,null));
 			else
@@ -553,7 +541,6 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 
 		@Override
 		public void onBindViewHolder(FindableViewHolder parent, int offset) {
-			// TODO: Implement this method
 			if(offset==0)return;
 			int position=offset-1;
 			View v=parent.itemView;
@@ -571,7 +558,6 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 
 		@Override
 		public int getItemViewType(int position) {
-			// TODO: Implement this method
 			if(position==0)return 0;else return 1;
 		}
 		
@@ -588,7 +574,6 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		
 		@Override
 		public String getItem(int position) {
-			// TODO: Implement this method
 			String s=super.getItem(position);
 			if (pref.getBoolean("deleteDecoPlayerName", false))
 				s = deleteDecorations(s);
@@ -597,13 +582,11 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 
 		@Override
 		public FindableViewHolder onCreateViewHolder(ViewGroup parent, int type) {
-			// TODO: Implement this method
 			return new VH(getLayoutInflater().inflate(android.R.layout.simple_list_item_1,parent,false));
 		}
 
 		@Override
 		public void onBindViewHolder(FindableViewHolder parent, int offset) {
-			// TODO: Implement this method
 			((TextView)parent.findViewById(android.R.id.text1)).setText(getItem(offset));
 		}
 		
@@ -672,7 +655,6 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		ListRecyclerViewAdapter<FindableViewHolder,String> player;
 		@Override
 		public void onResume() {
-			// TODO: Implement this method
 			super.onResume();
 			lv = (RecyclerView)getView();
 			lv.setLayoutManager(new HPLinearLayoutManager(getActivity()));
@@ -740,7 +722,6 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-			// TODO: Implement this method
 			return inflater.inflate(R.layout.players_tab, container, false);
 		}
 
@@ -758,7 +739,6 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		KVRecyclerAdapter<String,String> infos;
 		@Override
 		public void onResume() {
-			// TODO: Implement this method
 			super.onResume();
 			data = (RecyclerView)getView().findViewById(R.id.data);
 			data.setLayoutManager(new HPLinearLayoutManager(getActivity()));
@@ -782,7 +762,6 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-			// TODO: Implement this method
 			View v= inflater.inflate(R.layout.data_tab, container, false);
 			((RecyclerView)v.findViewById(R.id.data)).addItemDecoration(new DividerItemDecoration(getContext()));
 			return v;
@@ -798,7 +777,6 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		KVRecyclerAdapter<String,String> infos;
 		@Override
 		public void onResume() {
-			// TODO: Implement this method
 			super.onResume();
 			serverIcon = (ImageView)getView().findViewById(R.id.serverIcon);
 			serverName = (TextView)getView().findViewById(R.id.serverTitle);
@@ -865,7 +843,6 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-			// TODO: Implement this method
 			View lv= inflater.inflate(R.layout.data_tab_pc, container, false);
 			lv.findViewById(R.id.serverImageAndName).setBackgroundDrawable(getParentActivity().slsl.load());
 			((RecyclerView)lv.findViewById(R.id.data)).addItemDecoration(new DividerItemDecoration(getContext()));
@@ -877,7 +854,6 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		RecyclerView lv;
 		@Override
 		public void onResume() {
-			// TODO: Implement this method
 			super.onResume();
 			lv = (RecyclerView)getView();
 			lv.setLayoutManager(new HPLinearLayoutManager(getActivity()));
@@ -910,7 +886,6 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-			// TODO: Implement this method
 			return inflater.inflate(R.layout.players_tab, container, false);
 		}
 	}
@@ -921,7 +896,6 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		RecyclerView mods;
 		@Override
 		public void onResume() {
-			// TODO: Implement this method
 			super.onResume();
 			mods = (RecyclerView)getView().findViewById(R.id.players);
 			modLoader = (TextView)getView().findViewById(R.id.modLoaderType);
@@ -951,14 +925,12 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-			// TODO: Implement this method
 			return inflater.inflate(R.layout.mods_tab, container, false);
 		}
 	}
 	public static class UcpInfoFragment extends BaseFragment<ServerInfoActivity> {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-			// TODO: Implement this method
 			return inflater.inflate(R.layout.server_info_no_details_fragment, container, false);
 		}
 	}
@@ -966,7 +938,6 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 
 		@Override
 		public void onResume() {
-			// TODO: Implement this method
 			super.onResume();
 			UnconnectedPing.UnconnectedPingResult result;
 			if (getParentActivity().localStat.response instanceof UnconnectedPing.UnconnectedPingResult) {
@@ -994,7 +965,6 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-			// TODO: Implement this method
 			View v= inflater.inflate(R.layout.server_info_ucp_details, container, false);
 			((RecyclerView)v.findViewById(R.id.data)).addItemDecoration(new DividerItemDecoration(getContext()));
 			return v;

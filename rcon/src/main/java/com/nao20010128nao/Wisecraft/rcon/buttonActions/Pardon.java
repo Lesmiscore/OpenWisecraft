@@ -16,7 +16,6 @@ public class Pardon extends NameSelectAction {
 
 	@Override
 	public void onSelected(final String s) {
-		// TODO: Implement this method
 		new AppCompatAlertDialog.Builder(this,getActivity().getPresenter().getDialogStyleId())
 			.setMessage(getResString(R.string.pardonAsk).replace("[PLAYER]", s))
 			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
@@ -30,19 +29,16 @@ public class Pardon extends NameSelectAction {
 
 	@Override
 	public String[] onPlayersList() throws IOException, AuthenticationException {
-		// TODO: Implement this method
 		return getActivity().getRCon().banList();
 	}
 
 	@Override
 	public int getViewId() {
-		// TODO: Implement this method
 		return R.id.pardon;
 	}
 
 	@Override
 	public int getTitleId() {
-		// TODO: Implement this method
 		return R.string.pardon;
 	}
 }

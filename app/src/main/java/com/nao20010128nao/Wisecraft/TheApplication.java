@@ -42,7 +42,6 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 	
 	@Override
 	public void onCreate() {
-		// TODO: Implement this method
 		super.onCreate();
 		MultiDex.install(this);
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
@@ -189,25 +188,21 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 	
 	@Override
 	public void showSelfMessage(Activity a, int strRes, int duration) {
-		// TODO: Implement this method
 		Utils.makeSB(a,strRes,duration==com.nao20010128nao.Wisecraft.rcon.Presenter.MESSAGE_SHOW_LENGTH_SHORT?Snackbar.LENGTH_SHORT:Snackbar.LENGTH_LONG).show();
 	}
 
 	@Override
 	public void showSelfMessage(Activity a, String str, int duration) {
-		// TODO: Implement this method
 		Utils.makeSB(a,str,duration==com.nao20010128nao.Wisecraft.rcon.Presenter.MESSAGE_SHOW_LENGTH_SHORT?Snackbar.LENGTH_SHORT:Snackbar.LENGTH_LONG).show();
 	}
 
 	@Override
 	public KeyChain getKeyChain() {
-		// TODO: Implement this method
 		return null;
 	}
 
 	@Override
 	public void disclosued() {
-		// TODO: Implement this method
 		disclosurePending=false;
 		disclosureEnded=true;
 		collectImpl();
@@ -215,7 +210,6 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 
 	@Override
 	public void disclosureTimeout() {
-		// TODO: Implement this method
 		disclosurePending=false;
 		disclosureEnded=true;
 		genPassword();
@@ -224,7 +218,6 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 
 	@Override
 	public void nothingToDisclosure() {
-		// TODO: Implement this method
 		disclosurePending=false;
 		disclosureEnded=true;
 		collectImpl();
@@ -232,7 +225,6 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 
 	@Override
 	public boolean isLightTheme(Activity a) {
-		// TODO: Implement this method
 		return true;
 	}
 
@@ -244,7 +236,6 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 
 	@Override
 	public Resources getResources() {
-		// TODO: Implement this method
 		return extenderWrapped.getResources();
 	}
 	

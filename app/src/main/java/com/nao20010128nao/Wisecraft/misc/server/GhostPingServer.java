@@ -24,7 +24,6 @@ public class GhostPingServer extends Thread {
 	int localPort = 19500;
 	static byte[] MAGIC = {(byte) 0xFE, (byte) 0xFD};
 	public void runImpl()throws IOException {
-		// TODO: Implement this method
 		/*if(Build.VERSION.SDK_INT<9){
 			Log.d("ghost_query", "the system is too old to start GhostPingServer");
 			return;
@@ -61,7 +60,6 @@ public class GhostPingServer extends Thread {
 
 	@Override
 	public void run() {
-		// TODO: Implement this method
 		try {
 			runImpl();
 		} catch (IOException e) {}

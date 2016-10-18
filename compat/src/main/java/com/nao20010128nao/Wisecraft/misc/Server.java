@@ -10,13 +10,11 @@ public class Server {
 
 	@Override
 	public int hashCode() {
-		// TODO: Implement this method
 		return ((((ip==null?0:ip.hashCode())<<6 ^ port)<<6) ^ mode)<<6 ^ (name==null?0:name.hashCode());
 	}
 
 	@Override
 	public boolean equals(Object o) {
-		// TODO: Implement this method
 		if (!(o instanceof Server)) {
 			return false;
 		}
@@ -26,7 +24,6 @@ public class Server {
 
 	@Override
 	public String toString() {
-		// TODO: Implement this method
 		StringBuilder sb=new StringBuilder();
 		if(/*ip.matches(Constant.IPV6_PATTERN)*/false){
 			sb.append('[').append(ip).append(']');//IPv6

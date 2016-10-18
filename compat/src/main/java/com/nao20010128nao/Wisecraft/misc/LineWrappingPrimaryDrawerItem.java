@@ -10,19 +10,16 @@ public class LineWrappingPrimaryDrawerItem extends PrimaryDrawerItem implements 
 
 	@Override
 	public int getLayoutRes() {
-		// TODO: Implement this method
 		return R.layout.drawer_item_primary_linewrap;
 	}
 
     @Override
     public int getIntId() {
-        // TODO: Implement this method
         return id;
     }
 
     @Override
     public LineWrappingPrimaryDrawerItem setIntId(int id) {
-        // TODO: Implement this method
         this.id = id;
         return this;
     }

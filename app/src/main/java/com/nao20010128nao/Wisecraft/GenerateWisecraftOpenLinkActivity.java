@@ -23,7 +23,6 @@ public class GenerateWisecraftOpenLinkActivity extends AppCompatActivity {
 	TextView result;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.create_wisecraft_open_link);
@@ -74,7 +73,6 @@ public class GenerateWisecraftOpenLinkActivity extends AppCompatActivity {
 
 	@Override
 	protected void attachBaseContext(Context newBase) {
-		// TODO: Implement this method
 		super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
 	}
 }

@@ -18,7 +18,6 @@ public class SigninActivity extends AppCompatActivity
 	Snackbar snackbar;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.accounts_signin_screen);
 		auth=FirebaseAuth.getInstance();
@@ -116,7 +115,6 @@ public class SigninActivity extends AppCompatActivity
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO: Implement this method
 		super.onActivityResult(requestCode, resultCode, data);
 		switch(requestCode){
 			case 0://register

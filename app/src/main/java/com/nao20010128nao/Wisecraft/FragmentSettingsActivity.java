@@ -54,7 +54,6 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
 		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
@@ -88,14 +87,12 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
-		// TODO: Implement this method
 		super.onSaveInstanceState(outState);
 		outState.putInt("misc.visibility",misc.getVisibility());
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// TODO: Implement this method
 		MenuItem showPreview=menu.add(Menu.NONE,0,0,R.string.preview);
 		showPreview.setIcon(TheApplication.instance.getTintedDrawable(misc.getVisibility()==View.VISIBLE?R.drawable.ic_visibility_black_48dp:R.drawable.ic_visibility_off_black_48dp,Utils.getMenuTintColor(this)));
 		MenuItemCompat.setShowAsAction(showPreview,MenuItem.SHOW_AS_ACTION_ALWAYS);
@@ -104,7 +101,6 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO: Implement this method
 		switch(item.getItemId()){
 			case 0:
 				boolean isShowing=misc.getVisibility()==View.VISIBLE;
@@ -127,7 +123,6 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 
 	@Override
 	public void onBackPressed() {
-		// TODO: Implement this method
 		FragmentManager sfm=getSupportFragmentManager();
 		if(sfm.getBackStackEntryCount()<2){
 			finish();
@@ -138,7 +133,6 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 
 	@Override
 	public void finish() {
-		// TODO: Implement this method
 		if(requireRestart){
 			if(ServerListActivityImpl.instance.get()!=null)
 				ServerListActivityImpl.instance.get().finish();
@@ -152,13 +146,11 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		SharedPreferences pref;
 		@Override
 		public void onCreatePreferences(Bundle p1, String p2) {
-			// TODO: Implement this method
 			addPreferencesFromResource(R.xml.settings_parent_compat);
 		}
 
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
-			// TODO: Implement this method
 			pref=PreferenceManager.getDefaultSharedPreferences(getContext());
 			super.onCreate(savedInstanceState);
 			sH("basics", new HandledPreference.OnClickListener(){
@@ -230,7 +222,6 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		}
 		@Override
 		public void onResume() {
-			// TODO: Implement this method
 			super.onResume();
 			getActivity().setTitle(R.string.settings);
 			findPreference("asfsls").setEnabled(pref.getBoolean("feature_asfsls",false));
@@ -242,7 +233,6 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		int which;
 		@Override
 		public void onCreatePreferences(Bundle p1, String p2) {
-			// TODO: Implement this method
 			addPreferencesFromResource(R.xml.settings_basic_compat);
 			sH("parallels", new HandledPreference.OnClickListener(){
 					public void onClick(String a, String b, String c) {
@@ -387,7 +377,6 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 
 		@Override
 		public void onResume() {
-			// TODO: Implement this method
 			super.onResume();
 			getActivity().setTitle(R.string.basics);
 		}
@@ -398,13 +387,11 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		int which;
 		@Override
 		public void onCreatePreferences(Bundle p1, String p2) {
-			// TODO: Implement this method
 			addPreferencesFromResource(R.xml.settings_features_compat);
 		}
 
 		@Override
 		public void onResume() {
-			// TODO: Implement this method
 			super.onResume();
 			getActivity().setTitle(R.string.features);
 		}
@@ -415,7 +402,6 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		int which;
 		@Override
 		public void onCreatePreferences(Bundle p1, String p2) {
-			// TODO: Implement this method
 			addPreferencesFromResource(R.xml.settings_asfsls_compat);
 			SharedPreferences slsVersCache=getContext().getSharedPreferences("sls_vers_cache", 0);
 			findPreference("currentSlsVersion").setSummary(slsVersCache.getString("dat.vcode",getResources().getString(R.string.unknown)));
@@ -423,7 +409,6 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 
 		@Override
 		public void onResume() {
-			// TODO: Implement this method
 			super.onResume();
 			getActivity().setTitle(R.string.addServerFromServerListSite);
 		}
@@ -433,14 +418,12 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 
 		@Override
 		public void onResume() {
-			// TODO: Implement this method
 			super.onResume();
 			getActivity().setTitle(R.string.colorChange);
 		}
 
 		@Override
 		public void onCreatePreferences(Bundle p1, String p2) {
-			// TODO: Implement this method
 			addPreferencesFromResource(R.xml.settings_color_changer_compat);
 		}
 	}
@@ -449,14 +432,12 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 
 		@Override
 		public void onResume() {
-			// TODO: Implement this method
 			super.onResume();
 			getActivity().setTitle(R.string.versionInfo);
 		}
 		
 		@Override
 		public RecyclerView onCreateRecyclerView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-			// TODO: Implement this method
 			return super.onCreateRecyclerView(Utils.fixLayoutInflaterIfNeeded(CalligraphyContextWrapper.wrap(inflater.getContext()),getActivity()),
 											  parent, 
 											  savedInstanceState);
@@ -464,7 +445,6 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 
 		@Override
 		public void onModifyPreferenceViewHolder(PreferenceViewHolder viewHolder, Preference pref) {
-			// TODO: Implement this method
 			PreferenceUtils.onBindViewHolder(getActivity(),pref,viewHolder);
 		}
 	}
@@ -491,7 +471,6 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
-			// TODO: Implement this method
 			ThemePatcher.applyThemeForActivity(this);
 			super.onCreate(savedInstanceState);
 			setContentView(R.layout.settings_server_list_style_editor);
@@ -745,7 +724,6 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		//FSF
 		@Override
 		public void onActivityResult(int requestCode, int resultCode, Intent data) {
-			// TODO: Implement this method
 			if(results.containsKey(requestCode)){
 				switch(resultCode){
 					case RESULT_OK:
@@ -889,7 +867,6 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 
 		@Override
 		public void onResume() {
-			// TODO: Implement this method
 			super.onResume();
 			new AsyncTask<Void,Void,List<Server>>(){
 				public List<Server> doInBackground(Void...a){
@@ -980,7 +957,6 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 
 		@Override
 		protected int onCalculateRows() {
-			// TODO: Implement this method
 			int rows;
 			if(getResources().getBoolean(R.bool.is_port)){
 				Log.d("FSA","calculating by the width of the screen");
@@ -1001,7 +977,6 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		
 		@Override
 		public void onResume() {
-			// TODO: Implement this method
 			super.onResume();
 			Toolbar tb=(Toolbar)findViewById(R.id.toolbar);
 			slsl=(ServerListStyleLoader)getActivity().getSystemService(ContextWrappingExtender.SERVER_LIST_STYLE_LOADER);
@@ -1047,7 +1022,6 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-			// TODO: Implement this method
 			return LayoutInflater.from(getActivity()).inflate(R.layout.server_info_pager_nobs,container,false);
 		}
 		
@@ -1055,7 +1029,6 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 
 			@Override
 			public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-				// TODO: Implement this method
 				return inflater.inflate(R.layout.none,container,false);
 			}
 		}

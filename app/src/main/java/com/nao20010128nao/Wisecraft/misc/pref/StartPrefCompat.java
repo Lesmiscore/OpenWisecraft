@@ -31,20 +31,17 @@ public class StartPrefCompat extends HandledPreferenceCompat implements SetTextC
 	
 	@Override
 	public void onBindViewHolder(PreferenceViewHolder holder) {
-		// TODO: Implement this method
 		super.onBindViewHolder(holder);
 		PreferenceUtils.onBindViewHolder(getContext(),this,holder);
 	}
 
 	@Override
 	public void setTextColor(int color) {
-		// TODO: Implement this method
 		this.color=color;
 	}
 
 	@Override
 	public int getTextColor() {
-		// TODO: Implement this method
 		return color;
 	}	
 }

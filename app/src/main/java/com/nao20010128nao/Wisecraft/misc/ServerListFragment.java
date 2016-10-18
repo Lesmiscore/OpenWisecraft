@@ -22,7 +22,6 @@ public class ServerListFragment<T extends FragmentActivity> extends BaseFragment
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		slra=new ServerListRecyclerAdapter(getActivity());
 		slsl=new ServerListStyleLoader(getActivity());
@@ -30,7 +29,6 @@ public class ServerListFragment<T extends FragmentActivity> extends BaseFragment
 	
 	@Override
 	public void onResume() {
-		// TODO: Implement this method
 		super.onResume();
 		rv.setAdapter(slra);
 		setLayoutModeInternal(pref.getInt("serverListStyle2",0));
@@ -39,7 +37,6 @@ public class ServerListFragment<T extends FragmentActivity> extends BaseFragment
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		// TODO: Implement this method
 		View v= inflater.inflate(R.layout.recycler_view_content,container,false);
 		rv=(RecyclerView)v.findViewById(android.R.id.list);
 		return v;

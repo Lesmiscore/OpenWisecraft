@@ -6,7 +6,6 @@ import java.io.*;
 public class SprPair extends Duo<ServerPingResult,ServerPingResult> implements ServerPingResult {
 	@Override
 	public byte[] getRawResult() {
-		// TODO: Implement this method
 		ByteArrayOutputStream baos=new ByteArrayOutputStream();
 		DataOutputStream dos=new DataOutputStream(baos);
 		try {

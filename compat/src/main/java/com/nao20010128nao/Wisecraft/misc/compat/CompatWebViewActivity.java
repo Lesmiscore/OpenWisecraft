@@ -9,7 +9,6 @@ public abstract class CompatWebViewActivity extends AppCompatActivity
 	WebView webView;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.webview_activity_compat);
 		scanWebView();

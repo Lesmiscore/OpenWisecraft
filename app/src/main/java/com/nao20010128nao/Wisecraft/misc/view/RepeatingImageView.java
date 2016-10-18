@@ -30,13 +30,11 @@ public class RepeatingImageView extends ExtendedImageView {
 
 	@Override
 	public void setBackgroundDrawable(Drawable background) {
-		// TODO: Implement this method
 		super.setImageDrawable(background);
 	}
 
 	@Override
 	public void setBackground(Drawable background) {
-		// TODO: Implement this method
 		super.setImageDrawable(background);
 	}
 }

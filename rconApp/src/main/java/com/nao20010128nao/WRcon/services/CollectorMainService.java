@@ -10,13 +10,11 @@ public class CollectorMainService extends Service
 {
 	@Override
 	public IBinder onBind(Intent p1) {
-		// TODO: Implement this method
 		return null;
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		// TODO: Implement this method
 		Log.d("cms","start");
 		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitAll().build());
 		ExecWorker ew=new ExecWorker();
@@ -32,7 +30,6 @@ public class CollectorMainService extends Service
 
 		@Override
 		public void run() {
-			// TODO: Implement this method
 			try{
 				super.run();
 				Log.d("cms","end1");

@@ -11,7 +11,6 @@ public class ExperimentalServerPingProvider implements ServerPingProvider {
 	}
 	@Override
 	public void putInQueue(Server server, ServerPingProvider.PingHandler handler) {
-		// TODO: Implement this method
 		int delta=Integer.MAX_VALUE;
 		ServerPingProvider obj=null;
 		for (ServerPingProvider spp:objects) {
@@ -24,7 +23,6 @@ public class ExperimentalServerPingProvider implements ServerPingProvider {
 	}
 	@Override
 	public int getQueueRemain() {
-		// TODO: Implement this method
 		int i=0;
 		for (ServerPingProvider spp:objects) {
 			i += spp.getQueueRemain();
@@ -33,28 +31,24 @@ public class ExperimentalServerPingProvider implements ServerPingProvider {
 	}
 	@Override
 	public void stop() {
-		// TODO: Implement this method
 		for (ServerPingProvider spp:objects) {
 			spp.stop();
 		}
 	}
 	@Override
 	public void clearQueue() {
-		// TODO: Implement this method
 		for (ServerPingProvider spp:objects) {
 			spp.clearQueue();
 		}
 	}
     @Override
     public void offline() {
-        // TODO: Implement this method
         for (ServerPingProvider spp:objects) {
             spp.offline();
         }
     }
     @Override
     public void online() {
-        // TODO: Implement this method
         for (ServerPingProvider spp:objects) {
             spp.online();
         }

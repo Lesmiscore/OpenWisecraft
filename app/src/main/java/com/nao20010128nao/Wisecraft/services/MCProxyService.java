@@ -20,13 +20,11 @@ public class MCProxyService extends Service
 	int ntfId=new SecureRandom().nextInt();
 	@Override
 	public IBinder onBind(Intent p1) {
-		// TODO: Implement this method
 		return null;
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		// TODO: Implement this method
 		ip=intent.getStringExtra("ip");
 		port=intent.getIntExtra("port",19132);
 		ctrlPort=intent.getIntExtra("control",35590);
@@ -56,7 +54,6 @@ public class MCProxyService extends Service
 	class ControlHandler extends Thread {
 		@Override
 		public void run() {
-			// TODO: Implement this method
 			DatagramSocket ds=null;
 			try {
 				ds = new DatagramSocket(ctrlPort);

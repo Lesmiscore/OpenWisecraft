@@ -36,30 +36,25 @@ public class HttpServerPingProvider implements ServerPingProvider
     }
     @Override
     public int getQueueRemain() {
-        // TODO: Implement this method
         return queue.size();
     }
     @Override
     public void stop() {
-        // TODO: Implement this method
         pingThread.interrupt();
     }
 
     @Override
     public void clearQueue() {
-        // TODO: Implement this method
         queue.clear();
     }
 
     @Override
     public void offline() {
-        // TODO: Implement this method
         offline=true;
     }
 
     @Override
     public void online() {
-        // TODO: Implement this method
         offline=false;
     }
 
@@ -67,7 +62,6 @@ public class HttpServerPingProvider implements ServerPingProvider
     private class PingThread extends Thread implements Runnable {
         @Override
         public void run() {
-            // TODO: Implement this method
             Map.Entry<Server,PingHandler> now=null;
             while (!(queue.isEmpty()|isInterrupted())) {
                 Log.d("HSPP", "Starting ping");

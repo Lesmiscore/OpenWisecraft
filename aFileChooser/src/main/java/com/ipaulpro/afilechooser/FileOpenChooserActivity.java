@@ -16,7 +16,6 @@ public class FileOpenChooserActivity extends FileChooserActivity
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		if(getIntent().hasExtra("path")){
 			File f=new File(getIntent().getStringExtra("path"));
 			if(f.isFile())f=f.getParentFile();
@@ -27,7 +26,6 @@ public class FileOpenChooserActivity extends FileChooserActivity
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// TODO: Implement this method
 		SubMenu addFile=menu.addSubMenu(0,4,0,R.string.create).setIcon(getTintedDrawable(R.drawable.ic_add_black_48dp,getPresenter().isLightTheme(this)?0xff_666666:0xff_ffffff));
 		addFile.add(0,5,1,R.string.add_file).setIcon(getTintedDrawable(R.drawable.ic_insert_drive_file_black_48dp,getPresenter().isLightTheme(this)?0xff_666666:0xff_ffffff));
 		addFile.add(0,6,2,R.string.add_dir).setIcon(getTintedDrawable(R.drawable.ic_folder_black_48dp,getPresenter().isLightTheme(this)?0xff_666666:0xff_ffffff));
@@ -37,7 +35,6 @@ public class FileOpenChooserActivity extends FileChooserActivity
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO: Implement this method
 		switch(item.getItemId()){
 			case 5:
 				View v=getLayoutInflater().inflate(R.layout.add_file,null);

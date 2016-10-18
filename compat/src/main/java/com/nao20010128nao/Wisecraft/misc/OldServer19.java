@@ -8,13 +8,11 @@ public class OldServer19 {
 
 	@Override
 	public int hashCode() {
-		// TODO: Implement this method
 		return ip.hashCode() ^ port^((Boolean)isPC).hashCode();
 	}
 
 	@Override
 	public boolean equals(Object o) {
-		// TODO: Implement this method
 		if (!(o instanceof OldServer19)) {
 			return false;
 		}
@@ -24,7 +22,6 @@ public class OldServer19 {
 
 	@Override
 	public String toString() {
-		// TODO: Implement this method
 		return ip + ":" + port;
 	}
 

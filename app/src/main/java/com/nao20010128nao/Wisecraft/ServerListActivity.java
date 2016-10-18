@@ -47,7 +47,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
 		loadMenu();
@@ -272,7 +271,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		addActivityResultReceiver(new DispatchActivityResult(){
 				@Override
 				public boolean dispatchActivityResult(int requestCode, int resultCode, Intent data, boolean consumed) {
-					// TODO: Implement this method
 					if (consumed)return true;
 					switch (requestCode) {
 						case 0:
@@ -731,7 +729,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	
 	@Override
 	protected void onDestroy() {
-		// TODO: Implement this method
 		super.onDestroy();
 		if (!skipSave)saveServers();
 		unregisterReceiver(nsbr);
@@ -739,7 +736,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
 	@Override
 	public void onBackPressed() {
-		// TODO: Implement this method
 		if (drawer.isDrawerOpen())
 			drawer.closeDrawer();
 		else
@@ -748,7 +744,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
 	@Override
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
-		// TODO: Implement this method
 		if(keyCode==KeyEvent.KEYCODE_MENU){
 			if(drawer.isDrawerOpen())
 				drawer.closeDrawer();
@@ -762,7 +757,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
-		// TODO: Implement this method
 		outState=drawer.saveInstanceState(outState);
 		super.onSaveInstanceState(outState);
 	}
@@ -861,7 +855,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
 	@Override
 	public void addIntoList(Server s) {
-		// TODO: Implement this method
 		if (list.contains(s))return;
 		sl.add(s);
 		spp.putInQueue(s, new PingHandlerImpl(true, -1));
@@ -870,7 +863,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
 	@Override
 	public boolean contains(Object s) {
-		// TODO: Implement this method
 		return list.contains(s);
 	}
     
@@ -895,7 +887,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
 		@Override
 		public ServerStatusWrapperViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-			// 表示するレイアウトを設定
+			// 表示するレイアウトを設�?
 			switch(sla.pref.getInt("serverListStyle2",0)){
 				case 0:default:
 					return new ServerStatusWrapperViewHolder(sla,false,viewGroup);
@@ -906,7 +898,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
 		@Override
 		public void onBindViewHolder(final ServerStatusWrapperViewHolder viewHolder, final int position) {
-			// データ表示
+			// �?ータ表示
 			if (sla.list != null && sla.list.size() > position && sla.list.get(position) != null) {
 				Server sv=getItem(position);
 				viewHolder.itemView.setTag(sv);
@@ -1023,19 +1015,16 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
 		@Override
 		public int getItemCount() {
-			// TODO: Implement this method
 			return sla.list.size();
 		}
 
 		@Override
 		public int getItemViewType(int position) {
-			// TODO: Implement this method
 			return sla.statLayout.getStatusAt(position);
 		}
 
 		@Override
 		public void onItemClick(AdapterView<?> p1, View p2, int p3, long p4) {
-			// TODO: Implement this method
 			if(sla.editMode==EDIT_MODE_SELECT_UPDATE){
 				if(sla.selected.contains(getItem(p3))){
 					sla.selected.remove(getItem(p3));
@@ -1062,7 +1051,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
 		@Override
 		public boolean onItemLongClick(AdapterView<?> p1, View p2, final int p3, long p4) {
-			// TODO: Implement this method
             if(sla.editMode!=EDIT_MODE_NULL)return true;
 			sla.clicked = p3;
 			new AppCompatAlertDialog.Builder(sla,ThemePatcher.getDefaultDialogStyle(sla))
@@ -1285,7 +1273,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
 
 		public void add(Server object) {
-			// TODO: Implement this method
 			if (!sla.list.contains(object)) {
 				sla.statLayout.addStatuses(1);
 				sla.list.add(object);
@@ -1294,17 +1281,14 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		}
 
 		public void addAll(Server[] items) {
-			// TODO: Implement this method
 			for (Server s:items)add(s);
 		}
 
 		public void addAll(Collection<? extends Server> collection) {
-			// TODO: Implement this method
 			for (Server s:collection)add(s);
 		}
 
 		public void remove(Server object) {
-			// TODO: Implement this method
 			int ofs=sla.list.indexOf(object);
 			sla.list.remove(object);
 			notifyItemRemoved(ofs);
@@ -1399,14 +1383,12 @@ public class ServerListActivity extends ServerListActivityImpl {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		instance = new WeakReference(this);
 	}
 
 	@Override
 	protected void onDestroy() {
-		// TODO: Implement this method
 		super.onDestroy();
 		instance.clear();
 	}

@@ -14,7 +14,6 @@ public class AddServerActivity extends ApiBaseActivity
 {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		Intent values=getIntent();
 		final Server result=new Server();
@@ -97,7 +96,6 @@ public class AddServerActivity extends ApiBaseActivity
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
-        // TODO: Implement this method
         super.onWindowFocusChanged(hasFocus);
         WindowManager.LayoutParams lp=getWindow().getAttributes();
         lp.width=lp.MATCH_PARENT;

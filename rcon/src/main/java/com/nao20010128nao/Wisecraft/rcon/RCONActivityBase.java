@@ -56,7 +56,6 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 	boolean wasSetHandlersCalled=false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		instance = new WeakReference(this);
 		pa=new PasswordAsking();
@@ -208,7 +207,6 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 
 	@Override
 	public void onBackPressed() {
-		// TODO: Implement this method
 		if (drw.isDrawerOpen()) {
 			drw.closeDrawer();
 		} else {
@@ -405,7 +403,6 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 	public static class ConsoleFragment extends BaseFragment<RCONActivityBase> {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-			// TODO: Implement this method
 			View v=inflater.inflate(R.layout.console, null, false);
 			getParentActivity().setConsoleLayout((LinearLayout)v.findViewById(R.id.consoleText));
 			getParentActivity().setCommandOk((Button)v.findViewById(R.id.send));
@@ -417,7 +414,6 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 	public static class PlayersFragment extends BaseFragment<RCONActivityBase> {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-			// TODO: Implement this method
 			View v=inflater.inflate(R.layout.rcon_players_tab, null, false);
 			getParentActivity().setPlayersListView((ListView)v.findViewById(R.id.players));
 			getParentActivity().setPlayersCountTextView((TextView)v.findViewById(R.id.playersCount));

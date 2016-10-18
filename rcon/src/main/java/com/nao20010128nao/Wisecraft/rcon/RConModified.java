@@ -12,7 +12,6 @@ public class RConModified extends RCon {
 
 	@Override
 	public String[] list() throws IOException, AuthenticationException {
-		// TODO: Implement this method
 		String[] data=lines(send("list"));
 		if (data.length >= 2) {
 			return data[1].split("\\, ");
@@ -22,7 +21,6 @@ public class RConModified extends RCon {
 
 	@Override
 	public String[] banList() throws IOException, AuthenticationException {
-		// TODO: Implement this method
 		String[] data=lines(send("banlist players"));
 		if (data.length >= 2) {
 			return data[1].split("\\, ");
@@ -32,7 +30,6 @@ public class RConModified extends RCon {
 
 	@Override
 	public String[] banIPList() throws IOException, AuthenticationException {
-		// TODO: Implement this method
 		String[] data=lines(send("banlist ips"));
 		if (data.length >= 2) {
 			return data[1].split("\\, ");

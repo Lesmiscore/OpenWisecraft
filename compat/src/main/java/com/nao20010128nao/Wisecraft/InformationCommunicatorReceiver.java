@@ -28,7 +28,6 @@ public class InformationCommunicatorReceiver extends BroadcastReceiver
 	}
 	@Override
 	public void onReceive(Context context, Intent request) {
-		// TODO: Implement this method
 		SharedPreferences sp=PreferenceManager.getDefaultSharedPreferences(context);
 		if(request.getAction().equals(ICR_REQUEST_ACTION)){
 			if(!sp.contains("uuid"))return;//nothing to disclosure

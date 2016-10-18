@@ -81,13 +81,11 @@ public class UnconnectedPing {
 
 		@Override
 		public long getLatestPingElapsed() {
-			// TODO: Implement this method
 			return latestPing;
 		}
 
 		@Override
 		public byte[] getRawResult() {
-			// TODO: Implement this method
 			return PingerUtils.copyOf(data,data.length);
 		}
 	}

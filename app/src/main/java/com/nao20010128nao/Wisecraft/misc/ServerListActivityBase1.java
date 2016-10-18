@@ -15,7 +15,6 @@ public abstract class ServerListActivityBase1 extends ServerListActivityBase2
 	HashMap<Integer,Boolean> permReqResults=new HashMap<Integer,Boolean>(){
 		@Override
 		public Boolean get(Object key) {
-			// TODO: Implement this method
 			Boolean b = super.get(key);
 			if (b == null) {
 				return false;
@@ -26,7 +25,6 @@ public abstract class ServerListActivityBase1 extends ServerListActivityBase2
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		addActivityResultReceiver(new DispatchActivityResult(){
 				public boolean dispatchActivityResult(int request,int result,Intent data,boolean consumed){
@@ -67,7 +65,6 @@ public abstract class ServerListActivityBase1 extends ServerListActivityBase2
 
 	@Override
 	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-		// TODO: Implement this method
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 		if(!permRequire.containsKey(requestCode)){
 			return;

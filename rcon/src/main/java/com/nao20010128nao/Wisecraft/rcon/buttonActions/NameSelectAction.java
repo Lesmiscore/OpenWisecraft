@@ -23,7 +23,6 @@ public abstract class NameSelectAction extends BaseAction {
 
 	@Override
 	public void onClick(View p1) {
-		// TODO: Implement this method
 		dialog = new AppCompatAlertDialog.Builder(this,getActivity().getPresenter().getDialogStyleId())
 			.setView(inflatePlayersView())
 			.show();
@@ -43,7 +42,6 @@ public abstract class NameSelectAction extends BaseAction {
 		submit.setOnClickListener(new View.OnClickListener(){
 				@Override
 				public void onClick(View p1) {
-					// TODO: Implement this method
 					try {
 						dialog.cancel();
 						dialog.dismiss();

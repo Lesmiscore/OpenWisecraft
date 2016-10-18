@@ -16,7 +16,6 @@ public class GoogleSigninActivity extends AppCompatActivity implements GoogleApi
 	FirebaseAuth auth=FirebaseAuth.getInstance();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		GoogleSignInOptions gso=new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
 			.requestIdToken(getResources().getString(R.string.google_api_token))
@@ -31,14 +30,12 @@ public class GoogleSigninActivity extends AppCompatActivity implements GoogleApi
 
 	@Override
 	public void onConnectionFailed(ConnectionResult p1) {
-		// TODO: Implement this method
 		setResult(RESULT_CANCELED);
 		finish();
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO: Implement this method
 		super.onActivityResult(requestCode, resultCode, data);
 		if(requestCode==0){
 			GoogleSignInResult gsr=Auth.GoogleSignInApi.getSignInResultFromIntent(data);

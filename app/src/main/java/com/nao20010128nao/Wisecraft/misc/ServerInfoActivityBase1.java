@@ -15,7 +15,6 @@ public abstract class ServerInfoActivityBase1 extends AppCompatActivity
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO: Implement this method
 		if(results.containsKey(requestCode)){
 			switch(resultCode){
 				case RESULT_OK:

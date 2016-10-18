@@ -13,12 +13,10 @@ public class ServerListActivityBase5 extends ServerListActivityBaseFields
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		addActivityResultReceiver(new DispatchActivityResult(){
 				@Override
 				public boolean dispatchActivityResult(int requestCode, int resultCode, Intent data,boolean consumed) {
-					// TODO: Implement this method
 					if(externalFileSelectResults.containsKey(requestCode)){
 						switch(resultCode){
 							case RESULT_OK:

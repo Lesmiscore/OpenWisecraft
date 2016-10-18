@@ -38,14 +38,13 @@ public class Factories {
 		
 		@Override
 		public List<T> subList(int p1, int p2) {
-			// TODO: 合ってるか保証できない
+			// TODO: 合ってるか保証できな�?
 			int len=p2-p1;
 			return obtainList(len);
 		}
 
 		@Override
 		public int indexOf(Object p1) {
-			// TODO: Implement this method
 			if(p1!=null)
 				return -1;
 			return 0;
@@ -53,31 +52,26 @@ public class Factories {
 
 		@Override
 		public void add(int p1, T p2) {
-			// TODO: Implement this method
 			throw new RuntimeException("This list is immutable.");
 		}
 
 		@Override
 		public T set(int p1, T p2) {
-			// TODO: Implement this method
 			throw new RuntimeException("This list is immutable.");
 		}
 
 		@Override
 		public boolean add(T p1) {
-			// TODO: Implement this method
 			throw new RuntimeException("This list is immutable.");
 		}
 
 		@Override
 		public Iterator<T> iterator() {
-			// TODO: Implement this method
 			return new FSNLL_Iterator();
 		}
 
 		@Override
 		public <T extends Object> T[] toArray(T[] p1) {
-			// TODO: Implement this method
 			if(p1.length<=length)
 				Arrays.fill(p1,null);
 			if(p1.length>length)
@@ -89,25 +83,21 @@ public class Factories {
 
 		@Override
 		public T remove(int p1) {
-			// TODO: Implement this method
 			throw new RuntimeException("This list is immutable.");
 		}
 
 		@Override
 		public int size() {
-			// TODO: Implement this method
 			return length;
 		}
 
 		@Override
 		public boolean remove(Object p1) {
-			// TODO: Implement this method
 			throw new RuntimeException("This list is immutable.");
 		}
 
 		@Override
 		public boolean containsAll(Collection<?> p1) {
-			// TODO: Implement this method
 			for(Object o:p1)
 				if(o!=null)
 					return false;
@@ -116,43 +106,36 @@ public class Factories {
 
 		@Override
 		public Object[] toArray() {
-			// TODO: Implement this method
 			return new Object[length];
 		}
 
 		@Override
 		public boolean removeAll(Collection<?> p1) {
-			// TODO: Implement this method
 			throw new RuntimeException("This list is immutable.");
 		}
 
 		@Override
 		public boolean addAll(int p1, Collection<? extends T> p2) {
-			// TODO: Implement this method
 			throw new RuntimeException("This list is immutable.");
 		}
 
 		@Override
 		public boolean addAll(Collection<? extends T> p1) {
-			// TODO: Implement this method
 			throw new RuntimeException("This list is immutable.");
 		}
 
 		@Override
 		public void clear() {
-			// TODO: Implement this method
 			throw new RuntimeException("This list is immutable.");
 		}
 
 		@Override
 		public boolean retainAll(Collection<?> p1) {
-			// TODO: Implement this method
 			throw new RuntimeException("This list is immutable.");
 		}
 
 		@Override
 		public int lastIndexOf(Object p1) {
-			// TODO: Implement this method
 			if(p1!=null)
 				return -1;
 			return length-1;
@@ -160,31 +143,26 @@ public class Factories {
 
 		@Override
 		public boolean isEmpty() {
-			// TODO: Implement this method
 			return length==0;
 		}
 
 		@Override
 		public ListIterator<T> listIterator() {
-			// TODO: Implement this method
 			return new FSNLL_Iterator();
 		}
 
 		@Override
 		public ListIterator<T> listIterator(int p1) {
-			// TODO: Implement this method
 			return (ListIterator<T>)obtainList(length-p1).listIterator();
 		}
 
 		@Override
 		public T get(int p1) {
-			// TODO: Implement this method
 			return (T)(forTest[p1]);
 		}
 
 		@Override
 		public boolean contains(Object p1) {
-			// TODO: Implement this method
 			if(p1!=null)
 				return false;
 			return true;
@@ -195,31 +173,26 @@ public class Factories {
 			int count=0;
 			@Override
 			public void remove() {
-				// TODO: Implement this method
 				throw new RuntimeException("This list is immutable.");
 			}
 
 			@Override
 			public T next() {
-				// TODO: Implement this method
 				return get(count++);
 			}
 
 			@Override
 			public boolean hasNext() {
-				// TODO: Implement this method
 				return count<length;
 			}
 
 			@Override
 			public void set(T p1) {
-				// TODO: Implement this method
 				throw new RuntimeException("This list is immutable.");
 			}
 
 			@Override
 			public boolean hasPrevious() {
-				// TODO: Implement this method
 				if(count==0)
 					return false;
 				return true;
@@ -227,25 +200,21 @@ public class Factories {
 
 			@Override
 			public int nextIndex() {
-				// TODO: Implement this method
 				return Math.min(count+1,length-1);
 			}
 
 			@Override
 			public void add(T p1) {
-				// TODO: Implement this method
 				throw new RuntimeException("This list is immutable.");
 			}
 
 			@Override
 			public T previous() {
-				// TODO: Implement this method
 				return get(count--);
 			}
 
 			@Override
 			public int previousIndex() {
-				// TODO: Implement this method
 				return Math.max(count-1,0);
 			}
 		}

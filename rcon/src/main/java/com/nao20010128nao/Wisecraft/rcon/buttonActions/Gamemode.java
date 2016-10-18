@@ -19,7 +19,6 @@ public class Gamemode extends NameSelectAction {
 
 	@Override
 	public void onSelected(final String s) {
-		// TODO: Implement this method
 		Log.d("gamemode", "value:" + s);
 		Log.d("gamemode", "playe:" + player);
 		if (isPlayer) {
@@ -48,13 +47,11 @@ public class Gamemode extends NameSelectAction {
 
 	@Override
 	public int getViewId() {
-		// TODO: Implement this method
 		return R.id.gamemode;
 	}
 
 	@Override
 	public String[] onPlayersList() throws IOException, AuthenticationException {
-		// TODO: Implement this method
 		if (!isPlayer)
 			return getResources().getStringArray(R.array.gamemodeConst);
 		else
@@ -63,7 +60,6 @@ public class Gamemode extends NameSelectAction {
 
 	@Override
 	public String onPlayerNameHint() {
-		// TODO: Implement this method
 		if (!isPlayer)
 			return getResString(R.string.gamemodeHint);
 		else
@@ -72,7 +68,6 @@ public class Gamemode extends NameSelectAction {
 
 	@Override
 	public int getTitleId() {
-		// TODO: Implement this method
 		return R.string.changepgm;
 	}
 }

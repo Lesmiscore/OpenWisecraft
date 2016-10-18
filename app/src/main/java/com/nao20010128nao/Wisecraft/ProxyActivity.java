@@ -27,7 +27,6 @@ public class ProxyActivity extends AppCompatActivity {
 	int port;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
 		
@@ -141,7 +140,6 @@ public class ProxyActivity extends AppCompatActivity {
 
 	@Override
 	public void finish() {
-		// TODO: Implement this method
 		try {
 			Activity.class.getMethod("finishAndRemoveTask").invoke(this);
 			return;

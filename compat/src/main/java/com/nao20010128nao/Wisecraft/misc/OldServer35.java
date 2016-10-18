@@ -8,13 +8,11 @@ public class OldServer35 {
 
 	@Override
 	public int hashCode() {
-		// TODO: Implement this method
 		return ip.hashCode() ^ port ^ mode;
 	}
 
 	@Override
 	public boolean equals(Object o) {
-		// TODO: Implement this method
 		if (!(o instanceof OldServer35)) {
 			return false;
 		}
@@ -24,7 +22,6 @@ public class OldServer35 {
 
 	@Override
 	public String toString() {
-		// TODO: Implement this method
 		StringBuilder sb=new StringBuilder();
 		if(/*ip.matches(Constant.IPV6_PATTERN)*/false){
 			sb.append('[').append(ip).append(']');//IPv6

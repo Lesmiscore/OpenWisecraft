@@ -17,7 +17,6 @@ public class Me extends BaseAction {
 
 	@Override
 	public void onClick(View p1) {
-		// TODO: Implement this method
 		dialog = new AppCompatAlertDialog.Builder(this,getActivity().getPresenter().getDialogStyleId())
 			.setView(inflateDialogView())
 			.show();
@@ -25,7 +24,6 @@ public class Me extends BaseAction {
 
 	@Override
 	public int getViewId() {
-		// TODO: Implement this method
 		return R.id.me;
 	}
 	public View inflateDialogView() {
@@ -35,7 +33,6 @@ public class Me extends BaseAction {
 		((Button)v.findViewById(R.id.ok)).setOnClickListener(new View.OnClickListener(){
 				@Override
 				public void onClick(View p1) {
-					// TODO: Implement this method
 					getActivity().performSend("me " + cmd.getText());
 					dialog.dismiss();
 				}
@@ -45,7 +42,6 @@ public class Me extends BaseAction {
 
 	@Override
 	public int getTitleId() {
-		// TODO: Implement this method
 		return R.string.me;
 	}
 }

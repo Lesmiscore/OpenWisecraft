@@ -39,7 +39,6 @@ public class HierarchyDumper extends Thread
 
 	@Override
 	public void run() {
-		// TODO: Implement this method
 		StringWriter sw=new StringWriter();
 		try {
 			dumpSingle(parent, sw, 0);

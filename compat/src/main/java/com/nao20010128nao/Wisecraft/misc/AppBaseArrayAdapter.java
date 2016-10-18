@@ -29,13 +29,11 @@ public class AppBaseArrayAdapter<T> extends ArrayAdapter<T> {
 	}
 
 	public void addAll(Collection<? extends T> collection) {
-		// TODO: Implement this method
 		for (T t:collection)
 			add(t);
 	}
 
 	public void addAll(T[] items) {
-		// TODO: Implement this method
 		for (T t:items)
 			add(t);
 	}

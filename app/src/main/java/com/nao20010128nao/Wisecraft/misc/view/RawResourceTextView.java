@@ -69,7 +69,6 @@ public class RawResourceTextView extends AppCompatTextView
 
 	@Override
 	public void setTypeface(Typeface tf) {
-		// TODO: Implement this method
 		super.setTypeface(tf.MONOSPACE);
 	}
 }

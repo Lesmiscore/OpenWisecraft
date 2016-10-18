@@ -27,7 +27,6 @@ public abstract class AboutAppActivityBase extends ScrollingActivity
 	LinearLayout ll;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		if(icons==null)
 			icons=Typeface.createFromAsset(getAssets(),"icomoon2.ttf");
@@ -87,7 +86,6 @@ public abstract class AboutAppActivityBase extends ScrollingActivity
 
 	@Override
 	public int getLayoutResId() {
-		// TODO: Implement this method
 		return R.layout.about_app_decor;
 	}
 	

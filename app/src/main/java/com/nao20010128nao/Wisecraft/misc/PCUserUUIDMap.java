@@ -6,7 +6,6 @@ public class PCUserUUIDMap extends HashMap<String,String>
 	private final String ALLOWED_CHARACTERS="abcdefghijklmnopqrstuvwxyzABCDEGHIJKLMNOPQRSTUVWXYZ_";
 	@Override
 	public String put(String key, String value) {
-		// TODO: Implement this method
 		if(!allowedAsUsername(key))
 			return null;
 		return super.put(key, value);

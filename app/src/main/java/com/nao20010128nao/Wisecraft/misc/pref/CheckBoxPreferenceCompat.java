@@ -34,20 +34,17 @@ public class CheckBoxPreferenceCompat extends android.support.v7.preference.Chec
 	
 	@Override
 	public void onBindViewHolder(PreferenceViewHolder holder) {
-		// TODO: Implement this method
 		super.onBindViewHolder(holder);
 		PreferenceUtils.onBindViewHolder(getContext(),this,holder);
 	}
 
 	@Override
 	public void setTextColor(int color) {
-		// TODO: Implement this method
 		this.color=color;
 	}
 
 	@Override
 	public int getTextColor() {
-		// TODO: Implement this method
 		return color;
 	}
 }

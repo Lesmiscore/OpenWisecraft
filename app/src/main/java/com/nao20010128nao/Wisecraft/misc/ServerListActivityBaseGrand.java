@@ -12,14 +12,12 @@ public abstract class ServerListActivityBaseGrand extends AppCompatActivity
 
 	@Override
 	protected void attachBaseContext(Context newBase) {
-		// TODO: Implement this method
 		super.attachBaseContext(newBase);
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
 	}
 
 	@Override
 	public final void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO: Implement this method
 		super.onActivityResult(requestCode, resultCode, data);
 		resultDerived.call(requestCode, resultCode, data);
 	}

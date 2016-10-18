@@ -38,13 +38,11 @@ public class ContextWrappingExtender extends ContextWrapper
 
 	@Override
 	public Resources getResources() {
-		// TODO: Implement this method
 		return modRes;
 	}
 
 	@Override
 	public Object getSystemService(String name) {
-		// TODO: Implement this method
 		if(SERVER_LIST_STYLE_LOADER.equals(name)){
 			if(slsl==null)
 				slsl=new ServerListStyleLoader(this);
@@ -55,7 +53,6 @@ public class ContextWrappingExtender extends ContextWrapper
 
 	@Override
 	public String getSystemServiceName(Class<?> serviceClass) {
-		// TODO: Implement this method
 		if(serviceClass==ServerListStyleLoader.class)
 			return SERVER_LIST_STYLE_LOADER;
 		return super.getSystemServiceName(serviceClass);
@@ -94,7 +91,6 @@ public class ContextWrappingExtender extends ContextWrapper
 
 		@Override
 		public int getDimensionPixelSize(int id) throws Resources.NotFoundException {
-			// TODO: Implement this method
 			{
 				final int sysUiResA = getIdentifier("navigation_bar_height", "dimen", "android");
 				final int sysUiResB = getIdentifier("navigation_bar_height_landscape", "dimen", "android");

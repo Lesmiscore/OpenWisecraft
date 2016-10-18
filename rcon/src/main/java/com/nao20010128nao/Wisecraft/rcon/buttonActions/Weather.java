@@ -16,7 +16,6 @@ public class Weather extends NameSelectAction {
 
 	@Override
 	public void onSelected(final String s) {
-		// TODO: Implement this method
 		new AppCompatAlertDialog.Builder(this,getActivity().getPresenter().getDialogStyleId())
 			.setMessage(getResString(R.string.weatherAsk).replace("[MODE]", s))
 			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
@@ -30,19 +29,16 @@ public class Weather extends NameSelectAction {
 
 	@Override
 	public int getViewId() {
-		// TODO: Implement this method
 		return R.id.weather;
 	}
 
 	@Override
 	public String[] onPlayersList() throws IOException, AuthenticationException {
-		// TODO: Implement this method
 		return super.onPlayersList();
 	}
 
 	@Override
 	public int getTitleId() {
-		// TODO: Implement this method
 		return R.string.changeweather;
 	}
 }

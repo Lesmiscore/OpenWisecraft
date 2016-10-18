@@ -118,7 +118,6 @@ public class PCQuery implements PingHost{
 
 	@Override
 	public long getLatestPingElapsed() {
-		// TODO: Implement this method
 		return lastPing;
 	}
 }

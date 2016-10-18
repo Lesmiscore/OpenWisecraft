@@ -18,7 +18,6 @@ public class ForceExpandBitmapDrawable extends Drawable
 	
 	@Override
 	public int getOpacity() {
-		// TODO: Implement this method
 		return paint.getAlpha();
 	}
 

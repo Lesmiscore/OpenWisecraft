@@ -29,7 +29,6 @@ public class RCONActivity extends RCONActivityBase implements TabHost.OnTabChang
 	FragmentTabHost fth;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		SpannableStringBuilder ssb=new SpannableStringBuilder();
 		ssb.append(getIntent().getStringExtra("ip")+":"+getIntent().getIntExtra("port",0));
@@ -42,7 +41,6 @@ public class RCONActivity extends RCONActivityBase implements TabHost.OnTabChang
 
 	@Override
 	public void exitActivity() {
-		// TODO: Implement this method
 		new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
 			.setMessage(R.string.auSure_exit)
 			.setNegativeButton(android.R.string.ok,new DialogInterface.OnClickListener(){
@@ -61,7 +59,6 @@ public class RCONActivity extends RCONActivityBase implements TabHost.OnTabChang
 
 	@Override
 	protected void onConnectionSuccess(String s) {
-		// TODO: Implement this method
 		didSuccess=true;
 		password=s;
 		invalidateOptionsMenu();
@@ -69,7 +66,6 @@ public class RCONActivity extends RCONActivityBase implements TabHost.OnTabChang
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// TODO: Implement this method
 		if(!didSuccess)return super.onCreateOptionsMenu(menu);
 		MenuItem reconnect=menu.add(Menu.NONE,0,0,R.string.reconnect).setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_refresh_black_48dp,Color.WHITE));
 		MenuItemCompat.setShowAsAction(reconnect,MenuItem.SHOW_AS_ACTION_IF_ROOM);
@@ -78,7 +74,6 @@ public class RCONActivity extends RCONActivityBase implements TabHost.OnTabChang
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO: Implement this method
 		switch(item.getItemId()){
 			case 0:
 				Intent restart=(Intent)getIntent().clone();
@@ -92,7 +87,6 @@ public class RCONActivity extends RCONActivityBase implements TabHost.OnTabChang
 
 	@Override
 	protected void onResume() {
-		// TODO: Implement this method
 		super.onResume();
 		onTabChanged("");
 	}

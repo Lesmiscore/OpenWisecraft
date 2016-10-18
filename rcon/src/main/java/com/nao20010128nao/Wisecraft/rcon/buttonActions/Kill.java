@@ -14,7 +14,6 @@ public class Kill extends NameSelectAction {
 
 	@Override
 	public void onSelected(final String s) {
-		// TODO: Implement this method
 		new AppCompatAlertDialog.Builder(this,getActivity().getPresenter().getDialogStyleId())
 			.setMessage(getResString(R.string.killAsk).replace("[PLAYER]", s))
 			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
@@ -28,13 +27,11 @@ public class Kill extends NameSelectAction {
 
 	@Override
 	public int getViewId() {
-		// TODO: Implement this method
 		return R.id.kill;
 	}
 
 	@Override
 	public int getTitleId() {
-		// TODO: Implement this method
 		return R.string.kill;
 	}
 }

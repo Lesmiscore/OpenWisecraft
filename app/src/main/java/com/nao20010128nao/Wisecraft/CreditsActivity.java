@@ -10,7 +10,6 @@ public class CreditsActivity extends ScrollingActivity
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
 	}

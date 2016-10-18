@@ -82,13 +82,11 @@ public class ServerListRecyclerAdapter extends ListRecyclerViewAdapter<ServerSta
 	
 	@Override
 	public ServerStatusWrapperViewHolder onCreateViewHolder(ViewGroup parent, int type) {
-		// TODO: Implement this method
 		return new ServerStatusWrapperViewHolder(context,isGrid,parent);
 	}
 
 	@Override
 	public void onBindViewHolder(ServerStatusWrapperViewHolder viewHolder, int offset) {
-		// TODO: Implement this method
 		Server s=getItem(offset);
 		viewHolder.setServer(s).setServerPlayers("-/-");
 		slsl.applyTextColorTo(viewHolder);
@@ -187,7 +185,6 @@ public class ServerListRecyclerAdapter extends ListRecyclerViewAdapter<ServerSta
 	private class PingingMap extends NonNullableMap<Server> {
 		@Override
 		public Boolean put(Server key, Boolean value) {
-			// TODO: Implement this method
 			Boolean b= super.put(key, value);
 			notifyItemChanged(slist.indexOf(key));
 			return b;

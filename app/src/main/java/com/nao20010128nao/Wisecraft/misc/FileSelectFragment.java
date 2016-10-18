@@ -29,13 +29,11 @@ public class FileSelectFragment extends BaseFragment<AppCompatActivity>
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		// TODO: Implement this method
 		return inflater.inflate(R.layout.server_list_imp_exp,container,false);
 	}
 
 	@Override
 	public void onResume() {
-		// TODO: Implement this method
 		super.onResume();
 		select=(Button)getView().findViewById(R.id.selectFile);
 		fileLocal=(ImageButton)getView().findViewById(R.id.openLocalChooser);
@@ -104,7 +102,6 @@ public class FileSelectFragment extends BaseFragment<AppCompatActivity>
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO: Implement this method
 		if(results.containsKey(requestCode)){
 			switch(resultCode){
 				case Activity.RESULT_OK:
@@ -126,7 +123,6 @@ public class FileSelectFragment extends BaseFragment<AppCompatActivity>
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
-		// TODO: Implement this method
 		super.onSaveInstanceState(outState);
 		Object last=getResult();
 		if(last instanceof File)
@@ -137,7 +133,6 @@ public class FileSelectFragment extends BaseFragment<AppCompatActivity>
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		super.onActivityCreated(savedInstanceState);
 		if(savedInstanceState==null)return;
 		if(savedInstanceState.containsKey("file")){

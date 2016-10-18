@@ -13,7 +13,6 @@ public class AboutAppActivity extends AboutAppActivityBase
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
 		Utils.getActionBarTextView(this).setTextColor(Color.WHITE);

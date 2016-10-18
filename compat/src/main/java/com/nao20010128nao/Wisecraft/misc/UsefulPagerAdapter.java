@@ -20,13 +20,11 @@ public class UsefulPagerAdapter extends FragmentPagerAdapter{
 
 	@Override
 	public int getCount() {
-		// TODO: Implement this method
 		return pages.size();
 	}
 
 	@Override
 	public Fragment getItem(int p1) {
-		// TODO: Implement this method
 		try {
 			return (Fragment)pages.get(p1).getKey().newInstance();
 		} catch (Throwable e) {
@@ -36,7 +34,6 @@ public class UsefulPagerAdapter extends FragmentPagerAdapter{
 
 	@Override
 	public CharSequence getPageTitle(int position) {
-		// TODO: Implement this method
 		return pages.get(position).getValue();
 	}
 }

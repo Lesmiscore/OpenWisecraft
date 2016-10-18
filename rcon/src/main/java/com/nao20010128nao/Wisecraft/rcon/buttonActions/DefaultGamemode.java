@@ -14,7 +14,6 @@ public class DefaultGamemode extends NameSelectAction {
 
 	@Override
 	public void onSelected(final String s) {
-		// TODO: Implement this method
 		new AppCompatAlertDialog.Builder(this,getActivity().getPresenter().getDialogStyleId())
 			.setMessage(getResString(R.string.defaultgamemodeAsk).replace("[MODE]", s))
 			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
@@ -28,19 +27,16 @@ public class DefaultGamemode extends NameSelectAction {
 
 	@Override
 	public int getViewId() {
-		// TODO: Implement this method
 		return R.id.defaultgamemode;
 	}
 
 	@Override
 	public String[] onPlayersList() {
-		// TODO: Implement this method
 		return getResources().getStringArray(R.array.defaultgamemodeConst);
 	}
 
 	@Override
 	public int getTitleId() {
-		// TODO: Implement this method
 		return R.string.defaultgm;
 	}
 }

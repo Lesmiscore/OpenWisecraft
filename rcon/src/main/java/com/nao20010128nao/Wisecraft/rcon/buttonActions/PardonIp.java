@@ -16,7 +16,6 @@ public class PardonIp extends NameSelectAction {
 
 	@Override
 	public void onSelected(final String s) {
-		// TODO: Implement this method
 		new AppCompatAlertDialog.Builder(this,getActivity().getPresenter().getDialogStyleId())
 			.setMessage(getResString(R.string.pardonIpAsk).replace("[PLAYER]", s))
 			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
@@ -30,25 +29,21 @@ public class PardonIp extends NameSelectAction {
 
 	@Override
 	public String onPlayerNameHint() {
-		// TODO: Implement this method
 		return getResString(R.string.pardonIpHint);
 	}
 
 	@Override
 	public String[] onPlayersList() throws IOException, AuthenticationException {
-		// TODO: Implement this method
 		return getActivity().getRCon().banIPList();
 	}
 
 	@Override
 	public int getViewId() {
-		// TODO: Implement this method
 		return R.id.pardonip;
 	}
 
 	@Override
 	public int getTitleId() {
-		// TODO: Implement this method
 		return R.string.pardon_ip;
 	}
 }

@@ -18,7 +18,6 @@ public class WidgetStateInspector extends AppCompatActivity
 	SharedPreferences pref,widgetPref;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.recycler_view_content);
 		pref=PreferenceManager.getDefaultSharedPreferences(this);

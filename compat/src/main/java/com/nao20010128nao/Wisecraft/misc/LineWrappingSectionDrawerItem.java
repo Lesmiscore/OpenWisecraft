@@ -10,19 +10,16 @@ public class LineWrappingSectionDrawerItem extends SectionDrawerItem implements 
     
 	@Override
 	public int getLayoutRes() {
-		// TODO: Implement this method
 		return R.layout.drawer_item_section_linewrap;
 	}
 
     @Override
     public int getIntId() {
-        // TODO: Implement this method
         return id;
     }
 
     @Override
     public LineWrappingSectionDrawerItem setIntId(int id) {
-        // TODO: Implement this method
         this.id=id;
         return this;
     }

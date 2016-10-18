@@ -20,7 +20,6 @@ public class ImageLoader
 	class LoaderThread extends Thread implements Runnable{
 		@Override
 		public void run() {
-			// TODO: Implement this method
 			while(!queue.isEmpty()){
 				Log.d("ImageLoader","Starting");
 				try {

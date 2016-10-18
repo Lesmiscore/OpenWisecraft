@@ -26,7 +26,6 @@ public class AccountManagerActivity extends AppCompatActivity
 	Drawer content;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		final FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) {

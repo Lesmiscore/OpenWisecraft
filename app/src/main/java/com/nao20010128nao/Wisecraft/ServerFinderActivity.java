@@ -35,7 +35,6 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
 		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
@@ -154,7 +153,6 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 
 	@Override
 	protected void onDestroy() {
-		// TODO: Implement this method
 		super.onDestroy();
 		if (spp != null) {
 			spp.clearQueue();
@@ -164,7 +162,6 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {
-		// TODO: Implement this method
 		super.onWindowFocusChanged(hasFocus);
 		/*
 		if(rv.getLayoutManager() instanceof StaggeredGridLayoutManager){
@@ -178,12 +175,10 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 	
 	@Override
 	public void addIntoList(Server s) {
-		// TODO: Implement this method
 	}
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO: Implement this method
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
@@ -280,7 +275,6 @@ public class ServerFinderActivity extends ServerFinderActivityImpl {
 	public static WeakReference<ServerFinderActivity> instance=new WeakReference(null);
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		instance = new WeakReference(this);
 	}
 }

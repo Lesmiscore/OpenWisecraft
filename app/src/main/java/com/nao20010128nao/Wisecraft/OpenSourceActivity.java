@@ -11,7 +11,6 @@ public class OpenSourceActivity extends ScrollingActivity
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.osl_parent);
@@ -26,7 +25,6 @@ public class OpenSourceActivity extends ScrollingActivity
 
 	@Override
 	public int getLayoutResId() {
-		// TODO: Implement this method
 		return R.layout.osl_decor;
 	}
 }

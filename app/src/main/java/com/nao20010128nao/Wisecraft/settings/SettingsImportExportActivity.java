@@ -16,7 +16,6 @@ public class SettingsImportExportActivity extends AppCompatActivity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		slsl=(ServerListStyleLoader)getSystemService(ContextWrappingExtender.SERVER_LIST_STYLE_LOADER);
 		
@@ -43,13 +42,11 @@ public class SettingsImportExportActivity extends AppCompatActivity {
 
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
-			// TODO: Implement this method
 			super.onCreate(savedInstanceState);
 		}
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-			// TODO: Implement this method
 			return inflater.inflate(R.layout.settings_import_fragment, container, false);
 		}
 	}
@@ -58,13 +55,11 @@ public class SettingsImportExportActivity extends AppCompatActivity {
 
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
-			// TODO: Implement this method
 			super.onCreate(savedInstanceState);
 		}
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-			// TODO: Implement this method
 			return super.onCreateView(inflater, container, savedInstanceState);
 		}
 	}

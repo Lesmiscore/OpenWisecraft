@@ -15,7 +15,6 @@ public class Banlist extends BaseAction {
 
 	@Override
 	public void onClick(View p1) {
-		// TODO: Implement this method
 		new AppCompatAlertDialog.Builder(this,getActivity().getPresenter().getDialogStyleId())
 			.setMessage(R.string.auSure)
 			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
@@ -29,13 +28,11 @@ public class Banlist extends BaseAction {
 
 	@Override
 	public int getViewId() {
-		// TODO: Implement this method
 		return R.id.banlist;
 	}
 
 	@Override
 	public int getTitleId() {
-		// TODO: Implement this method
 		return R.string.banlist;
 	}
 }

@@ -45,13 +45,11 @@ public class Reply implements ServerPingResult,PCQueryResult {
 
 	@Override
 	public byte[] getRawResult() {
-		// TODO: Implement this method
 		return raw.getBytes(CompatCharsets.UTF_8);
 	}
 
 	@Override
 	public void setRaw(String s) {
-		// TODO: Implement this method
 		if(raw!=null)return;
 		if(s==null)return;
 		raw=s;

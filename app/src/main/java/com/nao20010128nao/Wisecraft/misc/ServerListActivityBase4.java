@@ -28,7 +28,6 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBase5
     protected NetworkStateBroadcastReceiver nsbr;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		{
 			setContentView(R.layout.server_list_content_toolbar);
@@ -64,7 +63,6 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBase5
 
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		super.onPostCreate(savedInstanceState);
 
 		indicator = Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "", Snackbar.LENGTH_SHORT);
@@ -88,7 +86,6 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBase5
 					registerReceiver(new BroadcastReceiver(){
 							@Override
 							public void onReceive(Context p1, Intent p2) {
-								// TODO: Implement this method
 								Log.d("slsupd", "received");
 								SlsUpdater.loadCurrentCode(p1);
 								Log.d("slsupd", "loaded");
@@ -123,7 +120,6 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBase5
 
 	@Override
 	protected void onStart() {
-		// TODO: Implement this method
 		super.onStart();
 		Log.d("ServerListActivity", "onStart");
 		TheApplication.instance.fbCfgLoader.addOnCompleteListener(new OnCompleteListener<Void>(){
@@ -142,7 +138,6 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBase5
 
 	@Override
 	protected void onResume() {
-		// TODO: Implement this method
 		super.onResume();
 		if(newVersionAnnounce!=0){
 			pref.edit().putInt("announcedFor",30).commit();
@@ -163,7 +158,6 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBase5
 
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {
-		// TODO: Implement this method
 		super.onWindowFocusChanged(hasFocus);
 		/*
 		if (rv.getLayoutManager() instanceof StaggeredGridLayoutManager) {
@@ -198,13 +192,11 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBase5
 	protected class NetworkStatusCheckWorker extends AsyncTask<Void,String,String> {
 		@Override
 		protected String doInBackground(Void[] p1) {
-			// TODO: Implement this method
 			return fetchNetworkState();
 		}
 
 		@Override
 		protected void onPostExecute(String result) {
-			// TODO: Implement this method
 			if (result != null) {
 				indicator.setText(result);
 				indicator.show();
@@ -215,7 +207,6 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBase5
 	protected class NetworkStateBroadcastReceiver extends BroadcastReceiver {
 		@Override
 		public void onReceive(Context p1, Intent p2) {
-			// TODO: Implement this method
 			Log.d("ServerListActivity - NSBB", "received");
 			new NetworkStatusCheckWorker().execute();
 		}

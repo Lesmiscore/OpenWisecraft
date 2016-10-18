@@ -8,11 +8,9 @@ public class Ban extends BaseAction
 	}
 	@Override
 	public String getCommandTitle() {
-		// TODO: Implement this method
 		return null;
 	}
 	@Override
 	public void onCommand(String player) {
-		// TODO: Implement this method
 	}
 }

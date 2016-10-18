@@ -21,19 +21,16 @@ public class UsefulPagerAdapter2 extends FragmentPagerAdapter{
 
 	@Override
 	public int getCount() {
-		// TODO: Implement this method
 		return pages.size();
 	}
 
 	@Override
 	public Fragment getItem(int p1) {
-		// TODO: Implement this method
 		return pages.get(p1).getKey();
 	}
 
 	@Override
 	public CharSequence getPageTitle(int position) {
-		// TODO: Implement this method
 		return pages.get(position).getValue();
 	}
 }

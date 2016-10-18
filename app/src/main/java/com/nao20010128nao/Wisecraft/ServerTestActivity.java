@@ -38,7 +38,6 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 	Map<Integer,Boolean> pinging=new HashMap<Integer,Boolean>(){
 		@Override
 		public Boolean get(Object key) {
-			// TODO: Implement this method
 			Boolean b= super.get(key);
 			if (b == null) {
 				return false;
@@ -48,7 +47,6 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 	};
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
 		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
@@ -153,14 +151,12 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 
 	@Override
 	public void onBackPressed() {
-		// TODO: Implement this method
 		super.onBackPressed();
 		instance = new WeakReference(null);
 	}
 
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {
-		// TODO: Implement this method
 		super.onWindowFocusChanged(hasFocus);
 		/*
 		if(rv.getLayoutManager() instanceof StaggeredGridLayoutManager){
@@ -174,12 +170,10 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 	
 	@Override
 	public void addIntoList(Server s) {
-		// TODO: Implement this method
 	}
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO: Implement this method
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
@@ -193,7 +187,6 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 
 		@Override
 		public void onItemClick(AdapterView<?> p1, View p2, int p3, long p4) {
-			// TODO: Implement this method
 			Server s=getItem(p3);
 			sta.clicked = p3;
 			if (s instanceof ServerStatus) {
@@ -203,7 +196,6 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 
 		@Override
 		public void onBindViewHolder(ServerStatusWrapperViewHolder viewHolder, final int offset) {
-			// TODO: Implement this method
 			Server s=getItem(offset);
 			viewHolder.setServer(s).setServerPlayers("-/-");
 			sta.slsl.applyTextColorTo(viewHolder);
@@ -291,7 +283,6 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 
 		@Override
 		public ServerStatusWrapperViewHolder onCreateViewHolder(ViewGroup viewGroup, int type) {
-			// TODO: Implement this method
 			switch(sta.pref.getInt("serverListStyle2",0)){
 				case 0:default:
 					return new ServerStatusWrapperViewHolder(sta,false,viewGroup);
@@ -312,7 +303,6 @@ public class ServerTestActivity extends CompatActivityGroup {
 	SharedPreferences pref;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		instance = new WeakReference(this);
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
 		super.onCreate(savedInstanceState);
@@ -323,7 +313,6 @@ public class ServerTestActivity extends CompatActivityGroup {
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// TODO: Implement this method
 		if (nonLoop)
 			return true;
 		nonLoop = true;
@@ -334,7 +323,6 @@ public class ServerTestActivity extends CompatActivityGroup {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO: Implement this method
 		if (nonLoop)
 			return true;
 		nonLoop = true;
@@ -345,7 +333,6 @@ public class ServerTestActivity extends CompatActivityGroup {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO: Implement this method
 		((ActivityResultInterface)getLocalActivityManager().getActivity("main")).onActivityResult(requestCode, resultCode, data);
 	}
 

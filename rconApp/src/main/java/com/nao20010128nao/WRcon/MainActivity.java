@@ -48,7 +48,6 @@ public class MainActivity extends MainActivityBase1
 	SharedPreferences pref;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		TheApplication.instance.prepareFirebase();
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
@@ -85,7 +84,6 @@ public class MainActivity extends MainActivityBase1
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// TODO: Implement this method
 		SubMenu add=menu.addSubMenu(Menu.NONE,0,1,R.string.add).setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_add_black_48dp,Color.WHITE));
 		add.add(Menu.NONE,1,1,R.string.addSingle).setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_add_black_48dp         ,getResources().getColor(R.color.light_icons_foreground)));
 		add.add(Menu.NONE,2,1,R.string.imporT).setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_file_download_black_48dp  ,getResources().getColor(R.color.light_icons_foreground)));
@@ -100,7 +98,6 @@ public class MainActivity extends MainActivityBase1
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO: Implement this method
 		switch(item.getItemId()){
 			case 1:{
 				final View dialogView=getLayoutInflater().inflate(R.layout.server_add_dialog_new,null);
@@ -269,7 +266,6 @@ public class MainActivity extends MainActivityBase1
 
 		@Override
 		public void onItemClick(AdapterView<?> p1, View p2, int p3, long p4) {
-			// TODO: Implement this method
 			Intent launcher;
 			startActivity(launcher=new Intent(MainActivity.this, RCONActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port));
 			Bundle log=new Bundle();
@@ -280,7 +276,6 @@ public class MainActivity extends MainActivityBase1
 
 		@Override
 		public boolean onItemLongClick(AdapterView<?> p1, View p2, final int position, long p4) {
-			// TODO: Implement this method
 			final Server server=getItem(position);
 			new AlertDialog.Builder(MainActivity.this)
 				.setItems(R.array.rconAppServerSubMenu,new DialogInterface.OnClickListener(){
@@ -333,7 +328,6 @@ public class MainActivity extends MainActivityBase1
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			// TODO: Implement this method
 			if(convertView==null)convertView=getLayoutInflater().inflate(R.layout.main_server_entry,parent,false);
 			((ImageView)convertView.findViewById(R.id.forward)).setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_chevron_right_black_48dp,0xff_666666));
 			((TextView)convertView.findViewById(R.id.serverIp)).setText(getItem(position).toString());
@@ -343,7 +337,6 @@ public class MainActivity extends MainActivityBase1
 
 		@Override
 		public void add(Server object) {
-			// TODO: Implement this method
 			if (!list.contains(object)){
 				super.add(object);
 			}
@@ -351,13 +344,11 @@ public class MainActivity extends MainActivityBase1
 
 		@Override
 		public void addAll(Server[] items) {
-			// TODO: Implement this method
 			addAll(Arrays.asList(items));
 		}
 
 		@Override
 		public void addAll(Collection<? extends Server> collection) {
-			// TODO: Implement this method
 			for (Server s:collection)add(s);
 		}
 	}

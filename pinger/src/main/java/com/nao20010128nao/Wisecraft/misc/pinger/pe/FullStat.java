@@ -61,7 +61,6 @@ public class FullStat implements ServerPingResult,PEPingResult {
 
 	@Override
 	public byte[] getRawResult() {
-		// TODO: Implement this method
 		return PingerUtils.trim(raw);
 	}
 }

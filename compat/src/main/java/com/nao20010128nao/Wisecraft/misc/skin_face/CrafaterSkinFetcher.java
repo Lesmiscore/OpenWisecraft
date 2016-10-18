@@ -26,13 +26,11 @@ public class CrafaterSkinFetcher implements SkinFetcherInterface
 		}
 		@Override
 		public void onError(Throwable err, URL url) {
-			// TODO: Implement this method
 			lis.onError(player);
 		}
 
 		@Override
 		public void onSuccess(Bitmap bmp, URL url) {
-			// TODO: Implement this method
 			lis.onSuccess(bmp,player);
 		}
 

@@ -8,7 +8,6 @@ import com.nao20010128nao.Wisecraft.misc.*;
 public abstract class ApiBaseActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
 	}

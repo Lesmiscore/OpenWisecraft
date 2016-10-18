@@ -8,13 +8,11 @@ public class Server implements Cloneable
 
 	@Override
 	public int hashCode() {
-		// TODO: Implement this method
 		return ip.hashCode() ^ port;
 	}
 
 	@Override
 	public boolean equals(Object o) {
-		// TODO: Implement this method
 		if (!(o instanceof Server)) {
 			return false;
 		}
@@ -24,13 +22,11 @@ public class Server implements Cloneable
 
 	@Override
 	public String toString() {
-		// TODO: Implement this method
 		return new StringBuilder().append(ip).append(':').append(port).toString();
 	}
 
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
-		// TODO: Implement this method
 		Server s=new Server();
 		s.ip=ip;s.port=port;
 		return s;

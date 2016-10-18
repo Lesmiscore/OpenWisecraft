@@ -17,7 +17,6 @@ public class RequestedServerInfoActivity extends ApiBaseActivity {
 	Intent si=new Intent();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		wd = new WorkingDialog(this);
         Intent values=getIntent();
@@ -79,7 +78,6 @@ public class RequestedServerInfoActivity extends ApiBaseActivity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO: Implement this method
 		switch (requestCode) {
 			case 0:
 				switch (resultCode) {

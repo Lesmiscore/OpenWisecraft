@@ -19,7 +19,6 @@ public class MainActivityBase1 extends AppCompatListActivity
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO: Implement this method
 		super.onActivityResult(requestCode, resultCode, data);
 		if(results.containsKey(requestCode)){
 			switch(resultCode){

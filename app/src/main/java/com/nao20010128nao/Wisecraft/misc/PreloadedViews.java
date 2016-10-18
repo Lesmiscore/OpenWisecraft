@@ -14,31 +14,26 @@ public class PreloadedViews extends HashMap<Integer,WeakReference<View>>
 
 	@Override
 	public WeakReference<View> put(Integer key, WeakReference<View> value) {
-		// TODO: Implement this method
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void putAll(Map<? extends Integer, ? extends WeakReference<View>> map) {
-		// TODO: Implement this method
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public Set<Map.Entry<Integer, WeakReference<View>>> entrySet() {
-		// TODO: Implement this method
 		return immutable.entrySet();
 	}
 
 	@Override
 	public Set<Integer> keySet() {
-		// TODO: Implement this method
 		return immutable.keySet();
 	}
 
 	@Override
 	public Collection<WeakReference<View>> values() {
-		// TODO: Implement this method
 		return immutable.values();
 	}
 	

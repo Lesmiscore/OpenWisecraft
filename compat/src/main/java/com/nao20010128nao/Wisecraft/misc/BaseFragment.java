@@ -13,7 +13,6 @@ public abstract class BaseFragment<Parent extends FragmentActivity> extends Frag
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		pref=PreferenceManager.getDefaultSharedPreferences(getParentActivity());
 	}

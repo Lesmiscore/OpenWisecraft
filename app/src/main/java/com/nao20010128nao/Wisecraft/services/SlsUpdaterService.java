@@ -9,13 +9,11 @@ public class SlsUpdaterService extends Service
 	public String replyAction;
 	@Override
 	public IBinder onBind(Intent p1) {
-		// TODO: Implement this method
 		return null;
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		// TODO: Implement this method
 		replyAction=intent.getStringExtra("action");
 		ExecWorker ew=new ExecWorker();
 		ew.start();
@@ -29,7 +27,6 @@ public class SlsUpdaterService extends Service
 
 		@Override
 		public void run() {
-			// TODO: Implement this method
 			try{
 				super.run();
 			}finally{

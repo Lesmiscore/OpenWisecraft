@@ -17,7 +17,6 @@ public class Tp extends BaseAction {
 
 	@Override
 	public void onClick(View p1) {
-		// TODO: Implement this method
 		dialog = new AppCompatAlertDialog.Builder(this,getActivity().getPresenter().getDialogStyleId())
 			.setView(inflateDialogView())
 			.show();
@@ -25,7 +24,6 @@ public class Tp extends BaseAction {
 
 	@Override
 	public int getViewId() {
-		// TODO: Implement this method
 		return R.id.tp;
 	}
 	public View inflateDialogView() {
@@ -35,7 +33,6 @@ public class Tp extends BaseAction {
 		((Button)v.findViewById(R.id.ok)).setOnClickListener(new View.OnClickListener(){
 				@Override
 				public void onClick(View p1) {
-					// TODO: Implement this method
 					getActivity().performSend("tp " + cmd.getText());
 
 				}
@@ -45,7 +42,6 @@ public class Tp extends BaseAction {
 
 	@Override
 	public int getTitleId() {
-		// TODO: Implement this method
 		return R.string.tp;
 	}
 }
