@@ -135,7 +135,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		if (usesOldInstance) {
 			rv.setAdapter(sl);
 		} else {
-            if (true) {
+            if (!pref.getBoolean("useAltServer",false)) {
                 spp = updater = new MultiServerPingProvider(Integer.valueOf(pref.getString("parallels", "6")));
                 if (pref.getBoolean("updAnotherThread", false))
 				    updater = new NormalServerPingProvider();
@@ -887,7 +887,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
 		@Override
 		public ServerStatusWrapperViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-			// 表示するレイアウトを設�?
+			// 表示するレイアウトを設�?
 			switch(sla.pref.getInt("serverListStyle2",0)){
 				case 0:default:
 					return new ServerStatusWrapperViewHolder(sla,false,viewGroup);
@@ -898,7 +898,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
 		@Override
 		public void onBindViewHolder(final ServerStatusWrapperViewHolder viewHolder, final int position) {
-			// �?ータ表示
+			// �?ータ表示
 			if (sla.list != null && sla.list.size() > position && sla.list.get(position) != null) {
 				Server sv=getItem(position);
 				viewHolder.itemView.setTag(sv);

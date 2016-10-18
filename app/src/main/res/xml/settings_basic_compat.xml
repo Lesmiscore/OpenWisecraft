@@ -99,4 +99,8 @@
 		android:title="@string/themeMode"
 		android:key="4.0themeMode"
 	/>
+	<com.nao20010128nao.Wisecraft.misc.pref.CheckBoxPreferenceCompat
+		android:title="Use only TCP to ping (via an another server)"
+		android:key="useAltServer"
+	/>
 </PreferenceScreen>
