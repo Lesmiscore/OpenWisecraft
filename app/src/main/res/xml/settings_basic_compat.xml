@@ -54,6 +54,7 @@
 		android:title="@string/serverListStyle"
 		android:key="serverListStyle"
 	/>
+<!--
 	<com.nao20010128nao.Wisecraft.misc.pref.CheckBoxPreferenceCompat
 		android:title="@string/showStatusesBar"
 		android:key="showStatusesBar"
@@ -65,6 +66,7 @@
 		android:defaultValue="false"
 		android:dependency="showStatusesBar"
 	/>
+-->
 	<com.nao20010128nao.Wisecraft.misc.pref.CheckBoxPreferenceCompat
 		android:title="@string/deleteDecoPlayerName"
 		android:key="deleteDecoPlayerName"

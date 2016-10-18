@@ -59,7 +59,7 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBase5
 		}
 		statLayout = (StatusesLayout)findViewById(R.id.serverStatuses);
 		statLayout.setColorRes(R.color.stat_error, R.color.stat_pending, R.color.stat_ok);
-		if (false&!pref.getBoolean("showStatusesBar", false))statLayout.setVisibility(View.GONE);
+		if (true|!pref.getBoolean("showStatusesBar", false))statLayout.setVisibility(View.GONE);
 	}
 
 	@Override
