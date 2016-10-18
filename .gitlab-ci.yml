@@ -16,7 +16,7 @@ before_script:
   - java -version
 
 stages:
-  - elim
+#  - elim
   - main
 
 main:
@@ -39,8 +39,8 @@ main:
       - powof2.txt
 
 
-elim:
-  stage: elim
-  script:
-    - gradle-2.14.1/bin/gradle eliminateImplementTodo --info --stacktrace
+#elim:
+#  stage: elim
+#  script:
+#    - gradle-2.14.1/bin/gradle eliminateImplementTodo --info --stacktrace
     
