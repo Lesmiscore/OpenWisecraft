@@ -140,9 +140,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                 if (pref.getBoolean("updAnotherThread", false))
 				    updater = new NormalServerPingProvider();
             } else {
-                spp = updater = new TcpMultiServerPingProvider("192.168.3.100",15687, Integer.valueOf(pref.getString("parallels", "6")));
+                spp = updater = new TcpMultiServerPingProvider("160.16.103.57",15687, Integer.valueOf(pref.getString("parallels", "6")));
                 if (pref.getBoolean("updAnotherThread", false))
-				    updater = new TcpServerPingProvider("192.168.3.100",15687);
+				    updater = new TcpServerPingProvider("160.16.103.57",15687);
             }
 			rv.setAdapter(sl = new ServerList(this));
 		}
