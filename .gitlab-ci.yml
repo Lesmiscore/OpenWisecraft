@@ -38,7 +38,7 @@ main:
       - dexdump*.txt
       - build.log
       - powof2.txt
-      - "*/build/outputs/apk/*"
+      - "*/build/outputs/aar/*"
       - tree.log
 
 
