@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<style name="AppTheme" parent="@style/Theme.AppCompat.Light">
+		<!--Default-->
 		<item name="colorPrimary">@color/primary</item>
 		<item name="colorAccent">@color/mainColor</item>
 		<item name="android:windowContentOverlay">@null</item>
@@ -12,6 +13,10 @@
 		<item name="wcDefaultPreferenceTextColor">#000000</item>
 		<item name="wcMenuTintColor">#000000</item>
 		<item name="dialogTheme">@style/AppAlertDialog</item>
+		<!--MaterialDrawer-->
+		<item name="material_drawer_background">?android:attr/windowBackground</item>
+        <item name="material_drawer_primary_text">@color/black</item>
+        <item name="material_drawer_selected_text">?attr/material_drawer_primary_text</item>
 	</style>
 	<style name="AppDialog" parent="@style/Theme.AppCompat.Light.Dialog">
 		<item name="colorPrimary">@color/primary</item>
