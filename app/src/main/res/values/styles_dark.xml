@@ -2,7 +2,7 @@
 <resources>
 	<style name="AppTheme.Dark" parent="@style/Theme.AppCompat">
 		<!--Default-->
-		<item name="colorAccent">@color/mainColor</item>
+		<item name="colorAccent">@color/mainColor.Dark</item>
 		<item name="android:windowContentOverlay">@null</item>
 		<item name="preferenceTheme">@style/AppTheme.Preference</item>
 		<item name="alertDialogTheme">@style/AppAlertDialog</item>
@@ -18,7 +18,7 @@
         <item name="material_drawer_selected_text">?attr/material_drawer_primary_text</item>
 	</style>
 	<style name="AppDialog.Dark" parent="@style/Theme.AppCompat.Dialog">
-		<item name="colorAccent">@color/mainColor</item>
+		<item name="colorAccent">@color/mainColor.Dark</item>
 		<item name="android:windowContentOverlay">@null</item>
 		<item name="preferenceTheme">@style/AppTheme.Preference</item>
 		<item name="wcToolbarTheme">@style/AppTheme.Toolbar.Dark</item>
@@ -27,7 +27,7 @@
 		<item name="dialogTheme">@style/AppAlertDialog.Dark</item>
 	</style>
 	<style name="AppAlertDialog.Dark" parent="@style/Theme.AppCompat.Dialog.Alert">
-		<item name="colorAccent">@color/mainColor</item>
+		<item name="colorAccent">@color/mainColor.Dark</item>
 		<item name="preferenceTheme">@style/AppTheme.Preference</item>
 		<item name="wcToolbarTheme">@style/AppTheme.Toolbar.Dark</item>
 		<item name="wcDefaultPreferenceTextColor">#ffffff</item>
@@ -42,8 +42,8 @@
 	</style>
 
 	<style name="AppTheme.Toolbar.Dark" parent="AppTheme.Dark">
-		<item name="colorControlNormal">@color/mainColor</item>
-		<item name="android:textColorSecondary">@color/mainColor</item>
+		<item name="colorControlNormal">@color/mainColor.Dark</item>
+		<item name="android:textColorSecondary">@color/mainColor.Dark</item>
 	</style>
 
 	<style name="AppTheme.ServerInfo.Dark" parent="AppTheme.NoActionBar.Dark">

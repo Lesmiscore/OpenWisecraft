@@ -19,8 +19,8 @@ public class ServerStatusWrapperViewHolder extends FindableViewHolder implements
 	public ServerStatusWrapperViewHolder(Context context,boolean isGrid,ViewGroup parent){
 		super(LayoutInflater.from(context).inflate(isGrid?R.layout.quickstatus_grid:R.layout.quickstatus,parent,false));
 		preload=new PreloadedViews((ViewGroup)itemView,ALL_VIEWS);
-		preload.getView(R.id.checkBackground).setBackgroundColor(ServerInfoActivity.translucent(ContextCompat.getColor(context,R.color.mainColor)));
-		((ImageView)preload.getView(R.id.checkMark)).setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_check_black_48dp,ContextCompat.getColor(context,R.color.mainColor)));
+		preload.getView(R.id.checkBackground).setBackgroundColor(ServerInfoActivity.translucent(ThemePatcher.getMainColor(context)));
+		((ImageView)preload.getView(R.id.checkMark)).setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_check_black_48dp,ThemePatcher.getMainColor(context)));
 	}
 	public ServerStatusWrapperViewHolder(Context context,int theme,boolean isGrid,ViewGroup parent){
 		this(new ContextThemeWrapper(context,theme),isGrid,parent);

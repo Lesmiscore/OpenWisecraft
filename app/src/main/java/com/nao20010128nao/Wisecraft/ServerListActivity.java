@@ -56,7 +56,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				LineWrappingPrimaryDrawerItem pdi=new LineWrappingPrimaryDrawerItem();
 				pdi.withName(s.getA()).withIcon(s.getB());
 				pdi.withSetSelected(false);((IdContainer)pdi).setIntId(appMenu.indexOf(s));
-				pdi.withIconColorRes(R.color.mainColor).withIconTinted(true);
+				pdi.withIconColor(ThemePatcher.getMainColor(this)).withIconTinted(true);
                 pdi.withIdentifier(appMenu.indexOf(s)).withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener(){
 						@Override
 						public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {

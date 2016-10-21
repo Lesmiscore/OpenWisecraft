@@ -23,4 +23,5 @@
 	
 	
 	<color name="mainColor">#7986CB</color>
+	<color name="mainColor.Dark">#6570A8</color>
 </resources>

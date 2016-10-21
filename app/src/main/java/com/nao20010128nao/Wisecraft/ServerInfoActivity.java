@@ -285,7 +285,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 	}
 	public void updateTaskDesc(ServerPingResult resp) {
 		if (Build.VERSION.SDK_INT >= 21) {
-			int color=ContextCompat.getColor(this, R.color.mainColor);
+			int color=ThemePatcher.getMainColor(this);
 			if (resp instanceof Reply) {
 				Reply rep=(Reply)resp;
 				if (rep.favicon != null) {

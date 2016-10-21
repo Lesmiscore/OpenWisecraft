@@ -2,6 +2,7 @@ package com.nao20010128nao.Wisecraft.misc;
 import android.app.*;
 import android.content.*;
 import android.content.res.*;
+import android.support.v4.content.*;
 import android.support.v7.view.*;
 import android.util.*;
 import com.nao20010128nao.Wisecraft.*;
@@ -149,6 +150,13 @@ public class ThemePatcher{
 	public static int getDefaultDialogStyle(Context c){
 		TypedArray ta=ThemePatcher.getStyledContext(c).obtainStyledAttributes(new int[]{R.attr.dialogTheme});
 		int color=ta.getResourceId(0,R.style.AppAlertDialog);
+		ta.recycle();
+		return color;
+	}
+	
+	public static int getMainColor(Context c){
+		TypedArray ta=ThemePatcher.getStyledContext(c).obtainStyledAttributes(new int[]{R.attr.colorAccent});
+		int color=ta.getColor(0,ContextCompat.getColor(c,R.color.mainColor));
 		ta.recycle();
 		return color;
 	}

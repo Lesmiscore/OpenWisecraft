@@ -3,9 +3,9 @@ import android.app.*;
 import android.content.*;
 import android.os.*;
 import android.support.v4.app.*;
-import android.support.v4.content.*;
 import com.nao20010128nao.MCProxy.*;
 import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.misc.*;
 import java.io.*;
 import java.net.*;
 import java.security.*;
@@ -40,7 +40,7 @@ public class MCProxyService extends Service
 		nb.setStyle(style);
 		nb.setContentIntent(PendingIntent.getActivity(this,hashCode(),new Intent(this,ProxyActivity.class).setAction("status"),0));
 		nb.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
-		nb.setColor(ContextCompat.getColor(this,R.color.mainColor));
+		nb.setColor(ThemePatcher.getMainColor(this));
 		nb.setSmallIcon(R.drawable.ic_launcher);
 		startForeground(ntfId,nb.build());
 		
