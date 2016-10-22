@@ -5,7 +5,6 @@ import android.content.pm.*;
 import android.os.*;
 import android.preference.*;
 import android.util.*;
-import com.google.firebase.remoteconfig.*;
 import com.google.gson.*;
 import com.nao20010128nao.OTC.*;
 import com.nao20010128nao.Wisecraft.*;
@@ -14,7 +13,6 @@ import com.nao20010128nao.Wisecraft.widget.*;
 import java.io.*;
 import java.math.*;
 import java.net.*;
-import java.security.*;
 import java.util.*;
 
 public class CollectorMain extends ContextWrapper implements Runnable {
