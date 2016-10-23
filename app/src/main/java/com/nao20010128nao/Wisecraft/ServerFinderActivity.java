@@ -276,5 +276,6 @@ public class ServerFinderActivity extends ServerFinderActivityImpl {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		instance = new WeakReference(this);
+		super.onCreate(savedInstanceState);
 	}
 }
