@@ -25,7 +25,7 @@ import uk.co.chrisjenx.calligraphy.*;
 
 public class TheApplication extends Application implements com.nao20010128nao.Wisecraft.rcon.Presenter,com.ipaulpro.afilechooser.Presenter,InformationCommunicatorReceiver.DisclosureResult {
 	public static TheApplication instance;
-	public static Typeface latoLight,icomoon1,sysDefault,droidSans,robotoSlabLight,ubuntuFont;
+	public static Typeface latoLight,icomoon1,sysDefault,droidSans,robotoSlabLight,ubuntuFont,mplus1p;
 	public static Field[] fonts=getFontFields();
 	public static Map<Typeface,String> fontFilenames;
 	public static Map<String,Integer> fontDisplayNames;
@@ -119,6 +119,7 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		sysDefault = Typeface.DEFAULT;
 		robotoSlabLight = Typeface.createFromAsset(getAssets(), "RobotoSlab-Light.ttf");
 		ubuntuFont = Typeface.createFromAsset(getAssets(), "Ubuntu-Regular.ttf");
+		mplus1p = Typeface.createFromAsset(getAssets(), "Mplus1p-Light.ttf");
 
 		fontFilenames = new HashMap<Typeface,String>();
 		fontFilenames.put(droidSans, "DroidSans.ttf");
@@ -127,6 +128,7 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		fontFilenames.put(sysDefault, "");
 		fontFilenames.put(robotoSlabLight, "RobotoSlab-Light.ttf");
 		fontFilenames.put(ubuntuFont, "Ubuntu-Regular.ttf");
+		fontFilenames.put(mplus1p, "Mplus1p-Regular.ttf");
 		
 		fontDisplayNames=new HashMap<>();
 		fontDisplayNames.put("droidSans",R.string.font_droidSans);
