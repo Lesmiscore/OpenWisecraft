@@ -137,6 +137,7 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		fontDisplayNames.put("sysDefault",R.string.font_sysDefault);
 		fontDisplayNames.put("robotoSlabLight",R.string.font_robotoSlabLight);
 		fontDisplayNames.put("ubuntuFont",R.string.font_ubuntu);
+		fontDisplayNames.put("mplus1p",R.string.font_mplus1p);
 		
 		CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath(getFontFilename()).setFontAttrId(R.attr.fontPath).build());
 	}
