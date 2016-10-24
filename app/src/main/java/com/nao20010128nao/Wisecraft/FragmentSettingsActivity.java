@@ -142,7 +142,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 	}
 	
 	
-	public static class HubPrefFragment extends BaseFragment {
+	public static class HubPrefFragment extends SettingsBaseFragment {
 		SharedPreferences pref;
 		@Override
 		public void onCreatePreferences(Bundle p1, String p2) {
@@ -228,7 +228,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		}
 	}
 
-	public static class Basics extends BaseFragment {
+	public static class Basics extends SettingsBaseFragment {
 		public static final String PARALLELS_DIALOG_FRAGMENT_TAG=DIALOG_FRAGMENT_TAG_PREFIX+"parallels-dialog";
 		int which;
 		@Override
@@ -383,7 +383,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 	}
 
 
-	public static class Features extends BaseFragment {
+	public static class Features extends SettingsBaseFragment {
 		int which;
 		@Override
 		public void onCreatePreferences(Bundle p1, String p2) {
@@ -398,7 +398,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 	}
 
 
-	public static class Asfsls extends BaseFragment {
+	public static class Asfsls extends SettingsBaseFragment {
 		int which;
 		@Override
 		public void onCreatePreferences(Bundle p1, String p2) {
@@ -414,7 +414,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		}
 	}
 	
-	public static class ColorChanger extends BaseFragment {
+	public static class ColorChanger extends SettingsBaseFragment {
 
 		@Override
 		public void onResume() {
@@ -812,7 +812,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 	
 	
 
-	public abstract static class BaseFragment extends SHablePreferenceFragment {
+	public abstract static class SettingsBaseFragment extends SHablePreferenceFragment {
 		protected SharedPreferences pref;
 		
 		LinearLayout miscContent;
