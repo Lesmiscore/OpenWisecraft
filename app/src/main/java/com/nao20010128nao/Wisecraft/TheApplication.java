@@ -128,7 +128,7 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		fontFilenames.put(sysDefault, "");
 		fontFilenames.put(robotoSlabLight, "RobotoSlab-Light.ttf");
 		fontFilenames.put(ubuntuFont, "Ubuntu-Regular.ttf");
-		fontFilenames.put(mplus1p, "Mplus1p-Regular.ttf");
+		fontFilenames.put(mplus1p, "Mplus1p-Light.ttf");
 		
 		fontDisplayNames=new HashMap<>();
 		fontDisplayNames.put("droidSans",R.string.font_droidSans);
