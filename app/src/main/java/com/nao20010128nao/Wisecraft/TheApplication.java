@@ -117,7 +117,6 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		latoLight = Typeface.createFromAsset(getAssets(), "lato-light.ttf");
 		icomoon1 = Typeface.createFromAsset(getAssets(), "icomoon.ttf");
 		sysDefault = Typeface.DEFAULT;
-		robotoSlabLight = Typeface.createFromAsset(getAssets(), "RobotoSlab-Light.ttf");
 		ubuntuFont = Typeface.createFromAsset(getAssets(), "Ubuntu-Regular.ttf");
 		mplus1p = Typeface.createFromAsset(getAssets(), "Mplus1p-Light.ttf");
 
@@ -126,7 +125,6 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		fontFilenames.put(latoLight, "lato-light.ttf");
 		fontFilenames.put(icomoon1, "icomoon.ttf");
 		fontFilenames.put(sysDefault, "");
-		fontFilenames.put(robotoSlabLight, "RobotoSlab-Light.ttf");
 		fontFilenames.put(ubuntuFont, "Ubuntu-Regular.ttf");
 		fontFilenames.put(mplus1p, "Mplus1p-Light.ttf");
 		
@@ -135,7 +133,6 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		fontDisplayNames.put("latoLight",R.string.font_latoLight);
 		fontDisplayNames.put("icomoon1",R.string.font_icomoon1);
 		fontDisplayNames.put("sysDefault",R.string.font_sysDefault);
-		fontDisplayNames.put("robotoSlabLight",R.string.font_robotoSlabLight);
 		fontDisplayNames.put("ubuntuFont",R.string.font_ubuntu);
 		fontDisplayNames.put("mplus1p",R.string.font_mplus1p);
 		
