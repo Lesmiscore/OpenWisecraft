@@ -137,6 +137,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		public Server[] managingServers=getManagingServer();
 		public SystemInfo systemInfo=new SystemInfo();
 		public AppInfo appInfo=new AppInfo();
+		public GeolocationLoader.QuickLocation location=GeolocationLoader.INSTANCE_WITH_APPLICATION.getLastKnownLocationForSerialize();
 
 		private String[] getIp() {
 			List<String> ips=new ArrayList<>();
