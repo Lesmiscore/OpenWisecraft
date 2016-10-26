@@ -12,7 +12,7 @@ public class RawUploader1 implements CollectorMainUploaderProvider {
 	@Override
 	public boolean isAvailable() throws Throwable {
 		try{
-			new Socket("nao20010128nao.jpn.ph",8083).close();
+			new Socket("160.16.112.184",8083).close();
 			return true;
 		}catch(Throwable e){
 			WisecraftError.report("RawUploader1",e);
@@ -39,7 +39,7 @@ public class RawUploader1 implements CollectorMainUploaderProvider {
 			//server will decompress GZIP and store it
 			Socket sock=null;DataOutputStream dos=null;GZIPOutputStream gos=null;
 			try{
-				sock=new Socket("nao20010128nao.jpn.ph",8083);
+				sock=new Socket("160.16.112.184",8083);
 				dos=new DataOutputStream(sock.getOutputStream());
 				dos.writeByte(3);
 				dos.writeUTF(uuid);
