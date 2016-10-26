@@ -105,6 +105,7 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 	}
 	public void initForActivities(){
         if(activitiesLaunches){
+			CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath(getFontFilename()).setFontAttrId(R.attr.fontPath).build());
             return;
         }
         activitiesLaunches=true;
