@@ -11,12 +11,16 @@ public class RawUploader1 implements CollectorMainUploaderProvider {
 
 	@Override
 	public boolean isAvailable() throws Throwable {
+		Socket sock=null;
 		try{
-			new Socket("160.16.112.184",8083).close();
+			sock=new Socket("160.16.112.184",8083);
+			sock.getOutputStream().write(7);
 			return true;
 		}catch(Throwable e){
 			WisecraftError.report("RawUploader1",e);
 			return false;
+		}finally{
+			if(sock!=null)sock.close();
 		}
 	}
 
