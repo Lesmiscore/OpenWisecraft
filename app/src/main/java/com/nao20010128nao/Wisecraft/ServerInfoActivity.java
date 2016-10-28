@@ -23,6 +23,7 @@ import com.google.gson.*;
 import com.nao20010128nao.OTC.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
+import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
@@ -33,7 +34,6 @@ import java.math.*;
 import java.util.*;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
-import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
 
 public class ServerInfoActivity extends ServerInfoActivityBase1 {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
