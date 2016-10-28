@@ -161,25 +161,7 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 	}
 
 	@Override
-	public void onWindowFocusChanged(boolean hasFocus) {
-		super.onWindowFocusChanged(hasFocus);
-		/*
-		if(rv.getLayoutManager() instanceof StaggeredGridLayoutManager){
-			((StaggeredGridLayoutManager)rv.getLayoutManager()).setSpanCount(calculateRows(this,rv));
-		}
-		if(rv.getLayoutManager() instanceof GridLayoutManager){
-			((GridLayoutManager)rv.getLayoutManager()).setSpanCount(calculateRows(this,rv));
-		}
-		*/
-	}
-	
-	@Override
 	public void addIntoList(Server s) {
-	}
-
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
 	}
 
 	class ServerList extends ListRecyclerViewAdapter<ServerStatusWrapperViewHolder,ServerStatus> implements AdapterView.OnItemClickListener {
