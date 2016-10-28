@@ -159,40 +159,13 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			behavior = ViewPagerBottomSheetBehavior.from(bottomSheet);
 			behavior.setHideable(true);
 			behavior.setState(ViewPagerBottomSheetBehavior.STATE_COLLAPSED);
-			behavior.setBottomSheetCallback(new ViewPagerBottomSheetBehavior.BottomSheetCallback() {
-				int r,g,b;
-				{
-					int color=slsl.getBackgroundSimpleColor();
-					r=Color.red(color);
-					g=Color.green(color);
-					b=Color.blue(color);
-				}
-					@Override
-					public void onStateChanged(View bottomSheet, int newState) {
-						switch (newState) {
-							case ViewPagerBottomSheetBehavior.STATE_DRAGGING:
-							case ViewPagerBottomSheetBehavior.STATE_SETTLING:
-							case ViewPagerBottomSheetBehavior.STATE_COLLAPSED:
-								break;
-							case ViewPagerBottomSheetBehavior.STATE_EXPANDED:
-								break;
-							case ViewPagerBottomSheetBehavior.STATE_HIDDEN:
-								finish();
-								break;
-						}
-					}
-
-					@Override
-					public void onSlide(View bottomSheet, float slideOffset) {
-						if (Build.VERSION.SDK_INT >= 21) {
-							BigDecimal val=slideOffset<0?BigDecimal.ZERO:new BigDecimal(slideOffset);
-							ViewCompat.setAlpha(background,val.floatValue());
-							int alpha=val.multiply(new BigDecimal(255)).intValue();
-							int status=Color.argb(alpha,r,g,b);
-							getWindow().setStatusBarColor(status);
-						}
-					}
-				});
+			
+			if (Build.VERSION.SDK_INT >= 21) {
+				behavior.setBottomSheetCallback(new ColorUpdateCallback());
+			}else{
+				behavior.setBottomSheetCallback(new UpdateCallback());
+			}
+			
 			background=findViewById(R.id.background);
 			background.setOnClickListener(new View.OnClickListener(){
 				public void onClick(View v){
@@ -963,6 +936,49 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			View v= inflater.inflate(R.layout.server_info_ucp_details, container, false);
 			((RecyclerView)v.findViewById(R.id.data)).addItemDecoration(new DividerItemDecoration(getContext()));
 			return v;
+		}
+	}
+	
+	
+	
+	class CallbackBase extends ViewPagerBottomSheetBehavior.BottomSheetCallback{
+		@Override
+		public void onStateChanged(View bottomSheet, int newState) {}
+		@Override
+		public void onSlide(View bottomSheet, float slideOffset) {}
+	}
+	class UpdateCallback extends CallbackBase{
+		@Override
+		public void onStateChanged(View bottomSheet, int newState) {
+			switch (newState) {
+				case ViewPagerBottomSheetBehavior.STATE_DRAGGING:
+				case ViewPagerBottomSheetBehavior.STATE_SETTLING:
+				case ViewPagerBottomSheetBehavior.STATE_COLLAPSED:
+					break;
+				case ViewPagerBottomSheetBehavior.STATE_EXPANDED:
+					break;
+				case ViewPagerBottomSheetBehavior.STATE_HIDDEN:
+					finish();
+					break;
+			}
+		}
+	}
+	class ColorUpdateCallback extends UpdateCallback{
+		int r,g,b;
+		public ColorUpdateCallback(){
+			int color=slsl.getBackgroundSimpleColor();
+			r=Color.red(color);
+			g=Color.green(color);
+			b=Color.blue(color);
+		}
+
+		@Override
+		public void onSlide(View bottomSheet, float slideOffset) {
+			BigDecimal val=slideOffset<0?BigDecimal.ZERO:new BigDecimal(slideOffset);
+			ViewCompat.setAlpha(background,val.floatValue());
+			int alpha=val.multiply(new BigDecimal(255)).intValue();
+			int status=Color.argb(alpha,r,g,b);
+			getWindow().setStatusBarColor(status);
 		}
 	}
 
