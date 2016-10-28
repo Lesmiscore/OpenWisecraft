@@ -184,17 +184,12 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 
 					@Override
 					public void onSlide(View bottomSheet, float slideOffset) {
-						if(Build.VERSION.SDK_INT>=11){
+						if (Build.VERSION.SDK_INT >= 21) {
 							BigDecimal val=slideOffset<0?BigDecimal.ZERO:new BigDecimal(slideOffset);
 							ViewCompat.setAlpha(background,val.floatValue());
-
-							if (Build.VERSION.SDK_INT >= 21) {
-								int alpha=val.multiply(new BigDecimal(255)).intValue();
-								int status=Color.argb(alpha,r,g,b);
-								getWindow().setStatusBarColor(status);
-							}
-						}else{
-							background.setVisibility(View.GONE);
+							int alpha=val.multiply(new BigDecimal(255)).intValue();
+							int status=Color.argb(alpha,r,g,b);
+							getWindow().setStatusBarColor(status);
 						}
 					}
 				});
