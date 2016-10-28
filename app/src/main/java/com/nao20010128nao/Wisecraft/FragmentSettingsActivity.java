@@ -353,6 +353,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 				});
 			sH("4.0themeMode", new HandledPreference.OnClickListener(){
 					public void onClick(String a, String b, String c) {
+						final boolean[] gpsRequired=Utils.getBooleanArray(getContext(),R.array.themeMode_GpsRequired);
 						new AppCompatAlertDialog.Builder(getContext(),ThemePatcher.getDefaultDialogStyle(getContext()))
 							.setTitle(R.string.themeMode)
 							.setSingleChoiceItems(getResources().getStringArray(R.array.themeMode),which=pref.getInt("4.0themeMode",ThemePatcher.THEME_MODE_LIGHT),new DialogInterface.OnClickListener(){
@@ -362,14 +363,22 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 							})
 							.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
 								public void onClick(DialogInterface di,int w){
-									pref.edit().putInt("4.0themeMode",which).commit();
+									if(gpsRequired[w]){
+										new AlertDialog.Builder(getContext(),ThemePatcher.getDefaultDialogStyle(getContext()))
+											.setMessage(getResources().getString(R.string.gpsRequiredForDayNight).replace("{NO}",getResources().getString(android.R.string.no)))
+											.setPositiveButton(android.R.string.yes,new DialogInterface.OnClickListener(){
+												public void onClick(DialogInterface di,int w){
+													pref.edit().putInt("4.0themeMode",which).commit();
+												}
+											})
+											.setNegativeButton(android.R.string.no,null)
+											.show();
+									}else{
+										pref.edit().putInt("4.0themeMode",which).commit();
+									}
 								}
 							})
-							.setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
-								public void onClick(DialogInterface di,int w){
-
-								}
-							})
+							.setNegativeButton(android.R.string.cancel,null)
 							.show();
 					}
 				});

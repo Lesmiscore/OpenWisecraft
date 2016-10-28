@@ -527,4 +527,12 @@ public class Utils extends PingerUtils{
 		ta.recycle();
 		return color;
 	}
+	public static boolean[] getBooleanArray(Context ctx,int resId){
+		TypedArray ta=ctx.getResources().obtainTypedArray(resId);
+		boolean[] values=new boolean[ta.length()];
+		for(int i=0;i<values.length;i++)
+			values[i]=ta.getBoolean(i,false);
+		ta.recycle();
+		return values;
+	}
 }

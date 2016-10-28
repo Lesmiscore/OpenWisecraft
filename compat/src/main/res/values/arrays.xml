@@ -57,7 +57,7 @@
         <item>@string/dark</item>
         <item>@string/darkOnNight</item>
     </string-array>
-	<array name="themeMode.GpsRequired">
+	<array name="themeMode_GpsRequired">
 		<item>false</item>
 		<item>false</item>
 		<item>true</item>
