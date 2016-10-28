@@ -1,0 +1,65 @@
+<resources>
+	<string-array name="serverSubMenu">
+        <item>@string/remove</item>
+        <item>@string/update</item>
+        <item>@string/edit</item>
+        <item>@string/testServer</item>
+        <item>@string/rcon</item>
+        <item>@string/addToMcpe</item>
+        <item>@string/launchMtl</item>
+        <item>@string/serverFinder</item>
+		<item>@string/genLink</item>
+    </string-array>
+    <string-array name="serverFinderMenu">
+        <item>@string/addThisServer</item>
+    </string-array>
+    <string-array name="serverSortMenu">
+        <item>@string/bringOnlinesToTop</item>
+        <item>@string/sortWithIpAndPort</item>
+        <item>@string/sortWithOnlineAndOffline</item>
+        <item>@string/sortByHand</item>
+    </string-array>
+	<string-array name="serverUpdateAllSubMenu">
+		<item>@string/updateAll.all</item>
+        <item>@string/updateAll.online</item>
+        <item>@string/updateAll.offline</item>
+        <item>@string/updateAll.select</item>
+	</string-array>
+
+
+    <string-array name="serverListSites">
+        <item>minecraftservers.org</item>
+        <item>minecraftpeservers.org</item>
+        <item>www.minecraft-servers-list.org</item>
+        <item>minecraft-mp.com</item>
+        <item>minecraftpocket-servers.com</item>
+        <item>minecraft.jp</item>
+        <item>pe.minecraft.jp</item>
+        <item>pmmp.jp.net</item>
+    </string-array>
+
+    <string-array name="serverListStyles">
+        <item>@string/serverListStyles_list</item>
+        <item>@string/serverListStyles_grid</item>
+        <item>@string/serverListStyles_noSpace</item>
+    </string-array>
+
+	<string-array name="fontNamesOrder">
+        <item>droidSans</item>
+        <item>latoLight</item>
+        <item>ubuntuFont</item>
+        <item>sysDefault</item>
+		<item>mplus1p</item>
+    </string-array>
+
+	<string-array name="themeMode">
+        <item>@string/light</item>
+        <item>@string/dark</item>
+        <item>@string/darkOnNight</item>
+    </string-array>
+	<array name="themeMode.GpsRequired">
+		<item>false</item>
+		<item>false</item>
+		<item>true</item>
+	</array>
+</resources>
