@@ -363,7 +363,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 							})
 							.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
 								public void onClick(DialogInterface di,int w){
-									if(gpsRequired[w]){
+									if(gpsRequired[which]){
 										new AlertDialog.Builder(getContext(),ThemePatcher.getDefaultDialogStyle(getContext()))
 											.setMessage(getResources().getString(R.string.gpsRequiredForDayNight).replace("{NO}",getResources().getString(android.R.string.no)))
 											.setPositiveButton(android.R.string.yes,new DialogInterface.OnClickListener(){
