@@ -164,6 +164,12 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 	public void addIntoList(Server s) {
 	}
 
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO: Implement this method
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+	
 	class ServerList extends ListRecyclerViewAdapter<ServerStatusWrapperViewHolder,ServerStatus> implements AdapterView.OnItemClickListener {
 		ServerFinderActivityImpl sta;
 
