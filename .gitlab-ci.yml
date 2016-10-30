@@ -2,7 +2,7 @@ image: maven:3-jdk-8
 
 before_script:
   - chmod a+x ./ci/*
-  - ./ci/prepare.sh 2> /dev/null
+  - source ./ci/prepare.sh 2> /dev/null
 
 stages:
 #  - elim
