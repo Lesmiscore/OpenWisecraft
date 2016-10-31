@@ -29,6 +29,7 @@ public class PingWidget extends AppWidgetProvider {
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 		SharedPreferences widgetPref = getWidgetPref(context);
+		SharedPreferences pref=PreferenceManager.getDefaultSharedPreferences(context);
 		Gson gson=new Gson();
 		widgetPref.edit().putInt("_version",2).putInt("_version.data",0).commit();
 		{/*
@@ -64,7 +65,12 @@ public class PingWidget extends AppWidgetProvider {
 						sl.notifyItemRangeInserted(0, curLen);
 					}*/
 		}
-		NormalServerPingProvider nspp=new NormalServerPingProvider();
+		ServerPingProvider nspp;
+		if (!pref.getBoolean("useAltServer",false)) {
+			nspp = new NormalServerPingProvider();
+		} else {
+			nspp = new TcpServerPingProvider("160.16.103.57",15687);
+		}
 		for(int wid:appWidgetIds){
 			Log.d("WisecraftWidgets","onUpdate: "+wid);
 			if(!widgetPref.contains(wid+"")){
