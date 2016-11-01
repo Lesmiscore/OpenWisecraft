@@ -189,10 +189,20 @@ public class ServerGetActivity extends CompatWebViewActivity {
 
 	@Override
 	public void onBackPressed() {
-		if (getWebView().canGoBack()) {
-			getWebView().goBack();
-		} else {
-			finish();
+		switch(bottomSheet.getState()){
+			case BottomSheetBehavior.STATE_EXPANDED:
+				bottomSheet.setState(BottomSheetBehavior.STATE_COLLAPSED);
+				break;
+			case BottomSheetBehavior.STATE_COLLAPSED:
+				bottomSheet.setState(BottomSheetBehavior.STATE_HIDDEN);
+				break;
+			default:
+				if (getWebView().canGoBack()) {
+					getWebView().goBack();
+				} else {
+					finish();
+				}
+				break;
 		}
 	}
 
