@@ -66,6 +66,8 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 	View background;//it is actually CoordinatorLayout
 	
 	ServerListStyleLoader slsl;
+	
+	ViewGroup snackbarParent;
 
 	/*Only for PC servers*/
 	Drawable serverIconObj;
@@ -93,10 +95,13 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		keeping = getIntent().getBundleExtra("object");
 		useBottomSheet=getIntent().getBooleanExtra("bottomSheet",true)&!pref.getBoolean("noScrollServerInfo",false);
 
-		if(useBottomSheet)
+		if(useBottomSheet){
 			setContentView(R.layout.server_info_pager);
-		else
+			snackbarParent=(ViewGroup)findViewById(R.id.coordinator);
+		}else{
 			setContentView(R.layout.server_info_pager_nobs);
+			snackbarParent=(ViewGroup)findViewById(android.R.id.content);
+		}
 		setSupportActionBar((android.support.v7.widget.Toolbar)findViewById(R.id.toolbar));
 		tabs = (ViewPager)findViewById(R.id.pager);
 		tabs.setAdapter(adapter = new InternalPagerAdapter());
@@ -346,9 +351,9 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 								}
 								public void onPostExecute(File f) {
 									if (f != null) {
-										Utils.makeSB(ServerInfoActivity.this, getResources().getString(R.string.export_complete).replace("[PATH]", f + ""), Snackbar.LENGTH_LONG).show();
+										Utils.makeSB(snackbarParent, getResources().getString(R.string.export_complete).replace("[PATH]", f + ""), Snackbar.LENGTH_LONG).show();
 									} else {
-										Utils.makeSB(ServerInfoActivity.this, getResources().getString(R.string.export_failed), Snackbar.LENGTH_LONG).show();
+										Utils.makeSB(snackbarParent, getResources().getString(R.string.export_failed), Snackbar.LENGTH_LONG).show();
 									}
 								}
 							}.execute(et_.getText().toString());

@@ -513,6 +513,24 @@ public class Utils extends PingerUtils{
 		sb.getView().setClickable(false);
 		return sb;
 	}
+	
+	public static Snackbar makeSB(View a,int t,int l){
+		return Snackbar.make(a,t,l);
+	}
+	public static Snackbar makeSB(View a,String t,int l){
+		return Snackbar.make(a,t,l);
+	}
+	public static Snackbar makeNonClickableSB(View a,int t,int l){
+		Snackbar sb=makeSB(a,t,l);
+		sb.getView().setClickable(false);
+		return sb;
+	}
+	public static Snackbar makeNonClickableSB(View a,String t,int l){
+		Snackbar sb=makeSB(a,t,l);
+		sb.getView().setClickable(false);
+		return sb;
+	}
+	
 	public static CoordinatorLayout.Behavior newBehavior(String clazz){
 		try {
 			return (CoordinatorLayout.Behavior)Class.forName(clazz).newInstance();
