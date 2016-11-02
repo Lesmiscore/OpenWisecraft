@@ -211,13 +211,15 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 
 	public void onBackPressed() {
 		if(useBottomSheet){
-			switch(behavior.getState()){
-				case ViewPagerBottomSheetBehavior.STATE_EXPANDED:
-					behavior.setState(ViewPagerBottomSheetBehavior.STATE_COLLAPSED);
-					break;
-				case ViewPagerBottomSheetBehavior.STATE_COLLAPSED:
-					behavior.setState(ViewPagerBottomSheetBehavior.STATE_HIDDEN);
-					break;
+			if(behavior.getAllowUserDragging()){
+				switch(behavior.getState()){
+					case ViewPagerBottomSheetBehavior.STATE_EXPANDED:
+						behavior.setState(ViewPagerBottomSheetBehavior.STATE_COLLAPSED);
+						break;
+					case ViewPagerBottomSheetBehavior.STATE_COLLAPSED:
+						behavior.setState(ViewPagerBottomSheetBehavior.STATE_HIDDEN);
+						break;
+				}
 			}
 		}else{
 			finish();
@@ -977,13 +979,14 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 				case ViewPagerBottomSheetBehavior.STATE_DRAGGING:
 					if(!behavior.getAllowUserDragging()){
 						behavior.setState(ViewPagerBottomSheetBehavior.STATE_EXPANDED);
+						break;
 					}
 				case ViewPagerBottomSheetBehavior.STATE_SETTLING:
 				case ViewPagerBottomSheetBehavior.STATE_COLLAPSED:
-					pin.setVisibility(View.GONE);
+					pin.hide();
 					break;
 				case ViewPagerBottomSheetBehavior.STATE_EXPANDED:
-					pin.setVisibility(View.VISIBLE);
+					pin.show();
 					break;
 				case ViewPagerBottomSheetBehavior.STATE_HIDDEN:
 					finish();
