@@ -277,7 +277,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							switch (resultCode) {
 								case Constant.ACTIVITY_RESULT_UPDATE:
 									Bundle obj=data.getBundleExtra("object");
-									updater.putInQueue(list.get(clicked), new PingHandlerImpl(true, data.getIntExtra("offset", 0), true));
+									updater.putInQueue(list.get(clicked), new PingHandlerImpl(true, data, true));
 									pinging.put(list.get(clicked), true);
 									statLayout.setStatusAt(clicked, 1);
 									sl.notifyItemChanged(clicked);
@@ -352,7 +352,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 												Utils.makeNonClickableSB(ServerListActivityImpl.this, R.string.alreadyExists, Snackbar.LENGTH_LONG).show();
 											} else {
 												sl.add(s);
-												spp.putInQueue(s, new PingHandlerImpl(true, -1));
+												spp.putInQueue(s, new PingHandlerImpl(true, new Intent().putExtra("offset",-1)));
 												pinging.put(s, true);
 											}
 											saveServers();
@@ -404,7 +404,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 																if (sv.size() != 0) {
 																	for (Server s:sv) {
 																		if (!list.contains(s)) {
-																			spp.putInQueue(s, new PingHandlerImpl(true, -1));
+																			spp.putInQueue(s, new PingHandlerImpl(true, new Intent().putExtra("offset",-1)));
 																			pinging.put(s, true);
 																			sl.add(s);
 																		}
@@ -805,8 +805,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
 	public void dryUpdate(Server s, boolean isUpdate) {
 		if (pinging.get(s))return;
-		if (isUpdate)updater.putInQueue(s, new PingHandlerImpl(true, -1));
-		else spp.putInQueue(s, new PingHandlerImpl(true, -1));
+		if (isUpdate)updater.putInQueue(s, new PingHandlerImpl(true, new Intent().putExtra("offset",-1)));
+		else spp.putInQueue(s, new PingHandlerImpl(true, new Intent().putExtra("offset",-1)));
 		pinging.put(s, true);
 		sl.notifyItemChanged(list.indexOf(s));
 	}
@@ -825,7 +825,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				for (int i=0;i < list.size();i++) {
 					if (pinging.get(list.get(i)) || !pred.process(list.get(i)))
 						continue;
-					spp.putInQueue(list.get(i), new PingHandlerImpl(false, -1, false){
+					spp.putInQueue(list.get(i), new PingHandlerImpl(false, new Intent().putExtra("offset",-1), false){
 							public void onPingFailed(final Server s) {
 								super.onPingFailed(s);
 								runOnUiThread(new Runnable(){
@@ -857,7 +857,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	public void addIntoList(Server s) {
 		if (list.contains(s))return;
 		sl.add(s);
-		spp.putInQueue(s, new PingHandlerImpl(true, -1));
+		spp.putInQueue(s, new PingHandlerImpl(true, new Intent().putExtra("offset",-1)));
 		pinging.put(s, true);
 	}
 
@@ -1041,7 +1041,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				Bundle bnd=new Bundle();
 				sla.startActivityForResult(new Intent(sla, ServerInfoActivity.class).putExtra("stat", Utils.encodeForServerInfo((ServerStatus)s)).putExtra("object", bnd), 0);
 			} else {
-				sla.updater.putInQueue(s, new PingHandlerImpl(true, 0, true));
+				sla.updater.putInQueue(s, new PingHandlerImpl(true, new Intent().putExtra("offset",0), true));
 				sla.pinging.put(sla.list.get(sla.clicked), true);
 				sla.statLayout.setStatusAt(sla.clicked, 1);
 				sla.sl.notifyItemChanged(sla.clicked);
@@ -1079,7 +1079,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 						executes.add(1, new Runnable(){
 								public void run() {
 									if (sla.pinging.get(getItem(p3)))return;
-									sla.updater.putInQueue(getItem(p3), new PingHandlerImpl(true, -1));
+									sla.updater.putInQueue(getItem(p3), new PingHandlerImpl(true, new Intent().putExtra("offset",-1)));
 									sla.pinging.put(sla.list.get(p3), true);
 									sla.statLayout.setStatusAt(p3, 1);
 									sla.sl.notifyItemChanged(p3);
@@ -1297,20 +1297,20 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
 	static class PingHandlerImpl implements ServerPingProvider.PingHandler {
 		boolean closeDialog;
-		int statTabOfs;
+		Intent extras;
 		Bundle obj;
 		public PingHandlerImpl() {
-			this(false, -1);
+			this(false, new Intent());
 		}
-		public PingHandlerImpl(boolean cd, int os) {
+		public PingHandlerImpl(boolean cd, Intent os) {
 			this(cd, os, true);
 		}
-		public PingHandlerImpl(boolean cd, int os, boolean updSrl) {
+		public PingHandlerImpl(boolean cd, Intent os, boolean updSrl) {
 			this(cd, os, updSrl, null);
 		}
-		public PingHandlerImpl(boolean cd, int os, boolean updSrl, Bundle receive) {
+		public PingHandlerImpl(boolean cd, Intent os, boolean updSrl, Bundle receive) {
 			closeDialog = cd;
-			statTabOfs = os;
+			extras = os;
 			if (updSrl)act().srl.setRefreshing(true);
 			obj = receive;
 		}
@@ -1329,7 +1329,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							act().sl.notifyItemChanged(i_);
 							if (closeDialog)
 								act().wd.hideWorkingDialog();
-							if (statTabOfs != -1)
+							if (extras.getIntExtra("offset",-1) != -1)
 								Utils.makeNonClickableSB(act(), R.string.serverOffline, Snackbar.LENGTH_SHORT).show();
 							if (!act().pinging.containsValue(true))
 								act().srl.setRefreshing(false);
@@ -1351,8 +1351,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							act().pinging.put(act().list.get(i_), false);
 							act().statLayout.setStatusAt(i_, 2);
 							act().sl.notifyItemChanged(i_);
-							if (statTabOfs != -1) {
-								Intent caller = new Intent(act(), ServerInfoActivity.class).putExtra("offset", statTabOfs).putExtra("stat", Utils.encodeForServerInfo(s));
+							if (extras.getIntExtra("offset",-1) != -1) {
+								Intent caller = new Intent(act(), ServerInfoActivity.class).putExtras(extras).putExtra("stat", Utils.encodeForServerInfo(s));
 								if (obj != null) {
 									caller.putExtra("object", obj);
 								}
