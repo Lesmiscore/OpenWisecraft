@@ -61,13 +61,14 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 	SkinFaceFetcher sff;
 	
 	View bottomSheet;
-	ViewPagerBottomSheetBehavior behavior;
+	LockableViewPagerBottomSheetBehavior behavior;
 	boolean useBottomSheet=false;
 	View background;//it is actually CoordinatorLayout
 	
 	ServerListStyleLoader slsl;
 	
 	ViewGroup snackbarParent;
+	FloatingActionButton pin;
 
 	/*Only for PC servers*/
 	Drawable serverIconObj;
@@ -98,6 +99,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		if(useBottomSheet){
 			setContentView(R.layout.server_info_pager);
 			snackbarParent=(ViewGroup)findViewById(R.id.coordinator);
+			pin=(FloatingActionButton)findViewById(R.id.pin);
 		}else{
 			setContentView(R.layout.server_info_pager_nobs);
 			snackbarParent=(ViewGroup)findViewById(android.R.id.content);
@@ -161,7 +163,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		if(useBottomSheet){
 			BottomSheetUtils.setupViewPager(tabs);
 			bottomSheet = findViewById(R.id.serverInfoFragment);
-			behavior = ViewPagerBottomSheetBehavior.from(bottomSheet);
+			behavior = (LockableViewPagerBottomSheetBehavior)ViewPagerBottomSheetBehavior.from(bottomSheet);
 			behavior.setHideable(true);
 			behavior.setState(ViewPagerBottomSheetBehavior.STATE_COLLAPSED);
 			
@@ -189,6 +191,8 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		TypedArray ta=ThemePatcher.getStyledContext(this).obtainStyledAttributes(new int[]{android.R.attr.windowBackground});
 		tabs.setBackgroundDrawable(ta.getDrawable(0));
 		ta.recycle();
+		
+		pin.setVisibility(View.GONE);
 	}
 
 	public void onBackPressed() {
@@ -959,8 +963,10 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 				case ViewPagerBottomSheetBehavior.STATE_DRAGGING:
 				case ViewPagerBottomSheetBehavior.STATE_SETTLING:
 				case ViewPagerBottomSheetBehavior.STATE_COLLAPSED:
+					pin.setVisibility(View.GONE);
 					break;
 				case ViewPagerBottomSheetBehavior.STATE_EXPANDED:
+					pin.setVisibility(View.VISIBLE);
 					break;
 				case ViewPagerBottomSheetBehavior.STATE_HIDDEN:
 					finish();
