@@ -28,6 +28,10 @@ public class LockableViewPagerBottomSheetBehavior<V extends View> extends ViewPa
     public void setAllowUserDragging(boolean allowUserDragging) {
         mAllowUserDragging = allowUserDragging;
     }
+	
+	public boolean getAllowUserDragging(){
+		return mAllowUserDragging;
+	}
 
     @Override
     public boolean onInterceptTouchEvent(CoordinatorLayout parent, V child, MotionEvent event) {

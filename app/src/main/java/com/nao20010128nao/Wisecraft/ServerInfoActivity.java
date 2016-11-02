@@ -192,7 +192,20 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		tabs.setBackgroundDrawable(ta.getDrawable(0));
 		ta.recycle();
 		
-		pin.setVisibility(View.GONE);
+		if(useBottomSheet){
+			pin.setVisibility(View.GONE);
+			behavior.setAllowUserDragging(true);
+			pin.setOnClickListener(new View.OnClickListener(){
+					public void onClick(View v){
+						behavior.setAllowUserDragging(!behavior.getAllowUserDragging());
+						if(behavior.getAllowUserDragging()){
+							pin.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_lock_black_48dp,Utils.getMenuTintColor(ServerInfoActivity.this)));//not pinned
+						}else{
+							pin.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_lock_open_black_48dp,Utils.getMenuTintColor(ServerInfoActivity.this)));//pinned
+						}
+					}
+				});
+		}
 	}
 
 	public void onBackPressed() {
