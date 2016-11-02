@@ -200,9 +200,9 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 					public void onClick(View v){
 						behavior.setAllowUserDragging(!behavior.getAllowUserDragging());
 						if(behavior.getAllowUserDragging()){
-							pin.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_lock_black_48dp,Color.WHITE));//not pinned
+							pin.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_lock_open_black_48dp,Color.WHITE));//not pinned
 						}else{
-							pin.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_lock_open_black_48dp,Color.WHITE));//pinned
+							pin.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_lock_black_48dp,Color.WHITE));//pinned
 						}
 					}
 				});

@@ -40,4 +40,20 @@ public class LockableViewPagerBottomSheetBehavior<V extends View> extends ViewPa
         }
         return super.onInterceptTouchEvent(parent, child, event);
     }
+
+	@Override
+	public boolean onTouchEvent(CoordinatorLayout parent, V child, MotionEvent event) {
+		if (!mAllowUserDragging) {
+            return false;
+        }
+		return super.onTouchEvent(parent, child, event);
+	}
+
+	@Override
+	public boolean onStartNestedScroll(CoordinatorLayout coordinatorLayout, V child, View directTargetChild, View target, int nestedScrollAxes) {
+		if (!mAllowUserDragging) {
+            return false;
+        }
+		return super.onStartNestedScroll(coordinatorLayout, child, directTargetChild, target, nestedScrollAxes);
+	}
 }
