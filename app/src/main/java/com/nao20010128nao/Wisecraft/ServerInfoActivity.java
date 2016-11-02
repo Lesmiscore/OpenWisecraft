@@ -195,13 +195,14 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		if(useBottomSheet){
 			pin.setVisibility(View.GONE);
 			behavior.setAllowUserDragging(true);
+			pin.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_lock_open_black_48dp,Color.WHITE));//pinned
 			pin.setOnClickListener(new View.OnClickListener(){
 					public void onClick(View v){
 						behavior.setAllowUserDragging(!behavior.getAllowUserDragging());
 						if(behavior.getAllowUserDragging()){
-							pin.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_lock_black_48dp,Utils.getMenuTintColor(ServerInfoActivity.this)));//not pinned
+							pin.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_lock_black_48dp,Color.WHITE));//not pinned
 						}else{
-							pin.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_lock_open_black_48dp,Utils.getMenuTintColor(ServerInfoActivity.this)));//pinned
+							pin.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_lock_open_black_48dp,Color.WHITE));//pinned
 						}
 					}
 				});
@@ -974,6 +975,9 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		public void onStateChanged(View bottomSheet, int newState) {
 			switch (newState) {
 				case ViewPagerBottomSheetBehavior.STATE_DRAGGING:
+					if(!behavior.getAllowUserDragging()){
+						behavior.setState(ViewPagerBottomSheetBehavior.STATE_EXPANDED);
+					}
 				case ViewPagerBottomSheetBehavior.STATE_SETTLING:
 				case ViewPagerBottomSheetBehavior.STATE_COLLAPSED:
 					pin.setVisibility(View.GONE);
