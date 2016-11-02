@@ -176,7 +176,9 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			background=findViewById(R.id.background);
 			background.setOnClickListener(new View.OnClickListener(){
 				public void onClick(View v){
-					behavior.setState(ViewPagerBottomSheetBehavior.STATE_HIDDEN);
+					if(behavior.getAllowUserDragging()){
+						behavior.setState(ViewPagerBottomSheetBehavior.STATE_HIDDEN);
+					}
 				}
 			});
 			background.setBackgroundColor(slsl.getBackgroundSimpleColor());
