@@ -208,6 +208,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 				});
 			if(getIntent().getBooleanExtra("bottomSheetPinned",false)){
 				pin.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_lock_black_48dp,Color.WHITE));//pinned
+				behavior.setAllowUserDragging(false);
 				new Handler().post(new Runnable(){
 						public void run(){
 							behavior.setState(ViewPagerBottomSheetBehavior.STATE_EXPANDED);
