@@ -1,8 +1,10 @@
 language: android
 sudo: required
 before_script:
+  - 'chmod a+x ./ci/*'
   - 'chmod a+x ./gradlew'
 script:
+  - './ci/prepare.sh'
   - './gradlew build'
 notifications:
   email: false
