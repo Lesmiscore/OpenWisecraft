@@ -394,7 +394,11 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 					.show();
 				break;
 			case 2://Update
-				setResultInstead(Constant.ACTIVITY_RESULT_UPDATE, new Intent().putExtra("offset", tabs.getCurrentItem()).putExtra("bottomSheetPinned",!behavior.getAllowUserDragging()));
+				if(useBottomSheet){
+					setResultInstead(Constant.ACTIVITY_RESULT_UPDATE, new Intent().putExtra("offset", tabs.getCurrentItem()).putExtra("bottomSheetPinned",!behavior.getAllowUserDragging()));
+				}else{
+					setResultInstead(Constant.ACTIVITY_RESULT_UPDATE, new Intent().putExtra("offset", tabs.getCurrentItem()));
+				}
 				scheduleFinish();//ServerListActivity updates the stat
 				return true;
 			case 1://See the title for all
