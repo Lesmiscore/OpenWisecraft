@@ -129,6 +129,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			usesOldInstance = true;
 
 			sl.attachNewActivity(this);
+			
+			instance.get().finish();
+			instance.clear();
 		}
 		instance = new WeakReference(this);
 		slsl = (ServerListStyleLoader)getSystemService(ContextWrappingExtender.SERVER_LIST_STYLE_LOADER);
