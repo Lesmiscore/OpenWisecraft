@@ -6,6 +6,7 @@ import android.os.*;
 import android.preference.*;
 import android.util.*;
 import com.google.gson.*;
+import com.google.gson.stream.*;
 import com.nao20010128nao.OTC.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
@@ -14,6 +15,8 @@ import java.io.*;
 import java.math.*;
 import java.net.*;
 import java.util.*;
+
+import com.google.gson.stream.JsonWriter;
 
 public class CollectorMain extends ContextWrapper implements Runnable {
 	private static final List<CollectorMainUploaderProvider> UPLOADERS;
@@ -58,12 +61,17 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 			Log.d("CollectorMain", "start");
 			String s="!!ERROR!!";
 			try {
-				sb.edit().putString(System.currentTimeMillis() + ".json", s=new Gson().toJson(new Infos())).commit();
+				StringWriter sw=new StringWriter();
+				JsonWriter jw=new JsonWriter(sw);
+				jw.setIndent("\t");
+				new Gson().toJson(new Infos(),Infos.class,jw);
+				jw.flush();
+				sb.edit().putString(System.currentTimeMillis() + ".json", s=sw.toString()).commit();
 				Log.d("CollectorMain", "collect");
 			} catch (Throwable e) {
 				DebugWriter.writeToE("CollectorMain",e);
 			} finally {
-				System.out.println(s);
+				//System.out.println(s);
 			}
 			
 			CollectorMainUploaderProvider cmup=getNextAvailableUploader();
