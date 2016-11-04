@@ -898,64 +898,31 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
 		@Override
 		public void onBindViewHolder(final ServerStatusWrapperViewHolder viewHolder, final int position) {
-			// �?ータ表示
 			if (sla.list != null && sla.list.size() > position && sla.list.get(position) != null) {
 				Server sv=getItem(position);
 				viewHolder.itemView.setTag(sv);
-				if(TextUtils.isEmpty(sv.name)||sv.toString().equals(sv.name)){
-					viewHolder.hideServerTitle();
-					sv.name=null;
-				}else{
-					if (sla.pref.getBoolean("serverListColorFormattedText", false)) {
-						viewHolder.setServerTitle(parseMinecraftFormattingCode(sv.name,sla.slsl.getTextColor()));
-					} else {
-						viewHolder.setServerTitle(deleteDecorations(sv.name));
+				try{
+					if(TextUtils.isEmpty(sv.name)||sv.toString().equals(sv.name)){
+						viewHolder.hideServerTitle();
+						sv.name=null;
+					}else{
+						if (sla.pref.getBoolean("serverListColorFormattedText", false)) {
+							viewHolder.setServerTitle(parseMinecraftFormattingCode(sv.name,sla.slsl.getTextColor()));
+						} else {
+							viewHolder.setServerTitle(deleteDecorations(sv.name));
+						}
+						viewHolder.showServerTitle();
 					}
-					viewHolder.showServerTitle();
-				}
-				sla.slsl.applyTextColorTo(viewHolder);
-				if (sla.pinging.get(sv)) {
-					viewHolder.pending(sv,sla);
-				} else {
-					if (sv instanceof ServerStatus) {
-						ServerStatus s=(ServerStatus)sv;
-						viewHolder.setStatColor(ContextCompat.getColor(sla, R.color.stat_ok));
-						final String title;
-						if (s.response instanceof FullStat) {//PE
-							FullStat fs = (FullStat) s.response;
-							Map<String, String> m = fs.getDataAsMap();
-							if (m.containsKey("hostname")) {
-								title = m.get("hostname");
-							} else if (m.containsKey("motd")) {
-								title = m.get("motd");
-							} else {
-								title = s.toString();
-							}
-							viewHolder.setServerPlayers(m.get("numplayers"), m.get("maxplayers"));
-						} else if (s.response instanceof Reply19) {//PC 1.9~
-							Reply19 rep = (Reply19) s.response;
-							if (rep.description == null) {
-								title = s.toString();
-							} else {
-								title = rep.description.text;
-							}
-							viewHolder.setServerPlayers(rep.players.online, rep.players.max);
-						} else if (s.response instanceof Reply) {//PC
-							Reply rep = (Reply) s.response;
-							if (rep.description == null) {
-								title = s.toString();
-							} else {
-								title = rep.description;
-							}
-							viewHolder.setServerPlayers(rep.players.online, rep.players.max);
-						} else if (s.response instanceof SprPair) {//PE?
-							SprPair sp = ((SprPair) s.response);
-							if (sp.getB() instanceof UnconnectedPing.UnconnectedPingResult) {
-								UnconnectedPing.UnconnectedPingResult res = (UnconnectedPing.UnconnectedPingResult) sp.getB();
-								title = res.getServerName();
-								viewHolder.setServerPlayers(res.getPlayersCount(), res.getMaxPlayers());
-							} else if (sp.getA() instanceof FullStat) {
-								FullStat fs = (FullStat) sp.getA();
+					sla.slsl.applyTextColorTo(viewHolder);
+					if (sla.pinging.get(sv)) {
+						viewHolder.pending(sv,sla);
+					} else {
+						if (sv instanceof ServerStatus) {
+							ServerStatus s=(ServerStatus)sv;
+							viewHolder.setStatColor(ContextCompat.getColor(sla, R.color.stat_ok));
+							final String title;
+							if (s.response instanceof FullStat) {//PE
+								FullStat fs = (FullStat) s.response;
 								Map<String, String> m = fs.getDataAsMap();
 								if (m.containsKey("hostname")) {
 									title = m.get("hostname");
@@ -965,30 +932,69 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 									title = s.toString();
 								}
 								viewHolder.setServerPlayers(m.get("numplayers"), m.get("maxplayers"));
-							} else {
+							} else if (s.response instanceof Reply19) {//PC 1.9~
+								Reply19 rep = (Reply19) s.response;
+								if (rep.description == null) {
+									title = s.toString();
+								} else {
+									title = rep.description.text;
+								}
+								viewHolder.setServerPlayers(rep.players.online, rep.players.max);
+							} else if (s.response instanceof Reply) {//PC
+								Reply rep = (Reply) s.response;
+								if (rep.description == null) {
+									title = s.toString();
+								} else {
+									title = rep.description;
+								}
+								viewHolder.setServerPlayers(rep.players.online, rep.players.max);
+							} else if (s.response instanceof SprPair) {//PE?
+								SprPair sp = ((SprPair) s.response);
+								if (sp.getB() instanceof UnconnectedPing.UnconnectedPingResult) {
+									UnconnectedPing.UnconnectedPingResult res = (UnconnectedPing.UnconnectedPingResult) sp.getB();
+									title = res.getServerName();
+									viewHolder.setServerPlayers(res.getPlayersCount(), res.getMaxPlayers());
+								} else if (sp.getA() instanceof FullStat) {
+									FullStat fs = (FullStat) sp.getA();
+									Map<String, String> m = fs.getDataAsMap();
+									if (m.containsKey("hostname")) {
+										title = m.get("hostname");
+									} else if (m.containsKey("motd")) {
+										title = m.get("motd");
+									} else {
+										title = s.toString();
+									}
+									viewHolder.setServerPlayers(m.get("numplayers"), m.get("maxplayers"));
+								} else {
+									title = s.toString();
+									viewHolder.setServerPlayers();
+								}
+							} else if (s.response instanceof UnconnectedPing.UnconnectedPingResult) {//PE
+								UnconnectedPing.UnconnectedPingResult res = (UnconnectedPing.UnconnectedPingResult) s.response;
+								title = res.getServerName();
+								viewHolder.setServerPlayers(res.getPlayersCount(), res.getMaxPlayers());
+							} else {//Unreachable
 								title = s.toString();
 								viewHolder.setServerPlayers();
 							}
-						} else if (s.response instanceof UnconnectedPing.UnconnectedPingResult) {//PE
-							UnconnectedPing.UnconnectedPingResult res = (UnconnectedPing.UnconnectedPingResult) s.response;
-							title = res.getServerName();
-							viewHolder.setServerPlayers(res.getPlayersCount(), res.getMaxPlayers());
-						} else {//Unreachable
-							title = s.toString();
-							viewHolder.setServerPlayers();
-						}
-						if (sla.pref.getBoolean("serverListColorFormattedText", false)) {
-							viewHolder.setServerName(parseMinecraftFormattingCode(title,sla.slsl.getTextColor()));
+							if (sla.pref.getBoolean("serverListColorFormattedText", false)) {
+								viewHolder.setServerName(parseMinecraftFormattingCode(title,sla.slsl.getTextColor()));
+							} else {
+								viewHolder.setServerName(deleteDecorations(title));
+							}
+							viewHolder
+								.setPingMillis(s.ping)
+								.setServer(s);
 						} else {
-							viewHolder.setServerName(deleteDecorations(title));
+							viewHolder.offline(sv,sla);
 						}
-						viewHolder
-							.setPingMillis(s.ping)
-							.setServer(s);
-					} else {
-						viewHolder.offline(sv,sla);
 					}
+				}catch(Throwable e){
+					RuntimeException rex=new RuntimeException("error: sv: "+sv+" Is the server sends incorrect data?",e);
+					WisecraftError.report(sv+"",e);
+					throw rex;
 				}
+				
 				if(sla.editMode==EDIT_MODE_SELECT_UPDATE){
 					viewHolder.setSelected(sla.selected.contains(sv));
 				}else{
