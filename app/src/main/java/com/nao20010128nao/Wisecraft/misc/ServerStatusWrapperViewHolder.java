@@ -136,7 +136,14 @@ public class ServerStatusWrapperViewHolder extends FindableViewHolder implements
 	public ServerStatusWrapperViewHolder online(Context context){
 		return setStatColor(ContextCompat.getColor(context, R.color.stat_ok));
 	}
-	
+
+	public ServerStatusWrapperViewHolder unknown(Context context, Server sv) {
+		return setStatColor(ContextCompat.getColor(context, R.color.stat_ok))
+			.setServerName(sv.ip + ":" + sv.port)
+			.setPingMillis(context.getResources().getString(R.string.notResponding))
+			.setServerPlayers().setServer(sv);
+	}
+
 	public ServerStatusWrapperViewHolder setSelected(boolean selected) {
 		if(selected){
 			preload.getView(R.id.checkBackground).setVisibility(View.VISIBLE);

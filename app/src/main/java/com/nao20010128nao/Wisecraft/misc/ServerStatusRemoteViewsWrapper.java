@@ -112,4 +112,10 @@ public class ServerStatusRemoteViewsWrapper implements ServerStatusViewControlle
 	public ServerStatusRemoteViewsWrapper online(Context context){
 		return setStatColor(ContextCompat.getColor(context, R.color.stat_ok));
 	}
+	public ServerStatusRemoteViewsWrapper unknown(Context context, Server sv) {
+		return setStatColor(ContextCompat.getColor(context, R.color.stat_ok))
+			.setServerName(sv.ip + ":" + sv.port)
+			.setPingMillis(context.getResources().getString(R.string.notResponding))
+			.setServerPlayers().setServer(sv);
+	}
 }

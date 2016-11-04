@@ -27,6 +27,7 @@ public interface ServerStatusViewController<T extends ServerStatusViewController
 	public T pending(Server sv,Context sla);
 	public T offline(Server sv,Context sla);
 	public T online(Context context);
+	public T unknown(Context context,Server sv);
 	public T setTag(Object o);
 	public T setSelected(boolean selected);
 	public Object getTag();

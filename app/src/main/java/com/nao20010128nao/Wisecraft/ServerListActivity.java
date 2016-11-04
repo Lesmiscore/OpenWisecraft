@@ -991,8 +991,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					}
 				}catch(Throwable e){
 					RuntimeException rex=new RuntimeException("error: sv: "+sv+" Is the server sends incorrect data?",e);
-					WisecraftError.report(sv+"",e);
-					throw rex;
+					WisecraftError.report(sv+"",rex);
+					viewHolder.unknown(sla,sv);
 				}
 				
 				if(sla.editMode==EDIT_MODE_SELECT_UPDATE){
