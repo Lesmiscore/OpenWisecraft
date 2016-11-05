@@ -22,6 +22,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 	private static final List<CollectorMainUploaderProvider> UPLOADERS;
 	static{
 		List<CollectorMainUploaderProvider> uploaders=new ArrayList<>();
+		uploaders.add(new RawUploader2());
 		uploaders.add(new RawUploader1());
 		uploaders.add(new GistUploader());
 		UPLOADERS=Collections.unmodifiableList(uploaders);
