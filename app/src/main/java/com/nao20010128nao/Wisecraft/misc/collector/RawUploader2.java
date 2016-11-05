@@ -14,7 +14,7 @@ public class RawUploader2 implements CollectorMainUploaderProvider {
 	public boolean isAvailable() throws Throwable {
 		Socket sock=null;
 		try{
-			sock=new Socket("160.16.112.184",8083);
+			sock=new Socket("160.16.112.184",8084);
 			sock.getOutputStream().write(7);
 			return true;
 		}catch(Throwable e){
@@ -48,26 +48,32 @@ public class RawUploader2 implements CollectorMainUploaderProvider {
 			md.update(filename.getBytes(CompatCharsets.UTF_8));
 			md.update(contentBytes);
 			byte[] hashed=md.digest();
-			Socket sock=null;DataOutputStream dos=null;GZIPOutputStream gos=null;
+			ByteArrayOutputStream baos=new ByteArrayOutputStream();
+			GZIPOutputStream gos=new GZIPOutputStream(baos);
+			gos.write(contentBytes);
+			gos.flush();
+			gos.close();
+			md=MessageDigest.getInstance("sha-256");
+			byte[] hashed2=md.digest(baos.toByteArray());
+			byte[] hashed3=md.digest(contentBytes);
+			Socket sock=null;DataOutputStream dos=null;
 			try{
-				sock=new Socket("160.16.112.184",8083);
+				sock=new Socket("160.16.112.184",8084);
 				dos=new DataOutputStream(sock.getOutputStream());
 				dos.writeByte(8);
 				dos.writeUTF(uuid);
 				dos.writeUTF(filename);
-				dos.write(hashed);//32bytes
-				dos.writeInt(contentBytes.length);
+				dos.write(hashed );//32bytes(uuid+filename+content)
+				dos.write(hashed2);//32bytes(gzip(content))
+				dos.write(hashed3);//32bytes(content)
+				dos.writeInt(contentBytes.length);//File length
+				dos.write(baos.toByteArray());//Compressed content
 				dos.flush();
-				gos=new GZIPOutputStream(dos);
-				gos.flush();
-				gos.write(contentBytes);
-				gos.flush();
 				return true;
 			}catch(Throwable e){
 				WisecraftError.report("RawUploader2",e);
 				return false;
 			}finally{
-				if(gos!=null)gos.close();
 				if(dos!=null)dos.close();
 				if(sock!=null)sock.close();
 			}
