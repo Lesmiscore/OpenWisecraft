@@ -38,7 +38,6 @@ public class Factories {
 		
 		@Override
 		public List<T> subList(int p1, int p2) {
-			// TODO: 合ってるか保証できな�?
 			int len=p2-p1;
 			return obtainList(len);
 		}

@@ -25,7 +25,6 @@ public class SkinFaceFetcher implements SkinFetcherInterface
 
 		@Override
 		public void onSuccess(Bitmap bmp, String player) {
-			// TODO: Cut image here
 			Bitmap cut=Bitmap.createBitmap(bmp,8,8,8,8);
 			lis.onSuccess(cut,player);
 		}

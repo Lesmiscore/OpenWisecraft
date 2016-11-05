@@ -890,7 +890,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
 		@Override
 		public ServerStatusWrapperViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-			// 表示するレイアウトを設�?
+			// 表示するレイアウトを設?��?
 			switch(sla.pref.getInt("serverListStyle2",0)){
 				case 0:default:
 					return new ServerStatusWrapperViewHolder(sla,false,viewGroup);

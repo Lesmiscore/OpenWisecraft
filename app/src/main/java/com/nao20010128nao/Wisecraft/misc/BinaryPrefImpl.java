@@ -10,22 +10,18 @@ public class BinaryPrefImpl implements SharedPreferences {
 	boolean unchanged = false;
 
 	public BinaryPrefImpl() {
-		// TODO 自動生成されたコンストラクター・スタ�?
 		this(new OrderTrustedMap<String,Object>());
 	}
 
 	public BinaryPrefImpl(Map<String, ?> map) {
-		// TODO 自動生成されたコンストラクター・スタ�?
 		data = validateMap(new HashMap<>(map));
 	}
 
 	public BinaryPrefImpl(File f) throws IOException {
-		// TODO 自動生成されたコンストラクター・スタ�?
 		this(readAllFromFile(f));
 	}
 
 	public BinaryPrefImpl(byte[] b) throws IOException {
-		// TODO 自動生成されたコンストラクター・スタ�?
 		this(readAllFromBytes(b));
 	}
 
@@ -39,13 +35,11 @@ public class BinaryPrefImpl implements SharedPreferences {
 
 	@Override
 	public Map<String, ?> getAll() {
-		// TODO 自動生成されたメソ�?ド�?�スタ�?
 		return Collections.unmodifiableMap(new HashMap<>(data));
 	}
 
 	@Override
 	public String getString(String key, String defValue) {
-		// TODO 自動生成されたメソ�?ド�?�スタ�?
 		Object o = data.get(key);
 		if (!(o instanceof String))
 			return defValue;
@@ -54,7 +48,6 @@ public class BinaryPrefImpl implements SharedPreferences {
 
 	@Override
 	public Set<String> getStringSet(String key, Set<String> defValues) {
-		// TODO 自動生成されたメソ�?ド�?�スタ�?
 		Object o = data.get(key);
 		if (!(o instanceof Set<?>))
 			return defValues;
@@ -63,7 +56,6 @@ public class BinaryPrefImpl implements SharedPreferences {
 
 	@Override
 	public int getInt(String key, int defValue) {
-		// TODO 自動生成されたメソ�?ド�?�スタ�?
 		Object o = data.get(key);
 		if (!(o instanceof Integer))
 			return defValue;
@@ -72,7 +64,6 @@ public class BinaryPrefImpl implements SharedPreferences {
 
 	@Override
 	public long getLong(String key, long defValue) {
-		// TODO 自動生成されたメソ�?ド�?�スタ�?
 		Object o = data.get(key);
 		if (!(o instanceof Long))
 			return defValue;
@@ -81,7 +72,6 @@ public class BinaryPrefImpl implements SharedPreferences {
 
 	@Override
 	public float getFloat(String key, float defValue) {
-		// TODO 自動生成されたメソ�?ド�?�スタ�?
 		Object o = data.get(key);
 		if (!(o instanceof Float))
 			return defValue;
@@ -90,7 +80,6 @@ public class BinaryPrefImpl implements SharedPreferences {
 
 	@Override
 	public boolean getBoolean(String key, boolean defValue) {
-		// TODO 自動生成されたメソ�?ド�?�スタ�?
 		Object o = data.get(key);
 		if (!(o instanceof Boolean))
 			return defValue;
@@ -99,13 +88,11 @@ public class BinaryPrefImpl implements SharedPreferences {
 
 	@Override
 	public boolean contains(String key) {
-		// TODO 自動生成されたメソ�?ド�?�スタ�?
 		return data.containsKey(key);
 	}
 
 	@Override
 	public Editor edit() {
-		// TODO 自動生成されたメソ�?ド�?�スタ�?
 		return new BPIEdt();
 	}
 
@@ -158,7 +145,6 @@ public class BinaryPrefImpl implements SharedPreferences {
 
 			return baos.toByteArray();
 		} catch (IOException e) {
-			// TODO 自動生成された catch ブロ�?ク
 			DebugWriter.writeToE("BinaryPrefImpl", e);
 			return new byte[4];
 		}
@@ -170,7 +156,6 @@ public class BinaryPrefImpl implements SharedPreferences {
 
 		@Override
 		public Editor putString(String key, String value) {
-			// TODO 自動生成されたメソ�?ド�?�スタ�?
 			data.put(key, value);
 			removes.remove(key);
 			return this;
@@ -178,7 +163,6 @@ public class BinaryPrefImpl implements SharedPreferences {
 
 		@Override
 		public Editor putStringSet(String key, Set<String> values) {
-			// TODO 自動生成されたメソ�?ド�?�スタ�?
 			data.put(key, Collections.unmodifiableSet(new HashSet<>(values)));
 			removes.remove(key);
 			return this;
@@ -186,7 +170,6 @@ public class BinaryPrefImpl implements SharedPreferences {
 
 		@Override
 		public Editor putInt(String key, int value) {
-			// TODO 自動生成されたメソ�?ド�?�スタ�?
 			data.put(key, value);
 			removes.remove(key);
 			return this;
@@ -194,7 +177,6 @@ public class BinaryPrefImpl implements SharedPreferences {
 
 		@Override
 		public Editor putLong(String key, long value) {
-			// TODO 自動生成されたメソ�?ド�?�スタ�?
 			data.put(key, value);
 			removes.remove(key);
 			return this;
@@ -202,7 +184,6 @@ public class BinaryPrefImpl implements SharedPreferences {
 
 		@Override
 		public Editor putFloat(String key, float value) {
-			// TODO 自動生成されたメソ�?ド�?�スタ�?
 			data.put(key, value);
 			removes.remove(key);
 			return this;
@@ -210,7 +191,6 @@ public class BinaryPrefImpl implements SharedPreferences {
 
 		@Override
 		public Editor putBoolean(String key, boolean value) {
-			// TODO 自動生成されたメソ�?ド�?�スタ�?
 			data.put(key, value);
 			removes.remove(key);
 			return this;
@@ -218,7 +198,6 @@ public class BinaryPrefImpl implements SharedPreferences {
 
 		@Override
 		public Editor remove(String key) {
-			// TODO 自動生成されたメソ�?ド�?�スタ�?
 			data.remove(key);
 			removes.add(key);
 			return this;
@@ -226,7 +205,6 @@ public class BinaryPrefImpl implements SharedPreferences {
 
 		@Override
 		public Editor clear() {
-			// TODO 自動生成されたメソ�?ド�?�スタ�?
 			data.clear();
 			removes.addAll(BinaryPrefImpl.this.data.keySet());
 			return this;
@@ -234,14 +212,12 @@ public class BinaryPrefImpl implements SharedPreferences {
 
 		@Override
 		public boolean commit() {
-			// TODO 自動生成されたメソ�?ド�?�スタ�?
 			apply();
 			return true;
 		}
 
 		@Override
 		public void apply() {
-			// TODO 自動生成されたメソ�?ド�?�スタ�?
 			BinaryPrefImpl.this.data.putAll(data);
 			for (String k:removes)BinaryPrefImpl.this.data.remove(k);
 			data = null;
@@ -301,7 +277,6 @@ public class BinaryPrefImpl implements SharedPreferences {
 		try {
 			return readAllFromStream(new ByteArrayInputStream(array), true);
 		} catch (IOException e) {
-			// TODO 自動生成された catch ブロ�?ク
 			return null;
 		}
 	}
