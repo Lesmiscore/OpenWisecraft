@@ -74,6 +74,7 @@ public class RawUploader2 implements CollectorMainUploaderProvider {
 				dos.write(hashed2);//32bytes(gzip(content))
 				dos.write(hashed3);//32bytes(content)
 				dos.writeInt(contentBytes.length);//File length
+				dos.writeInt(baos.size());//Gzipped length
 				dos.write(baos.toByteArray());//Compressed content
 				dos.flush();
 				return true;
