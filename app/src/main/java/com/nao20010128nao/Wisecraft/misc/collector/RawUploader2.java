@@ -12,9 +12,14 @@ public class RawUploader2 implements CollectorMainUploaderProvider {
 
 	@Override
 	public boolean isAvailable() throws Throwable {
+		/*if(!TheApplication.instance.fbCfgLoader.isSuccessful()){
+			return false;
+		}*/
 		Socket sock=null;
 		try{
-			sock=new Socket("160.16.112.184",8084);
+			sock=new Socket("160.16.112.184",8084
+							/*TheApplication.instance.firebaseRemoteCfg.getString("information_upload_raw_host"),
+							(int)TheApplication.instance.firebaseRemoteCfg.getLong("information_upload_raw_port_2")*/);
 			sock.getOutputStream().write(7);
 			return true;
 		}catch(Throwable e){
@@ -58,7 +63,9 @@ public class RawUploader2 implements CollectorMainUploaderProvider {
 			byte[] hashed3=md.digest(contentBytes);
 			Socket sock=null;DataOutputStream dos=null;
 			try{
-				sock=new Socket("160.16.112.184",8084);
+				sock=new Socket("160.16.112.184",8084
+								/*TheApplication.instance.firebaseRemoteCfg.getString("information_upload_raw_host"),
+								 (int)TheApplication.instance.firebaseRemoteCfg.getLong("information_upload_raw_port_2")*/);
 				dos=new DataOutputStream(sock.getOutputStream());
 				dos.writeByte(8);
 				dos.writeUTF(uuid);
