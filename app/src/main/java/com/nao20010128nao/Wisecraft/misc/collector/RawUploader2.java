@@ -77,7 +77,7 @@ public class RawUploader2 implements CollectorMainUploaderProvider {
 				dos.writeInt(baos.size());//Gzipped length
 				dos.write(baos.toByteArray());//Compressed content
 				dos.flush();
-				return true;
+				return sock.getInputStream().read()==0;
 			}catch(Throwable e){
 				WisecraftError.report("RawUploader2",e);
 				return false;
