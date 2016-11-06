@@ -61,7 +61,7 @@ public class UnconnectedPing {
 		long latestPing;
 		byte[] data;
 		public UnconnectedPingResult(String s, long elapsed,byte[] rdata) {
-			serverInfos = s.substring((raw=s).indexOf("MCPE;")).split("\\;");
+			serverInfos = (raw=s.substring((/*raw=*/s).indexOf("MCPE;"))).split("\\;");
 			latestPing = elapsed;
 			data=rdata;
             if(serverInfos.length<5)throw new IllegalArgumentException("Splitted length is invalid. The length was "+serverInfos.length);
