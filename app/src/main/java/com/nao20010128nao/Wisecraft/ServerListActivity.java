@@ -890,7 +890,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
 		@Override
 		public ServerStatusWrapperViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-			// 表示するレイアウトを設?��?
+			// 表示するレイアウトを設?��?
 			switch(sla.pref.getInt("serverListStyle2",0)){
 				case 0:default:
 					return new ServerStatusWrapperViewHolder(sla,false,viewGroup);
@@ -1062,216 +1062,211 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		public boolean onItemLongClick(AdapterView<?> p1, View p2, final int p3, long p4) {
             if(sla.editMode!=EDIT_MODE_NULL)return true;
 			sla.clicked = p3;
+			
+			final List<Duo<Runnable,Integer>> executes,all;
+			{
+				executes=new ArrayList<>();
+				executes.add(0, new Duo<Runnable,Integer>(new Runnable(){
+									 public void run() {
+										 new AppCompatAlertDialog.Builder(sla,ThemePatcher.getDefaultDialogStyle(sla))
+											 .setMessage(R.string.auSure)
+											 .setNegativeButton(android.R.string.yes, new DialogInterface.OnClickListener(){
+												 public void onClick(DialogInterface di, int i) {
+													 sla.sl.remove(sla.list.get(sla.clicked));
+													 sla.saveServers();
+													 sla.statLayout.removeStatus(sla.clicked);
+												 }
+											 })
+											 .setPositiveButton(android.R.string.no, new DialogInterface.OnClickListener(){
+												 public void onClick(DialogInterface di, int i) {
+												 }
+											 })
+											 .show();
+									 }
+								 },R.string.remove));
+				executes.add(1, new Duo<Runnable,Integer>(new Runnable(){
+									 public void run() {
+										 if (sla.pinging.get(getItem(p3)))return;
+										 sla.updater.putInQueue(getItem(p3), new PingHandlerImpl(true, new Intent().putExtra("offset",-1)));
+										 sla.pinging.put(sla.list.get(p3), true);
+										 sla.statLayout.setStatusAt(p3, 1);
+										 sla.sl.notifyItemChanged(p3);
+										 sla.wd.showWorkingDialog();
+									 }
+								 },R.string.update));
+				executes.add(2, new Duo<Runnable,Integer>(new Runnable(){
+									 public void run() {
+										 final Server data=getItem(p3);
+										 View dialog=sla.getLayoutInflater().inflate(R.layout.server_add_dialog_new, null);
+										 final LinearLayout peFrame=(LinearLayout)dialog.findViewById(R.id.pe);
+										 final LinearLayout pcFrame=(LinearLayout)dialog.findViewById(R.id.pc);
+										 final EditText pe_ip=(EditText)dialog.findViewById(R.id.pe).findViewById(R.id.serverIp);
+										 final EditText pe_port=(EditText)dialog.findViewById(R.id.pe).findViewById(R.id.serverPort);
+										 final EditText pc_ip=(EditText)dialog.findViewById(R.id.pc).findViewById(R.id.serverIp);
+										 final CheckBox split=(CheckBox)dialog.findViewById(R.id.switchFirm);
+										 final EditText serverName=(EditText)dialog.findViewById(R.id.serverName);
+
+										 if (data.mode == 1) {
+											 if (data.port == 25565) {
+												 pc_ip.setText(data.ip);
+											 } else {
+												 pc_ip.setText(data.toString());
+											 }
+										 } else {
+											 pe_ip.setText(data.ip);
+											 pe_port.setText(data.port + "");
+										 }
+										 split.setChecked(data.mode == 1);
+										 if (data.mode == 1) {
+											 peFrame.setVisibility(View.GONE);
+											 pcFrame.setVisibility(View.VISIBLE);
+											 split.setText(R.string.pc);
+										 } else {
+											 pcFrame.setVisibility(View.GONE);
+											 peFrame.setVisibility(View.VISIBLE);
+											 split.setText(R.string.pe);
+										 }
+										 if(!TextUtils.isEmpty(data.name))
+											 serverName.setText(data.name);
+
+										 split.setOnClickListener(new View.OnClickListener(){
+												 public void onClick(View v) {
+													 if (split.isChecked()) {
+														 //PE->PC
+														 peFrame.setVisibility(View.GONE);
+														 pcFrame.setVisibility(View.VISIBLE);
+														 split.setText(R.string.pc);
+														 StringBuilder result=new StringBuilder();
+														 result.append(pe_ip.getText());
+														 int port=Integer.valueOf(pe_port.getText().toString()).intValue();
+														 if (!(port == 25565 | port == 19132)) {
+															 result.append(':').append(pe_port.getText());
+														 }
+														 pc_ip.setText(result);
+													 } else {
+														 //PC->PE
+														 pcFrame.setVisibility(View.GONE);
+														 peFrame.setVisibility(View.VISIBLE);
+														 split.setText(R.string.pe);
+														 Server s=Utils.convertServerObject(Arrays.<com.nao20010128nao.McServerList.Server>asList(com.nao20010128nao.McServerList.Server.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
+														 pe_ip.setText(s.ip);
+														 pe_port.setText(s.port + "");
+													 }
+												 }
+											 });
+
+										 new AppCompatAlertDialog.Builder(sla,ThemePatcher.getDefaultDialogStyle(sla)).
+											 setView(dialog).
+											 setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener(){
+												 public void onClick(DialogInterface d, int sel) {
+													 Server s;
+													 if (split.isChecked()) {
+														 s = Utils.convertServerObject(Arrays.<com.nao20010128nao.McServerList.Server>asList(com.nao20010128nao.McServerList.Server.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
+													 } else {
+														 s = new Server();
+														 s.ip = pe_ip.getText().toString();
+														 s.port = Integer.valueOf(pe_port.getText().toString());
+														 s.mode = 0;
+													 }
+													 if(!TextUtils.isEmpty(serverName.getText()))
+														 s.name=serverName.getText().toString();
+
+													 sla.list.set(p3, s);
+													 sla.sl.notifyItemChanged(p3);
+													 sla.dryUpdate(s, true);
+													 sla.statLayout.setStatusAt(p3, 1);
+
+													 sla.saveServers();
+												 }
+											 }).
+											 setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener(){
+												 public void onClick(DialogInterface d, int sel) {
+
+												 }
+											 }).
+											 show();
+									 }
+								 },R.string.edit));
+				executes.add(3, new Duo<Runnable,Integer>(new Runnable(){
+									 public void run() {
+										 sla.startActivity(new Intent(sla, ServerTestActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port).putExtra("ispc", getItem(p3).mode));
+									 }
+								 },R.string.testServer));
+				executes.add(4, new Duo<Runnable,Integer>(new Runnable(){
+									 public void run() {
+										 sla.startActivity(new Intent(sla, RCONActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port));
+									 }
+								 },R.string.rcon));
+				executes.add(5, new Duo<Runnable,Integer>(new Runnable(){
+									 public void run() {
+										 new Thread(){
+											 public void run() {
+												 File servLst=new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt");
+												 Server s=getItem(p3);
+												 String sls=Utils.readWholeFile(servLst);
+												 if (sls == null)
+													 sls = "";
+												 for (String l:Utils.lines(sls))
+													 if (l.endsWith(s.toString()))return;
+												 sls += "\n900:" + randomText() + ":" + s + "\n";
+												 StringBuilder sb=new StringBuilder(100);
+												 for (String line:Utils.lines(sls))
+													 if (line.split("\\:").length == 4)
+														 sb.append(line).append('\n');
+												 Utils.writeToFile(servLst, sb.toString());
+											 }
+										 }.start();
+									 }
+								 },R.string.addToMcpe));
+				executes.add(6, new Duo<Runnable,Integer>(new Runnable(){
+									 public void run() {
+										 sla.startActivity(new Intent(sla, ProxyActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port).setAction("start"));
+									 }
+								 },R.string.launchMtl));
+				executes.add(7, new Duo<Runnable,Integer>(new Runnable(){
+									 public void run() {
+										 sla.startActivity(new Intent(sla, ServerFinderActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port).putExtra("mode", getItem(p3).mode));
+									 }
+								 },R.string.serverFinder));
+				executes.add(8, new Duo<Runnable,Integer>(new Runnable(){
+									 public void run() {
+										 sla.startActivity(new Intent(sla, GenerateWisecraftOpenLinkActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port).putExtra("mode", getItem(p3).mode));
+									 }
+								 },R.string.genLink));
+
+				all=new ArrayList<>(executes);
+
+				if (getItem(p3).mode == 1) {
+					executes.remove(all.get(5));
+					executes.remove(all.get(6));
+				}
+				if (!sla.pref.getBoolean("feature_proxy", true)) {
+					executes.remove(all.get(6));
+				}
+				if (!sla.pref.getBoolean("feature_serverFinder", false)) {
+					executes.remove(all.get(7));
+				}
+			}
+			
 			new AppCompatAlertDialog.Builder(sla,ThemePatcher.getDefaultDialogStyle(sla))
 				.setTitle(getItem(p3).resolveVisibleTitle())
-				.setItems(generateSubMenu(getItem(p3).mode == 1), new DialogInterface.OnClickListener(){
+				.setItems(generateSubMenu(executes), new DialogInterface.OnClickListener(){
 					public void onClick(DialogInterface di, int which) {
-						List<Runnable> executes=new ArrayList<>();
-						executes.add(0, new Runnable(){
-								public void run() {
-									new AppCompatAlertDialog.Builder(sla,ThemePatcher.getDefaultDialogStyle(sla))
-										.setMessage(R.string.auSure)
-										.setNegativeButton(android.R.string.yes, new DialogInterface.OnClickListener(){
-											public void onClick(DialogInterface di, int i) {
-												sla.sl.remove(sla.list.get(sla.clicked));
-												sla.saveServers();
-												sla.statLayout.removeStatus(sla.clicked);
-											}
-										})
-										.setPositiveButton(android.R.string.no, new DialogInterface.OnClickListener(){
-											public void onClick(DialogInterface di, int i) {
-											}
-										})
-										.show();
-								}
-							});
-						executes.add(1, new Runnable(){
-								public void run() {
-									if (sla.pinging.get(getItem(p3)))return;
-									sla.updater.putInQueue(getItem(p3), new PingHandlerImpl(true, new Intent().putExtra("offset",-1)));
-									sla.pinging.put(sla.list.get(p3), true);
-									sla.statLayout.setStatusAt(p3, 1);
-									sla.sl.notifyItemChanged(p3);
-									sla.wd.showWorkingDialog();
-								}
-							});
-						executes.add(2, new Runnable(){
-								public void run() {
-									final Server data=getItem(p3);
-									View dialog=sla.getLayoutInflater().inflate(R.layout.server_add_dialog_new, null);
-									final LinearLayout peFrame=(LinearLayout)dialog.findViewById(R.id.pe);
-									final LinearLayout pcFrame=(LinearLayout)dialog.findViewById(R.id.pc);
-									final EditText pe_ip=(EditText)dialog.findViewById(R.id.pe).findViewById(R.id.serverIp);
-									final EditText pe_port=(EditText)dialog.findViewById(R.id.pe).findViewById(R.id.serverPort);
-									final EditText pc_ip=(EditText)dialog.findViewById(R.id.pc).findViewById(R.id.serverIp);
-									final CheckBox split=(CheckBox)dialog.findViewById(R.id.switchFirm);
-									final EditText serverName=(EditText)dialog.findViewById(R.id.serverName);
-									
-									if (data.mode == 1) {
-										if (data.port == 25565) {
-											pc_ip.setText(data.ip);
-										} else {
-											pc_ip.setText(data.toString());
-										}
-									} else {
-										pe_ip.setText(data.ip);
-										pe_port.setText(data.port + "");
-									}
-									split.setChecked(data.mode == 1);
-									if (data.mode == 1) {
-										peFrame.setVisibility(View.GONE);
-										pcFrame.setVisibility(View.VISIBLE);
-										split.setText(R.string.pc);
-									} else {
-										pcFrame.setVisibility(View.GONE);
-										peFrame.setVisibility(View.VISIBLE);
-										split.setText(R.string.pe);
-									}
-									if(!TextUtils.isEmpty(data.name))
-										serverName.setText(data.name);
-
-									split.setOnClickListener(new View.OnClickListener(){
-											public void onClick(View v) {
-												if (split.isChecked()) {
-													//PE->PC
-													peFrame.setVisibility(View.GONE);
-													pcFrame.setVisibility(View.VISIBLE);
-													split.setText(R.string.pc);
-													StringBuilder result=new StringBuilder();
-													result.append(pe_ip.getText());
-													int port=Integer.valueOf(pe_port.getText().toString()).intValue();
-													if (!(port == 25565 | port == 19132)) {
-														result.append(':').append(pe_port.getText());
-													}
-													pc_ip.setText(result);
-												} else {
-													//PC->PE
-													pcFrame.setVisibility(View.GONE);
-													peFrame.setVisibility(View.VISIBLE);
-													split.setText(R.string.pe);
-													Server s=Utils.convertServerObject(Arrays.<com.nao20010128nao.McServerList.Server>asList(com.nao20010128nao.McServerList.Server.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
-													pe_ip.setText(s.ip);
-													pe_port.setText(s.port + "");
-												}
-											}
-										});
-
-									new AppCompatAlertDialog.Builder(sla,ThemePatcher.getDefaultDialogStyle(sla)).
-										setView(dialog).
-										setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener(){
-											public void onClick(DialogInterface d, int sel) {
-												Server s;
-												if (split.isChecked()) {
-													s = Utils.convertServerObject(Arrays.<com.nao20010128nao.McServerList.Server>asList(com.nao20010128nao.McServerList.Server.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
-												} else {
-													s = new Server();
-													s.ip = pe_ip.getText().toString();
-													s.port = Integer.valueOf(pe_port.getText().toString());
-													s.mode = 0;
-												}
-												if(!TextUtils.isEmpty(serverName.getText()))
-													s.name=serverName.getText().toString();
-
-												sla.list.set(p3, s);
-												sla.sl.notifyItemChanged(p3);
-												sla.dryUpdate(s, true);
-												sla.statLayout.setStatusAt(p3, 1);
-												
-												sla.saveServers();
-											}
-										}).
-										setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener(){
-											public void onClick(DialogInterface d, int sel) {
-
-											}
-										}).
-										show();
-								}
-							});
-						executes.add(3, new Runnable(){
-								public void run() {
-									sla.startActivity(new Intent(sla, ServerTestActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port).putExtra("ispc", getItem(p3).mode));
-								}
-							});
-						executes.add(4, new Runnable(){
-								public void run() {
-									sla.startActivity(new Intent(sla, RCONActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port));
-								}
-							});
-						executes.add(5, new Runnable(){
-								public void run() {
-									new Thread(){
-										public void run() {
-											File servLst=new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt");
-											Server s=getItem(p3);
-											String sls=Utils.readWholeFile(servLst);
-											if (sls == null)
-												sls = "";
-											for (String l:Utils.lines(sls))
-												if (l.endsWith(s.toString()))return;
-											sls += "\n900:" + randomText() + ":" + s + "\n";
-											StringBuilder sb=new StringBuilder(100);
-											for (String line:Utils.lines(sls))
-												if (line.split("\\:").length == 4)
-													sb.append(line).append('\n');
-											Utils.writeToFile(servLst, sb.toString());
-										}
-									}.start();
-								}
-							});
-						executes.add(6, new Runnable(){
-								public void run() {
-									sla.startActivity(new Intent(sla, ProxyActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port).setAction("start"));
-								}
-							});
-						executes.add(7, new Runnable(){
-								public void run() {
-									sla.startActivity(new Intent(sla, ServerFinderActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port).putExtra("mode", getItem(p3).mode));
-								}
-							});
-						executes.add(8, new Runnable(){
-								public void run() {
-									sla.startActivity(new Intent(sla, GenerateWisecraftOpenLinkActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port).putExtra("mode", getItem(p3).mode));
-								}
-							});
-
-						List<Runnable> all=new ArrayList(executes);
-
-						if (getItem(p3).mode == 1) {
-							executes.remove(all.get(5));
-							executes.remove(all.get(6));
-						}
-						if (!sla.pref.getBoolean("feature_proxy", true)) {
-							executes.remove(all.get(6));
-						}
-						if (!sla.pref.getBoolean("feature_serverFinder", false)) {
-							executes.remove(all.get(7));
-						}
-
-						executes.get(which).run();
+						executes.get(which).getA().run();
 					}
 				})
 				.setCancelable(true)
 				.show();
 			return true;
 		}
-
-		private String[] generateSubMenu(boolean isPC) {
-			List<String> result=new ArrayList<String>(Arrays.<String>asList(sla.getResources().getStringArray(R.array.serverSubMenu)));
-			List<String> all=new ArrayList<String>(result);
-			if (isPC) {
-				result.remove(all.get(5));
-				result.remove(all.get(6));
-			}
-			if (!sla.pref.getBoolean("feature_proxy", true)) {
-				result.remove(all.get(6));
-			}
-			if (!sla.pref.getBoolean("feature_serverFinder", false)) {
-				result.remove(all.get(7));
-			}
+		
+		private String[] generateSubMenu(List<Duo<Runnable,Integer>> executes) {
+			List<String> result=new ArrayList<String>();
+			for(Duo<Runnable,Integer> menus:executes)
+				result.add(sla.getResources().getString(menus.getB()));
 			return result.toArray(new String[result.size()]);
 		}
-
+		
 		public void attachNewActivity(ServerListActivityImpl sla) {
 			this.sla = sla;
 		}
