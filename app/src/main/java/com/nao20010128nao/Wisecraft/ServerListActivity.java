@@ -1233,6 +1233,52 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 										 sla.startActivity(new Intent(sla, GenerateWisecraftOpenLinkActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port).putExtra("mode", getItem(p3).mode));
 									 }
 								 },R.string.genLink));
+				executes.add(9, new Duo<Runnable,Integer>(new Runnable(){
+									 public void run() {
+										 if(!(getItem(p3) instanceof ServerStatus))return;
+										 View dialogView_=sla.getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
+										 final EditText et_=(EditText)dialogView_.findViewById(R.id.filePath);
+										 et_.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/pingresult.wisecraft-ping").toString());
+										 dialogView_.findViewById(R.id.selectFile).setOnClickListener(new View.OnClickListener(){
+												 public void onClick(View v) {
+													 File f=new File(et_.getText().toString());
+													 if ((!f.exists())|f.isFile())f = f.getParentFile();
+													 sla.startChooseFileForOpen(f, new FileChooserResult(){
+															 public void onSelected(File f) {
+																 et_.setText(f.toString());
+															 }
+															 public void onSelectCancelled() {/*No-op*/}
+														 });
+												 }
+											 });
+										 new AppCompatAlertDialog.Builder(sla,ThemePatcher.getDefaultDialogStyle(sla))
+											 .setTitle(R.string.export_typepath_simple)
+											 .setView(dialogView_)
+											 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
+												 public void onClick(DialogInterface di, int w) {
+													 Utils.makeSB(sla.coordinator, R.string.exporting, Snackbar.LENGTH_LONG).show();
+													 new AsyncTask<String,Void,File>(){
+														 public File doInBackground(String... texts) {
+															 File f;
+															 byte[] data=PingSerializeProvider.doRawDumpForFile(((ServerStatus)getItem(p3)).response);
+															 if (writeToFileByBytes(f = new File(texts[0]), data))
+																 return f;
+															 else
+																 return null;
+														 }
+														 public void onPostExecute(File f) {
+															 if (f != null) {
+																 Utils.makeSB(sla.coordinator, sla.getResources().getString(R.string.export_complete).replace("[PATH]", f + ""), Snackbar.LENGTH_LONG).show();
+															 } else {
+																 Utils.makeSB(sla.coordinator, sla.getResources().getString(R.string.export_failed), Snackbar.LENGTH_LONG).show();
+															 }
+														 }
+													 }.execute(et_.getText().toString());
+												 }
+											 })
+											 .show();
+										}
+								 },R.string.exportPing));
 
 				all=new ArrayList<>(executes);
 
@@ -1245,6 +1291,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				}
 				if (!sla.pref.getBoolean("feature_serverFinder", false)) {
 					executes.remove(all.get(7));
+				}
+				if(!(getItem(p3) instanceof ServerStatus)){
+					executes.remove(all.get(9));
 				}
 			}
 			

@@ -371,7 +371,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 					.setView(dialogView_)
 					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 						public void onClick(DialogInterface di, int w) {
-							Utils.makeSB(ServerInfoActivity.this, R.string.exporting, Snackbar.LENGTH_LONG).show();
+							Utils.makeSB(snackbarParent, R.string.exporting, Snackbar.LENGTH_LONG).show();
 							new AsyncTask<String,Void,File>(){
 								public File doInBackground(String... texts) {
 									File f;

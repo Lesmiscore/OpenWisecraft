@@ -47,6 +47,7 @@ public abstract class ServerListActivityBaseFields extends ServerListActivityBas
     protected ItemTouchHelper itemDecor;
     protected SimpleCallback ddManager;
     protected ActionMode.Callback editAm,selectUpdateAm;
+	protected CoordinatorLayout coordinator;
     
     //base2,3,5
     protected SecureRandom sr=new SecureRandom();
