@@ -8,7 +8,6 @@ import android.graphics.drawable.*;
 import android.os.*;
 import android.preference.*;
 import android.support.design.widget.*;
-import android.support.v4.content.*;
 import android.support.v4.view.*;
 import android.support.v7.graphics.*;
 import android.support.v7.widget.*;
@@ -613,51 +612,6 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		}
 	}
 	
-	static class DividerItemDecoration extends RecyclerView.ItemDecoration {
-
-		private static final int[] ATTRS = new int[]{android.R.attr.listDivider};
-
-		private Drawable mDivider;
-		private int oneDp;
-
-		/**
-		 * Default divider will be used
-		 */
-		public DividerItemDecoration(Context context) {
-			final TypedArray styledAttributes = context.obtainStyledAttributes(ATTRS);
-			mDivider = styledAttributes.getDrawable(0);
-			styledAttributes.recycle();
-			oneDp=context.getResources().getDimensionPixelSize(R.dimen.one_dp);
-		}
-
-		/**
-		 * Custom divider will be used
-		 */
-		public DividerItemDecoration(Context context, int resId) {
-			mDivider = ContextCompat.getDrawable(context, resId);
-			oneDp=context.getResources().getDimensionPixelSize(R.dimen.one_dp);
-		}
-
-		@Override
-		public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
-			int left = parent.getPaddingLeft();
-			int right = parent.getWidth() - parent.getPaddingRight();
-
-			int childCount = parent.getChildCount();
-			for (int i = 0; i < childCount; i++) {
-				View child = parent.getChildAt(i);
-
-				RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
-
-				int top = child.getBottom() + params.bottomMargin;
-				int bottom = top + oneDp;
-
-				mDivider.setBounds(left, top, right, bottom);
-				mDivider.draw(c);
-			}
-		}
-	}
-	
 	
 	public static class PlayersFragment extends BaseFragment<ServerInfoActivity> {
 		RecyclerView lv;
@@ -772,7 +726,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			View v= inflater.inflate(R.layout.data_tab, container, false);
-			((RecyclerView)v.findViewById(R.id.data)).addItemDecoration(new DividerItemDecoration(getContext()));
+			((RecyclerView)v.findViewById(R.id.data)).addItemDecoration(new DividerItemDecoration(getContext(),LinearLayoutManager.VERTICAL));
 			return v;
 		}
 	}
@@ -854,7 +808,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			View lv= inflater.inflate(R.layout.data_tab_pc, container, false);
 			lv.findViewById(R.id.serverImageAndName).setBackgroundDrawable(getParentActivity().slsl.load());
-			((RecyclerView)lv.findViewById(R.id.data)).addItemDecoration(new DividerItemDecoration(getContext()));
+			((RecyclerView)lv.findViewById(R.id.data)).addItemDecoration(new DividerItemDecoration(getContext(),LinearLayoutManager.VERTICAL));
 			return lv;
 		}
 	}
@@ -956,7 +910,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 			}
 			RecyclerView lv=(RecyclerView)getView().findViewById(R.id.data);
 			lv.setLayoutManager(new HPLinearLayoutManager(getActivity()));
-			lv.addItemDecoration(new DividerItemDecoration(getContext()));
+			lv.addItemDecoration(new DividerItemDecoration(getContext(),LinearLayoutManager.VERTICAL));
 			lv.setHasFixedSize(false);
 			
 			KVRecyclerAdapter<String,String> adap=new KVRecyclerAdapter<String,String>(getActivity());
@@ -975,7 +929,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			View v= inflater.inflate(R.layout.server_info_ucp_details, container, false);
-			((RecyclerView)v.findViewById(R.id.data)).addItemDecoration(new DividerItemDecoration(getContext()));
+			((RecyclerView)v.findViewById(R.id.data)).addItemDecoration(new DividerItemDecoration(getContext(),LinearLayoutManager.VERTICAL));
 			return v;
 		}
 	}
