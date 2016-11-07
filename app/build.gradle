@@ -68,7 +68,7 @@ android {
 		}
 		pg.initWith(buildTypes.debug2)
 		pg{
-			minifyEnabled false
+			minifyEnabled true
             proguardFiles '../proguard-rules.pro'
 		}
 		/*debug3 {
