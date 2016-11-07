@@ -66,6 +66,11 @@ android {
 			resValue "string", "wsi", "[DEBUG2] "+wsi
 			resValue "bool", "inspectorEnabled", "true"
 		}
+		pg.initWith(buildTypes.debug2)
+		pg{
+			minifyEnabled false
+            proguardFiles '../proguard-rules.pro'
+		}
 		/*debug3 {
         	applicationIdSuffix = '.alpha2'  
             versionNameSuffix = ' Pre'
