@@ -18,7 +18,7 @@ import java.util.*;
 import android.support.v7.widget.Toolbar;
 import com.nao20010128nao.Wisecraft.misc.Server;
 
-public class ServerGetActivity extends CompatWebViewActivity {
+class ServerGetActivityImpl extends CompatWebViewActivity {
 	public static List<String> addForServerList;
 	String domain;
 	String[] serverList;
@@ -166,7 +166,7 @@ public class ServerGetActivity extends CompatWebViewActivity {
 								dialogMsg = getResources().getString(R.string.msl_unsupportedWebpage) + url;
 							}
 
-							new AppCompatAlertDialog.Builder(ServerGetActivity.this,ThemePatcher.getDefaultDialogStyle(ServerGetActivity.this))
+							new AppCompatAlertDialog.Builder(ServerGetActivityImpl.this,ThemePatcher.getDefaultDialogStyle(ServerGetActivityImpl.this))
 								.setTitle(R.string.error)
 								.setMessage(dialogMsg)
 								.setPositiveButton(android.R.string.ok, Constant.BLANK_DIALOG_CLICK_LISTENER)
@@ -233,7 +233,7 @@ public class ServerGetActivity extends CompatWebViewActivity {
 			}else{
 				parent.findViewById(R.id.check).setVisibility(View.GONE);
 			}
-			((ImageView)parent.findViewById(R.id.check)).setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_check_black_48dp,Utils.getMenuTintColor(ServerGetActivity.this)));
+			((ImageView)parent.findViewById(R.id.check)).setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_check_black_48dp,Utils.getMenuTintColor(ServerGetActivityImpl.this)));
 		}
 
 		@Override
@@ -277,4 +277,7 @@ public class ServerGetActivity extends CompatWebViewActivity {
 			}
 		}
 	}
+}
+public class ServerGetActivity extends ServerGetActivityImpl{
+	
 }

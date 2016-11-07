@@ -34,7 +34,7 @@ import java.util.*;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 
-public class ServerInfoActivity extends ServerInfoActivityBase1 {
+class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
 	//public static List<ServerStatus> stat=new ArrayList<>();
 	public static Map<String,Bitmap> faces=new HashMap<>();
@@ -1012,4 +1012,7 @@ public class ServerInfoActivity extends ServerInfoActivityBase1 {
 		hsv[2]-=0.20f;
 		return Color.HSVToColor(hsv);
 	}
+}
+public class ServerInfoActivity extends ServerInfoActivityImpl{
+	
 }

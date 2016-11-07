@@ -34,7 +34,7 @@ import uk.co.chrisjenx.calligraphy.*;
 import android.support.v7.widget.Toolbar;
 import com.nao20010128nao.Wisecraft.R;
 
-public class FragmentSettingsActivity extends AppCompatActivity {
+class FragmentSettingsActivityImpl extends AppCompatActivity {
 	public static final Map<String,Class<? extends Fragment>> FRAGMENT_CLASSES=new HashMap<String,Class<? extends Fragment>>(){{
 			put("root",HubPrefFragment.class);
 			put("basics",Basics.class);
@@ -73,10 +73,10 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 		slf=new ServerListPreviewFragment();
 		if(getResources().getBoolean(R.bool.is_port)){
 			Log.d("FSA","calculating by the width of the screen");
-			slf.setRows(Utils.calculateRows(FragmentSettingsActivity.this));
+			slf.setRows(Utils.calculateRows(FragmentSettingsActivityImpl.this));
 		}else{
 			Log.d("FSA","calculating by the half width of the screen");
-			slf.setRows(Utils.calculateRows(FragmentSettingsActivity.this,Utils.getScreenWidth(this)/2));
+			slf.setRows(Utils.calculateRows(FragmentSettingsActivityImpl.this,Utils.getScreenWidth(this)/2));
 		}
 		upa.addTab(slf,"");
 		upa.addTab(new ServerInfoToolbarFragment(),"");
@@ -1042,4 +1042,7 @@ public class FragmentSettingsActivity extends AppCompatActivity {
 			}
 		}
 	}
+}
+public class FragmentSettingsActivity extends FragmentSettingsActivityImpl{
+	
 }
