@@ -59,6 +59,6 @@
 
 -keepattributes InnerClasses,EnclosingMethod
 
--keep class ** {
-	@com.google.gson.annotations.** *;
+-keepclassmembers class ** {
+	@com.google.gson.annotations.** <fields>;
 }
