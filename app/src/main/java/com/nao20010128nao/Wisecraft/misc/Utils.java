@@ -553,4 +553,7 @@ public class Utils extends PingerUtils{
 		ta.recycle();
 		return values;
 	}
+	public static String toString(Object o){
+		return o==null?"null":o.toString();
+	}
 }
