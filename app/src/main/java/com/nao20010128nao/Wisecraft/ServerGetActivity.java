@@ -142,6 +142,7 @@ public class ServerGetActivity extends CompatWebViewActivity {
 						try {
 							return ServerAddressFetcher.findServersInWebpage(new URL(url = a[0]));
 						} catch (Throwable e) {
+							DebugWriter.writeToD("ServerGetActivity.gettingServer#"+url,e);
 							return e;
 						}
 					}
