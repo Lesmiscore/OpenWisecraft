@@ -29,6 +29,7 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 	public static Field[] fonts=getFontFields();
 	public static Map<Typeface,String> fontFilenames;
 	public static Map<String,Integer> fontDisplayNames;
+	public static Map<String,Typeface> fontFieldNames;
 	public static Map<String,String> pcUserUUIDs;
 	public String uuid;
 	public SharedPreferences pref;
@@ -65,16 +66,7 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		Log.d("Tesuya",(String)Utils.getField(BuildConfig.class,null,"HIDDEN_AD"));
 	}
 	public Typeface getLocalizedFont() {
-		try {
-			return (Typeface)TheApplication.class.getField(getFontFieldName()).get(null);
-		} catch (NoSuchFieldException e) {
-
-		} catch (IllegalAccessException e) {
-
-		} catch (IllegalArgumentException e) {
-
-		}
-		return latoLight;
+		return fontFieldNames.get(getFontFieldName());
 	}
 	public String getFontFieldName() {
 		return pref.getString("fontField", getResources().getString(R.string.fontField));
@@ -136,6 +128,14 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		fontDisplayNames.put("sysDefault",R.string.font_sysDefault);
 		fontDisplayNames.put("ubuntuFont",R.string.font_ubuntu);
 		fontDisplayNames.put("mplus1p",R.string.font_mplus1p);
+		
+		fontFieldNames=new HashMap<>();
+		fontFieldNames.put("droidSans",droidSans);
+		fontFieldNames.put("latoLight",latoLight);
+		fontFieldNames.put("icomoon1",icomoon1);
+		fontFieldNames.put("sysDefault",sysDefault);
+		fontFieldNames.put("ubuntuFont",ubuntuFont);
+		fontFieldNames.put("mplus1p",mplus1p);
 		
 		CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath(getFontFilename()).setFontAttrId(R.attr.fontPath).build());
 	}

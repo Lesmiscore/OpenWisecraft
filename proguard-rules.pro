@@ -50,33 +50,6 @@
 -keep class android.support.** {
   *;
 }
--keep public class com.nao20010128nao.Wisecraft.TheApplication {
-   public static final android.graphics.Typeface **;
-}
--keep public class com.nao20010128nao.Wisecraft.misc.Server {
-   public <fields>;
-}
--keep public class com.nao20010128nao.WRcon.misc.Server {
-   public <fields>;
-}
--keep public class com.nao20010128nao.Wisecraft.misc.collector.CollectorMain {
-   public <fields>;
-}
--keep public class com.nao20010128nao.WRcon.collector.CollectorMain {
-   public <fields>;
-}
--keep public class * implements com.nao20010128nao.Wisecraft.misc.pinger.ServerPingResult {
-   *;
-}
--keep public class com.nao20010128nao.Wisecraft.misc.pinger.** {
-   *;
-}
--keep public class com.nao20010128nao.Wisecraft.misc.collector.CollectorMain$** {
-   public <fields>;
-}
--keep public class com.nao20010128nao.WRcon.collector.CollectorMain$** {
-   public <fields>;
-}
 
 -keep class com.firebase.** { *; }
 -keep class org.apache.** { *; }
