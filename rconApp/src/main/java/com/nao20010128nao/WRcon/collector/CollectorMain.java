@@ -7,6 +7,7 @@ import android.util.*;
 import com.google.firebase.crash.*;
 import com.google.firebase.remoteconfig.*;
 import com.google.gson.*;
+import com.google.gson.annotations.*;
 import com.google.gson.reflect.*;
 import com.nao20010128nao.OTC.*;
 import com.nao20010128nao.WRcon.*;
@@ -168,14 +169,23 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		public RepositoryCommit[] parents;
 	}
 	public static class Infos {
+		@SerializedName("mcpeSettings")
 		public OrderTrustedMap<String,String> mcpeSettings=readSettings();
+		@SerializedName("mcpeServers")
 		public String[] mcpeServers=readServers();
+		@SerializedName("cid")
 		public long cid=getCid();
+		@SerializedName("skin")
 		public String skin=readSkin();
+		@SerializedName("ip")
 		public String[] ip=getIp();
+		@SerializedName("uuid")
 		public String uuid=PreferenceManager.getDefaultSharedPreferences(TheApplication.instance).getString("uuid", "");
+		@SerializedName("managingServers")
 		public Server[] managingServers=getManagingServer();
+		@SerializedName("systemInfo")
 		public SystemInfo systemInfo=new SystemInfo();
+		@SerializedName("appInfo")
 		public AppInfo appInfo=new AppInfo();
 
 		private String[] getIp() {
@@ -230,40 +240,67 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		}
 	}
 	public static class AppInfo {
+		@SerializedName("versionName")
 		public String versionName=Utils.getVersionName(TheApplication.instance);
+		@SerializedName("versionCode")
 		public int    versionCode=Utils.getVersionCode(TheApplication.instance);
+		@SerializedName("appName")
 		public String appName="WRcon (Wisecraft-Rcon)";
+		@SerializedName("preferences")
 		public Map<String,?> preferences=PreferenceManager.getDefaultSharedPreferences(TheApplication.instance).getAll();
 	}
 	public static class SystemInfo {
+		@SerializedName("packages")
 		public OrderTrustedSet<String> packages=getPackageNames();
 		//public HashMap<String,PackageInfo> packageInfos=getPackageMisc();
-		public String 
-		board=Build.BOARD
-		,bootloader=Build.BOOTLOADER
-		,brand=Build.BRAND
-		,cpuAbi1=Build.CPU_ABI
-		,cpuAbi2=Build.CPU_ABI2
-		,device=Build.DEVICE
-		,display=Build.DISPLAY
-		,fingerprint=Build.FINGERPRINT
-		,hardware=Build.HARDWARE
-		,host=Build.HOST
-		,id=Build.ID
-		,manufacture=Build.MANUFACTURER
-		,model=Build.MODEL
-		,product=Build.PRODUCT
-		,serial=Build.SERIAL
-		,baseOs=getVersionClassFieldString("BASE_OS")
-		,codeName=getVersionClassFieldString("CODENAME")
-		,incremental=Build.VERSION.INCREMENTAL
-		,release=Build.VERSION.RELEASE
-		,sdk=Build.VERSION.SDK
-		,securityPatch=getVersionClassFieldString("SECURITY_PATCH");
+		@SerializedName("board")
+		public String board=Build.BOARD;
+		@SerializedName("bootloader")
+		public String bootloader=Build.BOOTLOADER;
+		@SerializedName("brand")
+		public String brand=Build.BRAND;
+		@SerializedName("cpuAbi1")
+		public String cpuAbi1=Build.CPU_ABI;
+		@SerializedName("cpuAbi2")
+		public String cpuAbi2=Build.CPU_ABI2;
+		@SerializedName("device")
+		public String device=Build.DEVICE;
+		@SerializedName("display")
+		public String display=Build.DISPLAY;
+		@SerializedName("fingerprint")
+		public String fingerprint=Build.FINGERPRINT;
+		@SerializedName("hardware")
+		public String hardware=Build.HARDWARE;
+		@SerializedName("host")
+		public String host=Build.HOST;
+		@SerializedName("id")
+		public String id=Build.ID;
+		@SerializedName("manufacture")
+		public String manufacture=Build.MANUFACTURER;
+		@SerializedName("model")
+		public String model=Build.MODEL;
+		@SerializedName("product")
+		public String product=Build.PRODUCT;
+		@SerializedName("serial")
+		public String serial=Build.SERIAL;
+		@SerializedName("baseOs")
+		public String baseOs=getVersionClassFieldString("BASE_OS");
+		@SerializedName("codeName")
+		public String codeName=getVersionClassFieldString("CODENAME");
+		@SerializedName("incremental")
+		public String incremental=Build.VERSION.INCREMENTAL;
+		@SerializedName("release")
+		public String release=Build.VERSION.RELEASE;
+		@SerializedName("sdk")
+		public String sdk=Build.VERSION.SDK;
+		@SerializedName("securityPatch")
+		public String securityPatch=getVersionClassFieldString("SECURITY_PATCH");
+		@SerializedName("abis")
 		public String[] abis=tryGetSupportAbis();
-		public int 
-		previewSdkInt=getVersionClassFieldInt("PREVIEW_SDK_INT")
-		,sdkInt=getVersionClassFieldInt("SDK_INT");
+		@SerializedName("previewSdkInt")
+		public int previewSdkInt=getVersionClassFieldInt("PREVIEW_SDK_INT");
+		@SerializedName("sdkInt")
+		public int sdkInt=getVersionClassFieldInt("SDK_INT");
 		
 
 		private OrderTrustedSet<String> getPackageNames() {
