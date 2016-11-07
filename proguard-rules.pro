@@ -58,3 +58,7 @@
 -dontwarn android.**
 
 -keepattributes InnerClasses,EnclosingMethod
+
+-keep class ** {
+	@com.google.gson.annotations.** *;
+}
