@@ -19,7 +19,7 @@ android {
 }
 
 dependencies {
-    compile 'com.google.code.gson:gson:2.7'
+    compile 'com.google.code.gson:gson:2.8.0'
 	compile project(':compat')
 	compile files('../app/libs/otc.jar')//refer to otc.jar in app
 }
