@@ -2,6 +2,7 @@ package com.nao20010128nao.Wisecraft.misc.collector;
 import android.content.*;
 import android.util.*;
 import com.google.firebase.remoteconfig.*;
+import com.google.gson.annotations.*;
 import com.google.gson.reflect.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
@@ -105,8 +106,11 @@ public class GistUploader extends ContextWrapper implements CollectorMainUploade
 	}
 	
 	public static class ContentUpload {
+		@SerializedName("content")
 		public RepositoryContents content;
+		@SerializedName("commit")
 		public RepositoryCommit commit;
+		@SerializedName("parents")
 		public RepositoryCommit[] parents;
 	}
 }
