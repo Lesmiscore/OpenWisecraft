@@ -15,7 +15,7 @@ public class KVRecyclerAdapter<K,V> extends ListRecyclerViewAdapter<KVRecyclerAd
 	@Override
 	public void onBindViewHolder(KVVH parent, int offset) {
 		parent.getK().setText(Utils.toString(getItem(offset).getKey()));
-		parent.getV().setText(Utils.toString(getItem(offset).getValue().toString()));
+		parent.getV().setText(Utils.toString(getItem(offset).getValue()));
 	}
 
 	@Override
