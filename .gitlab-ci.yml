@@ -29,6 +29,7 @@ main:
       - powof2.txt
       - "*/build/outputs/aar/*"
       - tree.log
+      - "*/build/outputs/mapping/*/mapping.txt"
 
 
 #elim:
