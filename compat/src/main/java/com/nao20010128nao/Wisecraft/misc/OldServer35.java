@@ -1,9 +1,14 @@
 package com.nao20010128nao.Wisecraft.misc;
 
 //Server class for <=3.2
+import com.google.gson.annotations.*;
+
 public class OldServer35 {
+	@SerializedName("ip")
 	public String ip;
+	@SerializedName("port")
 	public int port;
+	@SerializedName("mode")
 	public int mode;//0 is PE, 1 is PC
 
 	@Override

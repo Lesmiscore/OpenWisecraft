@@ -1,11 +1,16 @@
 package com.nao20010128nao.Wisecraft.misc;
 
 import android.text.*;
+import com.google.gson.annotations.*;
 
 public class Server {
+	@SerializedName("ip")
 	public String ip;
+	@SerializedName("port")
 	public int port;
+	@SerializedName("mode")
 	public int mode;//0 is PE, 1 is PC
+	@SerializedName("name")
 	public String name;//,tag;
 
 	@Override

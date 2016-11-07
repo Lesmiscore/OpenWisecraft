@@ -10,6 +10,7 @@ import android.support.v4.content.*;
 import android.util.*;
 import android.widget.*;
 import com.google.gson.*;
+import com.google.gson.annotations.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.api.*;
 import com.nao20010128nao.Wisecraft.misc.*;
@@ -313,6 +314,7 @@ public class PingWidget extends AppWidgetProvider {
 	}
 	
 	public static class WidgetData{
+		@SerializedName("style")
 		public int style=0;
 	}
 	
