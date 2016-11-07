@@ -1,11 +1,8 @@
--keep public class * extends android.app.Activity {
-   *;
+-keepnames public class * extends android.app.Activity {
 }
--keep public class * extends android.app.Service {
-   *;
+-keepnames public class * extends android.app.Service {
 }
--keep public class * extends android.content.BroadcastReceiver {
-   *;
+-keepnames public class * extends android.content.BroadcastReceiver {
 }
 -dontwarn com.google.common.**
 -dontwarn com.google.appengine.**
