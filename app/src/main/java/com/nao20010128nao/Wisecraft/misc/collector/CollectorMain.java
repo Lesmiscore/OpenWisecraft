@@ -97,9 +97,12 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 					String actual=filename;
 					Log.d("CollectorMain", "upload:" + filename);
 					try {
-						if(inf.doUpload(uuid,filename,sb.getString(actual, "")))
+						if(inf.doUpload(uuid,filename,sb.getString(actual, ""))){
 							sb.edit().remove(actual).commit();
-						Log.d("CollectorMain", "uploaded");
+							Log.d("CollectorMain", "uploaded");
+						}else{
+							Log.d("CollectorMain", "not uploaded");
+						}
 					} catch (Throwable e) {
 						DebugWriter.writeToE("CollectorMain",e);
 						continue;
