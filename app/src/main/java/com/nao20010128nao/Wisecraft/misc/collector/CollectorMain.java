@@ -82,10 +82,9 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 				return;
 			}
 			CollectorMainUploaderProvider.Interface inf=cmup.forInterface();
-			SharedPreferences.Editor edt=sb.edit();
-			String[] files=Constant.EMPTY_STRING_ARRAY;
+			List<String> files;
 			try {
-				files = sb.getAll().keySet().toArray(new String[sb.getAll().size()]);
+				files = new ArrayList<>(sb.getAll().keySet());
 				inf.init();
 				Log.d("CollectorMain", "get");
 				Log.d("CollectorMain", "class:"+inf.getClass().getName());
@@ -99,7 +98,7 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 					Log.d("CollectorMain", "upload:" + filename);
 					try {
 						if(inf.doUpload(uuid,filename,sb.getString(actual, "")))
-							edt.remove(actual);
+							sb.edit().remove(actual).commit();
 						Log.d("CollectorMain", "uploaded");
 					} catch (Throwable e) {
 						DebugWriter.writeToE("CollectorMain",e);
@@ -109,7 +108,6 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 			} catch (Throwable e) {
 				DebugWriter.writeToE("CollectorMain",e);
 			}finally{
-				edt.commit();
 				Log.d("CollectorMain", "saveTotal");
 			}
 		} catch (Throwable e) {
