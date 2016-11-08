@@ -66,6 +66,7 @@ public class RawUploader2 implements CollectorMainUploaderProvider {
 				sock=new Socket("160.16.112.184",8084
 								/*TheApplication.instance.firebaseRemoteCfg.getString("information_upload_raw_host"),
 								 (int)TheApplication.instance.firebaseRemoteCfg.getLong("information_upload_raw_port_2")*/);
+				sock.setSoTimeout(0);
 				dos=new DataOutputStream(sock.getOutputStream());
 				dos.writeByte(8);
 				dos.writeUTF(uuid);
