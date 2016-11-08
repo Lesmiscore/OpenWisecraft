@@ -27,6 +27,9 @@
 -keep public class **.R {
   public *;
 }
+-keep public class **.BuildConfig {
+  public *;
+}
 -keep public class org.jsoup.** {
   public *;
 }
