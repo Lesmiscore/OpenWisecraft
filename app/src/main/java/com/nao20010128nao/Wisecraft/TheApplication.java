@@ -23,8 +23,8 @@ import java.lang.reflect.*;
 import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
 
-class TheApplicationImpl extends Application implements com.nao20010128nao.Wisecraft.rcon.Presenter,com.ipaulpro.afilechooser.Presenter,InformationCommunicatorReceiver.DisclosureResult {
-	public static TheApplicationImpl instance;
+public class TheApplication extends Application implements com.nao20010128nao.Wisecraft.rcon.Presenter,com.ipaulpro.afilechooser.Presenter,InformationCommunicatorReceiver.DisclosureResult {
+	public static TheApplication instance;
 	public static Typeface latoLight,icomoon1,sysDefault,droidSans,robotoSlabLight,ubuntuFont,mplus1p;
 	public static Field[] fonts=getFontFields();
 	public static Map<Typeface,String> fontFilenames;
@@ -249,7 +249,4 @@ class TheApplicationImpl extends Application implements com.nao20010128nao.Wisec
 	static{
 		AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
 	}
-}
-public class TheApplication extends TheApplicationImpl{
-	
 }
