@@ -10,4 +10,6 @@
 	</style>
 	<style name="AppTheme.ServerInfo.DayNight" parent="AppTheme.ServerInfo.Dark">
 	</style>
+	<style name="AppTheme.ServerList.DayNight" parent="AppTheme.ServerList.Dark">
+	</style>
 </resources>
