@@ -43,6 +43,11 @@ android {
 			resValue "string", "wsi", ""
 			resValue "bool", "inspectorEnabled", "false"
         }
+        shrinkRelease.initWith(buildTypes.release)
+        shrinkRelease{
+			minifyEnabled true
+            proguardFiles '../proguard-rules.pro'
+		}
         debug {
         	applicationIdSuffix = '.alpha'  
             versionNameSuffix = 'd'
@@ -57,6 +62,11 @@ android {
 				resValue "string", "wsi", ""
 				resValue "bool", "inspectorEnabled", "false"
 			}
+			shrinkPre.initWith(buildTypes.pre)
+			shrinkPre{
+		        minifyEnabled true
+                proguardFiles '../proguard-rules.pro'
+		    }
 		}
 		debug2 {
         	applicationIdSuffix = '.alpha'  
