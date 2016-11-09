@@ -24,8 +24,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:id="@+id/appbar"
-				app:layout_scrollFlags="scroll|enterAlways"
-				android:fitsSystemWindows="true">
+				app:layout_scrollFlags="scroll|enterAlways">
 
 				<android.support.v7.widget.Toolbar
 					style="?attr/wcToolbarTheme"
