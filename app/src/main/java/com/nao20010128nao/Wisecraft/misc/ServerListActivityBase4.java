@@ -4,10 +4,10 @@ import android.net.*;
 import android.os.*;
 import android.support.design.widget.*;
 import android.support.v4.view.*;
+import android.support.v4.widget.*;
 import android.support.v7.widget.*;
 import android.util.*;
 import android.view.*;
-import android.widget.*;
 import com.google.android.gms.tasks.*;
 import com.mikepenz.materialdrawer.*;
 import com.nao20010128nao.Wisecraft.*;
@@ -30,15 +30,7 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBase5
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		{
-			FrameLayout content=(FrameLayout)getLayoutInflater().inflate(R.layout.server_list_content_toolbar,(ViewGroup)findViewById(android.R.id.content),false);
-			ViewGroup droidContent=(ViewGroup)findViewById(android.R.id.content);
-			ViewGroup dcParent=(ViewGroup)droidContent.getParent();
-			int dcIndex=dcParent.indexOfChild(droidContent);
-			dcParent.removeView(droidContent);
-			content.setLayoutParams(droidContent.getLayoutParams());
-			dcParent.addView(content,dcIndex);
-			content.setId(android.R.id.content);
-			//setContentView(R.layout.server_list_content_toolbar);
+			setContentView(R.layout.server_list_content_toolbar);
 
 			setSupportActionBar(Utils.getToolbar(this));
             
