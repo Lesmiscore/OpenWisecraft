@@ -4,12 +4,12 @@ import android.net.*;
 import android.os.*;
 import android.support.design.widget.*;
 import android.support.v4.view.*;
-import android.support.v4.widget.*;
 import android.support.v7.widget.*;
 import android.util.*;
 import android.view.*;
 import com.google.android.gms.tasks.*;
 import com.mikepenz.materialdrawer.*;
+import com.mikepenz.materialize.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.server.*;
@@ -30,7 +30,12 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBase5
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		{
-			setContentView(R.layout.server_list_content_toolbar);
+			((ViewGroup)findViewById(android.R.id.content)).removeAllViews();
+			Materialize mtz=new MaterializeBuilder(this)
+				.withContainer((ViewGroup)getLayoutInflater().inflate(R.layout.server_list_content_toolbar,(ViewGroup)findViewById(android.R.id.content),false))
+				.withTransparentStatusBar(true)
+				.build();
+			//setContentView(R.layout.server_list_content_toolbar);
 
 			setSupportActionBar(Utils.getToolbar(this));
             
