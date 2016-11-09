@@ -1,74 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_height="match_parent"
 	android:layout_width="match_parent"
-	android:orientation="vertical"
-	android:id="@+id/statusWrapper">
+	android:id="@+id/prepared">
 
-	<android.support.design.widget.CoordinatorLayout
-		android:layout_width="match_parent"
+	<LinearLayout
 		android:layout_height="match_parent"
-		android:fitsSystemWindows="true"
-		android:layout_weight="1.0"
-		android:id="@+id/coordinator">
+		android:layout_width="match_parent"
+		android:orientation="vertical"
+		android:id="@+id/statusWrapper">
 
-		<android.support.design.widget.AppBarLayout
+		<android.support.design.widget.CoordinatorLayout
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:id="@+id/appbar"
-			app:layout_scrollFlags="scroll|enterAlways"
-			android:fitsSystemWindows="true">
-
-			<android.support.v7.widget.Toolbar
-				style="?attr/wcToolbarTheme"
-				android:theme="?attr/wcToolbarTheme"
-				app:theme="?attr/wcToolbarTheme"
-				android:id="@+id/toolbar"
-				android:layout_height="?attr/actionBarSize"
-				android:layout_width="match_parent"
-				app:layout_scrollFlags="scroll|enterAlways"/>
-
-		</android.support.design.widget.AppBarLayout>
-
-		<FrameLayout
 			android:layout_height="match_parent"
-			android:layout_width="match_parent"
-			app:layout_behavior="@string/appbar_scrolling_view_behavior">
+			android:fitsSystemWindows="true"
+			android:layout_weight="1.0"
+			android:id="@+id/coordinator">
 
-			<com.nao20010128nao.Wisecraft.misc.view.FixedRefreshLayout
-				android:id="@+id/swipelayout"
+			<android.support.design.widget.AppBarLayout
 				android:layout_width="match_parent"
-				android:layout_height="match_parent">
+				android:layout_height="wrap_content"
+				android:id="@+id/appbar"
+				app:layout_scrollFlags="scroll|enterAlways"
+				android:fitsSystemWindows="true">
 
-				<android.support.v7.widget.RecyclerView
-					android:id="@id/android:list"
+				<android.support.v7.widget.Toolbar
+					style="?attr/wcToolbarTheme"
+					android:theme="?attr/wcToolbarTheme"
+					app:theme="?attr/wcToolbarTheme"
+					android:id="@+id/toolbar"
+					android:layout_height="?attr/actionBarSize"
 					android:layout_width="match_parent"
-					android:layout_height="match_parent"/>
+					app:layout_scrollFlags="scroll|enterAlways"/>
 
-			</com.nao20010128nao.Wisecraft.misc.view.FixedRefreshLayout>
+			</android.support.design.widget.AppBarLayout>
 
-		</FrameLayout>
+			<FrameLayout
+				android:layout_height="match_parent"
+				android:layout_width="match_parent"
+				app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-		<FrameLayout
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			app:layout_behavior="@string/bottom_sheet_behavior"
-			app:behavior_peekHeight="@dimen/bottomSheet_peek"
-			android:id="@+id/bottomSheet"
-			android:background="?android:attr/windowBackground"
-			android:visibility="gone"/>
+				<com.nao20010128nao.Wisecraft.misc.view.FixedRefreshLayout
+					android:id="@+id/swipelayout"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent">
 
-		<com.nao20010128nao.Wisecraft.misc.view.StatusesLayout
-			android:layout_height="10dp"
-			android:layout_width="match_parent"
-			android:id="@+id/serverStatuses"
-			app:layout_scrollFlags="enterAlways"
-			android:gravity="bottom"/>
+					<android.support.v7.widget.RecyclerView
+						android:id="@id/android:list"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"/>
 
-	</android.support.design.widget.CoordinatorLayout>
+				</com.nao20010128nao.Wisecraft.misc.view.FixedRefreshLayout>
 
-</LinearLayout>
+			</FrameLayout>
+
+			<FrameLayout
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				app:layout_behavior="@string/bottom_sheet_behavior"
+				app:behavior_peekHeight="@dimen/bottomSheet_peek"
+				android:id="@+id/bottomSheet"
+				android:background="?android:attr/windowBackground"
+				android:visibility="gone"/>
+
+			<com.nao20010128nao.Wisecraft.misc.view.StatusesLayout
+				android:layout_height="10dp"
+				android:layout_width="match_parent"
+				android:id="@+id/serverStatuses"
+				app:layout_scrollFlags="enterAlways"
+				android:gravity="bottom"/>
+
+		</android.support.design.widget.CoordinatorLayout>
+
+	</LinearLayout>
+
+</FrameLayout>
 
