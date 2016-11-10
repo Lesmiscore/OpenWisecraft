@@ -458,7 +458,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity {
 		}
 	}
 	
-	public static class ServerListStyleEditor extends AppCompatActivity {
+	static class ServerListStyleEditorImpl extends AppCompatActivity {
 		ServerListStyleLoader slsl;
 		RadioGroup rdGrp;
 		ImageView color,image,textColor;
@@ -1044,5 +1044,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity {
 	}
 }
 public class FragmentSettingsActivity extends FragmentSettingsActivityImpl{
-	
+	public static class ServerListStyleEditor extends ServerListStyleEditorImpl{
+		
+	}
 }
