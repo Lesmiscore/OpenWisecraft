@@ -3,11 +3,9 @@ import android.content.*;
 import android.content.res.*;
 import android.preference.*;
 import android.util.*;
-import android.view.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import java.math.*;
-import org.xmlpull.v1.*;
 
 public class ContextWrappingExtender extends ContextWrapper
 {
@@ -49,8 +47,6 @@ public class ContextWrappingExtender extends ContextWrapper
 			if(slsl==null)
 				slsl=new ServerListStyleLoader(this);
 			return slsl;
-		}else if(LAYOUT_INFLATER_SERVICE.equals(name)){
-			return new ExtLayoutInflater();
 		}
 		return super.getSystemService(name);
 	}
@@ -123,46 +119,6 @@ public class ContextWrappingExtender extends ContextWrapper
 		private int getDimensionPixelSizeFixed(int id){
 			BigDecimal div=new BigDecimal(super.getDimensionPixelSize(id)).divide(new BigDecimal(pref.getString("changeDpi","1")),4,RoundingMode.FLOOR);
 			return div.intValue();
-		}
-	}
-	
-	private class ExtLayoutInflater extends LayoutInflater {
-		LayoutInflater parent=from(getBaseContext());
-		public ExtLayoutInflater(){
-			super(from(getBaseContext()),ContextWrappingExtender.this);
-		}
-		
-		private ExtLayoutInflater(Context c,LayoutInflater li){
-			super(li,c);
-		}
-		
-		@Override
-		public LayoutInflater cloneInContext(Context p1) {
-			return new ExtLayoutInflater(p1,this);
-		}
-
-		@Override
-		public View inflate(int resource, ViewGroup root) {
-			if(resource==R.layout.material_drawer_slider)
-				resource=R.layout.material_drawer_slider_2;
-			return parent.inflate(resource, root);
-		}
-
-		@Override
-		public View inflate(int resource, ViewGroup root, boolean attachToRoot) {
-			if(resource==R.layout.material_drawer_slider)
-				resource=R.layout.material_drawer_slider_2;
-			return parent.inflate(resource, root, attachToRoot);
-		}
-
-		@Override
-		public View inflate(XmlPullParser parser, ViewGroup root) {
-			return parent.inflate(parser, root);
-		}
-
-		@Override
-		public View inflate(XmlPullParser parser, ViewGroup root, boolean attachToRoot) {
-			return parent.inflate(parser, root, attachToRoot);
 		}
 	}
 }
