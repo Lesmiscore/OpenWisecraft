@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 	<style name="AppTheme.Dark" parent="@style/Theme.AppCompat">
 		<!--Default-->
 		<item name="colorAccent">@color/mainColor.Dark</item>
@@ -49,9 +49,5 @@
 	<style name="AppTheme.ServerInfo.Dark" parent="AppTheme.NoActionBar.Dark">
 		<item name="android:windowIsTranslucent">true</item>
 		<item name="android:windowBackground">@android:color/transparent</item>
-	</style>
-	
-	<style name="AppTheme.ServerList.Dark" parent="AppTheme.NoActionBar.Dark">
-		<item name="android:windowTranslucentStatus" tools:targetApi="19">true</item>
 	</style>
 </resources>

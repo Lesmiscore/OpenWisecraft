@@ -29,9 +29,9 @@ public class ThemePatcher{
 		themes.put(
 			ServerListActivity.class,
 			new Themes(
-				R.style.AppTheme_ServerList,
-				R.style.AppTheme_ServerList_Dark,
-				R.style.AppTheme_ServerList_DayNight
+				R.style.AppTheme_NoActionBar,
+				R.style.AppTheme_NoActionBar_Dark,
+				R.style.AppTheme_NoActionBar_DayNight
 			)
 		);
 		themes.put(
