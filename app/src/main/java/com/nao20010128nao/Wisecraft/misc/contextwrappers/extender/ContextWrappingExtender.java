@@ -129,7 +129,7 @@ public class ContextWrappingExtender extends ContextWrapper
 	private class ExtLayoutInflater extends LayoutInflater {
 		LayoutInflater parent=from(getBaseContext());
 		public ExtLayoutInflater(){
-			super((LayoutInflater)ContextWrappingExtender.super.getSystemService(LAYOUT_INFLATER_SERVICE),ContextWrappingExtender.this);
+			super(from(getBaseContext()),ContextWrappingExtender.this);
 		}
 		
 		private ExtLayoutInflater(Context c,LayoutInflater li){
@@ -143,11 +143,15 @@ public class ContextWrappingExtender extends ContextWrapper
 
 		@Override
 		public View inflate(int resource, ViewGroup root) {
+			if(resource==R.layout.material_drawer_slider)
+				resource=R.layout.material_drawer_slider_2;
 			return parent.inflate(resource, root);
 		}
 
 		@Override
 		public View inflate(int resource, ViewGroup root, boolean attachToRoot) {
+			if(resource==R.layout.material_drawer_slider)
+				resource=R.layout.material_drawer_slider_2;
 			return parent.inflate(resource, root, attachToRoot);
 		}
 
