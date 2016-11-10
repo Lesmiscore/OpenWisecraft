@@ -343,7 +343,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity {
 				});
 			sH("serverListLooks", new HandledPreference.OnClickListener(){
 					public void onClick(String a, String b, String c) {
-						startActivity(new Intent(getActivity(),ServerListStyleEditor.class));
+						startActivity(new Intent(getActivity(),FragmentSettingsActivity.ServerListStyleEditor.class));
 					}
 				});
 			sH("widgetEditor", new HandledPreference.OnClickListener(){
@@ -534,7 +534,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity {
 				});
 			selectColor.setOnClickListener(new View.OnClickListener(){
 					public void onClick(View v){
-						ColorPickerDialog cpd=ColorPickerDialog.createColorPickerDialog(ServerListStyleEditor.this,ColorPickerDialog.LIGHT_THEME);
+						ColorPickerDialog cpd=ColorPickerDialog.createColorPickerDialog(ServerListStyleEditorImpl.this,ColorPickerDialog.LIGHT_THEME);
 						cpd.setLastColor(selectedColor);
 						cpd.setOnColorPickedListener(new ColorPickerDialog.OnColorPickedListener(){
 								public void onColorPicked(int c,String hex){
@@ -556,7 +556,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity {
 						new AsyncTask<Object,Void,Bitmap>(){
 							public Bitmap doInBackground(Object... a){
 								Log.d("slse image",a[0]+"");
-								String path=ServerListStyleEditor.toString(a[0]);
+								String path=Utils.toString(a[0]);
 								InputStream is=null;
 								try{
 									is=tryOpen(path);
@@ -584,7 +584,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity {
 				});
 			selectTextColor.setOnClickListener(new View.OnClickListener(){
 					public void onClick(View v){
-						ColorPickerDialog cpd=ColorPickerDialog.createColorPickerDialog(ServerListStyleEditor.this,ColorPickerDialog.LIGHT_THEME);
+						ColorPickerDialog cpd=ColorPickerDialog.createColorPickerDialog(ServerListStyleEditorImpl.this,ColorPickerDialog.LIGHT_THEME);
 						cpd.setLastColor(selectedColor);
 						cpd.setOnColorPickedListener(new ColorPickerDialog.OnColorPickedListener(){
 								public void onColorPicked(int c,String hex){
@@ -724,10 +724,6 @@ class FragmentSettingsActivityImpl extends AppCompatActivity {
 				return ((URI)o).toString();
 			else
 				return null;
-		}
-		
-		public static String toString(Object o) {
-			return o==null?"null":o.toString();
 		}
 		
 		//FSF
