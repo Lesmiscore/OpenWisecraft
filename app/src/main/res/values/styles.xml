@@ -53,7 +53,7 @@
 		<item name="actionBarStyle">@style/WhiteTextActionBar</item>
 	</style>
 	
-    <style name="AppTheme.Widget.ActionBar" parent="Widget.AppCompat.ActionBar.Light">
+    <style name="AppTheme.Widget.ActionBar" parent="Widget.AppCompat.Light.ActionBar">
         <item name="android:background">@color/primary</item>
         <item name="theme">@style/AppTheme.ThemeOverlay.ActionBar</item>
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
