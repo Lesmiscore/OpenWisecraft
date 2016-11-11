@@ -42,7 +42,7 @@
         <item name="preferenceTheme">@style/AppTheme.Preference</item>
     </style>
 
-    <style name="AppTheme.Toolbar.Black" parent="AppTheme.Black">
+    <style name="AppTheme.Toolbar.Black" parent="AppTheme.Dark">
         <item name="colorControlNormal">#ffffff</item>
         <item name="android:textColorSecondary">#ffffff</item>
         <item name="titleTextColor">#ffffff</item>
