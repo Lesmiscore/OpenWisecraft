@@ -48,7 +48,7 @@
         <item name="preferenceTheme">@style/AppTheme.Preference</item>
     </style>
 
-    <style name="AppTheme.Toolbar.Violet" parent="AppTheme.Dark">
+    <style name="AppTheme.Toolbar.Violet" parent="AppTheme.Violet">
         <item name="colorControlNormal">#ffffff</item>
         <item name="android:textColorSecondary">#ffffff</item>
         <item name="titleTextColor">#ffffff</item>
