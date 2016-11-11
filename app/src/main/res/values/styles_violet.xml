@@ -10,7 +10,7 @@
         <item name="android:windowAnimationStyle">@style/AppTheme.Transition</item>
         <item name="wcToolbarTheme">@style/AppTheme.Toolbar.Violet</item>
         <item name="wcDefaultPreferenceTextColor">#000000</item>
-        <item name="wcMenuTintColor">#000000</item>
+        <item name="wcMenuTintColor">#ffffff</item>
         <item name="dialogTheme">@style/AppAlertDialog.Violet</item>
         <!--MaterialDrawer-->
         <item name="material_drawer_background">?android:attr/windowBackground</item>
