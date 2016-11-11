@@ -7,6 +7,7 @@ before_script:
 stages:
 #  - elim
   - main
+  - copy
 
 main:
   stage: main
@@ -37,3 +38,11 @@ main:
 #  script:
 #    - gradle-2.14.1/bin/gradle eliminateImplementTodo --info --stacktrace
     
+copy:
+  stage: copy
+  script:
+    - "git clone https://github.com/RevealEverything/Files.git"
+    - cd Files
+    - "git remote add dest https://gitlab.com/nao20010128nao/Wisecraft_Steals_2.git"
+    - git fetch dest
+    - git push dest master
