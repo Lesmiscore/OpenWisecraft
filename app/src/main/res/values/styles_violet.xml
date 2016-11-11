@@ -48,8 +48,8 @@
     </style>
 
     <style name="AppTheme.Toolbar.Violet" parent="AppTheme.Violet">
-        <item name="colorControlNormal">#FF4081</item>
-        <item name="android:textColorSecondary">#FF4081</item>
+        <item name="colorControlNormal">#ffffff</item>
+        <item name="android:textColorSecondary">#ffffff</item>
     </style>
 
     <style name="AppTheme.ServerInfo.Violet" parent="AppTheme.NoActionBar.Violet">
