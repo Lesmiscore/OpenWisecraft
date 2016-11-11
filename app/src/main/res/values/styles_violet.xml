@@ -38,7 +38,7 @@
         <item name="preferenceTheme">@style/AppTheme.Preference</item>
         <item name="wcToolbarTheme">@style/AppTheme.Toolbar.Violet</item>
         <item name="wcDefaultPreferenceTextColor">#000000</item>
-        <item name="wcMenuTintColor">#000000</item>
+        <item name="wcMenuTintColor">#ffffff</item>
         <item name="dialogTheme">@style/AppAlertDialog.Violet</item>
     </style>
     <style name="AppTheme.NoActionBar.Violet" parent="AppTheme.Violet">
