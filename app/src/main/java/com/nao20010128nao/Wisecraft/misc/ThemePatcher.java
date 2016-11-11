@@ -15,6 +15,8 @@ public class ThemePatcher{
 	public static final int THEME_MODE_LIGHT=0;
 	public static final int THEME_MODE_DARK=1;
 	public static final int THEME_MODE_DAYNIGHT=2;
+	public static final int THEME_MODE_VIOLET=3;
+	public static final int THEME_MODE_BLACK=4;
 	public static final Map<Class<? extends Activity>,Themes> THEMES;
 	static{
 		Map<Class<? extends Activity>,Themes> themes=new HashMap<>();
@@ -23,7 +25,9 @@ public class ThemePatcher{
 			new Themes(
 				R.style.AppTheme,
 				R.style.AppTheme_Dark,
-				R.style.AppTheme_DayNight
+				R.style.AppTheme_DayNight,
+				R.style.AppTheme_Violet,
+				R.style.AppTheme_Black
 			)
 		);
 		themes.put(
@@ -31,7 +35,9 @@ public class ThemePatcher{
 			new Themes(
 				R.style.AppTheme_NoActionBar,
 				R.style.AppTheme_NoActionBar_Dark,
-				R.style.AppTheme_NoActionBar_DayNight
+				R.style.AppTheme_NoActionBar_DayNight,
+				R.style.AppTheme_NoActionBar_Violet,
+				R.style.AppTheme_NoActionBar_Black
 			)
 		);
 		themes.put(
@@ -39,7 +45,9 @@ public class ThemePatcher{
 			new Themes(
 				R.style.AppTheme_ServerInfo,
 				R.style.AppTheme_ServerInfo_Dark,
-				R.style.AppTheme_ServerInfo_DayNight
+				R.style.AppTheme_ServerInfo_DayNight,
+				R.style.AppTheme_ServerInfo_Violet,
+				R.style.AppTheme_ServerInfo_Black
 			)
 		);
 		themes.put(
@@ -47,7 +55,9 @@ public class ThemePatcher{
 			new Themes(
 				R.style.AppTheme_NoActionBar,
 				R.style.AppTheme_NoActionBar_Dark,
-				R.style.AppTheme_NoActionBar_DayNight
+				R.style.AppTheme_NoActionBar_DayNight,
+				R.style.AppTheme_NoActionBar_Violet,
+				R.style.AppTheme_NoActionBar_Black
 			)
 		);
 		themes.put(
@@ -55,12 +65,16 @@ public class ThemePatcher{
 			new Themes(
 				R.style.AppTheme_NoActionBar,
 				R.style.AppTheme_NoActionBar_Dark,
-				R.style.AppTheme_NoActionBar_DayNight
+				R.style.AppTheme_NoActionBar_DayNight,
+				R.style.AppTheme_NoActionBar_Violet,
+				R.style.AppTheme_NoActionBar_Black
 			)
 		);
 		themes.put(
 			RequestedServerInfoActivity.class,
 			new Themes(
+				R.style.AppTheme_Translucent,
+				R.style.AppTheme_Translucent,
 				R.style.AppTheme_Translucent,
 				R.style.AppTheme_Translucent,
 				R.style.AppTheme_Translucent
@@ -71,12 +85,16 @@ public class ThemePatcher{
 			new Themes(
 				R.style.AppDialog,
 				R.style.AppDialog_Dark,
-				R.style.AppDialog_DayNight
+				R.style.AppDialog_DayNight,
+				R.style.AppDialog_Violet,
+				R.style.AppDialog_Black
 			)
 		);
 		themes.put(
 			OpenSourceActivity.class,
 			new Themes(
+				R.style.AppTheme_OpenSource,
+				R.style.AppTheme_OpenSource,
 				R.style.AppTheme_OpenSource,
 				R.style.AppTheme_OpenSource,
 				R.style.AppTheme_OpenSource
@@ -85,6 +103,8 @@ public class ThemePatcher{
 		themes.put(
 			AboutAppActivity.class,
 			new Themes(
+				R.style.AppTheme_OpenSource,
+				R.style.AppTheme_OpenSource,
 				R.style.AppTheme_OpenSource,
 				R.style.AppTheme_OpenSource,
 				R.style.AppTheme_OpenSource
@@ -119,6 +139,14 @@ public class ThemePatcher{
 				Log.d("ThemePatcher","Using THEME_MODE_DAYNIGHT.");
 				setTheme(a, themes.dayNight);
 				break;
+			case THEME_MODE_VIOLET:
+				Log.d("ThemePatcher","Using THEME_MODE_VIOLET.");
+				setTheme(a, themes.violet);
+				break;
+			case THEME_MODE_BLACK:
+				Log.d("ThemePatcher","Using THEME_MODE_BLACK.");
+				setTheme(a, themes.black);
+				break;
 		}
 		Log.d("ThemePatcher","Done. How is it?");
 	}
@@ -140,6 +168,12 @@ public class ThemePatcher{
 			case THEME_MODE_DAYNIGHT:
 				Log.d("ThemePatcher","Using THEME_MODE_DAYNIGHT.");
 				return themes.dayNight;
+			case THEME_MODE_VIOLET:
+				Log.d("ThemePatcher","Using THEME_MODE_VIOLET.");
+				return themes.violet;
+			case THEME_MODE_BLACK:
+				Log.d("ThemePatcher","Using THEME_MODE_BLACK.");
+				return themes.black;
 		}
 	}
 	
@@ -168,11 +202,13 @@ public class ThemePatcher{
 	
 	
 	public static class Themes{
-		public final int light,dark,dayNight;
-		public Themes(int light,int dark,int dayNight){
+		public final int light,dark,dayNight,violet,black;
+		public Themes(int light,int dark,int dayNight,int violet,int black){
 			this.light=light;
 			this.dark=dark;
 			this.dayNight=dayNight;
+			this.violet=violet;
+			this.black=black;
 		}
 	}
 }
