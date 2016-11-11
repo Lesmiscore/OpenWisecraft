@@ -367,7 +367,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 									}).
 									show();
 							}
-						},null));//0
+						},null,null,UUID.fromString("a077e0fe-1ae0-3e05-8ca1-08b587fb787d")));//0
 		appMenu.add(new Sextet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem,UUID>(R.string.addFromMCPE, R.drawable.ic_add_black_48dp, new Treatment<ServerListActivity>(){
 							public void process(ServerListActivity a) {
 								new AlertDialog.Builder(a,ThemePatcher.getDefaultDialogStyle(a))
@@ -422,7 +422,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 									.setNegativeButton(android.R.string.no,null)
 									.show();
 							}
-						},null));//1
+						},null,null,UUID.fromString("1041efc9-fe9f-32db-9729-9b9897f5eebd")));//1
 		appMenu.add(new Sextet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem,UUID>(R.string.update_all, R.drawable.ic_refresh_black_48dp, new Treatment<ServerListActivity>(){
 							public void process(ServerListActivity a) {
 								updateAllWithConditions(new Predicate<Server>(){public boolean process(Server a){return true;}});
@@ -451,7 +451,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 									})
 									.show();
 							}
-						}));//2
+						},null,UUID.fromString("7880ff52-b8c5-3c29-8b65-74fc30a57316")));//2
 		appMenu.add(new Sextet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem,UUID>(R.string.export, R.drawable.ic_file_upload_black_48dp, new Treatment<ServerListActivity>(){
 							public void process(ServerListActivity a) {
 								View dialogView_=getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
@@ -499,7 +499,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 									})
 									.show();
 							}
-						},null));//3
+						},null,null,UUID.fromString("614d2246-80d1-37de-9f2e-fed1fa15c83d")));//3
 		appMenu.add(new Sextet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem,UUID>(R.string.imporT, R.drawable.ic_file_download_black_48dp, new Treatment<ServerListActivity>(){
 							public void process(ServerListActivity a) {
 								View dialogView=getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
@@ -564,7 +564,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 									})
 									.show();
 							}
-						},null));//4
+						},null,null,UUID.fromString("1b4cd9b1-662a-3e72-9ae4-eecd46858077")));//4
 		if(pref.getBoolean("feature_bott", true)){
 			appMenu.add(new Sextet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem,UUID>(R.string.sort, R.drawable.ic_compare_arrows_black_48dp, new Treatment<ServerListActivity>(){
 								public void process(ServerListActivity a) {
@@ -615,21 +615,21 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 										})
 										.show();
 								}
-							},null));//5
+							},null,null,UUID.fromString("59084d0f-904a-3379-a0f2-285d6763016c")));//5
 		}
 		if(pref.getBoolean("feature_serverFinder", false)){
 			appMenu.add(new Sextet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem,UUID>(R.string.serverFinder, R.drawable.ic_search_black_48dp, new Treatment<ServerListActivity>(){
 								public void process(ServerListActivity a) {
 									startActivity(new Intent(a, ServerFinderActivity.class));
 								}
-							},null));//6
+							},null,null,UUID.fromString("fce961a9-a6be-394d-8a16-96e598e7886d")));//6
 		}
 		if(pref.getBoolean("feature_asfsls", false)){
 			appMenu.add(new Sextet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem,UUID>(R.string.addServerFromServerListSite, R.drawable.ic_language_black_48dp, new Treatment<ServerListActivity>(){
 								public void process(ServerListActivity a) {
 									startActivity(new Intent(a, ServerGetActivity.class));
 								}
-							},null));//7
+							},null,null,UUID.fromString("9e63592a-3b0b-33f6-a8e2-937f2aa85ce2")));//7
 		}
 		appMenu.add(new Sextet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem,UUID>(R.string.loadPing, R.drawable.ic_open_in_new_black_48dp, new Treatment<ServerListActivity>(){
 							public void process(ServerListActivity a) {
@@ -702,12 +702,12 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 									})
 									.show();
 							}
-						},null));//8
+						},null,null,UUID.fromString("162c19a0-271d-3671-80cd-cb95826e19d0")));//8
 		appMenu.add(new Sextet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem,UUID>(R.string.settings, R.drawable.ic_settings_black_48dp, new Treatment<ServerListActivity>(){
 							public void process(ServerListActivity a) {
 								SettingsDelegate.openAppSettings(a);
 							}
-						},null));//9
+						},null,null,UUID.fromString("85df5fde-76f9-3d50-aeb3-cc5edb77ecfa")));//9
 		appMenu.add(new Sextet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem,UUID>(R.string.exit, R.drawable.ic_close_black_48dp, new Treatment<ServerListActivity>(){
 							public void process(ServerListActivity a) {
 								finish();
@@ -722,7 +722,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 										}
 									}, 150 * 2);
 							}
-						},null));//10
+						},null,null,UUID.fromString("5c0baf72-9a92-312d-ab33-062bdc3aa445")));//10
 	}
 
 	private void setupDrawer() {
