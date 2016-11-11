@@ -9,7 +9,7 @@
 		<item name="alertDialogTheme">@style/AppAlertDialog</item>
         <item name="windowActionModeOverlay">true</item>
 		<item name="android:windowAnimationStyle">@style/AppTheme.Transition</item>
-		<item name="wcToolbarTheme">@style/AppTheme.Toolbar</item>
+		<item name="wcToolbarTheme">@style/AppTheme.Widget.ActionBar</item>
 		<item name="wcDefaultPreferenceTextColor">#000000</item>
 		<item name="wcMenuTintColor">#000000</item>
 		<item name="dialogTheme">@style/AppAlertDialog</item>
@@ -24,7 +24,7 @@
 		<item name="colorAccent">@color/mainColor</item>
 		<item name="android:windowContentOverlay">@null</item>
 		<item name="preferenceTheme">@style/AppTheme.Preference</item>
-		<item name="wcToolbarTheme">@style/AppTheme.Toolbar</item>
+		<item name="wcToolbarTheme">@style/AppTheme.Widget.ActionBar</item>
 		<item name="wcDefaultPreferenceTextColor">#000000</item>
 		<item name="wcMenuTintColor">#000000</item>
 		<item name="dialogTheme">@style/AppAlertDialog</item>
@@ -33,7 +33,7 @@
 		<item name="colorPrimary">@color/primary</item>
 		<item name="colorAccent">@color/mainColor</item>
 		<item name="preferenceTheme">@style/AppTheme.Preference</item>
-		<item name="wcToolbarTheme">@style/AppTheme.Toolbar</item>
+		<item name="wcToolbarTheme">@style/AppTheme.Widget.ActionBar</item>
 		<item name="wcDefaultPreferenceTextColor">#000000</item>
 		<item name="wcMenuTintColor">#000000</item>
 		<item name="dialogTheme">@style/AppAlertDialog</item>
@@ -53,10 +53,17 @@
 		<item name="actionBarStyle">@style/WhiteTextActionBar</item>
 	</style>
 	
-	<style name="AppTheme.Toolbar" parent="AppTheme">
-		<item name="colorControlNormal">@color/mainColor</item>
+    <style name="AppTheme.Widget.ActionBar" parent="Widget.AppCompat.ActionBar.Light">
+        <item name="android:background">@color/primary</item>
+        <item name="theme">@style/AppTheme.ThemeOverlay.ActionBar</item>
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+        <item name="colorControlNormal">@color/mainColor</item>
 		<item name="android:textColorSecondary">@color/mainColor</item>
-	</style>
+    </style>
+
+    <style name="AppTheme.ThemeOverlay.ActionBar" parent="ThemeOverlay.AppCompat.ActionBar.Light">
+        <item name="android:textColorPrimary">#000000</item>
+    </style>
 	
 	<style name="AppTheme.ServerInfo" parent="AppTheme.NoActionBar">
 		<item name="android:windowIsTranslucent">true</item>

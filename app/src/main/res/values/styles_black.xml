@@ -6,7 +6,7 @@
         <item name="alertDialogTheme">@style/AppAlertDialog.Black</item>
         <item name="windowActionModeOverlay">true</item>
         <item name="android:windowAnimationStyle">@style/AppTheme.Transition</item>
-        <item name="wcToolbarTheme">@style/AppTheme.Toolbar.Black</item>
+        <item name="wcToolbarTheme">@style/AppTheme.Widget.ActionBar.Black</item>
         <item name="wcDefaultPreferenceTextColor">#000000</item>
         <item name="wcMenuTintColor">#ffffff</item>
         <item name="dialogTheme">@style/AppAlertDialog.Black</item>
@@ -21,7 +21,7 @@
         <item name="colorAccent">#304FFE</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="preferenceTheme">@style/AppTheme.Preference</item>
-        <item name="wcToolbarTheme">@style/AppTheme.Toolbar.Black</item>
+        <item name="wcToolbarTheme">@style/AppTheme.Widget.ActionBar.Black</item>
         <item name="wcDefaultPreferenceTextColor">#000000</item>
         <item name="wcMenuTintColor">#ffffff</item>
         <item name="dialogTheme">@style/AppAlertDialog.Black</item>
@@ -31,7 +31,7 @@
         <item name="colorAccent">#304FFE</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="preferenceTheme">@style/AppTheme.Preference</item>
-        <item name="wcToolbarTheme">@style/AppTheme.Toolbar.Black</item>
+        <item name="wcToolbarTheme">@style/AppTheme.Widget.ActionBar.Black</item>
         <item name="wcDefaultPreferenceTextColor">#000000</item>
         <item name="wcMenuTintColor">#000000</item>
         <item name="dialogTheme">@style/AppAlertDialog.Black</item>
@@ -41,11 +41,17 @@
         <item name="windowNoTitle">true</item>
         <item name="preferenceTheme">@style/AppTheme.Preference</item>
     </style>
-
-    <style name="AppTheme.Toolbar.Black" parent="AppTheme.Black">
-        <item name="colorControlNormal">#ffffff</item>
+    
+    <style name="AppTheme.Widget.ActionBar.Black" parent="Widget.AppCompat.ActionBar">
+        <item name="theme">@style/AppTheme.ThemeOverlay.ActionBar.Black</item>
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat</item>
+		<item name="colorControlNormal">#ffffff</item>
         <item name="android:textColorSecondary">#ffffff</item>
         <item name="titleTextColor">#ffffff</item>
+	</style>
+
+    <style name="AppTheme.ThemeOverlay.ActionBar.Black" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:textColorPrimary">#FFFFFF</item>
     </style>
 
     <style name="AppTheme.ServerInfo.Black" parent="AppTheme.NoActionBar.Black">
