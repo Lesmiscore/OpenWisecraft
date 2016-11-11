@@ -294,7 +294,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	}
 
 	private void loadMenu() {
-		appMenu.add(new Quintet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem>(R.string.add, R.drawable.ic_add_black_48dp, new Treatment<ServerListActivity>(){
+		appMenu.add(new Sextet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem,UUID>(R.string.add, R.drawable.ic_add_black_48dp, new Treatment<ServerListActivity>(){
 							public void process(ServerListActivity a) {
 								View dialog=getLayoutInflater().inflate(R.layout.server_add_dialog_new, null);
 								final LinearLayout peFrame=(LinearLayout)dialog.findViewById(R.id.pe);
@@ -368,7 +368,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 									show();
 							}
 						},null));//0
-		appMenu.add(new Quintet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem>(R.string.addFromMCPE, R.drawable.ic_add_black_48dp, new Treatment<ServerListActivity>(){
+		appMenu.add(new Sextet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem,UUID>(R.string.addFromMCPE, R.drawable.ic_add_black_48dp, new Treatment<ServerListActivity>(){
 							public void process(ServerListActivity a) {
 								new AlertDialog.Builder(a,ThemePatcher.getDefaultDialogStyle(a))
 									.setTitle(R.string.addFromMCPE)
@@ -423,7 +423,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 									.show();
 							}
 						},null));//1
-		appMenu.add(new Quintet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem>(R.string.update_all, R.drawable.ic_refresh_black_48dp, new Treatment<ServerListActivity>(){
+		appMenu.add(new Sextet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem,UUID>(R.string.update_all, R.drawable.ic_refresh_black_48dp, new Treatment<ServerListActivity>(){
 							public void process(ServerListActivity a) {
 								updateAllWithConditions(new Predicate<Server>(){public boolean process(Server a){return true;}});
 							}
@@ -452,7 +452,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 									.show();
 							}
 						}));//2
-		appMenu.add(new Quintet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem>(R.string.export, R.drawable.ic_file_upload_black_48dp, new Treatment<ServerListActivity>(){
+		appMenu.add(new Sextet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem,UUID>(R.string.export, R.drawable.ic_file_upload_black_48dp, new Treatment<ServerListActivity>(){
 							public void process(ServerListActivity a) {
 								View dialogView_=getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
 								final EditText et_=(EditText)dialogView_.findViewById(R.id.filePath);
@@ -500,7 +500,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 									.show();
 							}
 						},null));//3
-		appMenu.add(new Quintet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem>(R.string.imporT, R.drawable.ic_file_download_black_48dp, new Treatment<ServerListActivity>(){
+		appMenu.add(new Sextet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem,UUID>(R.string.imporT, R.drawable.ic_file_download_black_48dp, new Treatment<ServerListActivity>(){
 							public void process(ServerListActivity a) {
 								View dialogView=getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
 								final EditText et=(EditText)dialogView.findViewById(R.id.filePath);
@@ -566,7 +566,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							}
 						},null));//4
 		if(pref.getBoolean("feature_bott", true)){
-			appMenu.add(new Quintet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem>(R.string.sort, R.drawable.ic_compare_arrows_black_48dp, new Treatment<ServerListActivity>(){
+			appMenu.add(new Sextet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem,UUID>(R.string.sort, R.drawable.ic_compare_arrows_black_48dp, new Treatment<ServerListActivity>(){
 								public void process(ServerListActivity a) {
 									new AlertDialog.Builder(a,ThemePatcher.getDefaultDialogStyle(a))
 										.setTitle(R.string.sort)
@@ -618,20 +618,20 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							},null));//5
 		}
 		if(pref.getBoolean("feature_serverFinder", false)){
-			appMenu.add(new Quintet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem>(R.string.serverFinder, R.drawable.ic_search_black_48dp, new Treatment<ServerListActivity>(){
+			appMenu.add(new Sextet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem,UUID>(R.string.serverFinder, R.drawable.ic_search_black_48dp, new Treatment<ServerListActivity>(){
 								public void process(ServerListActivity a) {
 									startActivity(new Intent(a, ServerFinderActivity.class));
 								}
 							},null));//6
 		}
 		if(pref.getBoolean("feature_asfsls", false)){
-			appMenu.add(new Quintet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem>(R.string.addServerFromServerListSite, R.drawable.ic_language_black_48dp, new Treatment<ServerListActivity>(){
+			appMenu.add(new Sextet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem,UUID>(R.string.addServerFromServerListSite, R.drawable.ic_language_black_48dp, new Treatment<ServerListActivity>(){
 								public void process(ServerListActivity a) {
 									startActivity(new Intent(a, ServerGetActivity.class));
 								}
 							},null));//7
 		}
-		appMenu.add(new Quintet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem>(R.string.loadPing, R.drawable.ic_open_in_new_black_48dp, new Treatment<ServerListActivity>(){
+		appMenu.add(new Sextet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem,UUID>(R.string.loadPing, R.drawable.ic_open_in_new_black_48dp, new Treatment<ServerListActivity>(){
 							public void process(ServerListActivity a) {
 								View dialogView=getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
 								final EditText et=(EditText)dialogView.findViewById(R.id.filePath);
@@ -703,12 +703,12 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 									.show();
 							}
 						},null));//8
-		appMenu.add(new Quintet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem>(R.string.settings, R.drawable.ic_settings_black_48dp, new Treatment<ServerListActivity>(){
+		appMenu.add(new Sextet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem,UUID>(R.string.settings, R.drawable.ic_settings_black_48dp, new Treatment<ServerListActivity>(){
 							public void process(ServerListActivity a) {
 								SettingsDelegate.openAppSettings(a);
 							}
 						},null));//9
-		appMenu.add(new Quintet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem>(R.string.exit, R.drawable.ic_close_black_48dp, new Treatment<ServerListActivity>(){
+		appMenu.add(new Sextet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem,UUID>(R.string.exit, R.drawable.ic_close_black_48dp, new Treatment<ServerListActivity>(){
 							public void process(ServerListActivity a) {
 								finish();
 								saveServers();
