@@ -12,6 +12,7 @@
         <item name="wcDefaultPreferenceTextColor">#000000</item>
         <item name="wcMenuTintColor">#ffffff</item>
         <item name="dialogTheme">@style/AppAlertDialog.Violet</item>
+        <item name="toolbarStyle">?attr/wcToolbarTheme</item>
         <!--MaterialDrawer-->
         <item name="material_drawer_background">?android:attr/windowBackground</item>
         <item name="material_drawer_primary_text">@color/black</item>
@@ -50,6 +51,7 @@
     <style name="AppTheme.Toolbar.Violet" parent="AppTheme.Violet">
         <item name="colorControlNormal">#ffffff</item>
         <item name="android:textColorSecondary">#ffffff</item>
+        <item name="titleTextColor">#ffffff</item>
     </style>
 
     <style name="AppTheme.ServerInfo.Violet" parent="AppTheme.NoActionBar.Violet">
