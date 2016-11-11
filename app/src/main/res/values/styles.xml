@@ -61,7 +61,7 @@
 		<item name="android:textColorSecondary">@color/mainColor</item>
     </style>
 
-    <style name="AppTheme.ThemeOverlay.ActionBar" parent="ThemeOverlay.AppCompat.ActionBar.Light">
+    <style name="AppTheme.ThemeOverlay.ActionBar" parent="ThemeOverlay.AppCompat.Light.ActionBar">
         <item name="android:textColorPrimary">#000000</item>
     </style>
 	
