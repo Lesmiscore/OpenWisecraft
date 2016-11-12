@@ -13,7 +13,8 @@
 		<item name="wcDefaultPreferenceTextColor">#000000</item>
 		<item name="wcMenuTintColor">#000000</item>
 		<item name="dialogTheme">@style/AppAlertDialog</item>
-		<item name="colorControlNormal">#000000</item>
+		<item name="colorControlNormal">?attr/colorAccent</item>
+		<item name="titleTextColor">?attr/colorControlNormal</item>
 		<!--MaterialDrawer-->
 		<item name="material_drawer_background">?android:attr/windowBackground</item>
         <item name="material_drawer_primary_text">@color/black</item>
