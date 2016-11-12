@@ -29,8 +29,8 @@
 				android:layout_height="?attr/actionBarSize"
 				app:layout_collapseMode="pin"
 				app:popupTheme="@style/AppTheme.PopupOverlay"
-				android:theme="@style/AppTheme.Widget.ActionBar"
-				app:theme="@style/AppTheme.Widget.ActionBar"
+				android:theme="@style/Widget.AppCompat.Toolbar"
+				app:theme="@style/Widget.AppCompat.Toolbar"
 				android:textColor="#ffffff"
 				android:textColorPrimary="#ffffff"/>
 
