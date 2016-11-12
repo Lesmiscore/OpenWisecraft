@@ -39,7 +39,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity {
 			put("root",HubPrefFragment.class);
 			put("basics",Basics.class);
 			put("features",Features.class);
-			put("asfsls",Asfsls.class);
+			//put("asfsls",Asfsls.class);
 			put("versionInfo",VersionInfoFragmentLocal.class);
 	}};
 	public static final String DIALOG_FRAGMENT_TAG_PREFIX="settings@com.nao20010128nao.Wisecraft#";
@@ -174,7 +174,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity {
 							.commit();
 					}
 				});
-			sH("asfsls",new HandledPreference.OnClickListener(){
+			/*sH("asfsls",new HandledPreference.OnClickListener(){
 					public void onClick(String a,String b,String c){
 						getActivity()
 							.getSupportFragmentManager()
@@ -184,7 +184,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity {
 							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
 							.commit();
 					}
-				});
+				});*/
 			sH("changeColor",new HandledPreference.OnClickListener(){
 					public void onClick(String a,String b,String c){
 						getActivity()
@@ -217,7 +217,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity {
 							.commit();
 					}
 				});
-			findPreference("asfsls").setEnabled(pref.getBoolean("feature_asfsls",false));
+			//findPreference("asfsls").setEnabled(pref.getBoolean("feature_asfsls",false));
 			((SetTextColor)findPreference("settingsAttention")).setTextColor(ContextCompat.getColor(getContext(),R.color.color888));
 		}
 		@Override
@@ -407,7 +407,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity {
 	}
 
 
-	public static class Asfsls extends SettingsBaseFragment {
+	/*public static class Asfsls extends SettingsBaseFragment {
 		int which;
 		@Override
 		public void onCreatePreferences(Bundle p1, String p2) {
@@ -421,7 +421,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity {
 			super.onResume();
 			getActivity().setTitle(R.string.addServerFromServerListSite);
 		}
-	}
+	}*/
 	
 	public static class ColorChanger extends SettingsBaseFragment {
 
