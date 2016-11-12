@@ -70,7 +70,7 @@
 		<item name="colorAccent">@android:color/transparent</item>
 	</style>
 	
-	<style name="AppTheme.Toolbar" parent="AppTheme">
+	<style name="AppTheme.Toolbar" parent="Widget.AppCompat.Toolbar">
 		<item name="colorControlNormal">?attr/colorAccent</item>
 		<item name="titleTextColor">#000000</item>
 	</style>
