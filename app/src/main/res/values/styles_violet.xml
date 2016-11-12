@@ -12,7 +12,6 @@
         <item name="wcDefaultPreferenceTextColor">#000000</item>
         <item name="wcMenuTintColor">#ffffff</item>
         <item name="dialogTheme">@style/AppAlertDialog.Violet</item>
-        <item name="toolbarStyle">?attr/wcToolbarTheme</item>
         <!--MaterialDrawer-->
         <item name="material_drawer_background">?android:attr/windowBackground</item>
         <item name="material_drawer_primary_text">@color/black</item>
