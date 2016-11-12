@@ -70,7 +70,7 @@
 		<item name="colorAccent">@android:color/transparent</item>
 	</style>
 	
-	<style name="AppTheme.Toolbar" parent="Widget.AppCompat.Toolbar">
+	<style name="AppTheme.Toolbar" parent="Widget.AppCompat.Toolbar.Wisecraft">
 		<item name="colorControlNormal">@color/mainColor</item>
 		<item name="titleTextColor">#000000</item>
 	</style>
@@ -139,4 +139,9 @@
 	<style name="Preference.ColorPickerPreference">
         <item name="android:widgetLayout">@layout/color_picker_preference</item>
     </style>
+    
+    
+    <style name="Widget.AppCompat.Toolbar.Wisecraft" parent="Widget.AppCompat.Toolbar">
+		<item name="titleMargin">4dp</item>
+	</style>
 </resources>
