@@ -224,7 +224,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity {
 		public void onResume() {
 			super.onResume();
 			getActivity().setTitle(R.string.settings);
-			findPreference("asfsls").setEnabled(pref.getBoolean("feature_asfsls",false));
+			//findPreference("asfsls").setEnabled(pref.getBoolean("feature_asfsls",false));
 		}
 	}
 
