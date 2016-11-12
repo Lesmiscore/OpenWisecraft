@@ -8,12 +8,11 @@
         <item name="alertDialogTheme">@style/AppAlertDialog.Violet</item>
         <item name="windowActionModeOverlay">true</item>
         <item name="android:windowAnimationStyle">@style/AppTheme.Transition</item>
-        <item name="wcToolbarTheme">@style/AppTheme.Widget.ActionBar.Violet</item>
+        <item name="wcToolbarTheme">@style/AppTheme.Toolbar.Violet</item>
         <item name="wcDefaultPreferenceTextColor">#000000</item>
         <item name="wcMenuTintColor">#ffffff</item>
         <item name="dialogTheme">@style/AppAlertDialog.Violet</item>
-        <item name="colorControlNormal">#ffffff</item>
-		<item name="titleTextColor">?attr/colorControlNormal</item>
+		<item name="toolbarStyle">?attr/wcToolbarTheme</item>
 		<!--MaterialDrawer-->
         <item name="material_drawer_background">?android:attr/windowBackground</item>
         <item name="material_drawer_primary_text">@color/black</item>
@@ -26,10 +25,11 @@
         <item name="colorAccent">#FF4081</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="preferenceTheme">@style/AppTheme.Preference</item>
-        <item name="wcToolbarTheme">@style/AppTheme.Widget.ActionBar.Violet</item>
+        <item name="wcToolbarTheme">@style/AppTheme.Toolbar.Violet</item>
         <item name="wcDefaultPreferenceTextColor">#000000</item>
         <item name="wcMenuTintColor">#000000</item>
         <item name="dialogTheme">@style/AppAlertDialog.Violet</item>
+        <item name="toolbarStyle">?attr/wcToolbarTheme</item>
     </style>
     
     <style name="AppAlertDialog.Violet" parent="Theme.AppCompat.Light.Dialog.Alert">
@@ -38,10 +38,11 @@
         <item name="colorAccent">#FF4081</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="preferenceTheme">@style/AppTheme.Preference</item>
-        <item name="wcToolbarTheme">@style/AppTheme.Widget.ActionBar.Violet</item>
+        <item name="wcToolbarTheme">@style/AppTheme.Toolbar.Violet</item>
         <item name="wcDefaultPreferenceTextColor">#000000</item>
         <item name="wcMenuTintColor">#ffffff</item>
         <item name="dialogTheme">@style/AppAlertDialog.Violet</item>
+        <item name="toolbarStyle">?attr/wcToolbarTheme</item>
     </style>
     
     <style name="AppTheme.NoActionBar.Violet" parent="AppTheme.Violet">
@@ -50,20 +51,13 @@
         <item name="preferenceTheme">@style/AppTheme.Preference</item>
     </style>
 
-    <style name="AppTheme.Widget.ActionBar.Violet" parent="Widget.AppCompat.ActionBar">
-        <item name="theme">@style/AppTheme.ThemeOverlay.ActionBar.Violet</item>
-        <item name="popupTheme">@style/ThemeOverlay.AppCompat</item>
-		<item name="colorControlNormal">#ffffff</item>
-        <item name="android:textColorSecondary">#ffffff</item>
-        <item name="titleTextColor">#ffffff</item>
-	</style>
-
-    <style name="AppTheme.ThemeOverlay.ActionBar.Violet" parent="ThemeOverlay.AppCompat.ActionBar">
-        <item name="android:textColorPrimary">#FFFFFF</item>
-    </style>
-
     <style name="AppTheme.ServerInfo.Violet" parent="AppTheme.NoActionBar.Violet">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
+    
+	<style name="AppTheme.Toolbar.Violet" parent="AppTheme.Violet">
+		<item name="colorControlNormal">#ffffff</item>
+		<item name="titleTextColor">?attr/colorControlNormal</item>
+	</style>
 </resources>
