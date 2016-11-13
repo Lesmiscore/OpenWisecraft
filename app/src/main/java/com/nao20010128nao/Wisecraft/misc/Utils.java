@@ -201,6 +201,11 @@ public class Utils extends PingerUtils{
 		} catch (NoSuchFieldException e) {
 		} catch (IllegalAccessException e) {
 		}
+		try{
+			return (TextView)mToolBar.getChildAt(1);
+		}catch(Throwable e){
+			
+		}
 		return null;
 	}
 	public static android.support.v7.widget.Toolbar getToolbar(Activity decor){

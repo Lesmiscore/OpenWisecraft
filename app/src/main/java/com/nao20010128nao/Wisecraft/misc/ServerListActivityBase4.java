@@ -4,10 +4,10 @@ import android.net.*;
 import android.os.*;
 import android.support.design.widget.*;
 import android.support.v4.view.*;
-import android.support.v4.widget.*;
 import android.support.v7.widget.*;
 import android.util.*;
 import android.view.*;
+import android.widget.*;
 import com.google.android.gms.tasks.*;
 import com.mikepenz.materialdrawer.*;
 import com.nao20010128nao.Wisecraft.*;
@@ -18,6 +18,7 @@ import com.nao20010128nao.Wisecraft.services.*;
 import java.io.*;
 import java.net.*;
 
+import android.support.v7.widget.Toolbar;
 import com.nao20010128nao.Wisecraft.R;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
@@ -33,6 +34,15 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBase5
 			setContentView(R.layout.server_list_content_toolbar);
 
 			setSupportActionBar(Utils.getToolbar(this));
+			new Handler().post(new Runnable(){
+					public void run(){
+						Toolbar tb=Utils.getToolbar(ServerListActivityBase4.this);
+						TextView tv=Utils.getActionBarTextView(tb);
+						if(tv!=null){
+							tv.setGravity(Gravity.CENTER);
+						}
+					}
+				});
             
 			DrawerBuilder bld=new DrawerBuilder()
 				.withActivity(this)
