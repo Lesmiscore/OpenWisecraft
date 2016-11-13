@@ -11,7 +11,7 @@ android {
 		return suffix[where]
 	}
 	def wsi="Widget Status Inspector"
-	def preNum=3 //0 is stable release
+	def preNum=4 //0 is stable release
 
     compileSdkVersion 24
     buildToolsVersion "24.0.0"
@@ -20,7 +20,7 @@ android {
         applicationId 'com.nao20010128nao.Wisecraft'
         minSdkVersion 17
         targetSdkVersion 21
-        versionCode 38
+        versionCode 39
         versionName "4.0"
 		multiDexEnabled true
 		jackOptions {
