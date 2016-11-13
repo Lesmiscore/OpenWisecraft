@@ -14,6 +14,7 @@ import android.text.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
+import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.api.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
@@ -560,5 +561,32 @@ public class Utils extends PingerUtils{
 	}
 	public static String toString(Object o){
 		return o==null?"null":o.toString();
+	}
+	public static int determineServerListJsonVersion(String json){
+		JsonArray ja=new JsonParser().parse(json).getAsJsonArray();
+		int maybe=-1;
+		for(JsonElement je:ja){
+			JsonObject entry=je.getAsJsonObject();
+			if(!(entry.has("ip")&entry.has("port"))){
+				continue;
+			}
+			if(entry.has("isPC")){
+				maybe=0;
+			}
+			if(entry.has("mode")&maybe<2){
+				maybe=1;
+			}
+			if(entry.has("name")){
+				maybe=2;
+			}
+		}
+		if(maybe==-1){
+			if(ja.size()==0){
+				maybe=2;
+			}else{
+				throw new IllegalArgumentException("json is not for server list.");
+			}
+		}
+		return maybe;
 	}
 }

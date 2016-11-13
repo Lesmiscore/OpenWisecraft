@@ -764,8 +764,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	}
 
 	public void loadServers() {
-		int version=pref.getInt("serversJsonVersion", 0);
-		version = version == 0 ?(pref.getString("servers", "[]").equals("[]") ?version: 1): version;
+		int version=pref.getInt("serversJsonVersion", -1);
+		if(version==-1)version=Utils.determineServerListJsonVersion(pref.getString("servers", "[]"));
 		switch (version) {
 			case 0:{
 					OldServer19[] sa=gson.fromJson(pref.getString("servers", "[]"), OldServer19[].class);
