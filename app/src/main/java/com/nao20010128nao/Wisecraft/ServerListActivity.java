@@ -87,7 +87,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		}
 
 		srl = (SwipeRefreshLayout)findViewById(R.id.swipelayout);
-		srl.setColorSchemeResources(R.color.upd_1, R.color.upd_2, R.color.upd_3, R.color.upd_4);
+		//srl.setColorSchemeResources(R.color.upd_1, R.color.upd_2, R.color.upd_3, R.color.upd_4);
+		srl.setColorSchemeColors(Utils.getHueRotatedColors());
 		srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
 				public void onRefresh() {
 					appMenu.findByA(R.string.update_all).getC().process(ServerListActivity.instance.get());

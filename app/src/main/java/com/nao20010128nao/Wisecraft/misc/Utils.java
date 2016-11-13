@@ -26,8 +26,11 @@ import java.util.*;
 
 import android.support.v7.widget.Toolbar;
 import com.nao20010128nao.Wisecraft.R;
+import java.math.*;
 
 public class Utils extends PingerUtils{
+	private static int[] HUE_COLORS;
+	
 	public static String deleteDecorations(String decorated) {
 		StringBuilder sb=new StringBuilder();
 		char[] chars=decorated.toCharArray();
@@ -588,5 +591,21 @@ public class Utils extends PingerUtils{
 			}
 		}
 		return maybe;
+	}
+	public static int[] getHueRotatedColors(){
+		if(HUE_COLORS!=null){
+			return copyOf(HUE_COLORS,HUE_COLORS.length);
+		}
+		int[] colors=new int[360/15];
+		BigDecimal _360=new BigDecimal("360");
+		for(int i=0;i<360;i+=15){
+			float[] hsv=new float[3];
+			hsv[0]=new BigDecimal(i).divide(_360).floatValue();
+			hsv[1]=0;
+			hsv[2]=1;
+			colors[i/15]=Color.HSVToColor(hsv);
+		}
+		HUE_COLORS=Arrays.copyOf(colors,colors.length);
+		return getHueRotatedColors();
 	}
 }
