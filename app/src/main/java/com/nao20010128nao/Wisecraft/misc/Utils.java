@@ -601,7 +601,7 @@ public class Utils extends PingerUtils{
 		int[] colors=new int[24];
 		BigDecimal _360=new BigDecimal("360");
 		for(int i=0;i<24;i++){
-			colors[i]=smallRgbTo32bitRgb(hsvToRgb(new BigDecimal(i).multiply(new BigDecimal("15")).divide(_360,10000,BigDecimal.ROUND_CEILING),BigDecimal.ZERO,BigDecimal.ONE));
+			colors[i]=smallRgbTo32bitRgb(hsvToRgb(new BigDecimal(i).multiply(new BigDecimal("15")).divide(_360,10000,BigDecimal.ROUND_CEILING),BigDecimal.ONE,BigDecimal.ONE));
 		}
 		HUE_COLORS=Arrays.copyOf(colors,colors.length);
 		return getHueRotatedColors();
@@ -613,7 +613,7 @@ public class Utils extends PingerUtils{
 		}
 		int[] colors=new int[24];
 		for(int i=0;i<24;i++){
-			colors[i]=smallRgbTo32bitRgb(hsvToRgb((float)15*(float)i/(float)360,0,1));
+			colors[i]=smallRgbTo32bitRgb(hsvToRgb((float)15*(float)i/(float)360,1,1));
 		}
 		HUE_COLORS=Arrays.copyOf(colors,colors.length);
 		return getHueRotatedColors();
