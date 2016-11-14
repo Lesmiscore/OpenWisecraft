@@ -56,7 +56,7 @@ android {
 		}
 		if(preNum!=0){
 			pre {
-				versionNameSuffix = (' Pre v'+preNum)
+				versionNameSuffix = (' Pre '+preNum)
 				signingConfig signingConfigs.release
 				resValue "string", "app_name", "Wisecraft "+getRandomBetaSuffix()
 				resValue "string", "wsi", ""
@@ -75,6 +75,10 @@ android {
 			resValue "string", "app_name", "[DEBUG2] Wisecraft "+getRandomBetaSuffix()
 			resValue "string", "wsi", "[DEBUG2] "+wsi
 			resValue "bool", "inspectorEnabled", "true"
+			
+			buildConfigField "String","CI_BUILD_ID","\""+System.getenv("CI_BUILD_ID")+"\""
+			buildConfigField "String","CI_BUILD_REF_NAME","\""+System.getenv("CI_BUILD_REF_NAME")+"\""
+			buildConfigField "String","CI_RUNNER_ID","\""+System.getenv("CI_RUNNER_ID")+"\""
 		}
 		pg.initWith(buildTypes.debug2)
 		pg{
