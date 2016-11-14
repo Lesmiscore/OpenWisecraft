@@ -599,49 +599,48 @@ public class Utils extends PingerUtils{
 		int[] colors=new int[24];
 		BigDecimal _360=new BigDecimal("360");
 		for(int i=0;i<24;i++){
-			colors[i/15]=smallRgbTo32bitRgb(hsvToRgb(new BigDecimal(i).multiply(new BigDecimal("15")).divide(_360,10000,BigDecimal.ROUND_CEILING),BigDecimal.ZERO,BigDecimal.ONE));
+			colors[i]=smallRgbTo32bitRgb(hsvToRgb(new BigDecimal(i).multiply(new BigDecimal("15")).divide(_360,10000,BigDecimal.ROUND_CEILING),BigDecimal.ZERO,BigDecimal.ONE));
 		}
 		HUE_COLORS=Arrays.copyOf(colors,colors.length);
 		return getHueRotatedColors();
 	}
 
-	public static BigDecimal[] hsvToRgb(BigDecimal hue, BigDecimal saturation, BigDecimal value) {
-		BigDecimal r, g, b;
-
-		int h = hue.multiply(new BigDecimal("6")).intValue();
-		BigDecimal f = hue.multiply(new BigDecimal("6")).subtract(BigDecimal.valueOf(h));
-		BigDecimal p = value.multiply(BigDecimal.ONE.subtract(saturation));
-		BigDecimal q = value.multiply(BigDecimal.ONE.subtract(f.multiply(saturation)));
-		BigDecimal t = value.multiply(BigDecimal.ONE.subtract(BigDecimal.ONE.subtract(f).divide(saturation)));
-
-		if (h == 0) {
-			r = value;
-			g = t;
-			b = p;
-		} else if (h == 1) {
-			r = q;
-			g = value;
-			b = p;
-		} else if (h == 2) {
-			r = p;
-			g = value;
-			b = t;
-		} else if (h == 3) {
-			r = p;
-			g = q;
-			b = value;
-		} else if (h == 4) {
-			r = t;
-			g = p;
-			b = value;
-		} else if (h <= 6) {
-			r = value;
-			g = p;
-			b = q;
-		} else {
-			throw new RuntimeException("Something went wrong when converting from HSV to RGB. Input was " + hue + ", " + saturation + ", " + value);
+	public static BigDecimal[] hsvToRgb(BigDecimal h, BigDecimal s, BigDecimal v) {
+		// https://ja.wikipedia.org/wiki/HSV%E8%89%B2%E7%A9%BA%E9%96%93?wprov=sfla1
+		BigDecimal r = v;
+		BigDecimal g = v;
+		BigDecimal b = v;
+		h=h.multiply(new BigDecimal("6"));
+		final int i = h.intValue();
+		final BigDecimal f = h.subtract(BigDecimal.valueOf(i));
+		switch (i) {
+			default:
+			case 0:
+				g = g.multiply(BigDecimal.ONE.subtract(s.divide(BigDecimal.ONE.subtract(f))));
+				b = b.multiply(BigDecimal.ONE.subtract(s));
+				break;
+			case 1:
+				r = r.multiply(BigDecimal.ONE.subtract(s.multiply(f)));
+				b = b.multiply(BigDecimal.ONE.subtract(s));
+				break;
+			case 2:
+				r = r.multiply(BigDecimal.ONE.subtract(s));
+				b = b.multiply(BigDecimal.ONE.subtract(s.divide(BigDecimal.ONE.subtract(f))));
+				break;
+			case 3:
+				r = r.multiply(BigDecimal.ONE.subtract(s));
+				g = g.multiply(BigDecimal.ONE.subtract(s.multiply(f)));
+				break;
+			case 4:
+				r = r.multiply(BigDecimal.ONE.subtract(s.divide(BigDecimal.ONE.subtract(f))));
+				g = g.multiply(BigDecimal.ONE.subtract(s));
+				break;
+			case 5:
+				g = g.multiply(BigDecimal.ONE.subtract(s));
+				b = b.multiply(BigDecimal.ONE.subtract(s.multiply(f)));
+				break;
 		}
-
+		
 		return new BigDecimal[]{r,g,b};
 	}
 	public static int smallRgbTo32bitRgb(BigDecimal[] bds){
