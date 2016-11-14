@@ -592,7 +592,9 @@ public class Utils extends PingerUtils{
 		}
 		return maybe;
 	}
-	public static int[] getHueRotatedColors(){
+	
+	@Deprecated
+	public static int[] getHueRotatedColors2(){
 		if(HUE_COLORS!=null){
 			return copyOf(HUE_COLORS,HUE_COLORS.length);
 		}
@@ -603,6 +605,57 @@ public class Utils extends PingerUtils{
 		}
 		HUE_COLORS=Arrays.copyOf(colors,colors.length);
 		return getHueRotatedColors();
+	}
+	
+	public static int[] getHueRotatedColors(){
+		if(HUE_COLORS!=null){
+			return copyOf(HUE_COLORS,HUE_COLORS.length);
+		}
+		int[] colors=new int[24];
+		for(int i=0;i<24;i++){
+			colors[i]=smallRgbTo32bitRgb(hsvToRgb((float)15*(float)i/(float)360,0,1));
+		}
+		HUE_COLORS=Arrays.copyOf(colors,colors.length);
+		return getHueRotatedColors();
+	}
+	
+	public static float[] hsvToRgb(float h,float s,float v){
+		float r = v;
+		float g = v;
+		float b = v;
+		if (s > 0.0f) {
+			h *= 6.0f;
+			final int i = (int) h;
+			final float f = h - (float) i;
+			switch (i) {
+				default:
+				case 0:
+					g *= 1 - s * (1 - f);
+					b *= 1 - s;
+					break;
+				case 1:
+					r *= 1 - s * f;
+					b *= 1 - s;
+					break;
+				case 2:
+					r *= 1 - s;
+					b *= 1 - s * (1 - f);
+					break;
+				case 3:
+					r *= 1 - s;
+					g *= 1 - s * f;
+					break;
+				case 4:
+					r *= 1 - s * (1 - f);
+					g *= 1 - s;
+					break;
+				case 5:
+					g *= 1 - s;
+					b *= 1 - s * f;
+					break;
+			}
+		}
+		return new float[]{r,g,b};
 	}
 
 	public static BigDecimal[] hsvToRgb(BigDecimal h, BigDecimal s, BigDecimal v) {
@@ -643,10 +696,18 @@ public class Utils extends PingerUtils{
 		
 		return new BigDecimal[]{r,g,b};
 	}
+	
 	public static int smallRgbTo32bitRgb(BigDecimal[] bds){
 		int r=bds[0].multiply(BigDecimal.valueOf(255)).intValue();
 		int g=bds[1].multiply(BigDecimal.valueOf(255)).intValue();
 		int b=bds[2].multiply(BigDecimal.valueOf(255)).intValue();
+		return Color.rgb(r,g,b);
+	}
+	
+	public static int smallRgbTo32bitRgb(float[] bds){
+		int r=(int)(bds[0]*255);
+		int g=(int)(bds[1]*255);
+		int b=(int)(bds[2]*255);
 		return Color.rgb(r,g,b);
 	}
 }
