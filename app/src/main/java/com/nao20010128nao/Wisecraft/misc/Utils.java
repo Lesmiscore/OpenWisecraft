@@ -596,16 +596,58 @@ public class Utils extends PingerUtils{
 		if(HUE_COLORS!=null){
 			return copyOf(HUE_COLORS,HUE_COLORS.length);
 		}
-		int[] colors=new int[360/15];
+		int[] colors=new int[24];
 		BigDecimal _360=new BigDecimal("360");
-		for(int i=0;i<360;i+=15){
-			float[] hsv=new float[3];
-			hsv[0]=new BigDecimal(i).divide(_360).floatValue();
-			hsv[1]=0;
-			hsv[2]=1;
-			colors[i/15]=Color.HSVToColor(hsv);
+		for(int i=0;i<24;i++){
+			colors[i/15]=smallRgbTo32bitRgb(hsvToRgb(new BigDecimal(i).multiply(new BigDecimal("15")).divide(_360,10000,BigDecimal.ROUND_CEILING),BigDecimal.ZERO,BigDecimal.ONE));
 		}
 		HUE_COLORS=Arrays.copyOf(colors,colors.length);
 		return getHueRotatedColors();
+	}
+
+	public static BigDecimal[] hsvToRgb(BigDecimal hue, BigDecimal saturation, BigDecimal value) {
+		BigDecimal r, g, b;
+
+		int h = hue.multiply(new BigDecimal("6")).intValue();
+		BigDecimal f = hue.multiply(new BigDecimal("6")).subtract(BigDecimal.valueOf(h));
+		BigDecimal p = value.multiply(BigDecimal.ONE.subtract(saturation));
+		BigDecimal q = value.multiply(BigDecimal.ONE.subtract(f.multiply(saturation)));
+		BigDecimal t = value.multiply(BigDecimal.ONE.subtract(BigDecimal.ONE.subtract(f).divide(saturation)));
+
+		if (h == 0) {
+			r = value;
+			g = t;
+			b = p;
+		} else if (h == 1) {
+			r = q;
+			g = value;
+			b = p;
+		} else if (h == 2) {
+			r = p;
+			g = value;
+			b = t;
+		} else if (h == 3) {
+			r = p;
+			g = q;
+			b = value;
+		} else if (h == 4) {
+			r = t;
+			g = p;
+			b = value;
+		} else if (h <= 6) {
+			r = value;
+			g = p;
+			b = q;
+		} else {
+			throw new RuntimeException("Something went wrong when converting from HSV to RGB. Input was " + hue + ", " + saturation + ", " + value);
+		}
+
+		return new BigDecimal[]{r,g,b};
+	}
+	public static int smallRgbTo32bitRgb(BigDecimal[] bds){
+		int r=bds[0].multiply(BigDecimal.valueOf(255)).intValue();
+		int g=bds[1].multiply(BigDecimal.valueOf(255)).intValue();
+		int b=bds[2].multiply(BigDecimal.valueOf(255)).intValue();
+		return Color.rgb(r,g,b);
 	}
 }
