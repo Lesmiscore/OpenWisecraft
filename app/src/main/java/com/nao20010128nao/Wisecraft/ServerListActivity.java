@@ -15,6 +15,7 @@ import android.text.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
+import com.google.gson.reflect.*;
 import com.mikepenz.materialdrawer.*;
 import com.mikepenz.materialdrawer.model.interfaces.*;
 import com.nao20010128nao.Wisecraft.*;
@@ -328,6 +329,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					return false;
 				}
 			});
+		if(savedInstanceState.containsKey("selected"))
+			selected=gson.fromJson(savedInstanceState.getString("selected"),new TypeToken<HashSet<Server>>(){}.getType());
 	}
 
 	private void loadMenu() {
@@ -798,6 +801,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	protected void onSaveInstanceState(Bundle outState) {
 		outState=drawer.saveInstanceState(outState);
 		super.onSaveInstanceState(outState);
+		outState.putString("selected",gson.toJson(selected));
 	}
 
 	public void loadServers() {
