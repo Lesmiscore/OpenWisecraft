@@ -27,6 +27,7 @@ public abstract class ServerListActivityBaseFields extends ServerListActivityBas
 	public static final int EDIT_MODE_NULL=0;
 	public static final int EDIT_MODE_EDIT=1;
 	public static final int EDIT_MODE_SELECT_UPDATE=2;
+	public static final int EDIT_MODE_MULTIPLE_DELETE=3;
 	
     //impl
     protected static final File mcpeServerList=new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt");
@@ -46,7 +47,7 @@ public abstract class ServerListActivityBaseFields extends ServerListActivityBas
     protected int editMode=EDIT_MODE_NULL;
     protected ItemTouchHelper itemDecor;
     protected SimpleCallback ddManager;
-    protected ActionMode.Callback editAm,selectUpdateAm;
+    protected ActionMode.Callback editAm,selectUpdateAm,multipleDeleteAm;
 	protected CoordinatorLayout coordinator;
     
     //base2,3,5

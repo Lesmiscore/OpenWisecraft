@@ -257,6 +257,41 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				selected.clear();
             }
         };
+		multipleDeleteAm = new ActionMode.Callback(){
+            public boolean onCreateActionMode(ActionMode p1, Menu p2) {
+                srl.setEnabled(false);
+                dl.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+				selected.clear();
+                return true;
+            }
+
+            public boolean onPrepareActionMode(ActionMode p1, Menu p2) {
+                editMode = EDIT_MODE_MULTIPLE_DELETE;
+				MenuItem mi=p2.add(Menu.NONE,0,0,R.string.delete).setIcon(TheApplication.instance.getTintedDrawable(R.drawable.ic_delete_forever_black_48dp,Utils.getMenuTintColor(ServerListActivityImpl.this)));
+				MenuItemCompat.setShowAsAction(mi,MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
+                return true;
+            }
+
+            public boolean onActionItemClicked(ActionMode p1, MenuItem p2) {
+				switch(p2.getItemId()){
+					case 0:
+						for(Server s:selected){
+							sl.remove(s);
+						}
+						p1.finish();
+						break;
+				}
+                return true;
+            }
+
+            public void onDestroyActionMode(ActionMode p1) {
+                editMode = EDIT_MODE_NULL;
+                srl.setEnabled(true);
+                dl.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                saveServers();
+				selected.clear();
+            }
+        };
         switch (pref.getInt("serverListStyle2", 0)) {
             case 0:
                 ddManager.setDefaultDragDirs(ItemTouchHelper.UP | ItemTouchHelper.DOWN);
@@ -269,6 +304,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		switch (editMode) {
 			case EDIT_MODE_EDIT:startEditMode();break;
 			case EDIT_MODE_SELECT_UPDATE:startSelectUpdateMode();break;
+			case EDIT_MODE_MULTIPLE_DELETE:startMultipleDeleteMode();break;
 		}
 
 		addActivityResultReceiver(new DispatchActivityResult(){
@@ -877,6 +913,11 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	private void startSelectUpdateMode() {
         //start action mode here
         startSupportActionMode(selectUpdateAm);
+    }
+	
+	private void startMultipleDeleteMode() {
+        //start action mode here
+        startSupportActionMode(multipleDeleteAm);
     }
 
 	
