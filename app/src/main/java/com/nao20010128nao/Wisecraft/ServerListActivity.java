@@ -329,8 +329,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					return false;
 				}
 			});
-		if(savedInstanceState.containsKey("selected"))
-			selected=gson.fromJson(savedInstanceState.getString("selected"),new TypeToken<HashSet<Server>>(){}.getType());
+		if(savedInstanceState!=null)
+			if(savedInstanceState.containsKey("selected"))
+				selected=gson.fromJson(savedInstanceState.getString("selected"),new TypeToken<HashSet<Server>>(){}.getType());
 	}
 
 	private void loadMenu() {
