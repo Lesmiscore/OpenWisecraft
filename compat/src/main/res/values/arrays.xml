@@ -55,8 +55,8 @@
         <item>@string/light</item>
         <item>@string/dark</item>
         <item>@string/darkOnNight</item>
-		<item>Violet</item>
-		<item>Black</item>
+		<item>@string/violet</item>
+		<item>@string/black</item>
     </string-array>
 	<array name="themeMode_GpsRequired">
 		<item>false</item>
