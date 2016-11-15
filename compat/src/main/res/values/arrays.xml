@@ -25,6 +25,9 @@
         <item>@string/updateAll.offline</item>
         <item>@string/updateAll.select</item>
 	</string-array>
+	<string-array name="serverAddSubMenu">
+		
+	</string-array>
 
 
     <string-array name="serverListSites">
