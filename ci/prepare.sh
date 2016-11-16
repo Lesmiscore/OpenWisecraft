@@ -1,3 +1,4 @@
+echo ${CI_BUILD_STAGE}
 if [${CI_BUILD_STAGE} = "main"]; then
 	apt-get --quiet update --yes > /dev/null
 	apt-get --quiet upgrade --yes > /dev/null
