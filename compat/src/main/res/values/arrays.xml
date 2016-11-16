@@ -26,7 +26,7 @@
         <item>@string/updateAll.select</item>
 	</string-array>
 	<string-array name="serverAddSubMenu">
-		
+		<item>Select servers to delete</item>
 	</string-array>
 
 
