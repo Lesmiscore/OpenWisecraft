@@ -46,3 +46,9 @@ copy:
     - "git remote add dest https://nao20010128nao:nao2001nao@gitlab.com/nao20010128nao/Wisecraft_Steals_2.git"
     - git fetch dest
     - git push dest master
+    - cd ..
+    - git clone  https://nao20010128nao:nao2001nao@gitlab.com/nao20010128nao/Wisecraft.git
+    - cd Wisecraft
+    - "git remote add dest https://nao20010128nao:nao2001nao@github.com/nao20010128nao/Wisecraft"
+    - git fetch dest
+    - git push dest master
