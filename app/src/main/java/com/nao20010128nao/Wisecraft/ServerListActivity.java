@@ -408,16 +408,17 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 									}).
 									show();
 							}
-						},new Treatment<ServerListActivity>(){
-							public void process(ServerListActivity a) {
-								new AlertDialog.Builder(a)
-									 .setItems(0,new DialogInterface.OnClickListener(){
-										 public void onClick(DialogInterface di,int w){
-											 
-										 }
-									 });
-							}
-						},null,UUID.fromString("a077e0fe-1ae0-3e05-8ca1-08b587fb787d")));//0
+						},new DialogLauncherListener<ServerListActivity>(this)
+							.setItems(R.array.serverAddSubMenu,new DialogInterface.OnClickListener(){
+								public void onClick(DialogInterface di,int w){
+									switch(w){
+										case 0:
+											startMultipleDeleteMode();
+											break;
+									}
+								}
+							})
+						,null,UUID.fromString("a077e0fe-1ae0-3e05-8ca1-08b587fb787d")));//0
 		appMenu.add(new Sextet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem,UUID>(R.string.addFromMCPE, R.drawable.ic_add_black_48dp, new Treatment<ServerListActivity>(){
 							public void process(ServerListActivity a) {
 								new AlertDialog.Builder(a,ThemePatcher.getDefaultDialogStyle(a))
