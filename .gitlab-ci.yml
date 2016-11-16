@@ -43,12 +43,12 @@ copy:
   script:
     - "git clone https://github.com/RevealEverything/Files.git"
     - cd Files
-    - "git remote add dest https://nao20010128nao:nao2001nao@gitlab.com/nao20010128nao/Wisecraft_Steals_2.git"
+    - "git remote add dest https://$GITLAB_USER:$GITLAB_PASS@gitlab.com/nao20010128nao/Wisecraft_Steals_2.git"
     - git fetch dest
     - git push dest master
     - cd ..
-    - git clone  https://nao20010128nao:nao2001nao@gitlab.com/nao20010128nao/Wisecraft.git
+    - "git clone https://$GITLAB_USER:$GITLAB_PASS@gitlab.com/nao20010128nao/Wisecraft.git"
     - cd Wisecraft
-    - "git remote add dest https://nao20010128nao:nao2001nao@github.com/nao20010128nao/Wisecraft"
+    - "git remote add dest https://$GITHUB_USER:$GITHUB_PASS@github.com/nao20010128nao/Wisecraft-mirror"
     - git fetch dest
     - git push dest master
