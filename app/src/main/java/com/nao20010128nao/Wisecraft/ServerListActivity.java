@@ -194,6 +194,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                 itemDecor.attachToRecyclerView(rv);
                 srl.setEnabled(false);
                 dl.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+				isInSelectMode=false;
                 return true;
             }
 
@@ -212,6 +213,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                 srl.setEnabled(true);
                 dl.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                 saveServers();
+				isInSelectMode=false;
             }
         };
 		selectUpdateAm = new ActionMode.Callback(){
@@ -219,6 +221,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                 srl.setEnabled(false);
                 dl.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 				selected.clear();
+				isInSelectMode=true;
                 return true;
             }
 
@@ -256,6 +259,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					}
 				}
 				selected.clear();
+				isInSelectMode=false;
             }
         };
 		multipleDeleteAm = new ActionMode.Callback(){
@@ -263,6 +267,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                 srl.setEnabled(false);
                 dl.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 				selected.clear();
+				isInSelectMode=true;
                 return true;
             }
 
@@ -291,6 +296,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                 dl.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                 saveServers();
 				selected.clear();
+				isInSelectMode=false;
             }
         };
         switch (pref.getInt("serverListStyle2", 0)) {
@@ -1090,7 +1096,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
 		@Override
 		public void onItemClick(AdapterView<?> p1, View p2, int p3, long p4) {
-			if(sla.editMode==EDIT_MODE_SELECT_UPDATE){
+			if(sla.isInSelectMode){
 				if(sla.selected.contains(getItem(p3))){
 					sla.selected.remove(getItem(p3));
 				}else{

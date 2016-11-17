@@ -45,6 +45,7 @@ public abstract class ServerListActivityBaseFields extends ServerListActivityBas
 	protected Map<Server,Boolean> pinging=new NonNullableMap<Server>();
 
     protected int editMode=EDIT_MODE_NULL;
+	protected boolean isInSelectMode=false;
     protected ItemTouchHelper itemDecor;
     protected SimpleCallback ddManager;
     protected ActionMode.Callback editAm,selectUpdateAm,multipleDeleteAm;
