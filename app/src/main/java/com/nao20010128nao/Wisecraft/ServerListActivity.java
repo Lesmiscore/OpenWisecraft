@@ -1055,12 +1055,12 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 						}
 					}
 				}catch(Throwable e){
-					RuntimeException rex=new RuntimeException("error: sv: "+sv+" Is the server sends incorrect data?",e);
+					RuntimeException rex=new RuntimeException("error: sv: "+sv+" Maybe the server sent incorrect data?",e);
 					WisecraftError.report(sv+"",rex);
 					viewHolder.unknown(sla,sv);
 				}
 				
-				if(sla.editMode==EDIT_MODE_SELECT_UPDATE){
+				if(sla.isInSelectMode){
 					viewHolder.setSelected(sla.selected.contains(sv));
 				}else{
 					viewHolder.setSelected(false);
