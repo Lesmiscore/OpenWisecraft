@@ -47,8 +47,8 @@ copy:
     - git fetch dest
     - git push dest master
     - cd ..
-    - "git clone https://$GITLAB_USER:$GITLAB_PASS@gitlab.com/nao20010128nao/Wisecraft.git"
+    - "git clone --mirror https://$GITLAB_USER:$GITLAB_PASS@gitlab.com/nao20010128nao/Wisecraft.git"
     - cd Wisecraft
     - "git remote add dest https://$GITHUB_USER:$GITHUB_PASS@github.com/nao20010128nao/Wisecraft-mirror"
     - git fetch dest
-    - git push dest master
+    - git push -f --tags dest refs/heads/*:refs/heads/*
