@@ -39,6 +39,15 @@ class ServerGetActivityImpl extends CompatWebViewActivity {
 		scanWebView();
 		setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
 		findViewById(R.id.bottomSheet).setVisibility(View.GONE);
+		new Handler().post(new Runnable(){
+					public void run(){
+						Toolbar tb=Utils.getToolbar(ServerGetActivityImpl.this);
+						TextView tv=Utils.getActionBarTextView(tb);
+						if(tv!=null){
+							tv.setGravity(Gravity.CENTER);
+						}
+					}
+				});
 		
 		bottomSheet=BottomSheetBehavior.from(findViewById(R.id.bottomSheet));
 		bottomSheet.setHideable(true);
