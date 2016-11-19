@@ -1,6 +1,5 @@
 package com.nao20010128nao.Wisecraft.widget;
 
-import android.appwidget.*;
 import android.content.*;
 import android.os.*;
 import android.support.v7.app.*;
@@ -9,10 +8,7 @@ import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
-import com.nao20010128nao.Wisecraft.misc.compat.*;
 import java.util.*;
-
-import com.nao20010128nao.Wisecraft.R;
 
 public class WidgetsEditorActivity extends AppCompatActivity {
 	SharedPreferences widgetPref;
@@ -172,7 +168,7 @@ public class WidgetsEditorActivity extends AppCompatActivity {
 				}
 			});
 
-		new AppCompatAlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this)).
+		new AlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this)).
 			setTitle(sv+" ("+wid+")").
 			setView(dialog).
 			setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener(){

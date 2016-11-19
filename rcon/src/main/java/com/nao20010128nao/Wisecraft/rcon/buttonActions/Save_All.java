@@ -1,13 +1,10 @@
 package com.nao20010128nao.Wisecraft.rcon.buttonActions;
 
 import android.content.*;
+import android.support.v7.app.*;
 import android.view.*;
-
-import com.nao20010128nao.Wisecraft.misc.RconModule_Constant;
-import com.nao20010128nao.Wisecraft.misc.compat.*;
+import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.rcon.*;
-
-import com.nao20010128nao.Wisecraft.rcon.R;
 
 public class Save_All extends BaseAction {
 	public Save_All(RCONActivityBase act) {
@@ -16,7 +13,7 @@ public class Save_All extends BaseAction {
 
 	@Override
 	public void onClick(View p1) {
-		new AppCompatAlertDialog.Builder(this,getActivity().getPresenter().getDialogStyleId())
+		new AlertDialog.Builder(this,getActivity().getPresenter().getDialogStyleId())
 			.setMessage(R.string.auSure)
 			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 				public void onClick(DialogInterface di, int w) {

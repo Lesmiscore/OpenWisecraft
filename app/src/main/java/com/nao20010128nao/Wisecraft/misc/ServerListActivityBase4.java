@@ -4,6 +4,7 @@ import android.net.*;
 import android.os.*;
 import android.support.design.widget.*;
 import android.support.v4.view.*;
+import android.support.v7.app.*;
 import android.support.v7.widget.*;
 import android.util.*;
 import android.view.*;
@@ -11,7 +12,6 @@ import android.widget.*;
 import com.google.android.gms.tasks.*;
 import com.mikepenz.materialdrawer.*;
 import com.nao20010128nao.Wisecraft.*;
-import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.server.*;
 import com.nao20010128nao.Wisecraft.misc.view.*;
 import com.nao20010128nao.Wisecraft.services.*;
@@ -153,7 +153,7 @@ public abstract class ServerListActivityBase4 extends ServerListActivityBase5
 		super.onResume();
 		if(newVersionAnnounce!=0){
 			pref.edit().putInt("announcedFor",30).commit();
-			new AppCompatAlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
+			new AlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
 				.setTitle(R.string.newVersionAnnounceTitle_30)
 				.setMessage(R.string.newVersionAnnounceContent_30)
 				.setCancelable(false)

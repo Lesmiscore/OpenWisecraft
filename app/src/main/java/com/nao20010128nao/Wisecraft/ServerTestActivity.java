@@ -17,6 +17,8 @@ import com.nao20010128nao.Wisecraft.misc.provider.*;
 import java.lang.ref.*;
 import java.util.*;
 
+import android.support.v7.app.AlertDialog;
+
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 
 class ServerTestActivityImpl extends AppCompatActivity implements ServerListActivityInterface {
@@ -83,7 +85,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 		if (usesOldInstance & sl.getItemCount() != 0) {
 
 		} else {
-			new AppCompatAlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
+			new AlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
 				.setTitle(R.string.testServer)
 				.setView(dialog = getLayoutInflater().inflate(R.layout.test_server_dialog, null, false))
 				.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){

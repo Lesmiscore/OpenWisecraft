@@ -57,7 +57,7 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 		rv.setAdapter(sl);
 		ip = getIntent().getStringExtra("ip");
 		mode = getIntent().getIntExtra("mode", 0);
-		new AppCompatAlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
+		new AlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
 			.setTitle(R.string.serverFinder)
 			.setView(dialog = getLayoutInflater().inflate(R.layout.server_finder_start, null, false))
 			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
@@ -239,7 +239,7 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			final Server s=getItem(position);
 			if (s instanceof ServerStatus) {
-				new AppCompatAlertDialog.Builder(ServerFinderActivityImpl.this,ThemePatcher.getDefaultDialogStyle(ServerFinderActivityImpl.this))
+				new AlertDialog.Builder(ServerFinderActivityImpl.this,ThemePatcher.getDefaultDialogStyle(ServerFinderActivityImpl.this))
 					.setTitle(s.toString())
 					.setItems(R.array.serverFinderMenu, new DialogInterface.OnClickListener(){
 						public void onClick(DialogInterface di, int w) {

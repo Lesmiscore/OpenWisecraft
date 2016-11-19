@@ -2,21 +2,18 @@ package com.nao20010128nao.Wisecraft;
 import android.app.*;
 import android.content.*;
 import android.os.*;
-import android.preference.*;
 import android.support.v7.app.*;
 import android.view.*;
 import android.view.View.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
-import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.services.*;
 import java.io.*;
 import java.lang.reflect.*;
 import java.net.*;
-import uk.co.chrisjenx.calligraphy.*;
 
-import com.nao20010128nao.Wisecraft.R;
+import android.support.v7.app.AlertDialog;
 
 public class ProxyActivity extends AppCompatActivity {
 	public static ServiceController cont;
@@ -55,11 +52,11 @@ public class ProxyActivity extends AppCompatActivity {
 		String act=getIntent().getAction();
 		if(act.equals("start")){
 			if(isProxyRunning()){
-				new AppCompatAlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
+				new AlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
 					.setMessage(R.string.mtlIsAlreadyRunning)
 					.setCancelable(false)
 					.setTitle(R.string.error)
-					.setPositiveButton(android.R.string.ok, new AppCompatAlertDialog.OnClickListener(){
+					.setPositiveButton(android.R.string.ok, new AlertDialog.OnClickListener(){
 						public void onClick(DialogInterface di, int w) {
 							finish();
 						}
@@ -94,15 +91,15 @@ public class ProxyActivity extends AppCompatActivity {
 	}
 
 	public void dialog1() {
-		new AppCompatAlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
+		new AlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
 			.setMessage(R.string.mtl_attention_1)
 			.setCancelable(false)
-			.setPositiveButton(R.string.next, new AppCompatAlertDialog.OnClickListener(){
+			.setPositiveButton(R.string.next, new AlertDialog.OnClickListener(){
 				public void onClick(DialogInterface di, int w) {
 					dialog2();
 				}
 			})
-			.setNegativeButton(R.string.close, new AppCompatAlertDialog.OnClickListener(){
+			.setNegativeButton(R.string.close, new AlertDialog.OnClickListener(){
 				public void onClick(DialogInterface di, int w) {
 					finish();
 				}
@@ -112,15 +109,15 @@ public class ProxyActivity extends AppCompatActivity {
 	}
 
 	public void dialog2() {
-		new AppCompatAlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
+		new AlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
 			.setMessage(R.string.mtl_attention_2)
 			.setCancelable(false)
-			.setPositiveButton(R.string.next, new AppCompatAlertDialog.OnClickListener(){
+			.setPositiveButton(R.string.next, new AlertDialog.OnClickListener(){
 				public void onClick(DialogInterface di, int w) {
 					start();
 				}
 			})
-			.setNegativeButton(R.string.close, new AppCompatAlertDialog.OnClickListener(){
+			.setNegativeButton(R.string.close, new AlertDialog.OnClickListener(){
 				public void onClick(DialogInterface di, int w) {
 					finish();
 				}

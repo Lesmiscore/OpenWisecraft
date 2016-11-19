@@ -13,10 +13,7 @@ import android.widget.*;
 import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
-import com.nao20010128nao.Wisecraft.misc.compat.*;
 import java.util.*;
-
-import com.nao20010128nao.Wisecraft.R;
 
 public abstract class WidgetServerSelectActivity extends AppCompatActivity 
 {
@@ -98,7 +95,7 @@ public abstract class WidgetServerSelectActivity extends AppCompatActivity
 						}
 					});
 
-				new AppCompatAlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this)).
+				new AlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this)).
 					setView(dialog).
 					setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener(){
 						public void onClick(DialogInterface d, int sel) {

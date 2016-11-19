@@ -1,10 +1,9 @@
 package com.nao20010128nao.Wisecraft;
 import android.content.*;
-import android.content.res.*;
 import android.os.*;
 import android.support.design.widget.*;
+import android.support.v7.app.*;
 import android.support.v7.widget.*;
-import android.text.*;
 import android.util.*;
 import android.view.*;
 import android.webkit.*;
@@ -83,7 +82,7 @@ class ServerGetActivityImpl extends CompatWebViewActivity {
 			});
 		
 		if(!Utils.isOnline(this)){
-			new AppCompatAlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
+			new AlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
 				.setMessage(R.string.offline)
 				.setTitle(R.string.error)
 				.setOnCancelListener(new DialogInterface.OnCancelListener(){
@@ -102,7 +101,7 @@ class ServerGetActivityImpl extends CompatWebViewActivity {
 			return;
 		}
 		serverList = createServerListDomains();
-		new AppCompatAlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
+		new AlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
 			.setSingleChoiceItems(serverList, -1, new DialogInterface.OnClickListener(){
 				public void onClick(DialogInterface di, int w) {
 					di.dismiss();
@@ -175,7 +174,7 @@ class ServerGetActivityImpl extends CompatWebViewActivity {
 								dialogMsg = getResources().getString(R.string.msl_unsupportedWebpage) + url;
 							}
 
-							new AppCompatAlertDialog.Builder(ServerGetActivityImpl.this,ThemePatcher.getDefaultDialogStyle(ServerGetActivityImpl.this))
+							new AlertDialog.Builder(ServerGetActivityImpl.this,ThemePatcher.getDefaultDialogStyle(ServerGetActivityImpl.this))
 								.setTitle(R.string.error)
 								.setMessage(dialogMsg)
 								.setPositiveButton(android.R.string.ok, Constant.BLANK_DIALOG_CLICK_LISTENER)

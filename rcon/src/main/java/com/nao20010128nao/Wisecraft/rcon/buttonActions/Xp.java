@@ -1,18 +1,13 @@
 package com.nao20010128nao.Wisecraft.rcon.buttonActions;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-import com.nao20010128nao.Wisecraft.misc.RconModule_Constant;
-import com.nao20010128nao.Wisecraft.rcon.R;
-import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
-import com.nao20010128nao.Wisecraft.misc.rcon.AuthenticationException;
-import com.nao20010128nao.Wisecraft.rcon.RCONActivityBase;
-import java.io.IOException;
+import android.support.v7.app.*;
+import android.view.*;
+import android.widget.*;
+import com.nao20010128nao.Wisecraft.misc.*;
+import com.nao20010128nao.Wisecraft.misc.rcon.*;
+import com.nao20010128nao.Wisecraft.rcon.*;
+import java.io.*;
 
 import static com.nao20010128nao.Wisecraft.misc.RconModule_Utils.*;
-import android.support.v7.app.AlertDialog;
-import com.nao20010128nao.Wisecraft.rcon.Presenter;
 
 public class Xp extends NameSelectAction {
 	String   amount       ,player       ;
@@ -34,7 +29,7 @@ public class Xp extends NameSelectAction {
 
 	@Override
 	public void onClick(View p1) {
-		dialog = new AppCompatAlertDialog.Builder(this,getActivity().getPresenter().getDialogStyleId())
+		dialog = new AlertDialog.Builder(this,getActivity().getPresenter().getDialogStyleId())
 			.setView(inflateDialogView())
 			.show();
 	}
@@ -88,7 +83,7 @@ public class Xp extends NameSelectAction {
 		executeButton.setOnClickListener(new View.OnClickListener(){
 				public void onClick(View v) {
 					if (isNullString(amount) || isNullString(player)) {
-						AppCompatAlertDialog.Builder b=new AppCompatAlertDialog.Builder(Xp.this,getActivity().getPresenter().getDialogStyleId());
+						AlertDialog.Builder b=new AlertDialog.Builder(Xp.this,getActivity().getPresenter().getDialogStyleId());
 						String mes="";
 						if (isNullString(amount)) {
 							mes += getResString(R.string.giveSelectAmount) + "\n";

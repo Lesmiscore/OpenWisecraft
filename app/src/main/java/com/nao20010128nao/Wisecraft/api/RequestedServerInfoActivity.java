@@ -2,13 +2,11 @@ package com.nao20010128nao.Wisecraft.api;
 import android.content.*;
 import android.net.*;
 import android.os.*;
+import android.support.v7.app.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
-import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.provider.*;
 import java.util.*;
-
-import com.nao20010128nao.Wisecraft.R;
 
 public class RequestedServerInfoActivity extends ApiBaseActivity {
 	ServerPingProvider spp=new NormalServerPingProvider();
@@ -113,7 +111,7 @@ public class RequestedServerInfoActivity extends ApiBaseActivity {
             runOnUiThread(new Runnable(){
                     public void run(){
                         wd.hideWorkingDialog();
-                        new AppCompatAlertDialog.Builder(RequestedServerInfoActivity.this,ThemePatcher.getDefaultDialogStyle(RequestedServerInfoActivity.this))
+                        new AlertDialog.Builder(RequestedServerInfoActivity.this,ThemePatcher.getDefaultDialogStyle(RequestedServerInfoActivity.this))
                             .setMessage(R.string.serverOffline)
                             .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
                                 public void onClick(DialogInterface di, int t) {

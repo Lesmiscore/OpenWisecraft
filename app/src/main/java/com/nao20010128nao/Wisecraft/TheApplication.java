@@ -69,8 +69,8 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		Log.d("Tesuya",(String)Utils.getField(BuildConfig.class,null,"HIDDEN_AD"));
 		registerActivityLifecycleCallbacks(this);
 	}
-	public Typeface getLocalizedFont() {
-		return fontFieldNames.get(getFontFieldName()).load();
+	public TypefaceLoader getLocalizedFont() {
+		return fontFieldNames.get(getFontFieldName());
 	}
 	public String getFontFieldName() {
 		return pref.getString("fontField", getResources().getString(R.string.fontField));

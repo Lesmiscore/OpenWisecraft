@@ -31,7 +31,7 @@ public class PreferenceUtils
 		if(!pref.isEnabled()){
 			((TextView)holder.findViewById(android.R.id.title)).setTextColor(ContextCompat.getColor(context,R.color.color888));
 		}
-		Utils.applyTypefaceForViewTree(holder.itemView,TheApplication.instance.getLocalizedFont());
+		Utils.applyTypefaceForViewTree(holder.itemView,TheApplication.instance.getLocalizedFont().load());
 	}
 	public static void onBindViewHolder(SetTextColor pref,PreferenceViewHolder holder){
 		((TextView)holder.findViewById(android.R.id.title)).setTextColor(pref.getTextColor());

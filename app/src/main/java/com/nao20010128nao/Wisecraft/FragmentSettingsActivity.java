@@ -249,7 +249,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity {
 				});
 			sH("serverListStyle", new HandledPreference.OnClickListener(){
 					public void onClick(String a, String b, String c) {
-						new AppCompatAlertDialog.Builder(getContext(),ThemePatcher.getDefaultDialogStyle(getContext()))
+						new AlertDialog.Builder(getContext(),ThemePatcher.getDefaultDialogStyle(getContext()))
 							.setTitle(R.string.serverListStyle)
 							.setSingleChoiceItems(getResources().getStringArray(R.array.serverListStyles),which=pref.getInt("serverListStyle2",0),new DialogInterface.OnClickListener(){
 								public void onClick(DialogInterface di,int w){
@@ -274,7 +274,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity {
 						String[] choice=getFontChoices();
 						String[] display=TheApplication.instance.getDisplayFontNames(choice);
 						final List<String> choiceList=Arrays.<String>asList(choice);
-						new AppCompatAlertDialog.Builder(getContext(),ThemePatcher.getDefaultDialogStyle(getContext()))
+						new AlertDialog.Builder(getContext(),ThemePatcher.getDefaultDialogStyle(getContext()))
 							.setSingleChoiceItems(display, choiceList.indexOf(TheApplication.instance.getFontFieldName())
 							, new DialogInterface.OnClickListener(){
 								public void onClick(DialogInterface di, int w) {
@@ -325,7 +325,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity {
 									onProgressChanged(seekBar,0,false);
 								}
 						});
-						new AppCompatAlertDialog.Builder(getContext(),ThemePatcher.getDefaultDialogStyle(getContext()))
+						new AlertDialog.Builder(getContext(),ThemePatcher.getDefaultDialogStyle(getContext()))
 							.setTitle(R.string.addLessRows)
 							.setView(v)
 							.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
@@ -354,7 +354,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity {
 			sH("4.0themeMode", new HandledPreference.OnClickListener(){
 					public void onClick(String a, String b, String c) {
 						final boolean[] gpsRequired=Utils.getBooleanArray(getContext(),R.array.themeMode_GpsRequired);
-						new AppCompatAlertDialog.Builder(getContext(),ThemePatcher.getDefaultDialogStyle(getContext()))
+						new AlertDialog.Builder(getContext(),ThemePatcher.getDefaultDialogStyle(getContext()))
 							.setTitle(R.string.themeMode)
 							.setSingleChoiceItems(getResources().getStringArray(R.array.themeMode),which=pref.getInt("4.0themeMode",ThemePatcher.THEME_MODE_LIGHT),new DialogInterface.OnClickListener(){
 								public void onClick(DialogInterface di,int w){

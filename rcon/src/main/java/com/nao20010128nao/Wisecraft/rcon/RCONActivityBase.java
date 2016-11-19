@@ -17,7 +17,6 @@ import com.mikepenz.materialdrawer.*;
 import com.mikepenz.materialdrawer.model.*;
 import com.mikepenz.materialdrawer.model.interfaces.*;
 import com.nao20010128nao.Wisecraft.misc.*;
-import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.rcon.*;
 import com.nao20010128nao.Wisecraft.rcon.*;
 import com.nao20010128nao.Wisecraft.rcon.buttonActions.*;
@@ -357,7 +356,7 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 		}
 		public void askPassword() {
 			if(hasPasswordCoded())return;
-			new AppCompatAlertDialog.Builder(this,getPresenter().getDialogStyleId())
+			new AlertDialog.Builder(this,getPresenter().getDialogStyleId())
 				.setView(inflateDialogView())
 				.setCancelable(false)
 				.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){

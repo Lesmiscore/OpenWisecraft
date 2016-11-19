@@ -1,17 +1,13 @@
 package com.nao20010128nao.Wisecraft.rcon.buttonActions;
+import android.support.v7.app.*;
 import android.view.*;
 import android.widget.*;
-
-import com.nao20010128nao.Wisecraft.misc.RconModule_Constant;
-import com.nao20010128nao.Wisecraft.misc.compat.*;
+import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.rcon.*;
 import com.nao20010128nao.Wisecraft.rcon.*;
 import java.io.*;
 
-import com.nao20010128nao.Wisecraft.rcon.R;
-
 import static com.nao20010128nao.Wisecraft.misc.RconModule_Utils.*;
-import android.support.v7.app.*;
 
 public class Clear extends NameSelectAction {
 	String   player       ,item       ;
@@ -33,7 +29,7 @@ public class Clear extends NameSelectAction {
 
 	@Override
 	public void onClick(View p1) {
-		dialog = new AppCompatAlertDialog.Builder(this,getActivity().getPresenter().getDialogStyleId())
+		dialog = new AlertDialog.Builder(this,getActivity().getPresenter().getDialogStyleId())
 			.setView(inflateDialogView())
 			.show();
 	}
@@ -87,7 +83,7 @@ public class Clear extends NameSelectAction {
 		executeButton.setOnClickListener(new View.OnClickListener(){
 				public void onClick(View v) {
 					if (isNullString(player) || isNullString(item)) {
-						AppCompatAlertDialog.Builder b=new AppCompatAlertDialog.Builder(Clear.this,getActivity().getPresenter().getDialogStyleId());
+						AlertDialog.Builder b=new AlertDialog.Builder(Clear.this,getActivity().getPresenter().getDialogStyleId());
 						String mes="";
 						if (isNullString(player)) {
 							mes += getResString(R.string.giveSelectPlayer) + "\n";

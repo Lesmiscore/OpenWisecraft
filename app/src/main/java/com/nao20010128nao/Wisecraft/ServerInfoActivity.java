@@ -9,6 +9,7 @@ import android.os.*;
 import android.preference.*;
 import android.support.design.widget.*;
 import android.support.v4.view.*;
+import android.support.v7.app.*;
 import android.support.v7.graphics.*;
 import android.support.v7.widget.*;
 import android.text.*;
@@ -21,7 +22,6 @@ import com.astuetz.*;
 import com.google.gson.*;
 import com.nao20010128nao.OTC.*;
 import com.nao20010128nao.Wisecraft.misc.*;
-import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
@@ -31,6 +31,8 @@ import java.io.*;
 import java.lang.ref.*;
 import java.math.*;
 import java.util.*;
+
+import android.support.v7.app.AlertDialog;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 
@@ -365,7 +367,7 @@ class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 								});
 						}
 					});
-				new AppCompatAlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
+				new AlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
 					.setTitle(R.string.export_typepath_simple)
 					.setView(dialogView_)
 					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
@@ -401,7 +403,7 @@ class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				scheduleFinish();//ServerListActivity updates the stat
 				return true;
 			case 1://See the title for all
-				AppCompatAlertDialog.Builder ab=new AppCompatAlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this));
+				AlertDialog.Builder ab=new AlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this));
 				LinearLayout ll;
 				boolean dark;
 				dark = pref.getBoolean("colorFormattedText", false) ?pref.getBoolean("darkBackgroundForServerName", false): false;

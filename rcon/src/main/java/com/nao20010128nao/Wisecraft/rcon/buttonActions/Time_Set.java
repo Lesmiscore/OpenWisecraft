@@ -1,13 +1,10 @@
 package com.nao20010128nao.Wisecraft.rcon.buttonActions;
 import android.content.*;
-
-import com.nao20010128nao.Wisecraft.misc.RconModule_Constant;
-import com.nao20010128nao.Wisecraft.misc.compat.*;
+import android.support.v7.app.*;
+import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.rcon.*;
 import com.nao20010128nao.Wisecraft.rcon.*;
 import java.io.*;
-
-import com.nao20010128nao.Wisecraft.rcon.R;
 
 public class Time_Set extends NameSelectAction {
 	public Time_Set(RCONActivityBase a) {
@@ -16,7 +13,7 @@ public class Time_Set extends NameSelectAction {
 
 	@Override
 	public void onSelected(final String s) {
-		new AppCompatAlertDialog.Builder(this,getActivity().getPresenter().getDialogStyleId())
+		new AlertDialog.Builder(this,getActivity().getPresenter().getDialogStyleId())
 			.setMessage(getResString(R.string.setTimeAsk).replace("[TIME]", s))
 			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 				public void onClick(DialogInterface di, int w) {
