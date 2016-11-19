@@ -22,14 +22,15 @@ import com.nao20010128nao.Wisecraft.services.*;
 import java.lang.reflect.*;
 import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
+import com.nao20010128nao.Wisecraft.misc.tfl.*;
 
 public class TheApplication extends Application implements com.nao20010128nao.Wisecraft.rcon.Presenter,com.ipaulpro.afilechooser.Presenter,InformationCommunicatorReceiver.DisclosureResult {
 	public static TheApplication instance;
-	public static Typeface latoLight,icomoon1,sysDefault,droidSans,robotoSlabLight,ubuntuFont,mplus1p;
+	public static TypefaceLoader latoLight,icomoon1,sysDefault,droidSans,robotoSlabLight,ubuntuFont,mplus1p;
 	public static Field[] fonts=getFontFields();
-	public static Map<Typeface,String> fontFilenames;
+	public static Map<TypefaceLoader,String> fontFilenames;
 	public static Map<String,Integer> fontDisplayNames;
-	public static Map<String,Typeface> fontFieldNames;
+	public static Map<String,TypefaceLoader> fontFieldNames;
 	public static Map<String,String> pcUserUUIDs;
 	public String uuid;
 	public SharedPreferences pref;
@@ -66,7 +67,7 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		Log.d("Tesuya",(String)Utils.getField(BuildConfig.class,null,"HIDDEN_AD"));
 	}
 	public Typeface getLocalizedFont() {
-		return fontFieldNames.get(getFontFieldName());
+		return fontFieldNames.get(getFontFieldName()).load();
 	}
 	public String getFontFieldName() {
 		return pref.getString("fontField", getResources().getString(R.string.fontField));
@@ -106,14 +107,14 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		firebaseRemoteCfg=FirebaseRemoteConfig.getInstance();
 		fbCfgLoader=firebaseRemoteCfg.fetch();
         
-		droidSans = Typeface.createFromAsset(getAssets(), "DroidSans.ttf");
-		latoLight = Typeface.createFromAsset(getAssets(), "lato-light.ttf");
-		icomoon1 = Typeface.createFromAsset(getAssets(), "icomoon.ttf");
-		sysDefault = Typeface.DEFAULT;
-		ubuntuFont = Typeface.createFromAsset(getAssets(), "Ubuntu-Regular.ttf");
-		mplus1p = Typeface.createFromAsset(getAssets(), "Mplus1p-Light.ttf");
+		droidSans = TypefaceLoader.newInstance(getAssets(), "DroidSans.ttf");
+		latoLight = TypefaceLoader.newInstance(getAssets(), "lato-light.ttf");
+		icomoon1 = TypefaceLoader.newInstance(getAssets(), "icomoon.ttf");
+		sysDefault = TypefaceLoader.newInstance(Typeface.DEFAULT);
+		ubuntuFont = TypefaceLoader.newInstance(getAssets(), "Ubuntu-Regular.ttf");
+		mplus1p = TypefaceLoader.newInstance(getAssets(), "Mplus1p-Light.ttf");
 
-		fontFilenames = new HashMap<Typeface,String>();
+		fontFilenames = new HashMap<TypefaceLoader,String>();
 		fontFilenames.put(droidSans, "DroidSans.ttf");
 		fontFilenames.put(latoLight, "lato-light.ttf");
 		fontFilenames.put(icomoon1, "icomoon.ttf");

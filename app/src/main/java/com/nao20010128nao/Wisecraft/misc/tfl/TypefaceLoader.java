@@ -16,6 +16,9 @@ public abstract class TypefaceLoader {
 	public static TypefaceLoader newInstance(String filename,Context ctx){
 		return new AssetTypefaceLoader(filename,ctx);
 	}
+	public static TypefaceLoader newInstance(AssetManager am,String filename){
+		return new AssetTypefaceLoader(filename,am);
+	}
 	public static TypefaceLoader newInstance(Typeface tf){
 		return new ConstantTypefaceLoader(tf);
 	}
