@@ -17,14 +17,15 @@ import com.google.firebase.remoteconfig.*;
 import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
+import com.nao20010128nao.Wisecraft.misc.tfl.*;
 import com.nao20010128nao.Wisecraft.rcon.*;
 import com.nao20010128nao.Wisecraft.services.*;
 import java.lang.reflect.*;
 import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
-import com.nao20010128nao.Wisecraft.misc.tfl.*;
+import android.os.*;
 
-public class TheApplication extends Application implements com.nao20010128nao.Wisecraft.rcon.Presenter,com.ipaulpro.afilechooser.Presenter,InformationCommunicatorReceiver.DisclosureResult {
+public class TheApplication extends Application implements com.nao20010128nao.Wisecraft.rcon.Presenter,com.ipaulpro.afilechooser.Presenter,InformationCommunicatorReceiver.DisclosureResult,Application.ActivityLifecycleCallbacks {
 	public static TheApplication instance;
 	public static TypefaceLoader latoLight,icomoon1,sysDefault,droidSans,robotoSlabLight,ubuntuFont,mplus1p;
 	public static Field[] fonts=getFontFields();
@@ -41,6 +42,7 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 	public Context extenderWrapped;
 	boolean disclosurePending=true,disclosureEnded=false;
     boolean activitiesLaunches=false;
+	WeakHashMap<Activity,Application> activities=new WeakHashMap<>();
 	
 	@Override
 	public void onCreate() {
@@ -65,6 +67,7 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 			.commit();
 			
 		Log.d("Tesuya",(String)Utils.getField(BuildConfig.class,null,"HIDDEN_AD"));
+		registerActivityLifecycleCallbacks(this);
 	}
 	public Typeface getLocalizedFont() {
 		return fontFieldNames.get(getFontFieldName()).load();
@@ -239,6 +242,42 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 	@Override
 	public Resources getResources() {
 		return extenderWrapped.getResources();
+	}
+
+	@Override
+	public void onActivityStarted(Activity p1) {
+	}
+
+	@Override
+	public void onActivityCreated(Activity p1, Bundle p2) {
+		activities.put(p1,this);
+	}
+
+	@Override
+	public void onActivityPaused(Activity p1) {
+	}
+
+	@Override
+	public void onActivityStopped(Activity p1) {
+	}
+
+	@Override
+	public void onActivitySaveInstanceState(Activity p1, Bundle p2) {
+	}
+
+	@Override
+	public void onActivityDestroyed(Activity p1) {
+		activities.remove(p1);
+	}
+
+	@Override
+	public void onActivityResumed(Activity p1) {
+	}
+	
+	public void restartForMainProcess(){
+		for(Activity a:activities.keySet())
+			a.finish();
+		startActivity(new Intent(this,ServerListActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
 	}
 	
 	public static Context injectContextSpecial(final Context base){
