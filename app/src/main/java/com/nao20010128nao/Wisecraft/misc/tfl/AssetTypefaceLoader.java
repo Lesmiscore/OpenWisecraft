@@ -8,7 +8,7 @@ class AssetTypefaceLoader extends TypefaceLoader
 {
 	String filename;
 	AssetManager am;
-	WeakReference<Typeface> ref;
+	WeakReference<Typeface> ref=new WeakReference<Typeface>(null);
 	public AssetTypefaceLoader(String filename,AssetManager am){
 		this.filename=filename;
 		this.am=am;

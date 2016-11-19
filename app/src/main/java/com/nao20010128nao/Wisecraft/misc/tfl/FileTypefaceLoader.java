@@ -8,7 +8,7 @@ import java.lang.ref.*;
 class FileTypefaceLoader extends TypefaceLoader
 {
 	File file;
-	WeakReference<Typeface> ref;
+	WeakReference<Typeface> ref=new WeakReference<Typeface>(null);
 	public FileTypefaceLoader(File f){
 		file=f;
 	}
