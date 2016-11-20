@@ -189,7 +189,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				return editMode != EDIT_MODE_NULL;
 			}
         };
-        editAm = new ActionMode.Callback(){
+        handMoveAm = new ActionMode.Callback(){
             public boolean onCreateActionMode(ActionMode p1, Menu p2) {
                 itemDecor.attachToRecyclerView(rv);
                 srl.setEnabled(false);
@@ -928,7 +928,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
     
     private void startEditMode() {
         //start action mode here
-        startSupportActionMode(editAm);
+        startSupportActionMode(handMoveAm);
     }
 	
 	private void startSelectUpdateMode() {
