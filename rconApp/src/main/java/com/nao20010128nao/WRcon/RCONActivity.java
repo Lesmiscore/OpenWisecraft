@@ -1,26 +1,20 @@
 package com.nao20010128nao.WRcon;
-import com.nao20010128nao.Wisecraft.rcon.RCONActivityBase;
-import android.os.Bundle;
-import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
-import android.content.DialogInterface;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.support.v4.view.MenuItemCompat;
-import android.content.Intent;
-import android.text.SpannableStringBuilder;
-import android.text.style.ForegroundColorSpan;
-import android.graphics.Color;
-import android.text.Spannable;
-import android.support.v4.app.FragmentTabHost;
-import android.widget.TextView;
-import android.content.res.ColorStateList;
-import android.widget.TabHost;
-import java.util.Arrays;
-import android.graphics.drawable.Drawable;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.graphics.drawable.StateListDrawable;
-import android.util.Log;
-import java.math.BigDecimal;
+import android.content.*;
+import android.graphics.*;
+import android.graphics.drawable.*;
+import android.os.*;
+import android.support.v4.app.*;
+import android.support.v4.graphics.drawable.*;
+import android.support.v4.view.*;
+import android.support.v7.app.*;
+import android.text.*;
+import android.text.style.*;
+import android.util.*;
+import android.view.*;
+import android.widget.*;
+import com.nao20010128nao.Wisecraft.rcon.*;
+import java.math.*;
+import java.util.*;
 
 public class RCONActivity extends RCONActivityBase implements TabHost.OnTabChangeListener
 {
@@ -41,7 +35,7 @@ public class RCONActivity extends RCONActivityBase implements TabHost.OnTabChang
 
 	@Override
 	public void exitActivity() {
-		new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
+		new AlertDialog.Builder(this,R.style.AppAlertDialog)
 			.setMessage(R.string.auSure_exit)
 			.setNegativeButton(android.R.string.ok,new DialogInterface.OnClickListener(){
 				public void onClick(DialogInterface di,int w){
@@ -101,7 +95,7 @@ public class RCONActivity extends RCONActivityBase implements TabHost.OnTabChang
 		for (int i = 0; i < fth.getTabWidget().getChildCount(); i++) {
 			TextView tv = (TextView) fth.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
 			tv.setTextColor(colors[i]);
-			fth.getTabWidget().getChildAt(i).setBackgroundColor(getResources().getColor(R.color.upd_2));
+			fth.getTabWidget().getChildAt(i).setBackgroundColor(getResources().getColor(R.color.mainColor));
 		}
 		fth.getTabWidget().getChildAt(selected).setBackgroundDrawable(tabUnderlineSelected);
 		Log.d("TabChild",fth.getTabWidget().getChildAt(selected).getClass().getName());

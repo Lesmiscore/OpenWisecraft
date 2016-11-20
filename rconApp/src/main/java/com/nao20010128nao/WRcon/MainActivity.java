@@ -1,44 +1,20 @@
 package com.nao20010128nao.WRcon;
-import com.nao20010128nao.Wisecraft.misc.compat.AppCompatListActivity;
-import android.os.Bundle;
-import com.nao20010128nao.Wisecraft.misc.AppBaseArrayAdapter;
-import java.util.ArrayList;
-import android.widget.ListView;
-import android.widget.AdapterView;
-import android.widget.Adapter;
-import android.view.View;
-import android.view.ViewGroup;
-import java.util.List;
-import java.util.Collection;
-import java.util.Arrays;
-import android.widget.TextView;
-import android.view.Menu;
-import android.view.SubMenu;
-import android.support.v4.view.MenuItemCompat;
-import android.view.MenuItem;
-import com.nao20010128nao.Wisecraft.misc.compat.AppCompatAlertDialog;
-import android.content.DialogInterface;
-import android.widget.EditText;
-import android.widget.Toast;
-import android.support.design.widget.Snackbar;
-import android.util.Log;
-import com.google.gson.Gson;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.support.v7.widget.AppCompatEditText;
-import java.io.File;
-import android.os.Environment;
-import android.os.AsyncTask;
-import com.nao20010128nao.WRcon.misc.Utils;
-import android.content.Intent;
-import android.support.v7.app.AlertDialog;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
-import com.nao20010128nao.Wisecraft.misc.DebugWriter;
-import com.nao20010128nao.WRcon.misc.MainActivityBase1;
-import android.widget.ImageView;
-import android.graphics.Color;
+import android.content.*;
+import android.graphics.*;
+import android.os.*;
+import android.preference.*;
+import android.support.design.widget.*;
+import android.support.v4.view.*;
+import android.support.v7.app.*;
+import android.util.*;
+import android.view.*;
+import android.widget.*;
+import com.google.android.gms.tasks.*;
+import com.google.gson.*;
+import com.nao20010128nao.WRcon.misc.*;
+import com.nao20010128nao.Wisecraft.misc.*;
+import java.io.*;
+import java.util.*;
 
 public class MainActivity extends MainActivityBase1
 {
@@ -101,7 +77,7 @@ public class MainActivity extends MainActivityBase1
 		switch(item.getItemId()){
 			case 1:{
 				final View dialogView=getLayoutInflater().inflate(R.layout.server_add_dialog_new,null);
-				new AppCompatAlertDialog.Builder(this,R.style.AppAlertDialog)
+				new AlertDialog.Builder(this,R.style.AppAlertDialog)
 					.setView(dialogView)
 					.setTitle(R.string.add)
 					.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
@@ -140,7 +116,7 @@ public class MainActivity extends MainActivityBase1
 								});
 						}
 					});
-				new AppCompatAlertDialog.Builder(MainActivity.this, R.style.AppAlertDialog)
+				new AlertDialog.Builder(MainActivity.this, R.style.AppAlertDialog)
 					.setTitle(R.string.export_typepath)
 					.setView(dialogView_)
 					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
@@ -186,7 +162,7 @@ public class MainActivity extends MainActivityBase1
 								});
 						}
 					});
-				new AppCompatAlertDialog.Builder(MainActivity.this, R.style.AppAlertDialog)
+				new AlertDialog.Builder(MainActivity.this, R.style.AppAlertDialog)
 					.setTitle(R.string.import_typepath)
 					.setView(dialogView)
 					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
@@ -297,7 +273,7 @@ public class MainActivity extends MainActivityBase1
 									final View dialogView=getLayoutInflater().inflate(R.layout.server_add_dialog_new,null);
 									((EditText)dialogView.findViewById(R.id.serverIp)).setText(server.ip);
 									((EditText)dialogView.findViewById(R.id.serverPort)).setText(server.port+"");
-									new AppCompatAlertDialog.Builder(MainActivity.this,R.style.AppAlertDialog)
+									new AlertDialog.Builder(MainActivity.this,R.style.AppAlertDialog)
 										.setView(dialogView)
 										.setTitle(R.string.edit)
 										.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
