@@ -51,6 +51,7 @@ android {
         debug {
         	applicationIdSuffix = '.alpha'  
             versionNameSuffix = 'd'
+            debuggable true
 			resValue "string", "wsi", ""
 			resValue "bool", "inspectorEnabled", "false"
 		}
@@ -72,6 +73,7 @@ android {
         	applicationIdSuffix = '.alpha'  
             versionNameSuffix = ' Pre'
 			signingConfig signingConfigs.release
+			debuggable true
 			resValue "string", "app_name", "[DEBUG2] Wisecraft "+getRandomBetaSuffix()
 			resValue "string", "wsi", "[DEBUG2] "+wsi
 			resValue "bool", "inspectorEnabled", "true"
