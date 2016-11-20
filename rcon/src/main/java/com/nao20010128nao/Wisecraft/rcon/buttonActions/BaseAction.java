@@ -27,6 +27,10 @@ public abstract class BaseAction extends ContextWrapper implements OnClickListen
 		pdi.withDescription(getTitleId());
 		return pdi;
 	}
+	public MenuItem appendIntoMenu(Menu m){
+		MenuItem mi=m.add(getTitleId(),0,0,getTitleId());
+		return mi;
+	}
 	public RCONActivityBase getActivity() {
 		return ra;
 	}
