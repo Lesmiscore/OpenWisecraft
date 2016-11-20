@@ -11,6 +11,8 @@ import java.util.*;
 import org.eclipse.egit.github.core.*;
 import org.eclipse.egit.github.core.client.*;
 import org.eclipse.egit.github.core.service.*;
+import com.nao20010128nao.Wisecraft.misc.collector.CollectorMainUploaderProvider.*;
+import java.io.*;
 
 public class GistUploader extends ContextWrapper implements CollectorMainUploaderProvider {
 	
@@ -96,7 +98,13 @@ public class GistUploader extends ContextWrapper implements CollectorMainUploade
 				return false;
 			}
 		}
-		
+
+		@Override
+		public boolean streamingUpload(String uuid, InputStream data, int length, CollectorMainUploaderProvider.UploadKind kind) {
+			// Return false because it's unsupported
+			return false;
+		}
+
 		private String getHash(List<RepositoryContents> cont, String filename) {
 			for (RepositoryContents o:cont)
 				if (o.getName().equalsIgnoreCase(filename))

