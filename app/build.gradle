@@ -144,7 +144,6 @@ android {
 }
 
 dependencies {
-	compile project(':pinger')
 	compile project(':statusesLayout')   // https://github.com/nao20010128nao/StatusesLayout
 	compile project(':wisecraft-i18n')   // https://github.com/nao20010128nao/Wisecraft-Multilanguage
 	compile project(':MaterialIcons')    // https://github.com/nao20010128nao/MaterialIconsLight
@@ -156,6 +155,7 @@ dependencies {
 	compile project(':calligraphy')
 	compile project(':colorPicker')
 	compile project(':pinger')
+	//compile project(':collector')
 	
 	compile 'com.android.support:recyclerview-v7:25.0.0'
 	compile 'com.android.support:design:25.0.0'
