@@ -80,15 +80,21 @@ public class RawUploader2 implements CollectorMainUploaderProvider {
 				dos.writeInt(baos.size());//Gzipped length
 				dos.write(baos.toByteArray());//Compressed content
 				dos.flush();
-				Thread.sleep(100);
-				return sock.getInputStream().read()==0;
+				InputStream sockIs=sock.getInputStream();
+				while(sock.isConnected()){
+					try{
+						return sockIs.read()==0;
+					}catch(Throwable e){
+						Thread.sleep(100);
+					}
+				}
 			}catch(Throwable e){
 				WisecraftError.report("RawUploader2",e);
-				return false;
 			}finally{
 				if(dos!=null)dos.close();
 				if(sock!=null)sock.close();
 			}
+			return false;
 		}
 
 		@Override
