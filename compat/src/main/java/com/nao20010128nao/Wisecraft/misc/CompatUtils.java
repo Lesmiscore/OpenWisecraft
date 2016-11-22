@@ -1,6 +1,13 @@
 package com.nao20010128nao.Wisecraft.misc;
 
+import android.content.*;
+import android.content.pm.*;
+import android.text.*;
 import android.view.*;
+import com.nao20010128nao.Wisecraft.misc.compat.*;
+import java.io.*;
+import java.security.*;
+import java.util.*;
 
 public class CompatUtils {
 	public static boolean equals(Object a, Object b) {
@@ -167,6 +174,87 @@ public class CompatUtils {
 					applyHandlersForViewTree(vg.getChildAt(i),longer);
 				}
 			}
+		}
+	}
+	public static boolean isNullString(String s) {
+		return TextUtils.isEmpty(s);
+	}
+	public static String randomText() {
+		return randomText(16);
+	}
+	public static String randomText(int len) {
+		StringBuilder sb=new StringBuilder(len*2);
+		byte[] buf=new byte[len];
+		new SecureRandom().nextBytes(buf);
+		for (byte b:buf)
+			sb.append(Character.forDigit(b >> 4 & 0xF, 16)).append(Character.forDigit(b & 0xF, 16));
+		return sb.toString();
+	}
+	public static int getVersionCode(Context context) {
+        try {
+            return context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+			DebugWriter.writeToE("Utils",e);
+			return 0;
+        }
+    }
+
+    public static String getVersionName(Context context) {
+        try {
+            return context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            DebugWriter.writeToE("Utils",e);
+			return "";
+        }
+    }
+	public static String[] lines(String s) {
+		try {
+			BufferedReader br=new BufferedReader(new StringReader(s));
+			List<String> tmp=new ArrayList<>(4);
+			String line=null;
+			while (null != (line = br.readLine()))tmp.add(line);
+			return tmp.toArray(new String[tmp.size()]);
+		} catch (Throwable e) {
+			return new String[0];
+		}
+	}
+	public static boolean writeToFile(File f, String content) {
+		return writeToFileByBytes(f,content.getBytes(CompatCharsets.UTF_8));
+	}
+	public static String readWholeFile(File f) {
+		return new String(readWholeFileInBytes(f),CompatCharsets.UTF_8);
+	}
+	public static boolean writeToFileByBytes(File f, byte[] content) {
+		FileOutputStream fos=null;
+		try {
+			(fos = new FileOutputStream(f)).write(content);
+			return true;
+		} catch (Throwable e) {
+			return false;
+		} finally {
+			try {
+				if (fos != null)fos.close();
+			} catch (IOException e) {}
+		}
+	}
+	public static byte[] readWholeFileInBytes(File f) {
+		FileInputStream fis=null;byte[] buf=new byte[8192];
+		ByteArrayOutputStream baos=new ByteArrayOutputStream(8192);
+		try {
+			fis = new FileInputStream(f);
+			while (true) {
+				int r=fis.read(buf);
+				if (r <= 0)
+					break;
+				baos.write(buf, 0, r);
+			}
+			return baos.toByteArray();
+		} catch (Throwable e) {
+			return null;
+		} finally {
+			try {
+				if (fis != null)fis.close();
+			} catch (IOException e) {}
 		}
 	}
 }

@@ -2,7 +2,6 @@ package com.nao20010128nao.Wisecraft.misc;
 import android.annotation.*;
 import android.app.*;
 import android.content.*;
-import android.content.pm.*;
 import android.content.res.*;
 import android.graphics.*;
 import android.net.*;
@@ -10,7 +9,6 @@ import android.os.*;
 import android.preference.*;
 import android.support.design.widget.*;
 import android.support.v7.widget.*;
-import android.text.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
@@ -21,12 +19,11 @@ import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import java.io.*;
 import java.lang.reflect.*;
-import java.security.*;
+import java.math.*;
 import java.util.*;
 
 import android.support.v7.widget.Toolbar;
 import com.nao20010128nao.Wisecraft.R;
-import java.math.*;
 
 public class Utils extends PingerUtils{
 	private static int[] HUE_COLORS;
@@ -55,59 +52,7 @@ public class Utils extends PingerUtils{
 			return s;
 		}
 	}
-	public static boolean isNullString(String s) {
-		return TextUtils.isEmpty(s);
-	}
-	public static String[] lines(String s) {
-		try {
-			BufferedReader br=new BufferedReader(new StringReader(s));
-			List<String> tmp=new ArrayList<>(4);
-			String line=null;
-			while (null != (line = br.readLine()))tmp.add(line);
-			return tmp.toArray(new String[tmp.size()]);
-		} catch (Throwable e) {
-			return Constant.EMPTY_STRING_ARRAY;
-		}
-	}
-	public static boolean writeToFile(File f, String content) {
-		return writeToFileByBytes(f,content.getBytes(CompatCharsets.UTF_8));
-	}
-	public static String readWholeFile(File f) {
-		return new String(readWholeFileInBytes(f),CompatCharsets.UTF_8);
-	}
-	public static boolean writeToFileByBytes(File f, byte[] content) {
-		FileOutputStream fos=null;
-		try {
-			(fos = new FileOutputStream(f)).write(content);
-			return true;
-		} catch (Throwable e) {
-			return false;
-		} finally {
-			try {
-				if (fos != null)fos.close();
-			} catch (IOException e) {}
-		}
-	}
-	public static byte[] readWholeFileInBytes(File f) {
-		FileInputStream fis=null;byte[] buf=new byte[8192];
-		ByteArrayOutputStream baos=new ByteArrayOutputStream(8192);
-		try {
-			fis = new FileInputStream(f);
-			while (true) {
-				int r=fis.read(buf);
-				if (r <= 0)
-					break;
-				baos.write(buf, 0, r);
-			}
-			return baos.toByteArray();
-		} catch (Throwable e) {
-			return null;
-		} finally {
-			try {
-				if (fis != null)fis.close();
-			} catch (IOException e) {}
-		}
-	}
+	
 	public static void copyAndClose(InputStream is, OutputStream os)throws IOException {
 		byte[] buf=new byte[100];
 		try {
@@ -127,17 +72,7 @@ public class Utils extends PingerUtils{
 			throw new NullPointerException();
 		return obj;
 	}
-	public static String randomText() {
-		return randomText(16);
-	}
-	public static String randomText(int len) {
-		StringBuilder sb=new StringBuilder(len*2);
-		byte[] buf=new byte[len];
-		new SecureRandom().nextBytes(buf);
-		for (byte b:buf)
-			sb.append(Character.forDigit(b >> 4 & 0xF, 16)).append(Character.forDigit(b & 0xF, 16));
-		return sb.toString();
-	}
+	
 	public static List<Server> convertServerObject(List<com.nao20010128nao.McServerList.Server> from) {
 		ArrayList<Server> result=new ArrayList<>();
 		for (com.nao20010128nao.McServerList.Server obj:from) {
@@ -150,24 +85,6 @@ public class Utils extends PingerUtils{
 		return result;
 	}
 
-	public static int getVersionCode(Context context) {
-        try {
-            return context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionCode;
-        } catch (PackageManager.NameNotFoundException e) {
-			DebugWriter.writeToE("Utils",e);
-			return 0;
-        }
-    }
-
-    public static String getVersionName(Context context) {
-        try {
-            return context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName;
-        } catch (PackageManager.NameNotFoundException e) {
-            DebugWriter.writeToE("Utils",e);
-			return "";
-        }
-    }
-	
 	public static byte[] readAll(InputStream is)throws IOException{
 		ByteArrayOutputStream os=new ByteArrayOutputStream(1000);
 		byte[] buf=new byte[1000];
