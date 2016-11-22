@@ -29,12 +29,11 @@
 				android:layout_marginLeft="10dp"
 				android:layout_marginRight="10dp"/>
 
-			<com.nao20010128nao.Wisecraft.misc.view.RawResourceTextView
+			<TextView
 				android:layout_height="wrap_content"
 				android:textAppearance="?android:attr/textAppearanceSmall"
 				android:layout_width="wrap_content"
-				wisecraft:rawRes="aosp_license"
-				wisecraft:async="true"/>
+				android:text="@string/aosp_license"/>
 
 		</LinearLayout>
 
@@ -62,12 +61,11 @@
 				android:layout_marginLeft="10dp"
 				android:layout_marginRight="10dp"/>
 
-			<com.nao20010128nao.Wisecraft.misc.view.RawResourceTextView
+			<TextView
 				android:layout_height="wrap_content"
 				android:textAppearance="?android:attr/textAppearanceSmall"
 				android:layout_width="wrap_content"
-				wisecraft:rawRes="gson_license"
-				wisecraft:async="true"/>
+				android:text="@string/gson_license"/>
 
 		</LinearLayout>
 
@@ -95,12 +93,11 @@
 				android:layout_marginLeft="10dp"
 				android:layout_marginRight="10dp"/>
 
-			<com.nao20010128nao.Wisecraft.misc.view.RawResourceTextView
+			<TextView
 				android:layout_height="wrap_content"
 				android:textAppearance="?android:attr/textAppearanceSmall"
 				android:layout_width="wrap_content"
-				wisecraft:rawRes="ahc_license"
-				wisecraft:async="true"/>
+				android:text="@string/ahc_license"/>
 
 		</LinearLayout>
 
@@ -128,12 +125,11 @@
 				android:layout_marginLeft="10dp"
 				android:layout_marginRight="10dp"/>
 
-			<com.nao20010128nao.Wisecraft.misc.view.RawResourceTextView
+			<TextView
 				android:layout_height="wrap_content"
 				android:textAppearance="?android:attr/textAppearanceSmall"
 				android:layout_width="wrap_content"
-				wisecraft:rawRes="nanohttpd_license"
-				wisecraft:async="true"/>
+				android:text="@string/nanohttpd_license"/>
 
 		</LinearLayout>
 
@@ -161,12 +157,11 @@
 				android:layout_marginLeft="10dp"
 				android:layout_marginRight="10dp"/>
 
-			<com.nao20010128nao.Wisecraft.misc.view.RawResourceTextView
+			<TextView
 				android:layout_height="wrap_content"
 				android:textAppearance="?android:attr/textAppearanceSmall"
 				android:layout_width="wrap_content"
-				wisecraft:rawRes="jsoup_license"
-				wisecraft:async="true"/>
+				android:text="@string/jsoup_license"/>
 
 		</LinearLayout>
 
@@ -194,12 +189,11 @@
 				android:layout_marginLeft="10dp"
 				android:layout_marginRight="10dp"/>
 
-			<com.nao20010128nao.Wisecraft.misc.view.RawResourceTextView
+			<TextView
 				android:layout_height="wrap_content"
 				android:textAppearance="?android:attr/textAppearanceSmall"
 				android:layout_width="wrap_content"
-				wisecraft:rawRes="calligraphy_license"
-				wisecraft:async="true"/>
+				android:text="@string/calligraphy_license"/>
 
 		</LinearLayout>
 
@@ -228,12 +222,11 @@
 				android:layout_marginLeft="10dp"
 				android:layout_marginRight="10dp"/>
 
-			<com.nao20010128nao.Wisecraft.misc.view.RawResourceTextView
+			<TextView
 				android:layout_height="wrap_content"
 				android:textAppearance="?android:attr/textAppearanceSmall"
 				android:layout_width="wrap_content"
-				wisecraft:rawRes="ubuntu_font_license"
-				wisecraft:async="true"/>
+				android:text="@string/ubuntu_font_license"/>
 
 		</LinearLayout>
 
