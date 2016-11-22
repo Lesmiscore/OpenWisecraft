@@ -58,6 +58,7 @@ dependencies {
 	compile project(':MaterialIcons')
 	compile project(':aFileChooser')
 	compile project(':wisecraft-i18n')
+	compile project(':collector')
 	
 	compile 'com.android.support:design:25.0.0'
 	compile 'com.android.support:support-compat:25.0.0'

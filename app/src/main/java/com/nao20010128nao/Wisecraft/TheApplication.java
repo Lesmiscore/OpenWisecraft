@@ -4,6 +4,7 @@ import android.content.*;
 import android.content.res.*;
 import android.graphics.*;
 import android.graphics.drawable.*;
+import android.os.*;
 import android.preference.*;
 import android.support.design.widget.*;
 import android.support.multidex.*;
@@ -15,6 +16,7 @@ import com.google.android.gms.tasks.*;
 import com.google.firebase.analytics.*;
 import com.google.firebase.remoteconfig.*;
 import com.google.gson.*;
+import com.google.gson.reflect.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
 import com.nao20010128nao.Wisecraft.misc.tfl.*;
@@ -23,9 +25,12 @@ import com.nao20010128nao.Wisecraft.services.*;
 import java.lang.reflect.*;
 import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
-import android.os.*;
 
-public class TheApplication extends Application implements com.nao20010128nao.Wisecraft.rcon.Presenter,com.ipaulpro.afilechooser.Presenter,InformationCommunicatorReceiver.DisclosureResult,Application.ActivityLifecycleCallbacks {
+public class TheApplication extends Application implements  com.nao20010128nao.Wisecraft.rcon.Presenter,
+															com.ipaulpro.afilechooser.Presenter,
+															com.nao20010128nao.Wisecraft.misc.collector.Presenter,
+															InformationCommunicatorReceiver.DisclosureResult,
+															Application.ActivityLifecycleCallbacks {
 	public static TheApplication instance;
 	public static TypefaceLoader latoLight,icomoon1,sysDefault,droidSans,robotoSlabLight,ubuntuFont,mplus1p;
 	public static Field[] fonts=getFontFields();
@@ -272,6 +277,11 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 
 	@Override
 	public void onActivityResumed(Activity p1) {
+	}
+
+	@Override
+	public List<Object> getServerList() {
+		return Arrays.asList(((List)new Gson().fromJson(PreferenceManager.getDefaultSharedPreferences(this).getString("servers", "[]"), new TypeToken<List<Server>>(){}.getType())).toArray());
 	}
 	
 	public void restartForMainProcess(){

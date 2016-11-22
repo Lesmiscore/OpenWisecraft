@@ -1,24 +1,24 @@
 package com.nao20010128nao.WRcon;
-import android.app.Application;
-import android.app.Activity;
-import android.support.design.widget.Snackbar;
-import com.nao20010128nao.Wisecraft.rcon.KeyChain;
-import com.nao20010128nao.Wisecraft.InformationCommunicatorReceiver;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import java.util.UUID;
-import android.content.Intent;
-import android.app.ActivityManager;
-import android.app.Service;
-import android.view.LayoutInflater;
-import com.nao20010128nao.WRcon.services.CollectorMainService;
-import android.graphics.drawable.Drawable;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.analytics.FirebaseAnalytics;
+import android.app.*;
+import android.content.*;
+import android.graphics.drawable.*;
+import android.preference.*;
+import android.support.design.widget.*;
+import android.support.v4.graphics.drawable.*;
+import android.view.*;
+import com.google.android.gms.tasks.*;
+import com.google.firebase.analytics.*;
+import com.google.firebase.remoteconfig.*;
+import com.google.gson.*;
+import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.rcon.*;
+import com.nao20010128nao.Wisecraft.services.*;
+import java.util.*;
+import com.google.gson.reflect.*;
 
-public class TheApplication extends Application implements com.nao20010128nao.Wisecraft.rcon.Presenter,InformationCommunicatorReceiver.DisclosureResult
+public class TheApplication extends Application implements  com.nao20010128nao.Wisecraft.rcon.Presenter,
+															com.nao20010128nao.Wisecraft.misc.collector.Presenter,
+															InformationCommunicatorReceiver.DisclosureResult
 {
 
 	public static TheApplication instance;
@@ -81,6 +81,14 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
 		disclosureEnded=true;
 		collectImpl();
 	}
+
+	@Override
+	public List<Object> getServerList() {
+		return Arrays.asList(((List)new Gson().fromJson(pref.getString("servers", "[]"), new TypeToken<List<Server>>(){}.getType())).toArray());
+	}
+
+	
+	
 	
 	
 	
