@@ -44,6 +44,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
     List<Server> list;
 	ServerListStyleLoader slsl;
 	Set<Server> selected=new HashSet<>();
+	Map<Server,Map.Entry<Boolean,Integer>> retrying=new HashMap<>();
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -401,7 +402,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 												Utils.makeNonClickableSB(ServerListActivityImpl.this, R.string.alreadyExists, Snackbar.LENGTH_LONG).show();
 											} else {
 												sl.add(s);
-												spp.putInQueue(s, new PingHandlerImpl(true, new Intent().putExtra("offset",-1)));
+												spp.putInQueue(s, new PingHandlerImpl(true, new Intent().putExtra("offset",-1),false));
 												pinging.put(s, true);
 											}
 											saveServers();
@@ -463,7 +464,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 																if (sv.size() != 0) {
 																	for (Server s:sv) {
 																		if (!list.contains(s)) {
-																			spp.putInQueue(s, new PingHandlerImpl(true, new Intent().putExtra("offset",-1)));
+																			spp.putInQueue(s, new PingHandlerImpl(true, new Intent().putExtra("offset",-1),false));
 																			pinging.put(s, true);
 																			sl.add(s);
 																		}
@@ -865,8 +866,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
 	public void dryUpdate(Server s, boolean isUpdate) {
 		if (pinging.get(s))return;
-		if (isUpdate)updater.putInQueue(s, new PingHandlerImpl(true, new Intent().putExtra("offset",-1)));
-		else spp.putInQueue(s, new PingHandlerImpl(true, new Intent().putExtra("offset",-1)));
+		if (isUpdate)updater.putInQueue(s, new PingHandlerImpl(true, new Intent().putExtra("offset",-1),false));
+		else spp.putInQueue(s, new PingHandlerImpl(true, new Intent().putExtra("offset",-1),false));
 		pinging.put(s, true);
 		sl.notifyItemChanged(list.indexOf(s));
 	}
@@ -917,7 +918,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	public void addIntoList(Server s) {
 		if (list.contains(s))return;
 		sl.add(s);
-		spp.putInQueue(s, new PingHandlerImpl(true, new Intent().putExtra("offset",-1)));
+		spp.putInQueue(s, new PingHandlerImpl(true, new Intent().putExtra("offset",-1),false));
 		pinging.put(s, true);
 	}
 
@@ -1149,7 +1150,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				executes.add(1, new Duo<Runnable,Integer>(new Runnable(){
 									 public void run() {
 										 if (sla.pinging.get(getItem(p3)))return;
-										 sla.updater.putInQueue(getItem(p3), new PingHandlerImpl(true, new Intent().putExtra("offset",-1)));
+										 sla.updater.putInQueue(getItem(p3), new PingHandlerImpl(true, new Intent().putExtra("offset",-1),false));
 										 sla.pinging.put(sla.list.get(p3), true);
 										 sla.statLayout.setStatusAt(p3, 1);
 										 sla.sl.notifyItemChanged(p3);
@@ -1414,20 +1415,22 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		boolean closeDialog;
 		Intent extras;
 		Bundle obj;
-		public PingHandlerImpl() {
-			this(false, new Intent());
+		boolean isUpd;
+		public PingHandlerImpl(boolean isUpdate) {
+			this(false, new Intent(),isUpdate);
 		}
-		public PingHandlerImpl(boolean cd, Intent os) {
-			this(cd, os, true);
+		public PingHandlerImpl(boolean cd, Intent os,boolean isUpdate) {
+			this(cd, os, true,isUpdate);
 		}
-		public PingHandlerImpl(boolean cd, Intent os, boolean updSrl) {
-			this(cd, os, updSrl, null);
+		public PingHandlerImpl(boolean cd, Intent os, boolean updSrl,boolean isUpdate) {
+			this(cd, os, updSrl, null,isUpdate);
 		}
-		public PingHandlerImpl(boolean cd, Intent os, boolean updSrl, Bundle receive) {
+		public PingHandlerImpl(boolean cd, Intent os, boolean updSrl, Bundle receive,boolean isUpdate) {
 			closeDialog = cd;
 			extras = os;
 			if (updSrl)act().srl.setRefreshing(true);
 			obj = receive;
+			isUpd=isUpdate;
 		}
 		public void onPingFailed(final Server s) {
 			act().runOnUiThread(new Runnable(){
@@ -1448,6 +1451,29 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 								Utils.makeNonClickableSB(act(), R.string.serverOffline, Snackbar.LENGTH_SHORT).show();
 							if (!act().pinging.containsValue(true))
 								act().srl.setRefreshing(false);
+							if(act().pref.getBoolean("letRetryPing",false)){
+								if(act().retrying.containsKey(s)){
+									final Map.Entry<Boolean,Integer> kvp=act().retrying.get(s);
+									int remaining=kvp.getValue();
+									if(remaining==0){
+										act().retrying.remove(s);//We don't retry anymore
+									}else{
+										kvp.setValue(remaining-1);
+										new Handler().postDelayed(new Runnable(){
+												public void run(){
+													(kvp.getKey()?act().updater:act().spp).putInQueue(s,PingHandlerImpl.this);
+												}
+											},1000);
+									}
+								}else{
+									act().retrying.put(s,new KVP<Boolean,Integer>(isUpd,act().pref.getInt("retryIteration",10)));
+									new Handler().postDelayed(new Runnable(){
+											public void run(){
+												(isUpd?act().updater:act().spp).putInQueue(s,PingHandlerImpl.this);
+											}
+										},1000);
+								}
+							}
 						} catch (final Throwable e) {
 							CollectorMain.reportError("ServerListActivity#onPingFailed", e);
 						}
@@ -1480,6 +1506,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							if (!act().pinging.containsValue(true)) {
 								act().srl.setRefreshing(false);
 							}
+							act().retrying.remove(s);
 						} catch (final Throwable e) {
 							DebugWriter.writeToE("ServerListActivity", e);
 							CollectorMain.reportError("ServerListActivity#onPingArrives", e);
