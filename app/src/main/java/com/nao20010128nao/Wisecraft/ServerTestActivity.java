@@ -298,48 +298,6 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 		}
 	}
 }
-public class ServerTestActivity extends CompatActivityGroup {
+public class ServerTestActivity extends ServerTestActivityImpl {
 	public static WeakReference<ServerTestActivity> instance=new WeakReference(null);
-
-	boolean nonLoop=false;
-	SharedPreferences pref;
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		instance = new WeakReference(this);
-		pref = PreferenceManager.getDefaultSharedPreferences(this);
-		super.onCreate(savedInstanceState);
-		getSupportActionBar().hide();
-		setContentView(getLocalActivityManager().startActivity("main", new Intent(this, Content.class).putExtras(getIntent())).getDecorView());
-	}
-	public static class Content extends ServerTestActivityImpl {public static void deleteRef() {instance = new WeakReference<>(null);}}
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		if (nonLoop)
-			return true;
-		nonLoop = true;
-		boolean val= getLocalActivityManager().getActivity("main").onCreateOptionsMenu(menu);
-		nonLoop = false;
-		return val;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		if (nonLoop)
-			return true;
-		nonLoop = true;
-		boolean val= getLocalActivityManager().getActivity("main").onOptionsItemSelected(item);
-		nonLoop = false;
-		return val;
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		((ActivityResultInterface)getLocalActivityManager().getActivity("main")).onActivityResult(requestCode, resultCode, data);
-	}
-
-	@Override
-	protected void attachBaseContext(Context newBase) {
-		super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
-	}
 }
