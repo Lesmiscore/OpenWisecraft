@@ -382,6 +382,19 @@ class FragmentSettingsActivityImpl extends AppCompatActivity {
 							.show();
 					}
 				});
+			sH("retryIteration", new HandledPreference.OnClickListener(){
+					public void onClick(String a, String b, String c) {
+						PreferenceUtils.showEditTextDialog(getActivity(),findPreference("retryIteration"),"10",new Treatment<View>(){
+								public void process(View v){
+									EditText text=(EditText)v.findViewById(android.R.id.edit);
+									text.setInputType(InputType.TYPE_CLASS_NUMBER|
+													  InputType.TYPE_TEXT_VARIATION_NORMAL|
+													  InputType.TYPE_NUMBER_FLAG_DECIMAL);
+									text.setFilters(new InputFilter[]{new InputFilter.LengthFilter(3)});
+								}
+							});
+					}
+				});
 		}
 
 		@Override

@@ -103,4 +103,16 @@
 		android:title="@string/useAltServer"
 		android:key="useAltServer"
 	/>
+	<com.nao20010128nao.Wisecraft.misc.pref.CheckBoxPreferenceCompat
+		android:title="@string/letRetryPing"
+		android:key="letRetryPing"
+		android:dependency="retryIteration"
+	/>
+	<com.nao20010128nao.Wisecraft.misc.pref.StartPrefCompat
+		android:title="@string/retryIteration"
+		android:key="retryIteration"
+		android:inputType="number" 
+		android:maxLength="3"
+		android:defaultValue="10"
+	/>
 </PreferenceScreen>
