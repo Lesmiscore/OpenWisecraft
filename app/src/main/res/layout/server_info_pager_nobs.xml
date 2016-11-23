@@ -5,8 +5,6 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:fitsSystemWindows="true"
-	android:layout_weight="1.0"
 	android:id="@+id/coordinator">
 
 	<android.support.design.widget.AppBarLayout
@@ -31,8 +29,7 @@
 			app:pstsTabTextStyle="coded"
 			android:paddingLeft="10dp"
 			android:paddingRight="10dp"
-			android:gravity="center"
-			app:layout_scrollFlags="scroll|enterAlways"/>
+			android:gravity="center"/>
 
 	</android.support.design.widget.AppBarLayout>
 
