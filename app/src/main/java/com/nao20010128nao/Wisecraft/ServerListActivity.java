@@ -1459,19 +1459,27 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 										act().retrying.remove(s);//We don't retry anymore
 									}else{
 										kvp.setValue(remaining-1);
-										new Handler().postDelayed(new Runnable(){
+										act().runOnUiThread(new Runnable(){
 												public void run(){
-													(kvp.getKey()?act().updater:act().spp).putInQueue(s,PingHandlerImpl.this);
+													new Handler().postDelayed(new Runnable(){
+															public void run(){
+																(kvp.getKey()?act().updater:act().spp).putInQueue(s,PingHandlerImpl.this);
+															}
+														},1000);
 												}
-											},1000);
+											});
 									}
 								}else{
 									act().retrying.put(s,new KVP<Boolean,Integer>(isUpd,act().pref.getInt("retryIteration",10)));
-									new Handler().postDelayed(new Runnable(){
+									act().runOnUiThread(new Runnable(){
 											public void run(){
-												(isUpd?act().updater:act().spp).putInQueue(s,PingHandlerImpl.this);
+												new Handler().postDelayed(new Runnable(){
+														public void run(){
+															(isUpd?act().updater:act().spp).putInQueue(s,PingHandlerImpl.this);
+														}
+													},1000);
 											}
-										},1000);
+										});
 								}
 							}
 						} catch (final Throwable e) {
