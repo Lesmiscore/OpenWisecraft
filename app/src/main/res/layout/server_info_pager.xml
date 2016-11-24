@@ -12,7 +12,7 @@
 		android:id="@+id/background"
 		android:alpha="0"/>
 
-	<com.nao20010128nao.Wisecraft.misc.view.NestedScrollControllableCoordinatorLayout
+	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		app:layout_behavior="com.nao20010128nao.Wisecraft.misc.LockableViewPagerBottomSheetBehavior"
@@ -53,7 +53,7 @@
 			android:id="@+id/pager"
 			app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-	</com.nao20010128nao.Wisecraft.misc.view.NestedScrollControllableCoordinatorLayout>
+	</LinearLayout>
 
 	<android.support.design.widget.FloatingActionButton
 		android:id="@+id/pin"

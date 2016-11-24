@@ -27,7 +27,6 @@ import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
 import com.nao20010128nao.Wisecraft.misc.skin_face.*;
-import com.nao20010128nao.Wisecraft.misc.view.*;
 import java.io.*;
 import java.lang.ref.*;
 import java.math.*;
@@ -66,7 +65,6 @@ class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 	LockableViewPagerBottomSheetBehavior behavior;
 	boolean useBottomSheet=false;
 	View background;//it is actually CoordinatorLayout
-	NestedScrollControllableCoordinatorLayout nsccl;
 	
 	ServerListStyleLoader slsl;
 	
@@ -221,8 +219,6 @@ class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 						}
 					});
 			}
-			nsccl=(NestedScrollControllableCoordinatorLayout)findViewById(R.id.serverInfoFragment);
-			nsccl.setNestedScrollEnabled(false);
 		}
 	}
 
@@ -951,7 +947,6 @@ class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 	class UpdateCallback extends CallbackBase{
 		@Override
 		public void onStateChanged(View bottomSheet, int newState) {
-			boolean shouldScroll=true;
 			switch (newState) {
 				case ViewPagerBottomSheetBehavior.STATE_DRAGGING:
 					if(!behavior.getAllowUserDragging()){
@@ -961,18 +956,14 @@ class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				case ViewPagerBottomSheetBehavior.STATE_SETTLING:
 				case ViewPagerBottomSheetBehavior.STATE_COLLAPSED:
 					pin.hide();
-					shouldScroll=true;
 					break;
 				case ViewPagerBottomSheetBehavior.STATE_EXPANDED:
 					pin.show();
-					shouldScroll=false;
 					break;
 				case ViewPagerBottomSheetBehavior.STATE_HIDDEN:
 					finish();
-					shouldScroll=false;
 					break;
 			}
-			nsccl.setNestedScrollEnabled(shouldScroll);
 		}
 	}
 	class ColorUpdateCallback extends UpdateCallback{
