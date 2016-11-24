@@ -66,6 +66,6 @@
 	@com.google.gson.annotations.** <fields>;
 }
 
--keep class com.nao20010128nao.McServerList.sites.Pmmp_Jp_Net$** {
- *;
+-keepclassmembers class com.nao20010128nao.McServerList.sites.Pmmp_Jp_Net$** {
+ @com.google.gson.annotations.** <fields>;
 }
