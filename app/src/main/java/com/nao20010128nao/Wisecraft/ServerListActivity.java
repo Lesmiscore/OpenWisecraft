@@ -128,6 +128,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             editMode = instance.get().editMode;
 			selected = instance.get().selected;
             instance.get().editMode = EDIT_MODE_NULL;
+			retrying = instance.get().retrying;
 			usesOldInstance = true;
 
 			sl.attachNewActivity(this);
@@ -254,12 +255,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                 srl.setEnabled(true);
                 dl.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                 saveServers();
-				for(Server s:selected){
-					if(list.indexOf(s)!=-1){
-						sl.notifyItemChanged(list.indexOf(s));
-					}
-				}
-				selected.clear();
+				sl.unselectAll();
 				isInSelectMode=false;
             }
         };
@@ -296,7 +292,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                 srl.setEnabled(true);
                 dl.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                 saveServers();
-				selected.clear();
+				sl.unselectAll();
 				isInSelectMode=false;
             }
         };
@@ -1408,6 +1404,17 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			int ofs=sla.list.indexOf(object);
 			sla.list.remove(object);
 			notifyItemRemoved(ofs);
+		}
+		
+		public void unselectAll(){
+			Set<Server> objects=new HashSet<>(sla.selected);
+			sla.selected.clear();
+			for(Server s:objects){
+				int i=sla.list.indexOf(s);
+				if(i>=0){
+					notifyItemChanged(i);
+				}
+			}
 		}
 	}
 
