@@ -1466,33 +1466,25 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 											Utils.makeNonClickableSB(act(), R.string.serverOffline, Snackbar.LENGTH_SHORT).show();
 									}else{
 										kvp.setValue(remaining-1);
-										act().runOnUiThread(new Runnable(){
+										act().getWindow().getDecorView().getHandler().postDelayed(new Runnable(){
 												public void run(){
-													new Handler().postDelayed(new Runnable(){
-															public void run(){
-																(kvp.getKey()?act().updater:act().spp).putInQueue(s,PingHandlerImpl.this);
-																act().pinging.put(s,true);
-																if(closeDialog)
-																	act().wd.showWorkingDialog();
-															}
-														},1000);
+													(kvp.getKey()?act().updater:act().spp).putInQueue(s,PingHandlerImpl.this);
+													act().pinging.put(s,true);
+													if(closeDialog)
+														act().wd.showWorkingDialog();
 												}
-											});
+											},1000);
 									}
 								}else{
 									act().retrying.put(s,new KVP<Boolean,Integer>(isUpd,act().pref.getInt("retryIteration",10)));
-									act().runOnUiThread(new Runnable(){
+									act().getWindow().getDecorView().getHandler().postDelayed(new Runnable(){
 											public void run(){
-												new Handler().postDelayed(new Runnable(){
-														public void run(){
-															(isUpd?act().updater:act().spp).putInQueue(s,PingHandlerImpl.this);
-															act().pinging.put(s,true);
-															if(closeDialog)
-																act().wd.showWorkingDialog();
-														}
-													},1000);
+												(isUpd?act().updater:act().spp).putInQueue(s,PingHandlerImpl.this);
+												act().pinging.put(s,true);
+												if(closeDialog)
+													act().wd.showWorkingDialog();
 											}
-										});
+										},1000);
 								}
 							}else{
 								if (extras.getIntExtra("offset",-1) != -1)
