@@ -15,7 +15,9 @@
 			android:id="@+id/toolbar"
 			android:layout_height="?attr/actionBarSize"
 			android:layout_width="match_parent"
-			app:layout_scrollFlags="scroll|enterAlways"/>
+			app:layout_scrollFlags="scroll|enterAlways"
+			android:theme="?attr/toolbarStyle"
+			style="?attr/toolbarStyle"/>
 
 		<com.astuetz.PagerSlidingTabStrip
 			android:id="@+id/tabs"
