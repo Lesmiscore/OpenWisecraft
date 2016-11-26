@@ -1,0 +1,7 @@
+<resources>
+	<declare-styleable name="rconActivityAttrs">
+		<attr name="rconTabColor" format="color"/>
+		<attr name="rconTabTextColor" format="color"/>
+		<attr name="rconTabUnderlineColor" format="color"/>
+	</declare-styleable>
+</resources>

@@ -89,9 +89,10 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 		pager.setAdapter(upa);
 		psts.setViewPager(pager);
 		
+		int[] appColors=resolveAppColors();
 		int PALE_PRIMARY;
 		{
-			int palePrimary=ContextCompat.getColor(this, R.color.mainColor);
+			int palePrimary=appColors[1];
 			int r=Color.red(palePrimary);
 			int g=Color.green(palePrimary);
 			int b=Color.blue(palePrimary);
@@ -99,8 +100,8 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 
 			PALE_PRIMARY = Color.argb(a, r, g, b);
 		}
-		psts.setOnPageChangeListener(new PstsTabColorUpdater(ContextCompat.getColor(this, R.color.mainColor), PALE_PRIMARY, pager, psts));
-		psts.setIndicatorColor(ContextCompat.getColor(this, R.color.mainColor));
+		psts.setOnPageChangeListener(new PstsTabColorUpdater(appColors[1], PALE_PRIMARY, pager, psts));
+		psts.setIndicatorColor(appColors[0]);
         
         pager.setCurrentItem(1);
         pager.setCurrentItem(0);
@@ -347,6 +348,23 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 			}
 		}
 		return null;
+	}
+	
+	private int[] resolveAppColors(){
+		int text,underline;
+		text=underline=ContextCompat.getColor(this, R.color.mainColor);
+		TypedArray ta=obtainStyledAttributes(R.styleable.rconActivityAttrs);
+		if(ta.hasValue(R.styleable.rconActivityAttrs_rconTabColor)){
+			text=underline=ta.getColor(R.styleable.rconActivityAttrs_rconTabColor,0);
+		}
+		if(ta.hasValue(R.styleable.rconActivityAttrs_rconTabTextColor)){
+			text=ta.getColor(R.styleable.rconActivityAttrs_rconTabTextColor,0);
+		}
+		if(ta.hasValue(R.styleable.rconActivityAttrs_rconTabUnderlineColor)){
+			underline=ta.getColor(R.styleable.rconActivityAttrs_rconTabUnderlineColor,0);
+		}
+		ta.recycle();
+		return new int[]{text,underline};
 	}
 	
 	class PasswordAsking extends ContextThemeWrapper {
