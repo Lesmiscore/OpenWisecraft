@@ -5,7 +5,7 @@ import android.support.v4.view.*;
 import android.support.v7.app.*;
 import android.view.*;
 import com.astuetz.*;
-import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.activity.ServerInfoActivity;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
 

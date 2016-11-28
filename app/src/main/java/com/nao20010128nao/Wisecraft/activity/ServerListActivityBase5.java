@@ -1,4 +1,4 @@
-package com.nao20010128nao.Wisecraft.misc;
+package com.nao20010128nao.Wisecraft.activity;
 
 import android.content.*;
 import android.net.*;

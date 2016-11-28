@@ -5,7 +5,13 @@ import android.content.res.*;
 import android.support.v4.content.*;
 import android.support.v7.view.*;
 import android.util.*;
-import com.nao20010128nao.Wisecraft.*;
+
+import com.nao20010128nao.Wisecraft.activity.AboutAppActivity;
+import com.nao20010128nao.Wisecraft.activity.OpenSourceActivity;
+import com.nao20010128nao.Wisecraft.activity.RCONActivity;
+import com.nao20010128nao.Wisecraft.activity.ServerGetActivity;
+import com.nao20010128nao.Wisecraft.activity.ServerInfoActivity;
+import com.nao20010128nao.Wisecraft.activity.ServerListActivity;
 import com.nao20010128nao.Wisecraft.api.*;
 import java.util.*;
 

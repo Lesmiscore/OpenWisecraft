@@ -1,4 +1,4 @@
-package com.nao20010128nao.Wisecraft.misc;
+package com.nao20010128nao.Wisecraft.activity;
 import android.net.*;
 import android.os.*;
 import android.support.design.widget.*;
@@ -11,7 +11,10 @@ import android.view.*;
 import com.google.gson.*;
 import com.mikepenz.materialdrawer.*;
 import com.mikepenz.materialdrawer.model.interfaces.*;
-import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.misc.NonNullableMap;
+import com.nao20010128nao.Wisecraft.misc.Server;
+import com.nao20010128nao.Wisecraft.misc.SextetWalker;
+import com.nao20010128nao.Wisecraft.misc.WorkingDialog;
 import com.nao20010128nao.Wisecraft.misc.provider.*;
 import com.nao20010128nao.Wisecraft.misc.skin_face.*;
 import com.nao20010128nao.Wisecraft.misc.view.*;

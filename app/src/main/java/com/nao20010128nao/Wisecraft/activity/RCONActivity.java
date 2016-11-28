@@ -1,6 +1,7 @@
-package com.nao20010128nao.Wisecraft;
+package com.nao20010128nao.Wisecraft.activity;
 import android.content.*;
 import com.mikepenz.materialdrawer.model.*;
+import com.nao20010128nao.Wisecraft.TheApplication;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.rcon.*;
 import android.os.*;

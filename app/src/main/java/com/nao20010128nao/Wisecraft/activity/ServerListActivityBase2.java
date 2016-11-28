@@ -1,10 +1,13 @@
-package com.nao20010128nao.Wisecraft.misc;
+package com.nao20010128nao.Wisecraft.activity;
+import com.nao20010128nao.Wisecraft.misc.Server;
+import com.nao20010128nao.Wisecraft.misc.ServerSorter;
+
 import java.util.*;
 
 //Server Sort Part
 public abstract class ServerListActivityBase2 extends ServerListActivityBase3
 {
-	public void doSort(final List<Server> sl,final SortKind sk,final SortFinishedCallback sfc){
+	public void doSort(final List<Server> sl, final SortKind sk, final SortFinishedCallback sfc){
 		new Thread(){
 			public void run(){
 				final List<Server> sortingServer=sk.doSort(sl);
@@ -35,7 +38,7 @@ public abstract class ServerListActivityBase2 extends ServerListActivityBase3
 		IP_AND_PORT{
 			public List<Server> doSort(List<Server> list){
 				List<Server> l=new ArrayList<>(list);
-				Collections.sort(l,ServerSorter.INSTANCE);
+				Collections.sort(l, ServerSorter.INSTANCE);
 				return l;
 			}
 		},

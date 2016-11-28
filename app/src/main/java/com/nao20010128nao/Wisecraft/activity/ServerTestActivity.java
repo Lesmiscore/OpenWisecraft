@@ -1,4 +1,4 @@
-package com.nao20010128nao.Wisecraft;
+package com.nao20010128nao.Wisecraft.activity;
 import android.app.*;
 import android.content.*;
 import android.os.*;
@@ -9,7 +9,6 @@ import android.support.v7.widget.*;
 import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.misc.*;
-import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;

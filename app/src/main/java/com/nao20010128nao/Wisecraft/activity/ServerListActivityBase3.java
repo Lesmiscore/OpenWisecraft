@@ -1,8 +1,10 @@
-package com.nao20010128nao.Wisecraft.misc;
+package com.nao20010128nao.Wisecraft.activity;
 import android.content.*;
 import com.ipaulpro.afilechooser.*;
+import com.nao20010128nao.Wisecraft.misc.Utils;
+
 import java.io.*;
-import java.util.*;
+
 import android.os.*;
 
 
@@ -42,7 +44,7 @@ public abstract class ServerListActivityBase3 extends ServerListActivityBase4
 		if(startDir!=null){
 			intent.putExtra("path",startDir.toString());
 		}
-		localFileSelectResults.put(call,Utils.requireNonNull(result));
+		localFileSelectResults.put(call, Utils.requireNonNull(result));
 		startActivityForResult(intent,call);
 	}
 	

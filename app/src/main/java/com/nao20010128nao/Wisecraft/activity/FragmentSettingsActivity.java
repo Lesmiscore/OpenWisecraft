@@ -1,4 +1,4 @@
-package com.nao20010128nao.Wisecraft;
+package com.nao20010128nao.Wisecraft.activity;
 import android.content.*;
 import android.graphics.*;
 import android.graphics.drawable.*;
@@ -18,7 +18,6 @@ import com.astuetz.*;
 import com.azeesoft.lib.colorpicker.*;
 import com.ipaulpro.afilechooser.*;
 import com.nao20010128nao.ToolBox.*;
-import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;

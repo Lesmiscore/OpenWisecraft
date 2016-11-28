@@ -5,13 +5,12 @@ import android.preference.*;
 import android.util.*;
 import com.nao20010128nao.McServerList.*;
 import com.nao20010128nao.McServerList.sites.*;
-import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.activity.ServerGetActivity;
 import com.nao20010128nao.Wisecraft.services.*;
 import dalvik.system.*;
 import java.io.*;
 import java.net.*;
 import java.util.*;
-import org.apache.commons.codec.binary.*;
 
 import org.apache.commons.codec.binary.Base64;
 

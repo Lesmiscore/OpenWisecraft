@@ -6,7 +6,7 @@ import android.preference.*;
 import android.view.*;
 import android.widget.*;
 import com.google.gson.*;
-import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.activity.ServerListActivity;
 import com.nao20010128nao.Wisecraft.misc.*;
 import java.util.*;
 

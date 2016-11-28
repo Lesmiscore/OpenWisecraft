@@ -1,12 +1,14 @@
-package com.nao20010128nao.Wisecraft.misc;
+package com.nao20010128nao.Wisecraft.activity;
 import android.content.*;
 import android.content.pm.*;
 import android.support.v4.app.*;
 import android.support.v4.content.*;
 import android.util.*;
-import java.security.*;
+
 import java.util.*;
 import android.os.*;
+
+import com.nao20010128nao.Wisecraft.misc.Factories;
 
 //Permission Request Part
 public abstract class ServerListActivityBase1 extends ServerListActivityBase2
@@ -48,7 +50,7 @@ public abstract class ServerListActivityBase1 extends ServerListActivityBase2
 		for(String s:unconfirmable)Log.d("ServerListActivity","unconfirmable:"+s);
 		if(perms.length==unconfirmable.size()){
 			Log.d("ServerListActivity","denied");
-			r.onFailed(perms,Factories.strArray(unconfirmable));
+			r.onFailed(perms, Factories.strArray(unconfirmable));
 			return;
 		}
 		if(notAllowed.isEmpty()&unconfirmable.isEmpty()){

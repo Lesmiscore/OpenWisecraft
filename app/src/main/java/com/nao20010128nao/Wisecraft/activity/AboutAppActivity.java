@@ -1,10 +1,12 @@
-package com.nao20010128nao.Wisecraft;
+package com.nao20010128nao.Wisecraft.activity;
 import android.content.*;
 import android.graphics.*;
 import android.net.*;
 import android.os.*;
 import android.preference.*;
 import android.view.*;
+
+import com.nao20010128nao.Wisecraft.AboutAppActivityBase;
 import com.nao20010128nao.Wisecraft.misc.*;
 
 public class AboutAppActivity extends AboutAppActivityBase

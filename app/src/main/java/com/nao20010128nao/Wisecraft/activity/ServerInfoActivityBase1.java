@@ -1,7 +1,9 @@
-package com.nao20010128nao.Wisecraft.misc;
+package com.nao20010128nao.Wisecraft.activity;
 import android.content.*;
 import android.support.v7.app.*;
 import com.ipaulpro.afilechooser.*;
+import com.nao20010128nao.Wisecraft.misc.Utils;
+
 import java.io.*;
 import java.security.*;
 import java.util.*;
@@ -39,7 +41,7 @@ public abstract class ServerInfoActivityBase1 extends AppCompatActivity
 		if(startDir!=null){
 			intent.putExtra("path",startDir.toString());
 		}
-		results.put(call,Utils.requireNonNull(result));
+		results.put(call, Utils.requireNonNull(result));
 		startActivityForResult(intent,call);
 	}
 

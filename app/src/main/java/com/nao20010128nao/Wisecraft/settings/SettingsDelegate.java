@@ -1,7 +1,8 @@
 package com.nao20010128nao.Wisecraft.settings;
 import android.app.*;
 import android.content.*;
-import com.nao20010128nao.Wisecraft.*;
+
+import com.nao20010128nao.Wisecraft.activity.FragmentSettingsActivity;
 
 public class SettingsDelegate extends ContextWrapper
 {

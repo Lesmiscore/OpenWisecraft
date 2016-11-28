@@ -1,4 +1,4 @@
-package com.nao20010128nao.Wisecraft;
+package com.nao20010128nao.Wisecraft.activity;
 import android.content.*;
 import android.os.*;
 import android.support.design.widget.*;

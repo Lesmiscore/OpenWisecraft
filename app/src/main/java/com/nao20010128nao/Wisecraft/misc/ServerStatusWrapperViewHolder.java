@@ -5,6 +5,7 @@ import android.support.v7.view.*;
 import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.activity.ServerInfoActivity;
 import com.nao20010128nao.Wisecraft.misc.view.*;
 
 import android.support.v7.view.ContextThemeWrapper;

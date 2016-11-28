@@ -14,8 +14,8 @@ import android.view.*;
 import android.widget.*;
 import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.activity.ServerInfoActivity;
 import com.nao20010128nao.Wisecraft.api.*;
-import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import java.io.*;
 import java.lang.reflect.*;
@@ -421,7 +421,7 @@ public class Utils extends PingerUtils{
 	}
 	public static String encodeForServerInfo(ServerStatus s){
 		byte[] data=PingSerializeProvider.dumpServerForFile(s);
-		return Base64.encodeToString(data,ServerInfoActivity.BASE64_FLAGS);
+		return Base64.encodeToString(data, ServerInfoActivity.BASE64_FLAGS);
 	}
 	public static Snackbar makeSB(Activity a,int t,int l){
 		return Snackbar.make(a.findViewById(android.R.id.content),t,l);

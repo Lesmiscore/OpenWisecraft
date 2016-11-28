@@ -7,7 +7,9 @@ import android.preference.*;
 import android.support.v4.content.*;
 import android.support.v7.graphics.*;
 import android.util.*;
-import com.nao20010128nao.Wisecraft.*;
+
+import com.nao20010128nao.Wisecraft.activity.ServerInfoActivity;
+
 import java.io.*;
 
 public class ServerListStyleLoader {

@@ -1,8 +1,9 @@
-package com.nao20010128nao.Wisecraft;
+package com.nao20010128nao.Wisecraft.activity;
 
 import android.content.*;
 import android.os.*;
 import com.nao20010128nao.TESTAPP.*;
+import com.nao20010128nao.Wisecraft.TheApplication;
 import com.nao20010128nao.Wisecraft.misc.*;
 
 public class CreditsActivity extends ScrollingActivity 

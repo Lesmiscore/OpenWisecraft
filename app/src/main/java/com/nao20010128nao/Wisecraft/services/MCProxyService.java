@@ -4,7 +4,7 @@ import android.content.*;
 import android.os.*;
 import android.support.v4.app.*;
 import com.nao20010128nao.MCProxy.*;
-import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.activity.ProxyActivity;
 import com.nao20010128nao.Wisecraft.misc.*;
 import java.io.*;
 import java.net.*;
