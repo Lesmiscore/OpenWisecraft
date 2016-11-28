@@ -2,10 +2,11 @@ package com.nao20010128nao.Wisecraft.activity;
 import android.content.*;
 import android.graphics.*;
 import android.os.*;
-import android.preference.*;
 import com.nao20010128nao.TESTAPP.*;
-import com.nao20010128nao.Wisecraft.TheApplication;
+import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+
+import com.nao20010128nao.Wisecraft.R;
 
 public class OpenSourceActivity extends ScrollingActivity
 {
