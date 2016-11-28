@@ -6,6 +6,7 @@ import android.graphics.*;
 import android.graphics.drawable.*;
 import android.os.*;
 import android.preference.*;
+import android.provider.*;
 import android.support.design.widget.*;
 import android.support.multidex.*;
 import android.support.v4.graphics.drawable.*;
@@ -150,10 +151,17 @@ public class TheApplication extends Application implements  com.nao20010128nao.W
 	}
 	
 	private String genPassword() {
-		uuid = pref.getString("uuid", UUID.randomUUID().toString());
+		class Methods{
+			String getAndroidId(){
+				return Settings.Secure.getString(getContentResolver(), Settings.System.ANDROID_ID);
+			}
+		}
+		uuid = pref.getString("uuid", null);
+		if(uuid==null)uuid=UUID.nameUUIDFromBytes((new Methods().getAndroidId()+Build.SERIAL).getBytes()).toString();
 		pref.edit().putString("uuid", uuid).commit();
 		return uuid + uuid;
 	}
+	
 	private static Field[] getFontFields() {
 		List<Field> l=new ArrayList<>(6);
 		for (Field f:TheApplication.class.getFields())
