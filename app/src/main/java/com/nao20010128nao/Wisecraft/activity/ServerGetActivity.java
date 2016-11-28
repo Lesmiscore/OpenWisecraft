@@ -9,12 +9,15 @@ import android.view.*;
 import android.webkit.*;
 import android.widget.*;
 import com.nao20010128nao.McServerList.*;
+import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.activity.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import java.net.*;
 import java.util.*;
 
 import android.support.v7.widget.Toolbar;
+import com.nao20010128nao.Wisecraft.R;
 import com.nao20010128nao.Wisecraft.misc.Server;
 
 class ServerGetActivityImpl extends CompatWebViewActivity {
