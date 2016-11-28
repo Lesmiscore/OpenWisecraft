@@ -10,7 +10,7 @@ import java.util.*;
 
 
 //Wrapper for aFileChooser
-public abstract class ServerInfoActivityBase1 extends AppCompatActivity
+abstract class ServerInfoActivityBase1 extends AppCompatActivity
 {
 	SecureRandom sr=new SecureRandom();
 	Map<Integer,FileChooserResult> results=new HashMap<>();

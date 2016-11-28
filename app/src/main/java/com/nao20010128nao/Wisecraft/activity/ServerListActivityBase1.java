@@ -11,7 +11,7 @@ import android.os.*;
 import com.nao20010128nao.Wisecraft.misc.Factories;
 
 //Permission Request Part
-public abstract class ServerListActivityBase1 extends ServerListActivityBase2
+abstract class ServerListActivityBase1 extends ServerListActivityBase2
 {
 	HashMap<Integer,Metadata> permRequire=new HashMap<>();
 	HashMap<Integer,Boolean> permReqResults=new HashMap<Integer,Boolean>(){

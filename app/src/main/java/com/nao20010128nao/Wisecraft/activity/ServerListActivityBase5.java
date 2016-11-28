@@ -6,7 +6,7 @@ import android.os.*;
 import java.io.*;
 import java.util.*;
 
-public class ServerListActivityBase5 extends ServerListActivityBaseFields 
+abstract class ServerListActivityBase5 extends ServerListActivityBaseFields 
 {
 	protected Map<Integer,UriFileChooserResult> externalFileSelectResults=new HashMap<>();
 	protected Map<Integer,FileChooserResult> localFileSelectResults=new HashMap<>();

@@ -5,7 +5,7 @@ import android.support.v7.app.*;
 import java.util.*;
 
 //Only most common things
-public abstract class ServerListActivityBaseGrand extends AppCompatActivity
+abstract class ServerListActivityBaseGrand extends AppCompatActivity
 {
 	protected SharedPreferences pref;
 	protected ActivityResultDispatcher resultDerived=new ActivityResultDispatcher();

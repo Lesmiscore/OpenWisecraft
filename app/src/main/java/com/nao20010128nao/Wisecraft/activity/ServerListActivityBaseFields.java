@@ -23,7 +23,7 @@ import java.util.*;
 import android.support.v7.view.ActionMode;
 
 //Fields
-public abstract class ServerListActivityBaseFields extends ServerListActivityBaseGrand
+abstract class ServerListActivityBaseFields extends ServerListActivityBaseGrand
 {
 	public static final int EDIT_MODE_NULL=0;
 	public static final int EDIT_MODE_EDIT=1;

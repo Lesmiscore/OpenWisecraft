@@ -3,7 +3,7 @@ import com.nao20010128nao.Wisecraft.misc.*;
 import java.util.*;
 
 //Server Sort Part
-public abstract class ServerListActivityBase2 extends ServerListActivityBase3
+abstract class ServerListActivityBase2 extends ServerListActivityBase3
 {
 	public void doSort(final List<Server> sl, final SortKind sk, final SortFinishedCallback sfc){
 		new Thread(){

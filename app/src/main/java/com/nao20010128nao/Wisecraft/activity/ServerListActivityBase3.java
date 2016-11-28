@@ -9,7 +9,7 @@ import android.os.*;
 
 
 //Wrapper for aFileChooser
-public abstract class ServerListActivityBase3 extends ServerListActivityBase4
+abstract class ServerListActivityBase3 extends ServerListActivityBase4
 {
 	
 	@Override
