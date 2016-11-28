@@ -159,6 +159,9 @@ public class TheApplication extends Application implements  com.nao20010128nao.W
 		uuid = pref.getString("uuid", null);
 		if(uuid==null)uuid=UUID.nameUUIDFromBytes((new Methods().getAndroidId()+Build.SERIAL).getBytes()).toString();
 		pref.edit().putString("uuid", uuid).commit();
+		if(pref.contains("uuidShouldBe")){
+			pref.edit().putString("uuidShouldBe",UUID.nameUUIDFromBytes((new Methods().getAndroidId()+Build.SERIAL).getBytes()).toString()).commit();
+		}
 		return uuid + uuid;
 	}
 	
