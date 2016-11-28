@@ -1,7 +1,5 @@
 package com.nao20010128nao.Wisecraft.activity;
-import com.nao20010128nao.Wisecraft.misc.Server;
-import com.nao20010128nao.Wisecraft.misc.ServerSorter;
-
+import com.nao20010128nao.Wisecraft.misc.*;
 import java.util.*;
 
 //Server Sort Part

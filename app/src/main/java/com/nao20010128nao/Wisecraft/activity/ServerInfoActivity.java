@@ -21,6 +21,7 @@ import biz.laenger.android.vpbs.*;
 import com.astuetz.*;
 import com.google.gson.*;
 import com.nao20010128nao.OTC.*;
+import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
@@ -33,6 +34,7 @@ import java.math.*;
 import java.util.*;
 
 import android.support.v7.app.AlertDialog;
+import com.nao20010128nao.Wisecraft.R;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 

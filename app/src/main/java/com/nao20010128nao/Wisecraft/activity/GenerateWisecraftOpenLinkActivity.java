@@ -6,8 +6,7 @@ import android.support.design.widget.*;
 import android.support.v7.app.*;
 import android.view.*;
 import android.widget.*;
-
-import com.nao20010128nao.Wisecraft.TheApplication;
+import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 
 public class GenerateWisecraftOpenLinkActivity extends AppCompatActivity {

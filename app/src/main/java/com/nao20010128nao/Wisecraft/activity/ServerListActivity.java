@@ -32,6 +32,7 @@ import java.lang.ref.*;
 import java.util.*;
 
 import android.support.v7.view.ActionMode;
+import com.nao20010128nao.Wisecraft.BuildConfig;
 import com.nao20010128nao.Wisecraft.R;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
