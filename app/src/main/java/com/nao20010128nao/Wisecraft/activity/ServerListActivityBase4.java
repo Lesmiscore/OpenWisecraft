@@ -30,7 +30,7 @@ import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 //Misc
 abstract class ServerListActivityBase4 extends ServerListActivityBase5
 {
-    protected NetworkStateBroadcastReceiver nsbr;
+    protected BroadcastReceiver nsbr;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -87,7 +87,13 @@ abstract class ServerListActivityBase4 extends ServerListActivityBase5
 		new NetworkStatusCheckWorker().execute();
 		IntentFilter inFil=new IntentFilter();
 		inFil.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-		registerReceiver(nsbr = new NetworkStateBroadcastReceiver(), inFil);
+		registerReceiver(nsbr = new BroadcastReceiver(){
+							 @Override
+							 public void onReceive(Context p1, Intent p2) {
+								 Log.d("ServerListActivity - NSBB", "received");
+								 new NetworkStatusCheckWorker().execute();
+							 }
+						 }, inFil);
 	
 		new Thread(){
 			String replyAction;
@@ -217,14 +223,6 @@ abstract class ServerListActivityBase4 extends ServerListActivityBase5
 				indicator.setText(result);
 				indicator.show();
 			}
-		}
-	}
-	
-	protected class NetworkStateBroadcastReceiver extends BroadcastReceiver {
-		@Override
-		public void onReceive(Context p1, Intent p2) {
-			Log.d("ServerListActivity - NSBB", "received");
-			new NetworkStatusCheckWorker().execute();
 		}
 	}
     
