@@ -6,6 +6,7 @@
 		<item name="colorPrimaryDark">@color/upd_1</item>
 		<item name="android:windowContentOverlay">@null</item>
 		<item name="android:buttonStyle">@style/AppButton</item>
+		<item name="rconConsoleSendButtonStyle">@style/AppButton</item>
 	</style>
 	<style name="AppDialog" parent="@style/Theme.AppCompat.Light.Dialog">
 		<item name="colorPrimary">@color/upd_2</item>

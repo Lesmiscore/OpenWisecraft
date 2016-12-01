@@ -4,4 +4,5 @@
 		<attr name="rconTabTextColor" format="color"/>
 		<attr name="rconTabUnderlineColor" format="color"/>
 	</declare-styleable>
+	<attr name="rconConsoleSendButtonStyle" format="reference"/>
 </resources>

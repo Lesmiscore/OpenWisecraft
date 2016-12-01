@@ -14,10 +14,13 @@
 		<item name="wcMenuTintColor">#000000</item>
 		<item name="dialogTheme">@style/AppAlertDialog</item>
 		<item name="toolbarStyle">?attr/wcToolbarTheme</item>
+		<item name="rconConsoleSendButtonStyle">@style/AppButton</item>
 		<!--MaterialDrawer-->
 		<item name="material_drawer_background">?android:attr/windowBackground</item>
         <item name="material_drawer_primary_text">@color/black</item>
         <item name="material_drawer_selected_text">?attr/material_drawer_primary_text</item>
+		<!--RCON-->
+		<item name="rconConsoleSendButtonStyle">@style/AppButton</item>
 	</style>
 	<style name="AppDialog" parent="@style/Theme.AppCompat.Light.Dialog">
 		<item name="colorPrimary">@color/primary</item>
@@ -94,17 +97,22 @@
     </style>
 	
 	
-	
-	<style name="AppButton" parent="@style/Widget.AppCompat.Button.Colored">
-		<item name="android:textColor">#fff</item>
-        <item name="android:gravity">center</item>
-		<item name="colorButtonNormal">@color/mainColor</item>
-		<item name="colorControlNormal">@color/mainColor</item>
+	<style name="AppButton" parent="AppButton.Base">
+		<item name="wcAppButtonTextColor">@color/mainColor</item>
+		<item name="wcAppButtonBgColor">#fff</item>
 	</style>
 	<style name="AppButton.Inverse">
-		<item name="android:textColor">@color/mainColor</item>
-		<item name="colorButtonNormal">#fff</item>
-		<item name="colorControlNormal">#fff</item>
+		<item name="wcAppButtonBgColor">@color/mainColor</item>
+		<item name="wcAppButtonTextColor">#fff</item>
+	</style>
+	
+	
+	
+	<style name="AppButton.Base" parent="@style/Widget.AppCompat.Button.Colored">
+		<item name="android:textColor">?attr/wcAppButtonBgColor</item>
+        <item name="android:gravity">center</item>
+		<item name="colorButtonNormal">?attr/wcAppButtonTextColor</item>
+		<item name="colorControlNormal">?attr/wcAppButtonTextColor</item>
 	</style>
 	
 	<style name="AppPreferenceTextAppearance" parent="TextAppearance.AppCompat.Medium">
