@@ -14,7 +14,6 @@
 		<item name="wcMenuTintColor">#000000</item>
 		<item name="dialogTheme">@style/AppAlertDialog</item>
 		<item name="toolbarStyle">?attr/wcToolbarTheme</item>
-		<item name="rconConsoleSendButtonStyle">@style/AppButton</item>
 		<!--MaterialDrawer-->
 		<item name="material_drawer_background">?android:attr/windowBackground</item>
         <item name="material_drawer_primary_text">@color/black</item>
