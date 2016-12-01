@@ -482,31 +482,28 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							public void process(ServerListActivity a) {
 								updateAllWithConditions(new Predicate<Server>(){public boolean process(Server a){return true;}});
 							}
-						},new Treatment<ServerListActivity>(){
-							public void process(ServerListActivity a) {
-								new AlertDialog.Builder(a,ThemePatcher.getDefaultDialogStyle(a))
-									.setTitle(R.string.update_all)
-									.setItems(R.array.serverUpdateAllSubMenu,new DialogInterface.OnClickListener(){
-										public void onClick(DialogInterface di, int w) {
-											switch(w){
-												case 0://update all
-													appMenu.findByA(R.string.update_all).getC().process(ServerListActivity.instance.get());
-													break;
-												case 1://update onlines
-													updateAllWithConditions(new Predicate<Server>(){public boolean process(Server a){return a instanceof ServerStatus;}});
-													break;
-												case 2://update offlines
-													updateAllWithConditions(new Predicate<Server>(){public boolean process(Server a){return !(a instanceof ServerStatus);}});
-													break;
-												case 3://select
-													startSelectUpdateMode();
-													break;
-											}
-										}
-									})
-									.show();
-							}
-						},null,UUID.fromString("7880ff52-b8c5-3c29-8b65-74fc30a57316")));//2
+						},
+						new DialogLauncherListener<ServerListActivity>(this)
+						.setTitle(R.string.update_all)
+						.setItems(R.array.serverUpdateAllSubMenu,new DialogInterface.OnClickListener(){
+								public void onClick(DialogInterface di, int w) {
+									switch(w){
+										case 0://update all
+											appMenu.findByA(R.string.update_all).getC().process(ServerListActivity.instance.get());
+											break;
+										case 1://update onlines
+											updateAllWithConditions(new Predicate<Server>(){public boolean process(Server a){return a instanceof ServerStatus;}});
+											break;
+										case 2://update offlines
+											updateAllWithConditions(new Predicate<Server>(){public boolean process(Server a){return !(a instanceof ServerStatus);}});
+											break;
+										case 3://select
+											startSelectUpdateMode();
+											break;
+									}
+								}
+							})
+						,null,UUID.fromString("7880ff52-b8c5-3c29-8b65-74fc30a57316")));//2
 		appMenu.add(new Sextet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem,UUID>(R.string.export, R.drawable.ic_file_upload_black_48dp, new Treatment<ServerListActivity>(){
 							public void process(ServerListActivity a) {
 								View dialogView_=getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
@@ -621,56 +618,53 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							}
 						},null,null,UUID.fromString("1b4cd9b1-662a-3e72-9ae4-eecd46858077")));//4
 		if(pref.getBoolean("feature_bott", true)){
-			appMenu.add(new Sextet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem,UUID>(R.string.sort, R.drawable.ic_compare_arrows_black_48dp, new Treatment<ServerListActivity>(){
-								public void process(ServerListActivity a) {
-									new AlertDialog.Builder(a,ThemePatcher.getDefaultDialogStyle(a))
-										.setTitle(R.string.sort)
-										.setItems(R.array.serverSortMenu, new DialogInterface.OnClickListener(){
-											public void onClick(DialogInterface di, int w) {
-												if(w==getResources().getStringArray(R.array.serverSortMenu).length-1){
-													startEditMode();
-												}else{
-													SortKind sk=new SortKind[]{SortKind.BRING_ONLINE_SERVERS_TO_TOP,SortKind.IP_AND_PORT,SortKind.ONLINE_AND_OFFLINE}[w];
-													skipSave = true;
-													doSort(list, sk,new SortFinishedCallback(){
-															public void onSortFinished(List<Server> data){
-																list.clear();
-																list.addAll(data);
-																saveServers();
-																sl.notifyItemRangeChanged(0,list.size()-1);
-																rv.smoothScrollToPosition(0);
-																new Thread(){
-																	public void run(){
-																		List<Server> lList=new ArrayList<>(list);
-																		final int[] datas=new int[list.size()];
-																		for(int i=0;i<datas.length;i++){
-																			Server s=lList.get(i);
-																			if(pinging.get(s)){
-																				datas[i]=1;
-																			}else{
-																				if(s instanceof ServerStatus){
-																					datas[i]=2;
-																				}else{
-																					datas[i]=0;
-																				}
-																			}
-																		}
-																		runOnUiThread(new Runnable(){
-																				public void run(){
-																					statLayout.setStatuses(datas);
-																				}
-																			});
-																	}
-																}.start();
+			appMenu.add(new Sextet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem,UUID>(R.string.sort, R.drawable.ic_compare_arrows_black_48dp, 
+					new DialogLauncherListener<ServerListActivity>(this)
+						.setTitle(R.string.sort)
+						.setItems(R.array.serverSortMenu, new DialogInterface.OnClickListener(){
+							public void onClick(DialogInterface di, int w) {
+								if(w==getResources().getStringArray(R.array.serverSortMenu).length-1){
+									startEditMode();
+								}else{
+									SortKind sk=new SortKind[]{SortKind.BRING_ONLINE_SERVERS_TO_TOP,SortKind.IP_AND_PORT,SortKind.ONLINE_AND_OFFLINE}[w];
+									skipSave = true;
+									doSort(list, sk,new SortFinishedCallback(){
+										public void onSortFinished(List<Server> data){
+											list.clear();
+											list.addAll(data);
+											saveServers();
+											sl.notifyItemRangeChanged(0,list.size()-1);
+											rv.smoothScrollToPosition(0);
+											new Thread(){
+												public void run(){
+													List<Server> lList=new ArrayList<>(list);
+													final int[] datas=new int[list.size()];
+														for(int i=0;i<datas.length;i++){
+															Server s=lList.get(i);
+															if(pinging.get(s)){
+																datas[i]=1;
+															}else{
+																if(s instanceof ServerStatus){
+																	datas[i]=2;
+																}else{
+																	datas[i]=0;
+																}
+															}
+														}
+														runOnUiThread(new Runnable(){
+															public void run(){
+																statLayout.setStatuses(datas);
 															}
 														});
 												}
-												di.dismiss();
-											}
-										})
-										.show();
+											}.start();
+										}
+									});
 								}
-							},null,null,UUID.fromString("59084d0f-904a-3379-a0f2-285d6763016c")));//5
+								di.dismiss();
+							}
+						})	
+						,null,null,UUID.fromString("59084d0f-904a-3379-a0f2-285d6763016c")));//5
 		}
 		if(pref.getBoolean("feature_serverFinder", false)){
 			appMenu.add(new Sextet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem,UUID>(R.string.serverFinder, R.drawable.ic_search_black_48dp, new Treatment<ServerListActivity>(){
