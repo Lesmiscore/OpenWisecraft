@@ -1471,7 +1471,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 											},1000);
 									}
 								}else{
-									act().retrying.put(s,new KVP<Boolean,Integer>(isUpd,act().pref.getInt("retryIteration",10)));
+									act().retrying.put(s,new KVP<Boolean,Integer>(isUpd,Integer.valueOf(act().pref.getString("retryIteration","10"))));
 									act().getWindow().getDecorView().getHandler().postDelayed(new Runnable(){
 											public void run(){
 												(isUpd?act().updater:act().spp).putInQueue(s,PingHandlerImpl.this);
