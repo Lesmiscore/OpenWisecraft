@@ -1,4 +1,4 @@
-image: "nao20010128nao/android-build:20161226"
+image: "nao20010128nao/android-build:latest"
 
 before_script:
   - chmod a+x ./ci/*
