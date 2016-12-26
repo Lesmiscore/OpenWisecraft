@@ -1,3 +1,4 @@
+#!/bin/sh
 git clone https://github.com/RevealEverything/Files.git
 cd Files
 git remote add dest https://$GITLAB_USER:$GITLAB_PASS@gitlab.com/nao20010128nao/Wisecraft_Steals_2.git

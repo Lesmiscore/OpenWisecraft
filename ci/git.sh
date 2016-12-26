@@ -1,3 +1,4 @@
+#!/bin/sh
 git config --global user.email "nao20010128@gmail.com"
 git config --global user.name "nao20010128nao"
 git submodule update --init --recursive
