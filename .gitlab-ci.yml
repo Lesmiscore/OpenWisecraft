@@ -1,25 +1,24 @@
-image: maven:3-jdk-8
+image: nao20010128nao/android-build
 
 before_script:
   - chmod a+x ./ci/*
   - source ./ci/prepare.sh 2> /dev/null
 
 stages:
-#  - elim
   - main
   - copy
 
 main:
   stage: main
   script:
-    - gradle-2.14.1/bin/gradle build --info --stacktrace > build.log
+    - gradle build --info --stacktrace > build.log
     - mv */build/outputs/apk/*.apk .
     - unzip app-release.apk -d unzippedApkA > /dev/null
-    - android-sdk-linux/build-tools/24.0.0/dexdump -d unzippedApkA/classes.dex > dexdump-app.txt
+    - $ANDROID_HOME/build-tools/25.0.0/dexdump -d unzippedApkA/classes.dex > dexdump-app.txt
     - unzip rconApp-release.apk -d unzippedApkB > /dev/null
-    - android-sdk-linux/build-tools/24.0.0/dexdump -d unzippedApkB/classes.dex > dexdump-rcon.txt
+    - $ANDROID_HOME/build-tools/25.0.0/dexdump -d unzippedApkB/classes.dex > dexdump-rcon.txt
     - unzip rconPassCrack-release.apk -d unzippedApkC > /dev/null
-    - android-sdk-linux/build-tools/24.0.0/dexdump -d unzippedApkC/classes.dex > dexdump-rconPC.txt
+    - $ANDROID_HOME/build-tools/25.0.0/dexdump -d unzippedApkC/classes.dex > dexdump-rconPC.txt
     - grep "Git\sRevision" build.log
     - tree > tree.log
   artifacts:
@@ -32,12 +31,6 @@ main:
       - tree.log
       - "*/build/outputs/mapping/*/mapping.txt"
 
-
-#elim:
-#  stage: elim
-#  script:
-#    - gradle-2.14.1/bin/gradle eliminateImplementTodo --info --stacktrace
-    
 copy:
   stage: copy
   script:
