@@ -11,7 +11,7 @@ stages:
 main:
   stage: main
   script:
-    - $GRADLE_BIN_PATH/gradle build --info --stacktrace > build.log
+    - gradle build --info --stacktrace > build.log
     - mv */build/outputs/apk/*.apk .
     - unzip app-release.apk -d unzippedApkA > /dev/null
     - $ANDROID_HOME/build-tools/25.0.0/dexdump -d unzippedApkA/classes.dex > dexdump-app.txt
