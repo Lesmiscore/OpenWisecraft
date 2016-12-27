@@ -16,7 +16,10 @@
         <item name="material_drawer_primary_text">@color/black</item>
         <item name="material_drawer_selected_text">?attr/material_drawer_primary_text</item>
 		<!--RCON-->
-		<item name="rconConsoleSendButtonStyle">@style/AppButton.Black</item>
+		<item name="rconConsoleSendButtonStyle">@style/AppButton</item>
+		<!--AppButton-->
+		<item name="wcAppButtonTextColor">#304FFE</item>
+		<item name="wcAppButtonBgColor">#000</item>
     </style>
     
     <style name="AppDialog.Black" parent="Theme.AppCompat.Light.Dialog">
@@ -54,14 +57,5 @@
 	<style name="AppTheme.Toolbar.Black" parent="Widget.AppCompat.Toolbar.Wisecraft">
 		<item name="colorControlNormal">#ffffff</item>
 		<item name="titleTextColor">?attr/colorControlNormal</item>
-	</style>
-	
-	<style name="AppButton.Black">
-		<item name="wcAppButtonTextColor">#304FFE</item>
-		<item name="wcAppButtonBgColor">#000</item>
-	</style>
-	<style name="AppButton.Inverse.Black">
-		<item name="wcAppButtonBgColor">#304FFE</item>
-		<item name="wcAppButtonTextColor">#000</item>
 	</style>
 </resources>
