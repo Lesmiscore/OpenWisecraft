@@ -20,7 +20,7 @@ public class SlsUpdater extends Thread
 	SlsUpdaterService ctx;
 	public SlsUpdater(SlsUpdaterService conte){
 		ctx=conte;
-		ctx.getDir("mcserverlist",777);
+		ctx.getDir("mcserverlist",Context.MODE_PRIVATE);
 	}
 	@Override
 	public void run() {
