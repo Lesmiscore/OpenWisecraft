@@ -96,9 +96,14 @@
     </style>
 	
 	
-	<style name="AppButton" parent="AppButton.Base">
+	<style name="AppButton" parent="@style/Widget.AppCompat.Button.Colored">
 		<item name="wcAppButtonTextColor">@color/mainColor</item>
 		<item name="wcAppButtonBgColor">#fff</item>
+		
+		<item name="android:textColor">?attr/wcAppButtonBgColor</item>
+        <item name="android:gravity">center</item>
+		<item name="colorButtonNormal">?attr/wcAppButtonTextColor</item>
+		<item name="colorControlNormal">?attr/wcAppButtonTextColor</item>
 	</style>
 	<style name="AppButton.Inverse">
 		<item name="wcAppButtonBgColor">@color/mainColor</item>
