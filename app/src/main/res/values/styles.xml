@@ -21,8 +21,8 @@
 		<!--RCON-->
 		<item name="rconConsoleSendButtonStyle">@style/AppButton</item>
 		<!--AppButton-->
-		<item name="wcAppButtonTextColor">@color/mainColor</item>
-		<item name="wcAppButtonBgColor">#fff</item>
+		<item name="wcAppButtonTextColor">#000</item>
+		<item name="wcAppButtonBgColor">@color/mainColor</item>
 	</style>
 	<style name="AppDialog" parent="@style/Theme.AppCompat.Light.Dialog">
 		<item name="colorPrimary">@color/primary</item>
@@ -100,16 +100,16 @@
 	
 	
 	<style name="AppButton" parent="@style/Widget.AppCompat.Button.Colored">
-		<item name="android:textColor">?attr/wcAppButtonBgColor</item>
-        <item name="android:gravity">center</item>
-		<item name="colorButtonNormal">?attr/wcAppButtonTextColor</item>
-		<item name="colorControlNormal">?attr/wcAppButtonTextColor</item>
-	</style>
-	<style name="AppButton.Inverse">
 		<item name="android:textColor">?attr/wcAppButtonTextColor</item>
         <item name="android:gravity">center</item>
 		<item name="colorButtonNormal">?attr/wcAppButtonBgColor</item>
 		<item name="colorControlNormal">?attr/wcAppButtonBgColor</item>
+	</style>
+	<style name="AppButton.Inverse">
+		<item name="android:textColor">?attr/wcAppButtonBgColor</item>
+        <item name="android:gravity">center</item>
+		<item name="colorButtonNormal">?attr/wcAppButtonTextColor</item>
+		<item name="colorControlNormal">?attr/wcAppButtonTextColor</item>
 	</style>
 	
 	

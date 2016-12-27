@@ -20,8 +20,8 @@
 		<!--RCON-->
 		<item name="rconConsoleSendButtonStyle">@style/AppButton</item>
 		<!--AppButton-->
-		<item name="wcAppButtonTextColor">#FF4081</item>
-		<item name="wcAppButtonBgColor">#fff</item>
+		<item name="wcAppButtonTextColor">#fff</item>
+		<item name="wcAppButtonBgColor">#FF4081</item>
     </style>
     
     <style name="AppDialog.Violet" parent="Theme.AppCompat.Light.Dialog">

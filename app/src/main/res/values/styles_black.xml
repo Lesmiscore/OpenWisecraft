@@ -18,7 +18,7 @@
 		<!--RCON-->
 		<item name="rconConsoleSendButtonStyle">@style/AppButton</item>
 		<!--AppButton-->
-		<item name="wcAppButtonTextColor">#304FFE</item>
+		<item name="wcAppButtonTextColor">#fff</item>
 		<item name="wcAppButtonBgColor">#000</item>
     </style>
     
