@@ -155,7 +155,10 @@ class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 
 		psts.setIndicatorColor(slsl.getTextColor());
 		psts.setTextColor(slsl.getTextColor());
-		psts.setOnPageChangeListener(new ColorUpdater(slsl.getTextColor(), translucent(slsl.getTextColor()), tabs, psts));
+		psts.setOnPageChangeListener(new ViewPagerChangeListenerObserver(
+			new ColorUpdater(slsl.getTextColor(), translucent(slsl.getTextColor()), tabs, psts),
+			new PstsTextStyleChanger(Typeface.BOLD, Typeface.NORMAL, tabs, psts)
+		));
 		
 		findViewById(R.id.appbar).setBackgroundDrawable(slsl.load());
 
