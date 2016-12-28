@@ -5,10 +5,9 @@
       <module fileurl="file://$PROJECT_DIR$/MaterialIcons/MaterialIcons.iml" filepath="$PROJECT_DIR$/MaterialIcons/MaterialIcons.iml" />
       <module fileurl="file://$PROJECT_DIR$/Wisecraft.iml" filepath="$PROJECT_DIR$/Wisecraft.iml" />
       <module fileurl="file://$PROJECT_DIR$/aFileChooser/aFileChooser.iml" filepath="$PROJECT_DIR$/aFileChooser/aFileChooser.iml" />
-      <module fileurl="file://$PROJECT_DIR$/accounts/accounts.iml" filepath="$PROJECT_DIR$/accounts/accounts.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/calligraphy/calligraphy.iml" filepath="$PROJECT_DIR$/calligraphy/calligraphy.iml" />
-      <module fileurl="file://$PROJECT_DIR$/colorPicker/colorpicker.iml" filepath="$PROJECT_DIR$/colorPicker/colorpicker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/collector/collector.iml" filepath="$PROJECT_DIR$/collector/collector.iml" />
       <module fileurl="file://$PROJECT_DIR$/compat/compat.iml" filepath="$PROJECT_DIR$/compat/compat.iml" />
       <module fileurl="file://$PROJECT_DIR$/psts/psts.iml" filepath="$PROJECT_DIR$/psts/psts.iml" />
       <module fileurl="file://$PROJECT_DIR$/rcon/rcon.iml" filepath="$PROJECT_DIR$/rcon/rcon.iml" />

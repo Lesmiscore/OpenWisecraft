@@ -154,7 +154,6 @@ dependencies {
 	compile project(':aFileChooser')
 	compile project(':calligraphy')
 	compile project(':colorPicker')
-	compile project(':pinger')
 	compile project(':collector')
 	
 	compile 'com.android.support:recyclerview-v7:25.1.0'

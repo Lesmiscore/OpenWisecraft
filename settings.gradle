@@ -1,6 +1,5 @@
 include ':app', ':wisecraft-i18n', ':compat'
 include ':scrolling', ':statusesLayout', ':rcon'
 include ':rconApp', ':rconPassCrack', ':MaterialIcons'
-include ':aFileChooser', ':accounts', ':calligraphy'
-include ':psts', ':colorPicker', ':pinger'
-include ':collector'
+include ':aFileChooser', ':calligraphy'
+include ':psts', ':colorPicker', ':collector'

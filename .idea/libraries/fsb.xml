@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="fsb">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/app/libs/fsb.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
