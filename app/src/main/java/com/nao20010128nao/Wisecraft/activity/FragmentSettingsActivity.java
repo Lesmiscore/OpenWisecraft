@@ -34,7 +34,7 @@ import uk.co.chrisjenx.calligraphy.*;
 import android.support.v7.widget.Toolbar;
 import com.nao20010128nao.Wisecraft.R;
 
-class FragmentSettingsActivityImpl extends AppCompatActivity {
+class FragmentSettingsActivityImpl extends AppCompatActivity implements SettingsScreen{
 	public static final Map<String,Class<? extends Fragment>> FRAGMENT_CLASSES=new HashMap<String,Class<? extends Fragment>>(){{
 			put("root",HubPrefFragment.class);
 			put("basics",Basics.class);
@@ -140,6 +140,13 @@ class FragmentSettingsActivityImpl extends AppCompatActivity {
 		}
 		super.finish();
 	}
+
+	@Override
+	public int getIdForFragment() {
+		// TODO: Implement this method
+		return R.id.preference;
+	}
+
 	
 	
 	public static class HubPrefFragment extends SettingsBaseFragment {
@@ -870,6 +877,10 @@ class FragmentSettingsActivityImpl extends AppCompatActivity {
 			PreferenceUtils.onBindViewHolder(getActivity(),pref,viewHolder);
 		}
 		
+		public int getIdForFragment(){
+			return ((SettingsScreen)getActivity()).getIdForFragment();
+		}
+		
 		
 		
 		
@@ -881,7 +892,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity {
 	
 	
 	//preview part
-	public static class ServerListPreviewFragment extends ServerListFragment<FragmentSettingsActivity> {
+	public static class ServerListPreviewFragment extends ServerListFragment<AppCompatActivity> {
 
 		@Override
 		public void onResume() {
@@ -988,7 +999,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity {
 		}
 	}
 	
-	public static class ServerInfoToolbarFragment extends com.nao20010128nao.Wisecraft.misc.BaseFragment<FragmentSettingsActivity> {
+	public static class ServerInfoToolbarFragment extends com.nao20010128nao.Wisecraft.misc.BaseFragment<AppCompatActivity> {
 		UsefulPagerAdapter adapter;
 		ViewPager tabs;
 		ServerListStyleLoader slsl;
@@ -1043,7 +1054,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity {
 			return LayoutInflater.from(getActivity()).inflate(R.layout.server_info_pager_nobs,container,false);
 		}
 		
-		public static class BlankFragment extends com.nao20010128nao.Wisecraft.misc.BaseFragment<FragmentSettingsActivity> {
+		public static class BlankFragment extends com.nao20010128nao.Wisecraft.misc.BaseFragment<AppCompatActivity> {
 
 			@Override
 			public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -1051,9 +1062,24 @@ class FragmentSettingsActivityImpl extends AppCompatActivity {
 			}
 		}
 	}
+	static class MasterDetailSettingsImpl extends MasterDetailSupportActivity implements SettingsScreen{
+		@Override
+		public void setupRecyclerView(RecyclerView recyclerView) {
+			// TODO: Implement this method
+		}
+		public int getIdForFragment(){
+			return R.id.item_detail_container;
+		}
+	}
+}
+interface SettingsScreen{
+	int getIdForFragment();
 }
 public class FragmentSettingsActivity extends FragmentSettingsActivityImpl{
 	public static class ServerListStyleEditor extends ServerListStyleEditorImpl{
+		
+	}
+	public static class MasterDetailSettings extends MasterDetailSettingsImpl{
 		
 	}
 }
