@@ -9,6 +9,8 @@ import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.provider.*;
 import java.util.*;
 
+import com.nao20010128nao.Wisecraft.R;
+
 public class RequestedServerInfoActivity extends ApiBaseActivity {
 	ServerPingProvider spp=new NormalServerPingProvider();
 	Server requested;

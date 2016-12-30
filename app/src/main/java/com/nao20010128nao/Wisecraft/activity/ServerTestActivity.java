@@ -18,6 +18,7 @@ import java.lang.ref.*;
 import java.util.*;
 
 import android.support.v7.app.AlertDialog;
+import com.nao20010128nao.Wisecraft.R;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 

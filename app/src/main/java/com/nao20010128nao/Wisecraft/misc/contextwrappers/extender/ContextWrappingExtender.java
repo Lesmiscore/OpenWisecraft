@@ -7,6 +7,8 @@ import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import java.math.*;
 
+import com.nao20010128nao.Wisecraft.R;
+
 public class ContextWrappingExtender extends ContextWrapper
 {
 	public static final String SERVER_LIST_STYLE_LOADER="server_list_style_loader";

@@ -20,6 +20,8 @@ import com.nao20010128nao.Wisecraft.misc.provider.*;
 import java.lang.ref.*;
 import java.util.*;
 
+import com.nao20010128nao.Wisecraft.R;
+
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 class ServerFinderActivityImpl extends AppCompatActivity implements ServerListActivityInterface {
 	ServerList sl;

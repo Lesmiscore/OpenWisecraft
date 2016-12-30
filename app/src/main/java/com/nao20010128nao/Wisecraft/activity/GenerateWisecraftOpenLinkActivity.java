@@ -9,6 +9,8 @@ import android.widget.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 
+import com.nao20010128nao.Wisecraft.R;
+
 public class GenerateWisecraftOpenLinkActivity extends AppCompatActivity {
 	static final String PREFIX="wisecraft://";
 	

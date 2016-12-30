@@ -15,6 +15,8 @@ import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import java.util.*;
 
+import com.nao20010128nao.Wisecraft.R;
+
 public abstract class WidgetServerSelectActivity extends AppCompatActivity 
 {
 	RecyclerView rv;

@@ -19,6 +19,8 @@ import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
 import com.nao20010128nao.Wisecraft.misc.provider.*;
 import java.util.*;
 
+import com.nao20010128nao.Wisecraft.R;
+
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 
 public class PingWidget extends AppWidgetProvider {

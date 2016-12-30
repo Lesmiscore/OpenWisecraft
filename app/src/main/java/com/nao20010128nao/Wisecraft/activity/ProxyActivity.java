@@ -14,6 +14,7 @@ import java.lang.reflect.*;
 import java.net.*;
 
 import android.support.v7.app.AlertDialog;
+import com.nao20010128nao.Wisecraft.R;
 
 public class ProxyActivity extends AppCompatActivity {
 	public static ServiceController cont;
