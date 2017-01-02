@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.nao20010128nao.Wisecraft.misc.MasterDetail.R;
+
 public abstract class MasterDetailSupportActivity extends AppCompatActivity {
 
     private boolean mTwoPane=false;
