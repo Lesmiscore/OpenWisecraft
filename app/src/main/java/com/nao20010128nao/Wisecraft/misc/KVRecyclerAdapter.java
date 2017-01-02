@@ -3,8 +3,9 @@ package com.nao20010128nao.Wisecraft.misc;
 import android.content.*;
 import android.view.*;
 import android.widget.*;
-import com.nao20010128nao.Wisecraft.*;
 import java.util.*;
+
+import com.nao20010128nao.Wisecraft.R;
 
 public class KVRecyclerAdapter<K,V> extends ListRecyclerViewAdapter<KVRecyclerAdapter.KVVH,Map.Entry<K,V>> 
 {

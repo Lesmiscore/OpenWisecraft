@@ -10,6 +10,8 @@ import com.nao20010128nao.Wisecraft.activity.*;
 import com.nao20010128nao.Wisecraft.api.*;
 import java.util.*;
 
+import com.nao20010128nao.Wisecraft.R;
+
 public class ThemePatcher{
 	private ThemePatcher(){}
 	

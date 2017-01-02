@@ -11,6 +11,8 @@ import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.activity.*;
 import java.io.*;
 
+import com.nao20010128nao.Wisecraft.R;
+
 public class ServerListStyleLoader {
 	public static final int BACKGROUND_WHITE=0;
 	public static final int BACKGROUND_BLACK=1;
