@@ -43,6 +43,67 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 			put("versionInfo",VersionInfoFragmentLocal.class);
 	}};
 	public static final String DIALOG_FRAGMENT_TAG_PREFIX="settings@com.nao20010128nao.Wisecraft#";
+	public static final List<Trio<Integer,String,Treatment<SettingsScreen>>> MAIN;
+	static{
+		List<Trio<Integer,String,Treatment<SettingsScreen>>> main=new ArrayList<>();
+		main.add(new Trio<Integer,String,Treatment<SettingsScreen>>(R.string.basics,"basics", new Treatment<SettingsScreen>(){
+					public void process(SettingsScreen ss) {
+						((AppCompatActivity)ss)
+							.getSupportFragmentManager()
+							.beginTransaction()
+							.replace(R.id.preference,new Basics())
+							.addToBackStack("basics")
+							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+							.commit();
+					}
+				}));
+		main.add(new Trio<Integer,String,Treatment<SettingsScreen>>(R.string.features,"features", new Treatment<SettingsScreen>(){
+					public void process(SettingsScreen ss) {
+						((AppCompatActivity)ss)
+							.getSupportFragmentManager()
+							.beginTransaction()
+							.replace(R.id.preference,new Features())
+							.addToBackStack("features")
+							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+							.commit();
+					}
+				}));
+		main.add(new Trio<Integer,String,Treatment<SettingsScreen>>(R.string.colorChange,"changeColor", new Treatment<SettingsScreen>(){
+					public void process(SettingsScreen ss) {
+						((AppCompatActivity)ss)
+							.getSupportFragmentManager()
+							.beginTransaction()
+							.replace(R.id.preference,new ColorChanger())
+							.addToBackStack("changeColor")
+							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+							.commit();
+					}
+				}));
+		main.add(new Trio<Integer,String,Treatment<SettingsScreen>>(R.string.osl,"osl", new Treatment<SettingsScreen>(){
+					public void process(SettingsScreen ss) {
+						AppCompatActivity act=(AppCompatActivity)ss;
+						act.startActivity(new Intent(act,OpenSourceActivity.class));
+					}
+				}));
+		main.add(new Trio<Integer,String,Treatment<SettingsScreen>>(R.string.aboutApp,"aboutApp", new Treatment<SettingsScreen>(){
+					public void process(SettingsScreen ss) {
+						AppCompatActivity act=(AppCompatActivity)ss;
+						act.startActivity(new Intent(act,AboutAppActivity.class));
+					}
+				}));
+		main.add(new Trio<Integer,String,Treatment<SettingsScreen>>(R.string.versionInfo,"versionInfo", new Treatment<SettingsScreen>(){
+					public void process(SettingsScreen ss) {
+						((AppCompatActivity)ss)
+							.getSupportFragmentManager()
+							.beginTransaction()
+							.replace(R.id.preference,new VersionInfoFragmentLocal())
+							.addToBackStack("versionInfo")
+							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+							.commit();
+					}
+				}));
+		MAIN=Collections.unmodifiableList(main);
+	}
 	
 	int which;
 	SharedPreferences pref;
@@ -154,84 +215,30 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 		@Override
 		public void onCreatePreferences(Bundle p1, String p2) {
 			addPreferencesFromResource(R.xml.settings_parent_compat);
+			for(Trio<Integer,String,Treatment<SettingsScreen>> t:MAIN){
+				StartPrefCompat pref=new StartPrefCompat(getActivity());
+				pref.setKey(t.getB());
+				pref.setTitle(t.getA());
+				final Treatment<SettingsScreen> proc=t.getC();
+				pref.setOnClickListener(new HandledPreference.OnClickListener(){
+						public void onClick(String a, String b, String c) {
+							proc.process((SettingsScreen)getActivity());
+						}
+					});
+				getPreferenceScreen().addPreference(pref);
+			}
 		}
 
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			pref=PreferenceManager.getDefaultSharedPreferences(getContext());
 			super.onCreate(savedInstanceState);
-			sH("basics", new HandledPreference.OnClickListener(){
-					public void onClick(String a, String b, String c) {
-						getActivity().getSupportFragmentManager()
-							.beginTransaction()
-							.replace(R.id.preference,new Basics())
-							.addToBackStack("basics")
-							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-							.commit();
-					}
-				});
-			sH("features", new HandledPreference.OnClickListener(){
-					public void onClick(String a, String b, String c) {
-						getActivity()
-							.getSupportFragmentManager()
-							.beginTransaction()
-							.replace(R.id.preference,new Features())
-							.addToBackStack("features")
-							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-							.commit();
-					}
-				});
-			/*sH("asfsls",new HandledPreference.OnClickListener(){
-					public void onClick(String a,String b,String c){
-						getActivity()
-							.getSupportFragmentManager()
-							.beginTransaction()
-							.replace(R.id.preference,new Asfsls())
-							.addToBackStack("asfsls")
-							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-							.commit();
-					}
-				});*/
-			sH("changeColor",new HandledPreference.OnClickListener(){
-					public void onClick(String a,String b,String c){
-						getActivity()
-							.getSupportFragmentManager()
-							.beginTransaction()
-							.replace(R.id.preference,new ColorChanger())
-							.addToBackStack("changeColor")
-							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-							.commit();
-					}
-				});
-			sH("osl",new HandledPreference.OnClickListener(){
-					public void onClick(String a,String b,String c){
-						startActivity(new Intent(getContext(),OpenSourceActivity.class));
-					}
-				});
-			sH("aboutApp",new HandledPreference.OnClickListener(){
-					public void onClick(String a,String b,String c){
-						startActivity(new Intent(getContext(),AboutAppActivity.class));
-					}
-				});
-			sH("versionInfo",new HandledPreference.OnClickListener(){
-					public void onClick(String a,String b,String c){
-						getActivity()
-							.getSupportFragmentManager()
-							.beginTransaction()
-							.replace(R.id.preference,new VersionInfoFragmentLocal())
-							.addToBackStack("versionInfo")
-							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-							.commit();
-					}
-				});
-			//findPreference("asfsls").setEnabled(pref.getBoolean("feature_asfsls",false));
 			((SetTextColor)findPreference("settingsAttention")).setTextColor(ContextCompat.getColor(getContext(),R.color.color888));
 		}
 		@Override
 		public void onResume() {
 			super.onResume();
 			getActivity().setTitle(R.string.settings);
-			//findPreference("asfsls").setEnabled(pref.getBoolean("feature_asfsls",false));
 		}
 	}
 
@@ -1065,7 +1072,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 	static class MasterDetailSettingsImpl extends MasterDetailSupportActivity implements SettingsScreen{
 		@Override
 		public void setupRecyclerView(RecyclerView recyclerView) {
-			// TODO: Implement this method
+			
 		}
 		public int getIdForFragment(){
 			return R.id.item_detail_container;

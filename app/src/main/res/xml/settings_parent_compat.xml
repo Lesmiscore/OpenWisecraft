@@ -6,32 +6,5 @@
 		android:key="settingsAttention"
 		android:enabled="false"
 	/>
-	<com.nao20010128nao.Wisecraft.misc.pref.StartPrefCompat
-		android:title="@string/basics"
-		android:key="basics"
-		/>
-	<com.nao20010128nao.Wisecraft.misc.pref.StartPrefCompat
-		android:title="@string/features"
-		android:key="features"
-		/>
-	<!--<com.nao20010128nao.Wisecraft.misc.pref.StartPrefCompat
-		android:title="@string/addServerFromServerListSite"
-		android:key="asfsls"
-		/>-->
-	<com.nao20010128nao.Wisecraft.misc.pref.StartPrefCompat
-		android:title="@string/colorChange"
-		android:key="changeColor"
-	/>
-	<com.nao20010128nao.Wisecraft.misc.pref.StartPrefCompat
-		android:title="@string/osl"
-		android:key="osl"
-	/>
-	<com.nao20010128nao.Wisecraft.misc.pref.StartPrefCompat
-		android:title="@string/aboutApp"
-		android:key="aboutApp"
-	/>
-	<com.nao20010128nao.Wisecraft.misc.pref.StartPrefCompat
-		android:title="@string/versionInfo"
-		android:key="versionInfo"
-	/>
+	<!--Make remaining part on code-->
 </PreferenceScreen>
