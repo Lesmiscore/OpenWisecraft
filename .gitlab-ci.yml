@@ -11,7 +11,7 @@ stages:
 main:
   stage: main
   script:
-    - gradle build --info --stacktrace > build.log
+    - gradle modifyValuesXml modifyBooleansXml build --info --stacktrace | tee build.log > /dev/null
     - mv */build/outputs/apk/*.apk .
     - unzip app-release.apk -d unzippedApkA > /dev/null
     - $ANDROID_HOME/build-tools/25.0.0/dexdump -d unzippedApkA/classes.dex > dexdump-app.txt

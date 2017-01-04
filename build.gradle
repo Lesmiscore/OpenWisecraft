@@ -121,9 +121,8 @@ def t=new PowOf2();
 t.setDaemon(true);
 t.start();
 
-def dir,f,sb
-def shouldEditFiles=System.getenv("CI")!="";
-if(shouldEditFiles){
+task("modifyBooleansXml")<<{
+	def dir,f,sb
 	dir="./app/src/main/res/values/booleans.xml"
 	System.err.println("Editing "+dir);
 	f=null;
@@ -148,7 +147,8 @@ if(shouldEditFiles){
 		f=null
 	}
 }
-if(shouldEditFiles){
+task("modifyValuesXml")<<{
+	def dir,f,sb
 	dir="./app/src/main/res/values/values.xml"
 	System.err.println("Editing "+dir);
 	f=null;
@@ -176,12 +176,9 @@ if(shouldEditFiles){
 
 
 
-class FileRollbackWithGit{
-	public static final FileRollbackWithGit INSTANCE=new FileRollbackWithGit();
-	public void finalize(){
-		System.err.println("Rolling back ");
-		["git","checkout","--","."].execute(null,dir).in.text.trim()
-	}
+task("rollbackFiles")<<{
+	System.err.println("Rolling back ");
+	["git","checkout","--","."].execute(null,dir).in.text.trim()
 }
 
 def finder(list,fille,suffix){
