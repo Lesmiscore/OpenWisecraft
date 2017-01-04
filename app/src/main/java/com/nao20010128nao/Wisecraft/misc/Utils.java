@@ -2,26 +2,32 @@ package com.nao20010128nao.Wisecraft.misc;
 import android.annotation.*;
 import android.app.*;
 import android.content.*;
+import android.content.pm.*;
 import android.content.res.*;
 import android.graphics.*;
 import android.net.*;
 import android.os.*;
 import android.preference.*;
 import android.support.design.widget.*;
+import android.support.v7.app.*;
 import android.support.v7.widget.*;
+import android.text.*;
+import android.text.style.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
 import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.*;
-import com.nao20010128nao.Wisecraft.activity.ServerInfoActivity;
+import com.nao20010128nao.Wisecraft.activity.*;
 import com.nao20010128nao.Wisecraft.api.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import java.io.*;
 import java.lang.reflect.*;
 import java.math.*;
 import java.util.*;
+import permissions.dispatcher.*;
 
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import com.nao20010128nao.Wisecraft.R;
 
@@ -626,5 +632,75 @@ public class Utils extends PingerUtils{
 		int g=(int)(bds[1]*255);
 		int b=(int)(bds[2]*255);
 		return Color.rgb(r,g,b);
+	}
+	
+	public static void describeForPermissionRequired(Activity a,String[] permissions,final PermissionRequest req,int reasonId){
+		Resources res=a.getResources();
+		PackageManager pm=a.getPackageManager();
+		TypedArray ta=a.obtainStyledAttributes(new int[]{android.R.attr.textAppearanceSmall});
+		int smallTxtAppr=ta.getResourceId(0,R.style.TextAppearance_AppCompat_Small);
+		ta.recycle();
+		SpannableStringBuilder ssb=new SpannableStringBuilder();
+		ssb.append(res.getString(R.string.permissionsRequiredMessage).replace("[REASON]",res.getString(reasonId)));
+		ssb.append('\n');
+		for(String p:permissions){
+			PermissionInfo pi;
+			try {
+				pi = pm.getPermissionInfo(p, PackageManager.GET_META_DATA);
+			} catch (PackageManager.NameNotFoundException e) {
+				continue;
+			}
+			SpannableStringBuilder ssb2=new SpannableStringBuilder();
+			ssb2.append(pi.loadLabel(pm));
+			ssb2.append('\n');
+			ssb2.setSpan(new StyleSpan(Typeface.BOLD),0,ssb2.length()-1,SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+			
+			SpannableStringBuilder ssb3=new SpannableStringBuilder();
+			ssb3.append(pi.loadDescription(pm));
+			ssb3.append('\n');
+			ssb3.setSpan(new TextAppearanceSpan(a,smallTxtAppr),0,ssb3.length()-1,SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+			
+			ssb.append(ssb2);
+			ssb.append(ssb3);
+			ssb.append('\n');
+		}
+		new AlertDialog.Builder(a)
+			.setTitle(R.string.permissionsRequired)
+			.setMessage(ssb)
+			.setPositiveButton(R.string.continue_,new QuickDialogClickListener(){
+				public void onClick(int w){
+					req.proceed();
+				}
+			})
+			.setNegativeButton(android.R.string.cancel,new QuickDialogClickListener(){
+				public void onClick(int w){
+					req.cancel();
+				}
+			})
+			.setOnDismissListener(new DialogInterface.OnDismissListener(){
+				public void onDismiss(DialogInterface a){
+					req.cancel();
+				}
+			})
+			.show();
+	}
+	
+	public static void showPermissionError(Activity a,String[] permissions,int reasonId){
+		Resources res=a.getResources();
+		PackageManager pm=a.getPackageManager();
+		StringBuilder sb=new StringBuilder();
+		sb.append(res.getString(R.string.permissionsRequiredMessage).replace("[REASON]",res.getString(reasonId)));
+		sb.append('\n');
+		for(String p:permissions){
+			PermissionInfo pi;
+			try {
+				pi = pm.getPermissionInfo(p, PackageManager.GET_META_DATA);
+			} catch (PackageManager.NameNotFoundException e) {
+				continue;
+			}
+			sb.append(pi.loadLabel(pm));
+			sb.append('\n');
+		}
+		Toast.makeText(a,sb.toString(),Toast.LENGTH_LONG).show();
 	}
 }

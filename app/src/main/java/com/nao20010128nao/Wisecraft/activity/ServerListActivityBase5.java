@@ -3,9 +3,15 @@ package com.nao20010128nao.Wisecraft.activity;
 import android.content.*;
 import android.net.*;
 import android.os.*;
+import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.misc.*;
 import java.io.*;
 import java.util.*;
+import permissions.dispatcher.*;
 
+import com.nao20010128nao.Wisecraft.R;
+
+@RuntimePermissions
 abstract class ServerListActivityBase5 extends ServerListActivityBaseFields 
 {
 	protected Map<Integer,UriFileChooserResult> externalFileSelectResults=new HashMap<>();
@@ -34,6 +40,7 @@ abstract class ServerListActivityBase5 extends ServerListActivityBaseFields
 			});
 	}
 	
+	@NeedsPermission({"android.permission.WRITE_EXTERNAL_STORAGE"})
 	public void startExtChooseFile(UriFileChooserResult result){
 		int call=Math.abs(sr.nextInt())&0xf;
 		while(externalFileSelectResults.containsKey(call)){
@@ -42,6 +49,23 @@ abstract class ServerListActivityBase5 extends ServerListActivityBaseFields
 		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 		intent.setType("*/*");
 		startActivityForResult(intent, call);
+	}
+	
+	@OnShowRationale({"android.permission.WRITE_EXTERNAL_STORAGE"})
+	@Deprecated
+	public void _startExtChooseFileRationale(PermissionRequest req){
+		Utils.describeForPermissionRequired(this,new String[]{"android.permission.WRITE_EXTERNAL_STORAGE"},req,R.string.permissionsRequiredReasonSelectFile);
+	}
+	
+	@OnPermissionDenied({"android.permission.WRITE_EXTERNAL_STORAGE"})
+	@Deprecated
+	public void _startExtChooseFileError(){
+		Utils.showPermissionError(this,new String[]{"android.permission.WRITE_EXTERNAL_STORAGE"},R.string.permissionsRequiredReasonSelectFile);
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 	}
 	
 	public static interface FileChooserResult extends ChooserResult<File>{
