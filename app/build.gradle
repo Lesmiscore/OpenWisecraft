@@ -195,5 +195,5 @@ dependencies {
     	compile 'com.mikepenz:fastadapter:+'
 	}
 	
-	apt 'com.github.hotchemi:permissionsdispatcher-processor:2.3.1'
+	if(true)apt 'com.github.hotchemi:permissionsdispatcher-processor:2.3.1'
 }
