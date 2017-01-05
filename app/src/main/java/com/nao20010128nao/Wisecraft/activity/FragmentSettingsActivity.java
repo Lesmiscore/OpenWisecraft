@@ -29,6 +29,7 @@ import java.io.*;
 import java.net.*;
 import java.security.*;
 import java.util.*;
+import permissions.dispatcher.*;
 import uk.co.chrisjenx.calligraphy.*;
 
 import android.support.v7.widget.Toolbar;
@@ -485,6 +486,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 		}
 	}
 	
+	@RuntimePermissions
 	static class ServerListStyleEditorImpl extends AppCompatActivity {
 		ServerListStyleLoader slsl;
 		RadioGroup rdGrp;
@@ -776,6 +778,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 			}
 		}
 		
+		@NeedsPermission({"android.permission.WRITE_EXTERNAL_STORAGE"})
 		public void startChooseFileForOpen(File startDir,ServerListActivityBase5.FileChooserResult result){
 			int call = nextCallId();
 			Intent intent=new Intent(this,FileOpenChooserActivity.class);
@@ -786,6 +789,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 			startActivityForResult(intent,call);
 		}
 
+		@NeedsPermission({"android.permission.WRITE_EXTERNAL_STORAGE"})
 		public void startChooseFileForSelect(File startDir,ServerListActivityBase5.FileChooserResult result){
 			int call = nextCallId();
 			Intent intent=new Intent(this,FileChooserActivity.class);
@@ -796,6 +800,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 			startActivityForResult(intent,call);
 		}
 
+		@NeedsPermission({"android.permission.WRITE_EXTERNAL_STORAGE"})
 		public void startChooseDirectory(File startDir,ServerListActivityBase5.FileChooserResult result){
 			int call = nextCallId();
 			Intent intent=new Intent(this,DirectoryChooserActivity.class);
@@ -806,6 +811,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 			startActivityForResult(intent,call);
 		}
 
+		@NeedsPermission({"android.permission.WRITE_EXTERNAL_STORAGE"})
 		public void startExtChooseFile(ServerListActivityBase5.UriFileChooserResult result){
 			int call = nextCallId();
 			Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -836,6 +842,27 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 				//uri retrived, return last result
 				return lastResult;
 			}
+		}
+		
+		
+		
+
+
+		@OnShowRationale({"android.permission.WRITE_EXTERNAL_STORAGE"})
+		@Deprecated
+		public void _startExtChooseFileRationale(PermissionRequest req){
+			Utils.describeForPermissionRequired(this,new String[]{"android.permission.WRITE_EXTERNAL_STORAGE"},req,R.string.permissionsRequiredReasonSelectFile);
+		}
+
+		@OnPermissionDenied({"android.permission.WRITE_EXTERNAL_STORAGE"})
+		@Deprecated
+		public void _startExtChooseFileError(){
+			Utils.showPermissionError(this,new String[]{"android.permission.WRITE_EXTERNAL_STORAGE"},R.string.permissionsRequiredReasonSelectFile);
+		}
+
+		@Override
+		public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+			super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 		}
 	}
 	
