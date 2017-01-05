@@ -30,7 +30,7 @@ main:
       - "*/build/outputs/aar/*"
       - tree.log
       - "*/build/outputs/mapping/*/mapping.txt"
-      - "*/build/generated/source/apt/*/"
+      - "*/build/generated/source/apt/*"
 
 copy:
   stage: copy
