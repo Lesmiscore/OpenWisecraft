@@ -486,387 +486,6 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 		}
 	}
 	
-	@RuntimePermissions
-	static class ServerListStyleEditorImpl extends AppCompatActivity {
-		ServerListStyleLoader slsl;
-		RadioGroup rdGrp;
-		ImageView color,image,textColor;
-		Button selectColor,selectImage,apply,selectTextColor;
-		Bitmap loadedBitmap;
-		int selectedColor=Color.BLACK,selectedTextColor;
-		boolean didOnceColorSelected=false;
-		
-		
-		//FSF
-		Map<Integer,ServerListActivityBase5.ChooserResult> results=new HashMap<>();
-		SecureRandom sr=new SecureRandom();
-		Object lastResult=null;
-
-		Button select;
-		ImageButton fileLocal,fileProvided;
-		EditText path;
-		LinearLayout pathForm,modeForm;
-		
-		@Override
-		public void onCreate(Bundle savedInstanceState) {
-			ThemePatcher.applyThemeForActivity(this);
-			super.onCreate(savedInstanceState);
-			setContentView(R.layout.settings_server_list_style_editor);
-			slsl=new ServerListStyleLoader(this);
-			rdGrp=(RadioGroup)findViewById(R.id.checkGroup);
-			color=(ImageView)findViewById(R.id.singleColorIndicate);
-			image=(ImageView)findViewById(R.id.imagePreview);
-			textColor=(ImageView)findViewById(R.id.textColorIndicate);
-			selectColor=(Button)findViewById(R.id.selectColor);
-			selectImage=(Button)findViewById(R.id.selectImage);
-			selectTextColor=(Button)findViewById(R.id.selectTextColor);
-			apply=(Button)findViewById(R.id.apply);
-			
-			switch(slsl.getBgId()){
-				case ServerListStyleLoader.BACKGROUND_WHITE:
-					rdGrp.check(R.id.white);
-					break;
-				case ServerListStyleLoader.BACKGROUND_BLACK:
-					rdGrp.check(R.id.black);
-					break;
-				case ServerListStyleLoader.BACKGROUND_DIRT:
-					rdGrp.check(R.id.dirt);
-					break;
-				case ServerListStyleLoader.BACKGROUND_SINGLE_COLOR:
-					rdGrp.check(R.id.singleColor);
-					color.setImageDrawable(slsl.load());
-					selectedColor=slsl.getBackgroundSimpleColor();
-					break;
-				case ServerListStyleLoader.BACKGROUND_IMAGE:
-					rdGrp.check(R.id.image);
-					loadedBitmap=slsl.getImageBgBitmap();
-					image.setImageBitmap(loadedBitmap);
-					break;
-			}
-			selectedTextColor=slsl.getTextColor();
-			textColor.setImageDrawable(new ColorDrawable(selectedTextColor));
-			
-			rdGrp.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
-					public void onCheckedChanged(RadioGroup p1, int p2){
-						switch(rdGrp.getCheckedRadioButtonId()){
-							case R.id.white:
-							case R.id.black:
-							case R.id.dirt:
-							case R.id.singleColor:
-								apply.setEnabled(true);
-								break;
-							case R.id.image:
-								apply.setEnabled(loadedBitmap!=null);
-								break;
-						}
-					}
-				});
-			selectColor.setOnClickListener(new View.OnClickListener(){
-					public void onClick(View v){
-						ColorPickerDialog cpd=ColorPickerDialog.createColorPickerDialog(ServerListStyleEditorImpl.this,ColorPickerDialog.LIGHT_THEME);
-						cpd.setLastColor(selectedColor);
-						cpd.setOnColorPickedListener(new ColorPickerDialog.OnColorPickedListener(){
-								public void onColorPicked(int c,String hex){
-									selectedColor=c;
-									didOnceColorSelected=true;
-									color.setImageDrawable(new ColorDrawable(selectedColor));
-								}
-							});
-						cpd.setOnClosedListener(new ColorPickerDialog.OnClosedListener(){
-								public void onClosed(){
-
-								}
-							});
-						cpd.show();
-					}
-				});
-			selectImage.setOnClickListener(new View.OnClickListener(){
-					public void onClick(View v){
-						new AsyncTask<Object,Void,Bitmap>(){
-							public Bitmap doInBackground(Object... a){
-								Log.d("slse image",a[0]+"");
-								String path=Utils.toString(a[0]);
-								InputStream is=null;
-								try{
-									is=tryOpen(path);
-									return BitmapFactory.decodeStream(is);
-								}catch(Throwable e){
-									WisecraftError.report("slse image",e);
-									DebugWriter.writeToE("slse image",e);
-									return null;
-								}finally{
-									try {
-										if (is != null)is.close();
-									} catch (IOException e) {
-										WisecraftError.report("slse image",e);
-									}
-								}
-							}
-							public void onPostExecute(Bitmap bmp){
-								loadedBitmap=bmp;
-								image.setImageBitmap(loadedBitmap);
-								apply.setEnabled(loadedBitmap!=null);
-								Log.d("slse image","loaded:"+bmp);
-							}
-						}.execute(getResult());
-					}
-				});
-			selectTextColor.setOnClickListener(new View.OnClickListener(){
-					public void onClick(View v){
-						ColorPickerDialog cpd=ColorPickerDialog.createColorPickerDialog(ServerListStyleEditorImpl.this,ColorPickerDialog.LIGHT_THEME);
-						cpd.setLastColor(selectedColor);
-						cpd.setOnColorPickedListener(new ColorPickerDialog.OnColorPickedListener(){
-								public void onColorPicked(int c,String hex){
-									selectedTextColor=c;
-									textColor.setImageDrawable(new ColorDrawable(selectedTextColor));
-								}
-							});
-						cpd.setOnClosedListener(new ColorPickerDialog.OnClosedListener(){
-								public void onClosed(){
-
-								}
-							});
-						cpd.show();
-					}
-				});
-			apply.setOnClickListener(new View.OnClickListener(){
-					public void onClick(View v){
-						switch(rdGrp.getCheckedRadioButtonId()){
-							case R.id.white:
-								slsl.setWhiteBg();
-								break;
-							case R.id.black:
-								slsl.setBlackBg();
-								break;
-							case R.id.dirt:
-								slsl.setDirtBg();
-								break;
-							case R.id.singleColor:
-								slsl.setSingleColorBg(selectedColor);
-								break;
-							case R.id.image:
-								if(loadedBitmap!=null)
-									slsl.setImageBg(loadedBitmap);
-								else return;
-								break;
-						}
-						slsl.setTextColor(selectedTextColor);
-						finish();
-					}
-				});
-			
-			//FSF
-			getLayoutInflater().inflate(R.layout.server_list_imp_exp,(ViewGroup)findViewById(R.id.fileSelectFrg));
-			select=(Button)findViewById(R.id.selectFile);
-			fileLocal=(ImageButton)findViewById(R.id.openLocalChooser);
-			fileProvided=(ImageButton)findViewById(R.id.openProvidedChooser);
-			path=(EditText)findViewById(R.id.filePath);
-			pathForm=(LinearLayout)findViewById(R.id.pathForm);
-			modeForm=(LinearLayout)findViewById(R.id.modeForm);
-
-			select.setOnClickListener(new View.OnClickListener(){
-					public void onClick(View v){
-						pathForm.setVisibility(View.GONE);
-						modeForm.setVisibility(View.VISIBLE);
-					}
-				});
-			fileLocal.setOnClickListener(new View.OnClickListener(){
-					public void onClick(View v){
-						modeForm.setVisibility(View.GONE);
-						pathForm.setVisibility(View.VISIBLE);
-
-						File f=new File(path.getText().toString());
-						if ((!f.exists())|f.isFile())f = f.getParentFile();
-						startChooseFileForSelect(f, new ServerListActivityBase5.FileChooserResult(){
-								public void onSelected(File f) {
-									path.setText(f.toString());
-									path.setEnabled(true);
-								}
-								public void onSelectCancelled() {/*No-op*/}
-							});
-					}
-				});
-			fileProvided.setOnClickListener(new View.OnClickListener(){
-					public void onClick(View v){
-						modeForm.setVisibility(View.GONE);
-						pathForm.setVisibility(View.VISIBLE);
-						startExtChooseFile(new ServerListActivityBase5.UriFileChooserResult(){
-								public void onSelected(Uri f) {
-									path.setText("");
-									path.setEnabled(false);
-								}
-								public void onSelectCancelled() {/*No-op*/}
-							});
-					}
-				});
-			path.setOnTouchListener(new View.OnTouchListener(){
-					public boolean onTouch(View v,MotionEvent ev){
-						if(ev.getAction()!=MotionEvent.ACTION_UP)return false;
-						if(!v.isEnabled()){
-							v.setEnabled(true);
-							path.setText(Environment.getExternalStorageDirectory().toString());
-							lastResult=null;
-						}
-						return false;
-					}
-				});
-			path.setText(Environment.getExternalStorageDirectory().toString());
-			fileLocal.setImageDrawable(TheApplication.getTintedDrawable(R.drawable.ic_file,Color.WHITE,this));
-			fileProvided.setImageDrawable(TheApplication.getTintedDrawable(R.drawable.ic_launch_black_36dp,Color.WHITE,this));
-		}
-
-		@Override
-		protected void attachBaseContext(Context newBase) {
-			super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
-		}
-		
-		public InputStream tryOpen(String uri) throws IOException {
-			Log.d("dbg", "tryOpen:" + uri);
-			if (uri.startsWith("content://")) {
-				return getContentResolver().openInputStream(Uri.parse(uri));
-			} else if (uri.startsWith("/")) {
-				return new FileInputStream(uri);
-			} else {
-				return URI.create(uri).toURL().openConnection().getInputStream();
-			}
-		}
-		
-		public OutputStream trySave(String uri) throws IOException {
-			Log.d("dbg", "trySave:" + uri);
-			if (uri.startsWith("content://")) {
-				return getContentResolver().openOutputStream(Uri.parse(uri));
-			} else if (uri.startsWith("/")) {
-				return new FileOutputStream(uri);
-			} else {
-				return URI.create(uri).toURL().openConnection().getOutputStream();
-			}
-		}
-		
-		public static String toUri(Object o) throws IOException,URISyntaxException{
-			if(o instanceof File)
-				return toUri(((File)o).toURL());
-			else if(o instanceof Uri)
-				return ((Uri)o).toString();
-			else if(o instanceof URL)
-				return toUri(((URL)o).toURI());
-			else if(o instanceof URI)
-				return ((URI)o).toString();
-			else
-				return null;
-		}
-		
-		//FSF
-		@Override
-		public void onActivityResult(int requestCode, int resultCode, Intent data) {
-			if(results.containsKey(requestCode)){
-				switch(resultCode){
-					case RESULT_OK:
-						if(results.get(requestCode) instanceof ServerListActivity.FileChooserResult){
-							((ServerListActivity.FileChooserResult)results.get(requestCode))
-								.onSelected((File)(lastResult=new File(data.getStringExtra("path"))));
-						}else if(results.get(requestCode) instanceof ServerListActivity.UriFileChooserResult){
-							((ServerListActivity.UriFileChooserResult)results.get(requestCode))
-								.onSelected((Uri)(lastResult=data.getData()));
-						}
-						Log.d("slse","select:"+lastResult);
-						break;
-					case RESULT_CANCELED:
-						results.get(requestCode).onSelectCancelled();
-						break;
-				}
-				results.remove(requestCode);
-			}
-		}
-		
-		@NeedsPermission({"android.permission.WRITE_EXTERNAL_STORAGE"})
-		public void startChooseFileForOpen(File startDir,ServerListActivity.FileChooserResult result){
-			int call = nextCallId();
-			Intent intent=new Intent(this,FileOpenChooserActivity.class);
-			if(startDir!=null){
-				intent.putExtra("path",startDir.toString());
-			}
-			results.put(call,Utils.requireNonNull(result));
-			startActivityForResult(intent,call);
-		}
-
-		@NeedsPermission({"android.permission.WRITE_EXTERNAL_STORAGE"})
-		public void startChooseFileForSelect(File startDir,ServerListActivity.FileChooserResult result){
-			int call = nextCallId();
-			Intent intent=new Intent(this,FileChooserActivity.class);
-			if(startDir!=null){
-				intent.putExtra("path",startDir.toString());
-			}
-			results.put(call,Utils.requireNonNull(result));
-			startActivityForResult(intent,call);
-		}
-
-		@NeedsPermission({"android.permission.WRITE_EXTERNAL_STORAGE"})
-		public void startChooseDirectory(File startDir,ServerListActivity.FileChooserResult result){
-			int call = nextCallId();
-			Intent intent=new Intent(this,DirectoryChooserActivity.class);
-			if(startDir!=null){
-				intent.putExtra("path",startDir.toString());
-			}
-			results.put(call,Utils.requireNonNull(result));
-			startActivityForResult(intent,call);
-		}
-
-		@NeedsPermission({"android.permission.WRITE_EXTERNAL_STORAGE"})
-		public void startExtChooseFile(ServerListActivity.UriFileChooserResult result){
-			int call = nextCallId();
-			Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-			intent.setType("*/*");
-			results.put(call,Utils.requireNonNull(result));
-			startActivityForResult(intent, call);
-		}
-
-		private int nextCallId() {
-			int call=Math.abs(sr.nextInt()) & 0xff;
-			while (results.containsKey(call)) {
-				call = Math.abs(sr.nextInt()) & 0xff;
-			}
-			return call;
-		}
-
-		public Object getLastResult() {
-			return lastResult;
-		}
-		public Object getResult(){
-			if(lastResult==null){
-				//no choose, so file
-				return new File(path.getText().toString());
-			}else if(lastResult instanceof File){
-				//file choosen, so file
-				return new File(path.getText().toString());
-			}else{
-				//uri retrived, return last result
-				return lastResult;
-			}
-		}
-		
-		
-		
-
-
-		@OnShowRationale({"android.permission.WRITE_EXTERNAL_STORAGE"})
-		@Deprecated
-		public void _startExtChooseFileRationale(PermissionRequest req){
-			Utils.describeForPermissionRequired(this,new String[]{"android.permission.WRITE_EXTERNAL_STORAGE"},req,R.string.permissionsRequiredReasonSelectFile);
-		}
-
-		@OnPermissionDenied({"android.permission.WRITE_EXTERNAL_STORAGE"})
-		@Deprecated
-		public void _startExtChooseFileError(){
-			Utils.showPermissionError(this,new String[]{"android.permission.WRITE_EXTERNAL_STORAGE"},R.string.permissionsRequiredReasonSelectFile);
-		}
-
-		@Override
-		public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-			super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-		}
-	}
-	
-	
 	
 	
 	
@@ -1155,6 +774,389 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 		}
 	}
 }
+
+@RuntimePermissions
+class ServerListStyleEditorImpl extends AppCompatActivity {
+	ServerListStyleLoader slsl;
+	RadioGroup rdGrp;
+	ImageView color,image,textColor;
+	Button selectColor,selectImage,apply,selectTextColor;
+	Bitmap loadedBitmap;
+	int selectedColor=Color.BLACK,selectedTextColor;
+	boolean didOnceColorSelected=false;
+
+
+	//FSF
+	Map<Integer,ServerListActivityBase5.ChooserResult> results=new HashMap<>();
+	SecureRandom sr=new SecureRandom();
+	Object lastResult=null;
+
+	Button select;
+	ImageButton fileLocal,fileProvided;
+	EditText path;
+	LinearLayout pathForm,modeForm;
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		ThemePatcher.applyThemeForActivity(this);
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.settings_server_list_style_editor);
+		slsl=new ServerListStyleLoader(this);
+		rdGrp=(RadioGroup)findViewById(R.id.checkGroup);
+		color=(ImageView)findViewById(R.id.singleColorIndicate);
+		image=(ImageView)findViewById(R.id.imagePreview);
+		textColor=(ImageView)findViewById(R.id.textColorIndicate);
+		selectColor=(Button)findViewById(R.id.selectColor);
+		selectImage=(Button)findViewById(R.id.selectImage);
+		selectTextColor=(Button)findViewById(R.id.selectTextColor);
+		apply=(Button)findViewById(R.id.apply);
+
+		switch(slsl.getBgId()){
+			case ServerListStyleLoader.BACKGROUND_WHITE:
+			rdGrp.check(R.id.white);
+			break;
+			case ServerListStyleLoader.BACKGROUND_BLACK:
+			rdGrp.check(R.id.black);
+			break;
+			case ServerListStyleLoader.BACKGROUND_DIRT:
+			rdGrp.check(R.id.dirt);
+			break;
+			case ServerListStyleLoader.BACKGROUND_SINGLE_COLOR:
+			rdGrp.check(R.id.singleColor);
+			color.setImageDrawable(slsl.load());
+			selectedColor=slsl.getBackgroundSimpleColor();
+			break;
+			case ServerListStyleLoader.BACKGROUND_IMAGE:
+			rdGrp.check(R.id.image);
+			loadedBitmap=slsl.getImageBgBitmap();
+			image.setImageBitmap(loadedBitmap);
+			break;
+		}
+		selectedTextColor=slsl.getTextColor();
+		textColor.setImageDrawable(new ColorDrawable(selectedTextColor));
+
+		rdGrp.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
+				public void onCheckedChanged(RadioGroup p1, int p2){
+					switch(rdGrp.getCheckedRadioButtonId()){
+						case R.id.white:
+						case R.id.black:
+						case R.id.dirt:
+						case R.id.singleColor:
+						apply.setEnabled(true);
+						break;
+						case R.id.image:
+						apply.setEnabled(loadedBitmap!=null);
+						break;
+					}
+				}
+			});
+		selectColor.setOnClickListener(new View.OnClickListener(){
+				public void onClick(View v){
+					ColorPickerDialog cpd=ColorPickerDialog.createColorPickerDialog(ServerListStyleEditorImpl.this,ColorPickerDialog.LIGHT_THEME);
+					cpd.setLastColor(selectedColor);
+					cpd.setOnColorPickedListener(new ColorPickerDialog.OnColorPickedListener(){
+							public void onColorPicked(int c,String hex){
+								selectedColor=c;
+								didOnceColorSelected=true;
+								color.setImageDrawable(new ColorDrawable(selectedColor));
+							}
+						});
+					cpd.setOnClosedListener(new ColorPickerDialog.OnClosedListener(){
+							public void onClosed(){
+
+							}
+						});
+					cpd.show();
+				}
+			});
+		selectImage.setOnClickListener(new View.OnClickListener(){
+				public void onClick(View v){
+					new AsyncTask<Object,Void,Bitmap>(){
+						public Bitmap doInBackground(Object... a){
+							Log.d("slse image",a[0]+"");
+							String path=Utils.toString(a[0]);
+							InputStream is=null;
+							try{
+								is=tryOpen(path);
+								return BitmapFactory.decodeStream(is);
+							}catch(Throwable e){
+								WisecraftError.report("slse image",e);
+								DebugWriter.writeToE("slse image",e);
+								return null;
+							}finally{
+								try {
+									if (is != null)is.close();
+								} catch (IOException e) {
+									WisecraftError.report("slse image",e);
+								}
+							}
+						}
+						public void onPostExecute(Bitmap bmp){
+							loadedBitmap=bmp;
+							image.setImageBitmap(loadedBitmap);
+							apply.setEnabled(loadedBitmap!=null);
+							Log.d("slse image","loaded:"+bmp);
+						}
+					}.execute(getResult());
+				}
+			});
+		selectTextColor.setOnClickListener(new View.OnClickListener(){
+				public void onClick(View v){
+					ColorPickerDialog cpd=ColorPickerDialog.createColorPickerDialog(ServerListStyleEditorImpl.this,ColorPickerDialog.LIGHT_THEME);
+					cpd.setLastColor(selectedColor);
+					cpd.setOnColorPickedListener(new ColorPickerDialog.OnColorPickedListener(){
+							public void onColorPicked(int c,String hex){
+								selectedTextColor=c;
+								textColor.setImageDrawable(new ColorDrawable(selectedTextColor));
+							}
+						});
+					cpd.setOnClosedListener(new ColorPickerDialog.OnClosedListener(){
+							public void onClosed(){
+
+							}
+						});
+					cpd.show();
+				}
+			});
+		apply.setOnClickListener(new View.OnClickListener(){
+				public void onClick(View v){
+					switch(rdGrp.getCheckedRadioButtonId()){
+						case R.id.white:
+						slsl.setWhiteBg();
+						break;
+						case R.id.black:
+						slsl.setBlackBg();
+						break;
+						case R.id.dirt:
+						slsl.setDirtBg();
+						break;
+						case R.id.singleColor:
+						slsl.setSingleColorBg(selectedColor);
+						break;
+						case R.id.image:
+						if(loadedBitmap!=null)
+							slsl.setImageBg(loadedBitmap);
+						else return;
+						break;
+					}
+					slsl.setTextColor(selectedTextColor);
+					finish();
+				}
+			});
+
+		//FSF
+		getLayoutInflater().inflate(R.layout.server_list_imp_exp,(ViewGroup)findViewById(R.id.fileSelectFrg));
+		select=(Button)findViewById(R.id.selectFile);
+		fileLocal=(ImageButton)findViewById(R.id.openLocalChooser);
+		fileProvided=(ImageButton)findViewById(R.id.openProvidedChooser);
+		path=(EditText)findViewById(R.id.filePath);
+		pathForm=(LinearLayout)findViewById(R.id.pathForm);
+		modeForm=(LinearLayout)findViewById(R.id.modeForm);
+
+		select.setOnClickListener(new View.OnClickListener(){
+				public void onClick(View v){
+					pathForm.setVisibility(View.GONE);
+					modeForm.setVisibility(View.VISIBLE);
+				}
+			});
+		fileLocal.setOnClickListener(new View.OnClickListener(){
+				public void onClick(View v){
+					modeForm.setVisibility(View.GONE);
+					pathForm.setVisibility(View.VISIBLE);
+
+					File f=new File(path.getText().toString());
+					if ((!f.exists())|f.isFile())f = f.getParentFile();
+					startChooseFileForSelect(f, new ServerListActivityBase5.FileChooserResult(){
+							public void onSelected(File f) {
+								path.setText(f.toString());
+								path.setEnabled(true);
+							}
+							public void onSelectCancelled() {/*No-op*/}
+						});
+				}
+			});
+		fileProvided.setOnClickListener(new View.OnClickListener(){
+				public void onClick(View v){
+					modeForm.setVisibility(View.GONE);
+					pathForm.setVisibility(View.VISIBLE);
+					startExtChooseFile(new ServerListActivityBase5.UriFileChooserResult(){
+							public void onSelected(Uri f) {
+								path.setText("");
+								path.setEnabled(false);
+							}
+							public void onSelectCancelled() {/*No-op*/}
+						});
+				}
+			});
+		path.setOnTouchListener(new View.OnTouchListener(){
+				public boolean onTouch(View v,MotionEvent ev){
+					if(ev.getAction()!=MotionEvent.ACTION_UP)return false;
+					if(!v.isEnabled()){
+						v.setEnabled(true);
+						path.setText(Environment.getExternalStorageDirectory().toString());
+						lastResult=null;
+					}
+					return false;
+				}
+			});
+		path.setText(Environment.getExternalStorageDirectory().toString());
+		fileLocal.setImageDrawable(TheApplication.getTintedDrawable(R.drawable.ic_file,Color.WHITE,this));
+		fileProvided.setImageDrawable(TheApplication.getTintedDrawable(R.drawable.ic_launch_black_36dp,Color.WHITE,this));
+	}
+
+	@Override
+	protected void attachBaseContext(Context newBase) {
+		super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
+	}
+
+	public InputStream tryOpen(String uri) throws IOException {
+		Log.d("dbg", "tryOpen:" + uri);
+		if (uri.startsWith("content://")) {
+			return getContentResolver().openInputStream(Uri.parse(uri));
+		} else if (uri.startsWith("/")) {
+			return new FileInputStream(uri);
+		} else {
+			return URI.create(uri).toURL().openConnection().getInputStream();
+		}
+	}
+
+	public OutputStream trySave(String uri) throws IOException {
+		Log.d("dbg", "trySave:" + uri);
+		if (uri.startsWith("content://")) {
+			return getContentResolver().openOutputStream(Uri.parse(uri));
+		} else if (uri.startsWith("/")) {
+			return new FileOutputStream(uri);
+		} else {
+			return URI.create(uri).toURL().openConnection().getOutputStream();
+		}
+	}
+
+	public static String toUri(Object o) throws IOException,URISyntaxException{
+		if(o instanceof File)
+			return toUri(((File)o).toURL());
+		else if(o instanceof Uri)
+			return ((Uri)o).toString();
+		else if(o instanceof URL)
+			return toUri(((URL)o).toURI());
+		else if(o instanceof URI)
+			return ((URI)o).toString();
+		else
+			return null;
+	}
+
+	//FSF
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(results.containsKey(requestCode)){
+			switch(resultCode){
+				case RESULT_OK:
+				if(results.get(requestCode) instanceof ServerListActivity.FileChooserResult){
+					((ServerListActivity.FileChooserResult)results.get(requestCode))
+						.onSelected((File)(lastResult=new File(data.getStringExtra("path"))));
+				}else if(results.get(requestCode) instanceof ServerListActivity.UriFileChooserResult){
+					((ServerListActivity.UriFileChooserResult)results.get(requestCode))
+						.onSelected((Uri)(lastResult=data.getData()));
+				}
+				Log.d("slse","select:"+lastResult);
+				break;
+				case RESULT_CANCELED:
+				results.get(requestCode).onSelectCancelled();
+				break;
+			}
+			results.remove(requestCode);
+		}
+	}
+
+	@NeedsPermission({"android.permission.WRITE_EXTERNAL_STORAGE"})
+	public void startChooseFileForOpen(File startDir,ServerListActivity.FileChooserResult result){
+		int call = nextCallId();
+		Intent intent=new Intent(this,FileOpenChooserActivity.class);
+		if(startDir!=null){
+			intent.putExtra("path",startDir.toString());
+		}
+		results.put(call,Utils.requireNonNull(result));
+		startActivityForResult(intent,call);
+	}
+
+	@NeedsPermission({"android.permission.WRITE_EXTERNAL_STORAGE"})
+	public void startChooseFileForSelect(File startDir,ServerListActivity.FileChooserResult result){
+		int call = nextCallId();
+		Intent intent=new Intent(this,FileChooserActivity.class);
+		if(startDir!=null){
+			intent.putExtra("path",startDir.toString());
+		}
+		results.put(call,Utils.requireNonNull(result));
+		startActivityForResult(intent,call);
+	}
+
+	@NeedsPermission({"android.permission.WRITE_EXTERNAL_STORAGE"})
+	public void startChooseDirectory(File startDir,ServerListActivity.FileChooserResult result){
+		int call = nextCallId();
+		Intent intent=new Intent(this,DirectoryChooserActivity.class);
+		if(startDir!=null){
+			intent.putExtra("path",startDir.toString());
+		}
+		results.put(call,Utils.requireNonNull(result));
+		startActivityForResult(intent,call);
+	}
+
+	@NeedsPermission({"android.permission.WRITE_EXTERNAL_STORAGE"})
+	public void startExtChooseFile(ServerListActivity.UriFileChooserResult result){
+		int call = nextCallId();
+		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+		intent.setType("*/*");
+		results.put(call,Utils.requireNonNull(result));
+		startActivityForResult(intent, call);
+	}
+
+	private int nextCallId() {
+		int call=Math.abs(sr.nextInt()) & 0xff;
+		while (results.containsKey(call)) {
+			call = Math.abs(sr.nextInt()) & 0xff;
+		}
+		return call;
+	}
+
+	public Object getLastResult() {
+		return lastResult;
+	}
+	public Object getResult(){
+		if(lastResult==null){
+			//no choose, so file
+			return new File(path.getText().toString());
+		}else if(lastResult instanceof File){
+			//file choosen, so file
+			return new File(path.getText().toString());
+		}else{
+			//uri retrived, return last result
+			return lastResult;
+		}
+	}
+
+
+
+
+
+	@OnShowRationale({"android.permission.WRITE_EXTERNAL_STORAGE"})
+	@Deprecated
+	public void _startExtChooseFileRationale(PermissionRequest req){
+		Utils.describeForPermissionRequired(this,new String[]{"android.permission.WRITE_EXTERNAL_STORAGE"},req,R.string.permissionsRequiredReasonSelectFile);
+	}
+
+	@OnPermissionDenied({"android.permission.WRITE_EXTERNAL_STORAGE"})
+	@Deprecated
+	public void _startExtChooseFileError(){
+		Utils.showPermissionError(this,new String[]{"android.permission.WRITE_EXTERNAL_STORAGE"},R.string.permissionsRequiredReasonSelectFile);
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+	}
+}
+
+
+
 interface SettingsScreen{
 	int getIdForFragment();
 }
