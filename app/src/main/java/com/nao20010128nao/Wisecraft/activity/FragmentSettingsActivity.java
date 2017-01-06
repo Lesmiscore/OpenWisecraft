@@ -761,11 +761,11 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 			if(results.containsKey(requestCode)){
 				switch(resultCode){
 					case RESULT_OK:
-						if(results.get(requestCode) instanceof ServerListActivityBase5.FileChooserResult){
-							((ServerListActivityBase5.FileChooserResult)results.get(requestCode))
+						if(results.get(requestCode) instanceof ServerListActivity.FileChooserResult){
+							((ServerListActivity.FileChooserResult)results.get(requestCode))
 								.onSelected((File)(lastResult=new File(data.getStringExtra("path"))));
-						}else if(results.get(requestCode) instanceof ServerListActivityBase5.UriFileChooserResult){
-							((ServerListActivityBase5.UriFileChooserResult)results.get(requestCode))
+						}else if(results.get(requestCode) instanceof ServerListActivity.UriFileChooserResult){
+							((ServerListActivity.UriFileChooserResult)results.get(requestCode))
 								.onSelected((Uri)(lastResult=data.getData()));
 						}
 						Log.d("slse","select:"+lastResult);
@@ -779,7 +779,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 		}
 		
 		@NeedsPermission({"android.permission.WRITE_EXTERNAL_STORAGE"})
-		public void startChooseFileForOpen(File startDir,ServerListActivityBase5.FileChooserResult result){
+		public void startChooseFileForOpen(File startDir,ServerListActivity.FileChooserResult result){
 			int call = nextCallId();
 			Intent intent=new Intent(this,FileOpenChooserActivity.class);
 			if(startDir!=null){
@@ -790,7 +790,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 		}
 
 		@NeedsPermission({"android.permission.WRITE_EXTERNAL_STORAGE"})
-		public void startChooseFileForSelect(File startDir,ServerListActivityBase5.FileChooserResult result){
+		public void startChooseFileForSelect(File startDir,ServerListActivity.FileChooserResult result){
 			int call = nextCallId();
 			Intent intent=new Intent(this,FileChooserActivity.class);
 			if(startDir!=null){
@@ -801,7 +801,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 		}
 
 		@NeedsPermission({"android.permission.WRITE_EXTERNAL_STORAGE"})
-		public void startChooseDirectory(File startDir,ServerListActivityBase5.FileChooserResult result){
+		public void startChooseDirectory(File startDir,ServerListActivity.FileChooserResult result){
 			int call = nextCallId();
 			Intent intent=new Intent(this,DirectoryChooserActivity.class);
 			if(startDir!=null){
@@ -812,7 +812,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 		}
 
 		@NeedsPermission({"android.permission.WRITE_EXTERNAL_STORAGE"})
-		public void startExtChooseFile(ServerListActivityBase5.UriFileChooserResult result){
+		public void startExtChooseFile(ServerListActivity.UriFileChooserResult result){
 			int call = nextCallId();
 			Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 			intent.setType("*/*");
