@@ -966,7 +966,7 @@ class ServerListStyleEditorImpl extends AppCompatActivity {
 
 					File f=new File(path.getText().toString());
 					if ((!f.exists())|f.isFile())f = f.getParentFile();
-					startChooseFileForSelect(f, new ServerListActivityBase5.FileChooserResult(){
+					ServerListStyleEditorImplPermissionsDispatcher.startChooseFileForSelectWithCheck(ServerListStyleEditorImpl.this,f, new ServerListActivityBase5.FileChooserResult(){
 							public void onSelected(File f) {
 								path.setText(f.toString());
 								path.setEnabled(true);
@@ -979,7 +979,7 @@ class ServerListStyleEditorImpl extends AppCompatActivity {
 				public void onClick(View v){
 					modeForm.setVisibility(View.GONE);
 					pathForm.setVisibility(View.VISIBLE);
-					startExtChooseFile(new ServerListActivityBase5.UriFileChooserResult(){
+					ServerListStyleEditorImplPermissionsDispatcher.startExtChooseFileWithCheck(ServerListStyleEditorImpl.this,new ServerListActivityBase5.UriFileChooserResult(){
 							public void onSelected(Uri f) {
 								path.setText("");
 								path.setEnabled(false);
@@ -1152,6 +1152,7 @@ class ServerListStyleEditorImpl extends AppCompatActivity {
 	@Override
 	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		ServerListStyleEditorImplPermissionsDispatcher.onRequestPermissionsResult(this,requestCode, grantResults);
 	}
 }
 

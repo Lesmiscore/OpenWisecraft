@@ -66,6 +66,7 @@ abstract class ServerListActivityBase5 extends ServerListActivityBaseFields
 	@Override
 	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		ServerListActivityBase5PermissionsDispatcher.onRequestPermissionsResult(this,requestCode,grantResults);
 	}
 	
 	public static interface FileChooserResult extends ChooserResult<File>{
