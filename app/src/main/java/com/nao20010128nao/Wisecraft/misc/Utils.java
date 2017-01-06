@@ -689,7 +689,7 @@ public class Utils extends PingerUtils{
 		Resources res=a.getResources();
 		PackageManager pm=a.getPackageManager();
 		StringBuilder sb=new StringBuilder();
-		sb.append(res.getString(R.string.permissionsRequiredMessage).replace("[REASON]",res.getString(reasonId)));
+		sb.append(res.getString(R.string.permissionsRequiredError).replace("[REASON]",res.getString(reasonId)));
 		sb.append('\n');
 		for(String p:permissions){
 			PermissionInfo pi;
