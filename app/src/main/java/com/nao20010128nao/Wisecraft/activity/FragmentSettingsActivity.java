@@ -44,10 +44,10 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 			put("versionInfo",VersionInfoFragmentLocal.class);
 	}};
 	public static final String DIALOG_FRAGMENT_TAG_PREFIX="settings@com.nao20010128nao.Wisecraft#";
-	public static final List<Trio<Integer,String,Treatment<SettingsScreen>>> MAIN;
+	public static final List<Quartet<Integer,String,Treatment<SettingsScreen>,Boolean>> MAIN;
 	static{
-		List<Trio<Integer,String,Treatment<SettingsScreen>>> main=new ArrayList<>();
-		main.add(new Trio<Integer,String,Treatment<SettingsScreen>>(R.string.basics,"basics", new Treatment<SettingsScreen>(){
+		List<Quartet<Integer,String,Treatment<SettingsScreen>,Boolean>> main=new ArrayList<>();
+		main.add(new Quartet<Integer,String,Treatment<SettingsScreen>,Boolean>(R.string.basics,"basics", new Treatment<SettingsScreen>(){
 					public void process(SettingsScreen ss) {
 						((AppCompatActivity)ss)
 							.getSupportFragmentManager()
@@ -57,8 +57,8 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
 							.commit();
 					}
-				}));
-		main.add(new Trio<Integer,String,Treatment<SettingsScreen>>(R.string.features,"features", new Treatment<SettingsScreen>(){
+				},true));
+		main.add(new Quartet<Integer,String,Treatment<SettingsScreen>,Boolean>(R.string.features,"features", new Treatment<SettingsScreen>(){
 					public void process(SettingsScreen ss) {
 						((AppCompatActivity)ss)
 							.getSupportFragmentManager()
@@ -68,8 +68,8 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
 							.commit();
 					}
-				}));
-		main.add(new Trio<Integer,String,Treatment<SettingsScreen>>(R.string.colorChange,"changeColor", new Treatment<SettingsScreen>(){
+				},true));
+		main.add(new Quartet<Integer,String,Treatment<SettingsScreen>,Boolean>(R.string.colorChange,"changeColor", new Treatment<SettingsScreen>(){
 					public void process(SettingsScreen ss) {
 						((AppCompatActivity)ss)
 							.getSupportFragmentManager()
@@ -79,20 +79,20 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
 							.commit();
 					}
-				}));
-		main.add(new Trio<Integer,String,Treatment<SettingsScreen>>(R.string.osl,"osl", new Treatment<SettingsScreen>(){
+				},true));
+		main.add(new Quartet<Integer,String,Treatment<SettingsScreen>,Boolean>(R.string.osl,"osl", new Treatment<SettingsScreen>(){
 					public void process(SettingsScreen ss) {
 						AppCompatActivity act=(AppCompatActivity)ss;
 						act.startActivity(new Intent(act,OpenSourceActivity.class));
 					}
-				}));
-		main.add(new Trio<Integer,String,Treatment<SettingsScreen>>(R.string.aboutApp,"aboutApp", new Treatment<SettingsScreen>(){
+				},false));
+		main.add(new Quartet<Integer,String,Treatment<SettingsScreen>,Boolean>(R.string.aboutApp,"aboutApp", new Treatment<SettingsScreen>(){
 					public void process(SettingsScreen ss) {
 						AppCompatActivity act=(AppCompatActivity)ss;
 						act.startActivity(new Intent(act,AboutAppActivity.class));
 					}
-				}));
-		main.add(new Trio<Integer,String,Treatment<SettingsScreen>>(R.string.versionInfo,"versionInfo", new Treatment<SettingsScreen>(){
+				},false));
+		main.add(new Quartet<Integer,String,Treatment<SettingsScreen>,Boolean>(R.string.versionInfo,"versionInfo", new Treatment<SettingsScreen>(){
 					public void process(SettingsScreen ss) {
 						((AppCompatActivity)ss)
 							.getSupportFragmentManager()
@@ -102,7 +102,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
 							.commit();
 					}
-				}));
+				},true));
 		MAIN=Collections.unmodifiableList(main);
 	}
 	
@@ -1099,10 +1099,59 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 	static class MasterDetailSettingsImpl extends MasterDetailSupportActivity implements SettingsScreen{
 		@Override
 		public void setupRecyclerView(RecyclerView recyclerView) {
-			
+			recyclerView.setAdapter(new RecyclerAdapter());
 		}
 		public int getIdForFragment(){
 			return R.id.item_detail_container;
+		}
+		
+		final class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.vh> {
+			int selected=0;
+			
+			@Override
+			public vh onCreateViewHolder(ViewGroup p1, int p2) {
+				return new vh(p1);
+			}
+
+			@Override
+			public void onBindViewHolder(vh p1, final int p2) {
+				p1.setTitle(MAIN.get(p2).getA());
+				p1.setSelected(p2==selected);
+				Utils.applyHandlersForViewTree(p1.itemView,new View.OnClickListener(){
+					public void onClick(View v){
+						MAIN.get(p2).getC().process(MasterDetailSettingsImpl.this);
+						if(MAIN.get(p2).getD())
+							setSelected(p2);
+					}
+				});
+			}
+
+			@Override
+			public int getItemCount() {
+				return MAIN.size();
+			}
+			
+			public void setSelected(int a){
+				notifyItemChanged(a);
+				notifyItemChanged(selected);
+				selected=a;
+			}
+			
+			
+			final class vh extends FindableViewHolder{
+				public vh(ViewGroup p1){
+					super(getLayoutInflater().inflate(R.layout.item_list_content,p1,false));
+				}
+				public void setTitle(CharSequence cs){
+					((TextView)findViewById(R.id.id)).setText(cs);
+				}
+				public void setTitle(int cs){
+					((TextView)findViewById(R.id.id)).setText(cs);
+				}
+				public void setSelected(boolean value){
+					ViewCompat.setBackground(findViewById(R.id.background),value?new ColorDrawable(ThemePatcher.getMainColor(MasterDetailSettingsImpl.this)):null);
+				}
+			}
 		}
 	}
 }

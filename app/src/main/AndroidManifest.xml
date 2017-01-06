@@ -119,6 +119,12 @@
 			android:exported="false"
 			android:fitsSystemWindows="false">
         </activity>
+		<activity
+			android:label="@string/settings"
+			android:name=".activity.FragmentSettingsActivity$MasterDetailSettings"
+			android:exported="false"
+			android:fitsSystemWindows="false">
+        </activity>
 		
         <activity
 			android:label="@string/serverFinder"
