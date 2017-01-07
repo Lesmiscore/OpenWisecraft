@@ -52,7 +52,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 						((AppCompatActivity)ss)
 							.getSupportFragmentManager()
 							.beginTransaction()
-							.replace(R.id.preference,new Basics())
+							.replace(ss.getIdForFragment(),new Basics())
 							.addToBackStack("basics")
 							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
 							.commit();
@@ -63,7 +63,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 						((AppCompatActivity)ss)
 							.getSupportFragmentManager()
 							.beginTransaction()
-							.replace(R.id.preference,new Features())
+							.replace(ss.getIdForFragment(),new Features())
 							.addToBackStack("features")
 							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
 							.commit();
@@ -74,7 +74,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 						((AppCompatActivity)ss)
 							.getSupportFragmentManager()
 							.beginTransaction()
-							.replace(R.id.preference,new ColorChanger())
+							.replace(ss.getIdForFragment(),new ColorChanger())
 							.addToBackStack("changeColor")
 							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
 							.commit();
@@ -97,7 +97,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 						((AppCompatActivity)ss)
 							.getSupportFragmentManager()
 							.beginTransaction()
-							.replace(R.id.preference,new VersionInfoFragmentLocal())
+							.replace(ss.getIdForFragment(),new VersionInfoFragmentLocal())
 							.addToBackStack("versionInfo")
 							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
 							.commit();
