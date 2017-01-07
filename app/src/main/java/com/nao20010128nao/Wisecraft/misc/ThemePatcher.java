@@ -113,6 +113,16 @@ public class ThemePatcher{
 				R.style.AppTheme_OpenSource
 			)
 		);
+		themes.put(
+			FragmentSettingsActivity.MasterDetailSettings.class,
+			new Themes(
+				R.style.AppTheme_NoActionBar,
+				R.style.AppTheme_NoActionBar_Dark,
+				R.style.AppTheme_NoActionBar_DayNight,
+				R.style.AppTheme_NoActionBar_Violet,
+				R.style.AppTheme_NoActionBar_Black
+			)
+		);
 		THEMES=Collections.unmodifiableMap(themes);
 	}
 	

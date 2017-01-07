@@ -715,7 +715,14 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 			}
 		}
 	}
-	static class MasterDetailSettingsImpl extends MasterDetailSupportActivity implements SettingsScreen{
+	static class MasterDetailSettingsImpl extends MasterDetailSupportActivity implements SettingsScreen {
+
+		@Override
+		protected void onCreate(Bundle savedInstanceState) {
+			ThemePatcher.applyThemeForActivity(this);
+			super.onCreate(savedInstanceState);
+		}
+		
 		@Override
 		public void setupRecyclerView(RecyclerView recyclerView) {
 			recyclerView.setAdapter(new RecyclerAdapter());

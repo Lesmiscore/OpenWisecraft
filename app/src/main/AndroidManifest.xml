@@ -123,7 +123,8 @@
 			android:label="@string/settings"
 			android:name=".activity.FragmentSettingsActivity$MasterDetailSettings"
 			android:exported="false"
-			android:fitsSystemWindows="false">
+			android:fitsSystemWindows="false"
+			android:theme="@style/AppTheme.NoActionBar">
         </activity>
 		
         <activity
