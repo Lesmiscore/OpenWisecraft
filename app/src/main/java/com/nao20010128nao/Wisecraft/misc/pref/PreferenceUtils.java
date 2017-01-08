@@ -3,7 +3,6 @@ import android.app.*;
 import android.content.*;
 import android.content.res.*;
 import android.graphics.*;
-import android.preference.*;
 import android.support.v4.content.*;
 import android.support.v7.app.*;
 import android.support.v7.preference.*;
@@ -12,9 +11,7 @@ import android.widget.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 
-import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.preference.Preference;
 import com.nao20010128nao.Wisecraft.R;
 
 public class PreferenceUtils
@@ -44,7 +41,7 @@ public class PreferenceUtils
 	}
 	//This is a relief measure of EditTextPreferenceDialogFragmentCompat. Will be deleted.
 	public static void showEditTextDialog(Activity activity,final Preference preference,String defaultValue,Treatment<View> editor){
-		final SharedPreferences pref=PreferenceManager.getDefaultSharedPreferences(activity);
+		final SharedPreferences pref=Utils.getPreferences(activity);
 		final View v=LayoutInflater.from(activity).inflate(R.layout.preference_dialog_edittext,null);
 		v.findViewById(android.R.id.message).setVisibility(View.GONE);
 		((EditText)v.findViewById(android.R.id.edit)).setText(pref.getString(preference.getKey(),defaultValue));

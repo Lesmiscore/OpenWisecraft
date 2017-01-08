@@ -263,7 +263,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 				});
 			sH("serverListStyle", new HandledPreference.OnClickListener(){
 					public void onClick(String a, String b, String c) {
-						new AlertDialog.Builder(getContext(),ThemePatcher.getDefaultDialogStyle(getContext()))
+						new AlertDialog.Builder(getActivity(),ThemePatcher.getDefaultDialogStyle(getContext()))
 							.setTitle(R.string.serverListStyle)
 							.setSingleChoiceItems(getResources().getStringArray(R.array.serverListStyles),which=pref.getInt("serverListStyle2",0),new DialogInterface.OnClickListener(){
 								public void onClick(DialogInterface di,int w){
@@ -288,7 +288,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 						String[] choice=getFontChoices();
 						String[] display=TheApplication.instance.getDisplayFontNames(choice);
 						final List<String> choiceList=Arrays.<String>asList(choice);
-						new AlertDialog.Builder(getContext(),ThemePatcher.getDefaultDialogStyle(getContext()))
+						new AlertDialog.Builder(getActivity(),ThemePatcher.getDefaultDialogStyle(getContext()))
 							.setSingleChoiceItems(display, choiceList.indexOf(TheApplication.instance.getFontFieldName())
 							, new DialogInterface.OnClickListener(){
 								public void onClick(DialogInterface di, int w) {
@@ -378,7 +378,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 							.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
 								public void onClick(DialogInterface di,int w){
 									if(gpsRequired[which]){
-										new AlertDialog.Builder(getContext(),ThemePatcher.getDefaultDialogStyle(getContext()))
+										new AlertDialog.Builder(getActivity(),ThemePatcher.getDefaultDialogStyle(getContext()))
 											.setMessage(getResources().getString(R.string.gpsRequiredForDayNight).replace("{NO}",getResources().getString(android.R.string.no)))
 											.setPositiveButton(android.R.string.yes,new DialogInterface.OnClickListener(){
 												public void onClick(DialogInterface di,int w){
