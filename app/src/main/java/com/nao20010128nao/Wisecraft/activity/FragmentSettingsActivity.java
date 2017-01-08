@@ -166,11 +166,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 		switch(item.getItemId()){
 			case 0:
 				boolean isShowing=misc.getVisibility()==View.VISIBLE;
-				if(isShowing){
-					misc.setVisibility(View.GONE);
-				}else{
-					misc.setVisibility(View.VISIBLE);
-				}
+				misc.setVisibility(isShowing?View.GONE:View.VISIBLE);
 				invalidateOptionsMenu();
 				break;
 		}
@@ -243,6 +239,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 		}
 	}
 
+	@RuntimePermissions
 	public static class Basics extends SettingsBaseFragment {
 		public static final String PARALLELS_DIALOG_FRAGMENT_TAG=DIALOG_FRAGMENT_TAG_PREFIX+"parallels-dialog";
 		int which;
@@ -416,6 +413,11 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 		public void onResume() {
 			super.onResume();
 			getActivity().setTitle(R.string.basics);
+		}
+		
+		@NeedsPermission({"android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION"})
+		public void setThemeModeWithGpsPermission(int which){
+			pref.edit().putInt("4.0themeMode",which).commit();
 		}
 	}
 
