@@ -118,7 +118,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		pref=PreferenceManager.getDefaultSharedPreferences(this);
+		pref=Utils.getPreferences(this);
 		ThemePatcher.applyThemeForActivity(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_settings_with_preview);
@@ -157,9 +157,11 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		/*
 		MenuItem showPreview=menu.add(Menu.NONE,0,0,R.string.preview);
 		showPreview.setIcon(TheApplication.instance.getTintedDrawable(misc.getVisibility()==View.VISIBLE?R.drawable.ic_visibility_black_48dp:R.drawable.ic_visibility_off_black_48dp,Utils.getMenuTintColor(this)));
 		MenuItemCompat.setShowAsAction(showPreview,MenuItem.SHOW_AS_ACTION_ALWAYS);
+		*/
 		return true;
 	}
 
@@ -204,12 +206,6 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 	@Override
 	public int getIdForFragment() {
 		return R.id.preference;
-	}
-	
-	@NeedsPermission({"android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION"})
-	public void setThemeModeWithGpsPermission(int which){
-		//TODO move into basics fragment
-		pref.edit().putInt("4.0themeMode",which).commit();
 	}
 
 	
@@ -343,7 +339,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 									onProgressChanged(seekBar,0,false);
 								}
 						});
-						new AlertDialog.Builder(getContext(),ThemePatcher.getDefaultDialogStyle(getContext()))
+						new AlertDialog.Builder(getActivity(),ThemePatcher.getDefaultDialogStyle(getContext()))
 							.setTitle(R.string.addLessRows)
 							.setView(v)
 							.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
@@ -372,7 +368,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 			sH("4.0themeMode", new HandledPreference.OnClickListener(){
 					public void onClick(String a, String b, String c) {
 						final boolean[] gpsRequired=Utils.getBooleanArray(getContext(),R.array.themeMode_GpsRequired);
-						new AlertDialog.Builder(getContext(),ThemePatcher.getDefaultDialogStyle(getContext()))
+						new AlertDialog.Builder(getActivity(),ThemePatcher.getDefaultDialogStyle(getContext()))
 							.setTitle(R.string.themeMode)
 							.setSingleChoiceItems(getResources().getStringArray(R.array.themeMode),which=pref.getInt("4.0themeMode",ThemePatcher.THEME_MODE_LIGHT),new DialogInterface.OnClickListener(){
 								public void onClick(DialogInterface di,int w){
@@ -719,9 +715,11 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 		}
 	}
 	static class MasterDetailSettingsImpl extends MasterDetailSupportActivity implements SettingsScreen {
-
+		SharedPreferences pref;
+		
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
+			pref=Utils.getPreferences(this);
 			ThemePatcher.applyThemeForActivity(this);
 			super.onCreate(savedInstanceState);
 			MAIN.get(0).getC().process(this);
@@ -740,6 +738,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 		public void onBackPressed() {
 			finish();
 		}
+		
 		
 		final class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.vh> {
 			int selected=0;
