@@ -8,7 +8,7 @@
 		<attr name="color"/>
 	</declare-styleable>
 	<declare-styleable name="MasterDetailSettings">
-		<attr name="wcAppButtonTextColor"/>
+		<attr name="wcSelectedTextColor"/>
 		<attr name="wcUnselectedTextColor"/>
 	</declare-styleable>
 	
@@ -19,4 +19,5 @@
 	<attr name="wcAppButtonTextColor" format="color"/>
 	<attr name="wcAppButtonBgColor" format="color"/>
 	<attr name="wcUnselectedTextColor" format="color"/>
+	<attr name="wcSelectedTextColor" format="color"/>
 </resources>

@@ -12,6 +12,7 @@
         <item name="dialogTheme">@style/AppAlertDialog.Black</item>
 		<item name="toolbarStyle">?attr/wcToolbarTheme</item>
 		<item name="wcUnselectedTextColor">#fff</item>
+		<item name="wcSelectedTextColor">#000</item>
 		<!--MaterialDrawer-->
         <item name="material_drawer_background">?android:attr/windowBackground</item>
         <item name="material_drawer_primary_text">@color/black</item>
@@ -57,6 +58,7 @@
     
 	<style name="AppTheme.Toolbar.Black" parent="Widget.AppCompat.Toolbar.Wisecraft">
 		<item name="colorControlNormal">#ffffff</item>
-		<item name="titleTextColor">?attr/colorControlNormal</item>
+		<item name="titleTextColor">#fff</item>
+		<item name="android:textColor">#fff</item>
 	</style>
 </resources>

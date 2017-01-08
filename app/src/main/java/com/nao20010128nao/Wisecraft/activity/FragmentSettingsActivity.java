@@ -203,12 +203,12 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 
 	@Override
 	public int getIdForFragment() {
-		// TODO: Implement this method
 		return R.id.preference;
 	}
 	
 	@NeedsPermission({"android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION"})
 	public void setThemeModeWithGpsPermission(int which){
+		//TODO move into basics fragment
 		pref.edit().putInt("4.0themeMode",which).commit();
 	}
 
@@ -748,7 +748,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 			public RecyclerAdapter(){
 				selectedBg=ThemePatcher.getMainColor(MasterDetailSettingsImpl.this);
 				TypedArray ta=obtainStyledAttributes(R.styleable.MasterDetailSettings);
-				selectedText=ta.getColor(R.styleable.MasterDetailSettings_wcAppButtonTextColor,Color.BLACK);
+				selectedText=ta.getColor(R.styleable.MasterDetailSettings_wcSelectedTextColor,Color.BLACK);
 				unselectedText=ta.getColor(R.styleable.MasterDetailSettings_wcUnselectedTextColor,Color.BLACK);
 				ta.recycle();
 			}
