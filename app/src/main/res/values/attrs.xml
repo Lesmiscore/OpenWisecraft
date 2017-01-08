@@ -7,6 +7,10 @@
 	<declare-styleable name="ColorPickerPreferenceCompat">
 		<attr name="color"/>
 	</declare-styleable>
+	<declare-styleable name="MasterDetailSettings">
+		<attr name="wcAppButtonTextColor"/>
+		<attr name="wcUnselectedTextColor"/>
+	</declare-styleable>
 	
 	<attr name="colorPickerPreferenceStyle" format="reference"/>
 	<attr name="wcToolbarTheme" format="reference"/>
@@ -14,4 +18,5 @@
 	<attr name="wcMenuTintColor" format="color"/>
 	<attr name="wcAppButtonTextColor" format="color"/>
 	<attr name="wcAppButtonBgColor" format="color"/>
+	<attr name="wcUnselectedTextColor" format="color"/>
 </resources>

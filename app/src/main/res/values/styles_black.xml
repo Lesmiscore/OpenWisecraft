@@ -11,6 +11,7 @@
         <item name="wcMenuTintColor">#ffffff</item>
         <item name="dialogTheme">@style/AppAlertDialog.Black</item>
 		<item name="toolbarStyle">?attr/wcToolbarTheme</item>
+		<item name="wcUnselectedTextColor">#fff</item>
 		<!--MaterialDrawer-->
         <item name="material_drawer_background">?android:attr/windowBackground</item>
         <item name="material_drawer_primary_text">@color/black</item>

@@ -34,6 +34,7 @@ import uk.co.chrisjenx.calligraphy.*;
 
 import android.support.v7.widget.Toolbar;
 import com.nao20010128nao.Wisecraft.R;
+import android.content.res.*;
 
 class FragmentSettingsActivityImpl extends AppCompatActivity implements SettingsScreen{
 	public static final Map<String,Class<? extends Fragment>> FRAGMENT_CLASSES=new HashMap<String,Class<? extends Fragment>>(){{
@@ -742,6 +743,15 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 		
 		final class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.vh> {
 			int selected=0;
+			int selectedBg,selectedText,unselectedText;
+			
+			public RecyclerAdapter(){
+				selectedBg=ThemePatcher.getMainColor(MasterDetailSettingsImpl.this);
+				TypedArray ta=obtainStyledAttributes(R.styleable.MasterDetailSettings);
+				selectedText=ta.getColor(R.styleable.MasterDetailSettings_wcAppButtonTextColor,Color.BLACK);
+				unselectedText=ta.getColor(R.styleable.MasterDetailSettings_wcUnselectedTextColor,Color.BLACK);
+				ta.recycle();
+			}
 			
 			@Override
 			public vh onCreateViewHolder(ViewGroup p1, int p2) {
@@ -785,7 +795,8 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 					((TextView)findViewById(R.id.id)).setText(cs);
 				}
 				public void setSelected(boolean value){
-					ViewCompat.setBackground(findViewById(R.id.background),value?new ColorDrawable(ThemePatcher.getMainColor(MasterDetailSettingsImpl.this)):null);
+					ViewCompat.setBackground(findViewById(R.id.background),value?new ColorDrawable(selectedBg):null);
+					((TextView)findViewById(R.id.id)).setTextColor(value?selectedText:unselectedText);
 				}
 			}
 		}
