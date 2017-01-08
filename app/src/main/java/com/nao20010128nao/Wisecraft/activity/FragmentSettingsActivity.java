@@ -721,14 +721,21 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 		protected void onCreate(Bundle savedInstanceState) {
 			ThemePatcher.applyThemeForActivity(this);
 			super.onCreate(savedInstanceState);
+			MAIN.get(0).getC().process(this);
 		}
 		
 		@Override
 		public void setupRecyclerView(RecyclerView recyclerView) {
 			recyclerView.setAdapter(new RecyclerAdapter());
 		}
+		
 		public int getIdForFragment(){
 			return R.id.item_detail_container;
+		}
+
+		@Override
+		public void onBackPressed() {
+			finish();
 		}
 		
 		final class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.vh> {
@@ -745,6 +752,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 				p1.setSelected(p2==selected);
 				Utils.applyHandlersForViewTree(p1.itemView,new View.OnClickListener(){
 					public void onClick(View v){
+						if(p2==selected)return;
 						MAIN.get(p2).getC().process(MasterDetailSettingsImpl.this);
 						if(MAIN.get(p2).getD())
 							setSelected(p2);
