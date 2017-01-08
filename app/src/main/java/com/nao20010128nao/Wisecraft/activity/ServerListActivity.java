@@ -36,6 +36,7 @@ import com.nao20010128nao.Wisecraft.BuildConfig;
 import com.nao20010128nao.Wisecraft.R;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
+import android.support.v4.app.*;
 
 //Full implement for user interface (Some part is available at ServerListActivityBase4)
 abstract class ServerListActivityImpl extends ServerListActivityBase1 implements ServerListActivityInterface,ServerListProvider {
@@ -134,7 +135,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
 			sl.attachNewActivity(this);
 			
-			instance.get().finish();
+			if(Build.VERSION.SDK_INT>=25)
+				if(!isInMultiWindowMode())
+					instance.get().finish();
 			instance.clear();
 		}
 		instance = new WeakReference(this);
