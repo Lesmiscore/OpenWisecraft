@@ -181,14 +181,23 @@ abstract class ServerListActivityBase4 extends ServerListActivityBase5
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
-		/*
 		if (rv.getLayoutManager() instanceof StaggeredGridLayoutManager) {
 			((StaggeredGridLayoutManager)rv.getLayoutManager()).setSpanCount(calculateRows(this, rv));
 		}
 		if (rv.getLayoutManager() instanceof GridLayoutManager) {
 			((GridLayoutManager)rv.getLayoutManager()).setSpanCount(calculateRows(this, rv));
 		}
-		*/
+	}
+
+	@Override
+	public void onMultiWindowModeChanged(boolean isInMultiWindowMode) {
+		super.onMultiWindowModeChanged(isInMultiWindowMode);
+		if (rv.getLayoutManager() instanceof StaggeredGridLayoutManager) {
+			((StaggeredGridLayoutManager)rv.getLayoutManager()).setSpanCount(calculateRows(this, rv));
+		}
+		if (rv.getLayoutManager() instanceof GridLayoutManager) {
+			((GridLayoutManager)rv.getLayoutManager()).setSpanCount(calculateRows(this, rv));
+		}
 	}
 	
 	protected String fetchNetworkState() {
