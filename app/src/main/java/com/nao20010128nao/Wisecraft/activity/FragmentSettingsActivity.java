@@ -1,5 +1,6 @@
 package com.nao20010128nao.Wisecraft.activity;
 import android.content.*;
+import android.content.res.*;
 import android.graphics.*;
 import android.graphics.drawable.*;
 import android.net.*;
@@ -34,8 +35,8 @@ import uk.co.chrisjenx.calligraphy.*;
 
 import android.support.v7.widget.Toolbar;
 import com.nao20010128nao.Wisecraft.R;
-import android.content.res.*;
 
+@RuntimePermissions
 class FragmentSettingsActivityImpl extends AppCompatActivity implements SettingsScreen{
 	public static final Map<String,Class<? extends Fragment>> FRAGMENT_CLASSES=new HashMap<String,Class<? extends Fragment>>(){{
 			put("root",HubPrefFragment.class);
@@ -205,6 +206,11 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 		// TODO: Implement this method
 		return R.id.preference;
 	}
+	
+	@NeedsPermission({"android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION"})
+	public void setThemeModeWithGpsPermission(int which){
+		pref.edit().putInt("4.0themeMode",which).commit();
+	}
 
 	
 	
@@ -240,7 +246,6 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 		}
 	}
 
-	@RuntimePermissions
 	public static class Basics extends SettingsBaseFragment {
 		public static final String PARALLELS_DIALOG_FRAGMENT_TAG=DIALOG_FRAGMENT_TAG_PREFIX+"parallels-dialog";
 		int which;
@@ -414,11 +419,6 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 		public void onResume() {
 			super.onResume();
 			getActivity().setTitle(R.string.basics);
-		}
-		
-		@NeedsPermission({"android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION"})
-		public void setThemeModeWithGpsPermission(int which){
-			pref.edit().putInt("4.0themeMode",which).commit();
 		}
 	}
 
