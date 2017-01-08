@@ -36,6 +36,8 @@ import uk.co.chrisjenx.calligraphy.*;
 import android.support.v7.widget.Toolbar;
 import com.nao20010128nao.Wisecraft.R;
 
+import static com.nao20010128nao.Wisecraft.activity.FragmentSettingsActivityImpl.MAIN;
+
 @RuntimePermissions
 class FragmentSettingsActivityImpl extends AppCompatActivity implements SettingsScreen{
 	public static final Map<String,Class<? extends Fragment>> FRAGMENT_CLASSES=new HashMap<String,Class<? extends Fragment>>(){{
@@ -208,6 +210,15 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 		return R.id.preference;
 	}
 
+	@Override
+	public void excecuteWithGpsPermission(Runnable e) {
+		FragmentSettingsActivityImplPermissionsDispatcher.excecuteWithGpsPermissionImplWithCheck(this,e);
+	}
+	
+	@NeedsPermission({"android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION"})
+	public void excecuteWithGpsPermissionImpl(Runnable r){
+		if(r!=null)r.run();
+	}
 	
 	
 	public static class HubPrefFragment extends SettingsBaseFragment {
@@ -714,54 +725,67 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 			}
 		}
 	}
-	static class MasterDetailSettingsImpl extends MasterDetailSupportActivity implements SettingsScreen {
-		SharedPreferences pref;
-		
-		@Override
-		protected void onCreate(Bundle savedInstanceState) {
-			pref=Utils.getPreferences(this);
-			ThemePatcher.applyThemeForActivity(this);
-			super.onCreate(savedInstanceState);
-			MAIN.get(0).getC().process(this);
-		}
-		
-		@Override
-		public void setupRecyclerView(RecyclerView recyclerView) {
-			recyclerView.setAdapter(new RecyclerAdapter());
-		}
-		
-		public int getIdForFragment(){
-			return R.id.item_detail_container;
+}
+
+@RuntimePermissions
+class MasterDetailSettingsImpl extends MasterDetailSupportActivity implements SettingsScreen {
+	SharedPreferences pref;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		pref=Utils.getPreferences(this);
+		ThemePatcher.applyThemeForActivity(this);
+		super.onCreate(savedInstanceState);
+		MAIN.get(0).getC().process(this);
+	}
+
+	@Override
+	public void setupRecyclerView(RecyclerView recyclerView) {
+		recyclerView.setAdapter(new RecyclerAdapter());
+	}
+
+	public int getIdForFragment(){
+		return R.id.item_detail_container;
+	}
+
+	@Override
+	public void excecuteWithGpsPermission(Runnable e) {
+		MasterDetailSettingsImplPermissionsDispatcher.excecuteWithGpsPermissionImplWithCheck(this,e);
+	}
+	
+	@NeedsPermission({"android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION"})
+	public void excecuteWithGpsPermissionImpl(Runnable r){
+		if(r!=null)r.run();
+	}
+	
+	@Override
+	public void onBackPressed() {
+		finish();
+	}
+
+
+	final class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.vh> {
+		int selected=0;
+		int selectedBg,selectedText,unselectedText;
+
+		public RecyclerAdapter(){
+			selectedBg=ThemePatcher.getMainColor(MasterDetailSettingsImpl.this);
+			TypedArray ta=obtainStyledAttributes(R.styleable.MasterDetailSettings);
+			selectedText=ta.getColor(R.styleable.MasterDetailSettings_wcSelectedTextColor,Color.BLACK);
+			unselectedText=ta.getColor(R.styleable.MasterDetailSettings_wcUnselectedTextColor,Color.BLACK);
+			ta.recycle();
 		}
 
 		@Override
-		public void onBackPressed() {
-			finish();
+		public vh onCreateViewHolder(ViewGroup p1, int p2) {
+			return new vh(p1);
 		}
-		
-		
-		final class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.vh> {
-			int selected=0;
-			int selectedBg,selectedText,unselectedText;
-			
-			public RecyclerAdapter(){
-				selectedBg=ThemePatcher.getMainColor(MasterDetailSettingsImpl.this);
-				TypedArray ta=obtainStyledAttributes(R.styleable.MasterDetailSettings);
-				selectedText=ta.getColor(R.styleable.MasterDetailSettings_wcSelectedTextColor,Color.BLACK);
-				unselectedText=ta.getColor(R.styleable.MasterDetailSettings_wcUnselectedTextColor,Color.BLACK);
-				ta.recycle();
-			}
-			
-			@Override
-			public vh onCreateViewHolder(ViewGroup p1, int p2) {
-				return new vh(p1);
-			}
 
-			@Override
-			public void onBindViewHolder(vh p1, final int p2) {
-				p1.setTitle(MAIN.get(p2).getA());
-				p1.setSelected(p2==selected);
-				Utils.applyHandlersForViewTree(p1.itemView,new View.OnClickListener(){
+		@Override
+		public void onBindViewHolder(vh p1, final int p2) {
+			p1.setTitle(MAIN.get(p2).getA());
+			p1.setSelected(p2==selected);
+			Utils.applyHandlersForViewTree(p1.itemView,new View.OnClickListener(){
 					public void onClick(View v){
 						if(p2==selected)return;
 						MAIN.get(p2).getC().process(MasterDetailSettingsImpl.this);
@@ -769,34 +793,33 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 							setSelected(p2);
 					}
 				});
-			}
+		}
 
-			@Override
-			public int getItemCount() {
-				return MAIN.size();
+		@Override
+		public int getItemCount() {
+			return MAIN.size();
+		}
+
+		public void setSelected(int a){
+			notifyItemChanged(a);
+			notifyItemChanged(selected);
+			selected=a;
+		}
+
+
+		final class vh extends FindableViewHolder{
+			public vh(ViewGroup p1){
+				super(getLayoutInflater().inflate(R.layout.item_list_content,p1,false));
 			}
-			
-			public void setSelected(int a){
-				notifyItemChanged(a);
-				notifyItemChanged(selected);
-				selected=a;
+			public void setTitle(CharSequence cs){
+				((TextView)findViewById(R.id.id)).setText(cs);
 			}
-			
-			
-			final class vh extends FindableViewHolder{
-				public vh(ViewGroup p1){
-					super(getLayoutInflater().inflate(R.layout.item_list_content,p1,false));
-				}
-				public void setTitle(CharSequence cs){
-					((TextView)findViewById(R.id.id)).setText(cs);
-				}
-				public void setTitle(int cs){
-					((TextView)findViewById(R.id.id)).setText(cs);
-				}
-				public void setSelected(boolean value){
-					ViewCompat.setBackground(findViewById(R.id.background),value?new ColorDrawable(selectedBg):null);
-					((TextView)findViewById(R.id.id)).setTextColor(value?selectedText:unselectedText);
-				}
+			public void setTitle(int cs){
+				((TextView)findViewById(R.id.id)).setText(cs);
+			}
+			public void setSelected(boolean value){
+				ViewCompat.setBackground(findViewById(R.id.background),value?new ColorDrawable(selectedBg):null);
+				((TextView)findViewById(R.id.id)).setTextColor(value?selectedText:unselectedText);
 			}
 		}
 	}
@@ -1187,6 +1210,7 @@ class ServerListStyleEditorImpl extends AppCompatActivity {
 
 interface SettingsScreen{
 	int getIdForFragment();
+	void excecuteWithGpsPermission(Runnable e);
 }
 public class FragmentSettingsActivity extends FragmentSettingsActivityImpl{
 	public static class ServerListStyleEditor extends ServerListStyleEditorImpl{
