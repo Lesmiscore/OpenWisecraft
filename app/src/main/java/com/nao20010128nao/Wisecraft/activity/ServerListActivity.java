@@ -513,7 +513,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 										public void onClick(View v) {
 											File f=new File(et_.getText().toString());
 											if ((!f.exists())|f.isFile())f = f.getParentFile();
-											startChooseFileForOpen(f, new FileChooserResult(){
+											ServerListActivityBase3PermissionsDispatcher.startChooseFileForOpenWithCheck(ServerListActivityImpl.this,f, new FileChooserResult(){
 													public void onSelected(File f) {
 														et_.setText(f.toString());
 													}
@@ -561,7 +561,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 										public void onClick(View v) {
 											File f=new File(et.getText().toString());
 											if ((!f.exists())|f.isFile())f = f.getParentFile();
-											startChooseFileForSelect(f, new FileChooserResult(){
+											ServerListActivityBase3PermissionsDispatcher.startChooseFileForOpenWithCheck(ServerListActivityImpl.this,f, new FileChooserResult(){
 													public void onSelected(File f) {
 														et.setText(f.toString());
 													}
@@ -689,7 +689,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 										public void onClick(View v) {
 											File f=new File(et.getText().toString());
 											if ((!f.exists())|f.isFile())f = f.getParentFile();
-											startChooseFileForSelect(f, new FileChooserResult(){
+											ServerListActivityBase3PermissionsDispatcher.startChooseFileForOpenWithCheck(ServerListActivityImpl.this,f, new FileChooserResult(){
 													public void onSelected(File f) {
 														et.setText(f.toString());
 													}
