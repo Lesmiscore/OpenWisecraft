@@ -1546,6 +1546,24 @@ public class ServerListActivity extends ServerListActivityImpl {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		instance = new WeakReference(this);
+		new Thread(){
+			public void run(){
+				List<Class> classes=new ArrayList<>();
+				Class now=ServerListActivity.class;
+				while(now!=Object.class){
+					classes.add(now);
+					now=now.getSuperclass();
+				}
+				List<StackTraceElement> ste=new ArrayList<>();
+				for(Class c:classes){
+					Log.i("Superclasses",c.getName());
+					ste.add(new StackTraceElement(c.getName(),"<init>",c.getSimpleName()+".test",c.hashCode()));
+				}
+				Throwable t=new Throwable("Debug");
+				t.setStackTrace(ste.toArray(new StackTraceElement[ste.size()]));
+				CollectorMain.reportError("Debug",t);
+			}
+		}.start();
 	}
 
 	@Override
