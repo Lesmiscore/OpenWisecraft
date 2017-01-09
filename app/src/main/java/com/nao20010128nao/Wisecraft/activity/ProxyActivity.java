@@ -16,7 +16,7 @@ import java.net.*;
 import android.support.v7.app.AlertDialog;
 import com.nao20010128nao.Wisecraft.R;
 
-public class ProxyActivity extends AppCompatActivity {
+class ProxyActivityImpl extends AppCompatActivity {
 	public static ServiceController cont;
 	
 	TextView serverIp,serverCon;
@@ -196,4 +196,7 @@ public class ProxyActivity extends AppCompatActivity {
 	public static interface ServiceController$GetServerResult{
 		public void onResult(Server s);
 	}
+}
+public class ProxyActivity extends ProxyActivityImpl{
+	
 }
