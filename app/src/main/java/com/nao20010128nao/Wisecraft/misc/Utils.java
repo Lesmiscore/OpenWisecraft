@@ -20,6 +20,7 @@ import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.activity.*;
 import com.nao20010128nao.Wisecraft.api.*;
+import com.nao20010128nao.Wisecraft.misc.collector.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import java.io.*;
 import java.lang.reflect.*;
@@ -173,15 +174,15 @@ public class Utils extends PingerUtils{
                 return point;
 
             } catch (Exception e) {
-                e.printStackTrace();
+                CollectorMain.reportError("getRealSize",e);
             }
         }
 
         return point;
     }
-	public static Point getViewSize(View View){
+	public static Point getViewSize(View view){
         Point point = new Point(0, 0);
-        point.set(View.getWidth(), View.getHeight());        
+        point.set(view.getWidth(), view.getHeight());        
 
         return point;
     }
