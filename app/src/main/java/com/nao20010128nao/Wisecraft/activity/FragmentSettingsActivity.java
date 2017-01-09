@@ -219,6 +219,14 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 	public void excecuteWithGpsPermissionImpl(Runnable r){
 		if(r!=null)r.run();
 	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		FragmentSettingsActivityImplPermissionsDispatcher.onRequestPermissionsResult(this,requestCode,grantResults);
+	}
+	
+	
 	
 	
 	public static class HubPrefFragment extends SettingsBaseFragment {
@@ -393,7 +401,12 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 											.setMessage(getResources().getString(R.string.gpsRequiredForDayNight).replace("{NO}",getResources().getString(android.R.string.no)))
 											.setPositiveButton(android.R.string.yes,new DialogInterface.OnClickListener(){
 												public void onClick(DialogInterface di,int w){
-													pref.edit().putInt("4.0themeMode",which).commit();
+													//pref.edit().putInt("4.0themeMode",which).commit();
+													getSettingsScreen().excecuteWithGpsPermission(new Runnable(){
+														public void run(){
+															pref.edit().putInt("4.0themeMode",which).commit();
+														}
+													});
 												}
 											})
 											.setNegativeButton(android.R.string.no,null)
@@ -541,7 +554,11 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 		}
 		
 		public int getIdForFragment(){
-			return ((SettingsScreen)getActivity()).getIdForFragment();
+			return getSettingsScreen().getIdForFragment();
+		}
+		
+		public SettingsScreen getSettingsScreen(){
+			return (SettingsScreen)getActivity();
 		}
 		
 		
@@ -762,6 +779,13 @@ class MasterDetailSettingsImpl extends MasterDetailSupportActivity implements Se
 	public void onBackPressed() {
 		finish();
 	}
+	
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		MasterDetailSettingsImplPermissionsDispatcher.onRequestPermissionsResult(this,requestCode,grantResults);
+	}
+	
 
 
 	final class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.vh> {
