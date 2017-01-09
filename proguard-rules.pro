@@ -24,12 +24,12 @@
     public <init>(android.content.Context, android.util.AttributeSet, int);
     public void set*(...);
 }
--keep public class **.R {
-  public *;
-}
--keep public class **.BuildConfig {
-  public *;
-}
+#-keep public class **.R {
+#  public *;
+#}
+#-keep public class **.BuildConfig {
+#  public *;
+#}
 -keep public class org.jsoup.** {
   public *;
 }
