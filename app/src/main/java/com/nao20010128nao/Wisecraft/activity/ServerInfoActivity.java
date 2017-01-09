@@ -769,19 +769,19 @@ class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				}
 
 				infos.clear();
-				Map<String,String> data=new OrderTrustedMap<>();
-				data.put(getResources().getString(R.string.pc_maxPlayers), rep.players.max + "");
-				data.put(getResources().getString(R.string.pc_nowPlayers), rep.players.online + "");
-				data.put(getResources().getString(R.string.pc_softwareVersion), rep.version.name);
-				data.put(getResources().getString(R.string.pc_protocolVersion), rep.version.protocol + "");
-				infos.addAll(data.entrySet());
+				List<Map.Entry<String,String>> data=new ArrayList<>();
+				data.add(new KVP<String,String>(getString(R.string.pc_maxPlayers), rep.players.max + ""));
+				data.add(new KVP<String,String>(getString(R.string.pc_nowPlayers), rep.players.online + ""));
+				data.add(new KVP<String,String>(getString(R.string.pc_softwareVersion), rep.version.name));
+				data.add(new KVP<String,String>(getString(R.string.pc_protocolVersion), rep.version.protocol + ""));
+				infos.addAll(data);
 
 				if (rep.favicon != null) {
 					byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
 					serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
 					serverIconObj = new BitmapDrawable(serverIconBmp);
 				} else {
-					serverIconObj = new ColorDrawable(Color.TRANSPARENT);
+					serverIconObj = null;
 				}
 			} else if (resp instanceof Reply19) {
 				Reply19 rep=(Reply19)resp;
@@ -792,19 +792,19 @@ class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				}
 
 				infos.clear();
-				Map<String,String> data=new OrderTrustedMap<>();
-				data.put(getResources().getString(R.string.pc_maxPlayers), rep.players.max + "");
-				data.put(getResources().getString(R.string.pc_nowPlayers), rep.players.online + "");
-				data.put(getResources().getString(R.string.pc_softwareVersion), rep.version.name);
-				data.put(getResources().getString(R.string.pc_protocolVersion), rep.version.protocol + "");
-				infos.addAll(data.entrySet());
+				List<Map.Entry<String,String>> data=new ArrayList<>();
+				data.add(new KVP<String,String>(getString(R.string.pc_maxPlayers), rep.players.max + ""));
+				data.add(new KVP<String,String>(getString(R.string.pc_nowPlayers), rep.players.online + ""));
+				data.add(new KVP<String,String>(getString(R.string.pc_softwareVersion), rep.version.name));
+				data.add(new KVP<String,String>(getString(R.string.pc_protocolVersion), rep.version.protocol + ""));
+				infos.addAll(data);
 
 				if (rep.favicon != null) {
 					byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
 					serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
 					serverIconObj = new BitmapDrawable(serverIconBmp);
 				} else {
-					serverIconObj = new ColorDrawable(Color.TRANSPARENT);
+					serverIconObj = null;
 				}
 			}
 			serverName.setText(serverNameStr);
@@ -845,7 +845,7 @@ class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				if (fs.getDataAsMap().containsKey("plugins")) {
 					String[] data=fs.getDataAsMap().get("plugins").split("\\: ");
 					if (data.length >= 2) {
-						ArrayList<String> plugins=new ArrayList<>(Arrays.<String>asList(data[1].split("\\; ")));
+						ArrayList<String> plugins=new ArrayList<String>(Arrays.<String>asList(data[1].split("\\; ")));
 						if (pref.getBoolean("sortPluginNames", false))
 							Collections.sort(plugins);
 						pluginNames.addAll(plugins);
@@ -923,14 +923,14 @@ class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 			KVRecyclerAdapter<String,String> adap=new KVRecyclerAdapter<String,String>(getActivity());
 			adap.setHasStableIds(false);
 			lv.setAdapter(adap);
-			OrderTrustedMap<String,String> otm=new OrderTrustedMap<String,String>();
+			List<Map.Entry<String,String>> otm=new ArrayList<>();
 			String[] values=result.getRaw().split("\\;");
-			otm.put(getString(R.string.ucp_serverName),      values[1]);
-			otm.put(getString(R.string.ucp_protocolVersion), values[2]);
-			otm.put(getString(R.string.ucp_mcpeVersion),     values[3]);
-			otm.put(getString(R.string.ucp_nowPlayers),      values[4]);
-			otm.put(getString(R.string.ucp_maxPlayers),      values[5]);
-			adap.addAll(otm.entrySet());
+			otm.add(new KVP<String,String>(getString(R.string.ucp_serverName),      values[1]));
+			otm.add(new KVP<String,String>(getString(R.string.ucp_protocolVersion), values[2]));
+			otm.add(new KVP<String,String>(getString(R.string.ucp_mcpeVersion),     values[3]));
+			otm.add(new KVP<String,String>(getString(R.string.ucp_nowPlayers),      values[4]));
+			otm.add(new KVP<String,String>(getString(R.string.ucp_maxPlayers),      values[5]));
+			adap.addAll(otm);
 		}
 
 		@Override
