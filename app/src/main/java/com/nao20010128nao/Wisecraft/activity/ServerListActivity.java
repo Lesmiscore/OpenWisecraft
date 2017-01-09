@@ -1571,5 +1571,11 @@ public class ServerListActivity extends ServerListActivityImpl {
 		super.onDestroy();
 		instance.clear();
 	}
+
+	@Override
+	public void finish() {
+		super.finish();
+		DebugWriter.writeToI("hookFinishCall",new Throwable());
+	}
 }
 
