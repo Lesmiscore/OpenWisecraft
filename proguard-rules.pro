@@ -1,3 +1,7 @@
+-optimizationpasses 10
+-mergeinterfacesaggressively
+-repackageclasses wisecraft
+
 -keepnames public class * extends android.app.Activity {
 }
 -keepnames public class * extends android.app.Service {
