@@ -543,6 +543,10 @@ public class Utils extends PingerUtils{
 	}
 	
 	public static float[] hsvToRgb(float h,float s,float v){
+		if("".equals("")){
+			BigDecimal[] rgb=hsvToRgb(BigDecimal.valueOf(h),BigDecimal.valueOf(s),BigDecimal.valueOf(v));
+			return new float[]{rgb[0].floatValue(),rgb[1].floatValue(),rgb[2].floatValue()};
+		}
 		float r = v;
 		float g = v;
 		float b = v;
@@ -586,37 +590,38 @@ public class Utils extends PingerUtils{
 		BigDecimal r = v;
 		BigDecimal g = v;
 		BigDecimal b = v;
-		h=h.multiply(new BigDecimal("6"));
-		final int i = h.intValue();
-		final BigDecimal f = h.subtract(BigDecimal.valueOf(i));
-		switch (i) {
-			default:
-			case 0:
-				g = g.multiply(BigDecimal.ONE.subtract(s.divide(BigDecimal.ONE.subtract(f))));
+		if(s.compareTo(BigDecimal.ZERO)>0){
+			h=h.multiply(new BigDecimal("6"));
+			final int i = h.intValue();
+			final BigDecimal f = h.subtract(BigDecimal.valueOf(i));
+			switch (i) {
+				default:
+				case 0:
+				g = g.multiply(BigDecimal.ONE.subtract(s.multiply(BigDecimal.ONE.subtract(f))));
 				b = b.multiply(BigDecimal.ONE.subtract(s));
 				break;
-			case 1:
+				case 1:
 				r = r.multiply(BigDecimal.ONE.subtract(s.multiply(f)));
 				b = b.multiply(BigDecimal.ONE.subtract(s));
 				break;
-			case 2:
+				case 2:
 				r = r.multiply(BigDecimal.ONE.subtract(s));
-				b = b.multiply(BigDecimal.ONE.subtract(s.divide(BigDecimal.ONE.subtract(f))));
+				b = b.multiply(BigDecimal.ONE.subtract(s.multiply(BigDecimal.ONE.subtract(f))));
 				break;
-			case 3:
+				case 3:
 				r = r.multiply(BigDecimal.ONE.subtract(s));
 				g = g.multiply(BigDecimal.ONE.subtract(s.multiply(f)));
 				break;
-			case 4:
-				r = r.multiply(BigDecimal.ONE.subtract(s.divide(BigDecimal.ONE.subtract(f))));
+				case 4:
+				r = r.multiply(BigDecimal.ONE.subtract(s.multiply(BigDecimal.ONE.subtract(f))));
 				g = g.multiply(BigDecimal.ONE.subtract(s));
 				break;
-			case 5:
+				case 5:
 				g = g.multiply(BigDecimal.ONE.subtract(s));
 				b = b.multiply(BigDecimal.ONE.subtract(s.multiply(f)));
 				break;
+			}
 		}
-		
 		return new BigDecimal[]{r,g,b};
 	}
 	
