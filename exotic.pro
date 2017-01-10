@@ -1,3 +1,2 @@
--optimizationpasses 10
--mergeinterfacesaggressively
+-optimizationpasses 30
 -repackageclasses wisecraft
