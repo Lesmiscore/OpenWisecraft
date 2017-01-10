@@ -364,7 +364,7 @@ class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 						public void onClick(View v) {
 							File f=new File(et_.getText().toString());
 							if ((!f.exists())|f.isFile())f = f.getParentFile();
-							ServerInfoActivityBase1PermissionsDispatcher.startChooseFileForOpenWithCheck(ServerInfoActivity.this,f, new FileChooserResult(){
+							ServerInfoActivityBase1PermissionsDispatcher.startChooseFileForOpenWithCheck(ServerInfoActivityImpl.this,f, new FileChooserResult(){
 									public void onSelected(File f) {
 										et_.setText(f.toString());
 									}
