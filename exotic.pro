@@ -1,0 +1,3 @@
+-optimizationpasses 10
+-mergeinterfacesaggressively
+-repackageclasses wisecraft

@@ -88,6 +88,10 @@ android {
 			minifyEnabled true
             proguardFiles '../proguard-rules.pro'
 		}
+		pg_ult.initWith(buildTypes.pg)
+		pg_ult{
+			proguardFiles '../proguard-rules.pro','../exotic.pro'
+		}
 		/*debug3 {
         	applicationIdSuffix = '.alpha2'  
             versionNameSuffix = ' Pre'
