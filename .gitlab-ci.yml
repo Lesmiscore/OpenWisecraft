@@ -21,7 +21,9 @@ main:
     - $ANDROID_HOME/build-tools/25.0.0/dexdump -d unzippedApkC/classes.dex > dexdump-rconPC.txt
     - grep "Git\sRevision" build.log
     - zip -r autogen.zip ./*/build/generated/source/
-    - 7z a autogen.7z ./*/build/generated/source/
+    - find . -type f ./*/build/generated/source/ | 7zpress.txt
+    - 7z a autogen.7z @7zpress.txt
+    - rm 7zpress.txt
     - tree -fai > tree.log
   artifacts:
     paths:
