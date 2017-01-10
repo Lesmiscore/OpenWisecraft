@@ -20,11 +20,7 @@ main:
     - unzip rconPassCrack-release.apk -d unzippedApkC > /dev/null
     - $ANDROID_HOME/build-tools/25.0.0/dexdump -d unzippedApkC/classes.dex > dexdump-rconPC.txt
     - grep "Git\sRevision" build.log
-    - zip -r autogen.zip ./*/build/generated/source/
-    - mkdir autogentmp
-    - unzip -d autogentmp/ autogen.zip
-    - 7z a autogen.7z autogentmp/
-    - rm -rf autogentmp
+    - ./ci/zip.sh
     - tree -fai > tree.log
   artifacts:
     paths:
