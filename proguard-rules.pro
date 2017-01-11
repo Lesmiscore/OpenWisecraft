@@ -76,3 +76,4 @@
 	@com.google.gson.annotations.** <fields>;
 }
 
+-repackageclasses wisecraft
