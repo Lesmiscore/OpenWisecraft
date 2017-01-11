@@ -62,10 +62,10 @@
 
 -keepattributes InnerClasses,EnclosingMethod
 
--keepclassmembers class ** {
+-keep class ** {
 	@com.google.gson.annotations.** <fields>;
 }
 
--keepclassmembers class com.nao20010128nao.McServerList.sites.Pmmp_Jp_Net$** {
+-keep class com.nao20010128nao.McServerList.sites.Pmmp_Jp_Net$** {
  @com.google.gson.annotations.** <fields>;
 }
