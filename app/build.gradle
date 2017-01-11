@@ -29,6 +29,7 @@ android {
 		}
 		
 		buildConfigField "String", "HIDDEN_AD", "\"http://cur.lv/11juip\""
+		buildConfigField "boolean", "SHOW_BUILD_DATA_ON_VERSIONS", "false"
 	}
 	
 	signingConfigs {
@@ -79,9 +80,7 @@ android {
 			resValue "string", "wsi", "[DEBUG2] "+wsi
 			resValue "bool", "inspectorEnabled", "true"
 			
-			buildConfigField "String","CI_BUILD_ID","\"${System.getenv('CI_BUILD_ID')}\""
-			buildConfigField "String","CI_BUILD_REF_NAME","\"${System.getenv('CI_BUILD_REF_NAME')}\""
-			buildConfigField "String","CI_RUNNER_ID","\"${System.getenv('CI_RUNNER_ID')}\""
+			buildConfigField "boolean", "SHOW_BUILD_DATA_ON_VERSIONS", "true"
 		}
 		pg.initWith(buildTypes.debug2)
 		pg{

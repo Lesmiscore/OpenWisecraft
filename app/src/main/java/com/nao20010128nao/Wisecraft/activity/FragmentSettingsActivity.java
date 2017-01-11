@@ -34,6 +34,7 @@ import permissions.dispatcher.*;
 import uk.co.chrisjenx.calligraphy.*;
 
 import android.support.v7.widget.Toolbar;
+import com.nao20010128nao.Wisecraft.BuildConfig;
 import com.nao20010128nao.Wisecraft.R;
 
 import static com.nao20010128nao.Wisecraft.activity.FragmentSettingsActivityImpl.MAIN;
@@ -98,10 +99,12 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 				},false));
 		main.add(new Quartet<Integer,String,Treatment<SettingsScreen>,Boolean>(R.string.versionInfo,"versionInfo", new Treatment<SettingsScreen>(){
 					public void process(SettingsScreen ss) {
+						VersionInfoFragmentLocal fragment=new VersionInfoFragmentLocal();
+						fragment.setShowBuildData(BuildConfig.SHOW_BUILD_DATA_ON_VERSIONS);
 						((AppCompatActivity)ss)
 							.getSupportFragmentManager()
 							.beginTransaction()
-							.replace(ss.getIdForFragment(),new VersionInfoFragmentLocal())
+							.replace(ss.getIdForFragment(),fragment)
 							.addToBackStack("versionInfo")
 							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
 							.commit();

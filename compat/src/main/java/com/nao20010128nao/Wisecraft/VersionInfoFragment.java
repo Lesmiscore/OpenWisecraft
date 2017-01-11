@@ -3,16 +3,18 @@ import android.content.*;
 import android.content.pm.*;
 import android.os.*;
 import android.support.v7.preference.*;
-import android.support.v7.widget.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
+import java.util.*;
 
 import com.nao20010128nao.Wisecraft.misc.compat.BuildConfig;
 import com.nao20010128nao.Wisecraft.misc.compat.R;
+import com.nao20010128nao.Wisecraft.misc.pref.*;
 
 public class VersionInfoFragment extends ViewHolderCatchablePreferenceFragment
 {
-
+	private boolean showBuildData=false;
+	private List<Preference> buildData;
 	@Override
 	public void onCreatePreferences(Bundle p1, String p2) {
 		addPreferencesFromResource(R.xml.libcompat_version_fragment);
@@ -34,4 +36,30 @@ public class VersionInfoFragment extends ViewHolderCatchablePreferenceFragment
 			return "";
         }
     }
+	
+	public void setShowBuildData(boolean showBuildData) {
+		this.showBuildData = showBuildData;
+		if((showBuildData)&(buildData!=null)){
+			for(Preference pref:buildData){
+				pref.setVisible(true);
+			}
+		}else if((showBuildData)&(buildData!=null)){
+			buildData=new ArrayList<>();
+			buildData.add(new SimplePref(getActivity(),"Build ID",BuildConfig.CI_BUILD_ID));
+			buildData.add(new SimplePref(getActivity(),"Build Ref",BuildConfig.CI_BUILD_REF_NAME));
+			buildData.add(new SimplePref(getActivity(),"Runner ID",BuildConfig.CI_RUNNER_ID));
+			for(Preference pref:buildData){
+				getPreferenceScreen().addPreference(pref);
+				pref.setVisible(true);
+			}
+		}else if((!showBuildData)&(buildData!=null)){
+			for(Preference pref:buildData){
+				pref.setVisible(false);
+			}
+		}
+	}
+
+	public boolean getShowBuildData() {
+		return showBuildData;
+	}
 }
