@@ -63,16 +63,16 @@
 -keepattributes InnerClasses,EnclosingMethod
 
 -keepattributes com.google.gson.annotations.** 
--keep class ** {
+-keepclassmembers class ** {
 	@com.google.gson.annotations.** <fields>;
 }
--keep class com.nao20010128nao.McServerList.sites.Pmmp_Jp_Net$** {
+-keepclassmembers class com.nao20010128nao.McServerList.sites.Pmmp_Jp_Net$** {
 	@com.google.gson.annotations.** <fields>;
 }
--keep class com.nao20010128nao.Wisecraft.misc.pinger.Reply$**{
+-keepclassmembers class com.nao20010128nao.Wisecraft.misc.pinger.Reply$**{
 	@com.google.gson.annotations.** <fields>;
 }
--keep class com.nao20010128nao.Wisecraft.misc.pinger.Reply19$**{
+-keepclassmembers class com.nao20010128nao.Wisecraft.misc.pinger.Reply19$**{
 	@com.google.gson.annotations.** <fields>;
 }
 
