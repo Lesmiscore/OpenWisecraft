@@ -14,37 +14,17 @@ public class VersionInfoFragment extends ViewHolderCatchablePreferenceFragment
 {
 
 	@Override
-	public void onResume() {
-		super.onResume();
-	}
-	
-	@Override
 	public void onCreatePreferences(Bundle p1, String p2) {
-		Class d=getBuildConfigClass();
 		addPreferencesFromResource(R.xml.libcompat_version_fragment);
 		findPreference("versionInfo_wisecraft").setSummary(getVersionName(getContext()));
-		findPreference("versionInfo_wisecraftInternal").setSummary(getField(d,null,"GIT_REVISION_HASH")+"");
-		findPreference("versionInfo_i18nInternal").setSummary(getField(d,null,"GIT_REVISION_HASH_I18N")+"");
-		findPreference("versionInfo_statusesLayoutInternal").setSummary(getField(d,null,"GIT_REVISION_HASH_STATUSES_LAYOUT")+"");
-		findPreference("versionInfo_materialIconsInternal").setSummary(getField(d,null,"GIT_REVISION_HASH_MATERIAL_ICONS")+"");
-		findPreference("versionInfo_calligraphyInternal").setSummary(getField(d,null,"GIT_REVISION_HASH_CALLIGRAPHY")+"");
-		findPreference("versionInfo_pstsInternal").setSummary(getField(d,null,"GIT_REVISION_HASH_PSTS")+"");
-		findPreference("versionInfo_colorPickerInternal").setSummary(getField(d,null,"GIT_REVISION_HASH_COLOR_PICKER")+"");
+		findPreference("versionInfo_wisecraftInternal").setSummary(BuildConfig.GIT_REVISION_HASH);
+		findPreference("versionInfo_i18nInternal").setSummary(BuildConfig.GIT_REVISION_HASH_COLOR_PICKER);
+		findPreference("versionInfo_statusesLayoutInternal").setSummary(BuildConfig.GIT_REVISION_HASH_STATUSES_LAYOUT);
+		findPreference("versionInfo_materialIconsInternal").setSummary(BuildConfig.GIT_REVISION_HASH_MATERIAL_ICONS);
+		findPreference("versionInfo_calligraphyInternal").setSummary(BuildConfig.GIT_REVISION_HASH_CALLIGRAPHY);
+		findPreference("versionInfo_pstsInternal").setSummary(BuildConfig.GIT_REVISION_HASH_PSTS);
+		findPreference("versionInfo_colorPickerInternal").setSummary(BuildConfig.GIT_REVISION_HASH_COLOR_PICKER);
 	}
-	
-	private Class getBuildConfigClass(){
-		try {
-			return onGetBuildConfigClass();
-		} catch (ClassNotFoundException e) {
-			return null;
-		}
-	}
-
-	public Class onGetBuildConfigClass()throws ClassNotFoundException{
-		return BuildConfig.class;
-	}
-	
-	
 	
 	private static String getVersionName(Context context) {
         try {
@@ -54,12 +34,4 @@ public class VersionInfoFragment extends ViewHolderCatchablePreferenceFragment
 			return "";
         }
     }
-	
-	private static <T> Object getField(Class<T> clz,T instance,String name){
-		try {
-			return clz.getField(name).get(instance);
-		} catch (Throwable e) {
-			return null;
-		}
-	}
 }
