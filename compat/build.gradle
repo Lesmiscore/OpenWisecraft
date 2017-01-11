@@ -76,7 +76,7 @@ def getHashOfRepo(String modul,String name,String root){
 	}else{
 		revisionHash = ["cmd",  "/c",  "git rev-parse HEAD"].execute(null,new File(root,modul)).in.text.trim()
 	}
-	if(!revisionHash.matches("^[0-9a-fA-F]+$")){
+	if(!revisionHash.matches("^[0-9a-fA-F]+\$")){
 		revisionHash = "Unknown"
 	}
 	println "Git Revision of "+name+" is:"+revisionHash
