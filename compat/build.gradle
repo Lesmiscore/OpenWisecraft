@@ -17,13 +17,17 @@ android{
         versionName "1.0"
 		
 		def root="${project.rootDir}";
-		buildConfigField "String", "GIT_REVISION_HASH", "\""+getHashOfRepo("","Wisecraft",root)+"\""
-		buildConfigField "String", "GIT_REVISION_HASH_I18N", "\""+getHashOfRepo("wisecraft-i18n","Wisecraft-Multilanguage",root)+"\""
-		buildConfigField "String", "GIT_REVISION_HASH_STATUSES_LAYOUT", "\""+getHashOfRepo("statusesLayout","StatusesLayout",root)+"\""
-		buildConfigField "String", "GIT_REVISION_HASH_MATERIAL_ICONS", "\""+getHashOfRepo("MaterialIcons","MaterialIconsLight",root)+"\""
-		buildConfigField "String", "GIT_REVISION_HASH_CALLIGRAPHY", "\""+getHashOfRepo("calligraphy","Calligraphy-Wisecraft",root)+"\""
-		buildConfigField "String", "GIT_REVISION_HASH_PSTS", "\""+getHashOfRepo("psts","Wisecraft-PagerSlidingTabStrip",root)+"\""
-		buildConfigField "String", "GIT_REVISION_HASH_COLOR_PICKER", "\""+getHashOfRepo("colorPicker","Wisecraft-AndroidPhotoshopColorPicker",root)+"\""
+		buildConfigField "String", "GIT_REVISION_HASH", "\"${getHashOfRepo('','Wisecraft',root)}\""
+		buildConfigField "String", "GIT_REVISION_HASH_I18N", "\"${getHashOfRepo('wisecraft-i18n','Wisecraft-Multilanguage',root)}\""
+		buildConfigField "String", "GIT_REVISION_HASH_STATUSES_LAYOUT", "\"${getHashOfRepo('statusesLayout','StatusesLayout',root)}\""
+		buildConfigField "String", "GIT_REVISION_HASH_MATERIAL_ICONS", "\"${getHashOfRepo('MaterialIcons','MaterialIconsLight',root)}\""
+		buildConfigField "String", "GIT_REVISION_HASH_CALLIGRAPHY", "\"${getHashOfRepo('calligraphy','Calligraphy-Wisecraft',root)}\""
+		buildConfigField "String", "GIT_REVISION_HASH_PSTS", "\"${getHashOfRepo('psts','Wisecraft-PagerSlidingTabStrip',root)}\""
+		buildConfigField "String", "GIT_REVISION_HASH_COLOR_PICKER", "\"${getHashOfRepo('colorPicker','Wisecraft-AndroidPhotoshopColorPicker',root)}\""
+		
+		buildConfigField "String","CI_BUILD_ID","\"${System.getenv('CI_BUILD_ID')}\""
+		buildConfigField "String","CI_BUILD_REF_NAME","\"${System.getenv('CI_BUILD_REF_NAME')}\""
+		buildConfigField "String","CI_RUNNER_ID","\"${System.getenv('CI_RUNNER_ID')}\""
     }
     buildTypes {
         release {
@@ -67,13 +71,16 @@ dependencies {
 
 def getHashOfRepo(String modul,String name,String root){
 	def revisionHash = "Unknown"
-	if(!System.getProperty("os.name").toLowerCase().startsWith("windows")){
+	if(!System.getProperty("os.name").toLowerCase().contains("windows")){
 		revisionHash = ["sh",  "-c",  "cd "+root+"/"+modul+" ; git rev-parse HEAD"].execute().in.text.trim()
 	}else{
 		revisionHash = ["cmd",  "/c",  "git rev-parse HEAD"].execute(null,new File(root,modul)).in.text.trim()
 	}
+	if(!revisionHash.matches("^[0-9a-fA-F]+$")){
+		revisionHash = "Unknown"
+	}
 	println "Git Revision of "+name+" is:"+revisionHash
-	return revisionHash;
+	return revisionHash
 }
 /*
 def getHashOfRepo(String modul,String name,String root){
