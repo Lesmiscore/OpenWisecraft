@@ -1,9 +1,6 @@
--keepnames public class * extends android.app.Activity {
-}
--keepnames public class * extends android.app.Service {
-}
--keepnames public class * extends android.content.BroadcastReceiver {
-}
+-keepnames public !abstract class * extends android.app.Activity
+-keepnames public !abstract class * extends android.app.Service
+-keepnames public !abstract class * extends android.content.BroadcastReceiver
 -dontwarn com.google.common.**
 -dontwarn com.google.appengine.**
 -dontwarn com.google.android.gms.**
@@ -18,7 +15,19 @@
 -keep class * implements android.os.Parcelable {
     public static final android.os.Parcelable$Creator *;
 }
--keep public class * extends android.view.View {
+-keepnames class * implements java.io.Serializable 
+-keepclassmembers class * implements java.io.Serializable { 
+    static final long serialVersionUID; 
+    private static final java.io.ObjectStreamField[] serialPersistentFields; 
+    !static !transient <fields>; 
+    !private <fields>; 
+    !private <methods>; 
+    private void writeObject(java.io.ObjectOutputStream); 
+    private void readObject(java.io.ObjectInputStream); 
+    java.lang.Object writeReplace(); 
+    java.lang.Object readResolve(); 
+}
+-keepnames public !abstract class * extends android.view.View {
     public <init>(android.content.Context);
     public <init>(android.content.Context, android.util.AttributeSet);
     public <init>(android.content.Context, android.util.AttributeSet, int);
@@ -39,17 +48,11 @@
 -keep class com.google.gson.stream.** { *; }
 -keep class com.google.gson.examples.android.model.** { *; }
 -dontwarn org.apache.**
--keep class org.apache.** {
-  *;
-}
+-keepnames class org.apache.**
 -dontwarn android.support.v4.app.**
 -dontwarn com.nao20010128nao.McServerList.sites.**
--keep class uk.co.chrisjenx.calligraphy.** {
-  *;
-}
--keep class android.support.** {
-  *;
-}
+-keepnames class uk.co.chrisjenx.calligraphy.**
+-keepnames class android.support.**
 
 -keep class com.firebase.** { *; }
 -keep class org.apache.** { *; }
@@ -77,3 +80,4 @@
 }
 
 -repackageclasses wisecraft
+-allowaccessmodification
