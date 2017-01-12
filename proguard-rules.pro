@@ -62,6 +62,7 @@
 -dontwarn org.apache.**
 -dontwarn org.w3c.dom.**
 -dontwarn android.**
+-keep com.google.gson.**
 
 -keepattributes InnerClasses,EnclosingMethod
 
@@ -80,4 +81,3 @@
 
 
 -repackageclasses wisecraft
--allowaccessmodification
