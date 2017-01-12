@@ -1,6 +1,15 @@
 #!/bin/sh
 git config --global user.email "nao20010128@gmail.com"
 git config --global user.name "nao20010128nao"
+if [[ $GITLAB_CI ]]
+then
+	rm -rf wisecraft-i18n
+	rm -rf statusesLayout
+	rm -rf MaterialIcons
+	rm -rf calligraphy
+	rm -rf psts
+	rm -rf colorPicker
+fi
 git submodule update --init --recursive
 cd wisecraft-i18n
 git pull origin master
