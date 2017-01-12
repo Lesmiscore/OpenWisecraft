@@ -8,11 +8,10 @@ image: "nao20010128nao/android-build:latest"
       - build.log
       - powof2.txt
       - "*/build/outputs/aar/*"
-      - tree.log
+      - tree-*.log
       - "*/build/outputs/mapping/*/mapping.txt"
       - "*/build/generated/source/*"
-      - "autogen.*"
-
+      - "autogen-*.*"
 
 before_script:
   - chmod a+x ./ci/*
@@ -36,6 +35,7 @@ main1: # Build for app debug APKs
   script:
     - "gradle :app:assembleDebug :app:assembleDebug2 --info --stacktrace | tee -a build.log > /dev/null"
     - mv */build/outputs/apk/*.apk .
+    - ./ci/packageInformations.sh
 
 main2: # Build for app debug(obfuscated) APKs
   <<: *artf
@@ -43,6 +43,7 @@ main2: # Build for app debug(obfuscated) APKs
   script:
     - "gradle :app:assemblePg :app:assemblePg_ult --info --stacktrace | tee -a build.log > /dev/null"
     - mv */build/outputs/apk/*.apk .
+    - ./ci/packageInformations.sh
 
 main3: # Build for app release APKs
   <<: *artf
@@ -50,6 +51,7 @@ main3: # Build for app release APKs
   script:
     - "gradle :app:assembleRelease --info --stacktrace | tee -a build.log > /dev/null"
     - mv */build/outputs/apk/*.apk .
+    - ./ci/packageInformations.sh
 
 main4: # Build for app release(obfuscated) APKs
   <<: *artf
@@ -57,6 +59,7 @@ main4: # Build for app release(obfuscated) APKs
   script:
     - "gradle :app:assembleShrinkRelease --info --stacktrace | tee -a build.log > /dev/null"
     - mv */build/outputs/apk/*.apk .
+    - ./ci/packageInformations.sh
 
 main5: # Build for app pre(non-obfuscated and obfuscated) APKs
   <<: *artf
@@ -67,6 +70,7 @@ main5: # Build for app pre(non-obfuscated and obfuscated) APKs
     - "DIR=${DIR#*=}"
     - "if [ $DIR != \"0\" ]; then gradle :app:assemblePre :app:assembleShrinkPre --info --stacktrace | tee -a build.log > /dev/null; fi"
     - mv */build/outputs/apk/*.apk .
+    - ./ci/packageInformations.sh
 
 main6: # Build for WRcon APKs
   <<: *artf
@@ -74,6 +78,7 @@ main6: # Build for WRcon APKs
   script:
     - "gradle :rconApp:build --info --stacktrace | tee -a build.log > /dev/null"
     - mv */build/outputs/apk/*.apk .
+    - ./ci/packageInformations.sh
 
 main7: # Build for Rcon Password Cracker APKs
   <<: *artf
@@ -81,6 +86,7 @@ main7: # Build for Rcon Password Cracker APKs
   script:
     - "gradle :rconPassCrack:build --info --stacktrace | tee -a build.log > /dev/null"
     - mv */build/outputs/apk/*.apk .
+    - ./ci/packageInformations.sh
 
 mainLast:
   <<: *artf
@@ -94,8 +100,6 @@ mainLast:
     - unzip rconPassCrack-release.apk -d unzippedApkC > /dev/null
     - $ANDROID_HOME/build-tools/25.0.0/dexdump -d unzippedApkC/classes.dex > dexdump-rconPC.txt
     - grep "Git\sRevision" build.log
-    - ./ci/zip.sh
-    - tree -fai > tree.log
 
 copy:
   stage: copy
