@@ -3,15 +3,75 @@ image: "nao20010128nao/android-build:latest"
 before_script:
   - chmod a+x ./ci/*
   - source ./ci/prepare.sh 2> /dev/null
+  - gradle modifyValuesXml modifyBooleansXml --info --stacktrace | tee -a build.log > /dev/null
 
 stages:
-  - main
+  - main1
+  - main2
+  - main3
+  - main4
+  - main5
+  - main6
+  - main7
+  - mainLast
   - copy
 
-main:
-  stage: main
+main1: # Build for app debug APKs
+  <<: *artf
+  stage: main1
   script:
-    - gradle modifyValuesXml modifyBooleansXml build --info --stacktrace | tee build.log > /dev/null
+    - gradle :app:assembleDebug :app:assembleDebug2 --info --stacktrace | tee -a build.log > /dev/null
+    - mv */build/outputs/apk/*.apk .
+
+main2: # Build for app debug(obfuscated) APKs
+  <<: *artf
+  stage: main2
+  script:
+    - gradle :app:assemblePg :app:assemblePg_ult --info --stacktrace | tee -a build.log > /dev/null
+    - mv */build/outputs/apk/*.apk .
+
+main3: # Build for app release APKs
+  <<: *artf
+  stage: main3
+  script:
+    - gradle :app:assembleRelease --info --stacktrace | tee -a build.log > /dev/null
+    - mv */build/outputs/apk/*.apk .
+
+main4: # Build for app release(obfuscated) APKs
+  <<: *artf
+  stage: main4
+  script:
+    - gradle :app:assembleShrinkRelease --info --stacktrace | tee -a build.log > /dev/null
+    - mv */build/outputs/apk/*.apk .
+
+main5: # Build for app pre(non-obfuscated and obfuscated) APKs
+  <<: *artf
+  stage: main5
+  script:
+    - DIR=`cat ./app/build.gradle | grep "def preNum="`
+    - DIR=${DIR% //*}
+    - "DIR=${DIR#*=}"
+    - if [ $DIR != "0" ]; then gradle :app:assemblePre :app:assembleShrinkPre --info --stacktrace | tee -a build.log > /dev/null; fi
+    - mv */build/outputs/apk/*.apk .
+
+main6: # Build for WRcon APKs
+  <<: *artf
+  stage: main6
+  script:
+    - gradle :rconApp:build --info --stacktrace | tee -a build.log > /dev/null
+    - mv */build/outputs/apk/*.apk .
+
+main7: # Build for Rcon Password Cracker APKs
+  <<: *artf
+  stage: main7
+  script:
+    - gradle :rconPassCrack:build --info --stacktrace | tee -a build.log > /dev/null
+    - mv */build/outputs/apk/*.apk .
+
+mainLast:
+  <<: *artf
+  stage: mainLast
+  script:
     - mv */build/outputs/apk/*.apk .
     - unzip app-release.apk -d unzippedApkA > /dev/null
     - $ANDROID_HOME/build-tools/25.0.0/dexdump -d unzippedApkA/classes.dex > dexdump-app.txt
@@ -22,6 +82,16 @@ main:
     - grep "Git\sRevision" build.log
     - ./ci/zip.sh
     - tree -fai > tree.log
+
+copy:
+  stage: copy
+  script:
+    - source ./ci/copy.sh
+
+
+
+
+artifacts: *atrf
   artifacts:
     paths:
       - "*.apk"
@@ -33,8 +103,3 @@ main:
       - "*/build/outputs/mapping/*/mapping.txt"
       - "*/build/generated/source/*"
       - "autogen.*"
-
-copy:
-  stage: copy
-  script:
-    - source ./ci/copy.sh
