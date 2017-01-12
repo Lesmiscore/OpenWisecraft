@@ -62,7 +62,7 @@
 -dontwarn org.apache.**
 -dontwarn org.w3c.dom.**
 -dontwarn android.**
--keep com.google.gson.**
+-keep class com.google.gson.**
 
 -keepattributes InnerClasses,EnclosingMethod
 
