@@ -51,8 +51,8 @@
 -keepnames class org.apache.**
 -dontwarn android.support.v4.app.**
 -dontwarn com.nao20010128nao.McServerList.sites.**
--keep class uk.co.chrisjenx.calligraphy.**
--keep class android.support.**
+-keep class uk.co.chrisjenx.calligraphy.** { *; }
+-keep class android.support.** { *; }
 
 -keep class com.firebase.** { *; }
 -keep class org.apache.** { *; }
