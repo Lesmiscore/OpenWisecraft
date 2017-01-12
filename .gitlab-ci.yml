@@ -91,7 +91,7 @@ copy:
 
 
 
-artifacts: *atrf
+.artifacts: *atrf
   artifacts:
     paths:
       - "*.apk"
