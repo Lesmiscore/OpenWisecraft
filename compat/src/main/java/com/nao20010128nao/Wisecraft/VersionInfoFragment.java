@@ -26,6 +26,7 @@ public class VersionInfoFragment extends ViewHolderCatchablePreferenceFragment
 		findPreference("versionInfo_calligraphyInternal").setSummary(BuildConfig.GIT_REVISION_HASH_CALLIGRAPHY);
 		findPreference("versionInfo_pstsInternal").setSummary(BuildConfig.GIT_REVISION_HASH_PSTS);
 		findPreference("versionInfo_colorPickerInternal").setSummary(BuildConfig.GIT_REVISION_HASH_COLOR_PICKER);
+		setShowBuildData(showBuildData);
 	}
 	
 	private static String getVersionName(Context context) {
@@ -44,13 +45,15 @@ public class VersionInfoFragment extends ViewHolderCatchablePreferenceFragment
 				pref.setVisible(true);
 			}
 		}else if((showBuildData)&(buildData==null)){
-			buildData=new ArrayList<>();
-			buildData.add(new SimplePref(getActivity(),"Build ID",BuildConfig.CI_BUILD_ID));
-			buildData.add(new SimplePref(getActivity(),"Build Ref",BuildConfig.CI_BUILD_REF_NAME));
-			buildData.add(new SimplePref(getActivity(),"Runner ID",BuildConfig.CI_RUNNER_ID));
-			for(Preference pref:buildData){
-				getPreferenceScreen().addPreference(pref);
-				pref.setVisible(true);
+			if(getActivity()!=null){
+				buildData=new ArrayList<>();
+				buildData.add(new SimplePref(getActivity(),"Build ID",BuildConfig.CI_BUILD_ID));
+				buildData.add(new SimplePref(getActivity(),"Build Ref",BuildConfig.CI_BUILD_REF_NAME));
+				buildData.add(new SimplePref(getActivity(),"Runner ID",BuildConfig.CI_RUNNER_ID));
+				for(Preference pref:buildData){
+					getPreferenceScreen().addPreference(pref);
+					pref.setVisible(true);
+				}
 			}
 		}else if((!showBuildData)&(buildData!=null)){
 			for(Preference pref:buildData){
