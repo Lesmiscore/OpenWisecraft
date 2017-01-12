@@ -43,7 +43,7 @@ public class VersionInfoFragment extends ViewHolderCatchablePreferenceFragment
 			for(Preference pref:buildData){
 				pref.setVisible(true);
 			}
-		}else if((showBuildData)&(buildData!=null)){
+		}else if((showBuildData)&(buildData==null)){
 			buildData=new ArrayList<>();
 			buildData.add(new SimplePref(getActivity(),"Build ID",BuildConfig.CI_BUILD_ID));
 			buildData.add(new SimplePref(getActivity(),"Build Ref",BuildConfig.CI_BUILD_REF_NAME));
