@@ -65,7 +65,7 @@
 
 -keepattributes InnerClasses,EnclosingMethod
 
--keepattributes com.google.gson.annotations.** 
+-keepattributes com.google.gson.annotations.**, com.nao20010128nao.Wisecraft.misc.ShouldBeKept
 -keepclassmembers class ** {
 	@com.google.gson.annotations.** <fields>;
 }
