@@ -1,6 +1,7 @@
 package com.nao20010128nao.Wisecraft.misc.pinger.pc;
 
 import com.google.gson.annotations.*;
+import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import java.util.*;
@@ -9,7 +10,8 @@ import java.util.*;
  * References: http://wiki.vg/Server_List_Ping
  * https://gist.github.com/thinkofdeath/6927216
  */
-public class Reply19 implements ServerPingResult,PCQueryResult {
+@ShouldBeKept
+public class Reply19 implements ServerPingResult,PCQueryResult,ShouldBeKept2 {
 	@SerializedName("description")
 	public Description description;
 	@SerializedName("players")
@@ -23,7 +25,8 @@ public class Reply19 implements ServerPingResult,PCQueryResult {
 	
 	private String raw;
 
-	public class Players {
+	@ShouldBeKept
+	public class Players implements ShouldBeKept2{
 		@SerializedName("max")
 		public int max;
 		@SerializedName("online")
@@ -32,33 +35,36 @@ public class Reply19 implements ServerPingResult,PCQueryResult {
 		public List<Player> sample;
 	}
 
-	public class Player {
+	@ShouldBeKept
+	public class Player implements ShouldBeKept2{
 		@SerializedName("name")
 		public String name;
 		@SerializedName("id")
 		public String id;
 	}
 
-	public class Version {
+	@ShouldBeKept
+	public class Version implements ShouldBeKept2{
 		@SerializedName("name")
 		public String name;
 		@SerializedName("protocol")
 		public int protocol;
 	}
 
-	public class Description{
+	@ShouldBeKept
+	public class Description implements ShouldBeKept2{
 		@SerializedName("text")
 		public String text;
 	}
 	
-	public class ModInfo{
+	public class ModInfo implements ShouldBeKept2{
 		@SerializedName("type")
 		public String type;
 		@SerializedName("modList")
 		public ModListContent[] modList;
 	}
 
-	public class ModListContent{
+	public class ModListContent implements ShouldBeKept2{
 		@SerializedName("modid")
 		public String modid;
 		@SerializedName("version")

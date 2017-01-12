@@ -72,12 +72,12 @@
 -keepclassmembers class com.nao20010128nao.McServerList.sites.Pmmp_Jp_Net$** {
 	@com.google.gson.annotations.** <fields>;
 }
--keepclassmembers class com.nao20010128nao.Wisecraft.misc.pinger.Reply$**{
+-keepclassmembers class com.nao20010128nao.Wisecraft.misc.pinger.Reply**{
 	@com.google.gson.annotations.** <fields>;
 }
--keepclassmembers class com.nao20010128nao.Wisecraft.misc.pinger.Reply19$**{
-	@com.google.gson.annotations.** <fields>;
-}
+-keepclassmembers class * implements com.nao20010128nao.Wisecraft.misc.ShouldBeKept2
+-keepclassmembers @com.nao20010128nao.Wisecraft.misc.ShouldBeKept class *
+
 
 -repackageclasses wisecraft
 -allowaccessmodification
