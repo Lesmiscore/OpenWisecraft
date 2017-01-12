@@ -1,1 +1,2 @@
 -optimizationpasses 30
+-allowaccessmodification
