@@ -16,7 +16,7 @@ image: "nao20010128nao/android-build:latest"
 before_script:
   - chmod a+x ./ci/*
   - source ./ci/prepare.sh
-  - gradle modifyValuesXml modifyBooleansXml --info --stacktrace | tee -a build.log > /dev/null
+  - if [[ $CI_BUILD_STAGE != copy ]]; then gradle modifyValuesXml modifyBooleansXml --info --stacktrace | tee -a build.log > /dev/null; fi
 
 stages:
   - main1
