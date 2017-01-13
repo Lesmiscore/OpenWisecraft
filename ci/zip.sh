@@ -1,4 +1,4 @@
-zip -r autogen.zip ./*/build/generated/source/
+zip -r autogen-$CI_BUILD_STAGE.zip ./*/build/generated/source/
 mkdir autogentmp
 unzip -d autogentmp/ autogen-$CI_BUILD_STAGE.zip
 cd autogentmp
