@@ -35,7 +35,8 @@
 			android:layout_height="wrap_content"
 			android:layout_width="wrap_content"
 			android:text="@string/change"
-			android:id="@+id/changePlayer"/>
+			android:id="@+id/changePlayer"
+			style="?attr/rconConsoleSendButtonStyle"/>
 
 	</LinearLayout>
 
@@ -69,7 +70,8 @@
 			android:layout_height="wrap_content"
 			android:layout_width="wrap_content"
 			android:text="@string/change"
-			android:id="@+id/changeAmount"/>
+			android:id="@+id/changeAmount"
+			style="?attr/rconConsoleSendButtonStyle"/>
 
 	</LinearLayout>
 
@@ -77,7 +79,8 @@
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:text="@string/execute"
-		android:id="@+id/execute"/>
+		android:id="@+id/execute"
+		style="?attr/rconConsoleSendButtonStyle"/>
 
 </LinearLayout>
 

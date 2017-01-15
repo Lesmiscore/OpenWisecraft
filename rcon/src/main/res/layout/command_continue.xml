@@ -33,7 +33,9 @@
 		android:layout_width="wrap_content"
 		android:text="@android:string/ok"
 		android:id="@+id/ok"
-		android:layout_gravity="right"/>
+		android:layout_gravity="right"
+		android:visibility="gone"
+		style="?attr/rconConsoleSendButtonStyle"/>
 
 </LinearLayout>
 
