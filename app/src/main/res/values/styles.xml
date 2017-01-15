@@ -22,6 +22,7 @@
         <item name="material_drawer_selected_text">?attr/material_drawer_primary_text</item>
 		<!--RCON-->
 		<item name="rconConsoleSendButtonStyle">@style/AppButton</item>
+		<item name="rconTabColor">@color/mainColor</item>
 		<!--AppButton-->
 		<item name="wcAppButtonTextColor">#000</item>
 		<item name="wcAppButtonBgColor">@color/mainColor</item>
