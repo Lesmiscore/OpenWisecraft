@@ -38,7 +38,8 @@
 			android:singleLine="false"
 			android:textDirection="anyRtl"
 			android:textSize="@dimen/material_drawer_item_primary_text"
-			tools:text="Some drawer text"/>
+			tools:text="Some drawer text"
+			android:visibility="gone"/>
 
 		<TextView
 			android:id="@+id/material_drawer_description"
@@ -50,8 +51,7 @@
 			android:singleLine="true"
 			android:textDirection="anyRtl"
 			android:textSize="@dimen/material_drawer_item_primary_description"
-			tools:text="Some drawer text"
-			android:visibility="gone"/>
+			tools:text="Some drawer text"/>
 
 	</LinearLayout>
 
