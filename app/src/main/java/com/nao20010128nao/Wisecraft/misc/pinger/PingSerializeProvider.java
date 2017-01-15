@@ -178,6 +178,7 @@ public class PingSerializeProvider
 		pingClassNumber.put(Reply.class                                 ,0x1002);
 		pingClassNumber.put(Reply19.class                               ,0x1003);
 		pingClassNumber.put(SprPair.class                               ,0xf004);
+		pingClassNumber.put(RawJsonReply.class                          ,0x1005);
 		
 		PING_CLASS_NUMBER=Collections.unmodifiableMap(pingClassNumber);
 		
@@ -188,6 +189,7 @@ public class PingSerializeProvider
 		pingClassNumbetReversed.put(0x1002,Reply.class);
 		pingClassNumbetReversed.put(0x1003,Reply19.class);
 		pingClassNumbetReversed.put(0xf004,SprPair.class);
+		pingClassNumbetReversed.put(0x1005,RawJsonReply.class);
 		
 		PING_CLASS_NUMBER_REVERSED=Collections.unmodifiableMap(pingClassNumbetReversed);
 	}
