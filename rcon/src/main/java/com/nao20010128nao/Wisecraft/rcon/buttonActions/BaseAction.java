@@ -24,7 +24,7 @@ public abstract class BaseAction extends ContextWrapper implements OnClickListen
 	public PrimaryDrawerItem newDrawerItem(){
 		PrimaryDrawerItem pdi=getActivity().onCreatePrimaryDrawerItem();
 		pdi.withOnDrawerItemClickListener(this);
-		pdi.withDescription(getTitleId());
+		pdi.withName(getTitleId());
 		return pdi;
 	}
 	public MenuItem appendIntoMenu(Menu m){
