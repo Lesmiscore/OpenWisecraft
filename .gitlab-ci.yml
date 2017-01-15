@@ -33,7 +33,7 @@ main1: # Build for app debug APKs
   <<: *artf
   stage: main1
   script:
-    - "gradle :app:assembleDebug :app:assembleDebug2 --info --stacktrace | tee -a build.log > /dev/null"
+    - "gradle :app:assembleDebug :app:assembleDebug2 :app:assembleDebug2TestObs --info --stacktrace | tee -a build.log > /dev/null"
     - mv */build/outputs/apk/*.apk .
     - ./ci/packageInformations.sh
 

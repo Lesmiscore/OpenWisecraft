@@ -85,6 +85,10 @@ android {
 			
 			buildConfigField "boolean", "SHOW_BUILD_DATA_ON_VERSIONS", "true"
 		}
+		debug2TestObs.initWith(buildTypes.debug2)
+		debug2TestObs{
+			buildConfigField "boolean", "OBFUSCATED", "true"
+		}
 		pg.initWith(buildTypes.debug2)
 		pg{
 			minifyEnabled true
