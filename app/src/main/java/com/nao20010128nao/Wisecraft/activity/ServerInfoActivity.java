@@ -308,6 +308,7 @@ class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 
 		updateTaskDesc(resp);
 	}
+	@ServerInfoParser
 	public void updateTaskDesc(ServerPingResult resp) {
 		if (Build.VERSION.SDK_INT >= 21) {
 			int color=ThemePatcher.getMainColor(this);
@@ -330,6 +331,15 @@ class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 					color = Palette.generate(serverIconBmp).getLightVibrantColor(color);
 				} else {
 					serverIconObj = new ColorDrawable(Color.TRANSPARENT);
+				}
+			}else if (resp instanceof RawJsonReply) {
+				JsonObject rep=((JsonElement)((RawJsonReply)resp).json).getAsJsonObject();
+				if (rep.has("favicon")) {
+					byte[] image=Base64.decode(rep.get("favicon").getAsString().split("\\,")[1], Base64.NO_WRAP);
+					serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
+					serverIconObj = new BitmapDrawable(serverIconBmp);
+				} else {
+					serverIconObj = null;
 				}
 			}
 			ActivityManager.TaskDescription td;
@@ -583,8 +593,8 @@ class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				Reply19.ModListContent mlc=(Reply19.ModListContent)o;
 				((TextView)v.findViewById(R.id.modName)).setText(mlc.modid);
 				((TextView)v.findViewById(R.id.modVersion)).setText(mlc.version);
-			} else if(o instanceof JsonElement){
-				JsonObject mlc=((JsonElement)o).getAsJsonObject();
+			} else if(o instanceof RawJsonReply){
+				JsonObject mlc=((JsonElement)((RawJsonReply)o).json).getAsJsonObject();
 				((TextView)v.findViewById(R.id.modName)).setText(mlc.get("modid").getAsString());
 				((TextView)v.findViewById(R.id.modVersion)).setText(mlc.get("version").getAsString());
 			}
@@ -707,8 +717,8 @@ class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				} else {
 					player.clear();
 				}
-			}else if(resp instanceof JsonElement){
-				JsonObject rep=((JsonElement)resp).getAsJsonObject();
+			}else if(resp instanceof RawJsonReply){
+				JsonObject rep=((JsonElement)((RawJsonReply)resp).json).getAsJsonObject();
 				if(rep.get("player").getAsJsonObject().has("sample")){
 					final ArrayList<String> sort=new ArrayList<>();
 					for (JsonElement je:rep.get("player").getAsJsonObject().get("sample").getAsJsonArray()) {
@@ -840,8 +850,8 @@ class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				} else {
 					serverIconObj = null;
 				}
-			} else if (resp instanceof JsonElement) {
-				JsonObject rep=((JsonElement)resp).getAsJsonObject();
+			} else if (resp instanceof RawJsonReply) {
+				JsonObject rep=((JsonElement)((RawJsonReply)resp).json).getAsJsonObject();
 				String text;
 				if(rep.get("description").isJsonObject()){
 					text = rep.get("description").getAsJsonObject().get("text").getAsString();
@@ -957,8 +967,8 @@ class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 					modInfos.addAll(rep.modinfo.modList);
 					modLoaderTypeName = rep.modinfo.type;
 				}
-			}else if(resp instanceof JsonElement){
-				JsonObject rep=((JsonElement)resp).getAsJsonObject();
+			}else if(resp instanceof RawJsonReply){
+				JsonObject rep=((JsonElement)((RawJsonReply)resp).json).getAsJsonObject();
 				if(rep.has("modinfo")){
 					JsonObject modInfo=rep.get("modinfo").getAsJsonObject();
 					modInfos.addAll(Utils.iterableToCollection(modInfo.get("modList").getAsJsonArray()));
