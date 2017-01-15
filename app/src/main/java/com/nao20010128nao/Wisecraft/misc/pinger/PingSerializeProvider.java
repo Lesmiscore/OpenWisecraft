@@ -86,6 +86,11 @@ public class PingSerializeProvider
 					pair.setB(loadFromRawDump(dis2));
 					result = pair;
 					break;
+				case 0x1005:
+					String json2=new String(resultBytes, CompatCharsets.UTF_8);
+					result = new RawJsonReply(json2);
+					((PCQueryResult)result).setRaw(json2);
+					break;
 
 				default:
 					result = null;
