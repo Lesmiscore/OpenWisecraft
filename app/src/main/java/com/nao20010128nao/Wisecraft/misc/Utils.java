@@ -709,4 +709,11 @@ public class Utils extends PingerUtils{
 		}
 		Toast.makeText(a,sb.toString(),Toast.LENGTH_LONG).show();
 	}
+	public static <T> Collection<T> iterableToCollection(Iterable<T> input){
+		List<T> result=new ArrayList<>();
+		for(T t:input){
+			result.add(t);
+		}
+		return result;
+	}
 }

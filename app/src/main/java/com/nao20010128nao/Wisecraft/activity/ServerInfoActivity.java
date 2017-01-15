@@ -252,6 +252,7 @@ class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 		}
 	}
 
+	@ServerInfoParser
 	public synchronized void update(final ServerPingResult resp) {
 		if (resp instanceof FullStat) {
 			FullStat fs=(FullStat)resp;
@@ -279,6 +280,19 @@ class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 			} else {
 				setTitle(rep.description.text);
 			}
+		} else if (resp instanceof RawJsonReply) {
+			RawJsonReply rep = (RawJsonReply) resp;
+			String title;
+			if (!rep.json.has("description")) {
+				title = localStat.toString();
+			} else {
+				if(rep.json.get("description").isJsonObject()){
+					title = rep.json.get("description").getAsJsonObject().get("text").getAsString();
+				}else{
+					title = rep.json.get("description").getAsString();
+				}
+			}
+			setTitle(title);
 		} else if (resp instanceof SprPair) {
 			SprPair p=(SprPair)resp;
 			update(p.getA());
@@ -555,6 +569,7 @@ class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 		}
 
 		@Override
+		@ServerInfoParser
 		public void onBindViewHolder(FindableViewHolder parent, int offset) {
 			if(offset==0)return;
 			int position=offset-1;
@@ -568,6 +583,10 @@ class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				Reply19.ModListContent mlc=(Reply19.ModListContent)o;
 				((TextView)v.findViewById(R.id.modName)).setText(mlc.modid);
 				((TextView)v.findViewById(R.id.modVersion)).setText(mlc.version);
+			} else if(o instanceof JsonElement){
+				JsonObject mlc=((JsonElement)o).getAsJsonObject();
+				((TextView)v.findViewById(R.id.modName)).setText(mlc.get("modid").getAsString());
+				((TextView)v.findViewById(R.id.modVersion)).setText(mlc.get("version").getAsString());
 			}
 		}
 
@@ -624,6 +643,7 @@ class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 		RecyclerView lv;
 		ListRecyclerViewAdapter<FindableViewHolder,String> player;
 		@Override
+		@ServerInfoParser
 		public void onResume() {
 			super.onResume();
 			lv = (RecyclerView)getView();
@@ -687,6 +707,18 @@ class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				} else {
 					player.clear();
 				}
+			}else if(resp instanceof JsonElement){
+				JsonObject rep=((JsonElement)resp).getAsJsonObject();
+				if(rep.get("player").getAsJsonObject().has("sample")){
+					final ArrayList<String> sort=new ArrayList<>();
+					for (JsonElement je:rep.get("player").getAsJsonObject().get("sample").getAsJsonArray()) {
+						JsonObject o=je.getAsJsonObject();
+						sort.add(o.get("name").getAsString());
+						TheApplication.instance.pcUserUUIDs.put(o.get("name").getAsString(), o.get("id").getAsString());
+					}
+				}else{
+					player.clear();
+				}
 			}
 		}
 
@@ -708,6 +740,7 @@ class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 		RecyclerView data;
 		KVRecyclerAdapter<String,String> infos;
 		@Override
+		@ServerInfoParser
 		public void onResume() {
 			super.onResume();
 			data = (RecyclerView)getView().findViewById(R.id.data);
@@ -746,6 +779,7 @@ class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 		CharSequence serverNameStr;
 		KVRecyclerAdapter<String,String> infos;
 		@Override
+		@ServerInfoParser
 		public void onResume() {
 			super.onResume();
 			serverIcon = (ImageView)getView().findViewById(R.id.serverIcon);
@@ -801,6 +835,38 @@ class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 
 				if (rep.favicon != null) {
 					byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
+					serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
+					serverIconObj = new BitmapDrawable(serverIconBmp);
+				} else {
+					serverIconObj = null;
+				}
+			} else if (resp instanceof JsonElement) {
+				JsonObject rep=((JsonElement)resp).getAsJsonObject();
+				String text;
+				if(rep.get("description").isJsonObject()){
+					text = rep.get("description").getAsJsonObject().get("text").getAsString();
+				}else{
+					text = rep.get("description").getAsString();
+				}
+				if (pref.getBoolean("serverListColorFormattedText", false)) {
+					serverNameStr = Utils.parseMinecraftFormattingCode(text,getParentActivity().slsl.getTextColor());
+				} else {
+					serverNameStr = Utils.deleteDecorations(text);
+				}
+
+				JsonObject players=rep.get("players").getAsJsonObject();
+				JsonObject version=rep.get("version").getAsJsonObject();
+				
+				infos.clear();
+				List<Map.Entry<String,String>> data=new ArrayList<>();
+				data.add(new KVP<String,String>(getString(R.string.pc_maxPlayers), players.get("max").getAsInt() + ""));
+				data.add(new KVP<String,String>(getString(R.string.pc_nowPlayers), players.get("online").getAsInt() + ""));
+				data.add(new KVP<String,String>(getString(R.string.pc_softwareVersion), version.get("name").getAsString()));
+				data.add(new KVP<String,String>(getString(R.string.pc_protocolVersion), version.get("protocol").getAsInt() + ""));
+				infos.addAll(data);
+
+				if (rep.has("favicon")) {
+					byte[] image=Base64.decode(rep.get("favicon").getAsString().split("\\,")[1], Base64.NO_WRAP);
 					serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
 					serverIconObj = new BitmapDrawable(serverIconBmp);
 				} else {
@@ -865,6 +931,7 @@ class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 		ListRecyclerViewAdapter<FindableViewHolder,Object> modInfos;
 		RecyclerView mods;
 		@Override
+		@ServerInfoParser
 		public void onResume() {
 			super.onResume();
 			mods = (RecyclerView)getView().findViewById(R.id.players);
@@ -889,6 +956,13 @@ class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				if (rep.modinfo != null) {
 					modInfos.addAll(rep.modinfo.modList);
 					modLoaderTypeName = rep.modinfo.type;
+				}
+			}else if(resp instanceof JsonElement){
+				JsonObject rep=((JsonElement)resp).getAsJsonObject();
+				if(rep.has("modinfo")){
+					JsonObject modInfo=rep.get("modinfo").getAsJsonObject();
+					modInfos.addAll(Utils.iterableToCollection(modInfo.get("modList").getAsJsonArray()));
+					modLoaderTypeName = modInfo.get("type").getAsString();
 				}
 			}
 		}

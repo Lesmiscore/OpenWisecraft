@@ -962,6 +962,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		}
 
 		@Override
+		@ServerInfoParser
 		public void onBindViewHolder(final ServerStatusWrapperViewHolder viewHolder, final int position) {
 			if (sla.list != null && sla.list.size() > position && sla.list.get(position) != null) {
 				Server sv=getItem(position);
@@ -1013,6 +1014,18 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 									title = rep.description;
 								}
 								viewHolder.setServerPlayers(rep.players.online, rep.players.max);
+							} else if (s.response instanceof RawJsonReply) {//PC (Obfuscated)
+								RawJsonReply rep = (RawJsonReply) s.response;
+								if (!rep.json.has("description")) {
+									title = s.toString();
+								} else {
+									if(rep.json.get("description").isJsonObject()){
+										title = rep.json.get("description").getAsJsonObject().get("text").getAsString();
+									}else{
+										title = rep.json.get("description").getAsString();
+									}
+								}
+								viewHolder.setServerPlayers(rep.json.get("players").getAsJsonObject().get("online").getAsInt(), rep.json.get("players").getAsJsonObject().get("online").getAsInt());
 							} else if (s.response instanceof SprPair) {//PE?
 								SprPair sp = ((SprPair) s.response);
 								if (sp.getB() instanceof UnconnectedPing.UnconnectedPingResult) {

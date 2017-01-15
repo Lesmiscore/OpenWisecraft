@@ -30,6 +30,7 @@ android {
 		
 		buildConfigField "String", "HIDDEN_AD", "\"http://cur.lv/11juip\""
 		buildConfigField "boolean", "SHOW_BUILD_DATA_ON_VERSIONS", "false"
+		buildConfigField "boolean", "OBFUSCATED", "false"
 	}
 	
 	signingConfigs {
@@ -49,6 +50,7 @@ android {
         shrinkRelease{
 			minifyEnabled true
             proguardFiles '../proguard-rules.pro'
+			buildConfigField "boolean", "OBFUSCATED", "true"
 		}
         debug {
         	applicationIdSuffix = '.alpha'  
@@ -69,6 +71,7 @@ android {
 			shrinkPre{
 		        minifyEnabled true
                 proguardFiles '../proguard-rules.pro'
+				buildConfigField "boolean", "OBFUSCATED", "true"
 		    }
 		}
 		debug2 {
@@ -86,52 +89,12 @@ android {
 		pg{
 			minifyEnabled true
             proguardFiles '../proguard-rules.pro'
+			buildConfigField "boolean", "OBFUSCATED", "true"
 		}
 		pg_ult.initWith(buildTypes.pg)
 		pg_ult{
 			proguardFiles '../proguard-rules.pro','../exotic.pro'
 		}
-		/*debug3 {
-        	applicationIdSuffix = '.alpha2'  
-            versionNameSuffix = ' Pre'
-			signingConfig signingConfigs.release
-			resValue "string", "app_name", "[DEBUG3] Wisecraft "+getRandomBetaSuffix()
-			resValue "string", "wsi", "[DEBUG3] "+wsi
-			resValue "bool", "inspectorEnabled", "true"
-		}
-		debug4 {
-        	applicationIdSuffix = '.alpha3'  
-            versionNameSuffix = ' Pre'
-			signingConfig signingConfigs.release
-			resValue "string", "app_name", "[DEBUG3] Wisecraft "+getRandomBetaSuffix()
-			resValue "string", "wsi", "[DEBUG4] "+wsi
-			resValue "bool", "inspectorEnabled", "true"
-		}*/
-		
-		/*v1x.initWith(buildTypes.release)
-		v1x {
-            applicationIdSuffix = '.v1x'  
-            versionNameSuffix = ' Pre (Version 1.x theme color)'
-			resValue "color", "mainColor", "#FF67549C"
-        }
-		v2x.initWith(buildTypes.release)
-		v2x {
-            applicationIdSuffix = '.v2x'  
-            versionNameSuffix = ' Pre (Version 2.x theme color)'
-			resValue "color", "mainColor", "#ff723a"
-        }
-		v3x.initWith(buildTypes.release)
-		v3x {
-            applicationIdSuffix = '.v3x'  
-            versionNameSuffix = ' Pre (Version 3.x theme color)'
-			resValue "color", "mainColor", "#59A145"
-        }
-		v4x.initWith(buildTypes.release)
-		v4x {
-            applicationIdSuffix = '.v4x'  
-            versionNameSuffix = ' Pre (Version 4.x theme color)'
-			resValue "color", "mainColor", "#7986CB"
-        }*/
     }
 	
 	applicationVariants.all { variant ->

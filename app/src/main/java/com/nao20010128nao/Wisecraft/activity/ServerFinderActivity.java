@@ -179,6 +179,7 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 		}
 
 		@Override
+		@ServerInfoParser
 		public void onBindViewHolder(ServerStatusWrapperViewHolder viewHolder, final int offset) {
 			sta.slsl.applyTextColorTo(viewHolder);
 			ServerStatus s=getItem(offset);
@@ -197,6 +198,17 @@ class ServerFinderActivityImpl extends AppCompatActivity implements ServerListAc
 					title = s.toString();
 				} else {
 					title = rep.description;
+				}
+			} else if (s.response instanceof RawJsonReply) {//PC (Obfuscated)
+				RawJsonReply rep = (RawJsonReply) s.response;
+				if (!rep.json.has("description")) {
+					title = s.toString();
+				} else {
+					if(rep.json.get("description").isJsonObject()){
+						title = rep.json.get("description").getAsJsonObject().get("text").getAsString();
+					}else{
+						title = rep.json.get("description").getAsString();
+					}
 				}
 			} else if (s.response instanceof UnconnectedPing.UnconnectedPingResult) {
 				title = ((UnconnectedPing.UnconnectedPingResult)s.response).getServerName();
