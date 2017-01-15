@@ -463,7 +463,7 @@ class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 			if (pref.getBoolean("serverListColorFormattedText", false)) {
 				SpannableStringBuilder ssb=new SpannableStringBuilder();
 				ssb.append(localStat.toString());
-				ssb.setSpan(new ForegroundColorSpan(slsl.getTextColor()), 0, ssb.length() - 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+				ssb.setSpan(new ForegroundColorSpan(slsl.getTextColor()), 0, ssb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 				super.setTitle(ssb);
 			} else {
 				super.setTitle(localStat.toString());
