@@ -145,6 +145,10 @@ android {
 	lintOptions {
         abortOnError false
     }
+    
+    configurations {
+        all*.exclude group: 'com.android.support'
+    }
 }
 
 dependencies {
