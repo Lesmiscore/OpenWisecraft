@@ -726,6 +726,10 @@ class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 						sort.add(o.get("name").getAsString());
 						TheApplication.instance.pcUserUUIDs.put(o.get("name").getAsString(), o.get("id").getAsString());
 					}
+					if (pref.getBoolean("sortPlayerNames", true))
+						Collections.sort(sort);
+					player.clear();
+					player.addAll(sort);
 				}else{
 					player.clear();
 				}
