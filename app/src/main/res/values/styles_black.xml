@@ -13,6 +13,7 @@
 		<item name="toolbarStyle">?attr/wcToolbarTheme</item>
 		<item name="wcUnselectedTextColor">#000</item>
 		<item name="wcSelectedTextColor">#fff</item>
+		<item name="popupTheme">@style/Theme.AppCompat.Light.DarkActionBar</item>
 		<!--MaterialDrawer-->
         <item name="material_drawer_background">?android:attr/windowBackground</item>
         <item name="material_drawer_primary_text">@color/black</item>

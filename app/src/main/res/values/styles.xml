@@ -68,5 +68,6 @@
     <style name="Widget.AppCompat.Toolbar.Wisecraft" parent="Widget.AppCompat.Toolbar">
 		<item name="titleMargin">4dp</item>
 		<item name="android:gravity">center</item>
+		<item name="popupTheme">?attr/popupTheme</item>
 	</style>
 </resources>
