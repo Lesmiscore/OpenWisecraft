@@ -8,11 +8,10 @@ import android.util.*;
 import android.view.*;
 import android.webkit.*;
 import android.widget.*;
-import com.nao20010128nao.McServerList.*;
 import com.nao20010128nao.Wisecraft.*;
-import com.nao20010128nao.Wisecraft.activity.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
+import com.nao20010128nao.Wisecraft.misc.serverList.*;
 import java.net.*;
 import java.util.*;
 
@@ -144,7 +143,7 @@ class ServerGetActivityImpl extends CompatWebViewActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case 0:
-				//List<com.nao20010128nao.McServerList.Server>
+				//List<MslServer>
 				downloading.show();
 				new AsyncTask<String,Void,Object>(){
 					String url;
@@ -161,7 +160,7 @@ class ServerGetActivityImpl extends CompatWebViewActivity {
 						downloading.dismiss();
 						if (o instanceof List) {
 							//Server list
-							final List<com.nao20010128nao.McServerList.Server> serv=(List<com.nao20010128nao.McServerList.Server>)o;
+							final List<MslServer> serv=(List<MslServer>)o;
 							adapter.deleteAll();
 							adapter.addAll(serv);
 							bottomSheet.setState(BottomSheetBehavior.STATE_COLLAPSED);
@@ -184,8 +183,8 @@ class ServerGetActivityImpl extends CompatWebViewActivity {
 								.show();
 						}
 					}
-					public List<com.nao20010128nao.McServerList.Server> getServers(List<com.nao20010128nao.McServerList.Server> all, boolean[] balues) {
-						List<com.nao20010128nao.McServerList.Server> lst=new ArrayList<com.nao20010128nao.McServerList.Server>();
+				public List<MslServer> getServers(List<MslServer> all, boolean[] balues) {
+					List<MslServer> lst=new ArrayList<MslServer>();
 						for (int i=0;i < balues.length;i++) {
 							if (balues[i]) {
 								lst.add(all.get(i));
@@ -231,8 +230,8 @@ class ServerGetActivityImpl extends CompatWebViewActivity {
 	}
 	
 	
-	class Adapter extends ListRecyclerViewAdapter<FindableViewHolder,com.nao20010128nao.McServerList.Server> {
-		Map<com.nao20010128nao.McServerList.Server,Boolean> selected=new NonNullableMap<com.nao20010128nao.McServerList.Server>();
+	class Adapter extends ListRecyclerViewAdapter<FindableViewHolder,MslServer> {
+		Map<MslServer,Boolean> selected=new NonNullableMap<MslServer>();
 		
 		@Override
 		public void onBindViewHolder(FindableViewHolder parent, int offset) {
@@ -263,14 +262,14 @@ class ServerGetActivityImpl extends CompatWebViewActivity {
 		}
 		
 		public List<Server> getSelection(){
-			List<com.nao20010128nao.McServerList.Server> result=new ArrayList<>();
-			for(com.nao20010128nao.McServerList.Server srv:new ArrayList<com.nao20010128nao.McServerList.Server>(this))
+			List<MslServer> result=new ArrayList<>();
+			for(MslServer srv:new ArrayList<MslServer>(this))
 				if(selected.get(srv))
 					result.add(srv);
 			return Utils.convertServerObject(result);
 		}
 
-		String makeServerTitle(com.nao20010128nao.McServerList.Server sv){
+		String makeServerTitle(MslServer sv){
 			StringBuilder sb=new StringBuilder();
 			sb.append(sv.ip).append(':').append(sv.port).append(" ");
 			sb.append(sv.isPE?"PE":"PC");
@@ -282,7 +281,7 @@ class ServerGetActivityImpl extends CompatWebViewActivity {
 			public OnClickListener(int i){ofs=i;}
 			@Override
 			public void onClick(View p1) {
-				com.nao20010128nao.McServerList.Server s=getItem(ofs);
+				MslServer s=getItem(ofs);
 				selected.put(s,!selected.get(s));
 				notifyItemChanged(ofs);
 			}

@@ -22,6 +22,7 @@ import com.nao20010128nao.Wisecraft.activity.*;
 import com.nao20010128nao.Wisecraft.api.*;
 import com.nao20010128nao.Wisecraft.misc.collector.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
+import com.nao20010128nao.Wisecraft.misc.serverList.*;
 import java.io.*;
 import java.lang.reflect.*;
 import java.math.*;
@@ -80,9 +81,9 @@ public class Utils extends PingerUtils{
 		return obj;
 	}
 	
-	public static List<Server> convertServerObject(List<com.nao20010128nao.McServerList.Server> from) {
+	public static List<Server> convertServerObject(List<MslServer> from) {
 		ArrayList<Server> result=new ArrayList<>();
-		for (com.nao20010128nao.McServerList.Server obj:from) {
+		for (MslServer obj:from) {
 			Server wcs=new Server();
 			wcs.ip = obj.ip;
 			wcs.port = obj.port;

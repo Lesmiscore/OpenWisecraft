@@ -26,6 +26,7 @@ import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
 import com.nao20010128nao.Wisecraft.misc.provider.*;
+import com.nao20010128nao.Wisecraft.misc.serverList.*;
 import com.nao20010128nao.Wisecraft.settings.*;
 import java.io.*;
 import java.lang.ref.*;
@@ -36,7 +37,6 @@ import com.nao20010128nao.Wisecraft.BuildConfig;
 import com.nao20010128nao.Wisecraft.R;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
-import android.support.v4.app.*;
 
 //Full implement for user interface (Some part is available at ServerListActivityBase4)
 abstract class ServerListActivityImpl extends ServerListActivityBase1 implements ServerListActivityInterface,ServerListProvider {
@@ -380,7 +380,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 												pcFrame.setVisibility(View.GONE);
 												peFrame.setVisibility(View.VISIBLE);
 												split.setText(R.string.pe);
-												Server s=Utils.convertServerObject(Arrays.asList(com.nao20010128nao.McServerList.Server.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
+												Server s=Utils.convertServerObject(Arrays.asList(MslServer.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
 												pe_ip.setText(s.ip);
 												pe_port.setText(s.port + "");
 											}
@@ -393,7 +393,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 										public void onClick(DialogInterface d, int sel) {
 											Server s;
 											if (split.isChecked()) {
-												s = Utils.convertServerObject(Arrays.asList(com.nao20010128nao.McServerList.Server.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
+												s = Utils.convertServerObject(Arrays.asList(MslServer.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
 											} else {
 												s = new Server();
 												s.ip = pe_ip.getText().toString();
@@ -1223,7 +1223,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 														 pcFrame.setVisibility(View.GONE);
 														 peFrame.setVisibility(View.VISIBLE);
 														 split.setText(R.string.pe);
-														 Server s=Utils.convertServerObject(Arrays.<com.nao20010128nao.McServerList.Server>asList(com.nao20010128nao.McServerList.Server.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
+														 Server s=Utils.convertServerObject(Arrays.<MslServer>asList(MslServer.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
 														 pe_ip.setText(s.ip);
 														 pe_port.setText(s.port + "");
 													 }
@@ -1236,7 +1236,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 												 public void onClick(DialogInterface d, int sel) {
 													 Server s;
 													 if (split.isChecked()) {
-														 s = Utils.convertServerObject(Arrays.<com.nao20010128nao.McServerList.Server>asList(com.nao20010128nao.McServerList.Server.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
+														 s = Utils.convertServerObject(Arrays.<MslServer>asList(MslServer.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
 													 } else {
 														 s = new Server();
 														 s.ip = pe_ip.getText().toString();

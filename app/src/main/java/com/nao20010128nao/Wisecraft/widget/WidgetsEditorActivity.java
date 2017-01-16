@@ -8,6 +8,7 @@ import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+import com.nao20010128nao.Wisecraft.misc.serverList.*;
 import java.util.*;
 
 import com.nao20010128nao.Wisecraft.R;
@@ -163,7 +164,7 @@ public class WidgetsEditorActivity extends AppCompatActivity {
 						pcFrame.setVisibility(View.GONE);
 						peFrame.setVisibility(View.VISIBLE);
 						split.setText(R.string.pe);
-						Server s=Utils.convertServerObject(Arrays.asList(com.nao20010128nao.McServerList.Server.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
+						Server s=Utils.convertServerObject(Arrays.asList(MslServer.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
 						pe_ip.setText(s.ip);
 						pe_port.setText(s.port + "");
 					}
@@ -177,7 +178,7 @@ public class WidgetsEditorActivity extends AppCompatActivity {
 				public void onClick(DialogInterface d, int sel) {
 					Server s;
 					if (split.isChecked()) {
-						s = Utils.convertServerObject(Arrays.asList(com.nao20010128nao.McServerList.Server.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
+						s = Utils.convertServerObject(Arrays.asList(MslServer.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
 					} else {
 						s = new Server();
 						s.ip = pe_ip.getText().toString();
