@@ -718,10 +718,10 @@ class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 					player.clear();
 				}
 			}else if(resp instanceof RawJsonReply){
-				JsonObject rep=((JsonElement)((RawJsonReply)resp).json).getAsJsonObject();
-				if(rep.get("player").getAsJsonObject().has("sample")){
+				JsonObject rep=((RawJsonReply)resp).json;
+				if(rep.get("players").getAsJsonObject().has("sample")){
 					final ArrayList<String> sort=new ArrayList<>();
-					for (JsonElement je:rep.get("player").getAsJsonObject().get("sample").getAsJsonArray()) {
+					for (JsonElement je:rep.get("players").getAsJsonObject().get("sample").getAsJsonArray()) {
 						JsonObject o=je.getAsJsonObject();
 						sort.add(o.get("name").getAsString());
 						TheApplication.instance.pcUserUUIDs.put(o.get("name").getAsString(), o.get("id").getAsString());
@@ -851,7 +851,7 @@ class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 					serverIconObj = null;
 				}
 			} else if (resp instanceof RawJsonReply) {
-				JsonObject rep=((JsonElement)((RawJsonReply)resp).json).getAsJsonObject();
+				JsonObject rep=((RawJsonReply)resp).json;
 				String text;
 				if(rep.get("description").isJsonObject()){
 					text = rep.get("description").getAsJsonObject().get("text").getAsString();
@@ -968,7 +968,7 @@ class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 					modLoaderTypeName = rep.modinfo.type;
 				}
 			}else if(resp instanceof RawJsonReply){
-				JsonObject rep=((JsonElement)((RawJsonReply)resp).json).getAsJsonObject();
+				JsonObject rep=((RawJsonReply)resp).json;
 				if(rep.has("modinfo")){
 					JsonObject modInfo=rep.get("modinfo").getAsJsonObject();
 					modInfos.addAll(Utils.iterableToCollection(modInfo.get("modList").getAsJsonArray()));
