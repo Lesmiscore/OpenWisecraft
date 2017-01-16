@@ -26,7 +26,7 @@ public class Reply19 implements ServerPingResult,PCQueryResult,ShouldBeKept2 {
 	private String raw;
 
 	@ShouldBeKept
-	public class Players implements ShouldBeKept2{
+	public static class Players implements ShouldBeKept2{
 		@SerializedName("max")
 		public int max;
 		@SerializedName("online")
@@ -36,7 +36,7 @@ public class Reply19 implements ServerPingResult,PCQueryResult,ShouldBeKept2 {
 	}
 
 	@ShouldBeKept
-	public class Player implements ShouldBeKept2{
+	public static class Player implements ShouldBeKept2{
 		@SerializedName("name")
 		public String name;
 		@SerializedName("id")
@@ -44,7 +44,7 @@ public class Reply19 implements ServerPingResult,PCQueryResult,ShouldBeKept2 {
 	}
 
 	@ShouldBeKept
-	public class Version implements ShouldBeKept2{
+	public static class Version implements ShouldBeKept2{
 		@SerializedName("name")
 		public String name;
 		@SerializedName("protocol")
@@ -52,19 +52,21 @@ public class Reply19 implements ServerPingResult,PCQueryResult,ShouldBeKept2 {
 	}
 
 	@ShouldBeKept
-	public class Description implements ShouldBeKept2{
+	public static class Description implements ShouldBeKept2{
 		@SerializedName("text")
 		public String text;
 	}
 	
-	public class ModInfo implements ShouldBeKept2{
+	@ShouldBeKept
+	public static class ModInfo implements ShouldBeKept2{
 		@SerializedName("type")
 		public String type;
 		@SerializedName("modList")
 		public ModListContent[] modList;
 	}
 
-	public class ModListContent implements ShouldBeKept2{
+	@ShouldBeKept
+	public static class ModListContent implements ShouldBeKept2{
 		@SerializedName("modid")
 		public String modid;
 		@SerializedName("version")

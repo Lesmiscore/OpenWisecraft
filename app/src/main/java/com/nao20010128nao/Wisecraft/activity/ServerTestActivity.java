@@ -198,6 +198,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 		}
 
 		@Override
+		@ServerInfoParser
 		public void onBindViewHolder(ServerStatusWrapperViewHolder viewHolder, final int offset) {
 			Server s=getItem(offset);
 			viewHolder.setServer(s).setServerPlayers("-/-");
@@ -237,6 +238,18 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 							title = rep.description;
 						}
                         viewHolder.setServerPlayers(rep.players.online, rep.players.max);
+					} else if (sv.response instanceof RawJsonReply) {//PC (Obfuscated)
+						RawJsonReply rep = (RawJsonReply) sv.response;
+						if (!rep.json.has("description")) {
+							title = s.toString();
+						} else {
+							if(rep.json.get("description").isJsonObject()){
+								title = rep.json.get("description").getAsJsonObject().get("text").getAsString();
+							}else{
+								title = rep.json.get("description").getAsString();
+							}
+						}
+						viewHolder.setServerPlayers(rep.json.get("players").getAsJsonObject().get("online").getAsInt(), rep.json.get("players").getAsJsonObject().get("online").getAsInt());
                     } else if (sv.response instanceof SprPair) {//PE?
 						SprPair sp=((SprPair)sv.response);
 						if (sp.getB() instanceof UnconnectedPing.UnconnectedPingResult) {

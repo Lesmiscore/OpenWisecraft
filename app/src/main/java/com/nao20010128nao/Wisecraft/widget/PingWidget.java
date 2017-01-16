@@ -223,6 +223,7 @@ public class PingWidget extends AppWidgetProvider {
 	static class NonBrodRevPingHandler implements ServerPingProvider.PingHandler{
 		int id;Context c;AppWidgetManager awm;
 		@Override
+		@ServerInfoParser
 		public void onPingArrives(ServerStatus s) {
 			Log.d("WisecraftWidgets","Ping OK for: "+id);
 			SharedPreferences pref=PreferenceManager.getDefaultSharedPreferences(c);
@@ -259,6 +260,18 @@ public class PingWidget extends AppWidgetProvider {
 					title = rep.description;
 				}
 				ssrvw.setServerPlayers(rep.players.online, rep.players.max);
+			} else if (s.response instanceof RawJsonReply) {//PC (Obfuscated)
+				RawJsonReply rep = (RawJsonReply) s.response;
+				if (!rep.json.has("description")) {
+					title = s.toString();
+				} else {
+					if(rep.json.get("description").isJsonObject()){
+						title = rep.json.get("description").getAsJsonObject().get("text").getAsString();
+					}else{
+						title = rep.json.get("description").getAsString();
+					}
+				}
+				ssrvw.setServerPlayers(rep.json.get("players").getAsJsonObject().get("online").getAsInt(), rep.json.get("players").getAsJsonObject().get("online").getAsInt());
 			} else if (s.response instanceof SprPair) {//PE?
 				SprPair sp = ((SprPair) s.response);
 				if (sp.getB() instanceof UnconnectedPing.UnconnectedPingResult) {

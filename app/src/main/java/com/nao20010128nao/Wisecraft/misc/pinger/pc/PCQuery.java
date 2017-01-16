@@ -7,7 +7,7 @@ import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import java.io.*;
 import java.net.*;
-
+import com.nao20010128nao.Wisecraft.BuildConfig;
 public class PCQuery implements PingHost{
 	private Gson gson = new Gson();
 	private String host;
@@ -89,10 +89,14 @@ public class PCQuery implements PingHost{
 			Log.i("ping_pc",s);
 			lastPing=System.currentTimeMillis()-t;
 			PCQueryResult result;
-			try {
-				result= gson.fromJson(s, Reply.class);
-			} catch (JsonSyntaxException e) {
-				result= gson.fromJson(s, Reply19.class);
+			if(BuildConfig.OBFUSCATED){
+				result=new RawJsonReply(s);
+			}else{
+				try {
+					result= gson.fromJson(s, Reply.class);
+				} catch (JsonSyntaxException e) {
+					result= gson.fromJson(s, Reply19.class);
+				}
 			}
 			result.setRaw(s);
 			return result;
