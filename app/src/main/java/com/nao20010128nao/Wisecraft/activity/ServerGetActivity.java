@@ -19,6 +19,7 @@ import java.util.*;
 
 import android.support.v7.widget.Toolbar;
 import com.nao20010128nao.Wisecraft.R;
+import android.support.v4.view.*;
 
 class ServerGetActivityImpl extends CompatWebViewActivity {
 	public static List<String> addForServerList;
@@ -136,7 +137,8 @@ class ServerGetActivityImpl extends CompatWebViewActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(Menu.NONE, 0, 0, R.string.findServers);
+		MenuItem find=menu.add(Menu.NONE, 0, 0, R.string.findServers).setIcon(TheApplication.getTintedDrawable(R.drawable.ic_search_black_48dp,Utils.getMenuTintColor(this),this));
+		MenuItemCompat.setShowAsAction(find,MenuItem.SHOW_AS_ACTION_ALWAYS);
 		return true;
 	}
 
