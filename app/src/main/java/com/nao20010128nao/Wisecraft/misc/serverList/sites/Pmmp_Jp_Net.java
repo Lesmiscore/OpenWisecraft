@@ -42,9 +42,10 @@ public class Pmmp_Jp_Net implements ServerListSite {
 		con.setRequestMethod("POST");
 		con.addRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 		con.setRequestProperty("User-Agent", "Apache-HttpClient/UNAVAILABLE (java 1.4)");
-		Writer w = new OutputStreamWriter(con.getOutputStream());
-		w.write("id=" + generateId() + "&notify=" + generateNotify() + "&app=2");
-		w.flush();
+		try(Writer w = new OutputStreamWriter(con.getOutputStream())){
+			w.write("id=" + generateId() + "&notify=" + generateNotify() + "&app=2");
+			w.flush();
+		}
 		try(Reader r=new InputStreamReader(con.getInputStream(), "UTF-8")){
 			JsonObject sl=new JsonParser().parse(r).getAsJsonObject();
 			List<MslServer> result = new ArrayList<>();
