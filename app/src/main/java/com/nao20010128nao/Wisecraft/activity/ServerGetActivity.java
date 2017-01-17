@@ -1,5 +1,7 @@
 package com.nao20010128nao.Wisecraft.activity;
 import android.content.*;
+import android.content.res.*;
+import android.graphics.*;
 import android.os.*;
 import android.support.design.widget.*;
 import android.support.v7.app.*;
@@ -17,7 +19,6 @@ import java.util.*;
 
 import android.support.v7.widget.Toolbar;
 import com.nao20010128nao.Wisecraft.R;
-import com.nao20010128nao.Wisecraft.misc.Server;
 
 class ServerGetActivityImpl extends CompatWebViewActivity {
 	public static List<String> addForServerList;
@@ -229,6 +230,18 @@ class ServerGetActivityImpl extends CompatWebViewActivity {
 		super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
 	}
 	
+	public int getCheckColor(){
+		TypedArray ta=obtainStyledAttributes(R.styleable.ServerGetActivity);
+		int color=Color.BLACK;
+		if(ta.hasValue(R.styleable.ServerGetActivity_wcMenuTintColor)){
+			color=ta.getColor(R.styleable.ServerGetActivity_wcMenuTintColor,0);
+		}
+		if(ta.hasValue(R.styleable.ServerGetActivity_wcSgaCheckColor)){
+			color=ta.getColor(R.styleable.ServerGetActivity_wcSgaCheckColor,0);
+		}
+		ta.recycle();
+		return color;
+	}
 	
 	class Adapter extends ListRecyclerViewAdapter<FindableViewHolder,MslServer> {
 		Map<MslServer,Boolean> selected=new NonNullableMap<MslServer>();
