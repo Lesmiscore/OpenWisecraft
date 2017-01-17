@@ -73,7 +73,6 @@ public class TheApplication extends Application implements  com.nao20010128nao.W
 			.remove("useBright")
 			.commit();
 			
-		Log.d("Tesuya",(String)Utils.getField(BuildConfig.class,null,"HIDDEN_AD"));
 		registerActivityLifecycleCallbacks(this);
 	}
 	public TypefaceLoader getLocalizedFont() {
