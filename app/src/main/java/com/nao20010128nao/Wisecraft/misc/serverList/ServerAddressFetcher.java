@@ -1,21 +1,10 @@
 package com.nao20010128nao.Wisecraft.misc.serverList;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import com.nao20010128nao.Wisecraft.misc.serverList.sites.MinecraftMp_Com;
-import com.nao20010128nao.Wisecraft.misc.serverList.sites.Minecraft_Jp;
-import com.nao20010128nao.Wisecraft.misc.serverList.sites.Minecraftpeservers_Org;
-import com.nao20010128nao.Wisecraft.misc.serverList.sites.MinecraftpocketServers_Com;
-import com.nao20010128nao.Wisecraft.misc.serverList.sites.Minecraftservers_Org;
-import com.nao20010128nao.Wisecraft.misc.serverList.sites.Pe_Minecraft_Jp;
-import com.nao20010128nao.Wisecraft.misc.serverList.sites.Pmmp_Jp_Net;
-import com.nao20010128nao.Wisecraft.misc.serverList.sites.ServerListSite;
+import com.nao20010128nao.Wisecraft.misc.collector.*;
+import com.nao20010128nao.Wisecraft.misc.serverList.sites.*;
+import java.io.*;
+import java.net.*;
+import java.util.*;
 
 /**
  * Finds Minecraft multiplayer IP & port from website. Cannot be instantinated.
@@ -60,6 +49,7 @@ public class ServerAddressFetcher {
 				return Collections.unmodifiableList(new ArrayList<>(servers));
 			} catch (Throwable e) {
 				errors.add(e);
+				CollectorMain.reportError("ServerAddressFetcher",e);
 			}
 		int errSize = errors.size();
 		Throwable first = errors.get(0);

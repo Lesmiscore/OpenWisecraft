@@ -1,18 +1,14 @@
 package com.nao20010128nao.Wisecraft.misc.serverList.sites;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.google.gson.Gson;
-import com.google.gson.annotations.SerializedName;
-import com.nao20010128nao.Wisecraft.misc.serverList.MslServer;
+import com.google.gson.*;
+import com.google.gson.annotations.*;
+import com.nao20010128nao.Wisecraft.misc.serverList.*;
+import java.io.*;
+import java.net.*;
+import java.security.*;
+import java.util.*;
+import android.text.*;
+import com.nao20010128nao.Wisecraft.misc.collector.*;
 
 /**
  * Parser class for "pmmp.jp.net".
@@ -49,21 +45,34 @@ public class Pmmp_Jp_Net implements ServerListSite {
 		Writer w = new OutputStreamWriter(con.getOutputStream());
 		w.write("id=" + generateId() + "&notify=" + generateNotify() + "&app=2");
 		w.flush();
-		PMMP_Servers_List sl = new Gson().fromJson(new InputStreamReader(con.getInputStream(), "UTF-8"),
-				PMMP_Servers_List.class);
-		List<MslServer> result = new ArrayList<>();
-		for (ServerEntry se : sl.servers) {
-			if (se.ip == null)
-				continue;
-			if (!se.ip.contains("."))
-				continue;
-			MslServer s = new MslServer();
-			s.ip = se.ip;
-			s.port = new Integer(se.port);
-			s.isPE = true;
-			result.add(s);
+		try(Reader r=new InputStreamReader(con.getInputStream(), "UTF-8")){
+			JsonObject sl=new JsonParser().parse(r).getAsJsonObject();
+			List<MslServer> result = new ArrayList<>();
+			for (JsonElement se : sl.get("servers").getAsJsonArray()) {
+				JsonObject jo=se.getAsJsonObject();
+				String ip,port;
+				if(jo.has("ip")){
+					ip=jo.get("ip").getAsString();
+				}else{
+					ip=null;
+				}
+				if(jo.has("port")){
+					port=jo.get("port").getAsString();
+				}else{
+					port=null;
+				}
+				if (TextUtils.isEmpty(ip)|TextUtils.isEmpty(port))
+					continue;
+				if (!ip.contains("."))
+					continue;
+				MslServer s = new MslServer();
+				s.ip = ip;
+				s.port = Integer.valueOf(port);
+				s.isPE = true;
+				result.add(s);
+			}
+			return result;
 		}
-		return result;
 	}
 
 	private String generateId() {

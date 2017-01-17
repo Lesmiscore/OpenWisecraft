@@ -32,7 +32,7 @@ public final class MslServer {
 		s.ip = spl[0];
 		if (spl.length == 2) {
 			// IP & port
-			s.port = new Integer(spl[1]);
+			s.port = Integer.valueOf(spl[1]);
 		} else {
 			// IP only
 			s.port = isPE ? 19132 : 25565;
