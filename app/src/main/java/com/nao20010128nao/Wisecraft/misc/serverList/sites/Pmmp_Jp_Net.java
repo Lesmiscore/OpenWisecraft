@@ -16,6 +16,7 @@ import com.nao20010128nao.Wisecraft.misc.collector.*;
 
 public class Pmmp_Jp_Net implements ServerListSite {
 	private static final String BASE64CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+	private static final String PORT_NUMBER_PATTERN="^[0-9]{1,5}$";
 
 	public Pmmp_Jp_Net() {
 		// TODO 自動生成されたコンストラクター・スタブ
@@ -65,6 +66,8 @@ public class Pmmp_Jp_Net implements ServerListSite {
 				if (TextUtils.isEmpty(ip)|TextUtils.isEmpty(port))
 					continue;
 				if (!ip.contains("."))
+					continue;
+				if(!port.matches(PORT_NUMBER_PATTERN))
 					continue;
 				MslServer s = new MslServer();
 				s.ip = ip;
