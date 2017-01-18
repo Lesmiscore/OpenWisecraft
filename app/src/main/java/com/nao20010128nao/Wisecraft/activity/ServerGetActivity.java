@@ -21,7 +21,7 @@ import android.support.v7.widget.Toolbar;
 import com.nao20010128nao.Wisecraft.R;
 import android.support.v4.view.*;
 
-class ServerGetActivityImpl extends CompatWebViewActivity {
+abstract class ServerGetActivityImpl extends CompatWebViewActivity {
 	public static List<String> addForServerList;
 	String domain;
 	String[] serverList;

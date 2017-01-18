@@ -40,7 +40,7 @@ import com.nao20010128nao.Wisecraft.R;
 import static com.nao20010128nao.Wisecraft.activity.FragmentSettingsActivityImpl.MAIN;
 
 @RuntimePermissions
-class FragmentSettingsActivityImpl extends AppCompatActivity implements SettingsScreen{
+abstract class FragmentSettingsActivityImpl extends AppCompatActivity implements SettingsScreen{
 	public static final Map<String,Class<? extends Fragment>> FRAGMENT_CLASSES=new HashMap<String,Class<? extends Fragment>>(){{
 			put("root",HubPrefFragment.class);
 			put("basics",Basics.class);
@@ -749,7 +749,7 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 }
 
 @RuntimePermissions
-class MasterDetailSettingsImpl extends MasterDetailSupportActivity implements SettingsScreen {
+abstract class MasterDetailSettingsImpl extends MasterDetailSupportActivity implements SettingsScreen {
 	SharedPreferences pref;
 
 	@Override
@@ -854,7 +854,7 @@ class MasterDetailSettingsImpl extends MasterDetailSupportActivity implements Se
 }
 
 @RuntimePermissions
-class ServerListStyleEditorImpl extends AppCompatActivity {
+abstract class ServerListStyleEditorImpl extends AppCompatActivity {
 	ServerListStyleLoader slsl;
 	RadioGroup rdGrp;
 	ImageView color,image,textColor;

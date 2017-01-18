@@ -38,7 +38,7 @@ import com.nao20010128nao.Wisecraft.R;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 
-class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
+abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
 	//public static List<ServerStatus> stat=new ArrayList<>();
 	public static Map<String,Bitmap> faces=new HashMap<>();
