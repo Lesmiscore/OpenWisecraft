@@ -868,7 +868,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							public void run() {
 								sl.addAll(sv);
 								saveServers();
-								Utils.makeNonClickableSB(ServerListActivityImpl.this, getResources().getString(R.string.imported).replace("[PATH]", et.getText().toString()), Snackbar.LENGTH_LONG).show();
+								Utils.makeNonClickableSB(ServerListActivityImpl.this, getResources().getString(R.string.imported).replace("[PATH]", fn), Snackbar.LENGTH_LONG).show();
 							}
 						});
 				}else{
