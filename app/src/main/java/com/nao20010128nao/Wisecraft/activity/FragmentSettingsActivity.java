@@ -238,7 +238,8 @@ class FragmentSettingsActivityImpl extends AppCompatActivity implements Settings
 		public void onCreatePreferences(Bundle p1, String p2) {
 			addPreferencesFromResource(R.xml.settings_parent_compat);
 			for(Trio<Integer,String,Treatment<SettingsScreen>> t:MAIN){
-				StartPrefCompat pref=new StartPrefCompat(getActivity());
+				Context c=Utils.wrapContextForPreference(getActivity());
+				StartPrefCompat pref=new StartPrefCompat(c);
 				pref.setKey(t.getB());
 				pref.setTitle(t.getA());
 				final Treatment<SettingsScreen> proc=t.getC();

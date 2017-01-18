@@ -46,10 +46,11 @@ public class VersionInfoFragment extends ViewHolderCatchablePreferenceFragment
 			}
 		}else if((showBuildData)&(buildData==null)){
 			if(getActivity()!=null){
+				Context c=CompatUtils.wrapContextForPreference(getActivity());
 				buildData=new ArrayList<>();
-				buildData.add(new SimplePref(getActivity(),"Build ID",BuildConfig.CI_BUILD_ID));
-				buildData.add(new SimplePref(getActivity(),"Build Ref",BuildConfig.CI_BUILD_REF_NAME));
-				buildData.add(new SimplePref(getActivity(),"Runner ID",BuildConfig.CI_RUNNER_ID));
+				buildData.add(new SimplePref(c,"Build ID",BuildConfig.CI_BUILD_ID));
+				buildData.add(new SimplePref(c,"Build Ref",BuildConfig.CI_BUILD_REF_NAME));
+				buildData.add(new SimplePref(c,"Runner ID",BuildConfig.CI_RUNNER_ID));
 				for(Preference pref:buildData){
 					getPreferenceScreen().addPreference(pref);
 					pref.setVisible(true);

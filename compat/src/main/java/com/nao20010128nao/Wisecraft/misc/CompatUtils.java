@@ -3,6 +3,7 @@ package com.nao20010128nao.Wisecraft.misc;
 import android.content.*;
 import android.content.pm.*;
 import android.text.*;
+import android.util.*;
 import android.view.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import java.io.*;
@@ -256,5 +257,14 @@ public class CompatUtils {
 				if (fis != null)fis.close();
 			} catch (IOException e) {}
 		}
+	}
+	public static Context wrapContextForPreference(Context c){
+		final TypedValue tv = new TypedValue();
+		c.getTheme().resolveAttribute(R.attr.preferenceTheme, tv, true);
+		final int theme = tv.resourceId;
+		if (theme <= 0) {
+			throw new IllegalStateException("Must specify preferenceTheme in theme");
+		}
+		return new ContextThemeWrapper(c, theme);
 	}
 }
