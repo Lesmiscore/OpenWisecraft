@@ -19,6 +19,7 @@ import com.google.gson.reflect.*;
 import com.mikepenz.materialdrawer.*;
 import com.mikepenz.materialdrawer.model.interfaces.*;
 import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.activity.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.collector.*;
 import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
@@ -31,13 +32,13 @@ import com.nao20010128nao.Wisecraft.settings.*;
 import java.io.*;
 import java.lang.ref.*;
 import java.util.*;
+import permissions.dispatcher.*;
 
 import android.support.v7.view.ActionMode;
 import com.nao20010128nao.Wisecraft.BuildConfig;
 import com.nao20010128nao.Wisecraft.R;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
-import permissions.dispatcher.*;
 
 //Full implement for user interface (Some part is available at ServerListActivityBase4)
 @RuntimePermissions
