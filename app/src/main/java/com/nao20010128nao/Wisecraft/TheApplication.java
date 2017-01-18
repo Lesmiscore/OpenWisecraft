@@ -30,7 +30,7 @@ import uk.co.chrisjenx.calligraphy.*;
 
 public class TheApplication extends Application implements  com.nao20010128nao.Wisecraft.rcon.Presenter,
 															com.ipaulpro.afilechooser.Presenter,
-															com.nao20010128nao.Wisecraft.misc.collector.Presenter,
+															com.nao20010128nao.Wisecraft.misc.collector1.Presenter,
 															InformationCommunicatorReceiver.DisclosureResult,
 															Application.ActivityLifecycleCallbacks {
 	public static TheApplication instance;
