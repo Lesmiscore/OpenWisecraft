@@ -67,13 +67,7 @@
 -keepattributes InnerClasses,EnclosingMethod
 
 -keepattributes com.google.gson.annotations.**, com.nao20010128nao.Wisecraft.misc.ShouldBeKept
--keepclassmembers class ** {
-	@com.google.gson.annotations.** <fields>;
-}
--keepclassmembers class com.nao20010128nao.McServerList.sites.Pmmp_Jp_Net$** {
-	@com.google.gson.annotations.** <fields>;
-}
--keepclassmembers class com.nao20010128nao.Wisecraft.misc.pinger.Reply**{
+-keepnames class ** {
 	@com.google.gson.annotations.** <fields>;
 }
 -keepclassmembers class * implements com.nao20010128nao.Wisecraft.misc.ShouldBeKept2

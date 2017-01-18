@@ -10,8 +10,8 @@ import java.util.*;
  * References: http://wiki.vg/Server_List_Ping
  * https://gist.github.com/thinkofdeath/6927216
  */
-@ShouldBeKept
-public class Reply19 implements ServerPingResult,PCQueryResult,ShouldBeKept2 {
+
+public class Reply19 implements ServerPingResult,PCQueryResult {
 	@SerializedName("description")
 	public Description description;
 	@SerializedName("players")
@@ -25,8 +25,8 @@ public class Reply19 implements ServerPingResult,PCQueryResult,ShouldBeKept2 {
 	
 	private String raw;
 
-	@ShouldBeKept
-	public static class Players implements ShouldBeKept2{
+	
+	public static class Players{
 		@SerializedName("max")
 		public int max;
 		@SerializedName("online")
@@ -35,38 +35,38 @@ public class Reply19 implements ServerPingResult,PCQueryResult,ShouldBeKept2 {
 		public List<Player> sample;
 	}
 
-	@ShouldBeKept
-	public static class Player implements ShouldBeKept2{
+	
+	public static class Player{
 		@SerializedName("name")
 		public String name;
 		@SerializedName("id")
 		public String id;
 	}
 
-	@ShouldBeKept
-	public static class Version implements ShouldBeKept2{
+	
+	public static class Version{
 		@SerializedName("name")
 		public String name;
 		@SerializedName("protocol")
 		public int protocol;
 	}
 
-	@ShouldBeKept
-	public static class Description implements ShouldBeKept2{
+	
+	public static class Description{
 		@SerializedName("text")
 		public String text;
 	}
 	
-	@ShouldBeKept
-	public static class ModInfo implements ShouldBeKept2{
+	
+	public static class ModInfo{
 		@SerializedName("type")
 		public String type;
 		@SerializedName("modList")
 		public ModListContent[] modList;
 	}
 
-	@ShouldBeKept
-	public static class ModListContent implements ShouldBeKept2{
+	
+	public static class ModListContent{
 		@SerializedName("modid")
 		public String modid;
 		@SerializedName("version")
