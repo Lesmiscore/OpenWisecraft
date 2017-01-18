@@ -882,6 +882,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		}.start();
 	}
 	
+	@NeedsPermission("android.permission.WRITE_EXTERNAL_STORAGE")
 	public void loadWisecraftPing(final String fn){
 		wd.showWorkingDialog(getResources().getString(R.string.loading));
 		new Thread(){
