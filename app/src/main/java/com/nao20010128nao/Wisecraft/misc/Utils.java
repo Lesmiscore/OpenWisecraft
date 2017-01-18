@@ -382,40 +382,14 @@ public class Utils extends PingerUtils{
 		try{
 			return Integer.valueOf(name);
 		}catch(Throwable e){
+			name=name.toLowerCase();
 			//PE
-			if("pe".equalsIgnoreCase(name)){
-				return 0;
-			}else
-			if("phone".equalsIgnoreCase(name)){
-				return 0;
-			}else
-			if("android".equalsIgnoreCase(name)){
-				return 0;
-			}else
-			if("ios".equalsIgnoreCase(name)){
-				return 0;
-			}else
-			if("pocket".equalsIgnoreCase(name)){
+			if(name.matches("^(pe|phone|android|ios|pocket)$")){
 				return 0;
 			}else
 			
 			//PC
-			if("pc".equalsIgnoreCase(name)){
-				return 1;
-			}else
-			if("desktop".equalsIgnoreCase(name)){
-				return 1;
-			}else
-			if("windows".equalsIgnoreCase(name)){
-				return 1;
-			}else
-			if("mac".equalsIgnoreCase(name)){
-				return 1;
-			}else
-			if("linux".equalsIgnoreCase(name)){
-				return 1;
-			}else
-			if("java".equalsIgnoreCase(name)){
+			if(name.matches("^(pc|desktop|windows|mac|linux|java)$")){
 				return 1;
 			}
 		}
