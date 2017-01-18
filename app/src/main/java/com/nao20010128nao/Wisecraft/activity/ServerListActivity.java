@@ -37,8 +37,10 @@ import com.nao20010128nao.Wisecraft.BuildConfig;
 import com.nao20010128nao.Wisecraft.R;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
+import permissions.dispatcher.*;
 
 //Full implement for user interface (Some part is available at ServerListActivityBase4)
+@RuntimePermissions
 abstract class ServerListActivityImpl extends ServerListActivityBase1 implements ServerListActivityInterface,ServerListProvider {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
 	
@@ -438,48 +440,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 									.setMessage(R.string.auSure)
 									.setPositiveButton(android.R.string.yes,new DialogInterface.OnClickListener(){
 										public void onClick(DialogInterface di,int w){
-											Utils.makeNonClickableSB(ServerListActivityImpl.this, R.string.importing, Snackbar.LENGTH_LONG).show();
-											new Thread(){
-												public void run() {
-													ArrayList<String[]> al=new ArrayList<String[]>();
-													try {
-														String[] lines=Utils.lines(Utils.readWholeFile(new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt")));
-														for (String s:lines) {
-															Log.d("readLine", s);
-															al.add(s.split("\\:"));
-														}
-													} catch (Throwable ex) {
-														DebugWriter.writeToE("ServerListActivity", ex);
-													}
-													final ArrayList<Server> sv=new ArrayList<>();
-													for (String[] s:al) {
-														if (s.length != 4)continue;
-														try {
-															Server svr=new Server();
-															svr.ip = s[2];
-															svr.port = Integer.valueOf(s[3]);
-															svr.mode = 0;
-															svr.name = s[1];
-															sv.add(svr);
-														} catch (NumberFormatException e) {}
-													}
-													sv.removeAll(list);
-													runOnUiThread(new Runnable(){
-															public void run() {
-																if (sv.size() != 0) {
-																	for (Server s:sv) {
-																		if (!list.contains(s)) {
-																			spp.putInQueue(s, new PingHandlerImpl(true, new Intent().putExtra("offset",-1),false));
-																			pinging.put(s, true);
-																			sl.add(s);
-																		}
-																	}
-																}
-																saveServers();
-															}
-														});
-												}
-											}.start();
+											ServerListActivityImplPermissionsDispatcher.addFromMCPEWithCheck(ServerListActivityImpl.this);
 										}
 									})
 									.setNegativeButton(android.R.string.no,null)
@@ -534,27 +495,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 									.setView(dialogView_)
 									.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 										public void onClick(DialogInterface di, int w) {
-											Utils.makeNonClickableSB(ServerListActivityImpl.this, R.string.exporting, Snackbar.LENGTH_LONG).show();
-											new AsyncTask<String,Void,File>(){
-												public File doInBackground(String... texts) {
-													Server[] servs=new Server[list.size()];
-													for (int i=0;i < servs.length;i++)
-														servs[i] = list.get(i).cloneAsServer();
-													File f=new File(Environment.getExternalStorageDirectory(), "/Wisecraft");
-													f.mkdirs();
-													if (writeToFile(f = new File(texts[0]), gson.toJson(servs, Server[].class)))
-														return f;
-													else
-														return null;
-												}
-												public void onPostExecute(File f) {
-													if (f != null) {
-														Utils.makeNonClickableSB(ServerListActivityImpl.this, getResources().getString(R.string.export_complete).replace("[PATH]", f + ""), Snackbar.LENGTH_LONG).show();
-													} else {
-														Utils.makeNonClickableSB(ServerListActivityImpl.this, getResources().getString(R.string.export_failed), Snackbar.LENGTH_LONG).show();
-													}
-												}
-											}.execute(et_.getText().toString());
+											ServerListActivityImplPermissionsDispatcher.exportWisecraftListWithCheck(ServerListActivityImpl.this,et_.getText().toString());
 										}
 									})
 									.show();
@@ -582,44 +523,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 									.setView(dialogView)
 									.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 										public void onClick(DialogInterface di, int w) {
-											Utils.makeNonClickableSB(ServerListActivityImpl.this, R.string.importing, Snackbar.LENGTH_LONG).show();
-											new Thread(){
-												public void run() {
-													File f=new File(et.getText().toString());
-													if(f.exists()){
-														final Server[] sv;
-														String json=readWholeFile(f);
-														if (json.contains("\"isPC\"") & (json.contains("true") | json.contains("false"))) {
-															//old version json file
-															OldServer19[] sa=gson.fromJson(json, OldServer19[].class);
-															List<Server> ns=new ArrayList<>();
-															for (OldServer19 s:sa) {
-																Server nso=new Server();
-																nso.ip = s.ip;
-																nso.port = s.port;
-																nso.mode = s.isPC ?1: 0;
-																ns.add(nso);
-															}
-															sv = ns.toArray(new Server[ns.size()]);
-														} else {
-															sv = gson.fromJson(json, Server[].class);
-														}
-														runOnUiThread(new Runnable(){
-																public void run() {
-																	sl.addAll(sv);
-																	saveServers();
-																	Utils.makeNonClickableSB(ServerListActivityImpl.this, getResources().getString(R.string.imported).replace("[PATH]", et.getText().toString()), Snackbar.LENGTH_LONG).show();
-																}
-															});
-													}else{
-														runOnUiThread(new Runnable(){
-																public void run() {
-																	Utils.makeNonClickableSB(ServerListActivityImpl.this, R.string.fileNotExist, Snackbar.LENGTH_LONG).show();
-																}
-															});
-													}
-												}
-											}.start();
+											ServerListActivityImplPermissionsDispatcher.importWisecraftListWithCheck(ServerListActivityImpl.this,et.getText().toString());
 										}
 									})
 									.show();
@@ -710,51 +614,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 									.setView(dialogView)
 									.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 										public void onClick(DialogInterface di, int w) {
-											wd.showWorkingDialog(getResources().getString(R.string.loading));
-											new Thread(){
-												public void run() {
-													ServerPingResult spr=null;
-													try{
-														spr=PingSerializeProvider.loadFromRawDumpFile(new BufferedInputStream(new FileInputStream(new File(et.getText().toString()))));
-													}catch(Throwable e){
-														WisecraftError.report("ServerListActivity#execOption#8",e);
-													}
-													final ServerStatus sv=new ServerStatus();
-													sv.ip="localhost";
-													sv.port=Integer.MIN_VALUE;
-													sv.ping=0;
-													sv.response=spr;
-													if(spr instanceof PEPingResult){
-														sv.mode=0;
-													}else if(spr instanceof PCQueryResult){
-														sv.mode=1;
-													}else if(spr instanceof SprPair){
-														SprPair pair=(SprPair)spr;
-														if(pair.getA() instanceof PEPingResult|pair.getB() instanceof PEPingResult){
-															sv.mode=0;
-														}else if(pair.getA() instanceof PCQueryResult|pair.getB() instanceof PCQueryResult){
-															sv.mode=1;
-														}
-													}
-													String _stat=null;
-													try{
-														_stat=Utils.encodeForServerInfo(sv);
-													}catch(Throwable e){
-														WisecraftError.report("ServerListActivity#execOption#8",e);
-													}
-													final String stat=_stat;
-													runOnUiThread(new Runnable(){
-															public void run() {
-																wd.hideWorkingDialog();
-																if(sv.response==null|stat==null){
-																	Utils.makeNonClickableSB(ServerListActivityImpl.this,R.string.loadPing_loadError,Snackbar.LENGTH_SHORT).show();
-																}else{
-																	startActivity(new Intent(ServerListActivityImpl.this, ServerInfoActivity.class).putExtra("stat", stat).putExtra("noExport",true).putExtra("nonUpd",true));
-																}
-															}
-														});
-												}
-											}.start();
+											ServerListActivityImplPermissionsDispatcher.loadWisecraftPingWithCheck(ServerListActivityImpl.this,et.getText().toString());
 										}
 									})
 									.show();
@@ -905,6 +765,169 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 						});
 					pinging.put(list.get(i), true);
 				}
+			}
+		}.start();
+	}
+	
+	@NeedsPermission("android.permission.WRITE_EXTERNAL_STORAGE")
+	public void addFromMCPE(){
+		Utils.makeNonClickableSB(ServerListActivityImpl.this, R.string.importing, Snackbar.LENGTH_LONG).show();
+		new Thread(){
+			public void run() {
+				ArrayList<String[]> al=new ArrayList<String[]>();
+				try {
+					String[] lines=Utils.lines(Utils.readWholeFile(new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt")));
+					for (String s:lines) {
+						Log.d("readLine", s);
+						al.add(s.split("\\:"));
+					}
+				} catch (Throwable ex) {
+					DebugWriter.writeToE("ServerListActivity", ex);
+				}
+				final ArrayList<Server> sv=new ArrayList<>();
+				for (String[] s:al) {
+					if (s.length != 4)continue;
+					try {
+						Server svr=new Server();
+						svr.ip = s[2];
+						svr.port = Integer.valueOf(s[3]);
+						svr.mode = 0;
+						svr.name = s[1];
+						sv.add(svr);
+					} catch (NumberFormatException e) {}
+				}
+				sv.removeAll(list);
+				runOnUiThread(new Runnable(){
+						public void run() {
+							if (sv.size() != 0) {
+								for (Server s:sv) {
+									if (!list.contains(s)) {
+										spp.putInQueue(s, new PingHandlerImpl(true, new Intent().putExtra("offset",-1),false));
+										pinging.put(s, true);
+										sl.add(s);
+									}
+								}
+							}
+							saveServers();
+						}
+					});
+			}
+		}.start();
+	}
+	
+	@NeedsPermission("android.permission.WRITE_EXTERNAL_STORAGE")
+	public void exportWisecraftList(String fn){
+		Utils.makeNonClickableSB(ServerListActivityImpl.this, R.string.exporting, Snackbar.LENGTH_LONG).show();
+		new AsyncTask<String,Void,File>(){
+			public File doInBackground(String... texts) {
+				Server[] servs=new Server[list.size()];
+				for (int i=0;i < servs.length;i++)
+					servs[i] = list.get(i).cloneAsServer();
+				File f=new File(Environment.getExternalStorageDirectory(), "/Wisecraft");
+				f.mkdirs();
+				if (writeToFile(f = new File(texts[0]), gson.toJson(servs, Server[].class)))
+					return f;
+				else
+					return null;
+			}
+			public void onPostExecute(File f) {
+				if (f != null) {
+					Utils.makeNonClickableSB(ServerListActivityImpl.this, getResources().getString(R.string.export_complete).replace("[PATH]", f + ""), Snackbar.LENGTH_LONG).show();
+				} else {
+					Utils.makeNonClickableSB(ServerListActivityImpl.this, getResources().getString(R.string.export_failed), Snackbar.LENGTH_LONG).show();
+				}
+			}
+		}.execute(fn);
+	}
+	
+	@NeedsPermission("android.permission.WRITE_EXTERNAL_STORAGE")
+	public void importWisecraftList(final String fn){
+		Utils.makeNonClickableSB(ServerListActivityImpl.this, R.string.importing, Snackbar.LENGTH_LONG).show();
+		new Thread(){
+			public void run() {
+				File f=new File(fn);
+				if(f.exists()){
+					final Server[] sv;
+					String json=readWholeFile(f);
+					if (json.contains("\"isPC\"") & (json.contains("true") | json.contains("false"))) {
+						//old version json file
+						OldServer19[] sa=gson.fromJson(json, OldServer19[].class);
+						List<Server> ns=new ArrayList<>();
+						for (OldServer19 s:sa) {
+							Server nso=new Server();
+							nso.ip = s.ip;
+							nso.port = s.port;
+							nso.mode = s.isPC ?1: 0;
+							ns.add(nso);
+						}
+						sv = ns.toArray(new Server[ns.size()]);
+					} else {
+						sv = gson.fromJson(json, Server[].class);
+					}
+					runOnUiThread(new Runnable(){
+							public void run() {
+								sl.addAll(sv);
+								saveServers();
+								Utils.makeNonClickableSB(ServerListActivityImpl.this, getResources().getString(R.string.imported).replace("[PATH]", et.getText().toString()), Snackbar.LENGTH_LONG).show();
+							}
+						});
+				}else{
+					runOnUiThread(new Runnable(){
+							public void run() {
+								Utils.makeNonClickableSB(ServerListActivityImpl.this, R.string.fileNotExist, Snackbar.LENGTH_LONG).show();
+							}
+						});
+				}
+			}
+		}.start();
+	}
+	
+	public void loadWisecraftPing(final String fn){
+		wd.showWorkingDialog(getResources().getString(R.string.loading));
+		new Thread(){
+			public void run() {
+				ServerPingResult spr=null;
+				try {
+					try(InputStream rdr=new BufferedInputStream(new FileInputStream(new File(fn)))){
+						spr = PingSerializeProvider.loadFromRawDumpFile(rdr);
+					}
+				} catch (Throwable e) {
+					WisecraftError.report("ServerListActivity#execOption#8",e);
+				}
+				final ServerStatus sv=new ServerStatus();
+				sv.ip="localhost";
+				sv.port=Integer.MIN_VALUE;
+				sv.ping=0;
+				sv.response=spr;
+				if(spr instanceof PEPingResult){
+					sv.mode=0;
+				}else if(spr instanceof PCQueryResult){
+					sv.mode=1;
+				}else if(spr instanceof SprPair){
+					SprPair pair=(SprPair)spr;
+					if(pair.getA() instanceof PEPingResult|pair.getB() instanceof PEPingResult){
+						sv.mode=0;
+					}else if(pair.getA() instanceof PCQueryResult|pair.getB() instanceof PCQueryResult){
+						sv.mode=1;
+					}
+				}
+				String _stat=null;
+				try{
+					_stat=Utils.encodeForServerInfo(sv);
+				}catch(Throwable e){
+					WisecraftError.report("ServerListActivity#execOption#8",e);
+				}
+				final String stat=_stat;
+				runOnUiThread(new Runnable(){
+						public void run() {
+							wd.hideWorkingDialog();
+							if(sv.response==null|stat==null){
+								Utils.makeNonClickableSB(ServerListActivityImpl.this,R.string.loadPing_loadError,Snackbar.LENGTH_SHORT).show();
+							}else{
+								startActivity(new Intent(ServerListActivityImpl.this, ServerInfoActivity.class).putExtra("stat", stat).putExtra("noExport",true).putExtra("nonUpd",true));
+							}
+						}
+					});
 			}
 		}.start();
 	}
