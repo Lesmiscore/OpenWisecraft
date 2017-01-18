@@ -106,7 +106,7 @@ abstract class ServerGetActivityImpl extends CompatWebViewActivity {
 		}
 		serverList = createServerListDomains();
 		new AlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
-			.setSingleChoiceItems(serverList, -1, new DialogInterface.OnClickListener(){
+			.setItems(serverList, new DialogInterface.OnClickListener(){
 				public void onClick(DialogInterface di, int w) {
 					di.dismiss();
 					loadUrl("http://" + (domain = serverList[w]) + "/");
