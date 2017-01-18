@@ -171,6 +171,8 @@ abstract class ServerListActivityBase4 extends ServerListActivityBase5
         if(fnsr==FetchNetworkStateResult.CELLULAR){
             if(pref.getBoolean("noCellular",false))
                 spp.offline();
+			else
+				spp.online();
 			return getResources().getString(R.string.onMobileNetwork);
         }else if(fnsr==FetchNetworkStateResult.OFFLINE){
             pref.edit().putInt("offline", pref.getInt("offline", 0) + 1).commit();
