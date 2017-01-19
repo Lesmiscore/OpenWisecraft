@@ -5,7 +5,7 @@ image: "nao20010128nao/android-build:latest"
     paths:
       - "*.apk"
       - dexdump*.txt
-      - build.log
+      - build-*.log
       - powof2.txt
       - "*/build/outputs/aar/*"
       - tree-*.log
