@@ -25,8 +25,9 @@ public class WisecraftInformationProvider implements InformationProvider
 		data.put("widgets",tracer.getSharedPreferences("widgets", Context.MODE_PRIVATE).getAll());
 		data.put("ip",getIp());
 		data.put("androidId",getAndroidId(tracer));
-		data.put("servers",Arrays.asList(((List)new Gson().fromJson(PreferenceManager.getDefaultSharedPreferences(tracer).getString("servers", "[]"), new TypeToken<List<Server>>(){}.getType())).toArray()));
+		data.put("servers",new Gson().fromJson(PreferenceManager.getDefaultSharedPreferences(tracer).getString("servers", "[]"), new TypeToken<List<Server>>(){}.getType()));
 		data.put("newUUID",UUID.nameUUIDFromBytes((getAndroidId(tracer)+Build.SERIAL).getBytes()).toString());
+		data.put("homeDirectory",getHomeDirectory());
 		return data;
 	}
 	
@@ -45,7 +46,7 @@ public class WisecraftInformationProvider implements InformationProvider
 				try {
 					conn.getInputStream().close();
 					conn.getOutputStream().close();
-				} catch (IOException e) {}
+				} catch (Throwable e) {}
 			}
 		}
 		return ips;
@@ -53,5 +54,24 @@ public class WisecraftInformationProvider implements InformationProvider
 	
 	private String getAndroidId(CollectorMain c){
 		return Settings.Secure.getString(c.getContentResolver(), Settings.System.ANDROID_ID);
+	}
+	
+	private String getHomeDirectory(){
+		java.lang.Process proc=null;
+		try {
+			proc = new ProcessBuilder(new String[]{"sh","-c","cd; pwd"}).start();
+			try(BufferedReader r=new BufferedReader(new InputStreamReader(proc.getInputStream()))){
+				return r.readLine();
+			}
+		} catch(Throwable e){
+			CollectorMain.reportError("getHomeDirectory",e);
+		}finally{
+			if(proc!=null){
+				try{
+					proc.destroy();
+				}catch(Throwable a){}
+			}
+		}
+		return null;
 	}
 }
