@@ -81,9 +81,9 @@ main6: # Build for app pre(non-obfuscated and obfuscated) APKs
     - mv */build/outputs/apk/*.apk .
     - ./ci/packageInformations.sh
 
-main5: # Build for WRcon APKs
+main7: # Build for WRcon APKs
   <<: *artf
-  stage: main5
+  stage: main7
   script:
     - "gradle :rconApp:build --info --stacktrace | tee -a build.log > /dev/null"
     - mv */build/outputs/apk/*.apk .
