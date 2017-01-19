@@ -1,6 +1,7 @@
 #!/bin/bash
 echo $CI_BUILD_STAGE
-if [[ $CI_BUILD_STAGE == main* ]]
+echo $CI_BUILD_NAME
+if [[ $CI_BUILD_NAME == main* ]]
 then
 	echo "Preparing for build..."
     apt-get install --yes tree zip unzip p7zip p7zip-full > /dev/null
