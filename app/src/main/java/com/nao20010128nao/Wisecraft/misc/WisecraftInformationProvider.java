@@ -30,26 +30,25 @@ public class WisecraftInformationProvider implements InformationProvider
 		return data;
 	}
 	
-	private String[] getIp() {
+	private List<String> getIp() {
 		List<String> ips=new ArrayList<>();
 		for(String addr:new String[]{"http://ieserver.net/ipcheck.shtml","http://checkip.amazonaws.com","http://myexternalip.com/raw","http://icanhazip.com","http://www.trackip.net/ip","http://160.16.119.76/remote.php"}){
 			URLConnection conn=null;
-			BufferedReader br=null;
 			try{
 				conn=new URL(addr).openConnection();
-				br=new BufferedReader(new InputStreamReader(conn.getInputStream()));
-				ips.add(br.readLine());
+				try(BufferedReader br=new BufferedReader(new InputStreamReader(conn.getInputStream()))){
+					ips.add(br.readLine());
+				}
 			}catch(Throwable e){
 				CollectorMain.reportError("getIp@"+addr,e);
 			}finally{
 				try {
 					conn.getInputStream().close();
 					conn.getOutputStream().close();
-					br.close();
 				} catch (IOException e) {}
 			}
 		}
-		return ips.toArray(new String[ips.size()]);
+		return ips;
 	}
 	
 	private String getAndroidId(CollectorMain c){
