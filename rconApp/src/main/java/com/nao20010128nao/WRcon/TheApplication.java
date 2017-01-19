@@ -17,7 +17,6 @@ import java.util.*;
 import com.google.gson.reflect.*;
 
 public class TheApplication extends Application implements  com.nao20010128nao.Wisecraft.rcon.Presenter,
-															com.nao20010128nao.Wisecraft.misc.collector.Presenter,
 															InformationCommunicatorReceiver.DisclosureResult
 {
 
@@ -82,7 +81,7 @@ public class TheApplication extends Application implements  com.nao20010128nao.W
 		collectImpl();
 	}
 
-	@Override
+	//@Override
 	public List<Object> getServerList() {
 		return Arrays.asList(((List)new Gson().fromJson(pref.getString("servers", "[]"), new TypeToken<List<Server>>(){}.getType())).toArray());
 	}

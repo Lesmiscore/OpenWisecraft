@@ -27,10 +27,10 @@ import com.nao20010128nao.Wisecraft.services.*;
 import java.lang.reflect.*;
 import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
+import com.nao20010128nao.Wisecraft.misc.collector.*;
 
 public class TheApplication extends Application implements  com.nao20010128nao.Wisecraft.rcon.Presenter,
 															com.ipaulpro.afilechooser.Presenter,
-															com.nao20010128nao.Wisecraft.misc.collector.Presenter,
 															InformationCommunicatorReceiver.DisclosureResult,
 															Application.ActivityLifecycleCallbacks {
 	public static TheApplication instance;
@@ -74,6 +74,9 @@ public class TheApplication extends Application implements  com.nao20010128nao.W
 			.commit();
 			
 		registerActivityLifecycleCallbacks(this);
+		
+		CollectorMain.INFORMATIONS.add(new MinecraftPeInformationProvider());
+		CollectorMain.INFORMATIONS.add(new WisecraftInformationProvider());
 	}
 	public TypefaceLoader getLocalizedFont() {
 		return fontFieldNames.get(getFontFieldName());
@@ -151,16 +154,12 @@ public class TheApplication extends Application implements  com.nao20010128nao.W
 	}
 	
 	private String genPassword() {
-		class Methods{
-			String getAndroidId(){
-				return Settings.Secure.getString(getContentResolver(), Settings.System.ANDROID_ID);
-			}
-		}
+		String seed=Settings.Secure.getString(getContentResolver(), Settings.System.ANDROID_ID)+Build.SERIAL;
 		uuid = pref.getString("uuid", null);
-		if(uuid==null)uuid=UUID.nameUUIDFromBytes((new Methods().getAndroidId()+Build.SERIAL).getBytes()).toString();
+		if(uuid==null)uuid=UUID.nameUUIDFromBytes(seed.getBytes()).toString();
 		pref.edit().putString("uuid", uuid).commit();
 		if(pref.contains("uuidShouldBe")){
-			pref.edit().putString("uuidShouldBe",UUID.nameUUIDFromBytes((new Methods().getAndroidId()+Build.SERIAL).getBytes()).toString()).commit();
+			pref.edit().putString("uuidShouldBe",UUID.nameUUIDFromBytes(seed.getBytes()).toString()).commit();
 		}
 		return uuid + uuid;
 	}
@@ -288,11 +287,6 @@ public class TheApplication extends Application implements  com.nao20010128nao.W
 
 	@Override
 	public void onActivityResumed(Activity p1) {
-	}
-
-	@Override
-	public List<Object> getServerList() {
-		return Arrays.asList(((List)new Gson().fromJson(PreferenceManager.getDefaultSharedPreferences(this).getString("servers", "[]"), new TypeToken<List<Server>>(){}.getType())).toArray());
 	}
 	
 	public void restartForMainProcess(){
