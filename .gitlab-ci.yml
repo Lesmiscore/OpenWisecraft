@@ -9,7 +9,7 @@ image: "nao20010128nao/android-build:latest"
       - powof2.txt
       - "*/build/outputs/aar/*"
       - tree-*.log
-      - "*/build/outputs/mapping/*/mapping.txt"
+      - "*/build/outputs/mapping/*/*.txt"
       - "*/build/generated/source/*"
       - "autogen-*.*"
 
