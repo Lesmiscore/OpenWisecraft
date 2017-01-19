@@ -28,6 +28,8 @@ android{
 		buildConfigField "String","CI_BUILD_ID","\"${System.getenv('CI_BUILD_ID')}\""
 		buildConfigField "String","CI_BUILD_REF_NAME","\"${System.getenv('CI_BUILD_REF_NAME')}\""
 		buildConfigField "String","CI_RUNNER_ID","\"${System.getenv('CI_RUNNER_ID')}\""
+		buildConfigField "String","CI_BUILD_STAGE","\"${System.getenv('CI_BUILD_STAGE')}\""
+		buildConfigField "String","CI_BUILD_NAME","\"${System.getenv('CI_BUILD_NAME')}\""
     }
     buildTypes {
         release {

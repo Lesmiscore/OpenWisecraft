@@ -51,6 +51,8 @@ public class VersionInfoFragment extends ViewHolderCatchablePreferenceFragment
 				buildData.add(new SimplePref(c,"Build ID",BuildConfig.CI_BUILD_ID));
 				buildData.add(new SimplePref(c,"Build Ref",BuildConfig.CI_BUILD_REF_NAME));
 				buildData.add(new SimplePref(c,"Runner ID",BuildConfig.CI_RUNNER_ID));
+				buildData.add(new SimplePref(c,"Build Stage",BuildConfig.CI_BUILD_STAGE));
+				buildData.add(new SimplePref(c,"Build Name",BuildConfig.CI_BUILD_NAME));
 				for(Preference pref:buildData){
 					getPreferenceScreen().addPreference(pref);
 					pref.setVisible(true);
