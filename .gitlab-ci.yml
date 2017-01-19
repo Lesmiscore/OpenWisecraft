@@ -19,20 +19,15 @@ before_script:
   - if [[ $CI_BUILD_STAGE != copy ]]; then gradle modifyValuesXml modifyBooleansXml --info --stacktrace | tee -a build.log > /dev/null; fi
 
 stages:
-  - main1
-  - main2
-  - main3
-  - main4
-  - main5
-  - main6
-  - main7
-  - main8
+  - app
+  - rconApp
+  - rconPassCrack
   - mainLast
   - copy
 
 main1: # Build for app debug APKs
   <<: *artf
-  stage: main1
+  stage: app
   script:
     - "gradle :app:assembleDebug :app:assembleDebug2 :app:assembleDebug2TestObs --info --stacktrace | tee -a build.log > /dev/null"
     - mv */build/outputs/apk/*.apk .
@@ -40,7 +35,7 @@ main1: # Build for app debug APKs
 
 main2: # Build for app debug(obfuscated) APKs
   <<: *artf
-  stage: main2
+  stage: app
   script:
     - "gradle :app:assemblePg --info --stacktrace | tee -a build.log > /dev/null"
     - mv */build/outputs/apk/*.apk .
@@ -48,7 +43,7 @@ main2: # Build for app debug(obfuscated) APKs
 
 main3: # Build for app debug(obfuscated) APKs
   <<: *artf
-  stage: main3
+  stage: app
   script:
     - "gradle :app:assemblePg_ult --info --stacktrace | tee -a build.log > /dev/null"
     - mv */build/outputs/apk/*.apk .
@@ -56,7 +51,7 @@ main3: # Build for app debug(obfuscated) APKs
 
 main4: # Build for app release APKs
   <<: *artf
-  stage: main4
+  stage: app
   script:
     - "gradle :app:assembleRelease --info --stacktrace | tee -a build.log > /dev/null"
     - mv */build/outputs/apk/*.apk .
@@ -64,7 +59,7 @@ main4: # Build for app release APKs
 
 main5: # Build for app release(obfuscated) APKs
   <<: *artf
-  stage: main5
+  stage: app
   script:
     - "gradle :app:assembleShrinkRelease --info --stacktrace | tee -a build.log > /dev/null"
     - mv */build/outputs/apk/*.apk .
@@ -72,7 +67,7 @@ main5: # Build for app release(obfuscated) APKs
 
 main6: # Build for app pre(non-obfuscated and obfuscated) APKs
   <<: *artf
-  stage: main6
+  stage: app
   script:
     - DIR=`cat ./app/build.gradle | grep "def preNum="`
     - DIR=${DIR% //*}
@@ -83,7 +78,7 @@ main6: # Build for app pre(non-obfuscated and obfuscated) APKs
 
 main7: # Build for WRcon APKs
   <<: *artf
-  stage: main7
+  stage: rconApp
   script:
     - "gradle :rconApp:build --info --stacktrace | tee -a build.log > /dev/null"
     - mv */build/outputs/apk/*.apk .
@@ -91,7 +86,7 @@ main7: # Build for WRcon APKs
 
 main8: # Build for Rcon Password Cracker APKs
   <<: *artf
-  stage: main8
+  stage: rconPassCrack
   script:
     - "gradle :rconPassCrack:build --info --stacktrace | tee -a build.log > /dev/null"
     - mv */build/outputs/apk/*.apk .
