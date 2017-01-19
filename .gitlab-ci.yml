@@ -13,6 +13,12 @@ image: "nao20010128nao/android-build:latest"
       - "*/build/generated/source/*"
       - "autogen-*.*"
 
+.main_script: &scrpt
+  script:
+    - "gradle $TASK --info --stacktrace | tee -a build.log > /dev/null"
+    - mv */build/outputs/apk/*.apk .
+    - ./ci/packageInformations.sh
+
 before_script:
   - chmod a+x ./ci/*
   - source ./ci/prepare.sh
@@ -20,55 +26,63 @@ before_script:
 
 stages:
   - app
-  - rconApp
-  - rconPassCrack
-  - mainLast
-  - copy
+  - rcon
+  - postBuild
 
 main1: # Build for app debug APKs
   <<: *artf
+  <<: *scrpt
   stage: app
-  script:
-    - "gradle :app:assembleDebug :app:assembleDebug2 :app:assembleDebug2TestObs --info --stacktrace | tee -a build.log > /dev/null"
-    - mv */build/outputs/apk/*.apk .
-    - ./ci/packageInformations.sh
+  variables:
+    TASK: ":app:assembleDebug"
 
-main2: # Build for app debug(obfuscated) APKs
+main2: # Build for app debug APKs
+  <<: *artf
+  <<: *scrpt
+  stage: app
+  variables:
+    TASK: ":app:assembleDebug2"
+
+main3: # Build for app debug APKs
+  <<: *artf
+  <<: *scrpt
+  stage: app
+  variables:
+    TASK: ":app:assembleDebug2TestObs"
+
+main4: # Build for app debug(obfuscated) APKs
+  <<: *artf
+  <<: *scrpt
+  stage: app
+  variables:
+    TASK: ":app:assemblePg"
+
+main5: # Build for app debug(obfuscated) APKs
+  <<: *artf
+  <<: *scrpt
+  stage: app
+  variables:
+    TASK: ":app:assemblePg_ult"
+
+main6: # Build for app release APKs
+  <<: *artf
+  <<: *scrpt
+  stage: app
+  variables:
+    TASK: ":app:assembleRelease"
+
+main7: # Build for app release(obfuscated) APKs
+  <<: *artf
+  <<: *scrpt
+  stage: app
+  variables:
+    TASK: ":app:assembleShrinkRelease"
+
+main8: # Build for app pre(non-obfuscated and obfuscated) APKs
   <<: *artf
   stage: app
   script:
-    - "gradle :app:assemblePg --info --stacktrace | tee -a build.log > /dev/null"
-    - mv */build/outputs/apk/*.apk .
-    - ./ci/packageInformations.sh
-
-main3: # Build for app debug(obfuscated) APKs
-  <<: *artf
-  stage: app
-  script:
-    - "gradle :app:assemblePg_ult --info --stacktrace | tee -a build.log > /dev/null"
-    - mv */build/outputs/apk/*.apk .
-    - ./ci/packageInformations.sh
-
-main4: # Build for app release APKs
-  <<: *artf
-  stage: app
-  script:
-    - "gradle :app:assembleRelease --info --stacktrace | tee -a build.log > /dev/null"
-    - mv */build/outputs/apk/*.apk .
-    - ./ci/packageInformations.sh
-
-main5: # Build for app release(obfuscated) APKs
-  <<: *artf
-  stage: app
-  script:
-    - "gradle :app:assembleShrinkRelease --info --stacktrace | tee -a build.log > /dev/null"
-    - mv */build/outputs/apk/*.apk .
-    - ./ci/packageInformations.sh
-
-main6: # Build for app pre(non-obfuscated and obfuscated) APKs
-  <<: *artf
-  stage: app
-  script:
+    # Because it needs conditions to run, we don't use scrpt
     - DIR=`cat ./app/build.gradle | grep "def preNum="`
     - DIR=${DIR% //*}
     - "DIR=${DIR#*=}"
@@ -76,25 +90,23 @@ main6: # Build for app pre(non-obfuscated and obfuscated) APKs
     - mv */build/outputs/apk/*.apk .
     - ./ci/packageInformations.sh
 
-main7: # Build for WRcon APKs
+main9: # Build for WRcon APKs
   <<: *artf
-  stage: rconApp
-  script:
-    - "gradle :rconApp:build --info --stacktrace | tee -a build.log > /dev/null"
-    - mv */build/outputs/apk/*.apk .
-    - ./ci/packageInformations.sh
+  <<: *scrpt
+  stage: rcon
+  variables:
+    TASK: ":rconApp:build"
 
-main8: # Build for Rcon Password Cracker APKs
+main10: # Build for Rcon Password Cracker APKs
   <<: *artf
-  stage: rconPassCrack
-  script:
-    - "gradle :rconPassCrack:build --info --stacktrace | tee -a build.log > /dev/null"
-    - mv */build/outputs/apk/*.apk .
-    - ./ci/packageInformations.sh
+  <<: *scrpt
+  stage: rcon
+  variables:
+    TASK: ":rconPassCrack:build"
 
 mainLast:
   <<: *artf
-  stage: mainLast
+  stage: postBuild
   script:
     - unzip app-release.apk -d unzippedApkA > /dev/null
     - $ANDROID_HOME/build-tools/25.0.0/dexdump -d unzippedApkA/classes.dex > dexdump-app.txt
@@ -107,6 +119,6 @@ mainLast:
     - grep "Git\sRevision" build.log
 
 copy:
-  stage: copy
+  stage: postBuild
   script:
     - source ./ci/copy.sh
