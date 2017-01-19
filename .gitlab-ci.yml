@@ -19,6 +19,16 @@ image: "nao20010128nao/android-build:latest"
     - mv */build/outputs/apk/*.apk .
     - ./ci/packageInformations.sh
 
+.pre_script: &pre
+  script:
+    # Script for pre builds
+    - DIR=`cat ./app/build.gradle | grep "def preNum="`
+    - DIR=${DIR% //*}
+    - "DIR=${DIR#*=}"
+    - "if [ $DIR != \"0\" ]; then gradle $TASK --info --stacktrace | tee -a build-$CI_BUILD_NAME.log > /dev/null; fi"
+    - mv */build/outputs/apk/*.apk .
+    - ./ci/packageInformations.sh
+
 before_script:
   - chmod a+x ./ci/*
   - source ./ci/prepare.sh
@@ -78,26 +88,30 @@ main7: # Build for app release(obfuscated) APKs
   variables:
     TASK: ":app:assembleShrinkRelease"
 
-main8: # Build for app pre(non-obfuscated and obfuscated) APKs
+main8: # Build for app pre APKs
   <<: *artf
+  <<: *pre
   stage: app
-  script:
-    # Because it needs conditions to run, we don't use scrpt
-    - DIR=`cat ./app/build.gradle | grep "def preNum="`
-    - DIR=${DIR% //*}
-    - "DIR=${DIR#*=}"
-    - "if [ $DIR != \"0\" ]; then gradle :app:assemblePre :app:assembleShrinkPre --info --stacktrace | tee -a build-$CI_BUILD_NAME.log > /dev/null; fi"
-    - mv */build/outputs/apk/*.apk .
-    - ./ci/packageInformations.sh
+  # Because it needs conditions to run, we use pre instead
+  variables:
+    TASK: ":app:assemblePre"
 
-main9: # Build for WRcon APKs
+main9: # Build for app pre(obfuscated) APKs
+  <<: *artf
+  <<: *pre
+  stage: app
+  # Because it needs conditions to run, we use pre instead
+  variables:
+    TASK: ":app:assembleShrinkPre"
+
+main10: # Build for WRcon APKs
   <<: *artf
   <<: *scrpt
   stage: rcon
   variables:
     TASK: ":rconApp:build"
 
-main10: # Build for Rcon Password Cracker APKs
+main11: # Build for Rcon Password Cracker APKs
   <<: *artf
   <<: *scrpt
   stage: rcon
