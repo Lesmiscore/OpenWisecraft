@@ -15,7 +15,7 @@ image: "nao20010128nao/android-build:latest"
 
 .main_script: &scrpt
   script:
-    - "gradle $TASK --info --stacktrace | tee -a build.log > /dev/null"
+    - "gradle $TASK --info --stacktrace | tee -a build-$CI_BUILD_NAME.log > /dev/null"
     - mv */build/outputs/apk/*.apk .
     - ./ci/packageInformations.sh
 
@@ -86,7 +86,7 @@ main8: # Build for app pre(non-obfuscated and obfuscated) APKs
     - DIR=`cat ./app/build.gradle | grep "def preNum="`
     - DIR=${DIR% //*}
     - "DIR=${DIR#*=}"
-    - "if [ $DIR != \"0\" ]; then gradle :app:assemblePre :app:assembleShrinkPre --info --stacktrace | tee -a build.log > /dev/null; fi"
+    - "if [ $DIR != \"0\" ]; then gradle :app:assemblePre :app:assembleShrinkPre --info --stacktrace | tee -a build-$CI_BUILD_NAME.log > /dev/null; fi"
     - mv */build/outputs/apk/*.apk .
     - ./ci/packageInformations.sh
 
@@ -116,7 +116,7 @@ mainLast:
     - $ANDROID_HOME/build-tools/25.0.0/dexdump -d unzippedApkC/classes.dex > dexdump-rconPC.txt
     - unzip app-pg.apk -d unzippedApkD > /dev/null
     - $ANDROID_HOME/build-tools/25.0.0/dexdump -d unzippedApkD/classes.dex > dexdump-appObs.txt
-    - grep "Git\sRevision" build.log
+    - grep "Git\sRevision" build-main1.log
 
 copy:
   stage: postBuild
