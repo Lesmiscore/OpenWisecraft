@@ -75,5 +75,4 @@
 
 
 -repackageclasses wisecraft
--allowaccessmodification
 

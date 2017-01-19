@@ -1,1 +1,2 @@
 -optimizationpasses 1000
+-allowaccessmodification
