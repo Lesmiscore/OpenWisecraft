@@ -31,14 +31,7 @@
     public <init>(android.content.Context);
     public <init>(android.content.Context, android.util.AttributeSet);
     public <init>(android.content.Context, android.util.AttributeSet, int);
-    public void set*(...);
 }
-#-keep public class **.R {
-#  public *;
-#}
-#-keep public class **.BuildConfig {
-#  public *;
-#}
 -keep public class org.jsoup.** {
   public *;
 }
@@ -73,6 +66,7 @@
 -keepclassmembers class * implements com.nao20010128nao.Wisecraft.misc.ShouldBeKept2
 -keepclassmembers @com.nao20010128nao.Wisecraft.misc.ShouldBeKept class *
 
+-whyareyoukeeping class *
 
 -repackageclasses wisecraft
 -allowaccessmodification
