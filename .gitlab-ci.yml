@@ -26,6 +26,7 @@ stages:
   - main5
   - main6
   - main7
+  - main8
   - mainLast
   - copy
 
@@ -41,29 +42,37 @@ main2: # Build for app debug(obfuscated) APKs
   <<: *artf
   stage: main2
   script:
-    - "gradle :app:assemblePg :app:assemblePg_ult --info --stacktrace | tee -a build.log > /dev/null"
+    - "gradle :app:assemblePg --info --stacktrace | tee -a build.log > /dev/null"
     - mv */build/outputs/apk/*.apk .
     - ./ci/packageInformations.sh
 
-main3: # Build for app release APKs
+main3: # Build for app debug(obfuscated) APKs
   <<: *artf
   stage: main3
+  script:
+    - "gradle :app:assemblePg_ult --info --stacktrace | tee -a build.log > /dev/null"
+    - mv */build/outputs/apk/*.apk .
+    - ./ci/packageInformations.sh
+
+main4: # Build for app release APKs
+  <<: *artf
+  stage: main4
   script:
     - "gradle :app:assembleRelease --info --stacktrace | tee -a build.log > /dev/null"
     - mv */build/outputs/apk/*.apk .
     - ./ci/packageInformations.sh
 
-main4: # Build for app release(obfuscated) APKs
+main5: # Build for app release(obfuscated) APKs
   <<: *artf
-  stage: main4
+  stage: main5
   script:
     - "gradle :app:assembleShrinkRelease --info --stacktrace | tee -a build.log > /dev/null"
     - mv */build/outputs/apk/*.apk .
     - ./ci/packageInformations.sh
 
-main5: # Build for app pre(non-obfuscated and obfuscated) APKs
+main6: # Build for app pre(non-obfuscated and obfuscated) APKs
   <<: *artf
-  stage: main5
+  stage: main6
   script:
     - DIR=`cat ./app/build.gradle | grep "def preNum="`
     - DIR=${DIR% //*}
@@ -72,17 +81,17 @@ main5: # Build for app pre(non-obfuscated and obfuscated) APKs
     - mv */build/outputs/apk/*.apk .
     - ./ci/packageInformations.sh
 
-main6: # Build for WRcon APKs
+main5: # Build for WRcon APKs
   <<: *artf
-  stage: main6
+  stage: main5
   script:
     - "gradle :rconApp:build --info --stacktrace | tee -a build.log > /dev/null"
     - mv */build/outputs/apk/*.apk .
     - ./ci/packageInformations.sh
 
-main7: # Build for Rcon Password Cracker APKs
+main8: # Build for Rcon Password Cracker APKs
   <<: *artf
-  stage: main7
+  stage: main8
   script:
     - "gradle :rconPassCrack:build --info --stacktrace | tee -a build.log > /dev/null"
     - mv */build/outputs/apk/*.apk .
