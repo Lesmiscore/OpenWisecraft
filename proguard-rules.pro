@@ -75,4 +75,5 @@
 
 
 -repackageclasses wisecraft
-
+-allowaccessmodification
+-optimizationpasses 3
