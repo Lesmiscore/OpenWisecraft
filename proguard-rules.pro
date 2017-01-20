@@ -70,4 +70,6 @@
 
 -repackageclasses wisecraft
 -allowaccessmodification
--optimizationpasses 3
+-optimizationpasses 30
+-useuniqueclassmembernames
+-keeppackagenames doNotKeepAThing
