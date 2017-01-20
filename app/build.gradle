@@ -10,6 +10,10 @@ android {
 		def where=Math.abs(rand.nextInt())%suffix.size();
 		return suffix[where]
 	}
+	def isEmptyStr={CharSequence str->
+        return (str == null || str.length() == 0)
+    }
+	
 	def wsi="Widget Status Inspector"
 	def preNum=5 //0 is stable release
 
@@ -111,6 +115,12 @@ android {
 	lintOptions {
         abortOnError false
     }
+    
+    dexOptions {
+    	if(!isEmptyStr("\"${System.getenv('CI_BUILD_ID')}\"")){//Check the environment
+    		threadCount 8
+		}
+	}
 }
 
 dependencies {
