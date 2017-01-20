@@ -933,6 +933,12 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			}
 		}.start();
 	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		ServerListActivityImplPermissionsDispatcher.onRequestPermissionsResult(this,requestCode,grantResults);
+	}
 	
 	public List<Server> getServers() {
 		return new ArrayList<Server>(list);
