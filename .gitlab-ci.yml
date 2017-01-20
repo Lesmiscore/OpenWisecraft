@@ -130,7 +130,7 @@ mainLast:
     - $ANDROID_HOME/build-tools/25.0.0/dexdump -d unzippedApkC/classes.dex > dexdump-rconPC.txt
     - unzip app-pg.apk -d unzippedApkD > /dev/null
     - $ANDROID_HOME/build-tools/25.0.0/dexdump -d unzippedApkD/classes.dex > dexdump-appObs.txt
-    - grep "Git\sRevision" build-main1.log
+    - grep "Git\sRevision" build-appDebug.log
 
 copy:
   stage: postBuild
