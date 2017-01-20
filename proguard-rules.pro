@@ -63,11 +63,6 @@
 -keepnames class ** {
 	@com.google.gson.annotations.** <fields>;
 }
--keepclassmembers class * implements com.nao20010128nao.Wisecraft.misc.ShouldBeKept2
--keepclassmembers @com.nao20010128nao.Wisecraft.misc.ShouldBeKept class *
-
--whyareyoukeeping class *
-
 -repackageclasses wisecraft
 -allowaccessmodification
 -optimizationpasses 30
