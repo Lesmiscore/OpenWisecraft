@@ -39,56 +39,56 @@ stages:
   - rcon
   - postBuild
 
-main1: # Build for app debug APKs
+appDebug: # Build for app debug APKs
   <<: *artf
   <<: *scrpt
   stage: app
   variables:
     TASK: ":app:assembleDebug"
 
-main2: # Build for app debug APKs
+appDebug2: # Build for app debug APKs
   <<: *artf
   <<: *scrpt
   stage: app
   variables:
     TASK: ":app:assembleDebug2"
 
-main3: # Build for app debug APKs
+appDebugTest2Obs: # Build for app debug APKs
   <<: *artf
   <<: *scrpt
   stage: app
   variables:
     TASK: ":app:assembleDebug2TestObs"
 
-main4: # Build for app debug(obfuscated) APKs
+appPg: # Build for app debug(obfuscated) APKs
   <<: *artf
   <<: *scrpt
   stage: app
   variables:
     TASK: ":app:assemblePg"
 
-main5: # Build for app debug(obfuscated) APKs
+appPgUlt: # Build for app debug(obfuscated) APKs
   <<: *artf
   <<: *scrpt
   stage: app
   variables:
     TASK: ":app:assemblePg_ult"
 
-main6: # Build for app release APKs
+appRelease: # Build for app release APKs
   <<: *artf
   <<: *scrpt
   stage: app
   variables:
     TASK: ":app:assembleRelease"
 
-main7: # Build for app release(obfuscated) APKs
+appShrinkRelease: # Build for app release(obfuscated) APKs
   <<: *artf
   <<: *scrpt
   stage: app
   variables:
     TASK: ":app:assembleShrinkRelease"
 
-main8: # Build for app pre APKs
+appPre: # Build for app pre APKs
   <<: *artf
   <<: *pre
   stage: app
@@ -96,7 +96,7 @@ main8: # Build for app pre APKs
   variables:
     TASK: ":app:assemblePre"
 
-main9: # Build for app pre(obfuscated) APKs
+appShrinkPre: # Build for app pre(obfuscated) APKs
   <<: *artf
   <<: *pre
   stage: app
@@ -104,14 +104,14 @@ main9: # Build for app pre(obfuscated) APKs
   variables:
     TASK: ":app:assembleShrinkPre"
 
-main10: # Build for WRcon APKs
+rconAppAll: # Build for WRcon APKs
   <<: *artf
   <<: *scrpt
   stage: rcon
   variables:
     TASK: ":rconApp:build"
 
-main11: # Build for Rcon Password Cracker APKs
+rconPassCrackAll: # Build for Rcon Password Cracker APKs
   <<: *artf
   <<: *scrpt
   stage: rcon
