@@ -31,6 +31,7 @@
     public <init>(android.content.Context);
     public <init>(android.content.Context, android.util.AttributeSet);
     public <init>(android.content.Context, android.util.AttributeSet, int);
+    public void set*(...);
 }
 -keep public class org.jsoup.** {
   public *;
@@ -60,9 +61,17 @@
 -keepattributes InnerClasses,EnclosingMethod
 
 -keepattributes com.google.gson.annotations.**, com.nao20010128nao.Wisecraft.misc.ShouldBeKept
--keepnames class ** {
+-keepclassmembers class ** {
 	@com.google.gson.annotations.** <fields>;
 }
+-keepclassmembers class com.nao20010128nao.McServerList.sites.Pmmp_Jp_Net$** {
+	@com.google.gson.annotations.** <fields>;
+}
+-keepclassmembers class com.nao20010128nao.Wisecraft.misc.pinger.Reply**{
+	@com.google.gson.annotations.** <fields>;
+}
+-keepclassmembers class * implements com.nao20010128nao.Wisecraft.misc.ShouldBeKept2
+-keepclassmembers @com.nao20010128nao.Wisecraft.misc.ShouldBeKept class *
+
+
 -repackageclasses wisecraft
--allowaccessmodification
--optimizationpasses 30
