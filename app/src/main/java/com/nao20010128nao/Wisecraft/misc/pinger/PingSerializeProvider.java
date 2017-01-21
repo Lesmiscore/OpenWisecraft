@@ -81,7 +81,11 @@ public class PingSerializeProvider
 					if(BuildConfig.OBFUSCATED){
 						result = new RawJsonReply(json);
 					}else{
-						result = new Gson().fromJson(json, (Class<? extends ServerPingResult>)resultClass);
+						if(resultClassNumber==0x1005){
+							result=new RawJsonReply(json);
+						}else{
+							result = new Gson().fromJson(json, (Class<? extends ServerPingResult>)resultClass);
+						}
 					}
 					((PCQueryResult)result).setRaw(json);
 					break;
