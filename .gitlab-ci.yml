@@ -39,56 +39,56 @@ stages:
   - rcon
   - postBuild
 
-appDebug: # Build for app debug APKs
+appDebug: &appDebug # Build for app debug APKs
   <<: *artf
   <<: *scrpt
   stage: app
   variables:
     TASK: ":app:assembleDebug"
 
-appDebug2: # Build for app debug APKs
+appDebug2: &appDebug2 # Build for app debug APKs
   <<: *artf
   <<: *scrpt
   stage: app
   variables:
     TASK: ":app:assembleDebug2"
 
-appDebugTest2Obs: # Build for app debug APKs
+appDebug2TestObs: &appDebug2TestObs # Build for app debug APKs
   <<: *artf
   <<: *scrpt
   stage: app
   variables:
     TASK: ":app:assembleDebug2TestObs"
 
-appPg: # Build for app debug(obfuscated) APKs
+appPg: &appPg # Build for app debug(obfuscated) APKs
   <<: *artf
   <<: *scrpt
   stage: app
   variables:
     TASK: ":app:assemblePg"
 
-appPgUlt: # Build for app debug(obfuscated) APKs
+appPgUlt: &appPgUlt # Build for app debug(obfuscated) APKs
   <<: *artf
   <<: *scrpt
   stage: app
   variables:
     TASK: ":app:assemblePg_ult"
 
-appRelease: # Build for app release APKs
+appRelease: &appRelese # Build for app release APKs
   <<: *artf
   <<: *scrpt
   stage: app
   variables:
     TASK: ":app:assembleRelease"
 
-appShrinkRelease: # Build for app release(obfuscated) APKs
+appShrinkRelease: &appShrinkRelease # Build for app release(obfuscated) APKs
   <<: *artf
   <<: *scrpt
   stage: app
   variables:
     TASK: ":app:assembleShrinkRelease"
 
-appPre: # Build for app pre APKs
+appPre: &appPre # Build for app pre APKs
   <<: *artf
   <<: *pre
   stage: app
@@ -96,7 +96,7 @@ appPre: # Build for app pre APKs
   variables:
     TASK: ":app:assemblePre"
 
-appShrinkPre: # Build for app pre(obfuscated) APKs
+appShrinkPre: &appShrinkPre # Build for app pre(obfuscated) APKs
   <<: *artf
   <<: *pre
   stage: app
@@ -104,7 +104,7 @@ appShrinkPre: # Build for app pre(obfuscated) APKs
   variables:
     TASK: ":app:assembleShrinkPre"
 
-rconAppAll: # Build for WRcon APKs
+rconAppAll: &rconAppAll # Build for WRcon APKs
   <<: *artf
   <<: *scrpt
   stage: rcon
@@ -136,3 +136,15 @@ copy:
   stage: postBuild
   script:
     - source ./ci/copy.sh
+
+
+appDebugSplit:         *appDebug
+appDebug2Split:        *appDebug2
+appDebug2TestObsSplit: *appDebug2TestObs
+appPgSplit:            *appPg
+appPgUltSplit:         *appPgUlt
+appReleaseSplit:       *appRelese
+appShrinkReleaseSplit: *appShrinkRelease
+appPreSplit:           *appPre
+appShrinkPreSplit:     *appShrinkPre
+rconAppAllSplit:       *rconAppAll

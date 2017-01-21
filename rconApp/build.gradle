@@ -45,6 +45,20 @@ android {
 	lintOptions {
         abortOnError false
     }
+    
+    
+	splits{
+		if(Boolean.getBoolean("SPLIT_APK")){
+			density{
+				enable true
+			}
+			language{
+				enable true
+				reset()
+				include "ja","en"
+			}
+		}
+	}
 }
 
 dependencies {
