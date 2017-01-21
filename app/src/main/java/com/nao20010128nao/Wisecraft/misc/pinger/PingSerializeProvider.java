@@ -9,6 +9,8 @@ import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
 import java.io.*;
 import java.util.*;
 
+import com.nao20010128nao.Wisecraft.BuildConfig;
+
 public class PingSerializeProvider 
 {
 	public static final Map<Class<? extends ServerPingResult>,Integer> PING_CLASS_NUMBER;
@@ -74,9 +76,13 @@ public class PingSerializeProvider
 				case 0x0001:
 					result = new UnconnectedPing.UnconnectedPingResult(new String(resultBytes,32,resultBytes.length-32, CompatCharsets.UTF_8), 0, resultBytes);
 					break;
-				case 0x1002:case 0x1003:
+				case 0x1002:case 0x1003:case 0x1005:
 					String json=new String(resultBytes, CompatCharsets.UTF_8);
-					result = new Gson().fromJson(json, (Class<? extends ServerPingResult>)resultClass);
+					if(BuildConfig.OBFUSCATED){
+						result = new RawJsonReply(json);
+					}else{
+						result = new Gson().fromJson(json, (Class<? extends ServerPingResult>)resultClass);
+					}
 					((PCQueryResult)result).setRaw(json);
 					break;
 				case 0xf004:
@@ -86,12 +92,6 @@ public class PingSerializeProvider
 					pair.setB(loadFromRawDump(dis2));
 					result = pair;
 					break;
-				case 0x1005:
-					String json2=new String(resultBytes, CompatCharsets.UTF_8);
-					result = new RawJsonReply(json2);
-					((PCQueryResult)result).setRaw(json2);
-					break;
-
 				default:
 					result = null;
 					break;
@@ -113,7 +113,7 @@ public class PingSerializeProvider
 				throw new IllegalArgumentException("InputStream has an invalid content!");
 			}
 		} catch (IOException e) {
-			throw new IllegalArgumentException("Failed to check the header of the InputStream.");
+			throw new IllegalArgumentException("Failed to check the header of the InputStream.",e);
 		}
 		return loadFromRawDump(dis);
 	}
@@ -137,7 +137,7 @@ public class PingSerializeProvider
                 throw new IllegalArgumentException("Unsupported type! Use loadFromDumpFile() instead.");
             }
         } catch (IOException e) {
-            throw new IllegalArgumentException("Failed to check the header of the InputStream.");
+            throw new IllegalArgumentException("Failed to check the header of the InputStream.",e);
         }
         try {
             ServerStatus result=new ServerStatus();
