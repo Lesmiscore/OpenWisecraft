@@ -138,14 +138,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
 			sl.attachNewActivity(this);
 			
-			boolean willFinishOldInstance=true;
-			{
-				if(Build.VERSION.SDK_INT>=25)
-					willFinishOldInstance=false;
-			}
-			if(willFinishOldInstance)
-				instance.get().finish();
-					
 			instance.clear();
 		}
 		instance = new WeakReference(this);
