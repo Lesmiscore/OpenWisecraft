@@ -447,6 +447,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				TextView serverNameView=(TextView)ll.findViewById(R.id.serverName);
 				serverNameView.setText(getTitle());
 				serverNameView.setTextColor(slsl.getTextColor());
+				ll.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
 				ab.setView(ll).show();
 				break;
 		}
