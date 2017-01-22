@@ -54,7 +54,6 @@ android {
 			}
 			language{
 				enable true
-				reset()
 				include "ja","en"
 			}
 		}
