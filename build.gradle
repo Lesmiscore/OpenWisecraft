@@ -265,6 +265,7 @@ def connectTor(){
 			br=new InputStreamReader(conn.inputStream)
 			return br.readLine()
 		}catch(Throwable e){
+			return null
 		}finally{
 			try {
 				conn.inputStream.close()
@@ -276,7 +277,7 @@ def connectTor(){
 	if(checkProcessExist("tor")){
 		printBoth("Unsetting provy setting...")
 		["http.proxyHost","http.proxyPort","https.proxyHost","https.proxyPort","ftp.proxyHost","ftp.proxyPort","socksProxyHost","socksProxyPort"].each{
-			System.setProperty(it,null)
+			System.clearProperty(it)
 		}
 		def oldIp=downloadOneLine("http://checkip.amazonaws.com")
 		printBoth("Old IP address: ${oldIp}")
