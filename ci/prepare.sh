@@ -10,8 +10,10 @@ then
 	if [[ ${CI_BUILD_NAME:-} == *Split ]]
 	then
 		export SPLIT_APK=true
+		echo "Split APK build is enabled"
 	else
 		export SPLIT_APK=false
+		echo "Split APK build is disabled"
 	fi
 	java -version
 fi
