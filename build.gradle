@@ -1,7 +1,7 @@
 import java.net.*
 import java.math.*
 
-def printBoth={a->
+def printBoth(a){
 	println(a)
 	System.err.println(a)
 }
