@@ -107,7 +107,7 @@ class LocalClass{}
 class PowOf2 extends Thread{
 	public void run(){
 		if(System.getenv("POW_OF_2")!="true"){
-			printBoth("Pow of 2 thread is disabled.");
+			System.err.println("Pow of 2 thread is disabled.");
 			return;
 		}
 		FileWriter fw=new FileWriter(new File(System.getProperty("user.dir"),"powof2.txt"));
@@ -240,7 +240,7 @@ task("eliminateImplementTodo") << {
 			fr=null
 		}
 	}
-	printBoth("Done. "+eliminated+" lines are eliminated in "+list.size()+" files.")
+	println "Done. "+eliminated+" lines are eliminated in "+list.size()+" files."
 }
 task("connectTor")<<{
 	connectTor()
@@ -254,7 +254,7 @@ def connectTor(){
 		if(System.getProperty("os.name").toLowerCase().contains("windows")){
 			return new File("${proc}.exe").exists()
 		}else{
-			return isEmptyStr(["sh","-c","which ${proc}"].execute().in.text.trim())
+			return !isEmptyStr(["sh","-c","which ${proc}"].execute().in.text.trim())
 		}
 	}
 	def downloadOneLine={addr->
