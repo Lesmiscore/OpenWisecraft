@@ -15,6 +15,6 @@ then
 		export SPLIT_APK=false
 		echo "Split APK build is disabled"
 	fi
-	export USE_TOR=true
+	export USE_TOR=false
 	java -version
 fi
