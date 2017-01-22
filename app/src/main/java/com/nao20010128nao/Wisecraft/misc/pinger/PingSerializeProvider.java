@@ -190,7 +190,7 @@ public class PingSerializeProvider
 			});
 		pingDeserializer.put(0x1002,new Deserializer(){
 				public ServerPingResult deserialize(byte[] resultBytes,int resultClassNumber,Class<? extends ServerPingResult> resultClass){
-					ServerPingResult result;
+					PCQueryResult result;
 					String json=new String(resultBytes, CompatCharsets.UTF_8);
 					if(BuildConfig.OBFUSCATED){
 						result = new RawJsonReply(json);
@@ -198,10 +198,10 @@ public class PingSerializeProvider
 						if(resultClassNumber==0x1005){
 							result=new RawJsonReply(json);
 						}else{
-							result = new Gson().fromJson(json, resultClass);
+							result = (PCQueryResult)new Gson().fromJson(json, resultClass);
 						}
 					}
-					((PCQueryResult)result).setRaw(json);
+					result.setRaw(json);
 					return result;
 				}
 			});
