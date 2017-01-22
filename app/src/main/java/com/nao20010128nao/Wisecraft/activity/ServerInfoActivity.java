@@ -690,47 +690,59 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				player.addAll(sort);
 			} else if (resp instanceof Reply) {
 				Reply rep=(Reply)resp;
-				if (rep.players != null && rep.players.sample != null) {
-					final ArrayList<String> sort=new ArrayList<>();
-					for (Reply.Player o:rep.players.sample) {
-						sort.add(o.name);
-						TheApplication.instance.pcUserUUIDs.put(o.name, o.id);
+				if(rep.players != null){
+					if (rep.players.sample != null) {
+						final ArrayList<String> sort=new ArrayList<>();
+						for (Reply.Player o:rep.players.sample) {
+							sort.add(o.name);
+							TheApplication.instance.pcUserUUIDs.put(o.name, o.id);
+						}
+						if (pref.getBoolean("sortPlayerNames", true))
+							Collections.sort(sort);
+						player.clear();
+						player.addAll(sort);
+					} else {
+						player.clear();
 					}
-					if (pref.getBoolean("sortPlayerNames", true))
-						Collections.sort(sort);
-					player.clear();
-					player.addAll(sort);
-				} else {
+				}else{
 					player.clear();
 				}
 			} else if (resp instanceof Reply19) {
 				Reply19 rep=(Reply19)resp;
-				if (rep.players != null && rep.players.sample != null) {
-					final ArrayList<String> sort=new ArrayList<>();
-					for (Reply19.Player o:rep.players.sample) {
-						sort.add(o.name);
-						TheApplication.instance.pcUserUUIDs.put(o.name, o.id);
+				if(rep.players != null){
+					if (rep.players.sample != null) {
+						final ArrayList<String> sort=new ArrayList<>();
+						for (Reply19.Player o:rep.players.sample) {
+							sort.add(o.name);
+							TheApplication.instance.pcUserUUIDs.put(o.name, o.id);
+						}
+						if (pref.getBoolean("sortPlayerNames", true))
+							Collections.sort(sort);
+						player.clear();
+						player.addAll(sort);
+					} else {
+						player.clear();
 					}
-					if (pref.getBoolean("sortPlayerNames", true))
-						Collections.sort(sort);
-					player.clear();
-					player.addAll(sort);
-				} else {
+				}else{
 					player.clear();
 				}
 			}else if(resp instanceof RawJsonReply){
 				JsonObject rep=((RawJsonReply)resp).json;
-				if(rep.has("players") && rep.get("players").getAsJsonObject().has("sample")){
-					final ArrayList<String> sort=new ArrayList<>();
-					for (JsonElement je:rep.get("players").getAsJsonObject().get("sample").getAsJsonArray()) {
-						JsonObject o=je.getAsJsonObject();
-						sort.add(o.get("name").getAsString());
-						TheApplication.instance.pcUserUUIDs.put(o.get("name").getAsString(), o.get("id").getAsString());
+				if(rep.has("players")){
+					if(rep.get("players").getAsJsonObject().has("sample")){
+						final ArrayList<String> sort=new ArrayList<>();
+						for (JsonElement je:rep.get("players").getAsJsonObject().get("sample").getAsJsonArray()) {
+							JsonObject o=je.getAsJsonObject();
+							sort.add(o.get("name").getAsString());
+							TheApplication.instance.pcUserUUIDs.put(o.get("name").getAsString(), o.get("id").getAsString());
+						}
+						if (pref.getBoolean("sortPlayerNames", true))
+							Collections.sort(sort);
+						player.clear();
+						player.addAll(sort);
+					}else{
+						player.clear();
 					}
-					if (pref.getBoolean("sortPlayerNames", true))
-						Collections.sort(sort);
-					player.clear();
-					player.addAll(sort);
 				}else{
 					player.clear();
 				}
