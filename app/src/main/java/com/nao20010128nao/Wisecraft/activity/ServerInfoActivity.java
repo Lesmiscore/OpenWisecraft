@@ -505,8 +505,6 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 	}
 
 	class PCUserFaceAdapter extends PlayerNamesListAdapter {
-		List<View> cached=new ArrayList<>(Constant.ONE_HUNDRED_LENGTH_NULL_LIST);
-		
 		@Override
 		public FindableViewHolder onCreateViewHolder(ViewGroup parent, int type) {
 			return new VH(getLayoutInflater().inflate(R.layout.simple_list_item_with_image,parent,false));
