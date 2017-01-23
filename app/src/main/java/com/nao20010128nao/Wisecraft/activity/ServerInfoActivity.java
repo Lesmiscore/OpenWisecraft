@@ -753,7 +753,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container) {
-			return inflater.inflate(R.layout.players_tab, container, false);
+			return inflater.inflate(R.layout.players_tab, container);
 		}
 
 		public boolean canInflateSkinFaceList() {
@@ -798,7 +798,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container) {
-			View v= inflater.inflate(R.layout.data_tab, container, false);
+			View v= inflater.inflate(R.layout.data_tab, container);
 			((RecyclerView)v.findViewById(R.id.data)).addItemDecoration(new DividerItemDecoration(getContext(),LinearLayoutManager.VERTICAL));
 			return v;
 		}
@@ -916,7 +916,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container) {
-			View lv= inflater.inflate(R.layout.data_tab_pc, container, false);
+			View lv= inflater.inflate(R.layout.data_tab_pc, container);
 			lv.findViewById(R.id.serverImageAndName).setBackgroundDrawable(getParentActivity().slsl.load());
 			((RecyclerView)lv.findViewById(R.id.data)).addItemDecoration(new DividerItemDecoration(getContext(),LinearLayoutManager.VERTICAL));
 			return lv;
@@ -963,7 +963,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container) {
-			return inflater.inflate(R.layout.players_tab, container, false);
+			return inflater.inflate(R.layout.players_tab, container);
 		}
 	}
 	public static class ModsFragment extends SiaBaseFragment {
@@ -1014,13 +1014,13 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container) {
-			return inflater.inflate(R.layout.mods_tab, container, false);
+			return inflater.inflate(R.layout.mods_tab, container);
 		}
 	}
 	public static class UcpInfoFragment extends SiaBaseFragment {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container) {
-			return inflater.inflate(R.layout.server_info_no_details_fragment, container, false);
+			return inflater.inflate(R.layout.server_info_no_details_fragment, container);
 		}
 	}
 	public static class UcpDetailsFragment extends SiaBaseFragment {
@@ -1058,7 +1058,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container) {
-			View v= inflater.inflate(R.layout.server_info_ucp_details, container, false);
+			View v= inflater.inflate(R.layout.server_info_ucp_details, container);
 			return v;
 		}
 	}
@@ -1070,7 +1070,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 			View base=inflater.inflate(R.layout.server_info_fragments_base,container,false);
 			ViewGroup childBase=(ViewGroup)base.findViewById(R.id.childBase);
 			childClassReturnedView=onCreateView(inflater,childBase);
-			if(childBase.getChildCount()<1){
+			if(childBase.getChildCount()==0){
 				childBase.addView(childClassReturnedView);
 			}
 			return base;

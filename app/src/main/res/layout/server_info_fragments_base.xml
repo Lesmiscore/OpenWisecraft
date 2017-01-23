@@ -13,7 +13,8 @@
 	<FrameLayout
 		android:layout_height="match_parent"
 		android:layout_width="match_parent"
-		android:id="@+id/error">
+		android:id="@+id/error"
+		android:visibility="invisible">
 
 		<TextView
 			android:textAppearance="?android:attr/textAppearanceLarge"
