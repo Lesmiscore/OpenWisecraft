@@ -1345,43 +1345,43 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 										 final EditText et_=(EditText)dialogView_.findViewById(R.id.filePath);
 										 et_.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/pingresult.wisecraft-ping").toString());
 										 dialogView_.findViewById(R.id.selectFile).setOnClickListener(new View.OnClickListener(){
-												 public void onClick(View v) {
-													 File f=new File(et_.getText().toString());
-													 if ((!f.exists())|f.isFile())f = f.getParentFile();
-													 sla.startChooseFileForOpen(f, new FileChooserResult(){
-															 public void onSelected(File f) {
-																 et_.setText(f.toString());
-															 }
-															 public void onSelectCancelled() {/*No-op*/}
-														 });
-												 }
-											 });
-										 new AlertDialog.Builder(sla,ThemePatcher.getDefaultDialogStyle(sla))
-											 .setTitle(R.string.export_typepath_simple)
-											 .setView(dialogView_)
-											 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
-												 public void onClick(DialogInterface di, int w) {
-													 Utils.makeSB(sla.coordinator, R.string.exporting, Snackbar.LENGTH_LONG).show();
-													 new AsyncTask<String,Void,File>(){
-														 public File doInBackground(String... texts) {
-															 File f;
-															 byte[] data=PingSerializeProvider.doRawDumpForFile(((ServerStatus)getItem(p3)).response);
-															 if (writeToFileByBytes(f = new File(texts[0]), data))
-																 return f;
-															 else
-																 return null;
-														 }
-														 public void onPostExecute(File f) {
-															 if (f != null) {
-																 Utils.makeSB(sla.coordinator, sla.getResources().getString(R.string.export_complete).replace("[PATH]", f + ""), Snackbar.LENGTH_LONG).show();
-															 } else {
-																 Utils.makeSB(sla.coordinator, sla.getResources().getString(R.string.export_failed), Snackbar.LENGTH_LONG).show();
-															 }
-														 }
-													 }.execute(et_.getText().toString());
-												 }
-											 })
-											 .show();
+												public void onClick(View v) {
+													File f=new File(et_.getText().toString());
+													if ((!f.exists())|f.isFile())f = f.getParentFile();
+													sla.startChooseFileForOpen(f, new FileChooserResult(){
+															public void onSelected(File f) {
+																et_.setText(f.toString());
+															}
+															public void onSelectCancelled() {/*No-op*/}
+														});
+												}
+											});
+										new AlertDialog.Builder(sla,ThemePatcher.getDefaultDialogStyle(sla))
+											.setTitle(R.string.export_typepath_simple)
+											.setView(dialogView_)
+											.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
+												public void onClick(DialogInterface di, int w) {
+													Utils.makeSB(sla.coordinator, R.string.exporting, Snackbar.LENGTH_LONG).show();
+													new AsyncTask<String,Void,File>(){
+														public File doInBackground(String... texts) {
+															File f;
+															byte[] data=PingSerializeProvider.doRawDumpForFile(((ServerStatus)getItem(p3)).response);
+															if (writeToFileByBytes(f = new File(texts[0]), data))
+																return f;
+															else
+																return null;
+														}
+														public void onPostExecute(File f) {
+															if (f != null) {
+																Utils.makeSB(sla.coordinator, sla.getResources().getString(R.string.export_complete).replace("[PATH]", f + ""), Snackbar.LENGTH_LONG).show();
+															} else {
+																Utils.makeSB(sla.coordinator, sla.getResources().getString(R.string.export_failed), Snackbar.LENGTH_LONG).show();
+															}
+														}
+													}.execute(et_.getText().toString());
+												}
+											})
+											.show();
 										}
 								 },R.string.exportPing));
 
