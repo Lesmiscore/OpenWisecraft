@@ -1064,10 +1064,10 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 	}
 	
 	static abstract class SiaBaseFragment extends BaseFragment<ServerInfoActivity> {
-		View childClassReturnedView;
+		private View childClassReturnedView,base;
 		@Override
 		public final View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-			View base=inflater.inflate(R.layout.server_info_fragments_base,container,false);
+			base=inflater.inflate(R.layout.server_info_fragments_base,container,false);
 			ViewGroup childBase=(ViewGroup)base.findViewById(R.id.childBase);
 			childClassReturnedView=onCreateView(inflater,childBase);
 			if(childBase.getChildCount()==0){
@@ -1080,6 +1080,11 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 
 		public View getChildClassReturnedView() {
 			return childClassReturnedView;
+		}
+		
+		public void indicateError(){
+			base.findViewById(R.id.childBase).setVisibility(View.GONE);
+			base.findViewById(R.id.error).setVisibility(View.VISIBLE);
 		}
 	}
 	
