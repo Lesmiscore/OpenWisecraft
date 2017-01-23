@@ -238,17 +238,24 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                 return true;
             }
 
-            public boolean onActionItemClicked(ActionMode p1, MenuItem p2) {
+            public boolean onActionItemClicked(final ActionMode p1, MenuItem p2) {
 				switch(p2.getItemId()){
 					case 0:
-						for(Server s:selected){
-							if(pinging.get(s))continue;
-							dryUpdate(s,true);
-							if(list.indexOf(s)!=-1){
-								statLayout.setStatusAt(list.indexOf(s),1);
+					new AlertDialog.Builder(ServerListActivityImpl.this)
+						.setMessage(R.string.auSure)
+						.setNegativeButton(android.R.string.ok,new QuickDialogClickListener(){
+							public void onClick(int which){
+								for(Server s:selected){
+									if(pinging.get(s))continue;
+									dryUpdate(s,true);
+									if(list.indexOf(s)!=-1){
+										statLayout.setStatusAt(list.indexOf(s),1);
+									}
+								}
+								p1.finish();
 							}
-						}
-						p1.finish();
+						})
+						.setPositiveButton(android.R.string.cancel,null);
 						break;
 				}
                 return true;
