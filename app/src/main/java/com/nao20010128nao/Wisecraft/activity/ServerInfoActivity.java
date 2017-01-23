@@ -1059,7 +1059,6 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container) {
 			View v= inflater.inflate(R.layout.server_info_ucp_details, container, false);
-			((RecyclerView)v.findViewById(R.id.data)).addItemDecoration(new DividerItemDecoration(getContext(),LinearLayoutManager.VERTICAL));
 			return v;
 		}
 	}
