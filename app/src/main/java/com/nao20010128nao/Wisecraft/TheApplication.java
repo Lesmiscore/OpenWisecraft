@@ -29,11 +29,11 @@ import java.util.*;
 import uk.co.chrisjenx.calligraphy.*;
 import com.nao20010128nao.Wisecraft.misc.collector.*;
 
-public class TheApplication extends Application implements  com.nao20010128nao.Wisecraft.rcon.Presenter,
+class TheApplicationImpl extends Application implements  com.nao20010128nao.Wisecraft.rcon.Presenter,
 															com.ipaulpro.afilechooser.Presenter,
 															InformationCommunicatorReceiver.DisclosureResult,
 															Application.ActivityLifecycleCallbacks {
-	public static TheApplication instance;
+	public static TheApplicationImpl implInstance;
 	public static TypefaceLoader latoLight,icomoon1,sysDefault,droidSans,robotoSlabLight,ubuntuFont,mplus1p;
 	public static Field[] fonts=getFontFields();
 	public static Map<TypefaceLoader,String> fontFilenames;
@@ -56,7 +56,7 @@ public class TheApplication extends Application implements  com.nao20010128nao.W
 		super.onCreate();
 		MultiDex.install(this);
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
-		instance = this;
+		implInstance = this;
 		
 		///////
 		pcUserUUIDs=new Gson().fromJson(pref.getString("pcuseruuids","{}"),PCUserUUIDMap.class);
@@ -303,5 +303,14 @@ public class TheApplication extends Application implements  com.nao20010128nao.W
 	
 	static{
 		AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
+	}
+}
+public class TheApplication extends TheApplicationImpl{
+	public static TheApplication instance;
+
+	@Override
+	public void onCreate() {
+		super.onCreate();
+		instance=this;
 	}
 }
