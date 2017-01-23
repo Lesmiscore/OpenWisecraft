@@ -932,6 +932,28 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			}
 		}.start();
 	}
+	
+	@NeedsPermission("android.permission.WRITE_EXTERNAL_STORAGE")
+	public void exportSingleServer(String dest,final ServerStatus stat){
+		Utils.makeSB(coordinator, R.string.exporting, Snackbar.LENGTH_LONG).show();
+		new AsyncTask<String,Void,File>(){
+			public File doInBackground(String... texts) {
+				File f;
+				byte[] data=PingSerializeProvider.doRawDumpForFile(stat.response);
+				if (writeToFileByBytes(f = new File(texts[0]), data))
+					return f;
+				else
+					return null;
+			}
+			public void onPostExecute(File f) {
+				if (f != null) {
+					Utils.makeSB(coordinator, getResources().getString(R.string.export_complete).replace("[PATH]", f + ""), Snackbar.LENGTH_LONG).show();
+				} else {
+					Utils.makeSB(coordinator, getResources().getString(R.string.export_failed), Snackbar.LENGTH_LONG).show();
+				}
+			}
+		}.execute(dest);
+	}
 
 	@Override
 	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -1348,7 +1370,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 												public void onClick(View v) {
 													File f=new File(et_.getText().toString());
 													if ((!f.exists())|f.isFile())f = f.getParentFile();
-													sla.startChooseFileForOpen(f, new FileChooserResult(){
+													ServerListActivityBase3PermissionsDispatcher.startChooseFileForOpenWithCheck(sla,f,new FileChooserResult(){
 															public void onSelected(File f) {
 																et_.setText(f.toString());
 															}
@@ -1361,24 +1383,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 											.setView(dialogView_)
 											.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 												public void onClick(DialogInterface di, int w) {
-													Utils.makeSB(sla.coordinator, R.string.exporting, Snackbar.LENGTH_LONG).show();
-													new AsyncTask<String,Void,File>(){
-														public File doInBackground(String... texts) {
-															File f;
-															byte[] data=PingSerializeProvider.doRawDumpForFile(((ServerStatus)getItem(p3)).response);
-															if (writeToFileByBytes(f = new File(texts[0]), data))
-																return f;
-															else
-																return null;
-														}
-														public void onPostExecute(File f) {
-															if (f != null) {
-																Utils.makeSB(sla.coordinator, sla.getResources().getString(R.string.export_complete).replace("[PATH]", f + ""), Snackbar.LENGTH_LONG).show();
-															} else {
-																Utils.makeSB(sla.coordinator, sla.getResources().getString(R.string.export_failed), Snackbar.LENGTH_LONG).show();
-															}
-														}
-													}.execute(et_.getText().toString());
+													ServerListActivityImplPermissionsDispatcher.exportSingleServerWithCheck(sla,et_.getText().toString(),(ServerStatus)getItem(p3));
 												}
 											})
 											.show();
