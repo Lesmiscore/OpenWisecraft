@@ -133,7 +133,6 @@ mainLast:
     - grep "Git\sRevision" build-appDebug.log
 
 copy:
-  image: "ubuntu:16.04"
   stage: postBuild
   script:
     - source ./ci/copy.sh
