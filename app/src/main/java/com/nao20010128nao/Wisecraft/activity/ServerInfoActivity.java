@@ -656,7 +656,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 		public void onResume() {
 			super.onResume();
 			try {
-				lv = (RecyclerView)getChildClassReturnedView();
+				lv = (RecyclerView)getChildClassReturnedView().findViewById(R.id.players);
 				lv.setLayoutManager(new HPLinearLayoutManager(getActivity()));
 				lv.setHasFixedSize(false);
 
@@ -929,7 +929,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 		public void onResume() {
 			super.onResume();
 			try {
-				lv = (RecyclerView)getChildClassReturnedView();
+				lv = (RecyclerView)getChildClassReturnedView().findViewById(R.id.players);
 				lv.setLayoutManager(new HPLinearLayoutManager(getActivity()));
 				lv.setHasFixedSize(false);
 
