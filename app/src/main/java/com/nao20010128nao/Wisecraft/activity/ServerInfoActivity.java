@@ -657,95 +657,99 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 		@ServerInfoParser
 		public void onResume() {
 			super.onResume();
-			lv = (RecyclerView)getView();
-			lv.setLayoutManager(new HPLinearLayoutManager(getActivity()));
-			lv.setHasFixedSize(false);
+			try {
+				lv = (RecyclerView)getView();
+				lv.setLayoutManager(new HPLinearLayoutManager(getActivity()));
+				lv.setHasFixedSize(false);
 
 
-			ServerStatus localStat=getParentActivity().localStat;
-			ServerPingResult resp=localStat.response;
-			if (pref.getBoolean("showPcUserFace", false) & localStat.mode == 1 & canInflateSkinFaceList()) {
-				getParentActivity().skinFaceImages = new ArrayList<>();
-				getParentActivity().sff = new SkinFaceFetcher(new SkinFetcher());
-				player = getParentActivity().new PCUserFaceAdapter();
-				Log.d("ServerInfoActivity", "face on");
-			} else {
-				player = getParentActivity().new PlayerNamesListAdapter();
-				Log.d("ServerInfoActivity", "face off");
-			}
+				ServerStatus localStat=getParentActivity().localStat;
+				ServerPingResult resp=localStat.response;
+				if (pref.getBoolean("showPcUserFace", false) & localStat.mode == 1 & canInflateSkinFaceList()) {
+					getParentActivity().skinFaceImages = new ArrayList<>();
+					getParentActivity().sff = new SkinFaceFetcher(new SkinFetcher());
+					player = getParentActivity().new PCUserFaceAdapter();
+					Log.d("ServerInfoActivity", "face on");
+				} else {
+					player = getParentActivity().new PlayerNamesListAdapter();
+					Log.d("ServerInfoActivity", "face off");
+				}
 
-			player.setHasStableIds(false);
-			lv.setAdapter(player);
+				player.setHasStableIds(false);
+				lv.setAdapter(player);
 
-			if (resp instanceof FullStat | resp instanceof SprPair) {
-				FullStat fs=null;
-				if (resp instanceof FullStat)
-					fs = (FullStat)resp;
-				else if (resp instanceof SprPair)
-					fs = (FullStat)((SprPair)resp).getA();
-				final ArrayList<String> sort=new ArrayList<>(fs.getPlayerList());
-				if (pref.getBoolean("sortPlayerNames", true))
-					Collections.sort(sort);
-				player.clear();
-				player.addAll(sort);
-			} else if (resp instanceof Reply) {
-				Reply rep=(Reply)resp;
-				if(rep.players != null){
-					if (rep.players.sample != null) {
-						final ArrayList<String> sort=new ArrayList<>();
-						for (Reply.Player o:rep.players.sample) {
-							sort.add(o.name);
-							TheApplication.instance.pcUserUUIDs.put(o.name, o.id);
+				if (resp instanceof FullStat | resp instanceof SprPair) {
+					FullStat fs=null;
+					if (resp instanceof FullStat)
+						fs = (FullStat)resp;
+					else if (resp instanceof SprPair)
+						fs = (FullStat)((SprPair)resp).getA();
+					final ArrayList<String> sort=new ArrayList<>(fs.getPlayerList());
+					if (pref.getBoolean("sortPlayerNames", true))
+						Collections.sort(sort);
+					player.clear();
+					player.addAll(sort);
+				} else if (resp instanceof Reply) {
+					Reply rep=(Reply)resp;
+					if (rep.players != null) {
+						if (rep.players.sample != null) {
+							final ArrayList<String> sort=new ArrayList<>();
+							for (Reply.Player o:rep.players.sample) {
+								sort.add(o.name);
+								TheApplication.instance.pcUserUUIDs.put(o.name, o.id);
+							}
+							if (pref.getBoolean("sortPlayerNames", true))
+								Collections.sort(sort);
+							player.clear();
+							player.addAll(sort);
+						} else {
+							player.clear();
 						}
-						if (pref.getBoolean("sortPlayerNames", true))
-							Collections.sort(sort);
-						player.clear();
-						player.addAll(sort);
 					} else {
 						player.clear();
 					}
-				}else{
-					player.clear();
-				}
-			} else if (resp instanceof Reply19) {
-				Reply19 rep=(Reply19)resp;
-				if(rep.players != null){
-					if (rep.players.sample != null) {
-						final ArrayList<String> sort=new ArrayList<>();
-						for (Reply19.Player o:rep.players.sample) {
-							sort.add(o.name);
-							TheApplication.instance.pcUserUUIDs.put(o.name, o.id);
+				} else if (resp instanceof Reply19) {
+					Reply19 rep=(Reply19)resp;
+					if (rep.players != null) {
+						if (rep.players.sample != null) {
+							final ArrayList<String> sort=new ArrayList<>();
+							for (Reply19.Player o:rep.players.sample) {
+								sort.add(o.name);
+								TheApplication.instance.pcUserUUIDs.put(o.name, o.id);
+							}
+							if (pref.getBoolean("sortPlayerNames", true))
+								Collections.sort(sort);
+							player.clear();
+							player.addAll(sort);
+						} else {
+							player.clear();
 						}
-						if (pref.getBoolean("sortPlayerNames", true))
-							Collections.sort(sort);
-						player.clear();
-						player.addAll(sort);
 					} else {
 						player.clear();
 					}
-				}else{
-					player.clear();
-				}
-			}else if(resp instanceof RawJsonReply){
-				JsonObject rep=((RawJsonReply)resp).json;
-				if(rep.has("players")){
-					if(rep.get("players").getAsJsonObject().has("sample")){
-						final ArrayList<String> sort=new ArrayList<>();
-						for (JsonElement je:rep.get("players").getAsJsonObject().get("sample").getAsJsonArray()) {
-							JsonObject o=je.getAsJsonObject();
-							sort.add(o.get("name").getAsString());
-							TheApplication.instance.pcUserUUIDs.put(o.get("name").getAsString(), o.get("id").getAsString());
+				} else if (resp instanceof RawJsonReply) {
+					JsonObject rep=((RawJsonReply)resp).json;
+					if (rep.has("players")) {
+						if (rep.get("players").getAsJsonObject().has("sample")) {
+							final ArrayList<String> sort=new ArrayList<>();
+							for (JsonElement je:rep.get("players").getAsJsonObject().get("sample").getAsJsonArray()) {
+								JsonObject o=je.getAsJsonObject();
+								sort.add(o.get("name").getAsString());
+								TheApplication.instance.pcUserUUIDs.put(o.get("name").getAsString(), o.get("id").getAsString());
+							}
+							if (pref.getBoolean("sortPlayerNames", true))
+								Collections.sort(sort);
+							player.clear();
+							player.addAll(sort);
+						} else {
+							player.clear();
 						}
-						if (pref.getBoolean("sortPlayerNames", true))
-							Collections.sort(sort);
-						player.clear();
-						player.addAll(sort);
-					}else{
+					} else {
 						player.clear();
 					}
-				}else{
-					player.clear();
 				}
+			} catch (Throwable e) {
+				WisecraftError.report("ServerInfoActivity.PlayersFragment",e);
 			}
 		}
 
@@ -770,24 +774,28 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 		@ServerInfoParser
 		public void onResume() {
 			super.onResume();
-			data = (RecyclerView)getView().findViewById(R.id.data);
-			data.setLayoutManager(new HPLinearLayoutManager(getActivity()));
-			data.setHasFixedSize(false);
+			try {
+				data = (RecyclerView)getView().findViewById(R.id.data);
+				data.setLayoutManager(new HPLinearLayoutManager(getActivity()));
+				data.setHasFixedSize(false);
 
-			infos = new KVRecyclerAdapter<>(getParentActivity());
-			infos.setHasStableIds(false);
-			data.setAdapter(infos);
-			ServerStatus localStat=getParentActivity().localStat;
-			ServerPingResult resp=localStat.response;
-			if (resp instanceof FullStat | resp instanceof SprPair) {
-				FullStat fs=null;
-				if (resp instanceof FullStat)
-					fs = (FullStat)resp;
-				else if (resp instanceof SprPair)
-					fs = (FullStat)((SprPair)resp).getA();
-				infos.clear();
-				infos.addAll(fs.getData());
-			} 
+				infos = new KVRecyclerAdapter<>(getParentActivity());
+				infos.setHasStableIds(false);
+				data.setAdapter(infos);
+				ServerStatus localStat=getParentActivity().localStat;
+				ServerPingResult resp=localStat.response;
+				if (resp instanceof FullStat | resp instanceof SprPair) {
+					FullStat fs=null;
+					if (resp instanceof FullStat)
+						fs = (FullStat)resp;
+					else if (resp instanceof SprPair)
+						fs = (FullStat)((SprPair)resp).getA();
+					infos.clear();
+					infos.addAll(fs.getData());
+				}
+			} catch (Throwable e) {
+				WisecraftError.report("ServerInfoActivity.DataFragmentPE",e);
+			}
 		}
 
 		@Override
@@ -809,99 +817,103 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 		@ServerInfoParser
 		public void onResume() {
 			super.onResume();
-			serverIcon = (ImageView)getView().findViewById(R.id.serverIcon);
-			serverName = (TextView)getView().findViewById(R.id.serverTitle);
-			data = (RecyclerView)getView().findViewById(R.id.data);
-			data.setLayoutManager(new HPLinearLayoutManager(getActivity()));
-			data.setHasFixedSize(false);
+			try {
+				serverIcon = (ImageView)getView().findViewById(R.id.serverIcon);
+				serverName = (TextView)getView().findViewById(R.id.serverTitle);
+				data = (RecyclerView)getView().findViewById(R.id.data);
+				data.setLayoutManager(new HPLinearLayoutManager(getActivity()));
+				data.setHasFixedSize(false);
 
 
-			infos = new KVRecyclerAdapter<>(getParentActivity());
-			infos.setHasStableIds(false);
-			data.setAdapter(infos);
-			ServerStatus localStat=getParentActivity().localStat;
-			ServerPingResult resp=localStat.response;
-			if (resp instanceof Reply) {
-				Reply rep=(Reply)resp;
-				if (pref.getBoolean("serverListColorFormattedText", false)) {
-					serverNameStr = Utils.parseMinecraftFormattingCode(rep.description,getParentActivity().slsl.getTextColor());
-				} else {
-					serverNameStr = Utils.deleteDecorations(rep.description);
+				infos = new KVRecyclerAdapter<>(getParentActivity());
+				infos.setHasStableIds(false);
+				data.setAdapter(infos);
+				ServerStatus localStat=getParentActivity().localStat;
+				ServerPingResult resp=localStat.response;
+				if (resp instanceof Reply) {
+					Reply rep=(Reply)resp;
+					if (pref.getBoolean("serverListColorFormattedText", false)) {
+						serverNameStr = Utils.parseMinecraftFormattingCode(rep.description, getParentActivity().slsl.getTextColor());
+					} else {
+						serverNameStr = Utils.deleteDecorations(rep.description);
+					}
+
+					infos.clear();
+					List<Map.Entry<String,String>> data=new ArrayList<>();
+					data.add(new KVP<String,String>(getString(R.string.pc_maxPlayers), rep.players.max + ""));
+					data.add(new KVP<String,String>(getString(R.string.pc_nowPlayers), rep.players.online + ""));
+					data.add(new KVP<String,String>(getString(R.string.pc_softwareVersion), rep.version.name));
+					data.add(new KVP<String,String>(getString(R.string.pc_protocolVersion), rep.version.protocol + ""));
+					infos.addAll(data);
+
+					if (rep.favicon != null) {
+						byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
+						serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
+						serverIconObj = new BitmapDrawable(serverIconBmp);
+					} else {
+						serverIconObj = null;
+					}
+				} else if (resp instanceof Reply19) {
+					Reply19 rep=(Reply19)resp;
+					if (pref.getBoolean("serverListColorFormattedText", false)) {
+						serverNameStr = Utils.parseMinecraftFormattingCode(rep.description.text, getParentActivity().slsl.getTextColor());
+					} else {
+						serverNameStr = Utils.deleteDecorations(rep.description.text);
+					}
+
+					infos.clear();
+					List<Map.Entry<String,String>> data=new ArrayList<>();
+					data.add(new KVP<String,String>(getString(R.string.pc_maxPlayers), rep.players.max + ""));
+					data.add(new KVP<String,String>(getString(R.string.pc_nowPlayers), rep.players.online + ""));
+					data.add(new KVP<String,String>(getString(R.string.pc_softwareVersion), rep.version.name));
+					data.add(new KVP<String,String>(getString(R.string.pc_protocolVersion), rep.version.protocol + ""));
+					infos.addAll(data);
+
+					if (rep.favicon != null) {
+						byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
+						serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
+						serverIconObj = new BitmapDrawable(serverIconBmp);
+					} else {
+						serverIconObj = null;
+					}
+				} else if (resp instanceof RawJsonReply) {
+					JsonObject rep=((RawJsonReply)resp).json;
+					String text;
+					if (rep.get("description").isJsonObject()) {
+						text = rep.get("description").getAsJsonObject().get("text").getAsString();
+					} else {
+						text = rep.get("description").getAsString();
+					}
+					if (pref.getBoolean("serverListColorFormattedText", false)) {
+						serverNameStr = Utils.parseMinecraftFormattingCode(text, getParentActivity().slsl.getTextColor());
+					} else {
+						serverNameStr = Utils.deleteDecorations(text);
+					}
+
+					JsonObject players=rep.get("players").getAsJsonObject();
+					JsonObject version=rep.get("version").getAsJsonObject();
+
+					infos.clear();
+					List<Map.Entry<String,String>> data=new ArrayList<>();
+					data.add(new KVP<String,String>(getString(R.string.pc_maxPlayers), players.get("max").getAsInt() + ""));
+					data.add(new KVP<String,String>(getString(R.string.pc_nowPlayers), players.get("online").getAsInt() + ""));
+					data.add(new KVP<String,String>(getString(R.string.pc_softwareVersion), version.get("name").getAsString()));
+					data.add(new KVP<String,String>(getString(R.string.pc_protocolVersion), version.get("protocol").getAsInt() + ""));
+					infos.addAll(data);
+
+					if (rep.has("favicon")) {
+						byte[] image=Base64.decode(rep.get("favicon").getAsString().split("\\,")[1], Base64.NO_WRAP);
+						serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
+						serverIconObj = new BitmapDrawable(serverIconBmp);
+					} else {
+						serverIconObj = null;
+					}
 				}
-
-				infos.clear();
-				List<Map.Entry<String,String>> data=new ArrayList<>();
-				data.add(new KVP<String,String>(getString(R.string.pc_maxPlayers), rep.players.max + ""));
-				data.add(new KVP<String,String>(getString(R.string.pc_nowPlayers), rep.players.online + ""));
-				data.add(new KVP<String,String>(getString(R.string.pc_softwareVersion), rep.version.name));
-				data.add(new KVP<String,String>(getString(R.string.pc_protocolVersion), rep.version.protocol + ""));
-				infos.addAll(data);
-
-				if (rep.favicon != null) {
-					byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
-					serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
-					serverIconObj = new BitmapDrawable(serverIconBmp);
-				} else {
-					serverIconObj = null;
-				}
-			} else if (resp instanceof Reply19) {
-				Reply19 rep=(Reply19)resp;
-				if (pref.getBoolean("serverListColorFormattedText", false)) {
-					serverNameStr = Utils.parseMinecraftFormattingCode(rep.description.text,getParentActivity().slsl.getTextColor());
-				} else {
-					serverNameStr = Utils.deleteDecorations(rep.description.text);
-				}
-
-				infos.clear();
-				List<Map.Entry<String,String>> data=new ArrayList<>();
-				data.add(new KVP<String,String>(getString(R.string.pc_maxPlayers), rep.players.max + ""));
-				data.add(new KVP<String,String>(getString(R.string.pc_nowPlayers), rep.players.online + ""));
-				data.add(new KVP<String,String>(getString(R.string.pc_softwareVersion), rep.version.name));
-				data.add(new KVP<String,String>(getString(R.string.pc_protocolVersion), rep.version.protocol + ""));
-				infos.addAll(data);
-
-				if (rep.favicon != null) {
-					byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
-					serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
-					serverIconObj = new BitmapDrawable(serverIconBmp);
-				} else {
-					serverIconObj = null;
-				}
-			} else if (resp instanceof RawJsonReply) {
-				JsonObject rep=((RawJsonReply)resp).json;
-				String text;
-				if(rep.get("description").isJsonObject()){
-					text = rep.get("description").getAsJsonObject().get("text").getAsString();
-				}else{
-					text = rep.get("description").getAsString();
-				}
-				if (pref.getBoolean("serverListColorFormattedText", false)) {
-					serverNameStr = Utils.parseMinecraftFormattingCode(text,getParentActivity().slsl.getTextColor());
-				} else {
-					serverNameStr = Utils.deleteDecorations(text);
-				}
-
-				JsonObject players=rep.get("players").getAsJsonObject();
-				JsonObject version=rep.get("version").getAsJsonObject();
-				
-				infos.clear();
-				List<Map.Entry<String,String>> data=new ArrayList<>();
-				data.add(new KVP<String,String>(getString(R.string.pc_maxPlayers), players.get("max").getAsInt() + ""));
-				data.add(new KVP<String,String>(getString(R.string.pc_nowPlayers), players.get("online").getAsInt() + ""));
-				data.add(new KVP<String,String>(getString(R.string.pc_softwareVersion), version.get("name").getAsString()));
-				data.add(new KVP<String,String>(getString(R.string.pc_protocolVersion), version.get("protocol").getAsInt() + ""));
-				infos.addAll(data);
-
-				if (rep.has("favicon")) {
-					byte[] image=Base64.decode(rep.get("favicon").getAsString().split("\\,")[1], Base64.NO_WRAP);
-					serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
-					serverIconObj = new BitmapDrawable(serverIconBmp);
-				} else {
-					serverIconObj = null;
-				}
+				serverName.setText(serverNameStr);
+				serverIcon.setImageDrawable(serverIconObj);
+			} catch (Throwable e) {
+				WisecraftError.report("ServerInfoActivity.DataFragmentPC",e);
 			}
-			serverName.setText(serverNameStr);
-			serverIcon.setImageDrawable(serverIconObj);
 		}
 
 		@Override
@@ -918,32 +930,36 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 		@Override
 		public void onResume() {
 			super.onResume();
-			lv = (RecyclerView)getView();
-			lv.setLayoutManager(new HPLinearLayoutManager(getActivity()));
-			lv.setHasFixedSize(false);
+			try {
+				lv = (RecyclerView)getView();
+				lv.setLayoutManager(new HPLinearLayoutManager(getActivity()));
+				lv.setHasFixedSize(false);
 
 
-			pluginNames = new SimpleRecyclerAdapter<String>(getParentActivity());
-			pluginNames.setHasStableIds(false);
-			lv.setAdapter(pluginNames);
-			ServerStatus localStat=getParentActivity().localStat;
-			ServerPingResult resp=localStat.response;
-			if (resp instanceof FullStat | resp instanceof SprPair) {
-				FullStat fs=null;
-				if (resp instanceof FullStat)
-					fs = (FullStat)resp;
-				else if (resp instanceof SprPair)
-					fs = (FullStat)((SprPair)resp).getA();
-				pluginNames.clear();
-				if (fs.getDataAsMap().containsKey("plugins")) {
-					String[] data=fs.getDataAsMap().get("plugins").split("\\: ");
-					if (data.length >= 2) {
-						ArrayList<String> plugins=new ArrayList<String>(Arrays.<String>asList(data[1].split("\\; ")));
-						if (pref.getBoolean("sortPluginNames", false))
-							Collections.sort(plugins);
-						pluginNames.addAll(plugins);
+				pluginNames = new SimpleRecyclerAdapter<String>(getParentActivity());
+				pluginNames.setHasStableIds(false);
+				lv.setAdapter(pluginNames);
+				ServerStatus localStat=getParentActivity().localStat;
+				ServerPingResult resp=localStat.response;
+				if (resp instanceof FullStat | resp instanceof SprPair) {
+					FullStat fs=null;
+					if (resp instanceof FullStat)
+						fs = (FullStat)resp;
+					else if (resp instanceof SprPair)
+						fs = (FullStat)((SprPair)resp).getA();
+					pluginNames.clear();
+					if (fs.getDataAsMap().containsKey("plugins")) {
+						String[] data=fs.getDataAsMap().get("plugins").split("\\: ");
+						if (data.length >= 2) {
+							ArrayList<String> plugins=new ArrayList<String>(Arrays.<String>asList(data[1].split("\\; ")));
+							if (pref.getBoolean("sortPluginNames", false))
+								Collections.sort(plugins);
+							pluginNames.addAll(plugins);
+						}
 					}
 				}
+			} catch (Throwable e) {
+				WisecraftError.report("ServerInfoActivity.PluginsFragment",e);
 			}
 		}
 
@@ -961,36 +977,40 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 		@ServerInfoParser
 		public void onResume() {
 			super.onResume();
-			mods = (RecyclerView)getView().findViewById(R.id.players);
-			modLoader = (TextView)getView().findViewById(R.id.modLoaderType);
-			mods.setLayoutManager(new HPLinearLayoutManager(getActivity()));
-			mods.setHasFixedSize(false);
+			try {
+				mods = (RecyclerView)getView().findViewById(R.id.players);
+				modLoader = (TextView)getView().findViewById(R.id.modLoaderType);
+				mods.setLayoutManager(new HPLinearLayoutManager(getActivity()));
+				mods.setHasFixedSize(false);
 
 
-			modInfos = getParentActivity().new ModInfoListAdapter();
-			modInfos.setHasStableIds(false);
-			mods.setAdapter(modInfos);
-			ServerStatus localStat=getParentActivity().localStat;
-			ServerPingResult resp=localStat.response;
-			if (resp instanceof Reply) {
-				Reply rep=(Reply)resp;
-				if (rep.modinfo != null) {
-					modInfos.addAll(rep.modinfo.modList);
-					modLoaderTypeName = rep.modinfo.type;
+				modInfos = getParentActivity().new ModInfoListAdapter();
+				modInfos.setHasStableIds(false);
+				mods.setAdapter(modInfos);
+				ServerStatus localStat=getParentActivity().localStat;
+				ServerPingResult resp=localStat.response;
+				if (resp instanceof Reply) {
+					Reply rep=(Reply)resp;
+					if (rep.modinfo != null) {
+						modInfos.addAll(rep.modinfo.modList);
+						modLoaderTypeName = rep.modinfo.type;
+					}
+				} else if (resp instanceof Reply19) {
+					Reply19 rep=(Reply19)resp;
+					if (rep.modinfo != null) {
+						modInfos.addAll(rep.modinfo.modList);
+						modLoaderTypeName = rep.modinfo.type;
+					}
+				} else if (resp instanceof RawJsonReply) {
+					JsonObject rep=((RawJsonReply)resp).json;
+					if (rep.has("modinfo")) {
+						JsonObject modInfo=rep.get("modinfo").getAsJsonObject();
+						modInfos.addAll(Utils.iterableToCollection(modInfo.get("modList").getAsJsonArray()));
+						modLoaderTypeName = modInfo.get("type").getAsString();
+					}
 				}
-			} else if (resp instanceof Reply19) {
-				Reply19 rep=(Reply19)resp;
-				if (rep.modinfo != null) {
-					modInfos.addAll(rep.modinfo.modList);
-					modLoaderTypeName = rep.modinfo.type;
-				}
-			}else if(resp instanceof RawJsonReply){
-				JsonObject rep=((RawJsonReply)resp).json;
-				if(rep.has("modinfo")){
-					JsonObject modInfo=rep.get("modinfo").getAsJsonObject();
-					modInfos.addAll(Utils.iterableToCollection(modInfo.get("modList").getAsJsonArray()));
-					modLoaderTypeName = modInfo.get("type").getAsString();
-				}
+			} catch (Throwable e) {
+				WisecraftError.report("ServerInfoActivity.ModsFragment",e);
 			}
 		}
 
@@ -1010,28 +1030,32 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 		@Override
 		public void onResume() {
 			super.onResume();
-			UnconnectedPing.UnconnectedPingResult result;
-			if (getParentActivity().localStat.response instanceof UnconnectedPing.UnconnectedPingResult) {
-				result = (UnconnectedPing.UnconnectedPingResult)getParentActivity().localStat.response;
-			} else {
-				result = (UnconnectedPing.UnconnectedPingResult)((SprPair)getParentActivity().localStat.response).getB();
+			try {
+				UnconnectedPing.UnconnectedPingResult result;
+				if (getParentActivity().localStat.response instanceof UnconnectedPing.UnconnectedPingResult) {
+					result = (UnconnectedPing.UnconnectedPingResult)getParentActivity().localStat.response;
+				} else {
+					result = (UnconnectedPing.UnconnectedPingResult)((SprPair)getParentActivity().localStat.response).getB();
+				}
+				RecyclerView lv=(RecyclerView)getView().findViewById(R.id.data);
+				lv.setLayoutManager(new HPLinearLayoutManager(getActivity()));
+				lv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+				lv.setHasFixedSize(false);
+
+				KVRecyclerAdapter<String,String> adap=new KVRecyclerAdapter<String,String>(getActivity());
+				adap.setHasStableIds(false);
+				lv.setAdapter(adap);
+				List<Map.Entry<String,String>> otm=new ArrayList<>();
+				String[] values=result.getRaw().split("\\;");
+				otm.add(new KVP<String,String>(getString(R.string.ucp_serverName),      values[1]));
+				otm.add(new KVP<String,String>(getString(R.string.ucp_protocolVersion), values[2]));
+				otm.add(new KVP<String,String>(getString(R.string.ucp_mcpeVersion),     values[3]));
+				otm.add(new KVP<String,String>(getString(R.string.ucp_nowPlayers),      values[4]));
+				otm.add(new KVP<String,String>(getString(R.string.ucp_maxPlayers),      values[5]));
+				adap.addAll(otm);
+			} catch (Throwable e) {
+				WisecraftError.report("ServerInfoActivity.UcpDetailsFragment",e);
 			}
-			RecyclerView lv=(RecyclerView)getView().findViewById(R.id.data);
-			lv.setLayoutManager(new HPLinearLayoutManager(getActivity()));
-			lv.addItemDecoration(new DividerItemDecoration(getContext(),LinearLayoutManager.VERTICAL));
-			lv.setHasFixedSize(false);
-			
-			KVRecyclerAdapter<String,String> adap=new KVRecyclerAdapter<String,String>(getActivity());
-			adap.setHasStableIds(false);
-			lv.setAdapter(adap);
-			List<Map.Entry<String,String>> otm=new ArrayList<>();
-			String[] values=result.getRaw().split("\\;");
-			otm.add(new KVP<String,String>(getString(R.string.ucp_serverName),      values[1]));
-			otm.add(new KVP<String,String>(getString(R.string.ucp_protocolVersion), values[2]));
-			otm.add(new KVP<String,String>(getString(R.string.ucp_mcpeVersion),     values[3]));
-			otm.add(new KVP<String,String>(getString(R.string.ucp_nowPlayers),      values[4]));
-			otm.add(new KVP<String,String>(getString(R.string.ucp_maxPlayers),      values[5]));
-			adap.addAll(otm);
 		}
 
 		@Override
