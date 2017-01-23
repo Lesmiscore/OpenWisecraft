@@ -650,7 +650,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 	}
 	
 	
-	public static class PlayersFragment extends BaseFragment<ServerInfoActivity> {
+	public static class PlayersFragment extends SiaBaseFragment {
 		RecyclerView lv;
 		ListRecyclerViewAdapter<FindableViewHolder,String> player;
 		@Override
@@ -767,7 +767,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 			}
 		}
 	}
-	public static class DataFragmentPE extends BaseFragment<ServerInfoActivity> {
+	public static class DataFragmentPE extends SiaBaseFragment {
 		RecyclerView data;
 		KVRecyclerAdapter<String,String> infos;
 		@Override
@@ -805,7 +805,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 			return v;
 		}
 	}
-	public static class DataFragmentPC extends BaseFragment<ServerInfoActivity> {
+	public static class DataFragmentPC extends SiaBaseFragment {
 		ImageView serverIcon;
 		TextView serverName;
 		Drawable serverIconObj;
@@ -924,7 +924,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 			return lv;
 		}
 	}
-	public static class PluginsFragment extends BaseFragment<ServerInfoActivity> {
+	public static class PluginsFragment extends SiaBaseFragment {
 		SimpleRecyclerAdapter<String> pluginNames;
 		RecyclerView lv;
 		@Override
@@ -968,7 +968,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 			return inflater.inflate(R.layout.players_tab, container, false);
 		}
 	}
-	public static class ModsFragment extends BaseFragment<ServerInfoActivity> {
+	public static class ModsFragment extends SiaBaseFragment {
 		String modLoaderTypeName;
 		TextView modLoader;
 		ListRecyclerViewAdapter<FindableViewHolder,Object> modInfos;
@@ -1019,13 +1019,13 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 			return inflater.inflate(R.layout.mods_tab, container, false);
 		}
 	}
-	public static class UcpInfoFragment extends BaseFragment<ServerInfoActivity> {
+	public static class UcpInfoFragment extends SiaBaseFragment {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			return inflater.inflate(R.layout.server_info_no_details_fragment, container, false);
 		}
 	}
-	public static class UcpDetailsFragment extends BaseFragment<ServerInfoActivity> {
+	public static class UcpDetailsFragment extends SiaBaseFragment {
 
 		@Override
 		public void onResume() {
@@ -1066,6 +1066,9 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 		}
 	}
 	
+	static class SiaBaseFragment extends BaseFragment<ServerInfoActivity> {
+		
+	}
 	
 	
 	class CallbackBase extends ViewPagerBottomSheetBehavior.BottomSheetCallback{
