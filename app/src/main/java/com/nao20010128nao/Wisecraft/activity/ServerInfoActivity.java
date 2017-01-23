@@ -656,7 +656,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 		public void onResume() {
 			super.onResume();
 			try {
-				lv = (RecyclerView)getView();
+				lv = (RecyclerView)getChildClassReturnedView();
 				lv.setLayoutManager(new HPLinearLayoutManager(getActivity()));
 				lv.setHasFixedSize(false);
 
@@ -773,7 +773,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 		public void onResume() {
 			super.onResume();
 			try {
-				data = (RecyclerView)getView().findViewById(R.id.data);
+				data = (RecyclerView)getChildClassReturnedView().findViewById(R.id.data);
 				data.setLayoutManager(new HPLinearLayoutManager(getActivity()));
 				data.setHasFixedSize(false);
 
@@ -816,9 +816,9 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 		public void onResume() {
 			super.onResume();
 			try {
-				serverIcon = (ImageView)getView().findViewById(R.id.serverIcon);
-				serverName = (TextView)getView().findViewById(R.id.serverTitle);
-				data = (RecyclerView)getView().findViewById(R.id.data);
+				serverIcon = (ImageView)getChildClassReturnedView().findViewById(R.id.serverIcon);
+				serverName = (TextView)getChildClassReturnedView().findViewById(R.id.serverTitle);
+				data = (RecyclerView)getChildClassReturnedView().findViewById(R.id.data);
 				data.setLayoutManager(new HPLinearLayoutManager(getActivity()));
 				data.setHasFixedSize(false);
 
@@ -929,7 +929,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 		public void onResume() {
 			super.onResume();
 			try {
-				lv = (RecyclerView)getView();
+				lv = (RecyclerView)getChildClassReturnedView();
 				lv.setLayoutManager(new HPLinearLayoutManager(getActivity()));
 				lv.setHasFixedSize(false);
 
@@ -976,8 +976,8 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 		public void onResume() {
 			super.onResume();
 			try {
-				mods = (RecyclerView)getView().findViewById(R.id.players);
-				modLoader = (TextView)getView().findViewById(R.id.modLoaderType);
+				mods = (RecyclerView)getChildClassReturnedView().findViewById(R.id.players);
+				modLoader = (TextView)getChildClassReturnedView().findViewById(R.id.modLoaderType);
 				mods.setLayoutManager(new HPLinearLayoutManager(getActivity()));
 				mods.setHasFixedSize(false);
 
@@ -1035,7 +1035,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				} else {
 					result = (UnconnectedPing.UnconnectedPingResult)((SprPair)getParentActivity().localStat.response).getB();
 				}
-				RecyclerView lv=(RecyclerView)getView().findViewById(R.id.data);
+				RecyclerView lv=(RecyclerView)getChildClassReturnedView().findViewById(R.id.data);
 				lv.setLayoutManager(new HPLinearLayoutManager(getActivity()));
 				lv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
 				lv.setHasFixedSize(false);
@@ -1078,8 +1078,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 		
 		public abstract View onCreateView(LayoutInflater inflater, ViewGroup container);
 
-		@Override
-		public View getView() {
+		public View getChildClassReturnedView() {
 			return childClassReturnedView;
 		}
 	}
