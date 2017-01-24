@@ -19,7 +19,6 @@
     public <init>(android.content.Context);
     public <init>(android.content.Context, android.util.AttributeSet);
     public <init>(android.content.Context, android.util.AttributeSet, int);
-    public void set*(...);
 }
 -keep public class org.jsoup.** {
   public *;
@@ -58,3 +57,4 @@
 -repackageclasses wisecraft
 
 -allowaccessmodification
+-optimizationpasses 10
