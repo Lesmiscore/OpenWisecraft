@@ -75,6 +75,11 @@ abstract class ServerInfoActivityBase1 extends AppCompatActivity
 		startActivityForResult(intent,call);
 	}
 
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		ServerInfoActivityBase1PermissionsDispatcher.onRequestPermissionsResult(this,requestCode,grantResults);
+	}
 
 	public static interface FileChooserResult{
 		public void onSelected(File f);

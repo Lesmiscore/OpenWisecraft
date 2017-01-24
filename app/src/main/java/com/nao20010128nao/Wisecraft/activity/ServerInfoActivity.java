@@ -20,7 +20,6 @@ import android.widget.*;
 import biz.laenger.android.vpbs.*;
 import com.astuetz.*;
 import com.google.gson.*;
-import com.nao20010128nao.OTC.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
@@ -32,12 +31,14 @@ import java.io.*;
 import java.lang.ref.*;
 import java.math.*;
 import java.util.*;
+import permissions.dispatcher.*;
 
 import android.support.v7.app.AlertDialog;
 import com.nao20010128nao.Wisecraft.R;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 
+@RuntimePermissions
 abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 	static WeakReference<ServerInfoActivity> instance=new WeakReference(null);
 	//public static List<ServerStatus> stat=new ArrayList<>();
@@ -401,24 +402,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 					.setView(dialogView_)
 					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 						public void onClick(DialogInterface di, int w) {
-							Utils.makeSB(snackbarParent, R.string.exporting, Snackbar.LENGTH_LONG).show();
-							new AsyncTask<String,Void,File>(){
-								public File doInBackground(String... texts) {
-									File f;
-									byte[] data=PingSerializeProvider.doRawDumpForFile(localStat.response);
-									if (writeToFileByBytes(f = new File(texts[0]), data))
-										return f;
-									else
-										return null;
-								}
-								public void onPostExecute(File f) {
-									if (f != null) {
-										Utils.makeSB(snackbarParent, getResources().getString(R.string.export_complete).replace("[PATH]", f + ""), Snackbar.LENGTH_LONG).show();
-									} else {
-										Utils.makeSB(snackbarParent, getResources().getString(R.string.export_failed), Snackbar.LENGTH_LONG).show();
-									}
-								}
-							}.execute(et_.getText().toString());
+							ServerInfoActivityImplPermissionsDispatcher.exportCurrentServerStatus(ServerInfoActivity.this,et_.getText().toString());
 						}
 					})
 					.show();
@@ -452,6 +436,28 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				break;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	@NeedsPermission("android.permission.WRITE_EXTERNAL_STORAGE")
+	public void exportCurrentServerStatus(String fn){
+		Utils.makeSB(snackbarParent, R.string.exporting, Snackbar.LENGTH_LONG).show();
+		new AsyncTask<String,Void,File>(){
+			public File doInBackground(String... texts) {
+				File f;
+				byte[] data=PingSerializeProvider.doRawDumpForFile(localStat.response);
+				if (writeToFileByBytes(f = new File(texts[0]), data))
+					return f;
+				else
+					return null;
+			}
+			public void onPostExecute(File f) {
+				if (f != null) {
+					Utils.makeSB(snackbarParent, getResources().getString(R.string.export_complete).replace("[PATH]", f + ""), Snackbar.LENGTH_LONG).show();
+				} else {
+					Utils.makeSB(snackbarParent, getResources().getString(R.string.export_failed), Snackbar.LENGTH_LONG).show();
+				}
+			}
+		}.execute(fn);
 	}
 
 	public void setResultInstead(int resultCode, Intent data) {
@@ -489,6 +495,12 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 		if (serverIconBmp != null)serverIconBmp.recycle();
 	}
 
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		ServerInfoActivityImplPermissionsDispatcher.onRequestPermissionsResult(this,requestCode,grantResults);
+	}
+	
 	public void addModsTab() {
 		if ((!hideMods) | localStat.mode == 1) {
 			adapter.addTab(ModsFragment.class, getResources().getString(R.string.mods));
