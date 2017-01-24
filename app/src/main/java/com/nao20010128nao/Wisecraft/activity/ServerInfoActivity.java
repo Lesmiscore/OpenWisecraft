@@ -748,6 +748,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				}
 			} catch (Throwable e) {
 				WisecraftError.report("ServerInfoActivity.PlayersFragment",e);
+				indicateError();
 			}
 		}
 
@@ -793,6 +794,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				}
 			} catch (Throwable e) {
 				WisecraftError.report("ServerInfoActivity.DataFragmentPE",e);
+				indicateError();
 			}
 		}
 
@@ -911,6 +913,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				serverIcon.setImageDrawable(serverIconObj);
 			} catch (Throwable e) {
 				WisecraftError.report("ServerInfoActivity.DataFragmentPC",e);
+				indicateError();
 			}
 		}
 
@@ -958,6 +961,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				}
 			} catch (Throwable e) {
 				WisecraftError.report("ServerInfoActivity.PluginsFragment",e);
+				indicateError();
 			}
 		}
 
@@ -1009,6 +1013,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				}
 			} catch (Throwable e) {
 				WisecraftError.report("ServerInfoActivity.ModsFragment",e);
+				indicateError();
 			}
 		}
 
@@ -1053,6 +1058,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				adap.addAll(otm);
 			} catch (Throwable e) {
 				WisecraftError.report("ServerInfoActivity.UcpDetailsFragment",e);
+				indicateError();
 			}
 		}
 
