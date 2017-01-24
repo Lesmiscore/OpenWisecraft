@@ -402,7 +402,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 					.setView(dialogView_)
 					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 						public void onClick(DialogInterface di, int w) {
-							ServerInfoActivityImplPermissionsDispatcher.exportCurrentServerStatus(ServerInfoActivityImpl.this,et_.getText().toString());
+							ServerInfoActivityImplPermissionsDispatcher.exportCurrentServerStatusWithCheck(ServerInfoActivityImpl.this,et_.getText().toString());
 						}
 					})
 					.show();
