@@ -6,7 +6,6 @@ import android.support.v7.preference.*;
 import android.view.*;
 import android.widget.*;
 import com.azeesoft.lib.colorpicker.*;
-import com.mikhaellopez.circularimageview.*;
 import com.nao20010128nao.Wisecraft.*;
 
 import com.nao20010128nao.Wisecraft.R;
@@ -45,7 +44,7 @@ public class ColorPickerPreferenceCompat extends Preference
 		widgetFrame.removeAllViews();
 		widgetFrame.setVisibility(View.VISIBLE);
 		LayoutInflater.from(getContext()).inflate(R.layout.color_picker_preference,widgetFrame);
-		CircularImageView civ=(CircularImageView)holder.findViewById(R.id.circle);
+		ImageView civ=(ImageView)holder.findViewById(R.id.circle);
 		civ.setImageDrawable(new ColorDrawable(getPersistedInt(defaultColor)));
 	}
 
