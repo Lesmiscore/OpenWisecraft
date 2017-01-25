@@ -22,7 +22,7 @@ public class MessagingService extends FirebaseMessagingService {
 		String title=remoteMessage.getNotification().getTitle();
 		String body=remoteMessage.getNotification().getBody();
 		String tag=remoteMessage.getNotification().getTag();
-		List<String> notificationTags=new Gson().fromJson(BuildConfig.NOTIFICATION_TAGS,new TypeToken<List<String>>(){}.getType());
+		List<String> notificationTags=Arrays.asList(BuildConfig.NOTIFICATION_TAGS);
 		if(!notificationTags.contains(tag)){
 			return;
 		}

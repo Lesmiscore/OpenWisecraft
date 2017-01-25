@@ -34,7 +34,7 @@ android {
 		buildConfigField "String", "HIDDEN_AD", "\"http://cur.lv/11juip\""
 		buildConfigField "boolean", "SHOW_BUILD_DATA_ON_VERSIONS", "false"
 		buildConfigField "boolean", "OBFUSCATED", "false"
-		buildConfigField "boolean", "NOTIFICATION_TAGS", "[\"main\"]"
+		buildConfigField "String[]", "NOTIFICATION_TAGS", "new String[]{\"main\"}"
 	}
 	
 	signingConfigs {
@@ -62,7 +62,7 @@ android {
             debuggable true
 			resValue "string", "wsi", ""
 			resValue "bool", "inspectorEnabled", "false"
-			buildConfigField "boolean", "NOTIFICATION_TAGS", "[\"main\",\"test\"]"
+			buildConfigField "String[]", "NOTIFICATION_TAGS", "new String[]{\"main\",\"test\"}"
 		}
 		if(preNum!=0){
 			pre {
@@ -88,7 +88,7 @@ android {
 			resValue "string", "wsi", "[DEBUG2] "+wsi
 			resValue "bool", "inspectorEnabled", "true"
 			
-			buildConfigField "boolean", "NOTIFICATION_TAGS", "[\"main\",\"test\"]"
+			buildConfigField "String[]", "NOTIFICATION_TAGS", "new String[]{\"main\",\"test\"}"
 			buildConfigField "boolean", "SHOW_BUILD_DATA_ON_VERSIONS", "true"
 		}
 		debug2TestObs.initWith(buildTypes.debug2)
