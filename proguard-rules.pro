@@ -36,7 +36,7 @@
 -keep class android.support.** { *; }
 
 -keep class com.firebase.** { *; }
--keep class org.apache.** { *; }
+-keepnames class org.apache.** { *; }
 -keepnames class com.fasterxml.jackson.** { *; }
 -keepnames class javax.servlet.** { *; }
 -keepnames class org.ietf.jgss.** { *; }
