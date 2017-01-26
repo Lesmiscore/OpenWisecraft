@@ -267,4 +267,10 @@ public class CompatUtils {
 		}
 		return new ContextThemeWrapper(c, theme);
 	}
+	public static String toHex(byte[] buf) {
+		StringBuilder sb=new StringBuilder();
+		for (byte b:buf)
+			sb.append(Character.forDigit(b >> 4 & 0xF, 16)).append(Character.forDigit(b & 0xF, 16));
+		return sb.toString();
+	}
 }
