@@ -6,13 +6,9 @@
 -dontwarn com.google.android.gms.**
 -dontwarn com.google.api.client.**
 -assumenosideeffects class android.util.Log {
-    public static *** v(...);
-    public static *** d(...);
-    public static *** i(...);
-    public static *** w(...);
-    public static *** e(...);
+    *;
 }
--keep class * implements android.os.Parcelable {
+-keepnames class * implements android.os.Parcelable {
     public static final android.os.Parcelable$Creator *;
 }
 -keepnames public !abstract class * extends android.view.View {
@@ -29,9 +25,7 @@
 -keep class com.google.gson.stream.** { *; }
 -keep class com.google.gson.examples.android.model.** { *; }
 -dontwarn org.apache.**
--keepnames class org.apache.**
 -dontwarn android.support.v4.app.**
--dontwarn com.nao20010128nao.McServerList.sites.**
 -keep class uk.co.chrisjenx.calligraphy.** { *; }
 -keep class android.support.** { *; }
 
