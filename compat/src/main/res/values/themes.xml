@@ -1,4 +1,8 @@
 <resources>
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar" />
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+	<style name="Theme.LibCompat.BottomSheetDialog" parent="Theme.Design.BottomSheetDialog">
+	</style>
+	<style name="Theme.LibCompat.Light.BottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
+	</style>
 </resources>

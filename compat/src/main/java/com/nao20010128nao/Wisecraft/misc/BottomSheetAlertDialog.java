@@ -80,7 +80,7 @@ public class BottomSheetAlertDialog extends BottomSheetDialog implements DialogI
             return resid;
         } else {
             TypedValue outValue = new TypedValue();
-            context.getTheme().resolveAttribute(R.attr.alertDialogTheme, outValue, true);
+            context.getTheme().resolveAttribute(R.attr.bottomSheetDialogTheme, outValue, true);
             return outValue.resourceId;
         }
     }

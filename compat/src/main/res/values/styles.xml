@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
+	<attr name="modifiedBottomSheetDialogTheme" format="reference"/>
+    <attr name="wcBottomSheetDialogDecor" format="reference"/>
+	<declare-styleable name="ModifiedBottomSheetDialog">
+		<attr name="wcBottomSheetDialogDecor"/>
+		<attr name="modifiedBottomSheetDialogTheme"/>
+		<attr name="bottomSheetDialogTheme"/>
+	</declare-styleable>
 </resources>
