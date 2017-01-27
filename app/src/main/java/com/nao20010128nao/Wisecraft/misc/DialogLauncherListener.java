@@ -225,7 +225,7 @@ public class DialogLauncherListener<T> implements DialogInterface.OnClickListene
 	
 	
 	
-	private static class AlertDialogBuilder extends AlertDialog.Builder implements DialogBuilder<AlertDialogBuilder,AlertDialog>{
+	private static class AlertDialogBuilder extends AlertDialog.Builder implements DialogBuilder<AlertDialog.Builder/*AlertDialogBuilder*/,AlertDialog>{
 		public AlertDialogBuilder(android.content.Context context) {
 			super(context);
 		}

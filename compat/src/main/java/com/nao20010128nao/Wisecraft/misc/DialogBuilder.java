@@ -1,7 +1,7 @@
 package com.nao20010128nao.Wisecraft.misc;
 import android.support.v7.app.*;
 
-public interface DialogBuilder<This extends DialogBuilder,Dialog extends AppCompatDialog>
+public interface DialogBuilder<This/* extends DialogBuilder*/,Dialog extends AppCompatDialog>
 {
 	@android.support.annotation.NonNull()
 	public android.content.Context getContext();
