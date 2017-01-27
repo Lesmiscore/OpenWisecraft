@@ -79,6 +79,9 @@ public interface DialogBuilder<This extends DialogBuilder,Dialog extends AppComp
 	@java.lang.Deprecated()
 	public This setInverseBackgroundForced(boolean useInverseBackground);
 
+	@android.support.annotation.RestrictTo(value={android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP,})
+	public This setRecycleOnMeasureEnabled(boolean enabled);
+
 	public Dialog create();
 
 	public Dialog show();
