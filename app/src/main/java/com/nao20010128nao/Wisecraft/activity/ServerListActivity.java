@@ -434,13 +434,13 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							})
 						,null,UUID.fromString("a077e0fe-1ae0-3e05-8ca1-08b587fb787d")));//0
 		appMenu.add(new Sextet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem,UUID>(R.string.addFromMCPE, R.drawable.ic_add_black_48dp, new Treatment<ServerListActivity>(){
-							public void process(ServerListActivity a) {
+							public void process(final ServerListActivity a) {
 								new AlertDialog.Builder(a,ThemePatcher.getDefaultDialogStyle(a))
 									.setTitle(R.string.addFromMCPE)
 									.setMessage(R.string.auSure)
 									.setPositiveButton(android.R.string.yes,new DialogInterface.OnClickListener(){
 										public void onClick(DialogInterface di,int w){
-											ServerListActivityImplPermissionsDispatcher.addFromMCPEWithCheck(ServerListActivityImpl.this);
+											ServerListActivityImplPermissionsDispatcher.addFromMCPEWithCheck(a);
 										}
 									})
 									.setNegativeButton(android.R.string.no,null)
@@ -474,7 +474,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							})
 						,null,UUID.fromString("7880ff52-b8c5-3c29-8b65-74fc30a57316")));//2
 		appMenu.add(new Sextet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem,UUID>(R.string.export, R.drawable.ic_file_upload_black_48dp, new Treatment<ServerListActivity>(){
-							public void process(ServerListActivity a) {
+							public void process(final ServerListActivity a) {
 								View dialogView_=getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
 								final EditText et_=(EditText)dialogView_.findViewById(R.id.filePath);
 								et_.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/servers.json").toString());
@@ -482,7 +482,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 										public void onClick(View v) {
 											File f=new File(et_.getText().toString());
 											if ((!f.exists())|f.isFile())f = f.getParentFile();
-											ServerListActivityBase3PermissionsDispatcher.startChooseFileForOpenWithCheck(ServerListActivityImpl.this,f, new FileChooserResult(){
+											ServerListActivityBase3PermissionsDispatcher.startChooseFileForOpenWithCheck(a,f, new FileChooserResult(){
 													public void onSelected(File f) {
 														et_.setText(f.toString());
 													}
@@ -495,14 +495,14 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 									.setView(dialogView_)
 									.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 										public void onClick(DialogInterface di, int w) {
-											ServerListActivityImplPermissionsDispatcher.exportWisecraftListWithCheck(ServerListActivityImpl.this,et_.getText().toString());
+											ServerListActivityImplPermissionsDispatcher.exportWisecraftListWithCheck(a,et_.getText().toString());
 										}
 									})
 									.show();
 							}
 						},null,null,UUID.fromString("614d2246-80d1-37de-9f2e-fed1fa15c83d")));//3
 		appMenu.add(new Sextet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem,UUID>(R.string.imporT, R.drawable.ic_file_download_black_48dp, new Treatment<ServerListActivity>(){
-							public void process(ServerListActivity a) {
+							public void process(final ServerListActivity a) {
 								View dialogView=getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
 								final EditText et=(EditText)dialogView.findViewById(R.id.filePath);
 								et.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/servers.json").toString());
@@ -510,7 +510,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 										public void onClick(View v) {
 											File f=new File(et.getText().toString());
 											if ((!f.exists())|f.isFile())f = f.getParentFile();
-											ServerListActivityBase3PermissionsDispatcher.startChooseFileForOpenWithCheck(ServerListActivityImpl.this,f, new FileChooserResult(){
+											ServerListActivityBase3PermissionsDispatcher.startChooseFileForOpenWithCheck(a,f, new FileChooserResult(){
 													public void onSelected(File f) {
 														et.setText(f.toString());
 													}
@@ -523,7 +523,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 									.setView(dialogView)
 									.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 										public void onClick(DialogInterface di, int w) {
-											ServerListActivityImplPermissionsDispatcher.importWisecraftListWithCheck(ServerListActivityImpl.this,et.getText().toString());
+											ServerListActivityImplPermissionsDispatcher.importWisecraftListWithCheck(a,et.getText().toString());
 										}
 									})
 									.show();
@@ -593,7 +593,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							},null,null,UUID.fromString("9e63592a-3b0b-33f6-a8e2-937f2aa85ce2")));//7
 		}
 		appMenu.add(new Sextet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem,UUID>(R.string.loadPing, R.drawable.ic_open_in_new_black_48dp, new Treatment<ServerListActivity>(){
-							public void process(ServerListActivity a) {
+							public void process(final ServerListActivity a) {
 								View dialogView=getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
 								final EditText et=(EditText)dialogView.findViewById(R.id.filePath);
 								et.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/pingresult.wisecraft-ping").toString());
@@ -601,7 +601,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 										public void onClick(View v) {
 											File f=new File(et.getText().toString());
 											if ((!f.exists())|f.isFile())f = f.getParentFile();
-											ServerListActivityBase3PermissionsDispatcher.startChooseFileForOpenWithCheck(ServerListActivityImpl.this,f, new FileChooserResult(){
+											ServerListActivityBase3PermissionsDispatcher.startChooseFileForOpenWithCheck(a,f, new FileChooserResult(){
 													public void onSelected(File f) {
 														et.setText(f.toString());
 													}
@@ -614,7 +614,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 									.setView(dialogView)
 									.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 										public void onClick(DialogInterface di, int w) {
-											ServerListActivityImplPermissionsDispatcher.loadWisecraftPingWithCheck(ServerListActivityImpl.this,et.getText().toString());
+											ServerListActivityImplPermissionsDispatcher.loadWisecraftPingWithCheck(a,et.getText().toString());
 										}
 									})
 									.show();
