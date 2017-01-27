@@ -9,12 +9,19 @@ import android.support.v7.app.AlertDialog;
 
 public class DialogLauncherListener<T> implements DialogInterface.OnClickListener,View.OnClickListener,Treatment<T>
 {
-	AlertDialog.Builder builder;
+	DialogBuilder builder;
 	
 	public DialogLauncherListener(Activity a){
-		builder=new AlertDialog.Builder(a,ThemePatcher.getDefaultDialogStyle(a));
+		this(a,false);
 	}
 
+	public DialogLauncherListener(Activity a,boolean isBottomSheet){
+		if(isBottomSheet)
+			builder=new BottomSheetAlertDialog.Builder(a,ThemePatcher.getDefaultDialogStyle(a));
+		else
+			builder=new AlertDialogBuilder(a,ThemePatcher.getDefaultDialogStyle(a));
+	}
+	
 	@Override
 	public void onClick(View p1) {
 		builder.show();
@@ -216,4 +223,15 @@ public class DialogLauncherListener<T> implements DialogInterface.OnClickListene
 		return this;
 	}
 	
+	
+	
+	private static class AlertDialogBuilder extends AlertDialog.Builder implements DialogBuilder<AlertDialogBuilder,AlertDialog>{
+		public AlertDialogBuilder(android.content.Context context) {
+			super(context);
+		}
+
+        public AlertDialogBuilder(android.content.Context context, int themeResId) {
+			super(context,themeResId);
+		}
+	}
 }

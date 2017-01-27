@@ -452,7 +452,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 								updateAllWithConditions(new Predicate<Server>(){public boolean process(Server a){return true;}});
 							}
 						},
-						new DialogLauncherListener<ServerListActivity>(this)
+						new DialogLauncherListener<ServerListActivity>(this,true)
 						.setTitle(R.string.update_all)
 						.setItems(R.array.serverUpdateAllSubMenu,new DialogInterface.OnClickListener(){
 								public void onClick(DialogInterface di, int w) {
