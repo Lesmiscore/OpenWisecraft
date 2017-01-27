@@ -216,12 +216,6 @@ public class DialogLauncherListener<T> implements DialogInterface.OnClickListene
 		builder.setInverseBackgroundForced(useInverseBackground);
 		return this;
 	}
-
-	@android.support.annotation.RestrictTo(value={android.support.annotation.RestrictTo.Scope.GROUP_ID})
-	public DialogLauncherListener<T> setRecycleOnMeasureEnabled(boolean enabled) {
-		builder.setRecycleOnMeasureEnabled(enabled);
-		return this;
-	}
 	
 	
 	
