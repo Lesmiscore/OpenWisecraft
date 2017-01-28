@@ -66,11 +66,11 @@ public class ThemePatcher{
 		themes.put(
 			ServerGetActivity.class,
 			new Themes(
-				R.style.AppTheme_NoActionBar,
-				R.style.AppTheme_NoActionBar_Dark,
-				R.style.AppTheme_NoActionBar_DayNight,
-				R.style.AppTheme_NoActionBar_Violet,
-				R.style.AppTheme_NoActionBar_Black
+				R.style.AppTheme_ServerGet,
+				R.style.AppTheme_ServerGet_Dark,
+				R.style.AppTheme_ServerGet_DayNight,
+				R.style.AppTheme_ServerGet_Violet,
+				R.style.AppTheme_ServerGet_Black
 			)
 		);
 		themes.put(

@@ -9,5 +9,6 @@
 	
 	
 	<string name="parallels_default">6</string>
-	<string name="wsi"></string>
+	
+    <item type="id" name="coordinator" />
 </resources>

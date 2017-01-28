@@ -65,7 +65,11 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
-    
+
+	<style name="AppTheme.ServerGet.Violet" parent="AppTheme.NoActionBar.Violet">
+		<item name="wcBottomSheetDialogDecor">@layout/server_get_activity_select_servers_dialog_decor</item>
+	</style>
+	
 	<style name="AppTheme.Toolbar.Violet" parent="Widget.AppCompat.Toolbar.Wisecraft">
 		<item name="colorControlNormal">#ffffff</item>
 		<item name="titleTextColor">#fff</item>

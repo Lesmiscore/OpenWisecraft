@@ -164,10 +164,31 @@ abstract class ServerGetActivityImpl extends CompatWebViewActivity {
 						if (o instanceof List) {
 							//Server list
 							final List<MslServer> serv=(List<MslServer>)o;
+							/*
 							adapter.deleteAll();
 							adapter.addAll(serv);
 							bottomSheet.setState(BottomSheetBehavior.STATE_COLLAPSED);
 							findViewById(R.id.bottomSheet).setVisibility(View.VISIBLE);
+							*/
+							final ModifiedBottomSheetDialog mbsd=new ModifiedBottomSheetDialog(ServerGetActivityImpl.this);
+							final Adapter adapter=new Adapter();
+							mbsd.setContentView(R.layout.server_get_recycler);
+							loadedServerListRv=(RecyclerView)mbsd.findViewById(R.id.servers);
+							loadedServerListRv.setLayoutManager(new LinearLayoutManager(ServerGetActivityImpl.this));
+							loadedServerListRv.setAdapter(adapter);
+							adapter.addAll(serv);
+							mbsd.findViewById(R.id.yes).setOnClickListener(new View.OnClickListener(){
+									public void onClick(View v){
+										for(Server s:adapter.getSelection())
+											ServerListActivity.instance.get().addIntoList(s);
+										mbsd.dismiss();
+									}
+								});
+							mbsd.findViewById(R.id.no).setOnClickListener(new View.OnClickListener(){
+									public void onClick(View v){
+										mbsd.dismiss();
+									}
+								});
 						} else {
 							//Throwable
 							String msg=((Throwable)o).getMessage();

@@ -98,10 +98,28 @@ public class ModifiedBottomSheetDialog extends AppCompatDialog {
         mCanceledOnTouchOutside = cancel;
         mCanceledOnTouchOutsideSet = true;
     }
+	
+	public void setMBehavior(BottomSheetBehavior<FrameLayout> mBehavior) {
+		this.mBehavior = mBehavior;
+	}
 
+	public BottomSheetBehavior<FrameLayout> getMBehavior() {
+		return mBehavior;
+	}
+
+	@Override
+	public void cancel() {
+		mBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+	}
+
+	@Override
+	public void dismiss() {
+		mBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+	}
+	
     private View wrapInBottomSheet(int layoutResId, View view, ViewGroup.LayoutParams params) {
-        final CoordinatorLayout coordinator = (CoordinatorLayout) View.inflate(getContext(),
-			getDecorResourceId(getContext()), null);
+        final View decor=View.inflate(getContext(), getDecorResourceId(getContext()), null);
+		final CoordinatorLayout coordinator = (CoordinatorLayout) decor instanceof CoordinatorLayout?decor:decor.findViewById(R.id.coordinator);
         if (layoutResId != 0 && view == null) {
             view = getLayoutInflater().inflate(layoutResId, coordinator, false);
         }
@@ -123,7 +141,7 @@ public class ModifiedBottomSheetDialog extends AppCompatDialog {
 					}
 				}
 			});
-        return coordinator;
+        return decor;
     }
 
     boolean shouldWindowCloseOnTouchOutside() {
@@ -173,7 +191,7 @@ public class ModifiedBottomSheetDialog extends AppCompatDialog {
         public void onStateChanged(@NonNull View bottomSheet,
 			@BottomSheetBehavior.State int newState) {
             if (newState == BottomSheetBehavior.STATE_HIDDEN) {
-                cancel();
+                ModifiedBottomSheetDialog.super.cancel();
             }
         }
 
