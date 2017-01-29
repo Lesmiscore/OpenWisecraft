@@ -173,7 +173,7 @@ abstract class ServerGetActivityImpl extends CompatWebViewActivity {
 							final ModifiedBottomSheetDialog mbsd=new ModifiedBottomSheetDialog(ServerGetActivityImpl.this);
 							final Adapter adapter=new Adapter();
 							mbsd.setContentView(R.layout.server_get_recycler);
-							loadedServerListRv=(RecyclerView)mbsd.findViewById(R.id.servers);
+							final RecyclerView loadedServerListRv=(RecyclerView)mbsd.findViewById(R.id.servers);
 							loadedServerListRv.setLayoutManager(new LinearLayoutManager(ServerGetActivityImpl.this));
 							loadedServerListRv.setAdapter(adapter);
 							adapter.addAll(serv);
