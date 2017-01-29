@@ -17,6 +17,7 @@
 		<item name="wcSelectedTextColor">#fff</item>
 		<item name="popupTheme">@style/Theme.AppCompat.Light.DarkActionBar</item>
 		<item name="wcSgaCheckColor">#000000</item>
+		<item name="modifiedBottomSheetDialogTheme">@style/AppTheme.BottomSheetDialog</item>
 		<!--MaterialDrawer-->
         <item name="material_drawer_background">?android:attr/windowBackground</item>
         <item name="material_drawer_primary_text">@color/black</item>
@@ -74,5 +75,9 @@
 		<item name="colorControlNormal">#ffffff</item>
 		<item name="titleTextColor">#fff</item>
 		<item name="android:textColor">#fff</item>
+	</style>
+
+	<style name="AppTheme.BottomSheetDialog.Violet" parent="Theme.LibCompat.Light.BottomSheetDialog">
+		<item name="wcBottomSheetDialogDecor">@layout/design_bottom_sheet_dialog</item>
 	</style>
 </resources>

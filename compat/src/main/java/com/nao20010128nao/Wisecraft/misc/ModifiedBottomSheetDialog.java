@@ -117,6 +117,10 @@ public class ModifiedBottomSheetDialog extends AppCompatDialog {
 		mBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
 	}
 	
+	private void forceCancel(){
+		super.dismiss();//cancel() calls dismiss() inside at Dialog class
+	}
+	
     private View wrapInBottomSheet(int layoutResId, View view, ViewGroup.LayoutParams params) {
         final View decor=View.inflate(getContext(), getDecorResourceId(getContext()), null);
 		final CoordinatorLayout coordinator = (CoordinatorLayout) (decor instanceof CoordinatorLayout?decor:decor.findViewById(R.id.coordinator));
@@ -179,7 +183,7 @@ public class ModifiedBottomSheetDialog extends AppCompatDialog {
 		int res=R.layout.design_bottom_sheet_dialog;
 		TypedArray ta=c.getTheme().obtainStyledAttributes(R.styleable.ModifiedBottomSheetDialog);
 		if(ta.hasValue(R.styleable.ModifiedBottomSheetDialog_wcBottomSheetDialogDecor)){
-			res=ta.getResourceId(R.styleable.ModifiedBottomSheetDialog_wcBottomSheetDialogDecor,R.layout.design_bottom_sheet_dialog);
+			res=ta.getResourceId(R.styleable.ModifiedBottomSheetDialog_wcBottomSheetDialogDecor,res);
 		}
 		ta.recycle();
 		return res;
@@ -191,7 +195,7 @@ public class ModifiedBottomSheetDialog extends AppCompatDialog {
         public void onStateChanged(@NonNull View bottomSheet,
 			@BottomSheetBehavior.State int newState) {
             if (newState == BottomSheetBehavior.STATE_HIDDEN) {
-                ModifiedBottomSheetDialog.super.cancel();
+                forceCancel();
             }
         }
 

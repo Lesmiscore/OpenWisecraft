@@ -2,7 +2,9 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar" />
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 	<style name="Theme.LibCompat.BottomSheetDialog" parent="Theme.Design.BottomSheetDialog">
+		<item name="modifiedBottomSheetDialogTheme">@layout/design_bottom_sheet_dialog</item>
 	</style>
 	<style name="Theme.LibCompat.Light.BottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
+		<item name="modifiedBottomSheetDialogTheme">@layout/design_bottom_sheet_dialog</item>
 	</style>
 </resources>
