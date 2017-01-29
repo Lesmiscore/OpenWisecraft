@@ -14,7 +14,6 @@
 		<item name="wcUnselectedTextColor">#000</item>
 		<item name="wcSelectedTextColor">#fff</item>
 		<item name="popupTheme">@style/Theme.AppCompat.Light.DarkActionBar</item>
-		<item name="modifiedBottomSheetDialogTheme">@style/AppTheme.BottomSheetDialog.Black</item>
 		<!--MaterialDrawer-->
         <item name="material_drawer_background">?android:attr/windowBackground</item>
         <item name="material_drawer_primary_text">@color/black</item>
@@ -61,6 +60,7 @@
     
 	<style name="AppTheme.ServerGet.Black" parent="AppTheme.NoActionBar.Black">
 		<item name="wcBottomSheetDialogDecor">@layout/server_get_activity_select_servers_dialog_decor</item>
+		<item name="modifiedBottomSheetDialogTheme">@style/AppTheme.BottomSheetDialog.Black</item>
 	</style>
 	
 	<style name="AppTheme.Toolbar.Black" parent="Widget.AppCompat.Toolbar.Wisecraft">
@@ -70,6 +70,6 @@
 	</style>
 
 	<style name="AppTheme.BottomSheetDialog.Black" parent="Theme.LibCompat.Light.BottomSheetDialog">
-		<item name="wcBottomSheetDialogDecor">@layout/design_bottom_sheet_dialog</item>
+		<item name="wcBottomSheetDialogDecor">@layout/server_get_activity_select_servers_dialog_decor</item>
 	</style>
 </resources>
