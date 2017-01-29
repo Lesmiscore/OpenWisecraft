@@ -10,5 +10,5 @@
 	
 	<string name="parallels_default">6</string>
 	
-    <item type="id" name="coordinator" />
+    <!--item type="id" name="coordinator" /-->
 </resources>
