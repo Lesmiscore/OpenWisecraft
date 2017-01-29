@@ -121,6 +121,11 @@ public class RequestedServerInfoActivity extends ApiBaseActivity {
                                     finish();
                                 }
                             })
+							.setOnDismissListener(new DialogInterface.OnDismissListener(){
+                                public void onDismiss(DialogInterface di) {
+                                    finish();
+                                }
+                            })
                             .show();
                     }
                 });
