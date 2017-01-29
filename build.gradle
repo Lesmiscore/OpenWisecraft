@@ -178,7 +178,7 @@ task("modifyValuesXml")<<{
 	}
 }
 task("safeDeleteDevXml")<<{
-	def dir="./app/src/main/res/values/booleans.xml"
+	def dir="./app/src/main/res/values/dev.xml"
 	def file=new File(dir)
 	if(file.exists())file.delete();
 }
