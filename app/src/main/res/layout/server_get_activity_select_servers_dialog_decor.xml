@@ -9,8 +9,10 @@
 	<include
 		layout="@layout/design_bottom_sheet_dialog"
 		android:layout="@layout/design_bottom_sheet_dialog"
-		android:layout_weight="1.0"
-		android:id="@+id/coordinator"/>
+		android:id="@+id/coordinator"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="1.0"/>
 
 	<LinearLayout
 		android:layout_height="wrap_content"
