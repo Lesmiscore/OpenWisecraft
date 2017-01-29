@@ -189,6 +189,7 @@ abstract class ServerGetActivityImpl extends CompatWebViewActivity {
 										mbsd.dismiss();
 									}
 								});
+							mbsd.show();
 						} else {
 							//Throwable
 							String msg=((Throwable)o).getMessage();

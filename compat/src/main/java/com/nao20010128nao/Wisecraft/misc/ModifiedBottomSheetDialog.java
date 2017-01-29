@@ -119,7 +119,7 @@ public class ModifiedBottomSheetDialog extends AppCompatDialog {
 	
     private View wrapInBottomSheet(int layoutResId, View view, ViewGroup.LayoutParams params) {
         final View decor=View.inflate(getContext(), getDecorResourceId(getContext()), null);
-		final CoordinatorLayout coordinator = (CoordinatorLayout) decor instanceof CoordinatorLayout?decor:decor.findViewById(R.id.coordinator);
+		final CoordinatorLayout coordinator = (CoordinatorLayout) (decor instanceof CoordinatorLayout?decor:decor.findViewById(R.id.coordinator));
         if (layoutResId != 0 && view == null) {
             view = getLayoutInflater().inflate(layoutResId, coordinator, false);
         }
