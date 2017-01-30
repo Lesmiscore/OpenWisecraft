@@ -531,7 +531,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 						},null,null,UUID.fromString("1b4cd9b1-662a-3e72-9ae4-eecd46858077")));//4
 		if(pref.getBoolean("feature_bott", true)){
 			appMenu.add(new Sextet<Integer,Integer,Treatment<ServerListActivity>,Treatment<ServerListActivity>,IDrawerItem,UUID>(R.string.sort, R.drawable.ic_compare_arrows_black_48dp, 
-					new DialogLauncherListener<ServerListActivity>(this,true)
+					new DialogLauncherListener<ServerListActivity>(this,false)
 						.setTitle(R.string.sort)
 						.setItems(R.array.serverSortMenu, new DialogInterface.OnClickListener(){
 							public void onClick(DialogInterface di, int w) {
