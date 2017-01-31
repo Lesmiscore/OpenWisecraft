@@ -72,7 +72,14 @@ appPgUlt: &appPgUlt # Build for app debug(obfuscated) APKs
   <<: *scrpt
   stage: app
   variables:
-    TASK: ":app:assemblePg_ult"
+    TASK: ":app:assemblePgUlt"
+
+appPgUlt: &appPgUlt # Build for app debug(obfuscated) APKs
+  <<: *artf
+  <<: *scrpt
+  stage: app
+  variables:
+    TASK: ":app:assemblePgExperimental"
 
 appRelease: &appRelese # Build for app release APKs
   <<: *artf
@@ -143,6 +150,7 @@ appDebug2Split:        *appDebug2
 appDebug2TestObsSplit: *appDebug2TestObs
 appPgSplit:            *appPg
 appPgUltSplit:         *appPgUlt
+appPgExperimentalSplit: *appPgExperimental
 appReleaseSplit:       *appRelese
 appShrinkReleaseSplit: *appShrinkRelease
 appPreSplit:           *appPre

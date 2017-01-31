@@ -101,9 +101,13 @@ android {
             proguardFiles '../proguard-rules.pro'
 			buildConfigField "boolean", "OBFUSCATED", "true"
 		}
-		pg_ult.initWith(buildTypes.pg)
-		pg_ult{
+		pgUlt.initWith(buildTypes.pg)
+		pgUlt{
 			proguardFiles '../proguard-rules.pro','../exotic.pro'
+		}
+		pgExperimental.initWith(buildTypes.pgUlt)
+		pgExperimental{
+			proguardFiles '../proguard-rules.pro','../exotic.pro','../exp.pro'
 		}
     }
 	
