@@ -1146,6 +1146,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 						}
 					}
 				);
+				travelViewTree(viewHolder.itemView,new Treatment<View>(){public void process(View v){sla.registerForContextMenu(v);}});
 			}
 		}
 
@@ -1418,7 +1419,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					.setCancelable(true)
 					.show();
 			}else{
-				sla.openContextMenu(p2,new Treatment<Duo<View,ContextMenu>>(){
+				sla.registerContextMenuHandler(p2,new Treatment<Duo<View,ContextMenu>>(){
 						public void process(Duo<View,ContextMenu> a){
 							ContextMenu menu=a.getB();
 							menu.setHeaderTitle(getItem(p3).toString());

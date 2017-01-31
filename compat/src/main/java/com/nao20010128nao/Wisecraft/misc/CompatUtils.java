@@ -177,6 +177,17 @@ public class CompatUtils {
 			}
 		}
 	}
+	public static void travelViewTree(View v,Treatment<View> a){
+		if(v!=null){
+			a.process(v);
+			if(v instanceof ViewGroup){
+				ViewGroup vg=(ViewGroup)v;
+				for(int i=0;i<vg.getChildCount();i++){
+					travelViewTree(vg.getChildAt(i),a);
+				}
+			}
+		}
+	}
 	public static boolean isNullString(String s) {
 		return TextUtils.isEmpty(s);
 	}
