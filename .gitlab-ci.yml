@@ -74,7 +74,7 @@ appPgUlt: &appPgUlt # Build for app debug(obfuscated) APKs
   variables:
     TASK: ":app:assemblePgUlt"
 
-appPgUlt: &appPgUlt # Build for app debug(obfuscated) APKs
+appPgExperimental: &appPgExperimental # Build for app debug(obfuscated) APKs
   <<: *artf
   <<: *scrpt
   stage: app
