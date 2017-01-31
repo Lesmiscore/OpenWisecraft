@@ -1135,14 +1135,14 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					new View.OnClickListener() {
 						@Override
 						public void onClick(View v) {
-							onItemClick(null, null, sla.list.indexOf(viewHolder.itemView.getTag()), Long.MIN_VALUE);
+							onItemClick(null, viewHolder.itemView, sla.list.indexOf(viewHolder.itemView.getTag()), Long.MIN_VALUE);
 						}
 					}
 					,
 					new View.OnLongClickListener() {
 						@Override
 						public boolean onLongClick(View v) {
-							return onItemLongClick(null, null, sla.list.indexOf(viewHolder.itemView.getTag()), Long.MIN_VALUE);
+							return onItemLongClick(null, viewHolder.itemView, sla.list.indexOf(viewHolder.itemView.getTag()), Long.MIN_VALUE);
 						}
 					}
 				);
