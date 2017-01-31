@@ -1419,7 +1419,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					.setCancelable(true)
 					.show();
 			}else{
-				sla.registerContextMenuHandler(p2,new Treatment<Duo<View,ContextMenu>>(){
+				sla.openContextMenu(p2,sla.rv,new Treatment<Duo<View,ContextMenu>>(){
 						public void process(Duo<View,ContextMenu> a){
 							ContextMenu menu=a.getB();
 							menu.setHeaderTitle(getItem(p3).toString());

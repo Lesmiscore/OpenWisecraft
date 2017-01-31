@@ -5,7 +5,7 @@ import java.util.*;
 
 //ContextMenu
 class ServerListActivityBase6 extends ServerListActivityBaseFields {
-	protected Map<View,Trio<Treatment<Duo<View,ContextMenu>>,Predicate<Trio<View,ContextMenu,MenuItem>>,Boolean>> contextMenuHandlers=new HashMap<>();
+	protected Map<View,Quartet<Treatment<Duo<View,ContextMenu>>,Predicate<Trio<View,ContextMenu,MenuItem>>,ViewGroup,Boolean>> contextMenuHandlers=new HashMap<>();
 	protected Map<Menu,View> contextMenuObjects=new HashMap<>();
 	protected Map<MenuItem,View> contextMenuItems=new HashMap<>();
 	
@@ -48,7 +48,7 @@ class ServerListActivityBase6 extends ServerListActivityBaseFields {
 	@Override
 	public void onContextMenuClosed(Menu menu) {
 		super.onContextMenuClosed(menu);
-		if(!contextMenuHandlers.get(contextMenuObjects.get(menu)).getC()){
+		if(!contextMenuHandlers.get(contextMenuObjects.get(menu)).getD()){
 			for(int i=0;i<menu.size();i++){
 				contextMenuItems.remove(menu.getItem(i));
 			}
@@ -57,13 +57,13 @@ class ServerListActivityBase6 extends ServerListActivityBaseFields {
 		}
 	}
 
-	public void openContextMenu(View view,Treatment<Duo<View,ContextMenu>> init,Predicate<Trio<View,ContextMenu,MenuItem>> selection) {
-		contextMenuHandlers.put(view,new Trio<Treatment<Duo<View,ContextMenu>>,Predicate<Trio<View,ContextMenu,MenuItem>>,Boolean>(init,selection,false));
-		if(!view.showContextMenu())
+	public void openContextMenu(View view,ViewGroup parent,Treatment<Duo<View,ContextMenu>> init,Predicate<Trio<View,ContextMenu,MenuItem>> selection) {
+		contextMenuHandlers.put(view,new Quartet<Treatment<Duo<View,ContextMenu>>,Predicate<Trio<View,ContextMenu,MenuItem>>,ViewGroup,Boolean>(init,selection,parent,false));
+		if(!(parent!=null?parent.showContextMenuForChild(view):view.showContextMenu()))
 			contextMenuHandlers.remove(view);
 	}
 	
-	public void registerContextMenuHandler(View view,Treatment<Duo<View,ContextMenu>> init,Predicate<Trio<View,ContextMenu,MenuItem>> selection){
-		contextMenuHandlers.put(view,new Trio<Treatment<Duo<View,ContextMenu>>,Predicate<Trio<View,ContextMenu,MenuItem>>,Boolean>(init,selection,true));
+	public void registerContextMenuHandler(View view,ViewGroup parent,Treatment<Duo<View,ContextMenu>> init,Predicate<Trio<View,ContextMenu,MenuItem>> selection){
+		contextMenuHandlers.put(view,new Quartet<Treatment<Duo<View,ContextMenu>>,Predicate<Trio<View,ContextMenu,MenuItem>>,ViewGroup,Boolean>(init,selection,parent,true));
 	}
 }
