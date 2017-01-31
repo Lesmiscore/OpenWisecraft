@@ -12,7 +12,7 @@ import permissions.dispatcher.*;
 import com.nao20010128nao.Wisecraft.R;
 
 @RuntimePermissions
-abstract class ServerListActivityBase5 extends ServerListActivityBaseFields 
+abstract class ServerListActivityBase5 extends ServerListActivityBase6 
 {
 	protected Map<Integer,UriFileChooserResult> externalFileSelectResults=new HashMap<>();
 	protected Map<Integer,FileChooserResult> localFileSelectResults=new HashMap<>();

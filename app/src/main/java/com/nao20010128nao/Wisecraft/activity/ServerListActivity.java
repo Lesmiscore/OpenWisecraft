@@ -1416,6 +1416,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				})
 				.setCancelable(true)
 				.show();
+			
 			return true;
 		}
 		
