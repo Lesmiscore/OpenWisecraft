@@ -1407,15 +1407,32 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				}
 			}
 			
-			new AlertDialog.Builder(sla,ThemePatcher.getDefaultDialogStyle(sla))
-				.setTitle(getItem(p3).resolveVisibleTitle())
-				.setItems(generateSubMenu(executes), new DialogInterface.OnClickListener(){
-					public void onClick(DialogInterface di, int which) {
-						executes.get(which).getA().run();
-					}
-				})
-				.setCancelable(true)
-				.show();
+			if(Build.VERSION.SDK_INT<24){
+				new AlertDialog.Builder(sla,ThemePatcher.getDefaultDialogStyle(sla))
+					.setTitle(getItem(p3).resolveVisibleTitle())
+					.setItems(generateSubMenu(executes), new DialogInterface.OnClickListener(){
+						public void onClick(DialogInterface di, int which) {
+							executes.get(which).getA().run();
+						}
+					})
+					.setCancelable(true)
+					.show();
+			}else{
+				sla.openContextMenu(p2,new Treatment<Duo<View,ContextMenu>>(){
+						public void process(Duo<View,ContextMenu> a){
+							ContextMenu menu=a.getB();
+							for(String s:generateSubMenu(executes)){
+								menu.add(Menu.NONE,menu.size(),menu.size(),s);
+							}
+						}
+					},new Predicate<Trio<View,ContextMenu,MenuItem>>(){
+						public boolean process(Trio<View,ContextMenu,MenuItem> a){
+							executes.get(a.getC().getItemId()).getA().run();
+							return true;
+						}
+					});
+			}
+			
 			
 			return true;
 		}
