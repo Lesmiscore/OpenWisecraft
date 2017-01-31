@@ -1407,7 +1407,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				}
 			}
 			
-			if(Build.VERSION.SDK_INT<24){
+			if(Build.VERSION.SDK_INT<23){
 				new AlertDialog.Builder(sla,ThemePatcher.getDefaultDialogStyle(sla))
 					.setTitle(getItem(p3).resolveVisibleTitle())
 					.setItems(generateSubMenu(executes), new DialogInterface.OnClickListener(){
@@ -1421,6 +1421,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				sla.openContextMenu(p2,new Treatment<Duo<View,ContextMenu>>(){
 						public void process(Duo<View,ContextMenu> a){
 							ContextMenu menu=a.getB();
+							menu.setHeaderTitle(getItem(p3).toString());
 							for(String s:generateSubMenu(executes)){
 								menu.add(Menu.NONE,menu.size(),menu.size(),s);
 							}
