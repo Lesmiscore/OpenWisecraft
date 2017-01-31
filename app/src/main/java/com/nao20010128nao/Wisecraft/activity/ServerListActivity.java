@@ -1077,7 +1077,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 										title = rep.json.get("description").getAsString();
 									}
 								}
-								viewHolder.setServerPlayers(rep.json.get("players").getAsJsonObject().get("online").getAsInt(), rep.json.get("players").getAsJsonObject().get("online").getAsInt());
+								viewHolder.setServerPlayers(rep.json.get("players").getAsJsonObject().get("online").getAsInt(), rep.json.get("players").getAsJsonObject().get("max").getAsInt());
 							} else if (s.response instanceof SprPair) {//PE?
 								SprPair sp = ((SprPair) s.response);
 								if (sp.getB() instanceof UnconnectedPing.UnconnectedPingResult) {
