@@ -1,11 +1,11 @@
 package com.nao20010128nao.Wisecraft.misc.pinger.pe;
 
 import android.annotation.*;
+import com.nao20010128nao.OTC.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import java.util.*;
-import com.nao20010128nao.OTC.*;
 
 public class FullStat implements ServerPingResult,PEPingResult {
 	static byte NULL = '\0';
@@ -36,7 +36,7 @@ public class FullStat implements ServerPingResult,PEPingResult {
 		for (int i = 2; i < dataEnds; i += 2) {
 			String k = new String(temp[i], CompatCharsets.UTF_8).trim();
 			String v = new String(temp[i + 1], CompatCharsets.UTF_8).trim();
-			if ("".equals(k) | "".equals(v))
+			if ("".equals(k))
 				continue;
 			datas.add(new KVP<String,String>(k, v));
 			mapDatas.put(k,v);
