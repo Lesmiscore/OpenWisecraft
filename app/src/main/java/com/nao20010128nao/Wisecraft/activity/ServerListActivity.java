@@ -1449,6 +1449,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					}
 				}
 				bsld.setAdapter(new ServerExtSelect());
+				bsld.show();
 			}else{
 				sla.openContextMenu(p2,sla.rv,new Treatment<Duo<View,ContextMenu>>(){
 						public void process(Duo<View,ContextMenu> a){
