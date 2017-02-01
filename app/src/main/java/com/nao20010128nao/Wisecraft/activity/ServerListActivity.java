@@ -1,5 +1,6 @@
 package com.nao20010128nao.Wisecraft.activity;
 import android.content.*;
+import android.content.res.*;
 import android.os.*;
 import android.support.design.widget.*;
 import android.support.v4.content.*;
@@ -19,7 +20,6 @@ import com.google.gson.reflect.*;
 import com.mikepenz.materialdrawer.*;
 import com.mikepenz.materialdrawer.model.interfaces.*;
 import com.nao20010128nao.Wisecraft.*;
-import com.nao20010128nao.Wisecraft.activity.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.collector.*;
 import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
@@ -1408,7 +1408,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				}
 			}
 			
-			if(true){
+			if(false){
 				new AlertDialog.Builder(sla,ThemePatcher.getDefaultDialogStyle(sla))
 					.setTitle(getItem(p3).resolveVisibleTitle())
 					.setItems(generateSubMenu(executes), new DialogInterface.OnClickListener(){
@@ -1418,6 +1418,37 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					})
 					.setCancelable(true)
 					.show();
+			}else if(true){
+				BottomSheetListDialog bsld=new BottomSheetListDialog(sla,ThemePatcher.getDefaultDialogStyle(sla));
+				bsld.setTitle(getItem(p3).resolveVisibleTitle());
+				bsld.setLayoutManager(new LinearLayoutManager(sla));
+				class ServerExtSelect extends RecyclerView.Adapter<FindableViewHolder> {
+					String[] strings=generateSubMenu(executes);
+					
+					@Override
+					public void onBindViewHolder(FindableViewHolder holder, final int position) {
+						((TextView)holder.findViewById(android.R.id.text1)).setText(strings[position]);
+						TypedArray ta=sla.obtainStyledAttributes(new int[]{R.attr.selectableItemBackground});
+						holder.itemView.setBackground(ta.getDrawable(0));
+						ta.recycle();
+						Utils.applyHandlersForViewTree(holder.itemView,new View.OnClickListener(){
+							public void onClick(View v){
+								executes.get(position).getA().run();
+							}
+						});
+					}
+
+					@Override
+					public FindableViewHolder onCreateViewHolder(ViewGroup p1, int p2){
+						return new FindableViewHolder(sla.getLayoutInflater().inflate(R.layout.simple_list_item_1,p1,false));
+					}
+
+					@Override
+					public int getItemCount() {
+						return strings.length;
+					}
+				}
+				bsld.setAdapter(new ServerExtSelect());
 			}else{
 				sla.openContextMenu(p2,sla.rv,new Treatment<Duo<View,ContextMenu>>(){
 						public void process(Duo<View,ContextMenu> a){
