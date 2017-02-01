@@ -1408,7 +1408,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				}
 			}
 			
-			if(Build.VERSION.SDK_INT<23){
+			if(true){
 				new AlertDialog.Builder(sla,ThemePatcher.getDefaultDialogStyle(sla))
 					.setTitle(getItem(p3).resolveVisibleTitle())
 					.setItems(generateSubMenu(executes), new DialogInterface.OnClickListener(){
