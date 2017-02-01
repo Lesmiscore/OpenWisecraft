@@ -23,7 +23,7 @@ import com.nao20010128nao.Wisecraft.R;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 
-public class PingWidget extends AppWidgetProvider {
+abstract class PingWidgetImpl extends WisecraftWidgetBase {
 	public static final int STATUS_ONLINE=0;
 	public static final int STATUS_OFFLINE=1;
 	public static final int STATUS_PENDING=2;
@@ -271,7 +271,7 @@ public class PingWidget extends AppWidgetProvider {
 						title = rep.json.get("description").getAsString();
 					}
 				}
-				ssrvw.setServerPlayers(rep.json.get("players").getAsJsonObject().get("online").getAsInt(), rep.json.get("players").getAsJsonObject().get("online").getAsInt());
+				ssrvw.setServerPlayers(rep.json.get("players").getAsJsonObject().get("online").getAsInt(), rep.json.get("players").getAsJsonObject().get("max").getAsInt());
 			} else if (s.response instanceof SprPair) {//PE?
 				SprPair sp = ((SprPair) s.response);
 				if (sp.getB() instanceof UnconnectedPing.UnconnectedPingResult) {
@@ -333,5 +333,8 @@ public class PingWidget extends AppWidgetProvider {
 		public int style=0;
 	}
 	
+	
+}
+public class PingWidget extends PingWidgetImpl{
 	public static class Type2 extends PingWidget{}
 }

@@ -18,8 +18,7 @@ import java.util.*;
 
 import com.nao20010128nao.Wisecraft.R;
 
-public abstract class WidgetServerSelectActivity extends AppCompatActivity 
-{
+abstract class WidgetServerSelectActivityImpl extends AppCompatActivity {
 	RecyclerView rv;
 	Adapter a;
 	Gson gson=new Gson();
@@ -113,7 +112,7 @@ public abstract class WidgetServerSelectActivity extends AppCompatActivity
 							}
 							
 							widgetPref.edit().putString(wid+"",gson.toJson(s)).commit();
-							sendBroadcast(new Intent(WidgetServerSelectActivity.this,PingWidget.PingHandler.class).putExtra("wid",wid));
+							sendBroadcast(new Intent(WidgetServerSelectActivityImpl.this,PingWidget.PingHandler.class).putExtra("wid",wid));
 							setResult(RESULT_OK,new Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, wid));
 							finish();
 						}
@@ -171,8 +170,8 @@ public abstract class WidgetServerSelectActivity extends AppCompatActivity
 				Server s=getItem(ofs).cloneAsServer();
 				s.name=null;
 				widgetPref.edit().putString(wid+"",gson.toJson(s)).commit();
-				PingWidget.setWidgetData(WidgetServerSelectActivity.this,wid,newWidgetDataInstance());
-				sendBroadcast(new Intent(WidgetServerSelectActivity.this,PingWidget.PingHandler.class).putExtra("wid",wid));
+				PingWidget.setWidgetData(WidgetServerSelectActivityImpl.this,wid,newWidgetDataInstance());
+				sendBroadcast(new Intent(WidgetServerSelectActivityImpl.this,PingWidget.PingHandler.class).putExtra("wid",wid));
 				setResult(RESULT_OK,new Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, wid));
 				finish();
 			}
@@ -181,6 +180,9 @@ public abstract class WidgetServerSelectActivity extends AppCompatActivity
 	
 	public abstract PingWidget.WidgetData newWidgetDataInstance();
 	
+	
+}
+public abstract class WidgetServerSelectActivity extends WidgetServerSelectActivityImpl {
 	public static class Type1 extends WidgetServerSelectActivity {
 
 		@Override
@@ -194,9 +196,10 @@ public abstract class WidgetServerSelectActivity extends AppCompatActivity
 
 		@Override
 		public PingWidget.WidgetData newWidgetDataInstance() {
-			PingWidget.WidgetData  data=new PingWidget.WidgetData();
+			PingWidget.WidgetData data=new PingWidget.WidgetData();
 			data.style=1;
 			return data;
 		}
 	}
 }
+
