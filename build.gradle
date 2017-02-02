@@ -38,6 +38,7 @@ buildscript {
     	jcenter()
     	mavenCentral()
     	maven { url "https://repo.eclipse.org/content/repositories/egit-releases/" }
+    	maven { url "https://raw.githubusercontent.com/nao20010128nao/MavenRepo/master/releases/" }
 	}
     dependencies {
         classpath('com.android.tools.build:gradle:2.1.3'){
