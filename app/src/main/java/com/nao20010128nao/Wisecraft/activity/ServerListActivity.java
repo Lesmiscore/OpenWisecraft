@@ -1419,7 +1419,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					.setCancelable(true)
 					.show();
 			}else if(true){
-				BottomSheetListDialog bsld=new BottomSheetListDialog(sla,ThemePatcher.getDefaultDialogStyle(sla));
+				BottomSheetListDialog bsld=new BottomSheetListDialog(sla);
 				bsld.setTitle(getItem(p3).resolveVisibleTitle());
 				bsld.setLayoutManager(new LinearLayoutManager(sla));
 				class ServerExtSelect extends RecyclerView.Adapter<FindableViewHolder> {
