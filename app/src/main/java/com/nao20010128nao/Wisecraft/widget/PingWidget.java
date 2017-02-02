@@ -142,7 +142,7 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 			.append(s.mode==0?"PE":"PC")
 			.toString();
 			
-		rvs.setOnClickPendingIntent(R.id.update, PendingIntent.getBroadcast(context, wid, new Intent(context, PingHandler.class).setAction("update").putExtra("wid", wid), 0));
+		rvs.setOnClickPendingIntent(R.id.update, PendingIntent.getBroadcast(context, wid, new Intent(context, PingWidget.PingHandler.class).setAction("update").putExtra("wid", wid), 0));
 		rvs.setOnClickPendingIntent(R.id.openServerStatus, PendingIntent.getActivity(context, wid*100, new Intent(context,RequestedServerInfoActivity.class).setData(Uri.parse(addr)), 0));
 	}
 
@@ -196,7 +196,7 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 	
 	
 	
-	public static class PingHandler extends BroadcastReceiver {
+	abstract static class PingHandlerImpl extends BroadcastReceiver {
 
 		@Override
 		public void onReceive(Context p1, Intent p2) {
@@ -337,4 +337,6 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 }
 public class PingWidget extends PingWidgetImpl{
 	public static class Type2 extends PingWidget{}
+	
+	public static class PingHandler extends PingHandlerImpl{}
 }
