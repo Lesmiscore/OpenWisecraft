@@ -362,7 +362,7 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 			ssrvw.offline(server,c);
 			
 			setupHandlers(rvs, c, id);
-			setWidgetStatus(c,id,STATUS_ONLINE,true);
+			setWidgetStatus(c,id,STATUS_OFFLINE,true);
 			awm.updateAppWidget(id,rvs);
 		}
 	}
