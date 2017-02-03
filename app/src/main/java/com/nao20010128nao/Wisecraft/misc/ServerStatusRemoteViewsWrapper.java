@@ -8,6 +8,7 @@ import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.widget.*;
 import java.util.*;
 import android.appwidget.*;
+import com.google.gson.*;
 
 public class ServerStatusRemoteViewsWrapper implements ServerStatusViewController<ServerStatusRemoteViewsWrapper> 
 {
@@ -40,7 +41,8 @@ public class ServerStatusRemoteViewsWrapper implements ServerStatusViewControlle
 		return setServerPlayers(count+"/"+max);
 	}
 	public ServerStatusRemoteViewsWrapper setServerPlayers(List<String> playersList) {
-		control.setRemoteAdapter(R.id.players,new Intent(c,PingWidget.ListViewUpdater.class).putExtra("list",new ArrayList<String>(playersList)));
+		PingWidget.getWidgetPref(c).edit().putString(wid+".players",new Gson().toJson(playersList)).commit();
+		control.setRemoteAdapter(R.id.players,new Intent(c,PingWidget.ListViewUpdater.class).putExtra("list",new ArrayList<String>(playersList)).putExtra("wid",wid));
 		AppWidgetManager.getInstance(c).notifyAppWidgetViewDataChanged(wid,R.id.players);
 		return this;
 	}

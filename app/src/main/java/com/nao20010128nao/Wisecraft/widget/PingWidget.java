@@ -24,6 +24,7 @@ import com.nao20010128nao.Wisecraft.R;
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 import android.widget.RemoteViewsService.*;
 import com.nao20010128nao.Wisecraft.activity.*;
+import com.google.gson.reflect.*;
 
 abstract class PingWidgetImpl extends WisecraftWidgetBase {
 	public static final int STATUS_ONLINE=0;
@@ -374,72 +375,84 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 	}
 	
 	
-	abstract static class ListViewUpdaterImpl extends RemoteViewsService implements RemoteViewsService.RemoteViewsFactory{
-		List<String> array;
+	abstract static class ListViewUpdaterImpl extends RemoteViewsService {
 		
 		@Override
 		public RemoteViewsService.RemoteViewsFactory onGetViewFactory(Intent p1) {
-			array=p1.getStringArrayListExtra("list");
+			List<String> array=p1.getStringArrayListExtra("list");
 			Log.d("ListViewUpdater","size of array: "+array.size());
 			
 			for(String s:array){
 				Log.d("ListViewUpdater","array: "+s);
 			}
-			return this;
+			return new Factory(array,this,p1.getIntExtra("wid",AppWidgetManager.INVALID_APPWIDGET_ID));
 		}
 		
 
-
-		@Override
-		public void onCreate() {
+		static class Factory implements RemoteViewsService.RemoteViewsFactory{
+			List<String> array;
+			Context c;
+			int wid;
+			public Factory(List<String> list,Context service,int wid){
+				array=list;
+				c=service;
+				this.wid=wid;
+			}
 			
-		}
+			@Override
+			public void onCreate() {
+				SharedPreferences widgetPref=getWidgetPref(c);
+				if(widgetPref.contains(wid+".players")){
+					array=new Gson().fromJson(widgetPref.getString(wid+".players","[]"),new TypeToken<ArrayList<String>>(){}.getType());
+				}
+			}
 
-		@Override
-		public RemoteViews getViewAt(int p1) {
-			RemoteViews view=new RemoteViews(getPackageName(),R.layout.simple_list_item_1);
-			view.setTextColor(android.R.id.text1,Color.WHITE);
-			view.setTextViewText(android.R.id.text1,array.get(p1));
-			Log.d("ListViewUpdater","getViewAt: "+p1+",array: "+array.get(p1));
-			return view;
-		}
+			@Override
+			public RemoteViews getViewAt(int p1) {
+				RemoteViews view=new RemoteViews(c.getPackageName(),R.layout.simple_list_item_1);
+				view.setTextColor(android.R.id.text1,Color.WHITE);
+				view.setTextViewText(android.R.id.text1,array.get(p1));
+				Log.d("ListViewUpdater","getViewAt: "+p1+",array: "+array.get(p1));
+				return view;
+			}
 
-		@Override
-		public boolean hasStableIds() {
-			return false;
-		}
+			@Override
+			public boolean hasStableIds() {
+				return true;
+			}
 
-		@Override
-		public RemoteViews getLoadingView() {
-			RemoteViews view=new RemoteViews(getPackageName(),R.layout.simple_list_item_1);
-			view.setTextColor(android.R.id.text1,ServerInfoActivity.translucent(Color.WHITE));
-			view.setTextViewText(android.R.id.text1,getResources().getString(R.string.loading));
-			return view;
-		}
+			@Override
+			public RemoteViews getLoadingView() {
+				RemoteViews view=new RemoteViews(c.getPackageName(),R.layout.simple_list_item_1);
+				view.setTextColor(android.R.id.text1,ServerInfoActivity.translucent(Color.WHITE));
+				view.setTextViewText(android.R.id.text1,c.getResources().getString(R.string.loading));
+				return view;
+			}
 
-		@Override
-		public void onDataSetChanged() {
-			
-		}
+			@Override
+			public void onDataSetChanged() {
+				onCreate();
+			}
 
-		@Override
-		public int getCount() {
-			return array.size();
-		}
+			@Override
+			public int getCount() {
+				return array.size();
+			}
 
-		@Override
-		public int getViewTypeCount() {
-			return getCount();
-		}
+			@Override
+			public int getViewTypeCount() {
+				return getCount();
+			}
 
-		@Override
-		public long getItemId(int p1) {
-			return array.get(p1).hashCode();
-		}
+			@Override
+			public long getItemId(int p1) {
+				return array.get(p1).hashCode();
+			}
 
-		@Override
-		public void onDestroy() {
-			
+			@Override
+			public void onDestroy() {
+
+			}
 		}
 	}
 }
