@@ -38,7 +38,7 @@ public class ServerStatusRemoteViewsWrapper implements ServerStatusViewControlle
 		return setServerPlayers(count+"/"+max);
 	}
 	public ServerStatusRemoteViewsWrapper setServerPlayers(List<String> playersList) {
-		control.setRemoteAdapter(R.id.players,new Intent(c,PingWidget.ListViewUpdater.class).putExtra("list",new ArrayList<>(playersList)));
+		control.setRemoteAdapter(R.id.players,new Intent(c,PingWidget.ListViewUpdater.class).putExtra("list",new ArrayList<String>(playersList)));
 		return this;
 	}
 	public ServerStatusRemoteViewsWrapper setServerAddress(String s){

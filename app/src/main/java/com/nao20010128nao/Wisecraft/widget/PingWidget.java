@@ -343,6 +343,7 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 			players=new ArrayList<>(players);//cast List into ArrayList exactly to sort
 			if (pref.getBoolean("sortPlayerNames", true))
 				Collections.sort(players);
+			Log.d("WisecraftWidgets","size of players: "+players.size());
 			
 			ssrvw
 				.setPingMillis(s.ping)
@@ -379,6 +380,8 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 		@Override
 		public RemoteViewsService.RemoteViewsFactory onGetViewFactory(Intent p1) {
 			array=p1.getStringArrayListExtra("list");
+			Log.d("ListViewUpdater","size of array: "+array.size());
+			
 			for(String s:array){
 				Log.d("ListViewUpdater","array: "+s);
 			}
