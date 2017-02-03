@@ -307,11 +307,7 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 				}
 			} else if (s.response instanceof SprPair) {//PE?
 				SprPair sp = ((SprPair) s.response);
-				if (sp.getB() instanceof UnconnectedPing.UnconnectedPingResult) {
-					UnconnectedPing.UnconnectedPingResult res = (UnconnectedPing.UnconnectedPingResult) sp.getB();
-					title = res.getServerName();
-					ssrvw.setServerPlayers(res.getPlayersCount(), res.getMaxPlayers());
-				} else if (sp.getA() instanceof FullStat) {
+				if (sp.getA() instanceof FullStat) {
 					FullStat fs = (FullStat) sp.getA();
 					Map<String, String> m = fs.getDataAsMap();
 					if (m.containsKey("hostname")) {
@@ -323,6 +319,10 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 					}
 					ssrvw.setServerPlayers(m.get("numplayers"), m.get("maxplayers"));
 					players=fs.getPlayerList();
+				} else if (sp.getB() instanceof UnconnectedPing.UnconnectedPingResult) {
+					UnconnectedPing.UnconnectedPingResult res = (UnconnectedPing.UnconnectedPingResult) sp.getB();
+					title = res.getServerName();
+					ssrvw.setServerPlayers(res.getPlayersCount(), res.getMaxPlayers());
 				} else {
 					title = s.toString();
 					ssrvw.setServerPlayers();
