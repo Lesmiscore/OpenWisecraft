@@ -7,15 +7,17 @@ import android.widget.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.widget.*;
 import java.util.*;
+import android.appwidget.*;
 
 public class ServerStatusRemoteViewsWrapper implements ServerStatusViewController<ServerStatusRemoteViewsWrapper> 
 {
-	RemoteViews control;Context c;int style;
+	RemoteViews control;Context c;int style,wid;
 	public ServerStatusRemoteViewsWrapper(Context c,int wid){
 		PingWidget.WidgetData widgetData=PingWidget.getWidgetData(c,wid);
 		style=widgetData.style;
 		control=new RemoteViews(c.getPackageName(),PingWidget.styleToId(style));
 		this.c=c;
+		this.wid=wid;
 	}
 	public ServerStatusRemoteViewsWrapper setStatColor(int color){
 		return this;
@@ -39,6 +41,7 @@ public class ServerStatusRemoteViewsWrapper implements ServerStatusViewControlle
 	}
 	public ServerStatusRemoteViewsWrapper setServerPlayers(List<String> playersList) {
 		control.setRemoteAdapter(R.id.players,new Intent(c,PingWidget.ListViewUpdater.class).putExtra("list",new ArrayList<String>(playersList)));
+		AppWidgetManager.getInstance(c).notifyAppWidgetViewDataChanged(wid,R.id.players);
 		return this;
 	}
 	public ServerStatusRemoteViewsWrapper setServerAddress(String s){
