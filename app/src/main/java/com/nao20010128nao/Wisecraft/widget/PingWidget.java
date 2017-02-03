@@ -354,6 +354,7 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 			setupHandlers(rvs, c, id);
 			setWidgetStatus(c,id,STATUS_ONLINE,true);
 			awm.updateAppWidget(id,rvs);
+			awm.notifyAppWidgetViewDataChanged(id,R.id.players);
 		}
 
 		@Override
@@ -365,6 +366,7 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 			setupHandlers(rvs, c, id);
 			setWidgetStatus(c,id,STATUS_OFFLINE,true);
 			awm.updateAppWidget(id,rvs);
+			awm.notifyAppWidgetViewDataChanged(id,R.id.players);
 		}
 	}
 	
@@ -403,6 +405,9 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 				SharedPreferences widgetPref=getWidgetPref(c);
 				if(widgetPref.contains(wid+".players")){
 					array=new Gson().fromJson(widgetPref.getString(wid+".players","[]"),new TypeToken<ArrayList<String>>(){}.getType());
+				}
+				for(String s:array){
+					Log.d("ListViewUpdater","final array for"+wid+": "+s);
 				}
 			}
 

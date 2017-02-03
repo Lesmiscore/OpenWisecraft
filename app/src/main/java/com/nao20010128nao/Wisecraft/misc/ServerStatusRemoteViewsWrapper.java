@@ -43,7 +43,6 @@ public class ServerStatusRemoteViewsWrapper implements ServerStatusViewControlle
 	public ServerStatusRemoteViewsWrapper setServerPlayers(List<String> playersList) {
 		PingWidget.getWidgetPref(c).edit().putString(wid+".players",new Gson().toJson(playersList)).commit();
 		control.setRemoteAdapter(R.id.players,new Intent(c,PingWidget.ListViewUpdater.class).putExtra("list",new ArrayList<String>(playersList)).putExtra("wid",wid));
-		AppWidgetManager.getInstance(c).notifyAppWidgetViewDataChanged(wid,R.id.players);
 		return this;
 	}
 	public ServerStatusRemoteViewsWrapper setServerAddress(String s){
