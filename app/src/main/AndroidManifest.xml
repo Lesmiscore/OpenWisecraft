@@ -171,6 +171,28 @@
 			android:exported="false">
         </activity>
 		
+        <service
+			android:label="@string/app_name"
+			android:name=".services.MCProxyService"
+			android:exported="false">
+        </service>
+		<service
+			android:name=".services.MessagingService">
+			<intent-filter>
+				<action android:name="com.google.firebase.MESSAGING_EVENT"/>
+			</intent-filter>
+		</service>
+		<service
+			android:name=".services.InstanceIdService">
+			<intent-filter>
+				<action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+			</intent-filter>
+		</service>
+		
+		
+		<!-- Widgets -->
+		
+		
 		<activity
 			android:label="@string/select"
 			android:name=".widget.WidgetServerSelectActivity$Type1"
@@ -183,6 +205,15 @@
 		<activity
 			android:label="@string/select"
 			android:name=".widget.WidgetServerSelectActivity$Type2"
+			android:exported="false"
+			android:fitsSystemWindows="false">
+			<intent-filter>  
+				<action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>  
+			</intent-filter> 
+        </activity>
+		<activity
+			android:label="@string/select"
+			android:name=".widget.WidgetServerSelectActivity$Type3"
 			android:exported="false"
 			android:fitsSystemWindows="false">
 			<intent-filter>  
@@ -206,24 +237,6 @@
 			android:exported="false"
 			android:fitsSystemWindows="false">
         </activity>
-
-        <service
-			android:label="@string/app_name"
-			android:name=".services.MCProxyService"
-			android:exported="false">
-        </service>
-		<service
-			android:name=".services.MessagingService">
-			<intent-filter>
-				<action android:name="com.google.firebase.MESSAGING_EVENT"/>
-			</intent-filter>
-		</service>
-		<service
-			android:name=".services.InstanceIdService">
-			<intent-filter>
-				<action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
-			</intent-filter>
-		</service>
 		
 		<receiver android:name=".widget.PingWidget" >
             <intent-filter>
@@ -257,10 +270,30 @@
             <meta-data android:name="android.appwidget.provider"
                 android:resource="@xml/ping_widget_2" />
         </receiver>
+		<receiver android:name=".widget.PingWidget$Type3" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_BIND" />
+				<action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+				<action android:name="android.appwidget.action.APPWIDGET_DELETED" />
+				<action android:name="android.appwidget.action.APPWIDGET_DISABLED" />
+				<action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
+				<action android:name="android.appwidget.action.APPWIDGET_HOST_RESTORED" />
+				<action android:name="android.appwidget.action.APPWIDGET_UPDATE_OPTIONS" />
+				<action android:name="android.appwidget.action.APPWIDGET_PICK" />
+				<action android:name="android.appwidget.action.APPWIDGET_RESTORED" />
+				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/ping_widget_3" />
+        </receiver>
 		<receiver android:name=".widget.PingWidget$PingHandler">
 			<intent-filter>
                 <action android:name="update" />
             </intent-filter>
 		</receiver>
+		
+		<service 
+			android:name=".widget.PingWidget$ListViewUpdater"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
     </application>
 </manifest>

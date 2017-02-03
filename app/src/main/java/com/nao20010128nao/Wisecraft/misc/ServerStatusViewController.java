@@ -1,6 +1,7 @@
 package com.nao20010128nao.Wisecraft.misc;
 
 import android.content.*;
+import java.util.*;
 
 public interface ServerStatusViewController<T extends ServerStatusViewController> {
 	public T setStatColor(int color);
@@ -9,6 +10,7 @@ public interface ServerStatusViewController<T extends ServerStatusViewController
 	public T setServerPlayers();
 	public T setServerPlayers(Number count,Number max);
 	public T setServerPlayers(String count,String max);
+	public T setServerPlayers(List<String> playersList);
 	public T setServerAddress(String s);
 	public T setServerAddress(Server s);
 	public T setPingMillis(String s);

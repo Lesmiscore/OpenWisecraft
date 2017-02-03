@@ -201,5 +201,14 @@ public abstract class WidgetServerSelectActivity extends WidgetServerSelectActiv
 			return data;
 		}
 	}
+	public static class Type3 extends WidgetServerSelectActivity {
+
+		@Override
+		public PingWidget.WidgetData newWidgetDataInstance() {
+			PingWidget.WidgetData data=new PingWidget.WidgetData();
+			data.style=2;
+			return data;
+		}
+	}
 }
 

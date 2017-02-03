@@ -10,6 +10,7 @@ import com.nao20010128nao.Wisecraft.misc.view.*;
 
 import android.support.v7.view.ContextThemeWrapper;
 import com.nao20010128nao.Wisecraft.R;
+import java.util.*;
 
 public class ServerStatusWrapperViewHolder extends FindableViewHolder implements ServerStatusViewController<ServerStatusWrapperViewHolder>
 {
@@ -47,6 +48,9 @@ public class ServerStatusWrapperViewHolder extends FindableViewHolder implements
 	}
 	public ServerStatusWrapperViewHolder setServerPlayers(String count,String max){
 		return setServerPlayers(count+"/"+max);
+	}
+	public ServerStatusWrapperViewHolder setServerPlayers(List<String> playersList) {
+		return this;
 	}
 	public ServerStatusWrapperViewHolder setServerAddress(String s){
 		((TextView)preload.getView(R.id.serverAddress)).setText(s);

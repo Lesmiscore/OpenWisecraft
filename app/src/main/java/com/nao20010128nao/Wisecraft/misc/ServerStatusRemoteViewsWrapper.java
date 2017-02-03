@@ -6,6 +6,7 @@ import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.widget.*;
+import java.util.*;
 
 public class ServerStatusRemoteViewsWrapper implements ServerStatusViewController<ServerStatusRemoteViewsWrapper> 
 {
@@ -35,6 +36,10 @@ public class ServerStatusRemoteViewsWrapper implements ServerStatusViewControlle
 	}
 	public ServerStatusRemoteViewsWrapper setServerPlayers(String count,String max){
 		return setServerPlayers(count+"/"+max);
+	}
+	public ServerStatusRemoteViewsWrapper setServerPlayers(List<String> playersList) {
+		control.setRemoteAdapter(R.id.players,new Intent(TheApplication.instance,PingWidget.ListViewUpdater.class).putExtra("list",new ArrayList<>(playersList)));
+		return this;
 	}
 	public ServerStatusRemoteViewsWrapper setServerAddress(String s){
 		control.setTextViewText(R.id.serverAddress,s);

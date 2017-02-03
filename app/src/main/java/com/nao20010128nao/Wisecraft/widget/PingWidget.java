@@ -22,6 +22,8 @@ import java.util.*;
 import com.nao20010128nao.Wisecraft.R;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
+import android.widget.RemoteViewsService.*;
+import com.nao20010128nao.Wisecraft.activity.*;
 
 abstract class PingWidgetImpl extends WisecraftWidgetBase {
 	public static final int STATUS_ONLINE=0;
@@ -189,6 +191,7 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 		switch(style){
 			case 0:return R.layout.ping_widget_content;
 			case 1:return R.layout.ping_widget_content_2;
+			case 2:return R.layout.ping_widget_content_3;
 		}
 		return 0;
 	}
@@ -233,6 +236,7 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 			
 			ssrvw.setStatColor(ContextCompat.getColor(c, R.color.stat_ok));
 			final String title;
+			List<String> players=Collections.emptyList();
 			if (s.response instanceof FullStat) {//PE
 				FullStat fs = (FullStat) s.response;
 				Map<String, String> m = fs.getDataAsMap();
@@ -244,6 +248,7 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 					title = s.toString();
 				}
 				ssrvw.setServerPlayers(m.get("numplayers"), m.get("maxplayers"));
+				players=fs.getPlayerList();
 			} else if (s.response instanceof Reply19) {//PC 1.9~
 				Reply19 rep = (Reply19) s.response;
 				if (rep.description == null) {
@@ -252,6 +257,15 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 					title = rep.description.text;
 				}
 				ssrvw.setServerPlayers(rep.players.online, rep.players.max);
+				if (rep.players != null) {
+					if (rep.players.sample != null) {
+						final ArrayList<String> sort=new ArrayList<>();
+						for (Reply19.Player o:rep.players.sample) {
+							sort.add(o.name);
+						}
+						players=sort;
+					}
+				}
 			} else if (s.response instanceof Reply) {//PC
 				Reply rep = (Reply) s.response;
 				if (rep.description == null) {
@@ -260,18 +274,37 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 					title = rep.description;
 				}
 				ssrvw.setServerPlayers(rep.players.online, rep.players.max);
-			} else if (s.response instanceof RawJsonReply) {//PC (Obfuscated)
-				RawJsonReply rep = (RawJsonReply) s.response;
-				if (!rep.json.has("description")) {
-					title = s.toString();
-				} else {
-					if(rep.json.get("description").isJsonObject()){
-						title = rep.json.get("description").getAsJsonObject().get("text").getAsString();
-					}else{
-						title = rep.json.get("description").getAsString();
+				if (rep.players != null) {
+					if (rep.players.sample != null) {
+						final ArrayList<String> sort=new ArrayList<>();
+						for (Reply.Player o:rep.players.sample) {
+							sort.add(o.name);
+						}
+						players=sort;
 					}
 				}
-				ssrvw.setServerPlayers(rep.json.get("players").getAsJsonObject().get("online").getAsInt(), rep.json.get("players").getAsJsonObject().get("max").getAsInt());
+			} else if (s.response instanceof RawJsonReply) {//PC (Obfuscated)
+				JsonObject rep = ((RawJsonReply) s.response).json;
+				if (!rep.has("description")) {
+					title = s.toString();
+				} else {
+					if(rep.get("description").isJsonObject()){
+						title = rep.get("description").getAsJsonObject().get("text").getAsString();
+					}else{
+						title = rep.get("description").getAsString();
+					}
+				}
+				ssrvw.setServerPlayers(rep.get("players").getAsJsonObject().get("online").getAsInt(), rep.get("players").getAsJsonObject().get("max").getAsInt());
+				if (rep.has("players")) {
+					if (rep.get("players").getAsJsonObject().has("sample")) {
+						final ArrayList<String> sort=new ArrayList<>();
+						for (JsonElement je:rep.get("players").getAsJsonObject().get("sample").getAsJsonArray()) {
+							JsonObject o=je.getAsJsonObject();
+							sort.add(o.get("name").getAsString());
+						}
+						players=sort;
+					}
+				}
 			} else if (s.response instanceof SprPair) {//PE?
 				SprPair sp = ((SprPair) s.response);
 				if (sp.getB() instanceof UnconnectedPing.UnconnectedPingResult) {
@@ -289,6 +322,7 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 						title = s.toString();
 					}
 					ssrvw.setServerPlayers(m.get("numplayers"), m.get("maxplayers"));
+					players=fs.getPlayerList();
 				} else {
 					title = s.toString();
 					ssrvw.setServerPlayers();
@@ -306,9 +340,13 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 			} else {
 				ssrvw.setServerName(deleteDecorations(title));
 			}
+			players=new ArrayList<>(players);//cast List into ArrayList exactly to sort			if (pref.getBoolean("sortPlayerNames", true))
+				Collections.sort(players);
+			
 			ssrvw
 				.setPingMillis(s.ping)
-				.setServer(s);
+				.setServer(s)
+				.setServerPlayers(players);
 			
 			setupHandlers(rvs, c, id);
 			setWidgetStatus(c,id,STATUS_ONLINE,true);
@@ -334,9 +372,73 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 	}
 	
 	
+	abstract static class ListViewUpdaterImpl extends RemoteViewsService implements RemoteViewsService.RemoteViewsFactory{
+		List<String> array;
+		
+		@Override
+		public RemoteViewsService.RemoteViewsFactory onGetViewFactory(Intent p1) {
+			array=p1.getStringArrayListExtra("list");
+			return this;
+		}
+		
+
+
+		@Override
+		public void onCreate() {
+			
+		}
+
+		@Override
+		public RemoteViews getViewAt(int p1) {
+			RemoteViews view=new RemoteViews(getPackageName(),R.layout.simple_list_item_1);
+			view.setTextColor(android.R.id.text1,Color.WHITE);
+			view.setTextViewText(android.R.id.text1,array.get(p1));
+			return view;
+		}
+
+		@Override
+		public boolean hasStableIds() {
+			return false;
+		}
+
+		@Override
+		public RemoteViews getLoadingView() {
+			RemoteViews view=new RemoteViews(getPackageName(),R.layout.simple_list_item_1);
+			view.setTextColor(android.R.id.text1,ServerInfoActivity.translucent(Color.WHITE));
+			view.setTextViewText(android.R.id.text1,getResources().getString(R.string.loading));
+			return view;
+		}
+
+		@Override
+		public void onDataSetChanged() {
+			
+		}
+
+		@Override
+		public int getCount() {
+			return array.size();
+		}
+
+		@Override
+		public int getViewTypeCount() {
+			return 1;
+		}
+
+		@Override
+		public long getItemId(int p1) {
+			return array.get(p1).hashCode();
+		}
+
+		@Override
+		public void onDestroy() {
+			
+		}
+	}
 }
 public class PingWidget extends PingWidgetImpl{
 	public static class Type2 extends PingWidget{}
+	public static class Type3 extends PingWidget{}
 	
 	public static class PingHandler extends PingHandlerImpl{}
+	public static class ListViewUpdater extends ListViewUpdaterImpl{}
 }

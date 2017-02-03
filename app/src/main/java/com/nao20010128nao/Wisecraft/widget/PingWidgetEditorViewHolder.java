@@ -8,6 +8,7 @@ import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.view.*;
 
 import com.nao20010128nao.Wisecraft.R;
+import java.util.*;
 
 public class PingWidgetEditorViewHolder extends FindableViewHolder implements ServerStatusViewController<PingWidgetEditorViewHolder>
 {
@@ -31,6 +32,9 @@ public class PingWidgetEditorViewHolder extends FindableViewHolder implements Se
 		return this;
 	}
 	public PingWidgetEditorViewHolder setServerPlayers(String count,String max){
+		return this;
+	}
+	public PingWidgetEditorViewHolder setServerPlayers(List<String> playersList) {
 		return this;
 	}
 	public PingWidgetEditorViewHolder setServerAddress(String s){
