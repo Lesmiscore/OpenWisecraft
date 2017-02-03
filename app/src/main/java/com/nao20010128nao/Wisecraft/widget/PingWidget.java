@@ -379,6 +379,9 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 		@Override
 		public RemoteViewsService.RemoteViewsFactory onGetViewFactory(Intent p1) {
 			array=p1.getStringArrayListExtra("list");
+			for(String s:array){
+				Log.d("ListViewUpdater","array: "+s);
+			}
 			return this;
 		}
 		
@@ -394,6 +397,7 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 			RemoteViews view=new RemoteViews(getPackageName(),R.layout.simple_list_item_1);
 			view.setTextColor(android.R.id.text1,Color.WHITE);
 			view.setTextViewText(android.R.id.text1,array.get(p1));
+			Log.d("ListViewUpdater","getViewAt: "+p1+",array: "+array.get(p1));
 			return view;
 		}
 
@@ -422,7 +426,7 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 
 		@Override
 		public int getViewTypeCount() {
-			return 1;
+			return getCount();
 		}
 
 		@Override
