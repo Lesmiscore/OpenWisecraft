@@ -340,7 +340,8 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 			} else {
 				ssrvw.setServerName(deleteDecorations(title));
 			}
-			players=new ArrayList<>(players);//cast List into ArrayList exactly to sort			if (pref.getBoolean("sortPlayerNames", true))
+			players=new ArrayList<>(players);//cast List into ArrayList exactly to sort
+			if (pref.getBoolean("sortPlayerNames", true))
 				Collections.sort(players);
 			
 			ssrvw
