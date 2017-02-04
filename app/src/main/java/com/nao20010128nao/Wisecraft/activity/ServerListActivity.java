@@ -1301,9 +1301,11 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
 													 sla.list.set(p3, s);
 													 sla.sl.notifyItemChanged(p3);
-													 sla.dryUpdate(s, true);
-													 sla.statLayout.setStatusAt(p3, 1);
-
+													 
+													 //Never update when the server is only edited
+													 /*sla.dryUpdate(s, true);
+													 sla.statLayout.setStatusAt(p3, 1);*/
+													 
 													 sla.saveServers();
 												 }
 											 }).
