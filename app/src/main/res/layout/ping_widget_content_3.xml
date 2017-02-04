@@ -87,11 +87,6 @@
 			android:layout_width="match_parent"
 			android:layout_weight="1.0">
 
-			<ListView
-				android:layout_height="match_parent"
-				android:layout_width="match_parent"
-				android:id="@+id/players"/>
-
 			<FrameLayout
 				android:layout_height="match_parent"
 				android:layout_width="match_parent"
@@ -106,6 +101,18 @@
 					android:layout_gravity="center"/>
 
 			</FrameLayout>
+
+			<ScrollView
+				android:layout_height="match_parent"
+				android:layout_width="match_parent">
+
+				<LinearLayout
+					android:layout_height="match_parent"
+					android:layout_width="match_parent"
+					android:orientation="vertical"
+					android:id="@+id/players"/>
+
+			</ScrollView>
 
 		</FrameLayout>
 

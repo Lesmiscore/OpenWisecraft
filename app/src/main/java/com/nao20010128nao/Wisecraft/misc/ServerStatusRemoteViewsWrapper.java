@@ -1,14 +1,13 @@
 package com.nao20010128nao.Wisecraft.misc;
 
 import android.content.*;
+import android.graphics.*;
 import android.support.v4.content.*;
 import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.widget.*;
 import java.util.*;
-import android.appwidget.*;
-import com.google.gson.*;
 
 public class ServerStatusRemoteViewsWrapper implements ServerStatusViewController<ServerStatusRemoteViewsWrapper> 
 {
@@ -41,8 +40,16 @@ public class ServerStatusRemoteViewsWrapper implements ServerStatusViewControlle
 		return setServerPlayers(count+"/"+max);
 	}
 	public ServerStatusRemoteViewsWrapper setServerPlayers(List<String> playersList) {
-		PingWidget.getWidgetPref(c).edit().putString(wid+".players",new Gson().toJson(playersList)).commit();
-		control.setRemoteAdapter(R.id.players,new Intent(c,PingWidget.ListViewUpdater.class).putExtra("list",new ArrayList<String>(playersList)).putExtra("wid",wid));
+		/*PingWidget.getWidgetPref(c).edit().putString(wid+".players",new Gson().toJson(playersList)).commit();
+		control.setRemoteAdapter(R.id.players,new Intent(c,PingWidget.ListViewUpdater.class).putExtra("list",new ArrayList<String>(playersList)).putExtra("wid",wid));*/
+		//Make views for each players and add them into LinearLayout
+		control.removeAllViews(R.id.players);
+		for(String pn:playersList){
+			RemoteViews single=new RemoteViews(c.getPackageName(),R.layout.simple_list_item_1);
+			single.setTextColor(android.R.id.text1,Color.WHITE);
+			single.setTextViewText(android.R.id.text1,pn);
+			control.addView(R.id.players,single);
+		}
 		return this;
 	}
 	public ServerStatusRemoteViewsWrapper setServerAddress(String s){
