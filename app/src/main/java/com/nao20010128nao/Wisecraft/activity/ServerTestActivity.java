@@ -249,7 +249,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 								title = rep.json.get("description").getAsString();
 							}
 						}
-						viewHolder.setServerPlayers(rep.json.get("players").getAsJsonObject().get("online").getAsInt(), rep.json.get("players").getAsJsonObject().get("online").getAsInt());
+						viewHolder.setServerPlayers(rep.json.get("players").getAsJsonObject().get("online").getAsInt(), rep.json.get("players").getAsJsonObject().get("max").getAsInt());
                     } else if (sv.response instanceof SprPair) {//PE?
 						SprPair sp=((SprPair)sv.response);
 						if (sp.getB() instanceof UnconnectedPing.UnconnectedPingResult) {

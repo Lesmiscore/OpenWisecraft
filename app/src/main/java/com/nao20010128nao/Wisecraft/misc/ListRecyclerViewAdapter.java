@@ -7,7 +7,7 @@ public abstract class ListRecyclerViewAdapter<VH extends RecyclerView.ViewHolder
 	List<LType> list;
 	List<LType> unmodifiableList;
 	public ListRecyclerViewAdapter(List<LType> lst){
-		unmodifiableList=Collections.unmodifiableList(list=new ArrayList<LType>(lst));
+		unmodifiableList=Collections.unmodifiableList(list=lst);
 	}
 	public ListRecyclerViewAdapter(){
 		this(new ArrayList<LType>());
