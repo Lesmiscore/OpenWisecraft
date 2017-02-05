@@ -23,6 +23,8 @@ import java.util.*;
 import com.nao20010128nao.Wisecraft.R;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
+
+@ShowsServerList
 abstract class ServerFinderActivityImpl extends AppCompatActivity implements ServerListActivityInterface {
 	ServerList sl;
 	List<ServerStatus> list;
@@ -72,7 +74,6 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
 			})
 			.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener(){
 				public void onClick(DialogInterface di, int w) {
-					di.dismiss();
 					finish();
 				}
 			})

@@ -42,6 +42,7 @@ import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 
 //Full implement for user interface (Some part is available at ServerListActivityBase4)
 @RuntimePermissions
+@ShowsServerList
 abstract class ServerListActivityImpl extends ServerListActivityBase1 implements ServerListActivityInterface,ServerListProvider {
 	public static WeakReference<ServerListActivityImpl> instance=new WeakReference(null);
 	

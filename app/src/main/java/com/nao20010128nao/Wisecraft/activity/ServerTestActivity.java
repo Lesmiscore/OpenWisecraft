@@ -22,6 +22,7 @@ import com.nao20010128nao.Wisecraft.R;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 
+@ShowsServerList
 class ServerTestActivityImpl extends AppCompatActivity implements ServerListActivityInterface {
 	static WeakReference<ServerTestActivityImpl> instance=new WeakReference(null);
 
