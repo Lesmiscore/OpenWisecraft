@@ -161,14 +161,12 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
-		/*
 		if(rv.getLayoutManager() instanceof StaggeredGridLayoutManager){
 			((StaggeredGridLayoutManager)rv.getLayoutManager()).setSpanCount(calculateRows(this,rv));
 		}
 		if(rv.getLayoutManager() instanceof GridLayoutManager){
 			((GridLayoutManager)rv.getLayoutManager()).setSpanCount(calculateRows(this,rv));
 		}
-		*/
 	}
 	
 	@Override
