@@ -15,7 +15,7 @@ image: "nao20010128nao/android-build:latest"
 
 .main_script: &scrpt
   script:
-    - "gradle $TASK --info --stacktrace | tee -a build-$CI_BUILD_NAME.log > /dev/null"
+    - "gradle safeDeleteDevXml $TASK --info --stacktrace | tee -a build-$CI_BUILD_NAME.log > /dev/null"
     - mv */build/outputs/apk/*.apk .
     - ./ci/packageInformations.sh
 
@@ -25,14 +25,13 @@ image: "nao20010128nao/android-build:latest"
     - DIR=`cat ./app/build.gradle | grep "def preNum="`
     - DIR=${DIR% //*}
     - "DIR=${DIR#*=}"
-    - "if [ $DIR != \"0\" ]; then gradle $TASK --info --stacktrace | tee -a build-$CI_BUILD_NAME.log > /dev/null; fi"
+    - "if [ $DIR != \"0\" ]; then gradle safeDeleteDevXml $TASK --info --stacktrace | tee -a build-$CI_BUILD_NAME.log > /dev/null; fi"
     - mv */build/outputs/apk/*.apk .
     - ./ci/packageInformations.sh
 
 before_script:
   - chmod a+x ./ci/*
   - source ./ci/prepare.sh
-  - if [[ $CI_BUILD_STAGE != postBuild ]]; then gradle safeDeleteDevXml --info --stacktrace | tee -a build-$CI_BUILD_NAME.log > /dev/null; fi
 
 stages:
   - app
