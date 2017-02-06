@@ -123,6 +123,7 @@ public class Utils extends PingerUtils{
 		return lst.toArray((T[])Array.newInstance(all.getClass().getComponentType(),lst.size()));
 	}
 	public static TextView getActionBarTextView(Toolbar mToolBar) {
+		if(TextUtils.isEmpty(mToolBar.getTitle()))return null;
 		try {
 			Field f = mToolBar.getClass().getDeclaredField("mTitleTextView");
 			f.setAccessible(true);
@@ -130,7 +131,28 @@ public class Utils extends PingerUtils{
 		} catch (NoSuchFieldException e) {
 		} catch (IllegalAccessException e) {
 		}
-		try{
+		try {
+			Field f=Toolbar.LayoutParams.class.getDeclaredField("mViewType");
+			f.setAccessible(true);
+			for (int i=0;i < mToolBar.getChildCount();i++) {
+				View v=mToolBar.getChildAt(i);
+				if (v instanceof TextView) {
+					ViewGroup.LayoutParams lp=v.getLayoutParams();
+					int viewType=f.get(lp);
+					if (viewType == 1) {
+						TextView tv=(TextView)v;
+						if(tv.getText().equals(mToolBar.getTitle())||tv.getText()==mToolBar.getTitle()){
+							return tv;
+						}
+					}
+				}
+			}
+		} catch (NoSuchFieldException e) {
+		} catch (IllegalAccessException e) {
+		} catch (SecurityException e) {
+		} catch (IllegalArgumentException e) {
+		}
+		try {
 			return (TextView)mToolBar.getChildAt(1);
 		}catch(Throwable e){
 			
