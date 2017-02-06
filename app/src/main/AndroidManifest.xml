@@ -224,17 +224,6 @@
 			</intent-filter> 
         </activity>
 		<activity
-			android:label="@string/wsi"
-			android:name=".widget.WidgetStateInspector"
-			android:exported="true"
-			android:fitsSystemWindows="false"
-			android:enabled="@bool/inspectorEnabled">
-			<intent-filter >
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-		<activity
 			android:label="@string/widgetEditor"
 			android:name=".widget.WidgetsEditorActivity"
 			android:exported="false"
