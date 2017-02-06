@@ -138,7 +138,7 @@ public class Utils extends PingerUtils{
 				View v=mToolBar.getChildAt(i);
 				if (v instanceof TextView) {
 					ViewGroup.LayoutParams lp=v.getLayoutParams();
-					int viewType=f.get(lp);
+					int viewType=(int)f.get(lp);
 					if (viewType == 1) {
 						TextView tv=(TextView)v;
 						if(tv.getText().equals(mToolBar.getTitle())||tv.getText()==mToolBar.getTitle()){
