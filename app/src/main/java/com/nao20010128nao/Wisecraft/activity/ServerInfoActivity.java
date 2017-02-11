@@ -644,8 +644,23 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 
 		@Override
 		public void onBindViewHolder(FindableViewHolder parent, int offset) {
-			((TextView)parent.findViewById(android.R.id.text1)).setText(getItem(offset));
-			
+			final String name=getItem(offset);
+			((TextView)parent.findViewById(android.R.id.text1)).setText(name);
+			if(pcMode){
+				TypedArray ta=obtainStyledAttributes(new int[]{R.attr.selectableItemBackground});
+				parent.itemView.setBackground(ta.getDrawable(0));
+				ta.recycle();
+				Utils.applyHandlersForViewTree(parent.itemView,new View.OnClickListener(){
+					public void onClick(View v){
+						MCPlayerInfoDialog dialog=new MCPlayerInfoDialog(ServerInfoActivityImpl.this);
+						dialog.setPlayer(name);
+						dialog.show();
+					}
+				});
+			}else{
+				parent.itemView.setBackground(null);
+				Utils.applyHandlersForViewTree(parent.itemView,null,null);
+			}
 		}
 		
 		public void setPcMode(boolean pcMode) {
@@ -673,7 +688,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 	
 	public static class PlayersFragment extends SiaBaseFragment {
 		RecyclerView lv;
-		ListRecyclerViewAdapter<FindableViewHolder,String> player;
+		PlayerNamesListAdapter player;
 		@Override
 		@ServerInfoParser
 		public void onResume() {
@@ -710,6 +725,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 						Collections.sort(sort);
 					player.clear();
 					player.addAll(sort);
+					player.setPcMode(false);
 				} else if (resp instanceof Reply) {
 					Reply rep=(Reply)resp;
 					if (rep.players != null) {
@@ -729,6 +745,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 					} else {
 						player.clear();
 					}
+					player.setPcMode(true);
 				} else if (resp instanceof Reply19) {
 					Reply19 rep=(Reply19)resp;
 					if (rep.players != null) {
@@ -748,6 +765,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 					} else {
 						player.clear();
 					}
+					player.setPcMode(true);
 				} else if (resp instanceof RawJsonReply) {
 					JsonObject rep=((RawJsonReply)resp).json;
 					if (rep.has("players")) {
@@ -768,6 +786,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 					} else {
 						player.clear();
 					}
+					player.setPcMode(true);
 				}
 			} catch (Throwable e) {
 				WisecraftError.report("ServerInfoActivity.PlayersFragment",e);
