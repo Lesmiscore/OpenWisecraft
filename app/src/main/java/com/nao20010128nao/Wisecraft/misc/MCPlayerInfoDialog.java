@@ -7,13 +7,11 @@ import android.widget.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.skin_face.*;
 import java.io.*;
-import java.lang.ref.*;
 import java.net.*;
 import java.util.regex.*;
 import org.jsoup.*;
 import org.jsoup.nodes.*;
 import org.jsoup.select.*;
-import java.util.concurrent.atomic.*;
 
 abstract class MCPlayerInfoDialogImpl extends AppCompatDialog {
 	String player;
