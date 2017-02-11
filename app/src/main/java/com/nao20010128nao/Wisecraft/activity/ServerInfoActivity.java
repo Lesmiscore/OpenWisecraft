@@ -623,10 +623,12 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 		}
 	}
 	class PlayerNamesListAdapter extends ListRecyclerViewAdapter<FindableViewHolder,String> {
+		boolean pcMode;
+		
 		public PlayerNamesListAdapter(){
 			super(new ArrayList<String>());
 		}
-		
+
 		@Override
 		public String getItem(int position) {
 			String s=super.getItem(position);
@@ -643,6 +645,15 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 		@Override
 		public void onBindViewHolder(FindableViewHolder parent, int offset) {
 			((TextView)parent.findViewById(android.R.id.text1)).setText(getItem(offset));
+			
+		}
+		
+		public void setPcMode(boolean pcMode) {
+			this.pcMode = pcMode;
+		}
+
+		public boolean isPcMode() {
+			return pcMode;
 		}
 		
 		public class VH extends FindableViewHolder{
