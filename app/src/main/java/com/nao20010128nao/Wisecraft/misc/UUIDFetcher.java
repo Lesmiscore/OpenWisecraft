@@ -9,7 +9,6 @@ import java.net.*;
 import java.nio.*;
 import java.util.*;
 import java.util.concurrent.*;
-import org.json.*;
 
 public class UUIDFetcher implements Callable<Map<String, UUID>> {
     private static final double PROFILES_PER_REQUEST = 100;
@@ -36,9 +35,9 @@ public class UUIDFetcher implements Callable<Map<String, UUID>> {
             writeBody(connection, body);
             JsonArray array = (JsonArray) jsonParser.parse(new InputStreamReader(connection.getInputStream()));
             for (Object profile : array) {
-                JSONObject jsonProfile = (JSONObject) profile;
-                String id = (String) jsonProfile.get("id");
-                String name = (String) jsonProfile.get("name");
+                JsonObject jsonProfile = (JsonObject) profile;
+                String id = jsonProfile.get("id").getAsString();
+                String name = jsonProfile.get("name").getAsString();
                 UUID uuid = UUIDFetcher.getUUID(id);
                 uuidMap.put(name, uuid);
             }
