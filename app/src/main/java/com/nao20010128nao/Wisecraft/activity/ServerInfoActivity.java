@@ -665,6 +665,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 		
 		public void setPcMode(boolean pcMode) {
 			this.pcMode = pcMode;
+			notifyItemRangeChanged(0,size());
 		}
 
 		public boolean isPcMode() {
@@ -712,8 +713,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				}
 
 				player.setHasStableIds(false);
-				lv.setAdapter(player);
-
+				
 				if (resp instanceof FullStat | resp instanceof SprPair) {
 					FullStat fs=null;
 					if (resp instanceof FullStat)
@@ -788,6 +788,8 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 					}
 					player.setPcMode(true);
 				}
+				
+				lv.setAdapter(player);
 			} catch (Throwable e) {
 				WisecraftError.report("ServerInfoActivity.PlayersFragment",e);
 				indicateError();
