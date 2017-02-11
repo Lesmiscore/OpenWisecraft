@@ -524,6 +524,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 
 		@Override
 		public void onBindViewHolder(FindableViewHolder holder, int position, List<Object> payloads) {
+			super.onBindViewHolder(holder,position);
 			View convertView=holder.itemView;
 			String playerName=getItem(position);
 			((TextView)convertView.findViewById(android.R.id.text1)).setText(playerName);
