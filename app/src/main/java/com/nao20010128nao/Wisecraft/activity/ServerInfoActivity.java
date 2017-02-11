@@ -651,12 +651,12 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				parent.itemView.setBackground(ta.getDrawable(0));
 				ta.recycle();
 				Utils.applyHandlersForViewTree(parent.itemView,new View.OnClickListener(){
-					public void onClick(View v){
-						MCPlayerInfoDialog dialog=new MCPlayerInfoDialog(ServerInfoActivityImpl.this);
-						dialog.setPlayer(name);
-						dialog.show();
-					}
-				});
+						public void onClick(View v){
+							MCPlayerInfoDialog dialog=new MCPlayerInfoDialog(ServerInfoActivityImpl.this);
+							dialog.setPlayer(name);
+							dialog.show();
+						}
+					},null);
 			}else{
 				parent.itemView.setBackground(null);
 				Utils.applyHandlersForViewTree(parent.itemView,null,null);

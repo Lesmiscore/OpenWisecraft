@@ -145,7 +145,7 @@ public class CompatUtils {
 		if(v!=null){
 			v.setOnClickListener(click);
 			v.setOnLongClickListener(longer);
-			v.setLongClickable(true);
+			v.setLongClickable(longer!=null);
 			if(v instanceof ViewGroup){
 				ViewGroup vg=(ViewGroup)v;
 				for(int i=0;i<vg.getChildCount();i++){
@@ -168,7 +168,7 @@ public class CompatUtils {
 	public static void applyHandlersForViewTree(View v,View.OnLongClickListener longer){
 		if(v!=null){
 			v.setOnLongClickListener(longer);
-			v.setLongClickable(true);
+			v.setLongClickable(longer!=null);
 			if(v instanceof ViewGroup){
 				ViewGroup vg=(ViewGroup)v;
 				for(int i=0;i<vg.getChildCount();i++){
