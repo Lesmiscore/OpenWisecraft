@@ -36,7 +36,8 @@
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceMedium"
 			android:id="@+id/username"
-			android:layout_marginLeft="10dp"/>
+			android:layout_marginLeft="10dp"
+			android:textIsSelectable="true"/>
 
 		<View
 			android:layout_height="10dp"
@@ -53,7 +54,8 @@
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceMedium"
 			android:id="@+id/uuid"
-			android:layout_marginLeft="10dp"/>
+			android:layout_marginLeft="10dp"
+			android:textIsSelectable="true"/>
 
 		<View
 			android:layout_height="10dp"
@@ -70,7 +72,8 @@
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceMedium"
 			android:id="@+id/mcbansReputation"
-			android:layout_marginLeft="10dp"/>
+			android:layout_marginLeft="10dp"
+			android:textIsSelectable="true"/>
 
 		<View
 			android:layout_height="10dp"
