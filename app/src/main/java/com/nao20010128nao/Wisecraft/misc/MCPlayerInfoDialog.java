@@ -71,7 +71,7 @@ abstract class MCPlayerInfoDialogImpl extends AppCompatDialog {
 						Document doc=Jsoup.connect("http://mcbans.com/player/"+uuidText+"/")
 							.userAgent("Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36")
 							.get();
-						Elements elems=doc.select("fieldset > section > div.section-content");
+						Elements elems=doc.select("div.section-content");
 						Log.d("MCPlayerInfoDialog","size: "+elems.size());
 						for(Element element:elems){
 							String value=element.text();
