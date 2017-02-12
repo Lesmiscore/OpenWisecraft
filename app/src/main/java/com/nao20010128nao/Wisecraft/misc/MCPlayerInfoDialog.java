@@ -3,12 +3,12 @@ package com.nao20010128nao.Wisecraft.misc;
 import android.graphics.*;
 import android.os.*;
 import android.support.v7.app.*;
+import android.util.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.skin_face.*;
 import java.io.*;
 import java.net.*;
-import java.util.regex.*;
 import org.jsoup.*;
 import org.jsoup.nodes.*;
 import org.jsoup.select.*;
@@ -74,6 +74,7 @@ abstract class MCPlayerInfoDialogImpl extends AppCompatDialog {
 						Elements elems=doc.select("fieldset > section > div.section-content");
 						for(Element element:elems){
 							String value=element.text();
+							Log.d("MCPlayerInfoDialog","elem: "+value);
 							if(value.matches("^(0|1|2|3|4|5|6|7|8|9|10)(|\\.[0-9]+) / 10$")){
 								rept=value;
 								break;
