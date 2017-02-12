@@ -72,9 +72,10 @@ abstract class MCPlayerInfoDialogImpl extends AppCompatDialog {
 							.userAgent("Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36")
 							.get();
 						Elements elems=doc.select("fieldset > section > div.section-content");
+						Log.d("MCPlayerInfoDialog","size: "+elems.size());
 						for(Element element:elems){
 							String value=element.text();
-							Log.d("MCPlayerInfoDialog","elem: "+value);
+							Log.d("MCPlayerInfoDialog","text: "+element.text()+",html: "+element.html()+",val: "+element.val());
 							if(value.matches("^(0|1|2|3|4|5|6|7|8|9|10)(|\\.[0-9]+) / 10$")){
 								rept=value;
 								break;
