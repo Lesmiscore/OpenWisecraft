@@ -46,6 +46,11 @@ abstract class MCPlayerInfoDialogImpl extends AppCompatDialog {
 				} catch (Exception e) {
 					WisecraftError.report("MCPlayerInfoDialog",e);
 				}
+				h.post(new Runnable(){
+						public void run(){
+							uuid.setText(uuidText);
+						}
+					});
 				try{
 					try(InputStream is=new URL("https://crafatar.com/avatars/"+(uuidText!=null?uuidText:player)).openConnection().getInputStream()){
 						bmp=BitmapFactory.decodeStream(is);
@@ -56,6 +61,11 @@ abstract class MCPlayerInfoDialogImpl extends AppCompatDialog {
 				}catch(Throwable e){
 					WisecraftError.report("MCPlayerInfoDialog",e);
 				}
+				h.post(new Runnable(){
+						public void run(){
+							face.setImageBitmap(bmp);
+						}
+					});
 				try{
 					if(uuidText!=null){
 						Document doc=Jsoup.connect("http://mcbans.com/player/"+uuidText+"/")
@@ -75,9 +85,7 @@ abstract class MCPlayerInfoDialogImpl extends AppCompatDialog {
 				}
 				h.post(new Runnable(){
 						public void run(){
-							uuid.setText(uuidText);
 							reputation.setText(rept);
-							face.setImageBitmap(bmp);
 						}
 					});
 			}
