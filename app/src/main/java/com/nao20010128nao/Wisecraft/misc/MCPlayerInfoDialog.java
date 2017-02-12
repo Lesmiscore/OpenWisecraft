@@ -12,6 +12,7 @@ import java.net.*;
 import org.jsoup.*;
 import org.jsoup.nodes.*;
 import org.jsoup.select.*;
+import java.util.regex.*;
 
 abstract class MCPlayerInfoDialogImpl extends AppCompatDialog {
 	String player;
@@ -68,18 +69,23 @@ abstract class MCPlayerInfoDialogImpl extends AppCompatDialog {
 					});
 				try{
 					if(uuidText!=null){
-						Document doc=Jsoup.connect("http://mcbans.com/player/"+uuidText.replace("-","")+"/")
-							.userAgent("Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36")
-							.get();
-						Elements elems=doc.select("div.section-content");
-						Log.d("MCPlayerInfoDialog","size: "+elems.size());
-						for(Element element:elems){
-							String value=element.text();
-							Log.d("MCPlayerInfoDialog","text: "+element.text()+",html: "+element.html()+",val: "+element.val());
-							if(value.matches("^(0|1|2|3|4|5|6|7|8|9|10)(|\\.[0-9]+) / 10$")){
-								rept=value;
-								break;
+						Pattern reptRegex=Pattern.compile("((0|1|2|3|4|5|6|7|8|9|10)(|\\.[0-9]+) / 10)");
+						StringBuilder sb=new StringBuilder();
+						BufferedReader reader=null;
+						try{
+							reader=new BufferedReader(new InputStreamReader(new URL("http://mcbans.com/player/"+uuidText.replace("-","")+"/").openConnection().getInputStream()));
+							char[] buf=new char[512];
+							while(true){
+								int r=reader.read(buf);
+								if(r<=0)break;
+								sb.append(buf,0,r);
 							}
+						}finally{
+							if(reader!=null)reader.close();
+						}
+						Matcher matcher=reptRegex.matcher(sb);
+						if(matcher.find()){
+							rept=matcher.group();
 						}
 					}
 				}catch(Throwable e){
