@@ -68,7 +68,7 @@ abstract class MCPlayerInfoDialogImpl extends AppCompatDialog {
 					});
 				try{
 					if(uuidText!=null){
-						Document doc=Jsoup.connect("http://mcbans.com/player/"+uuidText+"/")
+						Document doc=Jsoup.connect("http://mcbans.com/player/"+uuidText.replace("-","")+"/")
 							.userAgent("Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36")
 							.get();
 						Elements elems=doc.select("div.section-content");
