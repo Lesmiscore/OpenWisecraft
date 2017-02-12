@@ -29,7 +29,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceLarge"
-			android:text="Username"/>
+			android:text="@+id/playerName"/>
 
 		<TextView
 			android:layout_width="wrap_content"
@@ -47,7 +47,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceLarge"
-			android:text="UUID"/>
+			android:text="@string/uuid"/>
 
 		<TextView
 			android:layout_width="wrap_content"
@@ -65,7 +65,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceLarge"
-			android:text="MCBans reputation"/>
+			android:text="@string/mcbansReputation"/>
 
 		<TextView
 			android:layout_width="wrap_content"
