@@ -64,7 +64,7 @@ abstract class MCPlayerInfoDialogImpl extends AppCompatDialog {
 						Elements elems=doc.select("fieldset > section > div.section-content");
 						for(Element element:elems){
 							String value=element.text();
-							if(value.matches("^(0|1|2|3|4|5|6|7|8|9|10)(|\\.[0-9]+)"+Pattern.quote(" / 10")+"$")){
+							if(value.matches("^(0|1|2|3|4|5|6|7|8|9|10)(|\\.[0-9]+) / 10$")){
 								rept=value;
 								break;
 							}
