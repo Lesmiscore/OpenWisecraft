@@ -22,7 +22,7 @@ android{
 		buildConfigField "String", "GIT_REVISION_HASH_COLOR_PICKER", "\"${getHashOfRepo('colorPicker','Wisecraft-AndroidPhotoshopColorPicker',root)}\""
 		
 		buildConfigField "String","CI_BUILD_ID","\"${ext.buildId()}\""
-		buildConfigField "String","CI_BUILD_REF_NAME","\"${ext.buildRed()}\""
+		buildConfigField "String","CI_BUILD_REF_NAME","\"${ext.buildRef()}\""
 		buildConfigField "String","CI_RUNNER_ID","\"${ext.runnerId()}\""
 		buildConfigField "String","CI_BUILD_STAGE","\"${ext.buildStage()}\""
 		buildConfigField "String","CI_BUILD_NAME","\"${ext.buildName()}\""
