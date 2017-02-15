@@ -1,6 +1,6 @@
 import java.net.*
 
-def env=System.env()
+def env=System.env
 ext["buildId"]={
 	if(env.has("CI_BUILD_ID"))env["CI_BUILD_ID"]
 	else if(env.has["TRAVIS_JOB_NUMBER"])env["TRAVIS_JOB_NUMBER"]
