@@ -6,12 +6,12 @@ import java.security.SecureRandom;
 android {
 	def getRandomBetaSuffix={->
 		def suffix=["BETA","Kabuki","Sakura","Soyokaze","Tokikaze","Matsu"]
-		def rand=new SecureRandom();
-		def where=Math.abs(rand.nextInt())%suffix.size();
+		def rand=new SecureRandom()
+		def where=Math.abs(rand.nextInt())%suffix.size()
 		return suffix[where]
 	}
 	def isEmptyStr={CharSequence str->
-        return (str == null || str.length() == 0)
+        str == null || str.length() == 0
     }
 	
 	def wsi="Widget Status Inspector"
