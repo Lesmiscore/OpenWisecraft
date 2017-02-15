@@ -4,12 +4,14 @@ def env=System.env
 ext["buildId"]={
 	if(env.containsKey("CI_BUILD_ID"))env["CI_BUILD_ID"]
 	else if(env.containsKey["TRAVIS_JOB_NUMBER"])env["TRAVIS_JOB_NUMBER"]
+	else if(env.containsKey["BUILD_BUILDID"])env["BUILD_BUILDID"]
 	else null
 }
 ext["buildRef"]={
 	if(env.containsKey("CI_BUILD_REF_NAME"))env["CI_BUILD_REF_NAME"]
 	else if(env.containsKey["TRAVIS_TAG"])env["TRAVIS_TAG"]
 	else if(env.containsKey["TRAVIS_COMMIT"])env["TRAVIS_COMMIT"]
+	else if(env.containsKey["BUILD_SOURCEBRANCHNAME"])env["BUILD_SOURCEBRANCHNAME"]
 	else null
 }
 ext["runnerId"]={
