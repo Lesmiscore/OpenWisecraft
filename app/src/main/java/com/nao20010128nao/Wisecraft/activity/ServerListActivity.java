@@ -1,4 +1,5 @@
 package com.nao20010128nao.Wisecraft.activity;
+import android.app.*;
 import android.content.*;
 import android.content.res.*;
 import android.os.*;
@@ -34,11 +35,13 @@ import java.lang.ref.*;
 import java.util.*;
 import permissions.dispatcher.*;
 
+import android.support.v7.app.AlertDialog;
 import android.support.v7.view.ActionMode;
 import com.nao20010128nao.Wisecraft.BuildConfig;
 import com.nao20010128nao.Wisecraft.R;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
+import android.graphics.*;
 
 //Full implement for user interface (Some part is available at ServerListActivityBase4)
 @RuntimePermissions
@@ -347,6 +350,16 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		if(savedInstanceState!=null)
 			if(savedInstanceState.containsKey("selected"))
 				selected=gson.fromJson(savedInstanceState.getString("selected"),new TypeToken<HashSet<Server>>(){}.getType());
+	
+		if(Build.VERSION.SDK_INT>=22){
+			setTaskDescription(
+				new ActivityManager.TaskDescription(
+					getResources().getString(R.string.app_name),
+					BitmapFactory.decodeResource(getResources(),R.drawable.ic_launcher),
+					ContextCompat.getColor(this,R.color.mainColor)
+				)
+			);
+		}
 	}
 
 	private void loadMenu() {
