@@ -356,7 +356,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				new CompatTaskDescription(
 					getResources().getString(R.string.app_name),
 					BitmapFactory.decodeResource(getResources(),R.drawable.ic_launcher),
-					ContextCompat.getColor(this,R.color.mainColor)
+					ThemePatcher.getMainColor(this)
 				)
 			);
 		}
