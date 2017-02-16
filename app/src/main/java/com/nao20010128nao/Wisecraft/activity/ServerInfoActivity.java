@@ -343,17 +343,17 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 					serverIconObj = null;
 				}
 			}
-			ActivityManager.TaskDescription td;
+			CompatTaskDescription td;
 			switch (localStat.mode) {
 				case 1:
 					if (serverIconBmp != null) {
-						td = new ActivityManager.TaskDescription(getTitle().toString(), serverIconBmp, color);
+						td = new CompatTaskDescription(getTitle().toString(), serverIconBmp, color);
 					} else {
-						td = new ActivityManager.TaskDescription(getTitle().toString(), ((BitmapDrawable)getResources().getDrawable(R.drawable.ic_launcher)).getBitmap(), color);
+						td = new CompatTaskDescription(getTitle().toString(), ((BitmapDrawable)getResources().getDrawable(R.drawable.ic_launcher)).getBitmap(), color);
 					}
 					break;
 				default:
-					td = new ActivityManager.TaskDescription(getTitle().toString(), ((BitmapDrawable)getResources().getDrawable(R.drawable.ic_launcher)).getBitmap(), color);
+					td = new CompatTaskDescription(getTitle().toString(), ((BitmapDrawable)getResources().getDrawable(R.drawable.ic_launcher)).getBitmap(), color);
 					break;
 			}
 			setTaskDescription(td);

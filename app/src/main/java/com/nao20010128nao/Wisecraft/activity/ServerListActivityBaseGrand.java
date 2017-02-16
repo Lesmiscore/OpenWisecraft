@@ -1,11 +1,11 @@
 package com.nao20010128nao.Wisecraft.activity;
 import android.content.*;
 import android.preference.*;
-import android.support.v7.app.*;
+import com.nao20010128nao.Wisecraft.misc.*;
 import java.util.*;
 
 //Only most common things
-abstract class ServerListActivityBaseGrand extends AppCompatActivity
+abstract class ServerListActivityBaseGrand extends WisecraftBaseActivity
 {
 	protected SharedPreferences pref;
 	protected ActivityResultDispatcher resultDerived=new ActivityResultDispatcher();

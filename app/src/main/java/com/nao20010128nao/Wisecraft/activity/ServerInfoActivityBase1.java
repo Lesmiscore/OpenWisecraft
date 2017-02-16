@@ -11,7 +11,7 @@ import permissions.dispatcher.*;
 
 //Wrapper for aFileChooser
 @RuntimePermissions
-abstract class ServerInfoActivityBase1 extends AppCompatActivity
+abstract class ServerInfoActivityBase1 extends WisecraftBaseActivity
 {
 	SecureRandom sr=new SecureRandom();
 	Map<Integer,FileChooserResult> results=new HashMap<>();
