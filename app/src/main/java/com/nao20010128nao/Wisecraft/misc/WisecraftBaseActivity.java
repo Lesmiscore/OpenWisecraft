@@ -26,17 +26,14 @@ public abstract class WisecraftBaseActivity extends AppCompatActivity
         private int mColorPrimary;
         
         public CompatTaskDescription(String label, Bitmap icon, int colorPrimary) {
-            this(label, icon, colorPrimary, null);
             if ((colorPrimary != 0) && (Color.alpha(colorPrimary) != 255)) {
                 throw new RuntimeException("A TaskDescription's primary color should be opaque");
             }
-        }
-        private CompatTaskDescription(String label, Bitmap icon, int colorPrimary,
-			Void identifier) {
-            mLabel = label;
+			mLabel = label;
             mIcon = icon;
             mColorPrimary = colorPrimary;
         }
+        
         public String getLabel() {
             return mLabel;
         }
