@@ -41,6 +41,8 @@ abstract class ServerGetActivityImpl extends CompatWebViewActivity {
 		getLayoutInflater().inflate(R.layout.recycler_view_content,(ViewGroup)findViewById(R.id.ynDecor).findViewById(R.id.frame));
 		scanWebView();
 		setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setDisplayShowHomeEnabled(true);
 		findViewById(R.id.bottomSheet).setVisibility(View.GONE);
 		new Handler().post(new Runnable(){
 					public void run(){
@@ -219,6 +221,8 @@ abstract class ServerGetActivityImpl extends CompatWebViewActivity {
 					}
 				}.execute(getWebView().getUrl());
 				break;
+			case android.R.id.home:
+				finish();
 		}
 		return true;
 	}
