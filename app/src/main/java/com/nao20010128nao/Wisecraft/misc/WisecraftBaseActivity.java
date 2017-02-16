@@ -9,7 +9,7 @@ public abstract class WisecraftBaseActivity extends AppCompatActivity
 {
 	
 	public void setTaskDescription(CompatTaskDescription taskDesc){
-		if(Build.VERSION.SDK_INT>=22){
+		if(Build.VERSION.SDK_INT>=21){
 			setTaskDescription(
 				new ActivityManager.TaskDescription(
 					taskDesc.getLabel(),
