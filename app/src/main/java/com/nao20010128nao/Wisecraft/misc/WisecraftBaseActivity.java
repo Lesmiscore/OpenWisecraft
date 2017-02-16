@@ -8,6 +8,11 @@ import android.support.v7.app.*;
 public abstract class WisecraftBaseActivity extends AppCompatActivity 
 {
 	
+	public void setShowBackButton(boolean value){
+		getSupportActionBar().setDisplayHomeAsUpEnabled(value);
+		getSupportActionBar().setDisplayShowHomeEnabled(value);
+	}
+	
 	public void setTaskDescription(CompatTaskDescription taskDesc){
 		if(Build.VERSION.SDK_INT>=21){
 			setTaskDescription(
