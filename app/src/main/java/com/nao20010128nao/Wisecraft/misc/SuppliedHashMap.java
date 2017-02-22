@@ -18,7 +18,7 @@ public class SuppliedHashMap<K,V> extends HashMap<K,V>
 	
 	@Override
 	public V get(Object key) {
-		if(creator!=null & containsKey(key)){
+		if(creator!=null & !containsKey(key)){
 			V v=creator.supply();
 			if(putWhenNotKnown){
 				put((K)key,v);
@@ -35,7 +35,7 @@ public class SuppliedHashMap<K,V> extends HashMap<K,V>
 				}
 			},putWhenNotKnown);
 	}
-	public static <K,V> SuppliedHashMap<K,V> fromClass(final Class<V> clazz,boolean putWhenNotKnown){
+	public static <K,V> SuppliedHashMap<K,V> fromClass(final Class<? extends V> clazz,boolean putWhenNotKnown){
 		return new SuppliedHashMap<K,V>(new Supplier<V>(){
 				public V supply(){
 					try {

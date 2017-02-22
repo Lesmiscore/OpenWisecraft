@@ -13,7 +13,7 @@ import java.util.*;
 
 public class ServerFinderService extends Service
 {
-	static Map<String,Map<Integer,ServerStatus>> detected=SuppliedHashMap.fromClass(HashMap.class,true);
+	static Map<String,Map<Integer,ServerStatus>> detected=SuppliedHashMap.fromClass((Class<Map<Integer,ServerStatus>>)HashMap.class,true);
 	
 	ServerPingProvider spp;
 	@Override
