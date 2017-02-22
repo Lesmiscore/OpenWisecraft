@@ -15,7 +15,7 @@ android {
     }
 	
 	def wsi="Widget Status Inspector"
-	def preNum=5 //0 is stable release
+	def preNum=0 //0 is stable release
 
     compileSdkVersion 25
     buildToolsVersion "25.0.0"
