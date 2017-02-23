@@ -13,6 +13,7 @@ public class PCServerPingProvider implements ServerPingProvider
 	public void putInQueue(Server server, PingHandler handler) {
 		Utils.requireNonNull(server);
 		Utils.requireNonNull(handler);
+		Utils.prepareLooper();
 		queue.add(new KVP<Server,PingHandler>(server, handler));
 		if (!pingThread.isAlive()) {
 			pingThread = new PingThread();
@@ -32,7 +33,11 @@ public class PCServerPingProvider implements ServerPingProvider
 	public void clearQueue() {
 		queue.clear();
 	}
-	
+	@Override
+	public void clearAndStop() {
+		clearAndStop();
+		stop();
+	}
     @Override
     public void offline() {
         offline=true;

@@ -38,7 +38,11 @@ public class TcpMultiServerPingProvider implements ServerPingProvider {
             spp.clearQueue();
         }
     }
-
+	@Override
+	public void clearAndStop() {
+		clearAndStop();
+		stop();
+	}
     @Override
     public void offline() {
         for (ServerPingProvider spp:objects) {

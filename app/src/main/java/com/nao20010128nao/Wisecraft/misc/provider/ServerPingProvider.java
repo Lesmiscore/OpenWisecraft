@@ -8,6 +8,7 @@ public interface ServerPingProvider {
 	public void clearQueue();
     public void offline();
     public void online();
+	public void clearAndStop();
 	public static interface PingHandler {
 		void onPingArrives(ServerStatus stat);
 		void onPingFailed(Server server);

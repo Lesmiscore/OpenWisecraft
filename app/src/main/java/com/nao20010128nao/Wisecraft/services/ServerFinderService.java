@@ -17,27 +17,28 @@ public class ServerFinderService extends Service
 	
 	static Map<String,State> detected=SuppliedHashMap.fromClass(State.class,String.class,true);
 	
-	ServerPingProvider spp;
 	@Override
 	public IBinder onBind(Intent p1) {
-		// TODO: Implement this method
 		return new InternalBinder();
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		// TODO: Implement this method
-		
-		return super.onStartCommand(intent, flags, startId);
+		String ip=intent.getStringExtra(EXTRA_IP);
+		int mode=intent.getIntExtra(EXTRA_MODE,0);
+		int start=intent.getIntExtra(EXTRA_START_PORT,0);
+		int end=intent.getIntExtra(EXTRA_END_PORT,0);
+		explore(ip,start,end,mode);
+		return START_NOT_STICKY;
 	}
 	
 	private void updateNotification(String tag,int now,int max){
 		int id=tag.hashCode();
-		Notification ntf=createBaseNotification(this,now,max,detected.get(tag).detected);
+		Notification ntf=createBaseNotification(this,now,max,tag,detected.get(tag).detected);
 		NotificationManagerCompat.from(this).notify(id,ntf);
 	}
 	
-	private static Notification createBaseNotification(Context c,int now,int max,Map<Integer,ServerStatus> servers){
+	private static Notification createBaseNotification(Context c,int now,int max,String tag,Map<Integer,ServerStatus> servers){
 		NotificationCompat.Builder ntf=new NotificationCompat.Builder(c);
 		// Add title like "Server Finder - ** servers found"
 		ntf.setContentTitle("Server Finder - [COUNT] servers found".replace("[COUNT]",servers.size()+""));
@@ -51,21 +52,24 @@ public class ServerFinderService extends Service
 			}
 			ntf.setStyle(bts);
 		}
+		ntf.setContentIntent(PendingIntent.getActivity(c,0,null,PendingIntent.FLAG_UPDATE_CURRENT));
 		return ntf.build();
 	}
 	
 	private String explore(final String ip, final int startPort, final int endPort, final int mode) {
 		final String tag=Utils.randomText();
-		new AsyncTask<Void,ServerStatus,Void>(){
+		AsyncTask<Void,ServerStatus,Void> at=new AsyncTask<Void,ServerStatus,Void>(){
 			public Void doInBackground(Void... l) {
 				final int max=endPort - startPort;
 
 				int threads=Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(ServerFinderService.this).getString("parallels", "6"));
+				ServerPingProvider spp;
 				if (mode==1) {
 					spp = new PCMultiServerPingProvider(threads);
 				} else {
 					spp = new UnconnectedMultiServerPingProvider(threads);
 				}
+				detected.get(tag).pinger=spp;
 
 				for (int p=startPort;p < endPort;p++) {
 					final int p2=p;
@@ -76,10 +80,10 @@ public class ServerFinderService extends Service
 					spp.putInQueue(s, new ServerPingProvider.PingHandler(){
 							public void onPingArrives(ServerStatus s) {
 								publishProgress(s);
-								update(endPort-p2,max);
+								update(endPort-s.port,max);
 							}
 							public void onPingFailed(Server s) {
-								update(endPort-p2,max);
+								update(endPort-s.port,max);
 							}
 						});
 				}
@@ -92,23 +96,31 @@ public class ServerFinderService extends Service
 			private void update(final int now,final int max) {
 				updateNotification(tag,now,max);
 			}
-		}.execute();
+		};
+		at.execute();
+		detected.get(tag).worker=at;
 		return tag;
 	}
 	
-	class InternalBinder extends Binder{
+	public class InternalBinder extends Binder{
 		public String startExploration(String ip,int mode,int start,int end){
 			return explore(ip,start,end,mode);
 		}
 		public State getState(String tag){
 			return detected.get(tag);
 		}
+		public void cancel(String tag){
+			getState(tag).worker.cancel(getState(tag).cancelled=true);
+			getState(tag).pinger.clearAndStop();
+		}
 	}
 	
 	public static class State{
 		public final Map<Integer,ServerStatus> detected=new HashMap<>();
 		public final String tag;
+		public AsyncTask<Void,ServerStatus,Void> worker;
 		public boolean finished=false,closed=false,cancelled=false;
+		ServerPingProvider pinger;
 		
 		public State(String t){
 			tag=t;

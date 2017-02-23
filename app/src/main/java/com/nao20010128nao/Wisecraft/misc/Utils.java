@@ -713,4 +713,11 @@ public class Utils extends PingerUtils{
 		}
 		return result;
 	}
+	public static void prepareLooper(){
+		try{
+			Looper.prepare();
+		}catch(Throwable a){
+			
+		}
+	}
 }
