@@ -13,9 +13,20 @@ android {
 	def isEmptyStr={CharSequence str->
         str == null || str.length() == 0
     }
+	def generateVersionCode={String n,int p->
+		def bitWidth=4//shouldn't be changed from 4
+	
+		def splitted=n.split(".")
+		def major=splitted[0]
+		def minor=splitted[1]
+		def reserved1=0//splitted[2]
+		def reserved2=0//splitted[3]
+		return major<<(bitWidth*4)|minor<<(bitWidth*3)|reserved1<<(bitWidth*2)|reserved2<<(bitWidth*1)|p
+	}
 	
 	def wsi="Widget Status Inspector"
 	def preNum=5 //0 is stable release
+	def version="5.0"
 
     compileSdkVersion 25
     buildToolsVersion "25.0.0"
@@ -29,8 +40,8 @@ android {
         applicationId 'com.nao20010128nao.Wisecraft'
         minSdkVersion 17
         targetSdkVersion 24
-        versionCode 40
-        versionName "4.0"
+        versionCode generateVersionCode(version,0xf-preNum)
+        versionName version
 		multiDexEnabled true
 		jackOptions {
 			enabled false
