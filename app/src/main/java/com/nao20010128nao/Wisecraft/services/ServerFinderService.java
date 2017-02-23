@@ -155,7 +155,7 @@ public class ServerFinderService extends Service
 	}
 	
 	public static class State{
-		public final Map<Integer,ServerStatus> detected=Collections.synchronizedMap(new HashMap<>());
+		public final Map<Integer,ServerStatus> detected=Collections.<Integer,ServerStatus>synchronizedMap(new HashMap<Integer,ServerStatus>());
 		public volatile String tag,ip;
 		public volatile AsyncTask<Void,ServerStatus,Void> worker;
 		public volatile boolean finished=false,closed=false,cancelled=false;
