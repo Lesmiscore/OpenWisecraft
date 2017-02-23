@@ -52,7 +52,7 @@ public class ServerFinderService extends Service
 			}
 			ntf.setStyle(bts);
 		}
-		ntf.setContentIntent(PendingIntent.getActivity(c,0,null,PendingIntent.FLAG_UPDATE_CURRENT));
+		ntf.setContentIntent(PendingIntent.getActivity(c,tag.hashCode()^800,null,PendingIntent.FLAG_UPDATE_CURRENT));
 		return ntf.build();
 	}
 	
