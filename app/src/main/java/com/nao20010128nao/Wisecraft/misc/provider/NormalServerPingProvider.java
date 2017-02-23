@@ -1,5 +1,6 @@
 package com.nao20010128nao.Wisecraft.misc.provider;
 import android.util.*;
+import com.google.common.collect.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
@@ -7,7 +8,7 @@ import java.io.*;
 import java.util.*;
 
 public class NormalServerPingProvider implements ServerPingProvider {
-	Queue<Map.Entry<Server,PingHandler>> queue=new LinkedList<>();
+	Queue<Map.Entry<Server,PingHandler>> queue=Queues.synchronizedQueue(Lists.<Map.Entry<Server,PingHandler>>newLinkedList());
 	Thread pingThread=new PingThread();
     boolean offline=false;
 

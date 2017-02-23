@@ -1,6 +1,7 @@
 package com.nao20010128nao.Wisecraft.misc.provider;
 import android.text.*;
 import android.util.*;
+import com.google.common.collect.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
@@ -12,7 +13,7 @@ public class TcpServerPingProvider implements ServerPingProvider
 {
     String host;int port;
     boolean offline;
-    Queue<Map.Entry<Server,PingHandler>> queue=new LinkedList<>();
+    Queue<Map.Entry<Server,PingHandler>> queue=Queues.synchronizedQueue(Lists.<Map.Entry<Server,PingHandler>>newLinkedList());
 	Thread pingThread=new PingThread();
     
     public TcpServerPingProvider(String host,int port){
