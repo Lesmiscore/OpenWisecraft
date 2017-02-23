@@ -7,6 +7,7 @@ import android.support.v4.app.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.provider.*;
 import java.util.*;
+import com.nao20010128nao.Wisecraft.activity.*;
 
 public class ServerFinderService extends Service
 {
@@ -43,7 +44,7 @@ public class ServerFinderService extends Service
 		// Add title like "Server Finder - ** servers found"
 		ntf.setContentTitle("Server Finder - [COUNT] servers found".replace("[COUNT]",servers.size()+""));
 		ntf.setProgress(now,max,false);
-		if(servers!=null || servers.size()!=0){
+		if(servers.size()!=0){
 			List<Integer> l=Factories.arrayList(servers.keySet());
 			Collections.sort(l);
 			NotificationCompat.InboxStyle bts=new NotificationCompat.InboxStyle();
@@ -52,7 +53,7 @@ public class ServerFinderService extends Service
 			}
 			ntf.setStyle(bts);
 		}
-		ntf.setContentIntent(PendingIntent.getActivity(c,tag.hashCode()^800,null,PendingIntent.FLAG_UPDATE_CURRENT));
+		ntf.setContentIntent(PendingIntent.getActivity(c,tag.hashCode()^800,new Intent(c,ServerFinderActivity.class).putExtra("tag",tag),PendingIntent.FLAG_UPDATE_CURRENT));
 		return ntf.build();
 	}
 	
