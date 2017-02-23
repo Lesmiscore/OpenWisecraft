@@ -16,7 +16,13 @@ public class ServerFinderService extends Service
 	public static final String EXTRA_START_PORT="sport";
 	public static final String EXTRA_END_PORT="eport";
 	
-	static Map<String,State> sessions=SuppliedHashMap.fromClass(State.class,String.class,true);
+	static Map<String,State> sessions=new SuppliedHashMap<String,State>(new Supplier<String,State>(){
+			public State supply(String tag){
+				State stt=new State();
+				stt.tag=tag;
+				return stt;
+			}
+		},true);
 	
 	@Override
 	public IBinder onBind(Intent p1) {
@@ -145,13 +151,10 @@ public class ServerFinderService extends Service
 	
 	public static class State{
 		public final Map<Integer,ServerStatus> detected=Collections.synchronizedMap(new HashMap<>());
-		public final String tag;
+		public volatile String tag;
 		public volatile AsyncTask<Void,ServerStatus,Void> worker;
 		public volatile boolean finished=false,closed=false,cancelled=false;
-		ServerPingProvider pinger;
 		
-		public State(String t){
-			tag=t;
-		}
+		ServerPingProvider pinger;
 	}
 }
