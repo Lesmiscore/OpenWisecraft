@@ -73,7 +73,6 @@ public class ServerFinderService extends Service
 				sessions.get(tag).pinger=spp;
 
 				for (int p=startPort;p < endPort;p++) {
-					final int p2=p;
 					Server s=new Server();
 					s.ip = ip;
 					s.port = p;
