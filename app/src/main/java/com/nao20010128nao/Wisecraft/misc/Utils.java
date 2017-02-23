@@ -418,7 +418,7 @@ public class Utils extends PingerUtils{
 		return 0;
 	}
 	public static <T> List<T> emptyList(){
-		return new ArrayList<T>();
+		return Factories.arrayList();
 	}
 	public static SharedPreferences getPreferences(Context c){
 		return PreferenceManager.getDefaultSharedPreferences(c);

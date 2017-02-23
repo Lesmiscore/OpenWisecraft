@@ -15,7 +15,7 @@ public class Factories {
 	public static <T> ArrayList<T> arrayList(){
 		return new ArrayList<T>();
 	}
-	public static <T> ArrayList<T> arrayList(List<T> list){
+	public static <T> ArrayList<T> arrayList(Collection<T> list){
 		return new ArrayList<T>(list);
 	}
 	public final static class FreeSizeNullLenList<T> implements List<T> {
