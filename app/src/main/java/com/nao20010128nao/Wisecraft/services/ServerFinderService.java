@@ -15,7 +15,7 @@ public class ServerFinderService extends Service
 	public static final String EXTRA_START_PORT="sport";
 	public static final String EXTRA_END_PORT="eport";
 	
-	static Map<String,Map<Integer,ServerStatus>> detected=SuppliedHashMap.fromClass((Class<Map<Integer,ServerStatus>>)HashMap.class,true);
+	static Map<String,State> detected=SuppliedHashMap.fromClass(State.class,String.class,true);
 	
 	ServerPingProvider spp;
 	@Override
@@ -33,7 +33,7 @@ public class ServerFinderService extends Service
 	
 	private void updateNotification(String tag,int now,int max){
 		int id=tag.hashCode();
-		Notification ntf=createBaseNotification(this,now,max,detected.get(tag));
+		Notification ntf=createBaseNotification(this,now,max,detected.get(tag).detected);
 		NotificationManagerCompat.from(this).notify(id,ntf);
 	}
 	
@@ -54,7 +54,7 @@ public class ServerFinderService extends Service
 		return ntf.build();
 	}
 	
-	private void explore(final String ip, final int startPort, final int endPort, final int mode) {
+	private String explore(final String ip, final int startPort, final int endPort, final int mode) {
 		final String tag=Utils.randomText();
 		new AsyncTask<Void,ServerStatus,Void>(){
 			public Void doInBackground(Void... l) {
@@ -87,17 +87,31 @@ public class ServerFinderService extends Service
 			}
 			public void onProgressUpdate(ServerStatus... s) {
 				ServerStatus ss=s[0];
-				detected.get(tag).put(ss.port,ss);
+				detected.get(tag).detected.put(ss.port,ss);
 			}
 			private void update(final int now,final int max) {
 				updateNotification(tag,now,max);
 			}
 		}.execute();
+		return tag;
 	}
 	
 	class InternalBinder extends Binder{
-		public void startExploration(String ip,int mode,int start,int end){
-			explore(ip,start,end,mode);
+		public String startExploration(String ip,int mode,int start,int end){
+			return explore(ip,start,end,mode);
+		}
+		public State getState(String tag){
+			return detected.get(tag);
+		}
+	}
+	
+	public static class State{
+		public final Map<Integer,ServerStatus> detected=new HashMap<>();
+		public final String tag;
+		public boolean finished=false,closed=false,cancelled=false;
+		
+		public State(String t){
+			tag=t;
 		}
 	}
 }
