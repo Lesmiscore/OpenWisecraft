@@ -15,7 +15,7 @@ public class ServerFinderService extends Service
 	public static final String EXTRA_START_PORT="sport";
 	public static final String EXTRA_END_PORT="eport";
 	
-	static Map<String,State> detected=SuppliedHashMap.fromClass(State.class,String.class,true);
+	static Map<String,State> sessions=SuppliedHashMap.fromClass(State.class,String.class,true);
 	
 	@Override
 	public IBinder onBind(Intent p1) {
@@ -34,7 +34,7 @@ public class ServerFinderService extends Service
 	
 	private void updateNotification(String tag,int now,int max){
 		int id=tag.hashCode();
-		Notification ntf=createBaseNotification(this,now,max,tag,detected.get(tag).detected);
+		Notification ntf=createBaseNotification(this,now,max,tag,sessions.get(tag).detected);
 		NotificationManagerCompat.from(this).notify(id,ntf);
 	}
 	
@@ -69,7 +69,7 @@ public class ServerFinderService extends Service
 				} else {
 					spp = new UnconnectedMultiServerPingProvider(threads);
 				}
-				detected.get(tag).pinger=spp;
+				sessions.get(tag).pinger=spp;
 
 				for (int p=startPort;p < endPort;p++) {
 					final int p2=p;
@@ -91,14 +91,14 @@ public class ServerFinderService extends Service
 			}
 			public void onProgressUpdate(ServerStatus... s) {
 				ServerStatus ss=s[0];
-				detected.get(tag).detected.put(ss.port,ss);
+				sessions.get(tag).detected.put(ss.port,ss);
 			}
 			private void update(final int now,final int max) {
 				updateNotification(tag,now,max);
 			}
 		};
 		at.execute();
-		detected.get(tag).worker=at;
+		sessions.get(tag).worker=at;
 		return tag;
 	}
 	
@@ -107,7 +107,7 @@ public class ServerFinderService extends Service
 			return explore(ip,start,end,mode);
 		}
 		public State getState(String tag){
-			return detected.get(tag);
+			return sessions.get(tag);
 		}
 		public void cancel(String tag){
 			getState(tag).worker.cancel(getState(tag).cancelled=true);
