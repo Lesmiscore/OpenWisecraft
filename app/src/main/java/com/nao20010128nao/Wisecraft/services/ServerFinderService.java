@@ -89,6 +89,11 @@ public class ServerFinderService extends Service
 	
 	private String explore(final String ip, final int startPort, final int endPort, final int mode) {
 		final String tag=Utils.randomText();
+		sessions.get(tag).ip=ip;
+		sessions.get(tag).start=startPort;
+		sessions.get(tag).end=endPort;
+		sessions.get(tag).mode=mode;
+		
 		AsyncTask<Void,ServerStatus,Void> at=new AsyncTask<Void,ServerStatus,Void>(){
 			public Void doInBackground(Void... l) {
 				final int max=endPort - startPort;
@@ -151,10 +156,10 @@ public class ServerFinderService extends Service
 	
 	public static class State{
 		public final Map<Integer,ServerStatus> detected=Collections.synchronizedMap(new HashMap<>());
-		public volatile String tag;
+		public volatile String tag,ip;
 		public volatile AsyncTask<Void,ServerStatus,Void> worker;
 		public volatile boolean finished=false,closed=false,cancelled=false;
-		
+		public volatile int start,end,mode;
 		ServerPingProvider pinger;
 	}
 }
