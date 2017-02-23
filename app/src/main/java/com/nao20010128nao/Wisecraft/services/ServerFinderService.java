@@ -57,6 +57,30 @@ public class ServerFinderService extends Service
 		return ntf.build();
 	}
 	
+	private void updateNotificationFinished(String tag){
+		int id=tag.hashCode();
+		Notification ntf=createFinishedNotification(this,tag,sessions.get(tag).detected);
+		NotificationManagerCompat.from(this).notify(id,ntf);
+	}
+
+	private static Notification createFinishedNotification(Context c,String tag,Map<Integer,ServerStatus> servers){
+		NotificationCompat.Builder ntf=new NotificationCompat.Builder(c);
+		// Add title like "Server Finder - ** servers found"
+		ntf.setContentTitle("Server Finder - [COUNT] servers found".replace("[COUNT]",servers.size()+""));
+		if(servers.size()!=0){
+			List<Integer> l=Factories.arrayList(servers.keySet());
+			Collections.sort(l);
+			NotificationCompat.InboxStyle bts=new NotificationCompat.InboxStyle();
+			for(int port:l){
+				bts.addLine(servers.get(port).toString());
+			}
+			bts.setSummaryText("Finished");
+			ntf.setStyle(bts);
+		}
+		ntf.setContentIntent(PendingIntent.getActivity(c,tag.hashCode()^800,new Intent(c,ServerFinderActivity.class).putExtra("tag",tag),PendingIntent.FLAG_UPDATE_CURRENT));
+		return ntf.build();
+	}
+	
 	private String explore(final String ip, final int startPort, final int endPort, final int mode) {
 		final String tag=Utils.randomText();
 		AsyncTask<Void,ServerStatus,Void> at=new AsyncTask<Void,ServerStatus,Void>(){
@@ -95,6 +119,10 @@ public class ServerFinderService extends Service
 			}
 			private void update(final int now,final int max) {
 				updateNotification(tag,now,max);
+				if(sessions.get(tag).pinger.getQueueRemain()==0){
+					sessions.get(tag).finished=true;
+					updateNotificationFinished(tag);
+				}
 			}
 		};
 		at.execute();
@@ -116,10 +144,10 @@ public class ServerFinderService extends Service
 	}
 	
 	public static class State{
-		public final Map<Integer,ServerStatus> detected=new HashMap<>();
+		public final Map<Integer,ServerStatus> detected=Collections.synchronizedMap(new HashMap<>());
 		public final String tag;
-		public AsyncTask<Void,ServerStatus,Void> worker;
-		public boolean finished=false,closed=false,cancelled=false;
+		public volatile AsyncTask<Void,ServerStatus,Void> worker;
+		public volatile boolean finished=false,closed=false,cancelled=false;
 		ServerPingProvider pinger;
 		
 		public State(String t){
