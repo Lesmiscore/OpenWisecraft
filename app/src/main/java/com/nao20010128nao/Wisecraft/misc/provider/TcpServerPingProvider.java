@@ -13,7 +13,7 @@ public class TcpServerPingProvider implements ServerPingProvider
 {
     String host;int port;
     boolean offline;
-    Queue<Map.Entry<Server,PingHandler>> queue=Queues.synchronizedQueue(Lists.<Map.Entry<Server,PingHandler>>newLinkedList());
+    Queue<Map.Entry<Server,PingHandler>> queue=Factories.newDefaultQueue();
 	Thread pingThread=new PingThread();
     
     public TcpServerPingProvider(String host,int port){

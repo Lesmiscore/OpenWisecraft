@@ -7,7 +7,7 @@ import java.io.*;
 import java.util.*;
 public class UnconnectedServerPingProvider implements ServerPingProvider
 {
-	Queue<Map.Entry<Server,PingHandler>> queue=Queues.synchronizedQueue(Lists.<Map.Entry<Server,PingHandler>>newLinkedList());
+	Queue<Map.Entry<Server,PingHandler>> queue=Factories.newDefaultQueue();
 	Thread pingThread=new PingThread();
     boolean offline=false;
 	

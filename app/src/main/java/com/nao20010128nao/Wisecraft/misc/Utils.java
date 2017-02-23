@@ -16,8 +16,10 @@ import android.text.style.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
+import com.google.common.collect.*;
 import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.R;
 import com.nao20010128nao.Wisecraft.activity.*;
 import com.nao20010128nao.Wisecraft.api.*;
 import com.nao20010128nao.Wisecraft.misc.collector.*;
@@ -31,7 +33,6 @@ import permissions.dispatcher.*;
 
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import com.nao20010128nao.Wisecraft.R;
 
 public class Utils extends PingerUtils{
 	private static int[] HUE_COLORS;

@@ -40,7 +40,7 @@ android {
         applicationId 'com.nao20010128nao.Wisecraft'
         minSdkVersion 17
         targetSdkVersion 24
-        versionCode generateVersionCode(version,0xf-preNum)
+        versionCode generateVersionCode(version,preNum==0?0xf:preNum)
         versionName version
 		multiDexEnabled true
 		jackOptions {

@@ -7,7 +7,7 @@ import java.io.*;
 import java.util.*;
 public class PCServerPingProvider implements ServerPingProvider
 {
-	Queue<Map.Entry<Server,PingHandler>> queue=Queues.newSynchronousQueue();
+	Queue<Map.Entry<Server,PingHandler>> queue=Factories.newDefaultQueue();
 	Thread pingThread=new PingThread();
     boolean offline=false;
 	
