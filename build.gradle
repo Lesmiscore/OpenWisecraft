@@ -314,5 +314,5 @@ task("convertConfigSlurperToBuildscript")<<{
     def gitlabCiConfig=new ConfigSlurper().parse(gitlabCi)
     def json=new JsonBuilder()
     json gitlabCiConfig
-    new File(rootDir,"test.gitlab-ci.yml").text=json.toString()
+    new File(rootDir,"test.gitlab-ci.yml").text=json.toPrettyString()
 }
