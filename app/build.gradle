@@ -16,7 +16,7 @@ android {
 	def generateVersionCode={String n,int p->
 		def bitWidth=4//shouldn't be changed from 4
 	
-		def splitted=n.split(".")
+		def splitted=n.split("\\.")
 		def major=new Integer(splitted[0])
 		def minor=new Integer(splitted[1])
 		def reserved1=0//splitted[2]
