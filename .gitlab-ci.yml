@@ -148,7 +148,8 @@ convertTest:
   script:
     - gradle convertConfigSlurperToBuildscript
   artifacts:
-    - test.gitlab-ci.yml
+    paths:
+      - test.gitlab-ci.yml
 
 
 appDebugSplit:         *appDebug
