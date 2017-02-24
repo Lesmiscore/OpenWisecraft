@@ -310,7 +310,7 @@ if(System.getenv("USE_TOR")=="true"){
 }
 
 task("convertConfigSlurperToBuildscript")<<{
-    def gitlabCi=new File(rootDir,"ci/gitlab-ci.groovy")
+    def gitlabCi=new File(rootDir,"ci/gitlab-ci.groovy").toURI().toURL()
     def gitlabCiConfig=new ConfigSlurper().parse(gitlabCi)
     def json=new JsonBuilder()
     json gitlabCiConfig
