@@ -146,6 +146,7 @@ copy:
 convertTest:
   stage: postBuild
   script:
+    - ./ci/git.sh
     - gradle convertConfigSlurperToBuildscript
   artifacts:
     paths:
