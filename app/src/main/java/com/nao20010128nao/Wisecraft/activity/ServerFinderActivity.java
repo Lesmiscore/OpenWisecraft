@@ -23,6 +23,8 @@ import java.util.*;
 import com.nao20010128nao.Wisecraft.R;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
+import com.nao20010128nao.Wisecraft.services.*;
+import android.nfc.*;
 
 @ShowsServerList
 abstract class ServerFinderActivityImpl extends AppCompatActivity implements ServerListActivityInterface {
@@ -31,10 +33,12 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
 	String ip;
 	int mode;
 	View dialog,dialog2;
-	ServerPingProvider spp;
 	SharedPreferences pref;
 	RecyclerView rv;
 	ServerListStyleLoader slsl;
+	ServiceConnection lastConnection;
+	String tag;
+	ServerFinderService.InternalBinder bound;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,96 +62,89 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
 				break;
 		}
 		rv.setAdapter(sl);
-		ip = getIntent().getStringExtra("ip");
-		mode = getIntent().getIntExtra("mode", 0);
-		new AlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
-			.setTitle(R.string.serverFinder)
-			.setView(dialog = getLayoutInflater().inflate(R.layout.server_finder_start, null, false))
-			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
-				public void onClick(DialogInterface di, int w) {
-					String ip=((EditText)dialog.findViewById(R.id.ip)).getText().toString();
-					int startPort=new Integer(((EditText)dialog.findViewById(R.id.startPort)).getText().toString());
-					int endPort=new Integer(((EditText)dialog.findViewById(R.id.endPort)).getText().toString());
-					boolean isPC=((CheckBox)dialog.findViewById(R.id.pc)).isChecked();
-					startFinding(ip, Math.min(startPort,endPort), Math.max(startPort,endPort), isPC);
-				}
-			})
-			.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener(){
-				public void onClick(DialogInterface di, int w) {
-					finish();
-				}
-			})
-			.setOnCancelListener(new DialogInterface.OnCancelListener(){
-				public void onCancel(DialogInterface di) {
-					finish();
-				}
-			})
-			.show();
-		if (ip != null)((EditText)dialog.findViewById(R.id.ip)).setText(ip);
+		
+		if(getIntent().hasExtra("tag")){
+			tag=getIntent().getStringExtra("tag");
+			launchService();
+		}else{
+			ip = getIntent().getStringExtra("ip");
+			mode = getIntent().getIntExtra("mode", 0);
+			new AlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
+				.setTitle(R.string.serverFinder)
+				.setView(dialog = getLayoutInflater().inflate(R.layout.server_finder_start, null, false))
+				.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
+					public void onClick(DialogInterface di, int w) {
+						String ip=((EditText)dialog.findViewById(R.id.ip)).getText().toString();
+						int startPort=new Integer(((EditText)dialog.findViewById(R.id.startPort)).getText().toString());
+						int endPort=new Integer(((EditText)dialog.findViewById(R.id.endPort)).getText().toString());
+						int mode=((CheckBox)dialog.findViewById(R.id.pc)).isChecked()?1:0;
+						launchService(ip, Math.min(startPort,endPort), Math.max(startPort,endPort), mode);
+					}
+				})
+				.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener(){
+					public void onClick(DialogInterface di, int w) {
+						finish();
+					}
+				})
+				.setOnCancelListener(new DialogInterface.OnCancelListener(){
+					public void onCancel(DialogInterface di) {
+						finish();
+					}
+				})
+				.show();
+			if (ip != null)((EditText)dialog.findViewById(R.id.ip)).setText(ip);
+		}
 		((CheckBox)dialog.findViewById(R.id.pc)).setChecked(mode == 0 ?false: true);
 		slsl=(ServerListStyleLoader)getSystemService(ContextWrappingExtender.SERVER_LIST_STYLE_LOADER);
 		
 		findViewById(android.R.id.content).setBackgroundDrawable(slsl.load());
 	}
-	private void startFinding(final String ip, final int startPort, final int endPort, final boolean isPC) {
-		final PopupWindow pw=new PopupWindow(this);
-		pw.setTouchable(false);
-		pw.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-		pw.setContentView(dialog2 = getLayoutInflater().inflate(R.layout.server_finder_finding, null, false));
-		pw.setWidth(Utils.getScreenWidth(ServerFinderActivityImpl.this));
-		pw.setHeight(getResources().getDimensionPixelSize(R.dimen.server_finder_finding_height));
-
-		ViewCompat.setAlpha(dialog2, 0.7f);
-
-		pw.showAtLocation(getWindow().getDecorView().findViewById(android.R.id.content), Gravity.CENTER, 0, 0);
-		;
-		setTitle(ip+":("+startPort+"~"+endPort+")");
-		new AsyncTask<Void,ServerStatus,Void>(){
-			public Void doInBackground(Void... l) {
-				final int max=endPort - startPort;
-
-				int threads=Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(ServerFinderActivityImpl.this).getString("parallels", "6"));
-				if (isPC) {
-					spp = new PCMultiServerPingProvider(threads);
-				} else {
-					spp = new UnconnectedMultiServerPingProvider(threads);
+	
+	private void launchService(final String ip, final int startPort, final int endPort, final int mode) {
+		bindService(new Intent(this,ServerFinderService.class),new ServiceConnection(){
+				public void onServiceConnected(android.content.ComponentName p1, android.os.IBinder p2){
+					lastConnection=this;
+					tag=(bound=(ServerFinderService.InternalBinder)p2).startExploration(ip,startPort,endPort,mode);
+					startIntervalUpdate();
 				}
 
-				for (int p=startPort;p < endPort;p++) {
-					Server s=new Server();
-					s.ip = ip;
-					s.port = p;
-					s.mode = isPC ?1: 0;
-					spp.putInQueue(s, new ServerPingProvider.PingHandler(){
-							public void onPingArrives(ServerStatus s) {
-								publishProgress(s);
-								update(max);
-							}
-							public void onPingFailed(Server s) {
-								update(max);
-							}
-						});
+				public void onServiceDisconnected(android.content.ComponentName p1){
+					finish();
 				}
-				return null;
-			}
-			public void onProgressUpdate(ServerStatus... s) {
-				sl.addAll(s);
-			}
-			private void update(final int max) {
-				runOnUiThread(new Runnable(){
-						public void run() {
-							((ProgressBar)dialog2.findViewById(R.id.perc)).setMax(max);
-							((ProgressBar)dialog2.findViewById(R.id.perc)).setProgress(((ProgressBar)dialog2.findViewById(R.id.perc)).getProgress() + 1);
-							((TextView)dialog2.findViewById(R.id.status)).setText(((ProgressBar)dialog2.findViewById(R.id.perc)).getProgress() + "/" + max);
-							if (((ProgressBar)dialog2.findViewById(R.id.perc)).getProgress() == max) {
-								pw.dismiss();
-								Snackbar.make(getWindow().getDecorView(), getResources().getString(R.string.foundServersCount).replace("[NUMBER]", "" + sl.getItemCount()), Snackbar.LENGTH_SHORT).show();
-							}
-						}
-					});
-			}
-		}.execute();
+			},0);
 	}
+	
+	private void launchService() {
+		bindService(new Intent(this,ServerFinderService.class),new ServiceConnection(){
+				public void onServiceConnected(android.content.ComponentName p1, android.os.IBinder p2){
+					lastConnection=this;
+					bound=(ServerFinderService.InternalBinder)p2;
+					startIntervalUpdate();
+				}
+
+				public void onServiceDisconnected(android.content.ComponentName p1){
+					finish();
+				}
+			},0);
+	}
+	
+	private void startIntervalUpdate(){
+		ServerFinderService.State state=bound.getState(tag);
+		setTitle(state.ip+":("+state.start+"~"+state.end+")");
+		updateList();
+	}
+	
+	private void updateList(){
+		new Handler().postDelayed(new Runnable(){
+				public void run(){
+					updateList();
+				}
+			},1000);
+		ServerFinderService.State state=bound.getState(tag);
+		sl.clear();
+		sl.addAll(state.detected.values());
+	}
+	
 	@Override
 	protected void attachBaseContext(Context newBase) {
 		super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
@@ -156,10 +153,7 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		if (spp != null) {
-			spp.clearQueue();
-			spp.stop();
-		}
+		if(lastConnection!=null)unbindService(lastConnection);
 	}
 
 	@Override

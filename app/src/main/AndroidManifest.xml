@@ -191,6 +191,12 @@
 				<action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
 			</intent-filter>
 		</service>
+
+		<service
+			android:name=".services.ServerFinderService"
+			android:exported="false">
+		</service>
+		
 		
 		
 		<!-- Widgets -->
