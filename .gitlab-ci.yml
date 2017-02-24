@@ -143,6 +143,13 @@ copy:
   script:
     - source ./ci/copy.sh
 
+convertTest:
+  stage: postBuild
+  script:
+    - gradle convertConfigSlurperToBuildscript
+  artifacts:
+    - 
+
 
 appDebugSplit:         *appDebug
 appDebug2Split:        *appDebug2

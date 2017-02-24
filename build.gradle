@@ -1,5 +1,6 @@
 import java.net.*
 import java.math.*
+import groovy.json.*
 
 def printBoth(a){
 	println(a)
@@ -306,4 +307,12 @@ def connectTor(){
 
 if(System.getenv("USE_TOR")=="true"){
 	connectTor()
+}
+
+task("convertConfigSlurperToBuildscript")<<{
+    def gitlabCi=new File(rootDir,"ci/gitlab-ci.groovy")
+    def gitlabCiConfig=new ConfigSlurper().parse(gitlabCi)
+    def json=new JsonBuilder()
+    json gitlabCiConfig
+    new File(rootDir,"test.gitlab-ci.yml").text=json.toString()
 }
