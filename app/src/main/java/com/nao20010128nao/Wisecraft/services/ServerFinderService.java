@@ -9,6 +9,7 @@ import com.nao20010128nao.Wisecraft.activity.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.provider.*;
 import java.util.*;
+import android.graphics.*;
 
 public class ServerFinderService extends Service
 {
@@ -61,6 +62,7 @@ public class ServerFinderService extends Service
 			ntf.setStyle(bts);
 		}
 		ntf.setSmallIcon(R.drawable.ic_search_black_48dp);
+		ntf.setLargeIcon(BitmapFactory.decodeResource(c.getResources(),R.drawable.ic_search_black_48dp));
 		ntf.setContentIntent(PendingIntent.getActivity(c,tag.hashCode()^800,new Intent(c,ServerFinderActivity.class).putExtra("tag",tag),PendingIntent.FLAG_UPDATE_CURRENT));
 		return ntf.build();
 	}
@@ -86,6 +88,7 @@ public class ServerFinderService extends Service
 			ntf.setStyle(bts);
 		}
 		ntf.setSmallIcon(R.drawable.ic_search_black_48dp);
+		ntf.setLargeIcon(BitmapFactory.decodeResource(c.getResources(),R.drawable.ic_search_black_48dp));
 		ntf.setContentIntent(PendingIntent.getActivity(c,tag.hashCode()^800,new Intent(c,ServerFinderActivity.class).putExtra("tag",tag),PendingIntent.FLAG_UPDATE_CURRENT));
 		return ntf.build();
 	}
