@@ -52,6 +52,7 @@ public class ServerFinderService extends Service
 		// Add title like "Server Finder - ** servers found"
 		ntf.setContentTitle("Server Finder - [COUNT] servers found".replace("[COUNT]",servers.size()+""));
 		ntf.setContentText("Now at [NOW]".replace("[NOW]",now+""));
+		ntf.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 		ntf.setProgress(now,max,false);
 		if(servers.size()!=0){
 			List<Integer> l=Factories.arrayList(servers.keySet());
@@ -80,6 +81,7 @@ public class ServerFinderService extends Service
 		// Add title like "Server Finder - ** servers found"
 		ntf.setContentTitle("Server Finder - [COUNT] servers found".replace("[COUNT]",servers.size()+""));
 		ntf.setContentText("Finished");
+		ntf.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 		if(servers.size()!=0){
 			List<Integer> l=Factories.arrayList(servers.keySet());
 			Collections.sort(l);
