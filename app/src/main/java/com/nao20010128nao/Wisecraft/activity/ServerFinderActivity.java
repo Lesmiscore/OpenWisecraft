@@ -111,7 +111,7 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
 				public void onServiceDisconnected(android.content.ComponentName p1){
 					finish();
 				}
-			},0);
+			},Context.BIND_AUTO_CREATE);
 	}
 	
 	private void launchService() {
@@ -125,7 +125,7 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
 				public void onServiceDisconnected(android.content.ComponentName p1){
 					finish();
 				}
-			},0);
+			},Context.BIND_AUTO_CREATE);
 	}
 	
 	private void startIntervalUpdate(){
