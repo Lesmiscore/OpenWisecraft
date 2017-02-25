@@ -104,7 +104,7 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
 		bindService(new Intent(this,ServerFinderService.class),new ServiceConnection(){
 				public void onServiceConnected(android.content.ComponentName p1, android.os.IBinder p2){
 					lastConnection=this;
-					tag=(bound=(ServerFinderService.InternalBinder)p2).startExploration(ip,startPort,endPort,mode);
+					tag=(bound=(ServerFinderService.InternalBinder)p2).startExploration(ip,mode,startPort,endPort);
 					startIntervalUpdate();
 				}
 
