@@ -51,6 +51,7 @@ public class ServerFinderService extends Service
 		NotificationCompat.Builder ntf=new NotificationCompat.Builder(c);
 		// Add title like "Server Finder - ** servers found"
 		ntf.setContentTitle("Server Finder - [COUNT] servers found".replace("[COUNT]",servers.size()+""));
+		ntf.setContentText("Now at [NOW]".replace("[NOW]",now+""));
 		ntf.setProgress(now,max,false);
 		if(servers.size()!=0){
 			List<Integer> l=Factories.arrayList(servers.keySet());
@@ -64,6 +65,7 @@ public class ServerFinderService extends Service
 		ntf.setSmallIcon(R.drawable.ic_search_black_48dp);
 		ntf.setLargeIcon(BitmapFactory.decodeResource(c.getResources(),R.drawable.ic_search_black_48dp));
 		ntf.setContentIntent(PendingIntent.getActivity(c,tag.hashCode()^800,new Intent(c,ServerFinderActivity.class).putExtra("tag",tag),PendingIntent.FLAG_UPDATE_CURRENT));
+		ntf.setOngoing(true);
 		return ntf.build();
 	}
 	
@@ -77,6 +79,7 @@ public class ServerFinderService extends Service
 		NotificationCompat.Builder ntf=new NotificationCompat.Builder(c);
 		// Add title like "Server Finder - ** servers found"
 		ntf.setContentTitle("Server Finder - [COUNT] servers found".replace("[COUNT]",servers.size()+""));
+		ntf.setContentText("Finished");
 		if(servers.size()!=0){
 			List<Integer> l=Factories.arrayList(servers.keySet());
 			Collections.sort(l);
