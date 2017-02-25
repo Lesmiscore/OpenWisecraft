@@ -51,9 +51,10 @@ public class ServerFinderService extends Service
 		NotificationCompat.Builder ntf=new NotificationCompat.Builder(c);
 		// Add title like "Server Finder - ** servers found"
 		ntf.setContentTitle("Server Finder - [COUNT] servers found".replace("[COUNT]",servers.size()+""));
-		ntf.setContentText("Now at [NOW]".replace("[NOW]",now+""));
+		ntf.setContentText("Checked [PORTS] port(s)".replace("[PORTS]",now+""));
 		ntf.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
-		ntf.setProgress(now,max,false);
+		ntf.setColor(ThemePatcher.getMainColor(c));
+		ntf.setProgress(max,now,false);
 		if(servers.size()!=0){
 			List<Integer> l=Factories.arrayList(servers.keySet());
 			Collections.sort(l);
@@ -82,6 +83,7 @@ public class ServerFinderService extends Service
 		ntf.setContentTitle("Server Finder - [COUNT] servers found".replace("[COUNT]",servers.size()+""));
 		ntf.setContentText("Finished");
 		ntf.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+		ntf.setColor(ThemePatcher.getMainColor(c));
 		if(servers.size()!=0){
 			List<Integer> l=Factories.arrayList(servers.keySet());
 			Collections.sort(l);
@@ -140,8 +142,9 @@ public class ServerFinderService extends Service
 				sessions.get(tag).detected.put(ss.port,ss);
 			}
 			private void update(final int now,final int max) {
-				updateNotification(tag,now,max);
-				if(sessions.get(tag).pinger.getQueueRemain()==0){
+				int remain=sessions.get(tag).pinger.getQueueRemain();
+				updateNotification(tag,max-remain,max);
+				if(remain==0){
 					sessions.get(tag).finished=true;
 					updateNotificationFinished(tag);
 				}
