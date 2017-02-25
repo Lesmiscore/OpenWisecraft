@@ -93,8 +93,8 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
 				})
 				.show();
 			if (ip != null)((EditText)dialog.findViewById(R.id.ip)).setText(ip);
+			((CheckBox)dialog.findViewById(R.id.pc)).setChecked(mode == 0 ?false: true);
 		}
-		((CheckBox)dialog.findViewById(R.id.pc)).setChecked(mode == 0 ?false: true);
 		slsl=(ServerListStyleLoader)getSystemService(ContextWrappingExtender.SERVER_LIST_STYLE_LOADER);
 		
 		findViewById(android.R.id.content).setBackgroundDrawable(slsl.load());
