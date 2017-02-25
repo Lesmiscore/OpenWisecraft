@@ -1,1 +1,2 @@
 -overloadaggressively
+-repackageclasses "日本語てすや"

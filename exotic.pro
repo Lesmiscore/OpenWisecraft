@@ -1,2 +1,2 @@
--optimizationpasses 40
+-optimizationpasses 400
 -allowaccessmodification
