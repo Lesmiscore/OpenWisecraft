@@ -10,6 +10,7 @@ import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.provider.*;
 import java.util.*;
 import android.graphics.*;
+import org.apache.commons.collections.map.*;
 
 public class ServerFinderService extends Service
 {
@@ -17,8 +18,12 @@ public class ServerFinderService extends Service
 	public static final String EXTRA_MODE="mode";
 	public static final String EXTRA_START_PORT="sport";
 	public static final String EXTRA_END_PORT="eport";
+	public static final String EXTRA_TAG="tag";
 	
-	static Map<String,State> sessions=new SuppliedHashMap<String,State>(new Supplier<String,State>(){
+	private static final String ACTION_DELETED="action_deleted";
+	private static final String ACTION_CANCEL="action_cancel";
+	
+	private static Map<String,State> sessions=new SuppliedHashMap<String,State>(new Supplier<String,State>(){
 			public State supply(String tag){
 				State stt=new State();
 				stt.tag=tag;
@@ -66,17 +71,21 @@ public class ServerFinderService extends Service
 		}
 		ntf.setSmallIcon(R.drawable.ic_search_black_48dp);
 		ntf.setLargeIcon(BitmapFactory.decodeResource(c.getResources(),R.drawable.ic_search_black_48dp));
-		ntf.setContentIntent(PendingIntent.getActivity(c,tag.hashCode()^800,new Intent(c,ServerFinderActivity.class).putExtra("tag",tag),PendingIntent.FLAG_UPDATE_CURRENT));
+		ntf.setContentIntent(PendingIntent.getActivity(c,tag.hashCode()^800,new Intent(c,ServerFinderActivity.class).putExtra(EXTRA_TAG,tag),PendingIntent.FLAG_UPDATE_CURRENT));
 		ntf.setOngoing(true);
 		return ntf.build();
 	}
 	
 	private void updateNotificationFinished(String tag){
-		int id=tag.hashCode();
-		Notification ntf=createFinishedNotification(this,tag,sessions.get(tag).detected);
-		NotificationManagerCompat.from(this).notify(id,ntf);
+		updateNotificationFinished(this,tag);
 	}
-
+	
+	private static void updateNotificationFinished(Context c,String tag){
+		int id=tag.hashCode();
+		Notification ntf=createFinishedNotification(c,tag,sessions.get(tag).detected);
+		NotificationManagerCompat.from(c).notify(id,ntf);
+	}
+	
 	private static Notification createFinishedNotification(Context c,String tag,Map<Integer,ServerStatus> servers){
 		NotificationCompat.Builder ntf=new NotificationCompat.Builder(c);
 		// Add title like "Server Finder - ** servers found"
@@ -96,7 +105,7 @@ public class ServerFinderService extends Service
 		}
 		ntf.setSmallIcon(R.drawable.ic_search_black_48dp);
 		ntf.setLargeIcon(BitmapFactory.decodeResource(c.getResources(),R.drawable.ic_search_black_48dp));
-		ntf.setContentIntent(PendingIntent.getActivity(c,tag.hashCode()^800,new Intent(c,ServerFinderActivity.class).putExtra("tag",tag),PendingIntent.FLAG_UPDATE_CURRENT));
+		ntf.setContentIntent(PendingIntent.getActivity(c,tag.hashCode()^800,new Intent(c,ServerFinderActivity.class).putExtra(EXTRA_TAG,tag),PendingIntent.FLAG_UPDATE_CURRENT));
 		return ntf.build();
 	}
 	
@@ -155,6 +164,24 @@ public class ServerFinderService extends Service
 		return tag;
 	}
 	
+	public void cancel(String tag){
+		cancel(this,tag);
+	}
+	
+	public static void cancel(Context c,String tag){
+		sessions.get(tag).worker.cancel(sessions.get(tag).cancelled=true);
+		sessions.get(tag).pinger.clearAndStop();
+		NotificationManagerCompat.from(c).cancel(tag.hashCode());
+		updateNotificationFinished(c,tag);
+	}
+	
+	public static void checkDead(String tag){
+		State state=sessions.get(tag);
+		if((state.finished|state.cancelled)&state.activityClosed&state.notificationRemoved){
+			sessions.remove(tag);
+		}
+	}
+	
 	public class InternalBinder extends Binder{
 		public String startExploration(String ip,int mode,int start,int end){
 			return explore(ip,start,end,mode);
@@ -163,8 +190,23 @@ public class ServerFinderService extends Service
 			return sessions.get(tag);
 		}
 		public void cancel(String tag){
-			getState(tag).worker.cancel(getState(tag).cancelled=true);
-			getState(tag).pinger.clearAndStop();
+			ServerFinderService.this.cancel(tag);
+			checkDead(tag);
+		}
+	}
+	
+	public static class NotificationDetector extends BroadcastReceiver {
+		@Override
+		public void onReceive(Context p1, Intent p2) {
+			String tag=p2.getStringExtra(EXTRA_TAG);
+			if(ACTION_DELETED.equals(p2.getAction())){
+				// notification was removed
+				sessions.get(tag).notificationRemoved=true;
+			}else if(ACTION_CANCEL.equals(p2.getAction())){
+				// cancel button was clicked
+				cancel(p1,tag);
+			}
+			checkDead(tag);
 		}
 	}
 	
@@ -172,7 +214,7 @@ public class ServerFinderService extends Service
 		public final Map<Integer,ServerStatus> detected=Collections.<Integer,ServerStatus>synchronizedMap(new HashMap<Integer,ServerStatus>());
 		public volatile String tag,ip;
 		public volatile AsyncTask<Void,ServerStatus,Void> worker;
-		public volatile boolean finished=false,closed=false,cancelled=false;
+		public volatile boolean finished=false,notificationRemoved=false,activityClosed=true,cancelled=false;
 		public volatile int start,end,mode;
 		ServerPingProvider pinger;
 	}

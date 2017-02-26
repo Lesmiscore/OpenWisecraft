@@ -131,16 +131,18 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
 	private void startIntervalUpdate(){
 		ServerFinderService.State state=bound.getState(tag);
 		setTitle(state.ip+":("+state.start+"~"+state.end+")");
+		state.activityClosed=false;
 		updateList();
 	}
 	
 	private void updateList(){
+		ServerFinderService.State state=bound.getState(tag);
+		if(state.finished)return;
 		new Handler().postDelayed(new Runnable(){
 				public void run(){
 					updateList();
 				}
 			},1000);
-		ServerFinderService.State state=bound.getState(tag);
 		sl.clear();
 		sl.addAll(state.detected.values());
 	}
@@ -153,7 +155,12 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		if(lastConnection!=null)unbindService(lastConnection);
+		if(lastConnection!=null){
+			ServerFinderService.State state=bound.getState(tag);
+			state.activityClosed=false;
+			ServerFinderService.checkDead(tag);
+			unbindService(lastConnection);
+		}
 	}
 
 	@Override

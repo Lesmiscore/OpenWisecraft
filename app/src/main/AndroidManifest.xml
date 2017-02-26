@@ -197,6 +197,12 @@
 			android:exported="false">
 		</service>
 		
+		<receiver android:name=".services.ServerFinderService$NotificationDetector">
+			<intent-filter>
+                <action android:name="action_deleted" />
+				<action android:name="action_cancel" />
+            </intent-filter>
+		</receiver>
 		
 		
 		<!-- Widgets -->
