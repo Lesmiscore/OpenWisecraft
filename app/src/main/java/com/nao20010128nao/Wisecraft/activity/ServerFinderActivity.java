@@ -157,7 +157,7 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
 		super.onDestroy();
 		if(lastConnection!=null){
 			ServerFinderService.State state=bound.getState(tag);
-			state.activityClosed=false;
+			state.activityClosed=true;
 			ServerFinderService.checkDead(tag);
 			unbindService(lastConnection);
 		}
