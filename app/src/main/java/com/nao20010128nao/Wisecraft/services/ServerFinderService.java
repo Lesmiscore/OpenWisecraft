@@ -43,11 +43,11 @@ public class ServerFinderService extends Service
 	
 	private void updateNotification(String tag,int now,int max){
 		int id=tag.hashCode();
-		Notification ntf=createBaseNotification(this,now,max,tag,sessions.get(tag).detected);
+		Notification ntf=createProgressNotification(this,now,max,tag,sessions.get(tag).detected);
 		NotificationManagerCompat.from(this).notify(id,ntf);
 	}
 	
-	private static Notification createBaseNotification(Context c,int now,int max,String tag,Map<Integer,ServerStatus> servers){
+	private static Notification createProgressNotification(Context c,int now,int max,String tag,Map<Integer,ServerStatus> servers){
 		NotificationCompat.Builder ntf=new NotificationCompat.Builder(c);
 		// Add title like "Server Finder - ** servers found"
 		ntf.setContentTitle("Server Finder - [COUNT] servers found".replace("[COUNT]",servers.size()+""));
@@ -120,7 +120,7 @@ public class ServerFinderService extends Service
 				}
 				sessions.get(tag).pinger=spp;
 
-				for (int p=startPort;p < endPort;p++) {
+				for (int p=startPort;p <= endPort;p++) {
 					Server s=new Server();
 					s.ip = ip;
 					s.port = p;
