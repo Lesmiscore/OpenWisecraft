@@ -150,8 +150,7 @@ public class ServerFinderService extends Service
 				}
 			}
 		};
-		at.execute();
-		sessions.get(tag).worker=at;
+		(sessions.get(tag).worker=at).execute();
 		return tag;
 	}
 	
