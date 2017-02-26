@@ -69,7 +69,7 @@ abstract class MCPlayerInfoDialogImpl extends AppCompatDialog {
 					});
 				try{
 					if(uuidText!=null){
-						Pattern reptRegex=Pattern.compile("((0|1|2|3|4|5|6|7|8|9|10)(|\\.[0-9]+) / 10)");
+						Pattern reptRegex=Pattern.compile("(([1-9]|10)(|\\.[0-9]+) \\/ 10)");
 						StringBuilder sb=new StringBuilder();
 						BufferedReader reader=null;
 						try{
