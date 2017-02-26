@@ -120,6 +120,7 @@ public class ServerFinderService extends Service
 				}
 				sessions.get(tag).pinger=spp;
 
+				update(0,max);
 				for (int p=startPort;p <= endPort;p++) {
 					Server s=new Server();
 					s.ip = ip;
@@ -128,10 +129,10 @@ public class ServerFinderService extends Service
 					spp.putInQueue(s, new ServerPingProvider.PingHandler(){
 							public void onPingArrives(ServerStatus s) {
 								publishProgress(s);
-								update(endPort-s.port,max);
+								update(-1,max);
 							}
 							public void onPingFailed(Server s) {
-								update(endPort-s.port,max);
+								update(-1,max);
 							}
 						});
 				}
@@ -142,7 +143,7 @@ public class ServerFinderService extends Service
 				sessions.get(tag).detected.put(ss.port,ss);
 			}
 			private void update(final int now,final int max) {
-				int remain=sessions.get(tag).pinger.getQueueRemain();
+				int remain=now==-1?sessions.get(tag).pinger.getQueueRemain():now;
 				updateNotification(tag,max-remain,max);
 				if(remain==0){
 					sessions.get(tag).finished=true;
