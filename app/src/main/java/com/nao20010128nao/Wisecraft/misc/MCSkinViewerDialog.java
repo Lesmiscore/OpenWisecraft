@@ -9,6 +9,7 @@ import java.util.regex.*;
 
 public class MCSkinViewerDialog extends AppCompatDialog 
 {
+	String player;
 	public MCSkinViewerDialog(android.content.Context context) {
 		this(context,ThemePatcher.getDefaultDialogStyle(context));
 	}
@@ -17,10 +18,18 @@ public class MCSkinViewerDialog extends AppCompatDialog
 		super(context,theme);
 	}
 
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
+	}
+
+	public void setPlayer(String player) {
+		this.player = player;
+	}
+
+	public String getPlayer() {
+		return player;
 	}
 	
 	

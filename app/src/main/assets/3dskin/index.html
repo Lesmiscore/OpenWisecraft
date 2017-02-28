@@ -106,9 +106,6 @@ body {
 <body>
 <canvas id="canvas" width="64" height="64"></canvas>
 <div id="sidebar">
-	<strong>Username</strong>
-	<input id="username" type="text" value="earthiverse">
-
 	<strong>Toggle Visibility - Body Parts</strong>
 	<label><input id="headToggle" type="checkbox" checked>Head</label>
 	<label><input id="bodyToggle" type="checkbox" checked>Body</label>
@@ -129,7 +126,6 @@ body {
 </div>
 <div id="info">
 	3D Skin Viewer v2 by <a href="https://github.com/earthiverse/3D-Minecraft-Skin-Viewer">earthiverse</a><br />
-	Skins downloaded from <a href="https://crafatar.com/">Crafatar</a>
 </div>
 <script type="text/javascript">
 	var scene, camera, renderer;
@@ -193,9 +189,8 @@ body {
 		console.log("Failed loading " + img.src);
 	}
 	
-	// I use crafatar because it allows CORS requests.
-	// Minotar stopped working.
-	img.src = 'http://crafatar.com/skins/earthiverse';
+	// Use skin image on the server
+	img.src = '/skins/image.png';
 	
 	function RenderSkin() {
 		// Head Parts
@@ -998,16 +993,6 @@ body {
 	function toggleRightLeg2() {
 		var rightLeg2 = scene.getObjectByName("rightLeg2", false);
 		rightLeg2.visible = rightLeg2Toggle.checked;
-	}
-	
-	// Change the username
-	document.getElementById('username').onkeypress = function(e){
-		if (!e) e = window.event;
-		var keyCode = e.keyCode || e.which;
-		if (keyCode == '13'){
-			// Enter pressed, set new image
-			img.src = 'https://crafatar.com/skins/' + document.getElementById('username').value;
-		}
 	}
 </script>
 </body>
