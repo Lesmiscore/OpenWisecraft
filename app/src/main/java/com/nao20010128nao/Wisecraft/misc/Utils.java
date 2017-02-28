@@ -15,11 +15,10 @@ import android.text.*;
 import android.text.style.*;
 import android.util.*;
 import android.view.*;
+import android.webkit.*;
 import android.widget.*;
-import com.google.common.collect.*;
 import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.*;
-import com.nao20010128nao.Wisecraft.R;
 import com.nao20010128nao.Wisecraft.activity.*;
 import com.nao20010128nao.Wisecraft.api.*;
 import com.nao20010128nao.Wisecraft.misc.collector.*;
@@ -33,6 +32,8 @@ import permissions.dispatcher.*;
 
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import com.nao20010128nao.Wisecraft.R;
+import permissions.dispatcher.PermissionRequest;
 
 public class Utils extends PingerUtils{
 	private static int[] HUE_COLORS;
@@ -720,5 +721,12 @@ public class Utils extends PingerUtils{
 		}catch(Throwable a){
 			
 		}
+	}
+	public static String getMimeType(String filePath){
+		int index;
+		if((index=filePath.lastIndexOf(".")) > 0){
+			return MimeTypeMap.getSingleton().getMimeTypeFromExtension(filePath.substring(index + 1));
+		}
+		return null;
 	}
 }
