@@ -22,6 +22,13 @@ then
 		export JACK_BUILD=false
 		echo "Jack build is disabled"
 	fi
+	if [[ ${CI_BUILD_NAME:-} == *Shksknvwr* ]]
+	then
+		echo "Minifying Skin Viewer assets..."
+		./minify_skinviewer.sh > build-minify-$CI_BUILD_NAME.log
+	else
+		echo "Minifying Skin Viewer is skipped"
+	fi
 	export POW_OF_2=false
 	export USE_TOR=false
 	java -version

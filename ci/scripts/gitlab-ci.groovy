@@ -23,31 +23,33 @@ def preScript=[
       "DIR=\${DIR#*=}".toString(),
       "if [ \$DIR != \"0\" ]; then gradle safeDeleteDevXml \$TASK --info --stacktrace | tee -a build-\$CI_BUILD_NAME.log > /dev/null; mv */build/outputs/apk/*.apk . ;./ci/packageInformations.sh ; fi".toString()
 ]
-["","Split"].each{split->
-    // app
-    def app=["Debug","Debug2","Debug2TestObs","Pg","PgUlt","PgExpermental","Release","ShrinkRelease"]
-    app.each{
-        this["app$it$split".toString()].script=mainScript
-        this["app$it$split".toString()].artifacts.paths=artf
-        this["app$it$split".toString()].stage="app".toString()
-        this["app$it$split".toString()].variables.TASK=":app:assemble$it".toString()
-    }
-    def pre=["","Shrink"]
-    pre.each{
-        this["app${it}Pre$split".toString()].script=preScript
-        this["app${it}Pre$split".toString()].artifacts.paths=artf
-        this["app${it}Pre$split".toString()].stage="app".toString()
-        this["app${it}Pre$split".toString()].variables.TASK=":app:assemble${it}Pre".toString()
-    }
-    // rcon
-    def rcon=["App":["Release","Pre"],"PassCrack":["Release"]]
-    rcon.entrySet().each{kv->
-        def module=kv.key
-        kv.value.each{build->
-            this["rcon$module$build$split".toString()].script=mainScript
-            this["rcon$module$build$split".toString()].artifacts.paths=artf
-            this["rcon$module$build$split".toString()].stage="rcon".toString()
-            this["rcon$module$build$split".toString()].variables.TASK=":${module}:assemble$build".toString()
+["","Shksknvwr"].each{ssv->
+	["","Split"].each{split->
+        // app
+        def app=["Debug","Debug2","Debug2TestObs","Pg","PgUlt","PgExpermental","Release","ShrinkRelease"]
+        app.each{
+            this["app$it$split$ssv".toString()].script=mainScript
+            this["app$it$split$ssv".toString()].artifacts.paths=artf
+            this["app$it$split$ssv".toString()].stage="app".toString()
+            this["app$it$split$ssv".toString()].variables.TASK=":app:assemble$it".toString()
+        }
+        def pre=["","Shrink"]
+        pre.each{
+            this["app${it}Pre$split$ssv".toString()].script=preScript
+            this["app${it}Pre$split$ssv".toString()].artifacts.paths=artf
+            this["app${it}Pre$split$ssv".toString()].stage="app".toString()
+            this["app${it}Pre$split$ssv".toString()].variables.TASK=":app:assemble${it}Pre".toString()
+        }
+        // rcon
+        def rcon=["App":["Release","Pre"],"PassCrack":["Release"]]
+        rcon.entrySet().each{kv->
+       	def module=kv.key
+     	   	kv.value.each{build->
+     	   	    this["rcon$module$build$split$ssv".toString()].script=mainScript
+                this["rcon$module$build$split$ssv".toString()].artifacts.paths=artf
+                this["rcon$module$build$split$ssv".toString()].stage="rcon".toString()
+                this["rcon$module$build$split$ssv".toString()].variables.TASK=":${module}:assemble$build".toString()
+            }
         }
     }
 }
