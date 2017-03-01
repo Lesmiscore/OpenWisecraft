@@ -23,7 +23,7 @@ cd $CURRENT_DIR
 # Minify files
 cd app/src/main/assets/3dskin
 
-html-minifier --html5 --minify-css true --minify-js --remove-comments --collapse-whitespace true -o index.min.html index.html
+html-minifier --html5 --minify-css true --minify-js true --remove-comments --collapse-whitespace true -o index.min.html index.html
 mv --force index.min.html index.html
 
 java -jar $CLOSURE_COMPILER_JAR --js js/2dskin.js --js_output_file js/2dskin.min.js
