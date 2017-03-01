@@ -47,6 +47,11 @@
 -keepclassmembers class * implements com.nao20010128nao.Wisecraft.misc.ShouldBeKept2
 -keepclassmembers @com.nao20010128nao.Wisecraft.misc.ShouldBeKept class *
 
+-keepclassmembers class * extends java.lang.Enum {
+    <fields>;
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
 
 -repackageclasses wisecraft
 
