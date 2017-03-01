@@ -109,7 +109,7 @@ public class MCSkinViewerDialog extends AppCompatDialog
 			}
 			if(session.getUri().endsWith("/skins/image.png")){
 				try{
-					return newChunkedResponse(cast(Response.Status.OK),Utils.getMimeType(".png"),new URL("https://crafater.com/skins/"+player).openStream());
+					return newChunkedResponse(cast(Response.Status.OK),Utils.getMimeType(".png"),new URL("https://crafatar.com/skins/"+player).openStream());
 				}catch(Throwable e){
 					DebugWriter.writeToE("MCSkinViewerDialog",e);
 				}
