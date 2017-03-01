@@ -44,7 +44,7 @@ public class MCSkinViewerDialog extends AppCompatDialog
 			(server=new SkinViewerHttpServer()).start(5000, true);
 			skinViewer.setWebViewClient(new WebViewClient(){});
 			skinViewer.getSettings().setJavaScriptEnabled(true);
-			skinViewer.loadUrl("http://localhost:6432/");
+			skinViewer.loadUrl("http://localhost:65432/index.html");
 		} catch (IOException e) {
 			WisecraftError.report("MCSkinViewerDialog",e);
 		}
