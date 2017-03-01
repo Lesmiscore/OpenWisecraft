@@ -35,6 +35,7 @@ public class MCSkinViewerDialog extends AppCompatDialog
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.skin_viewer_dialog);
 		progress=(FrameLayout)findViewById(R.id.loading);

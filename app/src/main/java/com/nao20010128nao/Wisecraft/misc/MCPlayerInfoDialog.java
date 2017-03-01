@@ -28,6 +28,7 @@ abstract class MCPlayerInfoDialogImpl extends AppCompatDialog {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.minecraft_pc_user_info);
 		face=(ImageView)findViewById(R.id.face);
