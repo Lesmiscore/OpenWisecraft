@@ -43,12 +43,12 @@ def preScript=[
         // rcon
         def rcon=["App":["Release","Pre"],"PassCrack":["Release"]]
         rcon.entrySet().each{kv->
-       	def module=kv.key
-     	   	kv.value.each{build->
-     	   	    this["rcon$module$build$split$ssv".toString()].script=mainScript
+            def module=kv.key
+     	   kv.value.each{build->
+     	       this["rcon$module$build$split$ssv".toString()].script=mainScript
                 this["rcon$module$build$split$ssv".toString()].artifacts.paths=artf
                 this["rcon$module$build$split$ssv".toString()].stage="rcon".toString()
-                this["rcon$module$build$split$ssv".toString()].variables.TASK=":${module}:assemble$build".toString()
+                this["rcon$module$build$split$ssv".toString()].variables.TASK=":rcon${module}:assemble$build".toString()
             }
         }
     }
