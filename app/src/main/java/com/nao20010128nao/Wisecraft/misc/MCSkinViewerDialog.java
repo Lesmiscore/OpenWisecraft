@@ -23,6 +23,7 @@ public class MCSkinViewerDialog extends AppCompatDialog
 	FrameLayout progress;
 	WebView skinViewer;
 	SkinViewerHttpServer server;
+	Handler h=new Handler();
 	public MCSkinViewerDialog(android.content.Context context) {
 		this(context,ThemePatcher.getDefaultDialogStyle(context));
 	}
@@ -52,7 +53,7 @@ public class MCSkinViewerDialog extends AppCompatDialog
 	@Override
 	protected void onStop() {
 		super.onStop();
-		server.stop();
+		if(server!=null)server.stop();
 	}
 
 	public void setPlayer(String player) {
@@ -84,9 +85,9 @@ public class MCSkinViewerDialog extends AppCompatDialog
 
 		@Override
 		public NanoHTTPD.Response serve(NanoHTTPD.IHTTPSession session) {
-			if(session.getUri().endsWith("/xhr/webgl_available")){
+			if(session.getUri().endsWith("/xhr/webgl_available")&!webGlChecked){
 				// Web GL is available so show WebView
-				getOwnerActivity().runOnUiThread(new Runnable(){
+				h.post(new Runnable(){
 						public void run(){
 							progress.setVisibility(View.GONE);
 							skinViewer.setVisibility(View.VISIBLE);
@@ -95,9 +96,9 @@ public class MCSkinViewerDialog extends AppCompatDialog
 				webGlChecked=true;
 				return newFixedLengthResponse("");
 			}
-			if(session.getUri().endsWith("/xhr/webgl_bad")){
+			if(session.getUri().endsWith("/xhr/webgl_bad")&!webGlChecked){
 				// Web GL is NOT available so we use another browser
-				getOwnerActivity().runOnUiThread(new Runnable(){
+				h.post(new Runnable(){
 						public void run(){
 							progress.setVisibility(View.GONE);
 							skinViewer.setVisibility(View.VISIBLE);
@@ -108,15 +109,15 @@ public class MCSkinViewerDialog extends AppCompatDialog
 			}
 			if(session.getUri().endsWith("/skins/image.png")){
 				try{
-					return newChunkedResponse(cast(Response.Status.OK),Utils.getMimeType(".png"),new URL("http://crafater.com/skins/"+player).openStream());
+					return newChunkedResponse(cast(Response.Status.OK),Utils.getMimeType(".png"),new URL("https://crafater.com/skins/"+player).openStream());
 				}catch(Throwable e){
-					
+					DebugWriter.writeToE("MCSkinViewerDialog",e);
 				}
 			}
 			if(session.getUri().endsWith("/background.css")){
 				StringBuilder css=new StringBuilder();
 				css
-				.append("baccground{")
+				.append("body{")
 				.append("background-color:").append(getBackgroundColor()).append(";")
 				.append("}");
 				return newFixedLengthResponse(css.toString());
@@ -131,7 +132,7 @@ public class MCSkinViewerDialog extends AppCompatDialog
 				path=path.split(Pattern.quote("&"))[0];
 				return newChunkedResponse(cast(Response.Status.OK),Utils.getMimeType(path),c.getAssets().open(path));
 			}catch(Throwable e){
-				
+				DebugWriter.writeToE("MCSkinViewerDialog",e);
 			}
 			return newFixedLengthResponse(cast(Response.Status.NOT_FOUND),"application/octet-stream","");
 		}
