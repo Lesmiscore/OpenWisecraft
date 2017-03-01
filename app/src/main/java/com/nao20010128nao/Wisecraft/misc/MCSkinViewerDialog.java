@@ -17,10 +17,15 @@ import java.net.*;
 import java.util.regex.*;
 
 import android.support.v7.view.ContextThemeWrapper;
+import android.net.*;
 public class MCSkinViewerDialog extends AppCompatDialog 
 {
+	static final int SERVER_PORT=65432;
+	static final String SERVER_URL="http://localhost:"+SERVER_PORT+"/index.html";
+	
+	
 	String player;
-	FrameLayout progress;
+	FrameLayout progress,webglError;
 	WebView skinViewer;
 	SkinViewerHttpServer server;
 	Handler h=new Handler();
@@ -40,12 +45,13 @@ public class MCSkinViewerDialog extends AppCompatDialog
 		setContentView(R.layout.skin_viewer_dialog);
 		progress=(FrameLayout)findViewById(R.id.loading);
 		skinViewer=(WebView)findViewById(R.id.skinViewingWebView);
+		webglError=(FrameLayout)findViewById(R.id.webglError);
 		
 		try {
 			(server=new SkinViewerHttpServer()).start(5000, true);
 			skinViewer.setWebViewClient(new WebViewClient(){});
 			skinViewer.getSettings().setJavaScriptEnabled(true);
-			skinViewer.loadUrl("http://localhost:65432/index.html");
+			skinViewer.loadUrl(SERVER_URL);
 		} catch (IOException e) {
 			WisecraftError.report("MCSkinViewerDialog",e);
 		}
@@ -81,13 +87,13 @@ public class MCSkinViewerDialog extends AppCompatDialog
 		Context c=getContext();
 		boolean webGlChecked=false;
 		public SkinViewerHttpServer(){
-			super(65432);
+			super(SERVER_PORT);
 		}
 
 		@Override
 		public NanoHTTPD.Response serve(NanoHTTPD.IHTTPSession session) {
 			if(session.getUri().endsWith("/xhr/webgl_available")&!webGlChecked){
-				// Web GL is available so show WebView
+				// WebGL is available so show WebView
 				h.post(new Runnable(){
 						public void run(){
 							progress.setVisibility(View.GONE);
@@ -98,11 +104,20 @@ public class MCSkinViewerDialog extends AppCompatDialog
 				return newFixedLengthResponse("");
 			}
 			if(session.getUri().endsWith("/xhr/webgl_bad")&!webGlChecked){
-				// Web GL is NOT available so we use another browser
+				// WebGL is NOT available so we use another browser
 				h.post(new Runnable(){
 						public void run(){
 							progress.setVisibility(View.GONE);
-							skinViewer.setVisibility(View.VISIBLE);
+							webglError.setVisibility(View.VISIBLE);
+							webglError.findViewById(R.id.openBrowser).setOnClickListener(new View.OnClickListener(){
+									public void onClick(View v){
+										Intent view=new Intent();
+										view.setData(Uri.parse(SERVER_URL));
+										view.setAction(Intent.ACTION_VIEW);
+										view.setFlags(view.getFlags()|Intent.FLAG_ACTIVITY_CLEAR_TOP/*|Intent.FLAG_ACTIVITY_NEW_TASK*/);
+										getContext().startActivity(Intent.createChooser(view,""));
+									}
+							});
 						}
 					});
 				webGlChecked=true;
@@ -129,6 +144,9 @@ public class MCSkinViewerDialog extends AppCompatDialog
 					path="3dskin"+session.getUri();
 				}else{
 					path="3dskin/"+session.getUri();
+				}
+				if("3dskin/".equals(path)){
+					path="3dskin/index.html";
 				}
 				path=path.split(Pattern.quote("&"))[0];
 				return newChunkedResponse(cast(Response.Status.OK),Utils.getMimeType(path),c.getAssets().open(path));
