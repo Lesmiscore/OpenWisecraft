@@ -272,7 +272,7 @@
         },
         "stage": "rcon",
         "variables": {
-            "TASK": ":App:assembleRelease"
+            "TASK": ":rconApp:assembleRelease"
         }
     },
     "rconAppPre": {
@@ -296,7 +296,7 @@
         },
         "stage": "rcon",
         "variables": {
-            "TASK": ":App:assemblePre"
+            "TASK": ":rconApp:assemblePre"
         }
     },
     "rconPassCrackRelease": {
@@ -320,7 +320,7 @@
         },
         "stage": "rcon",
         "variables": {
-            "TASK": ":PassCrack:assembleRelease"
+            "TASK": ":rconPassCrack:assembleRelease"
         }
     },
     "appDebugSplit": {
@@ -586,7 +586,7 @@
         },
         "stage": "rcon",
         "variables": {
-            "TASK": ":App:assembleRelease"
+            "TASK": ":rconApp:assembleRelease"
         }
     },
     "rconAppPreSplit": {
@@ -610,7 +610,7 @@
         },
         "stage": "rcon",
         "variables": {
-            "TASK": ":App:assemblePre"
+            "TASK": ":rconApp:assemblePre"
         }
     },
     "rconPassCrackReleaseSplit": {
@@ -634,7 +634,7 @@
         },
         "stage": "rcon",
         "variables": {
-            "TASK": ":PassCrack:assembleRelease"
+            "TASK": ":rconPassCrack:assembleRelease"
         }
     },
     "appDebugShksknvwr": {
@@ -900,7 +900,7 @@
         },
         "stage": "rcon",
         "variables": {
-            "TASK": ":App:assembleRelease"
+            "TASK": ":rconApp:assembleRelease"
         }
     },
     "rconAppPreShksknvwr": {
@@ -924,7 +924,7 @@
         },
         "stage": "rcon",
         "variables": {
-            "TASK": ":App:assemblePre"
+            "TASK": ":rconApp:assemblePre"
         }
     },
     "rconPassCrackReleaseShksknvwr": {
@@ -948,7 +948,7 @@
         },
         "stage": "rcon",
         "variables": {
-            "TASK": ":PassCrack:assembleRelease"
+            "TASK": ":rconPassCrack:assembleRelease"
         }
     },
     "appDebugSplitShksknvwr": {
@@ -1214,7 +1214,7 @@
         },
         "stage": "rcon",
         "variables": {
-            "TASK": ":App:assembleRelease"
+            "TASK": ":rconApp:assembleRelease"
         }
     },
     "rconAppPreSplitShksknvwr": {
@@ -1238,7 +1238,7 @@
         },
         "stage": "rcon",
         "variables": {
-            "TASK": ":App:assemblePre"
+            "TASK": ":rconApp:assemblePre"
         }
     },
     "rconPassCrackReleaseSplitShksknvwr": {
@@ -1262,7 +1262,7 @@
         },
         "stage": "rcon",
         "variables": {
-            "TASK": ":PassCrack:assembleRelease"
+            "TASK": ":rconPassCrack:assembleRelease"
         }
     },
     "mainLast": {
