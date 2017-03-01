@@ -70,3 +70,7 @@ mainLast.script=[
 
 copy.stage="postBuild".toString()
 copy.script=["source ./ci/copy.sh".toString()]
+
+convertTest.stage="postBuild".toString()
+convertTest.script=["./ci/git.sh".toString(),"gradle convertConfigSlurperToBuildscript".toString()]
+convertTest.artifacts.paths=["test.gitlab-ci.yml".toString()]
