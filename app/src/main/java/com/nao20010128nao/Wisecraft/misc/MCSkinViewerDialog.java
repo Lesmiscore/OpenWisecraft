@@ -22,6 +22,7 @@ public class MCSkinViewerDialog extends AppCompatDialog
 	String player;
 	FrameLayout progress;
 	WebView skinViewer;
+	SkinViewerHttpServer server;
 	public MCSkinViewerDialog(android.content.Context context) {
 		this(context,ThemePatcher.getDefaultDialogStyle(context));
 	}
@@ -39,13 +40,19 @@ public class MCSkinViewerDialog extends AppCompatDialog
 		skinViewer=(WebView)findViewById(R.id.skinViewingWebView);
 		
 		try {
-			new SkinViewerHttpServer().start(5000, true);
+			(server=new SkinViewerHttpServer()).start(5000, true);
 			skinViewer.setWebViewClient(new WebViewClient(){});
 			skinViewer.getSettings().setJavaScriptEnabled(true);
 			skinViewer.loadUrl("http://localhost:6432/");
 		} catch (IOException e) {
 			WisecraftError.report("MCSkinViewerDialog",e);
 		}
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		server.stop();
 	}
 
 	public void setPlayer(String player) {

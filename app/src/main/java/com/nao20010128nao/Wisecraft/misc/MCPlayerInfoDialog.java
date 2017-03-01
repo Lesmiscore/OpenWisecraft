@@ -3,16 +3,14 @@ package com.nao20010128nao.Wisecraft.misc;
 import android.graphics.*;
 import android.os.*;
 import android.support.v7.app.*;
-import android.util.*;
+import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.skin_face.*;
 import java.io.*;
 import java.net.*;
-import org.jsoup.*;
-import org.jsoup.nodes.*;
-import org.jsoup.select.*;
 import java.util.regex.*;
+import android.text.*;
 
 abstract class MCPlayerInfoDialogImpl extends AppCompatDialog {
 	String player;
@@ -98,6 +96,19 @@ abstract class MCPlayerInfoDialogImpl extends AppCompatDialog {
 					});
 			}
 		}.start();
+		face.setOnClickListener(new View.OnClickListener(){
+			public void onClick(View v){
+				String forPreview;
+				if(!TextUtils.isEmpty(uuid.getText())){
+					forPreview=uuid.getText().toString().replace("-","");
+				}else{
+					forPreview=player;
+				}
+				MCSkinViewerDialog svd=new MCSkinViewerDialog(getContext());
+				svd.setPlayer(forPreview);
+				svd.show();
+			}
+		});
 	}
 	
 	public void setPlayer(String player) {
