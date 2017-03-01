@@ -25,7 +25,7 @@ then
 	if [[ ${CI_BUILD_NAME:-} == *Shksknvwr* ]]
 	then
 		echo "Minifying Skin Viewer assets..."
-		./minify_skinviewer.sh > build-minify-$CI_BUILD_NAME.log
+		./ci/minify_skinviewer.sh > build-minify-$CI_BUILD_NAME.log
 	else
 		echo "Minifying Skin Viewer is skipped"
 	fi
