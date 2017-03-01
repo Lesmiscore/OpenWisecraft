@@ -129,7 +129,7 @@
             "TASK": ":app:assemblePgUlt"
         }
     },
-    "appPgExpermental": {
+    "appPgExperimental": {
         "script": [
             "gradle safeDeleteDevXml $TASK --info --stacktrace | tee -a build-$CI_BUILD_NAME.log > /dev/null",
             "mv */build/outputs/apk/*.apk .",
@@ -150,7 +150,7 @@
         },
         "stage": "app",
         "variables": {
-            "TASK": ":app:assemblePgExpermental"
+            "TASK": ":app:assemblePgExperimental"
         }
     },
     "appRelease": {
@@ -443,7 +443,7 @@
             "TASK": ":app:assemblePgUlt"
         }
     },
-    "appPgExpermentalSplit": {
+    "appPgExperimentalSplit": {
         "script": [
             "gradle safeDeleteDevXml $TASK --info --stacktrace | tee -a build-$CI_BUILD_NAME.log > /dev/null",
             "mv */build/outputs/apk/*.apk .",
@@ -464,7 +464,7 @@
         },
         "stage": "app",
         "variables": {
-            "TASK": ":app:assemblePgExpermental"
+            "TASK": ":app:assemblePgExperimental"
         }
     },
     "appReleaseSplit": {
@@ -757,7 +757,7 @@
             "TASK": ":app:assemblePgUlt"
         }
     },
-    "appPgExpermentalShksknvwr": {
+    "appPgExperimentalShksknvwr": {
         "script": [
             "gradle safeDeleteDevXml $TASK --info --stacktrace | tee -a build-$CI_BUILD_NAME.log > /dev/null",
             "mv */build/outputs/apk/*.apk .",
@@ -778,7 +778,7 @@
         },
         "stage": "app",
         "variables": {
-            "TASK": ":app:assemblePgExpermental"
+            "TASK": ":app:assemblePgExperimental"
         }
     },
     "appReleaseShksknvwr": {
@@ -1071,7 +1071,7 @@
             "TASK": ":app:assemblePgUlt"
         }
     },
-    "appPgExpermentalSplitShksknvwr": {
+    "appPgExperimentalSplitShksknvwr": {
         "script": [
             "gradle safeDeleteDevXml $TASK --info --stacktrace | tee -a build-$CI_BUILD_NAME.log > /dev/null",
             "mv */build/outputs/apk/*.apk .",
@@ -1092,7 +1092,7 @@
         },
         "stage": "app",
         "variables": {
-            "TASK": ":app:assemblePgExpermental"
+            "TASK": ":app:assemblePgExperimental"
         }
     },
     "appReleaseSplitShksknvwr": {
