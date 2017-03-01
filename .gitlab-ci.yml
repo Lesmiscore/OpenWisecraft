@@ -1297,5 +1297,17 @@
         "script": [
             "source ./ci/copy.sh"
         ]
+    },
+    "convertTest": {
+        "stage": "postBuild",
+        "script": [
+            "./ci/git.sh",
+            "gradle convertConfigSlurperToBuildscript"
+        ],
+        "artifacts": {
+            "paths": [
+                "test.gitlab-ci.yml"
+            ]
+        }
     }
 }
