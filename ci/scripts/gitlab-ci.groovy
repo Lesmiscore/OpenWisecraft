@@ -26,7 +26,7 @@ def preScript=[
 ["","Shksknvwr"].each{ssv->
 	["","Split"].each{split->
         // app
-        def app=["Debug","Debug2","Debug2TestObs","Pg","PgUlt","PgExpermental","Release","ShrinkRelease"]
+        def app=["Debug","Debug2","Debug2TestObs","Pg","PgUlt","PgExperimental","Release","ShrinkRelease"]
         app.each{
             this["app$it$split$ssv".toString()].script=mainScript
             this["app$it$split$ssv".toString()].artifacts.paths=artf
