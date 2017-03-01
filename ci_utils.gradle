@@ -16,7 +16,7 @@ ext["buildRef"]={
 }
 ext["runnerId"]={
 	if(env.containsKey("CI_RUNNER_ID"))env["CI_RUNNER_ID"]
-	else InetAddress.getByName(new URL("http://checkip.amazonaws.com").openConnection().readLine()).hostName
+	else InetAddress.getByName(new URL("http://checkip.amazonaws.com").openConnection().inputStream.newReader().readLine()).hostName
 }
 ext["buildStage"]={
 	if(env.containsKey("CI_BUILD_STAGE"))env["CI_BUILD_STAGE"]
