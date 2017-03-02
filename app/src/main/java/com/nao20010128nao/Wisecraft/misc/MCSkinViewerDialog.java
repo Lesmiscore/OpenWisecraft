@@ -3,6 +3,7 @@ package com.nao20010128nao.Wisecraft.misc;
 import android.content.*;
 import android.content.res.*;
 import android.graphics.*;
+import android.net.*;
 import android.os.*;
 import android.support.v7.app.*;
 import android.support.v7.view.*;
@@ -17,7 +18,7 @@ import java.net.*;
 import java.util.regex.*;
 
 import android.support.v7.view.ContextThemeWrapper;
-import android.net.*;
+
 public class MCSkinViewerDialog extends AppCompatDialog 
 {
 	static final int SERVER_PORT=65432;
