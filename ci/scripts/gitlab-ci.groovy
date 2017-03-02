@@ -3,7 +3,6 @@ before_script=["chmod a+x ./ci/*".toString(), "source ./ci/prepare.sh".toString(
 stages=["app".toString(),"rcon".toString(),"postBuild".toString()]
 def artf=[
       "*.apk".toString(),
-      "dexdump*.txt".toString(),
       "build-*.log".toString(),
       "powof2.txt".toString(),
       "*/build/outputs/aar/*".toString(),
@@ -54,7 +53,7 @@ def preScript=[
     }
 }
 // postBuild
-mainLast.artifacts.paths=artf
+mainLast.artifacts.paths=["dexdump*.txt".toString()]
 mainLast.stage="postBuild"
 mainLast.script=[
       "unzip app-release.apk -d unzippedApkA > /dev/null".toString(),
