@@ -18,7 +18,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -42,7 +41,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -66,7 +64,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -90,7 +87,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -114,7 +110,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -138,7 +133,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -162,7 +156,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -186,7 +179,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -211,7 +203,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -236,7 +227,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -260,7 +250,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -284,7 +273,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -308,7 +296,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -332,7 +319,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -356,7 +342,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -380,7 +365,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -404,7 +388,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -428,7 +411,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -452,7 +434,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -476,7 +457,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -500,7 +480,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -525,7 +504,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -550,7 +528,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -574,7 +551,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -598,7 +574,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -622,7 +597,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -646,7 +620,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -670,7 +643,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -694,7 +666,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -718,7 +689,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -742,7 +712,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -766,7 +735,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -790,7 +758,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -814,7 +781,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -839,7 +805,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -864,7 +829,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -888,7 +852,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -912,7 +875,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -936,7 +898,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -960,7 +921,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -984,7 +944,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -1008,7 +967,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -1032,7 +990,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -1056,7 +1013,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -1080,7 +1036,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -1104,7 +1059,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -1128,7 +1082,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -1153,7 +1106,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -1178,7 +1130,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -1202,7 +1153,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -1226,7 +1176,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -1250,7 +1199,6 @@
         "artifacts": {
             "paths": [
                 "*.apk",
-                "dexdump*.txt",
                 "build-*.log",
                 "powof2.txt",
                 "*/build/outputs/aar/*",
@@ -1268,15 +1216,7 @@
     "mainLast": {
         "artifacts": {
             "paths": [
-                "*.apk",
-                "dexdump*.txt",
-                "build-*.log",
-                "powof2.txt",
-                "*/build/outputs/aar/*",
-                "tree-*.log",
-                "*/build/outputs/mapping/*/*.txt",
-                "*/build/generated/source/*",
-                "autogen-*.*"
+                "dexdump*.txt"
             ]
         },
         "stage": "postBuild",
