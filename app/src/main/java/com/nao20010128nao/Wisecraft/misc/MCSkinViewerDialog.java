@@ -25,7 +25,8 @@ public class MCSkinViewerDialog extends AppCompatDialog
 	
 	
 	String player;
-	FrameLayout progress,webglError;
+	FrameLayout progress;
+	LinearLayout webglError;
 	WebView skinViewer;
 	SkinViewerHttpServer server;
 	Handler h=new Handler();
@@ -45,7 +46,7 @@ public class MCSkinViewerDialog extends AppCompatDialog
 		setContentView(R.layout.skin_viewer_dialog);
 		progress=(FrameLayout)findViewById(R.id.loading);
 		skinViewer=(WebView)findViewById(R.id.skinViewingWebView);
-		webglError=(FrameLayout)findViewById(R.id.webglError);
+		webglError=(LinearLayout)findViewById(R.id.webglError);
 		
 		try {
 			(server=new SkinViewerHttpServer()).start(5000, true);
