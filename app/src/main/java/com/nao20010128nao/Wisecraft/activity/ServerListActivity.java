@@ -696,6 +696,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	}
 
 	public void loadServers() {
+		/*
 		int version=pref.getInt("serversJsonVersion", -1);
 		if(version==-1)version=Utils.determineServerListJsonVersion(pref.getString("servers", "[]"));
 		switch (version) {
@@ -724,6 +725,14 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					sl.notifyItemRangeInserted(0, curLen);
 				}
 		}
+		*/
+		List<Server> sa=Utils.jsonToServers(pref.getString("servers", "[]"));
+		int prevLen=list.size();
+		list.clear();
+		sl.notifyItemRangeRemoved(0, prevLen);
+		int curLen=sa.size();
+		list.addAll(sa);
+		sl.notifyItemRangeInserted(0, curLen);
 	}
 	public void saveServers() {
 		new Thread(){
@@ -861,8 +870,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			public void run() {
 				File f=new File(fn);
 				if(f.exists()){
-					final Server[] sv;
+					final List<Server> sv;
 					String json=readWholeFile(f);
+					/*
 					if (json.contains("\"isPC\"") & (json.contains("true") | json.contains("false"))) {
 						//old version json file
 						OldServer19[] sa=gson.fromJson(json, OldServer19[].class);
@@ -878,6 +888,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 					} else {
 						sv = gson.fromJson(json, Server[].class);
 					}
+					*/
+					sv=Utils.jsonToServers(json);
 					runOnUiThread(new Runnable(){
 							public void run() {
 								sl.addAll(sv);
