@@ -111,6 +111,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 		setSupportActionBar((android.support.v7.widget.Toolbar)findViewById(R.id.toolbar));
 		tabs = (ViewPager)findViewById(R.id.pager);
 		tabs.setAdapter(adapter = new InternalPagerAdapter());
+		tabs.setPageTransformer(true,new ZoomOutPageTransformer());
 		PagerSlidingTabStrip psts=(PagerSlidingTabStrip)findViewById(R.id.tabs);
 		psts.setViewPager(tabs);
 		
