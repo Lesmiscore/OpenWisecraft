@@ -28,7 +28,8 @@
             android:label="@string/app_name"
             android:name=".activity.ServerListActivity"
 			android:theme="@style/AppTheme.NoActionBar"
-			android:enabled="false">
+			android:enabled="true"
+			android:exported="false">
             <!-- Hide this activity because this is for the alias -->
         </activity>
 		<activity-alias 
