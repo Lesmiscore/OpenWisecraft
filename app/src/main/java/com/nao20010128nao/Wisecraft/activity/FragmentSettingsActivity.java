@@ -134,52 +134,6 @@ abstract class FragmentSettingsActivityImpl extends AppCompatActivity implements
 				.addToBackStack("root")
 				.commit();
 		}
-		misc=(FrameLayout)findViewById(R.id.misc);
-		pager=(ViewPager)LayoutInflater.from(this).inflate(R.layout.view_pager_only,misc,true).findViewById(R.id.pager);
-		
-		UsefulPagerAdapter2 upa=new UsefulPagerAdapter2(getSupportFragmentManager());
-		pager.setAdapter(upa);
-		slf=new ServerListPreviewFragment();
-		if(getResources().getBoolean(R.bool.is_port)){
-			Log.d("FSA","calculating by the width of the screen");
-			slf.setRows(Utils.calculateRows(FragmentSettingsActivityImpl.this));
-		}else{
-			Log.d("FSA","calculating by the half width of the screen");
-			slf.setRows(Utils.calculateRows(FragmentSettingsActivityImpl.this,Utils.getScreenWidth(this)/2));
-		}
-		upa.addTab(slf,"");
-		upa.addTab(new ServerInfoToolbarFragment(),"");
-		if(savedInstanceState!=null){
-			misc.setVisibility(savedInstanceState.getInt("misc.visibility"));
-		}
-	}
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		outState.putInt("misc.visibility",misc.getVisibility());
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		/*
-		MenuItem showPreview=menu.add(Menu.NONE,0,0,R.string.preview);
-		showPreview.setIcon(TheApplication.instance.getTintedDrawable(misc.getVisibility()==View.VISIBLE?R.drawable.ic_visibility_black_48dp:R.drawable.ic_visibility_off_black_48dp,Utils.getMenuTintColor(this)));
-		MenuItemCompat.setShowAsAction(showPreview,MenuItem.SHOW_AS_ACTION_ALWAYS);
-		*/
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch(item.getItemId()){
-			case 0:
-				boolean isShowing=misc.getVisibility()==View.VISIBLE;
-				misc.setVisibility(isShowing?View.GONE:View.VISIBLE);
-				invalidateOptionsMenu();
-				break;
-		}
-		return true;
 	}
 	
 	@Override
@@ -461,23 +415,6 @@ abstract class FragmentSettingsActivityImpl extends AppCompatActivity implements
 		}
 	}
 
-
-	/*public static class Asfsls extends SettingsBaseFragment {
-		int which;
-		@Override
-		public void onCreatePreferences(Bundle p1, String p2) {
-			addPreferencesFromResource(R.xml.settings_asfsls_compat);
-			SharedPreferences slsVersCache=getContext().getSharedPreferences("sls_vers_cache", 0);
-			findPreference("currentSlsVersion").setSummary(slsVersCache.getString("dat.vcode",getResources().getString(R.string.unknown)));
-		}
-
-		@Override
-		public void onResume() {
-			super.onResume();
-			getActivity().setTitle(R.string.addServerFromServerListSite);
-		}
-	}*/
-	
 	public static class ColorChanger extends SettingsBaseFragment {
 
 		@Override
@@ -571,180 +508,6 @@ abstract class FragmentSettingsActivityImpl extends AppCompatActivity implements
 		protected void onMiscPartAvailable(LinearLayout misc){}
 		
 		public LinearLayout getMiscContent(){return miscContent;}
-	}
-	
-	
-	
-	//preview part
-	public static class ServerListPreviewFragment extends ServerListFragment<AppCompatActivity> {
-
-		@Override
-		public void onResume() {
-			super.onResume();
-			new AsyncTask<Void,Void,List<Server>>(){
-				public List<Server> doInBackground(Void...a){
-					List<Server> list=new ArrayList<>();
-					
-					ByteArrayOutputStream result=new ByteArrayOutputStream();
-					DataOutputStream resW=new DataOutputStream(result);
-					try{
-						//full stat
-						resW.write(0);resW.writeInt(0);
-						//73 70 6C 69 74 6E 75 6D 00 80 00
-						resW.write((byte)0x73);
-						resW.write((byte)0x70);
-						resW.write((byte)0x6c);
-						resW.write((byte)0x69);
-						resW.write((byte)0x74);
-						resW.write((byte)0x6e);
-						resW.write((byte)0x75);
-						resW.write((byte)0x6d);
-						resW.write((byte)0x00);
-						resW.write((byte)0x80);
-						resW.write((byte)0x00);
-						//KV
-						Map<String,String> kv=new HashMap();
-						kv.put("gametype", "SMP");
-						kv.put("map", "wisecraft");
-						kv.put("server_engine", "");
-						kv.put("hostport", "");
-						kv.put("whitelist", "on");
-						kv.put("plugins", "Wisecraft Ghost Ping");
-						kv.put("hostname", "§0W§1i§2s§3e§4c§5r§6a§7f§8t §9P§aE §bS§ce§dr§ev§fe§rr");//Colorful!
-						kv.put("numplayers", Integer.MAX_VALUE + "");
-						kv.put("version", "v0.15.6 alpha");
-						kv.put("game_id", "MINECRAFTPE");
-						kv.put("hostip", "127.0.0.1");
-						kv.put("maxplayers", Integer.MAX_VALUE + "");
-						for (Map.Entry<String,String> ent:kv.entrySet()) {
-							resW.write(ent.getKey().getBytes(CompatCharsets.UTF_8));
-							resW.write(0);
-							resW.write(ent.getValue().getBytes(CompatCharsets.UTF_8));
-							resW.write(0);
-						}
-						resW.write(0);
-						//01 70 6C 61 79 65 72 5F 00 00
-						resW.write((byte)0x01);
-						resW.write((byte)0x70);
-						resW.write((byte)0x6c);
-						resW.write((byte)0x61);
-						resW.write((byte)0x79);
-						resW.write((byte)0x65);
-						resW.write((byte)0x72);
-						resW.write((byte)0x5f);
-						resW.write((byte)0x00);
-						resW.write((byte)0x00);
-						//players
-						resW.write(0);
-						resW.write(0);
-						
-						resW.flush();
-					}catch(Throwable e){}
-					
-					ServerStatus success=new ServerStatus();//success server(PE)
-					success.ip="localhost";
-					success.port=19132;
-					success.ping=123;
-					success.response=new FullStat(result.toByteArray());
-					list.add(success);
-					
-					Server error=success.cloneAsServer();//error server(PE)
-					error.port++;
-					list.add(error);
-					
-					Server pending=error.cloneAsServer();//pending server(PE)
-					pending.port++;
-					list.add(pending);
-					
-					return list;
-				}
-				
-				public void onPostExecute(List<Server> lst){
-					getAdapter().clear();
-					getAdapter().getPingingMap().put(lst.get(2),true);
-					addServers(lst);
-				}
-			}.execute();
-			setRows(onCalculateRows());
-		}
-
-		@Override
-		protected int onCalculateRows() {
-			int rows;
-			if(getResources().getBoolean(R.bool.is_port)){
-				Log.d("FSA","calculating by the width of the screen");
-				rows=Utils.calculateRows(getActivity());
-			}else{
-				Log.d("FSA","calculating by the width of the content");
-				rows=Utils.calculateRows(getActivity(),Utils.getScreenWidth(getActivity())/2);
-			}
-			Log.d("FSA","calculated rows: "+rows);
-			return rows;
-		}
-	}
-	
-	public static class ServerInfoToolbarFragment extends com.nao20010128nao.Wisecraft.misc.BaseFragment<AppCompatActivity> {
-		UsefulPagerAdapter adapter;
-		ViewPager tabs;
-		ServerListStyleLoader slsl;
-		
-		@Override
-		public void onResume() {
-			super.onResume();
-			Toolbar tb=(Toolbar)findViewById(R.id.toolbar);
-			slsl=(ServerListStyleLoader)getActivity().getSystemService(ContextWrappingExtender.SERVER_LIST_STYLE_LOADER);
-			
-			tabs = (ViewPager)findViewById(R.id.pager);
-			tabs.setAdapter(adapter = new UsefulPagerAdapter(getChildFragmentManager()));
-			PagerSlidingTabStrip psts=(PagerSlidingTabStrip)findViewById(R.id.tabs);
-			psts.setViewPager(tabs);
-			
-			adapter.addTab(BlankFragment.class,"A");
-			adapter.addTab(BlankFragment.class,"B");
-			adapter.addTab(BlankFragment.class,"C");
-			
-			psts.setIndicatorColor(slsl.getTextColor());
-			psts.setTextColor(slsl.getTextColor());
-			psts.setOnPageChangeListener(new ColorUpdater(slsl.getTextColor(), ServerInfoActivity.translucent(slsl.getTextColor()), tabs, psts));
-
-			findViewById(R.id.appbar).setBackgroundDrawable(slsl.load());
-			
-			{
-				String title="§0W§1i§2s§3e§4c§5r§6a§7f§8t §9P§aE §bS§ce§dr§ev§fe§rr";
-				if (pref.getBoolean("serverListColorFormattedText", false)) {
-					tb.setTitle(Utils.parseMinecraftFormattingCode(title.toString(),slsl.getTextColor()));
-				} else {
-					tb.setTitle(Utils.deleteDecorations(title.toString()));
-				}
-			}
-			
-			{
-				Menu menu=tb.getMenu();
-				menu.clear();
-				MenuItem updateBtn,seeTitleButton;
-				
-				seeTitleButton = menu.add(Menu.NONE, 0, 0, R.string.seeTitle);
-				seeTitleButton.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_open_in_new_black_48dp, slsl.getTextColor()));
-				MenuItemCompat.setShowAsAction(seeTitleButton, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
-
-				updateBtn = menu.add(Menu.NONE, 1, 1, R.string.update);
-				updateBtn.setIcon(TheApplication.instance.getTintedDrawable(com.nao20010128nao.MaterialIcons.R.drawable.ic_refresh_black_48dp, slsl.getTextColor()));
-				MenuItemCompat.setShowAsAction(updateBtn, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
-			}
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-			return LayoutInflater.from(getActivity()).inflate(R.layout.server_info_pager_nobs,container,false);
-		}
-		
-		public static class BlankFragment extends com.nao20010128nao.Wisecraft.misc.BaseFragment<AppCompatActivity> {
-
-			@Override
-			public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-				return inflater.inflate(R.layout.none,container,false);
-			}
-		}
 	}
 }
 
@@ -1234,12 +997,12 @@ abstract class ServerListStyleEditorImpl extends AppCompatActivity {
 	}
 }
 
-
-
 interface SettingsScreen{
 	int getIdForFragment();
 	void excecuteWithGpsPermission(Runnable e);
 }
+
+
 public class FragmentSettingsActivity extends FragmentSettingsActivityImpl{
 	public static class ServerListStyleEditor extends ServerListStyleEditorImpl{
 		
