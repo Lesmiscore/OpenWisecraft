@@ -729,4 +729,38 @@ public class Utils extends PingerUtils{
 		}
 		return null;
 	}
+	
+	public static List<Server> jsonToServers(String json){
+		JsonArray ja=new JsonParser().parse(json).getAsJsonArray();
+		List<Server> servers=new ArrayList<>();
+		for(JsonElement je:ja){
+			JsonObject entry=je.getAsJsonObject();
+			if(!(entry.has("ip")&entry.has("port"))){
+				continue;
+			}
+			Server s=new Server();
+			if(entry.has("isPC")){
+				// mode 19
+				s.ip=entry.get("ip").getAsString();
+				s.port=entry.get("port").getAsInt();
+				s.mode=entry.get("isPC").getAsBoolean()?1:0;
+			}else if(entry.has("mode")){
+				// mode 35
+				s.ip=entry.get("ip").getAsString();
+				s.port=entry.get("port").getAsInt();
+				s.mode=entry.get("mode").getAsInt();
+				if(entry.has("name")){
+					// current structure
+					s.name=entry.get("name").getAsString();
+				}
+			}else{
+				// so old!
+				s.ip=entry.get("ip").getAsString();
+				s.port=entry.get("port").getAsInt();
+				s.mode=0;// forces PE to use
+			}
+			servers.add(s);
+		}
+		return servers;
+	}
 }
