@@ -492,8 +492,7 @@ public class Utils extends PingerUtils{
 	public static int determineServerListJsonVersion(String json){
 		WisecraftJsonObject ja=WJOUtils.parse(json);
 		int maybe=-1;
-		for(JsonElement je:ja){
-			JsonObject entry=je.getAsJsonObject();
+		for(WisecraftJsonObject entry:ja){
 			if(!(entry.has("ip")&entry.has("port"))){
 				continue;
 			}
@@ -734,8 +733,7 @@ public class Utils extends PingerUtils{
 	public static List<Server> jsonToServers(String json){
 		WisecraftJsonObject ja=WJOUtils.parse(json);
 		List<Server> servers=new ArrayList<>();
-		for(JsonElement je:ja){
-			JsonObject entry=je.getAsJsonObject();
+		for(WisecraftJsonObject entry:ja){
 			if(!(entry.has("ip")&entry.has("port"))){
 				continue;
 			}
