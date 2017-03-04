@@ -186,7 +186,7 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
 			sta.slsl.applyTextColorTo(viewHolder);
 			ServerStatus s=getItem(offset);
 			
-			final String title;
+			final CharSequence title;
 			if (s.response instanceof Reply19) {//PC 1.9~
 				Reply19 rep=(Reply19)s.response;
 				if (rep.description == null) {
@@ -206,11 +206,7 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
 				if (!rep.json.has("description")) {
 					title = s.toString();
 				} else {
-					if(rep.json.get("description").isJsonObject()){
-						title = rep.json.get("description").get("text").getAsString();
-					}else{
-						title = rep.json.get("description").getAsString();
-					}
+					title=Utils.parseMinecraftDescriptionJson(rep.json.get("description"));
 				}
 			} else if (s.response instanceof UnconnectedPing.UnconnectedPingResult) {
 				title = ((UnconnectedPing.UnconnectedPingResult)s.response).getServerName();
@@ -218,9 +214,17 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
 				title = s.toString();
 			}
 			if (sta.pref.getBoolean("serverListColorFormattedText", false)) {
-				viewHolder.setServerName(parseMinecraftFormattingCode(title,sta.slsl.getTextColor()));
+				if(title instanceof String){
+					viewHolder.setServerName(parseMinecraftFormattingCode(title.toString()));
+				}else{
+					viewHolder.setServerName(title);
+				}
 			} else {
-				viewHolder.setServerName(deleteDecorations(title));
+				if(title instanceof String){
+					viewHolder.setServerName(deleteDecorations(title.toString()));
+				}else{
+					viewHolder.setServerName(title.toString());
+				}
 			}
 			viewHolder
 				.setStatColor(ContextCompat.getColor(sta, R.color.stat_ok))

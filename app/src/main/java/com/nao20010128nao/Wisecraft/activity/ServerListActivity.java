@@ -1044,7 +1044,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 						sv.name=null;
 					}else{
 						if (sla.pref.getBoolean("serverListColorFormattedText", false)) {
-							viewHolder.setServerTitle(parseMinecraftFormattingCode(sv.name,sla.slsl.getTextColor()));
+							viewHolder.setServerTitle(parseMinecraftFormattingCode(sv.name));
 						} else {
 							viewHolder.setServerTitle(deleteDecorations(sv.name));
 						}
@@ -1057,7 +1057,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 						if (sv instanceof ServerStatus) {
 							ServerStatus s=(ServerStatus)sv;
 							viewHolder.setStatColor(ContextCompat.getColor(sla, R.color.stat_ok));
-							final String title;
+							final CharSequence title;
 							if (s.response instanceof FullStat) {//PE
 								FullStat fs = (FullStat) s.response;
 								Map<String, String> m = fs.getDataAsMap();
@@ -1090,11 +1090,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 								if (!rep.json.has("description")) {
 									title = s.toString();
 								} else {
-									if(rep.json.get("description").isJsonObject()){
-										title = rep.json.get("description").get("text").getAsString();
-									}else{
-										title = rep.json.get("description").getAsString();
-									}
+									title=Utils.parseMinecraftDescriptionJson(rep.json.get("description"));
 								}
 								viewHolder.setServerPlayers(rep.json.get("players").get("online").getAsInt(), rep.json.get("players").get("max").getAsInt());
 							} else if (s.response instanceof SprPair) {//PE?
@@ -1127,9 +1123,17 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 								viewHolder.setServerPlayers();
 							}
 							if (sla.pref.getBoolean("serverListColorFormattedText", false)) {
-								viewHolder.setServerName(parseMinecraftFormattingCode(title,sla.slsl.getTextColor()));
+								if(title instanceof String){
+									viewHolder.setServerName(parseMinecraftFormattingCode(title.toString()));
+								}else{
+									viewHolder.setServerName(title);
+								}
 							} else {
-								viewHolder.setServerName(deleteDecorations(title));
+								if(title instanceof String){
+									viewHolder.setServerName(deleteDecorations(title.toString()));
+								}else{
+									viewHolder.setServerName(title.toString());
+								}
 							}
 							viewHolder
 								.setPingMillis(s.ping)

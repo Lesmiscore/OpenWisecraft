@@ -53,11 +53,10 @@ public class Utils extends PingerUtils{
 		}
 		return sb.toString();
 	}
-	public static CharSequence parseMinecraftFormattingCode(String s,int defColor){
+	public static CharSequence parseMinecraftFormattingCode(String s){
 		try {
 			MinecraftFormattingCodeParser mfcp=new MinecraftFormattingCodeParser();
 			mfcp.loadFlags(s);
-			mfcp.defaultColor=defColor;
 			return mfcp.build();
 		} catch (Throwable e) {
 			return s;
@@ -761,5 +760,47 @@ public class Utils extends PingerUtils{
 			servers.add(s);
 		}
 		return servers;
+	}
+	
+	public static CharSequence parseMinecraftDescriptionJson(WisecraftJsonObject description){
+		if(!description.isJsonObject()){
+			return parseMinecraftFormattingCode(description.getAsString());
+		}
+		if(description.has("extra")){
+			SpannableStringBuilder ssb=new SpannableStringBuilder();
+			Map<String,Integer> nameToColor=MinecraftFormattingCodeParser.NAME_TO_COLOR;
+			for(WisecraftJsonObject part:description.get("extra")){
+				if(part.isJsonObject()){
+					// styled
+					SpannableStringBuilder partSsb=new SpannableStringBuilder();
+					String base=part.get("text").getAsString();
+					int bend=base.length()-1;
+					partSsb.append(base);
+					if(part.has("bold")&&part.get("bold").getAsBoolean()){
+						partSsb.setSpan(new StyleSpan(Typeface.BOLD),0,bend,SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+					}
+					if(part.has("italic")&&part.get("italic").getAsBoolean()){
+						partSsb.setSpan(new StyleSpan(Typeface.ITALIC),0,bend,SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+					}
+					if(part.has("strikethrough")&&part.get("strikethrough").getAsBoolean()){
+						partSsb.setSpan(new StrikethroughSpan(),0,bend,SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+					}
+					if(part.has("underlined")&&part.get("underlined").getAsBoolean()){
+						partSsb.setSpan(new UnderlineSpan(),0,bend,SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+					}
+					// ignore obfuscated: not supported on Android
+					if(part.has("color")&&nameToColor.containsKey(part.get("color").getAsString())){
+						partSsb.setSpan(new ForegroundColorSpan(nameToColor.get(part.get("color").getAsString())),0,bend,SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+					}
+					ssb.append(partSsb);
+				}else{
+					// non-styled
+					ssb.append(parseMinecraftFormattingCode(part.getAsString()));
+				}
+			}
+			return ssb;
+		}else{
+			return parseMinecraftFormattingCode(description.get("text").getAsString());
+		}
 	}
 }

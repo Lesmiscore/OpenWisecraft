@@ -234,7 +234,7 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 			RemoteViews rvs=(RemoteViews)ssrvw.getTag();
 			
 			ssrvw.setStatColor(ContextCompat.getColor(c, R.color.stat_ok));
-			final String title;
+			final CharSequence title;
 			List<String> players=Collections.emptyList();
 			if (s.response instanceof FullStat) {//PE
 				FullStat fs = (FullStat) s.response;
@@ -287,11 +287,7 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 				if (!rep.has("description")) {
 					title = s.toString();
 				} else {
-					if(rep.get("description").isJsonObject()){
-						title = rep.get("description").get("text").getAsString();
-					}else{
-						title = rep.get("description").getAsString();
-					}
+					title=Utils.parseMinecraftDescriptionJson(rep.get("description"));
 				}
 				ssrvw.setServerPlayers(rep.get("players").get("online").getAsInt(), rep.get("players").get("max").getAsInt());
 				if (rep.has("players")) {
@@ -334,9 +330,17 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 				ssrvw.setServerPlayers();
 			}
 			if (pref.getBoolean("serverListColorFormattedText", false)) {
-				ssrvw.setServerName(parseMinecraftFormattingCode(title,Color.WHITE));
+				if(title instanceof String){
+					ssrvw.setServerName(parseMinecraftFormattingCode(title.toString()));
+				}else{
+					ssrvw.setServerName(title);
+				}
 			} else {
-				ssrvw.setServerName(deleteDecorations(title));
+				if(title instanceof String){
+					ssrvw.setServerName(deleteDecorations(title.toString()));
+				}else{
+					ssrvw.setServerName(title.toString());
+				}
 			}
 			players=new ArrayList<>(players);//cast List into ArrayList exactly to sort
 			if (pref.getBoolean("sortPlayerNames", true))

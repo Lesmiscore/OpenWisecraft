@@ -209,7 +209,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 				if (s instanceof ServerStatus) {
 					ServerStatus sv=(ServerStatus)s;
 					viewHolder.setStatColor(ContextCompat.getColor(sta, R.color.stat_ok));
-					final String title;
+					final CharSequence title;
 					if (sv.response instanceof FullStat) {//PE
 						FullStat fs=(FullStat)sv.response;
 						Map<String,String> m=fs.getDataAsMap();
@@ -242,11 +242,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 						if (!rep.json.has("description")) {
 							title = s.toString();
 						} else {
-							if(rep.json.get("description").isJsonObject()){
-								title = rep.json.get("description").get("text").getAsString();
-							}else{
-								title = rep.json.get("description").getAsString();
-							}
+							title=Utils.parseMinecraftDescriptionJson(rep.json.get("description"));
 						}
 						viewHolder.setServerPlayers(rep.json.get("players").get("online").getAsInt(), rep.json.get("players").get("max").getAsInt());
                     } else if (sv.response instanceof SprPair) {//PE?
@@ -279,9 +275,17 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
                         viewHolder.setServerPlayers();
                     }
 					if (sta.pref.getBoolean("serverListColorFormattedText", false)) {
-						viewHolder.setServerName(parseMinecraftFormattingCode(title,sta.slsl.getTextColor()));
+						if(title instanceof String){
+							viewHolder.setServerName(parseMinecraftFormattingCode(title.toString()));
+						}else{
+							viewHolder.setServerName(title);
+						}
 					} else {
-						viewHolder.setServerName(deleteDecorations(title));
+						if(title instanceof String){
+							viewHolder.setServerName(deleteDecorations(title.toString()));
+						}else{
+							viewHolder.setServerName(title.toString());
+						}
 					}
 					viewHolder
 						.setPingMillis(sv.ping);

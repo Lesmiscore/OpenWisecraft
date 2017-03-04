@@ -94,7 +94,7 @@ public class ServerListRecyclerAdapter extends ListRecyclerViewAdapter<ServerSta
 			viewHolder.hideServerTitle();
 		}else{
 			if (pref.getBoolean("serverListColorFormattedText", false)) {
-				viewHolder.setServerTitle(parseMinecraftFormattingCode(s.name,slsl.getTextColor()));
+				viewHolder.setServerTitle(parseMinecraftFormattingCode(s.name));
 			} else {
 				viewHolder.setServerTitle(deleteDecorations(s.name));
 			}
@@ -164,7 +164,7 @@ public class ServerListRecyclerAdapter extends ListRecyclerViewAdapter<ServerSta
 					viewHolder.setServerPlayers();
 				}
 				if (pref.getBoolean("serverListColorFormattedText", false)) {
-					viewHolder.setServerName(parseMinecraftFormattingCode(title,slsl.getTextColor()));
+					viewHolder.setServerName(parseMinecraftFormattingCode(title));
 				} else {
 					viewHolder.setServerName(deleteDecorations(title));
 				}

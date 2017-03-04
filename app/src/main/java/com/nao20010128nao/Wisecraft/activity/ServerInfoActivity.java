@@ -226,6 +226,8 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 					});
 			}
 		}
+		
+		Utils.getActionBarTextView(Utils.getToolbar(this)).setTextColor(slsl.getTextColor());
 	}
 
 	public void onBackPressed() {
@@ -283,15 +285,11 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 			}
 		} else if (resp instanceof RawJsonReply) {
 			RawJsonReply rep = (RawJsonReply) resp;
-			String title;
+			CharSequence title;
 			if (!rep.json.has("description")) {
 				title = localStat.toString();
 			} else {
-				if(rep.json.get("description").isJsonObject()){
-					title = rep.json.get("description").get("text").getAsString();
-				}else{
-					title = rep.json.get("description").getAsString();
-				}
+				title=Utils.parseMinecraftDescriptionJson(rep.json.get("description"));
 			}
 			setTitle(title);
 		} else if (resp instanceof SprPair) {
@@ -489,9 +487,17 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 			}
 		} else {
 			if (pref.getBoolean("serverListColorFormattedText", false)) {
-				super.setTitle(Utils.parseMinecraftFormattingCode(title.toString(),slsl.getTextColor()));
+				if(title instanceof String){
+					super.setTitle(Utils.parseMinecraftFormattingCode(title.toString()));
+				}else{
+					super.setTitle(title.toString());
+				}
 			} else {
-				super.setTitle(Utils.deleteDecorations(title.toString()));
+				if(title instanceof String){
+					super.setTitle(Utils.deleteDecorations(title.toString()));
+				}else{
+					super.setTitle(title.toString());
+				}
 			}
 		}
 	}
@@ -889,7 +895,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				if (resp instanceof Reply) {
 					Reply rep=(Reply)resp;
 					if (pref.getBoolean("serverListColorFormattedText", false)) {
-						serverNameStr = Utils.parseMinecraftFormattingCode(rep.description, getParentActivity().slsl.getTextColor());
+						serverNameStr = Utils.parseMinecraftFormattingCode(rep.description);
 					} else {
 						serverNameStr = Utils.deleteDecorations(rep.description);
 					}
@@ -912,7 +918,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				} else if (resp instanceof Reply19) {
 					Reply19 rep=(Reply19)resp;
 					if (pref.getBoolean("serverListColorFormattedText", false)) {
-						serverNameStr = Utils.parseMinecraftFormattingCode(rep.description.text, getParentActivity().slsl.getTextColor());
+						serverNameStr = Utils.parseMinecraftFormattingCode(rep.description.text);
 					} else {
 						serverNameStr = Utils.deleteDecorations(rep.description.text);
 					}
@@ -941,7 +947,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 						text = rep.get("description").getAsString();
 					}
 					if (pref.getBoolean("serverListColorFormattedText", false)) {
-						serverNameStr = Utils.parseMinecraftFormattingCode(text, getParentActivity().slsl.getTextColor());
+						serverNameStr = Utils.parseMinecraftFormattingCode(text);
 					} else {
 						serverNameStr = Utils.deleteDecorations(text);
 					}
@@ -965,6 +971,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 						serverIconObj = null;
 					}
 				}
+				serverName.setTextColor(getParentActivity().slsl.getTextColor());
 				serverName.setText(serverNameStr);
 				serverIcon.setImageDrawable(serverIconObj);
 			} catch (Throwable e) {
