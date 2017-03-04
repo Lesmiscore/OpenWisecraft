@@ -297,8 +297,7 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 				if (rep.has("players")) {
 					if (rep.get("players").has("sample")) {
 						final ArrayList<String> sort=new ArrayList<>();
-						for (JsonElement je:rep.get("players").get("sample")) {
-							JsonObject o=je.getAsJsonObject();
+						for (WisecraftJsonObject o:rep.get("players").get("sample")) {
 							sort.add(o.get("name").getAsString());
 						}
 						players=sort;
