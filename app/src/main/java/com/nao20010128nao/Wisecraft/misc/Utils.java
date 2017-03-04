@@ -22,6 +22,7 @@ import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.activity.*;
 import com.nao20010128nao.Wisecraft.api.*;
 import com.nao20010128nao.Wisecraft.misc.collector.*;
+import com.nao20010128nao.Wisecraft.misc.json.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import com.nao20010128nao.Wisecraft.misc.serverList.*;
 import java.io.*;
@@ -489,7 +490,7 @@ public class Utils extends PingerUtils{
 		return o==null?"null":o.toString();
 	}
 	public static int determineServerListJsonVersion(String json){
-		JsonArray ja=new JsonParser().parse(json).getAsJsonArray();
+		WisecraftJsonObject ja=WJOUtils.parse(json);
 		int maybe=-1;
 		for(JsonElement je:ja){
 			JsonObject entry=je.getAsJsonObject();
@@ -731,7 +732,7 @@ public class Utils extends PingerUtils{
 	}
 	
 	public static List<Server> jsonToServers(String json){
-		JsonArray ja=new JsonParser().parse(json).getAsJsonArray();
+		WisecraftJsonObject ja=WJOUtils.parse(json);
 		List<Server> servers=new ArrayList<>();
 		for(JsonElement je:ja){
 			JsonObject entry=je.getAsJsonObject();

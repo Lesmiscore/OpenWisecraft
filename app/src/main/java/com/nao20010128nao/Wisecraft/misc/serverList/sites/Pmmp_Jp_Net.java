@@ -1,14 +1,14 @@
 package com.nao20010128nao.Wisecraft.misc.serverList.sites;
 
+import android.text.*;
 import com.google.gson.*;
 import com.google.gson.annotations.*;
+import com.nao20010128nao.Wisecraft.misc.json.*;
 import com.nao20010128nao.Wisecraft.misc.serverList.*;
 import java.io.*;
 import java.net.*;
 import java.security.*;
 import java.util.*;
-import android.text.*;
-import com.nao20010128nao.Wisecraft.misc.collector.*;
 
 /**
  * Parser class for "pmmp.jp.net".
@@ -48,10 +48,9 @@ public class Pmmp_Jp_Net implements ServerListSite {
 			w.flush();
 		}
 		try(Reader r=new InputStreamReader(con.getInputStream(), "UTF-8")){
-			JsonObject sl=new JsonParser().parse(r).getAsJsonObject();
+			WisecraftJsonObject sl=WJOUtils.parse(r);
 			List<MslServer> result = new ArrayList<>();
-			for (JsonElement se : sl.get("servers").getAsJsonArray()) {
-				JsonObject jo=se.getAsJsonObject();
+			for (WisecraftJsonObject jo : sl.get("servers")) {
 				String ip,port;
 				if(jo.has("ip")){
 					ip=jo.get("ip").getAsString();
