@@ -1,7 +1,7 @@
 package com.nao20010128nao.Wisecraft.activity;
-import android.app.*;
 import android.content.*;
 import android.content.res.*;
+import android.graphics.*;
 import android.os.*;
 import android.support.design.widget.*;
 import android.support.v4.content.*;
@@ -35,13 +35,11 @@ import java.lang.ref.*;
 import java.util.*;
 import permissions.dispatcher.*;
 
-import android.support.v7.app.AlertDialog;
 import android.support.v7.view.ActionMode;
 import com.nao20010128nao.Wisecraft.BuildConfig;
 import com.nao20010128nao.Wisecraft.R;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
-import android.graphics.*;
 
 //Full implement for user interface (Some part is available at ServerListActivityBase4)
 @RuntimePermissions
