@@ -334,7 +334,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 					serverIconObj = new ColorDrawable(Color.TRANSPARENT);
 				}
 			}else if (resp instanceof RawJsonReply) {
-				JsonObject rep=((JsonElement)((RawJsonReply)resp).json).getAsJsonObject();
+				WisecraftJsonObject rep=((RawJsonReply)resp).json;
 				if (rep.has("favicon")) {
 					byte[] image=Base64.decode(rep.get("favicon").getAsString().split("\\,")[1], Base64.NO_WRAP);
 					serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
