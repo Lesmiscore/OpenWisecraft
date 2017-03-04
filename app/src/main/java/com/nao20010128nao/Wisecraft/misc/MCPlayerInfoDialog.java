@@ -65,39 +65,39 @@ abstract class MCPlayerInfoDialogImpl extends AppCompatDialog {
 									h.post(new Runnable(){
 											public void run(){
 												face.setImageBitmap(bmp);
-											}
-										});
-								}
-							}.run();
-							new Thread(){
-								public void run(){
-									try{
-										if(uuidText!=null){
-											Pattern reptRegex=Pattern.compile("(([1-9]|10)(|\\.[0-9]+) \\/ 10)");
-											StringBuilder sb=new StringBuilder();
-											BufferedReader reader=null;
-											try{
-												reader=new BufferedReader(new InputStreamReader(new URL("http://mcbans.com/player/"+uuidText.replace("-","")+"/").openConnection().getInputStream()));
-												char[] buf=new char[512];
-												while(true){
-													int r=reader.read(buf);
-													if(r<=0)break;
-													sb.append(buf,0,r);
-												}
-											}finally{
-												if(reader!=null)reader.close();
-											}
-											Matcher matcher=reptRegex.matcher(sb);
-											if(matcher.find()){
-												rept=matcher.group();
-											}
-										}
-									}catch(Throwable e){
-										WisecraftError.report("MCPlayerInfoDialog",e);
-									}
-									h.post(new Runnable(){
-											public void run(){
-												reputation.setText(rept);
+												new Thread(){
+													public void run(){
+														try{
+															if(uuidText!=null){
+																Pattern reptRegex=Pattern.compile("(([1-9]|10)(|\\.[0-9]+) \\/ 10)");
+																StringBuilder sb=new StringBuilder();
+																BufferedReader reader=null;
+																try{
+																	reader=new BufferedReader(new InputStreamReader(new URL("http://mcbans.com/player/"+uuidText.replace("-","")+"/").openConnection().getInputStream()));
+																	char[] buf=new char[512];
+																	while(true){
+																		int r=reader.read(buf);
+																		if(r<=0)break;
+																		sb.append(buf,0,r);
+																	}
+																}finally{
+																	if(reader!=null)reader.close();
+																}
+																Matcher matcher=reptRegex.matcher(sb);
+																if(matcher.find()){
+																	rept=matcher.group();
+																}
+															}
+														}catch(Throwable e){
+															WisecraftError.report("MCPlayerInfoDialog",e);
+														}
+														h.post(new Runnable(){
+																public void run(){
+																	reputation.setText(rept);
+																}
+															});
+													}
+												}.run();
 											}
 										});
 								}
