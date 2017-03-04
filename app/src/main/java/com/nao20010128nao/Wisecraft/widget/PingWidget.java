@@ -11,20 +11,18 @@ import android.util.*;
 import android.widget.*;
 import com.google.gson.*;
 import com.google.gson.annotations.*;
+import com.google.gson.reflect.*;
 import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.activity.*;
 import com.nao20010128nao.Wisecraft.api.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+import com.nao20010128nao.Wisecraft.misc.json.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
 import com.nao20010128nao.Wisecraft.misc.provider.*;
 import java.util.*;
 
-import com.nao20010128nao.Wisecraft.R;
-
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
-import android.widget.RemoteViewsService.*;
-import com.nao20010128nao.Wisecraft.activity.*;
-import com.google.gson.reflect.*;
 
 abstract class PingWidgetImpl extends WisecraftWidgetBase {
 	public static final int STATUS_ONLINE=0;
@@ -285,21 +283,21 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 					}
 				}
 			} else if (s.response instanceof RawJsonReply) {//PC (Obfuscated)
-				JsonObject rep = ((RawJsonReply) s.response).json;
+				WisecraftJsonObject rep = ((RawJsonReply) s.response).json;
 				if (!rep.has("description")) {
 					title = s.toString();
 				} else {
 					if(rep.get("description").isJsonObject()){
-						title = rep.get("description").getAsJsonObject().get("text").getAsString();
+						title = rep.get("description").get("text").getAsString();
 					}else{
 						title = rep.get("description").getAsString();
 					}
 				}
-				ssrvw.setServerPlayers(rep.get("players").getAsJsonObject().get("online").getAsInt(), rep.get("players").getAsJsonObject().get("max").getAsInt());
+				ssrvw.setServerPlayers(rep.get("players").get("online").getAsInt(), rep.get("players").get("max").getAsInt());
 				if (rep.has("players")) {
-					if (rep.get("players").getAsJsonObject().has("sample")) {
+					if (rep.get("players").has("sample")) {
 						final ArrayList<String> sort=new ArrayList<>();
-						for (JsonElement je:rep.get("players").getAsJsonObject().get("sample").getAsJsonArray()) {
+						for (JsonElement je:rep.get("players").get("sample")) {
 							JsonObject o=je.getAsJsonObject();
 							sort.add(o.get("name").getAsString());
 						}

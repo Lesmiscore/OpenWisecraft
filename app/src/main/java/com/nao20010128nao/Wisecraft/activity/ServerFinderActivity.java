@@ -207,7 +207,7 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
 					title = s.toString();
 				} else {
 					if(rep.json.get("description").isJsonObject()){
-						title = rep.json.get("description").getAsJsonObject().get("text").getAsString();
+						title = rep.json.get("description").get("text").getAsString();
 					}else{
 						title = rep.json.get("description").getAsString();
 					}

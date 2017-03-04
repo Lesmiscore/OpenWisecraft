@@ -645,11 +645,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 								if (pref.getBoolean("exitCompletely", false))
 									if (ProxyActivity.cont != null)
 										ProxyActivity.cont.stopService();
-								new Handler().postDelayed(new Runnable(){
-										public void run() {
-											//System.exit(0);
-										}
-									}, 150 * 2);
 							}
 						},null,null,UUID.fromString("5c0baf72-9a92-312d-ab33-062bdc3aa445")));//10
 	}
@@ -1096,12 +1091,12 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 									title = s.toString();
 								} else {
 									if(rep.json.get("description").isJsonObject()){
-										title = rep.json.get("description").getAsJsonObject().get("text").getAsString();
+										title = rep.json.get("description").get("text").getAsString();
 									}else{
 										title = rep.json.get("description").getAsString();
 									}
 								}
-								viewHolder.setServerPlayers(rep.json.get("players").getAsJsonObject().get("online").getAsInt(), rep.json.get("players").getAsJsonObject().get("max").getAsInt());
+								viewHolder.setServerPlayers(rep.json.get("players").get("online").getAsInt(), rep.json.get("players").get("max").getAsInt());
 							} else if (s.response instanceof SprPair) {//PE?
 								SprPair sp = ((SprPair) s.response);
 								if (sp.getB() instanceof UnconnectedPing.UnconnectedPingResult) {

@@ -243,12 +243,12 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 							title = s.toString();
 						} else {
 							if(rep.json.get("description").isJsonObject()){
-								title = rep.json.get("description").getAsJsonObject().get("text").getAsString();
+								title = rep.json.get("description").get("text").getAsString();
 							}else{
 								title = rep.json.get("description").getAsString();
 							}
 						}
-						viewHolder.setServerPlayers(rep.json.get("players").getAsJsonObject().get("online").getAsInt(), rep.json.get("players").getAsJsonObject().get("max").getAsInt());
+						viewHolder.setServerPlayers(rep.json.get("players").get("online").getAsInt(), rep.json.get("players").get("max").getAsInt());
                     } else if (sv.response instanceof SprPair) {//PE?
 						SprPair sp=((SprPair)sv.response);
 						if (sp.getB() instanceof UnconnectedPing.UnconnectedPingResult) {

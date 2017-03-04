@@ -1,6 +1,5 @@
 package com.nao20010128nao.Wisecraft.activity;
 
-import android.app.*;
 import android.content.*;
 import android.content.res.*;
 import android.graphics.*;
@@ -23,6 +22,7 @@ import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
+import com.nao20010128nao.Wisecraft.misc.json.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
@@ -33,7 +33,6 @@ import java.math.*;
 import java.util.*;
 import permissions.dispatcher.*;
 
-import android.support.v7.app.AlertDialog;
 import com.nao20010128nao.Wisecraft.R;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
@@ -289,7 +288,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				title = localStat.toString();
 			} else {
 				if(rep.json.get("description").isJsonObject()){
-					title = rep.json.get("description").getAsJsonObject().get("text").getAsString();
+					title = rep.json.get("description").get("text").getAsString();
 				}else{
 					title = rep.json.get("description").getAsString();
 				}
@@ -618,8 +617,8 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				Reply19.ModListContent mlc=(Reply19.ModListContent)o;
 				((TextView)v.findViewById(R.id.modName)).setText(mlc.modid);
 				((TextView)v.findViewById(R.id.modVersion)).setText(mlc.version);
-			} else if(o instanceof RawJsonReply){
-				JsonObject mlc=((JsonElement)((RawJsonReply)o).json).getAsJsonObject();
+			} else if(o instanceof WisecraftJsonObject){
+				WisecraftJsonObject mlc=(WisecraftJsonObject)o;
 				((TextView)v.findViewById(R.id.modName)).setText(mlc.get("modid").getAsString());
 				((TextView)v.findViewById(R.id.modVersion)).setText(mlc.get("version").getAsString());
 			}
@@ -781,12 +780,11 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 					}
 					player.setPcMode(true);
 				} else if (resp instanceof RawJsonReply) {
-					JsonObject rep=((RawJsonReply)resp).json;
+					WisecraftJsonObject rep=((RawJsonReply)resp).json;
 					if (rep.has("players")) {
-						if (rep.get("players").getAsJsonObject().has("sample")) {
+						if (rep.get("players").has("sample")) {
 							final ArrayList<String> sort=new ArrayList<>();
-							for (JsonElement je:rep.get("players").getAsJsonObject().get("sample").getAsJsonArray()) {
-								JsonObject o=je.getAsJsonObject();
+							for (WisecraftJsonObject o:rep.get("players").get("sample")) {
 								sort.add(o.get("name").getAsString());
 								TheApplication.instance.pcUserUUIDs.put(o.get("name").getAsString(), o.get("id").getAsString());
 							}
@@ -935,10 +933,10 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 						serverIconObj = null;
 					}
 				} else if (resp instanceof RawJsonReply) {
-					JsonObject rep=((RawJsonReply)resp).json;
+					WisecraftJsonObject rep=((RawJsonReply)resp).json;
 					String text;
 					if (rep.get("description").isJsonObject()) {
-						text = rep.get("description").getAsJsonObject().get("text").getAsString();
+						text = rep.get("description").get("text").getAsString();
 					} else {
 						text = rep.get("description").getAsString();
 					}
@@ -948,8 +946,8 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 						serverNameStr = Utils.deleteDecorations(text);
 					}
 
-					JsonObject players=rep.get("players").getAsJsonObject();
-					JsonObject version=rep.get("version").getAsJsonObject();
+					WisecraftJsonObject players=rep.get("players");
+					WisecraftJsonObject version=rep.get("version");
 
 					infos.clear();
 					List<Map.Entry<String,String>> data=new ArrayList<>();
@@ -1062,10 +1060,10 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 						modLoaderTypeName = rep.modinfo.type;
 					}
 				} else if (resp instanceof RawJsonReply) {
-					JsonObject rep=((RawJsonReply)resp).json;
+					WisecraftJsonObject rep=((RawJsonReply)resp).json;
 					if (rep.has("modinfo")) {
-						JsonObject modInfo=rep.get("modinfo").getAsJsonObject();
-						modInfos.addAll(Utils.iterableToCollection(modInfo.get("modList").getAsJsonArray()));
+						WisecraftJsonObject modInfo=rep.get("modinfo");
+						modInfos.addAll(Utils.iterableToCollection(modInfo.get("modList")));
 						modLoaderTypeName = modInfo.get("type").getAsString();
 					}
 				}
