@@ -482,6 +482,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 	@Override
 	public void setTitle(CharSequence title) {
 		if (title == null) {
+			Log.d("ServerInfoActivity","title == null");
 			if (pref.getBoolean("serverListColorFormattedText", false)) {
 				SpannableStringBuilder ssb=new SpannableStringBuilder();
 				ssb.append(localStat.toString());
@@ -491,6 +492,9 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				super.setTitle(localStat.toString());
 			}
 		} else {
+			Log.d("ServerInfoActivity","title != null");
+			Log.d("ServerInfoActivity","length: "+title.length());
+			Log.d("ServerInfoActivity",title.toString());
 			if (pref.getBoolean("serverListColorFormattedText", false)) {
 				if(title instanceof String){
 					super.setTitle(Utils.parseMinecraftFormattingCode(title.toString()));
