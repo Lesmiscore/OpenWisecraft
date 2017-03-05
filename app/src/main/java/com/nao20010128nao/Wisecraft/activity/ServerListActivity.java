@@ -1452,7 +1452,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				ta.recycle();
 				
 				ta=sla.obtainStyledAttributes(new int[]{android.R.attr.textColor});
-				int texCol=ta.getColor(0,Color.WHITE);
+				final int texCol=ta.getColor(0,Color.WHITE);
 				ta.recycle();
 				((TextView)bsld.findViewById(R.id.title)).setTextColor(texCol);
 				class ServerExtSelect extends RecyclerView.Adapter<FindableViewHolder> {
