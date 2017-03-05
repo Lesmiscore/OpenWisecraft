@@ -1448,7 +1448,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				bsld.setTitle(getItem(p3).resolveVisibleTitle());
 				bsld.setLayoutManager(new LinearLayoutManager(sla));
 				TypedArray ta=sla.obtainStyledAttributes(new int[]{android.R.attr.windowBackground});
-				bsld.getRecyclerView().setBackground(ta.getDrawable(0));
+				bsld.getWindow().getDecorView().setBackground(ta.getDrawable(0));
 				ta.recycle();
 				
 				ta=sla.obtainStyledAttributes(new int[]{android.R.attr.textColor});
