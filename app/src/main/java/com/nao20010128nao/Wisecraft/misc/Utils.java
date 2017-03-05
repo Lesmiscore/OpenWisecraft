@@ -774,7 +774,7 @@ public class Utils extends PingerUtils{
 					// styled
 					SpannableStringBuilder partSsb=new SpannableStringBuilder();
 					String base=part.get("text").getAsString();
-					int bend=base.length()-1;
+					int bend=base.length();
 					partSsb.append(base);
 					if(part.has("bold")&&part.get("bold").getAsBoolean()){
 						partSsb.setSpan(new StyleSpan(Typeface.BOLD),0,bend,SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
