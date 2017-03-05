@@ -766,7 +766,7 @@ public class Utils extends PingerUtils{
 		if(!description.isJsonObject()){
 			return parseMinecraftFormattingCode(description.getAsString());
 		}
-		if(description.has("extra")&&description.get("extra").isJsonObject()){
+		if(description.has("extra")&&description.get("extra").isJsonArray()){
 			SpannableStringBuilder ssb=new SpannableStringBuilder();
 			Map<String,Integer> nameToColor=MinecraftFormattingCodeParser.NAME_TO_COLOR;
 			for(WisecraftJsonObject part:description.get("extra")){
