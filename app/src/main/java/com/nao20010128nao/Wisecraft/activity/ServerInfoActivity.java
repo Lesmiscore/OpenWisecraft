@@ -229,7 +229,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 		
 		new Handler().post(new Runnable(){
 			public void run(){
-				Utils.getActionBarTextView(Utils.getToolbar(this)).setTextColor(slsl.getTextColor());
+				Utils.getActionBarTextView(Utils.getToolbar(ServerInfoActivityImpl.this)).setTextColor(slsl.getTextColor());
 			}
 		});
 	}
