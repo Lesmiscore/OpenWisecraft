@@ -227,7 +227,11 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 			}
 		}
 		
-		Utils.getActionBarTextView(Utils.getToolbar(this)).setTextColor(slsl.getTextColor());
+		new Handler().post(new Runnable(){
+			public void run(){
+				Utils.getActionBarTextView(Utils.getToolbar(this)).setTextColor(slsl.getTextColor());
+			}
+		});
 	}
 
 	public void onBackPressed() {
@@ -490,7 +494,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				if(title instanceof String){
 					super.setTitle(Utils.parseMinecraftFormattingCode(title.toString()));
 				}else{
-					super.setTitle(title.toString());
+					super.setTitle(title);
 				}
 			} else {
 				if(title instanceof String){
@@ -940,18 +944,14 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 					}
 				} else if (resp instanceof RawJsonReply) {
 					WisecraftJsonObject rep=((RawJsonReply)resp).json;
-					String text;
-					if (rep.get("description").isJsonObject()) {
-						text = rep.get("description").get("text").getAsString();
-					} else {
-						text = rep.get("description").getAsString();
-					}
+					CharSequence text;
+					text=Utils.parseMinecraftDescriptionJson(rep.get("description"));
 					if (pref.getBoolean("serverListColorFormattedText", false)) {
-						serverNameStr = Utils.parseMinecraftFormattingCode(text);
+						serverNameStr = text;
 					} else {
-						serverNameStr = Utils.deleteDecorations(text);
+						serverNameStr = text.toString();
 					}
-
+					
 					WisecraftJsonObject players=rep.get("players");
 					WisecraftJsonObject version=rep.get("version");
 
