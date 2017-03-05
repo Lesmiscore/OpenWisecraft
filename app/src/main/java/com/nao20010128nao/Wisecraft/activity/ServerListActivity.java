@@ -1447,12 +1447,21 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				final BottomSheetListDialog bsld=new BottomSheetListDialog(sla);
 				bsld.setTitle(getItem(p3).resolveVisibleTitle());
 				bsld.setLayoutManager(new LinearLayoutManager(sla));
+				TypedArray ta=sla.obtainStyledAttributes(new int[]{android.R.attr.windowBackground});
+				bsld.getRecyclerView().setBackground(ta.getDrawable(0));
+				ta.recycle();
+				
+				ta=sla.obtainStyledAttributes(new int[]{android.R.attr.textColor});
+				int texCol=ta.getColor(0,Color.WHITE);
+				ta.recycle();
+				((TextView)bsld.findViewById(R.id.title)).setTextColor(texCol);
 				class ServerExtSelect extends RecyclerView.Adapter<FindableViewHolder> {
 					String[] strings=generateSubMenu(executes);
 					
 					@Override
 					public void onBindViewHolder(FindableViewHolder holder, final int position) {
 						((TextView)holder.findViewById(android.R.id.text1)).setText(strings[position]);
+						((TextView)holder.findViewById(android.R.id.text1)).setTextColor(texCol);
 						TypedArray ta=sla.obtainStyledAttributes(new int[]{R.attr.selectableItemBackground});
 						holder.itemView.setBackground(ta.getDrawable(0));
 						ta.recycle();
