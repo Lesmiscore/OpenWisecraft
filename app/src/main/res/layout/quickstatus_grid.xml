@@ -10,14 +10,21 @@
 		android:layout_height="match_parent"
 		android:orientation="vertical">
 
-		<TextView
-			style="@style/AppTheme.QuickStatus.SingleLineTextView"
+		<LinearLayout
 			android:layout_height="wrap_content"
-			android:textAppearance="?android:attr/textAppearanceLarge"
 			android:layout_width="match_parent"
-			android:text="ERROR"
-			android:gravity="center"
-			android:id="@+id/serverTitle"/>
+			android:orientation="horizontal">
+
+			<TextView
+				style="@style/AppTheme.QuickStatus.SingleLineTextView"
+				android:layout_height="wrap_content"
+				android:textAppearance="?android:attr/textAppearanceLarge"
+				android:layout_width="match_parent"
+				android:text="ERROR"
+				android:gravity="center"
+				android:id="@+id/serverTitle"/>
+
+		</LinearLayout>
 
 		<LinearLayout
 			android:layout_height="match_parent"
