@@ -97,11 +97,11 @@ abstract class MCPlayerInfoDialogImpl extends AppCompatDialog {
 																}
 															});
 													}
-												}.run();
+												}.start();
 											}
 										});
 								}
-							}.run();
+							}.start();
 						}
 					});
 			}
