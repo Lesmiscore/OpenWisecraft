@@ -39,14 +39,14 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceLarge"
-			android:text="WebGL is not supported on WebView.\nPlease use WebGL-friendly browser by clicking the button below."
+			android:text="@string/webGlUnsupported"
 			android:gravity="center"
 			android:layout_gravity="center"/>
 
 		<Button
 			android:layout_height="wrap_content"
 			android:layout_width="wrap_content"
-			android:text="Open in another browser"
+			android:text="@string/openAnotherBrowser"
 			android:id="@+id/openBrowser"/>
 
 	</LinearLayout>
