@@ -65,7 +65,11 @@ abstract class MCPlayerInfoDialogImpl extends AppCompatDialog {
 									h.post(new Runnable(){
 											public void run(){
 												face.setImageBitmap(bmp);
-												new Thread(){
+											}
+										});
+								}
+							}.start();
+							new Thread(){
 													public void run(){
 														try{
 															if(uuidText!=null){
@@ -98,10 +102,6 @@ abstract class MCPlayerInfoDialogImpl extends AppCompatDialog {
 															});
 													}
 												}.start();
-											}
-										});
-								}
-							}.start();
 						}
 					});
 			}
