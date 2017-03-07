@@ -1012,6 +1012,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
         startSupportActionMode(multipleDeleteAm);
     }
 
+	public void startServerInfoActivity(Intent in){
+		startActivityForResult(in.setClass(this, ServerInfoActivity.class), 0);
+	}
 	
 	
 	static class ServerList extends RecyclerView.Adapter<ServerStatusWrapperViewHolder> implements AdapterView.OnItemClickListener,AdapterView.OnItemLongClickListener {
@@ -1199,7 +1202,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			if (sla.pinging.get(s))return;
 			if (s instanceof ServerStatus) {
 				Bundle bnd=new Bundle();
-				sla.startActivityForResult(new Intent(sla, ServerInfoActivity.class).putExtra("stat", Utils.encodeForServerInfo((ServerStatus)s)).putExtra("object", bnd), 0);
+				sla.startServerInfoActivity(new Intent().putExtra("stat", Utils.encodeForServerInfo((ServerStatus)s)).putExtra("object", bnd));
 			} else {
 				sla.updater.putInQueue(s, new PingHandlerImpl(true, new Intent().putExtra("offset",0), true));
 				sla.pinging.put(sla.list.get(sla.clicked), true);
@@ -1639,11 +1642,11 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							act().statLayout.setStatusAt(i_, 2);
 							act().sl.notifyItemChanged(i_);
 							if (extras.getIntExtra("offset",-1) != -1) {
-								Intent caller = new Intent(act(), ServerInfoActivity.class).putExtras(extras).putExtra("stat", Utils.encodeForServerInfo(s));
+								Intent caller = new Intent().putExtras(extras).putExtra("stat", Utils.encodeForServerInfo(s));
 								if (obj != null) {
 									caller.putExtra("object", obj);
 								}
-								act().startActivityForResult(caller, 0);
+								act().startServerInfoActivity(caller);
 							}
 							if (closeDialog) {
 								act().wd.hideWorkingDialog();
