@@ -17,6 +17,7 @@
 		<item name="wcSelectedTextColor">#fff</item>
 		<item name="popupTheme">@style/Theme.AppCompat</item>
 		<item name="wcSgaCheckColor">#000000</item>
+		<item name="android:windowContentTransitions">true</item>
 		<!--MaterialDrawer-->
 		<item name="material_drawer_background">?android:attr/windowBackground</item>
         <item name="material_drawer_primary_text">@color/white</item>
