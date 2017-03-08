@@ -47,6 +47,7 @@
 -keepclassmembers class * implements com.nao20010128nao.Wisecraft.misc.ShouldBeKept2
 -keepclassmembers @com.nao20010128nao.Wisecraft.misc.ShouldBeKept class *
 
+-keepclassmembers public enum * { *; }
 
 -repackageclasses wisecraft
 
