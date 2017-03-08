@@ -4,6 +4,7 @@ import com.nao20010128nao.Wisecraft.misc.rcon.*;
 import java.io.*;
 
 import static com.nao20010128nao.Wisecraft.misc.RconModule_Utils.*;
+import com.nao20010128nao.Wisecraft.misc.*;
 
 public class RConModified extends RCon {
 	public RConModified(String ip, int port, char[] password)throws IOException,AuthenticationException {
@@ -14,7 +15,10 @@ public class RConModified extends RCon {
 	public String[] list() throws IOException, AuthenticationException {
 		String[] data=lines(send("list"));
 		if (data.length >= 2) {
-			return data[1].split("\\, ");
+			String[] players=data[1].split("\\, ");
+			for(int i=0;i<players.length;i++){
+				players[i]=RconModule_Utils.deleteDecorations(players[i]);
+			}
 		}
 		return RconModule_Constant.EMPTY_STRING_ARRAY;
 	}
