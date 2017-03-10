@@ -248,7 +248,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				}
 			}
 		}else{
-			finish();
+			supportFinishAfterTransition();
 		}
 	}
 	
