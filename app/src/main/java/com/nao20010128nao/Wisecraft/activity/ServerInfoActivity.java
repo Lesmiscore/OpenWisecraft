@@ -256,10 +256,10 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 		if(useBottomSheet){
 			behavior.setState(ViewPagerBottomSheetBehavior.STATE_HIDDEN);
 		}else{
-			finish();
+			supportFinishAfterTransition();
 		}
 	}
-
+	
 	@ServerInfoParser
 	public synchronized void update(final ServerPingResult resp) {
 		if (resp instanceof FullStat) {
