@@ -4,7 +4,9 @@ import android.content.res.*;
 import android.graphics.*;
 import android.os.*;
 import android.support.design.widget.*;
+import android.support.v4.app.*;
 import android.support.v4.content.*;
+import android.support.v4.util.*;
 import android.support.v4.view.*;
 import android.support.v4.widget.*;
 import android.support.v7.app.*;
@@ -35,12 +37,12 @@ import java.lang.ref.*;
 import java.util.*;
 import permissions.dispatcher.*;
 
+import android.support.v4.util.Pair;
 import android.support.v7.view.ActionMode;
 import com.nao20010128nao.Wisecraft.BuildConfig;
 import com.nao20010128nao.Wisecraft.R;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
-import android.support.v4.app.*;
 
 //Full implement for user interface (Some part is available at ServerListActivityBase4)
 @RuntimePermissions
@@ -1163,7 +1165,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			if (sla.pinging.get(s))return;
 			if (s instanceof ServerStatus) {
 				Bundle bnd=new Bundle();
-				sla.startServerInfoActivity(new Intent().putExtra("stat", Utils.encodeForServerInfo((ServerStatus)s)).putExtra("object", bnd));
+				sla.startServerInfoActivity(new Intent().putExtra("stat", Utils.encodeForServerInfo((ServerStatus)s)).putExtra("object", bnd),p3);
 			} else {
 				sla.updater.putInQueue(s, new PingHandlerImpl(true, new Intent().putExtra("offset",0), true));
 				sla.pinging.put(sla.list.get(sla.clicked), true);
@@ -1607,7 +1609,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 								if (obj != null) {
 									caller.putExtra("object", obj);
 								}
-								act().startServerInfoActivity(caller);
+								act().startServerInfoActivity(caller,i_);
 							}
 							if (closeDialog) {
 								act().wd.hideWorkingDialog();
