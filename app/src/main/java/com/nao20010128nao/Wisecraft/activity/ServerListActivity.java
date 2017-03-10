@@ -40,6 +40,7 @@ import com.nao20010128nao.Wisecraft.BuildConfig;
 import com.nao20010128nao.Wisecraft.R;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
+import android.support.v4.app.*;
 
 //Full implement for user interface (Some part is available at ServerListActivityBase4)
 @RuntimePermissions
@@ -689,36 +690,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	}
 
 	public void loadServers() {
-		/*
-		int version=pref.getInt("serversJsonVersion", -1);
-		if(version==-1)version=Utils.determineServerListJsonVersion(pref.getString("servers", "[]"));
-		switch (version) {
-			case 0:{
-					OldServer19[] sa=gson.fromJson(pref.getString("servers", "[]"), OldServer19[].class);
-					List<OldServer35> ns=new ArrayList<>();
-					for (OldServer19 s:sa) {
-						OldServer35 nso=new OldServer35();
-						nso.ip = s.ip;
-						nso.port = s.port;
-						nso.mode = s.isPC ?1: 0;
-						ns.add(nso);
-					}
-					pref.edit().putInt("serversJsonVersion", 1).putString("servers", gson.toJson(ns)).commit();
-				}
-			case 1:{
-					pref.edit().putInt("serversJsonVersion", 2).commit();
-				}
-			case 2:{
-					Server[] sa=gson.fromJson(pref.getString("servers", "[]"), Server[].class);
-					int prevLen=list.size();
-					list.clear();
-					sl.notifyItemRangeRemoved(0, prevLen);
-					int curLen=sa.length;
-					list.addAll(Arrays.asList(sa));
-					sl.notifyItemRangeInserted(0, curLen);
-				}
-		}
-		*/
 		List<Server> sa=Utils.jsonToServers(pref.getString("servers", "[]"));
 		int prevLen=list.size();
 		list.clear();
@@ -865,23 +836,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				if(f.exists()){
 					final List<Server> sv;
 					String json=readWholeFile(f);
-					/*
-					if (json.contains("\"isPC\"") & (json.contains("true") | json.contains("false"))) {
-						//old version json file
-						OldServer19[] sa=gson.fromJson(json, OldServer19[].class);
-						List<Server> ns=new ArrayList<>();
-						for (OldServer19 s:sa) {
-							Server nso=new Server();
-							nso.ip = s.ip;
-							nso.port = s.port;
-							nso.mode = s.isPC ?1: 0;
-							ns.add(nso);
-						}
-						sv = ns.toArray(new Server[ns.size()]);
-					} else {
-						sv = gson.fromJson(json, Server[].class);
-					}
-					*/
 					sv=Utils.jsonToServers(json);
 					runOnUiThread(new Runnable(){
 							public void run() {
@@ -1012,8 +966,15 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
         startSupportActionMode(multipleDeleteAm);
     }
 
-	public void startServerInfoActivity(Intent in){
-		startActivityForResult(in.setClass(this, ServerInfoActivity.class), 0);
+	public void startServerInfoActivity(Intent in,int objPos){
+		in.setClass(this, ServerInfoActivity.class);
+		boolean useBottomSheet=in.getBooleanExtra("bottomSheet",true)&!pref.getBoolean("noScrollServerInfo",false);
+		if(!useBottomSheet&(objPos>=0|objPos<list.size())&rv.findViewHolderForAdapterPosition(objPos)!=null){
+			ActivityOptionsCompat opt=ActivityOptionsCompat.makeSceneTransitionAnimation(this,Pair.<View,String>create(rv.findViewHolderForAdapterPosition(objPos).itemView,getResources().getString(R.string.serverInfoTrans1)));
+			startActivityForResult(in, 0,opt.toBundle());
+		}else{
+			startActivityForResult(in, 0);
+		}
 	}
 	
 	
