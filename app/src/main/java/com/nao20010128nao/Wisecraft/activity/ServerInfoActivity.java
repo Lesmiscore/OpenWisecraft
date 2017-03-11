@@ -611,10 +611,11 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 
 		@Override
 		public FindableViewHolder onCreateViewHolder(ViewGroup parent, int type) {
-			if(type==0)
-				return new VH(getLayoutInflater().inflate(R.layout.void_view,null));
-			else
-				return new VH(getLayoutInflater().inflate(R.layout.mod_info_content, parent, false));
+			switch(type){
+				case  0:return new VH(getLayoutInflater().inflate(R.layout.void_view,parent,false));
+				case  1:return new VH(getLayoutInflater().inflate(R.layout.mod_info_content, parent, false));
+				default:return null;
+			}
 		}
 
 		@Override
