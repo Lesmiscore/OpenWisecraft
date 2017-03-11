@@ -9,52 +9,80 @@ import com.nao20010128nao.Wisecraft.*;
 
 import android.support.v7.app.ActionBar;
 import com.nao20010128nao.Wisecraft.misc.compat.R;
+import java.util.*;
 
 public class WorkingDialog extends ContextWrapper {
 	ProgressDialog waitDialog;
+	Set<Object> locks=new HashSet<>();
+	CharSequence message;
+	
 	public WorkingDialog(Activity c) {
 		super(c);
+		setMessage(getResources().getString(R.string.working));
 	}
-	public void showWorkingDialog() {
-		showWorkingDialog(getResources().getString(R.string.working));
+	
+	public WorkingDialog(Activity c,CharSequence cs) {
+		super(c);
+		setMessage(cs);
 	}
-	public void showWorkingDialog(String message) {
-		if (waitDialog != null) {
-			hideWorkingDialog();
+	
+	public WorkingDialog(Activity c,int cs) {
+		super(c);
+		setMessage(cs);
+	}
+	
+	public void setMessage(CharSequence message) {
+		this.message = message;
+	}
+	
+	public void setMessage(int message) {
+		this.message = getResources().getString(message);
+	}
+	
+	public CharSequence getMessage() {
+		return message;
+	}
+	
+	public void showWorkingDialog(Object lock) {
+		locks.add(CompatUtils.requireNonNull(lock));
+		if(waitDialog==null){
+			waitDialog = new AppCompatProgressDialog(this){
+
+				@Override
+				public void onBackPressed() {
+					/* no-op */
+				}
+
+				@Override
+				public void setTitle(CharSequence title) {
+					/* no-op */
+				}
+
+				@Override
+				public void setTitle(int titleId) {
+					/* no-op */
+				}
+
+				@Override
+				public void setCustomTitle(View customTitleView) {
+					/* no-op */
+				}
+			};
+			waitDialog.setIndeterminate(true);
+			waitDialog.setMessage(message);
+			waitDialog.setCancelable(false);
+			waitDialog.show();
 		}
-		waitDialog = new AppCompatProgressDialog(this){
-			
-			@Override
-			public void onBackPressed() {
-				/* no-op */
-			}
-
-			@Override
-			public void setTitle(CharSequence title) {
-				/* no-op */
-			}
-
-			@Override
-			public void setTitle(int titleId) {
-				/* no-op */
-			}
-
-			@Override
-			public void setCustomTitle(View customTitleView) {
-				/* no-op */
-			}
-		};
-		waitDialog.setIndeterminate(true);
-		waitDialog.setMessage(message);
-		waitDialog.setCancelable(false);
-		waitDialog.show();
 	}
-	public void hideWorkingDialog() {
-		if (waitDialog == null) {
-			return;
+	public void hideWorkingDialog(Object lock) {
+		locks.remove(CompatUtils.requireNonNull(lock));
+		if(locks.isEmpty()){
+			if (waitDialog == null) {
+				return;
+			}
+			waitDialog.cancel();
+			waitDialog = null;
 		}
-		waitDialog.cancel();
-		waitDialog = null;
 	}
 	
 	class AppCompatProgressDialog extends ProgressDialog{

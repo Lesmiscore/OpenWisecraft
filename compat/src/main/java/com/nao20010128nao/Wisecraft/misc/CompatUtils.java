@@ -284,4 +284,9 @@ public class CompatUtils {
 			sb.append(Character.forDigit(b >> 4 & 0xF, 16)).append(Character.forDigit(b & 0xF, 16));
 		return sb.toString();
 	}
+	public static <T> T requireNonNull(T obj) {
+		if (obj == null)
+			throw new NullPointerException();
+		return obj;
+	}
 }

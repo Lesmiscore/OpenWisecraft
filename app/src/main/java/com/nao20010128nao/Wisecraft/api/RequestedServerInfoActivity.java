@@ -73,7 +73,7 @@ public class RequestedServerInfoActivity extends ApiBaseActivity {
             return;
 		}
 		requested = result.cloneAsServer();
-		wd.showWorkingDialog();
+		wd.showWorkingDialog(result);
 		spp.putInQueue(requested, new PingHandlingImpl());
 	}
 
@@ -83,7 +83,7 @@ public class RequestedServerInfoActivity extends ApiBaseActivity {
 			case 0:
 				switch (resultCode) {
 					case Constant.ACTIVITY_RESULT_UPDATE:
-						wd.showWorkingDialog();
+						wd.showWorkingDialog(requested);
 						spp.putInQueue(requested, new PingHandlingImpl(data.getIntExtra("offset",0)));
 						break;
 					default:
@@ -106,14 +106,14 @@ public class RequestedServerInfoActivity extends ApiBaseActivity {
             runOnUiThread(new Runnable(){
                     public void run(){
                         startActivityForResult(((Intent)si.clone()).putExtra("offset",offset).putExtra("bottomSheet",false).putExtra("stat",Utils.encodeForServerInfo(s)), 0);
-                        wd.hideWorkingDialog();
+                        wd.hideWorkingDialog(s);
                     }
                 });
 		}
 		public void onPingFailed(Server s) {
             runOnUiThread(new Runnable(){
                     public void run(){
-                        wd.hideWorkingDialog();
+                        wd.hideWorkingDialog(s);
                         new AlertDialog.Builder(RequestedServerInfoActivity.this,ThemePatcher.getDefaultDialogStyle(RequestedServerInfoActivity.this))
                             .setMessage(R.string.serverOffline)
                             .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){

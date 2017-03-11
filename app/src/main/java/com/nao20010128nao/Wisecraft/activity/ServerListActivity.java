@@ -336,11 +336,12 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							switch (resultCode) {
 								case Constant.ACTIVITY_RESULT_UPDATE:
 									Bundle obj=data.getBundleExtra("object");
-									updater.putInQueue(list.get(clicked), new PingHandlerImpl(true, data, true));
-									pinging.put(list.get(clicked), true);
+									Server serv=list.get(clicked);
+									updater.putInQueue(serv, new PingHandlerImpl(true, data, true));
+									pinging.put(serv, true);
 									statLayout.setStatusAt(clicked, 1);
 									sl.notifyItemChanged(clicked);
-									wd.showWorkingDialog();
+									wd.showWorkingDialog(serv);
 									break;
 							}
 							return true;
@@ -739,7 +740,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 								super.onPingFailed(s);
 								runOnUiThread(new Runnable(){
 										public void run() {			
-											wd.hideWorkingDialog();
+											wd.hideWorkingDialog(s);
 										}
 									});
 							}
@@ -747,7 +748,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 								super.onPingArrives(s);
 								runOnUiThread(new Runnable(){
 										public void run() {
-											wd.hideWorkingDialog();
+											wd.hideWorkingDialog(s);
 										}
 									});
 							}
@@ -859,7 +860,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	
 	@NeedsPermission("android.permission.WRITE_EXTERNAL_STORAGE")
 	public void loadWisecraftPing(final String fn){
-		wd.showWorkingDialog(getResources().getString(R.string.loading));
+		wd.showWorkingDialog(fn);
 		new Thread(){
 			public void run() {
 				ServerPingResult spr=null;
@@ -896,7 +897,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				final String stat=_stat;
 				runOnUiThread(new Runnable(){
 						public void run() {
-							wd.hideWorkingDialog();
+							wd.hideWorkingDialog(fn);
 							if(sv.response==null|stat==null){
 								Utils.makeNonClickableSB(ServerListActivityImpl.this,R.string.loadPing_loadError,Snackbar.LENGTH_SHORT).show();
 							}else{
@@ -1168,10 +1169,10 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 				sla.startServerInfoActivity(new Intent().putExtra("stat", Utils.encodeForServerInfo((ServerStatus)s)).putExtra("object", bnd),p3);
 			} else {
 				sla.updater.putInQueue(s, new PingHandlerImpl(true, new Intent().putExtra("offset",0), true));
-				sla.pinging.put(sla.list.get(sla.clicked), true);
-				sla.statLayout.setStatusAt(sla.clicked, 1);
-				sla.sl.notifyItemChanged(sla.clicked);
-				sla.wd.showWorkingDialog();
+				sla.pinging.put(s, true);
+				sla.statLayout.setStatusAt(p3, 1);
+				sla.sl.notifyItemChanged(p3);
+				sla.wd.showWorkingDialog(s);
 			}
 		}
 
@@ -1203,12 +1204,13 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 								 },R.string.remove));
 				executes.add(1, new Duo<Runnable,Integer>(new Runnable(){
 									 public void run() {
-										 if (sla.pinging.get(getItem(p3)))return;
-										 sla.updater.putInQueue(getItem(p3), new PingHandlerImpl(true, new Intent().putExtra("offset",-1),false));
-										 sla.pinging.put(sla.list.get(p3), true);
+										 Server svr=getItem(p3);
+										 if (sla.pinging.get(svr))return;
+										 sla.updater.putInQueue(svr, new PingHandlerImpl(true, new Intent().putExtra("offset",-1),false));
+										 sla.pinging.put(svr, true);
 										 sla.statLayout.setStatusAt(p3, 1);
 										 sla.sl.notifyItemChanged(p3);
-										 sla.wd.showWorkingDialog();
+										 sla.wd.showWorkingDialog(svr);
 									 }
 								 },R.string.update));
 				executes.add(2, new Duo<Runnable,Integer>(new Runnable(){
@@ -1545,11 +1547,11 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							}
 							Server sn=s.cloneAsServer();
 							act().list.set(i_, sn);
-							act().pinging.put(act().list.get(i_), false);
+							act().pinging.put(sn, false);
 							act().statLayout.setStatusAt(i_, 0);
 							act().sl.notifyItemChanged(i_);
 							if (closeDialog)
-								act().wd.hideWorkingDialog();
+								act().wd.hideWorkingDialog(sn);
 							if (!act().pinging.containsValue(true))
 								act().srl.setRefreshing(false);
 							if(act().pref.getBoolean("letRetryPing",false)){
@@ -1567,7 +1569,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 													(kvp.getKey()?act().updater:act().spp).putInQueue(s,PingHandlerImpl.this);
 													act().pinging.put(s,true);
 													if(closeDialog)
-														act().wd.showWorkingDialog();
+														act().wd.showWorkingDialog(s);
 												}
 											},1000);
 									}
@@ -1578,7 +1580,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 												(isUpd?act().updater:act().spp).putInQueue(s,PingHandlerImpl.this);
 												act().pinging.put(s,true);
 												if(closeDialog)
-													act().wd.showWorkingDialog();
+													act().wd.showWorkingDialog(s);
 											}
 										},1000);
 								}
@@ -1601,7 +1603,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 								return;
 							}
 							act().list.set(i_, s);
-							act().pinging.put(act().list.get(i_), false);
+							act().pinging.put(s, false);
 							act().statLayout.setStatusAt(i_, 2);
 							act().sl.notifyItemChanged(i_);
 							if (extras.getIntExtra("offset",-1) != -1) {
@@ -1612,7 +1614,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 								act().startServerInfoActivity(caller,i_);
 							}
 							if (closeDialog) {
-								act().wd.hideWorkingDialog();
+								act().wd.hideWorkingDialog(s);
 							}
 
 							if (!act().pinging.containsValue(true)) {
