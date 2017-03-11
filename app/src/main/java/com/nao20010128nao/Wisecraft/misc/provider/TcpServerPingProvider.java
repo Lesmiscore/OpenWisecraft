@@ -43,7 +43,7 @@ public class TcpServerPingProvider implements ServerPingProvider
     }
 	@Override
 	public void clearAndStop() {
-		clearAndStop();
+		clearQueue();
 		stop();
 	}
     @Override

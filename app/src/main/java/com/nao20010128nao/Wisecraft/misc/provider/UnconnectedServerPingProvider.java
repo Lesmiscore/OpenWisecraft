@@ -38,7 +38,7 @@ public class UnconnectedServerPingProvider implements ServerPingProvider
 
 	@Override
 	public void clearAndStop() {
-		clearAndStop();
+		clearQueue();
 		stop();
 	}
 

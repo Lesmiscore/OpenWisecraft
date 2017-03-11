@@ -37,7 +37,7 @@ public class NormalServerPingProvider implements ServerPingProvider {
 	}
 	@Override
 	public void clearAndStop() {
-		clearAndStop();
+		clearQueue();
 		stop();
 	}
     @Override
