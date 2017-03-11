@@ -110,7 +110,7 @@ public class RequestedServerInfoActivity extends ApiBaseActivity {
                     }
                 });
 		}
-		public void onPingFailed(Server s) {
+		public void onPingFailed(final Server s) {
             runOnUiThread(new Runnable(){
                     public void run(){
                         wd.hideWorkingDialog(s);
