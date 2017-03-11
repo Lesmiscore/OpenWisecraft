@@ -23,6 +23,7 @@ public class WorkingDialog extends ContextWrapper {
 			hideWorkingDialog();
 		}
 		waitDialog = new AppCompatProgressDialog(this){
+			
 			@Override
 			public void onBackPressed() {
 				/* no-op */
@@ -68,6 +69,7 @@ public class WorkingDialog extends ContextWrapper {
 		protected void onCreate(Bundle savedInstanceState) {
 			dlg.installViewFactory();
 			dlg.onCreate(savedInstanceState);
+			dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
 			super.onCreate(savedInstanceState);
 		}
 		
