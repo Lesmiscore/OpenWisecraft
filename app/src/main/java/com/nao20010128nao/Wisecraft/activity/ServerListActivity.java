@@ -1029,9 +1029,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 								FullStat fs = (FullStat) s.response;
 								Map<String, String> m = fs.getDataAsMap();
 								if (m.containsKey("hostname")) {
-									title = m.get("hostname");
+									title = parseMinecraftFormattingCode(m.get("hostname"));
 								} else if (m.containsKey("motd")) {
-									title = m.get("motd");
+									title = parseMinecraftFormattingCode(m.get("motd"));
 								} else {
 									title = s.toString();
 								}
@@ -1041,7 +1041,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 								if (rep.description == null) {
 									title = s.toString();
 								} else {
-									title = rep.description.text;
+									title = parseMinecraftFormattingCode(rep.description.text);
 								}
 								viewHolder.setServerPlayers(rep.players.online, rep.players.max);
 							} else if (s.response instanceof Reply) {//PC
@@ -1049,7 +1049,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 								if (rep.description == null) {
 									title = s.toString();
 								} else {
-									title = rep.description;
+									title = parseMinecraftFormattingCode(rep.description);
 								}
 								viewHolder.setServerPlayers(rep.players.online, rep.players.max);
 							} else if (s.response instanceof RawJsonReply) {//PC (Obfuscated)
@@ -1064,15 +1064,15 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 								SprPair sp = ((SprPair) s.response);
 								if (sp.getB() instanceof UnconnectedPing.UnconnectedPingResult) {
 									UnconnectedPing.UnconnectedPingResult res = (UnconnectedPing.UnconnectedPingResult) sp.getB();
-									title = res.getServerName();
+									title = parseMinecraftFormattingCode(res.getServerName());
 									viewHolder.setServerPlayers(res.getPlayersCount(), res.getMaxPlayers());
 								} else if (sp.getA() instanceof FullStat) {
 									FullStat fs = (FullStat) sp.getA();
 									Map<String, String> m = fs.getDataAsMap();
 									if (m.containsKey("hostname")) {
-										title = m.get("hostname");
+										title = parseMinecraftFormattingCode(m.get("hostname"));
 									} else if (m.containsKey("motd")) {
-										title = m.get("motd");
+										title = parseMinecraftFormattingCode(m.get("motd"));
 									} else {
 										title = s.toString();
 									}
@@ -1083,24 +1083,16 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 								}
 							} else if (s.response instanceof UnconnectedPing.UnconnectedPingResult) {//PE
 								UnconnectedPing.UnconnectedPingResult res = (UnconnectedPing.UnconnectedPingResult) s.response;
-								title = res.getServerName();
+								title = parseMinecraftFormattingCode(res.getServerName());
 								viewHolder.setServerPlayers(res.getPlayersCount(), res.getMaxPlayers());
 							} else {//Unreachable
 								title = s.toString();
 								viewHolder.setServerPlayers();
 							}
 							if (sla.pref.getBoolean("serverListColorFormattedText", false)) {
-								if(title instanceof String){
-									viewHolder.setServerName(parseMinecraftFormattingCode(title.toString()));
-								}else{
-									viewHolder.setServerName(title);
-								}
+								viewHolder.setServerName(title);
 							} else {
-								if(title instanceof String){
-									viewHolder.setServerName(deleteDecorations(title.toString()));
-								}else{
-									viewHolder.setServerName(title.toString());
-								}
+								viewHolder.setServerName(title.toString());
 							}
 							viewHolder
 								.setPingMillis(s.ping)
