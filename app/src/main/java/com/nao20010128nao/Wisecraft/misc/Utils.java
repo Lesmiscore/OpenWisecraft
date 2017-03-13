@@ -294,11 +294,6 @@ public class Utils extends PingerUtils{
 	public static Object tryExecuteMethod(Object object,String methodName){
 		return tryExecuteMethod(object,methodName);
 	}
-	public static boolean isOnline(Context ctx){
-		ConnectivityManager cm=(ConnectivityManager)ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-        return (networkInfo != null && networkInfo.isConnected());
-	}
 	public static TextView getActionBarTextView(Activity a) {
 		return getActionBarTextView(getToolbar(a));
 	}

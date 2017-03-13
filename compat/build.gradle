@@ -52,6 +52,8 @@ dependencies {
 	compile 'com.google.firebase:firebase-crash:10.0.1'
 	
 	compile 'com.google.code.gson:gson:2.8.0'
+	compile 'us.feras.mdv:markdownview:1.1.0'
+    
 	compile project(':scrolling')
 	compile project(':wisecraft-i18n')
 	compile project(':psts')

@@ -2,6 +2,7 @@ package com.nao20010128nao.Wisecraft.misc;
 
 import android.content.*;
 import android.content.pm.*;
+import android.net.*;
 import android.text.*;
 import android.util.*;
 import android.view.*;
@@ -288,5 +289,10 @@ public class CompatUtils {
 		if (obj == null)
 			throw new NullPointerException();
 		return obj;
+	}
+	public static boolean isOnline(Context ctx){
+		ConnectivityManager cm=(ConnectivityManager)ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        return (networkInfo != null && networkInfo.isConnected());
 	}
 }
