@@ -88,7 +88,7 @@ abstract class FragmentSettingsActivityImpl extends AppCompatActivity implements
 		main.add(new Quartet<Integer,String,Treatment<SettingsScreen>,Boolean>(R.string.osl,"osl", new Treatment<SettingsScreen>(){
 					public void process(SettingsScreen ss) {
 						AppCompatActivity act=(AppCompatActivity)ss;
-						act.startActivity(new Intent(act,OpenSourceActivity.class));
+						act.startActivity(new Intent(act,OpenSourceActivity2.class));
 					}
 				},false));
 		main.add(new Quartet<Integer,String,Treatment<SettingsScreen>,Boolean>(R.string.aboutApp,"aboutApp", new Treatment<SettingsScreen>(){

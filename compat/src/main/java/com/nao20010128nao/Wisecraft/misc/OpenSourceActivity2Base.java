@@ -21,6 +21,7 @@ public abstract class OpenSourceActivity2Base extends AppCompatActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.only_toolbar);
 		getLayoutInflater().inflate(R.layout.open_source_markdown,(ViewGroup)findViewById(R.id.frame));
+		setSupportActionBar(CompatUtils.getToolbar(this));
 		markdownView=(MarkdownView)findViewById(R.id.markdownView);
 		oslMdCache=new File(getCacheDir(),"openSourceLicense.md");
 		if(CompatUtils.isOnline(this)){

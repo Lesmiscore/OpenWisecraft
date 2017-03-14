@@ -162,6 +162,12 @@
 			android:exported="false"
 			android:theme="@style/AppTheme.OpenSource">
         </activity>
+		<activity
+			android:label="@string/osl"
+			android:name=".activity.OpenSourceActivity2"
+			android:exported="false"
+			android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
 			android:label="@string/aboutApp"
 			android:name=".activity.AboutAppActivity"
