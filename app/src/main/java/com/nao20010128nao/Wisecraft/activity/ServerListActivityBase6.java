@@ -4,7 +4,7 @@ import com.nao20010128nao.Wisecraft.misc.*;
 import java.util.*;
 
 //ContextMenu
-class ServerListActivityBase6 extends ServerListActivityBaseFields {
+abstract class ServerListActivityBase6 extends ServerListActivityBase7 {
 	protected Map<View,Quartet<Treatment<Duo<View,ContextMenu>>,Predicate<Trio<View,ContextMenu,MenuItem>>,ViewGroup,Boolean>> contextMenuHandlers=new HashMap<>();
 	protected Map<Menu,View> contextMenuObjects=new HashMap<>();
 	protected Map<MenuItem,View> contextMenuItems=new HashMap<>();

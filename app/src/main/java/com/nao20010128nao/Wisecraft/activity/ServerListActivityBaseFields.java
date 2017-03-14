@@ -49,7 +49,7 @@ abstract class ServerListActivityBaseFields extends ServerListActivityBaseGrand
 	protected boolean isInSelectMode=false;
     protected ItemTouchHelper itemDecor;
     protected SimpleCallback ddManager;
-    protected ActionMode.Callback handMoveAm,selectUpdateAm,multipleDeleteAm;
+    protected ActionMode.Callback handMoveAm,selectUpdateAm,multipleDeleteAm,removeUnusedDomainsAm;
 	protected CoordinatorLayout coordinator;
     
     //base2,3,5

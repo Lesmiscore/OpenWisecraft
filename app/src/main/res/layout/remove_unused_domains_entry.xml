@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical">
+
+	<LinearLayout
+		android:layout_height="60dp"
+		android:layout_width="match_parent"
+		android:orientation="horizontal">
+
+		<ImageButton
+			style="?android:attr/buttonBarButtonStyle"
+			android:layout_height="match_parent"
+			android:layout_width="60dp"
+			android:id="@+id/expand"/>
+
+		<TextView
+			android:id="@+id/domain"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:textAppearance="?android:attr/textAppearanceListItemSmall"
+			android:gravity="center_vertical"
+			android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+			android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+			android:minHeight="?android:attr/listPreferredItemHeightSmall"/>
+
+	</LinearLayout>
+
+	<LinearLayout
+		android:layout_height="match_parent"
+		android:layout_width="match_parent"
+		android:orientation="vertical"
+		android:paddingLeft="30dp"
+		android:id="@+id/servers">
+
+	</LinearLayout>
+
+</LinearLayout>
+
