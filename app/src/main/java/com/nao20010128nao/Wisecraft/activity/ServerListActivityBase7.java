@@ -105,10 +105,10 @@ public abstract class ServerListActivityBase7 extends ServerListActivityBaseFiel
 					tv.setText(serv.resolveVisibleTitle());
 					p1.servers.addView(entryView);
 				}
-				p1.expand.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_expand_less_black_48dp,domain.getTextColor()));
+				p1.expand.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_expand_less_black_48dp,p1.domain.getTextColor()));
 			}else{
 				p1.servers.setVisibility(View.GONE);
-				p1.expand.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_expand_more_black_48dp,domain.getTextColor()));
+				p1.expand.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_expand_more_black_48dp,p1.domain.getTextColor()));
 			}
 			p1.expand.setOnClickListener(new View.OnClickListener(){
 					public void onClick(View v){
