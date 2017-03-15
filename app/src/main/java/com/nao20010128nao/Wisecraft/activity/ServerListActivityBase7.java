@@ -103,8 +103,8 @@ public abstract class ServerListActivityBase7 extends ServerListActivityBaseFiel
 		
 		public DomainListAdapter(Multimap<String,Server> domains){
 			this.domains=domains;
-			List<Boolean> nCopied=Collections.nCopies(listedDomains.size(),false);
 			listedDomains=  Collections.unmodifiableList(new ArrayList<>(domains.keySet()));
+			List<Boolean> nCopied=Collections.nCopies(listedDomains.size(),false);
 			expandStates=   Collections.unmodifiableList(new ArrayList<>(nCopied));
 			domainChecked=  Collections.unmodifiableList(new ArrayList<>(nCopied));
 			domainUsed=     Collections.unmodifiableList(new ArrayList<>(nCopied));
