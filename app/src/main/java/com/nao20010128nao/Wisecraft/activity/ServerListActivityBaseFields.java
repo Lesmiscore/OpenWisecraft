@@ -29,6 +29,7 @@ abstract class ServerListActivityBaseFields extends ServerListActivityBaseGrand
 	public static final int EDIT_MODE_EDIT=1;
 	public static final int EDIT_MODE_SELECT_UPDATE=2;
 	public static final int EDIT_MODE_MULTIPLE_DELETE=3;
+	public static final int EDIT_MODE_REMOVE_UNUSED_DOMAINS=4;
 	
     //impl
     protected static final File mcpeServerList=new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt");

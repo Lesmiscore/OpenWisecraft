@@ -325,6 +325,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			case EDIT_MODE_EDIT:startEditMode();break;
 			case EDIT_MODE_SELECT_UPDATE:startSelectUpdateMode();break;
 			case EDIT_MODE_MULTIPLE_DELETE:startMultipleDeleteMode();break;
+			case EDIT_MODE_REMOVE_UNUSED_DOMAINS:startRemoveDomainsActionMode();break;
 		}
 
 		addActivityResultReceiver(new DispatchActivityResult(){

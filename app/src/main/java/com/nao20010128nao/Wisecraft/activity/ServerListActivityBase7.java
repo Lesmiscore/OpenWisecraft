@@ -31,6 +31,7 @@ public abstract class ServerListActivityBase7 extends ServerListActivityBaseFiel
 				rv.setAdapter(new DomainListAdapter(domains));
 				rv.setLayoutManager(new LinearLayoutManager(ServerListActivityBase7.this));
 				isInSelectMode=false;
+				editMode = EDIT_MODE_REMOVE_UNUSED_DOMAINS;
                 return true;
             }
 
@@ -67,7 +68,7 @@ public abstract class ServerListActivityBase7 extends ServerListActivityBaseFiel
 	Multimap<String,Server> listDomains(){
 		HashMultimap<String,Server> hmm=HashMultimap.<String,Server>create();
 		for(Server s:getServers()){
-			if(!(s.ip.matches(Constant.IPV4_PATTERN)||s.ip.matches(Constant.IPV6_PATTERN))){
+			if(!(s.ip.matches(Constant.IPV4_PATTERN)|s.ip.matches(Constant.IPV6_PATTERN))){
 				hmm.put(s.ip.toLowerCase(),s);
 			}
 		}
@@ -90,6 +91,7 @@ public abstract class ServerListActivityBase7 extends ServerListActivityBaseFiel
 			p1.domain.setText(listedDomains.get(p2));
 			if(expandStates.get(p2)){
 				p1.servers.setVisibility(View.VISIBLE);
+				p1.servers.removeAllViews();
 				for(Server serv:domains.get(listedDomains.get(p2))){
 					View entryView=getLayoutInflater().inflate(R.layout.simple_list_item_1,p1.servers,false);
 					TextView tv=(TextView)entryView.findViewById(android.R.id.text1);
