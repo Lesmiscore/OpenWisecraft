@@ -2,6 +2,7 @@ package com.nao20010128nao.Wisecraft.misc;
 import android.app.*;
 import android.content.*;
 import android.content.res.*;
+import android.graphics.*;
 import android.support.v4.content.*;
 import android.support.v7.view.*;
 import android.util.*;
@@ -9,8 +10,7 @@ import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.activity.*;
 import com.nao20010128nao.Wisecraft.api.*;
 import java.util.*;
-
-import com.nao20010128nao.Wisecraft.R;
+import android.graphics.drawable.*;
 
 public class ThemePatcher{
 	private ThemePatcher(){}
@@ -207,7 +207,28 @@ public class ThemePatcher{
 		ta.recycle();
 		return color;
 	}
-
+	
+	public static int getMenuTintColor(Context context){
+		TypedArray ta=context.obtainStyledAttributes(new int[]{R.attr.wcMenuTintColor});
+		int color=ta.getColor(0,Color.BLACK);
+		ta.recycle();
+		return color;
+	}
+	
+	public static int getDefaultTextColor(Context context){
+		TypedArray ta=context.obtainStyledAttributes(new int[]{android.R.attr.textColor});
+		int color=ta.getColor(0,Color.BLACK);
+		ta.recycle();
+		return color;
+	}
+	
+	public static Drawable getWindowBackground(Context context){
+		TypedArray ta=context.obtainStyledAttributes(new int[]{android.R.attr.windowBackground});
+		Drawable drw=ta.getDrawable(0);
+		ta.recycle();
+		return drw;
+	}
+	
 	private static void setTheme(Activity a, int theme) {
 		a.setTheme(theme);
 		a.getTheme().applyStyle(theme, true);

@@ -1,7 +1,9 @@
 package com.nao20010128nao.Wisecraft.activity;
 
+import android.graphics.drawable.*;
 import android.os.*;
 import android.support.v4.widget.*;
+import android.support.v7.view.*;
 import android.support.v7.widget.*;
 import android.view.*;
 import android.widget.*;
@@ -11,6 +13,7 @@ import com.nao20010128nao.Wisecraft.misc.*;
 import java.util.*;
 
 import android.support.v7.view.ActionMode;
+import android.support.v4.view.*;
 //Remove servers on unused domains
 public abstract class ServerListActivityBase7 extends ServerListActivityBaseFields 
 {
@@ -21,15 +24,18 @@ public abstract class ServerListActivityBase7 extends ServerListActivityBaseFiel
 		removeUnusedDomainsAm=new ActionMode.Callback(){
 			RecyclerView.Adapter slaDefaultAdapter;
 			RecyclerView.LayoutManager slaDefaultLayoutManager;
+			Drawable slaViewBackground;
 			
             public boolean onCreateActionMode(ActionMode p1, Menu p2) {
                 srl.setEnabled(false);
                 dl.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+				slaViewBackground=rv.getBackground();
 				slaDefaultAdapter=rv.getAdapter();
 				slaDefaultLayoutManager=rv.getLayoutManager();
 				Multimap<String,Server> domains=listDomains();
 				rv.setAdapter(new DomainListAdapter(domains));
 				rv.setLayoutManager(new LinearLayoutManager(ServerListActivityBase7.this));
+				ViewCompat.setBackground(rv,ThemePatcher.getWindowBackground(ServerListActivityBase7.this));
 				isInSelectMode=false;
 				editMode = EDIT_MODE_REMOVE_UNUSED_DOMAINS;
                 return true;
@@ -51,6 +57,7 @@ public abstract class ServerListActivityBase7 extends ServerListActivityBaseFiel
                 dl.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
 				rv.setAdapter(slaDefaultAdapter);
 				rv.setLayoutManager(slaDefaultLayoutManager);
+				ViewCompat.setBackground(rv,slaViewBackground);
                 saveServers();
 				isInSelectMode=false;
             }
@@ -89,18 +96,19 @@ public abstract class ServerListActivityBase7 extends ServerListActivityBaseFiel
 		@Override
 		public void onBindViewHolder(Vh p1, final int p2) {
 			p1.domain.setText(listedDomains.get(p2));
+			p1.servers.removeAllViews();
 			if(expandStates.get(p2)){
 				p1.servers.setVisibility(View.VISIBLE);
-				p1.servers.removeAllViews();
 				for(Server serv:domains.get(listedDomains.get(p2))){
 					View entryView=getLayoutInflater().inflate(R.layout.simple_list_item_1,p1.servers,false);
 					TextView tv=(TextView)entryView.findViewById(android.R.id.text1);
 					tv.setText(serv.resolveVisibleTitle());
 					p1.servers.addView(entryView);
 				}
+				p1.expand.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_expand_less_black_48dp,ThemePatcher.getDefaultTextColor(ServerListActivityBase7.this)));
 			}else{
 				p1.servers.setVisibility(View.GONE);
-				p1.servers.removeAllViews();
+				p1.expand.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_expand_more_black_48dp,ThemePatcher.getDefaultTextColor(ServerListActivityBase7.this)));
 			}
 			p1.expand.setOnClickListener(new View.OnClickListener(){
 					public void onClick(View v){

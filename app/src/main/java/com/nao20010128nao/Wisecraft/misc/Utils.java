@@ -452,10 +452,7 @@ public class Utils extends PingerUtils{
 		}
 	}
 	public static int getMenuTintColor(Context context){
-		TypedArray ta=context.obtainStyledAttributes(new int[]{R.attr.wcMenuTintColor});
-		int color=ta.getColor(0,Color.BLACK);
-		ta.recycle();
-		return color;
+		return ThemePatcher.getMenuTintColor(context);
 	}
 	public static boolean[] getBooleanArray(Context ctx,int resId){
 		TypedArray ta=ctx.getResources().obtainTypedArray(resId);
@@ -688,7 +685,7 @@ public class Utils extends PingerUtils{
 		Toast.makeText(a,sb.toString(),Toast.LENGTH_LONG).show();
 	}
 	public static <T> Collection<T> iterableToCollection(Iterable<T> input){
-		List<T> result=new ArrayList<>();
+		List<T> result=emptyList();
 		for(T t:input){
 			result.add(t);
 		}
