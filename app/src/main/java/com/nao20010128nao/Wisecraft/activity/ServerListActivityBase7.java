@@ -86,8 +86,9 @@ public abstract class ServerListActivityBase7 extends ServerListActivityBaseFiel
 	Multimap<String,Server> listDomains(){
 		HashMultimap<String,Server> hmm=HashMultimap.<String,Server>create();
 		for(Server s:getServers()){
-			if(!(s.ip.matches(Constant.IPV4_PATTERN)|s.ip.matches(Constant.IPV6_PATTERN))){
-				hmm.put(s.ip.toLowerCase(),s);
+			String ip=s.ip.toLowerCase();
+			if(!(ip.matches(Constant.IPV4_PATTERN)|ip.matches(Constant.IPV6_PATTERN)|"localhost".equalsIgnoreCase(ip))){
+				hmm.put(ip,s);
 			}
 		}
 		return hmm;
