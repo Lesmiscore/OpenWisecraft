@@ -440,7 +440,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 									show();
 							}
 						},new DialogLauncherListener<ServerListActivity>(this)
-							.setItems(new String[]{"select servs to delete","remove unused domains"}/*R.array.serverAddSubMenu*/,new DialogInterface.OnClickListener(){
+							.setItems(R.array.serverAddSubMenu,new DialogInterface.OnClickListener(){
 								public void onClick(DialogInterface di,int w){
 									switch(w){
 										case 0:
