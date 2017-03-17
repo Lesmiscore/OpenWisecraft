@@ -1501,7 +1501,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
 		public void remove(Server object) {
 			int ofs=sla.list.indexOf(object);
-			sla.list.remove(object);
+			sla.list.remove(ofs);
 			notifyItemRemoved(ofs);
 		}
 		
