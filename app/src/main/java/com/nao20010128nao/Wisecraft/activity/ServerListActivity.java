@@ -954,10 +954,15 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	}
 
 	@Override
-	public boolean contains(Object s) {
+	public boolean contains(Server s) {
 		return list.contains(s);
 	}
-    
+
+	@Override
+	public void removeFromList(Server s) {
+		sl.remove(s);
+	}
+
     private void startEditMode() {
         //start action mode here
         startSupportActionMode(handMoveAm);

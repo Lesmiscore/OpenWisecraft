@@ -17,7 +17,7 @@ import java.util.*;
 import android.support.v7.view.ActionMode;
 
 //Remove servers on unused domains
-public abstract class ServerListActivityBase7 extends ServerListActivityBaseFields 
+public abstract class ServerListActivityBase7 extends ServerListActivityBaseFields
 {
 
 	@Override
@@ -50,11 +50,26 @@ public abstract class ServerListActivityBase7 extends ServerListActivityBaseFiel
 
             public boolean onPrepareActionMode(ActionMode p1, Menu p2) {
                 editMode = EDIT_MODE_REMOVE_UNUSED_DOMAINS;
+				MenuItem delete=p2.add(0,0,0,R.string.delete).setIcon(R.drawable.ic_delete_forever_black_48dp);
+				MenuItemCompat.setShowAsAction(delete,MenuItem.SHOW_AS_ACTION_ALWAYS);
                 return true;
             }
 
             public boolean onActionItemClicked(ActionMode p1, MenuItem p2) {
-                return true;
+				switch(p2.getItemId()){
+					case 0:
+						Set<Server> reallyDeletingServers=new HashSet<>();
+						for(int i=0;i<domainLstAdptr.getItemCount();i++){
+							if(domainLstAdptr.domainChecked.get(i)&&domainLstAdptr.deletingDomain.get(i)){
+								reallyDeletingServers.addAll(domains.get(domainLstAdptr.listedDomains.get(i)));
+							}
+						}
+						for(Server deletion:reallyDeletingServers){
+							removeFromList(deletion);
+						}
+						return true;
+				}
+                return false;
             }
 
             public void onDestroyActionMode(ActionMode p1) {
@@ -77,6 +92,7 @@ public abstract class ServerListActivityBase7 extends ServerListActivityBaseFiel
 	/* Following methods are needed for this class */
 	public abstract void saveServers();
 	public abstract List<Server> getServers();
+	public abstract void removeFromList(Server s);
 	
 	public void startRemoveDomainsActionMode(){
 		startSupportActionMode(removeUnusedDomainsAm);

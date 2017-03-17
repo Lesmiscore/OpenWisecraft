@@ -44,4 +44,14 @@ public class ServerListArrayList extends ArrayList<Server> implements ServerList
 	public void addIntoList(Server s) {
 		add(s);
 	}
+
+	@Override
+	public void removeFromList(Server s) {
+		remove(s);
+	}
+
+	@Override
+	public boolean contains(Server s) {
+		return contains((Object)s);
+	}
 }
