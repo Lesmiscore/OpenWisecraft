@@ -45,12 +45,11 @@ public abstract class ServerListActivityBase7 extends ServerListActivityBaseFiel
 				(worker=new DomainStatusChecker()).execute(domainLstAdptr);
 				this.domains=domains;
 				isInSelectMode=false;
-				editMode = EDIT_MODE_REMOVE_UNUSED_DOMAINS;
                 return true;
             }
 
             public boolean onPrepareActionMode(ActionMode p1, Menu p2) {
-                editMode = EDIT_MODE_EDIT;
+                editMode = EDIT_MODE_REMOVE_UNUSED_DOMAINS;
                 return true;
             }
 
