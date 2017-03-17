@@ -31,10 +31,10 @@ public class KVRecyclerAdapter<K,V> extends ListRecyclerViewAdapter<KVRecyclerAd
 			super(v);
 		}
 		public TextView getK(){
-			return (TextView)findViewById(R.id.k);
+			return findTypedViewById(R.id.k);
 		}
 		public TextView getV(){
-			return (TextView)findViewById(R.id.v);
+			return findTypedViewById(R.id.v);
 		}
 	}
 }
