@@ -960,7 +960,10 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
 	@Override
 	public void removeFromList(Server s) {
+		int ofs=list.indexOf(s);
 		sl.remove(s);
+		saveServers();
+		statLayout.removeStatus(ofs);
 	}
 
     private void startEditMode() {
