@@ -156,6 +156,12 @@ public abstract class ServerListActivityBase7 extends ServerListActivityBaseFiel
 				}else{
 					//checkbox to ask user to delete
 					p1.showWillDelete(deletingDomain.get(p2));
+					p1.willDelete.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+							public void onCheckedChanged(android.widget.CompoundButton p1, boolean state){
+								domainChecked.set(p2,state);
+								notifyItemChanged(p2);
+							}
+						});
 				}
 			}else{
 				//loading
