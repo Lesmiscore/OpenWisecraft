@@ -28,9 +28,6 @@ public class RCONActivity extends RCONActivityBase implements TabHost.OnTabChang
 		ssb.append(getIntent().getStringExtra("ip")+":"+getIntent().getIntExtra("port",0));
 		ssb.setSpan(new ForegroundColorSpan(Color.WHITE),0,ssb.length(),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 		setTitle(ssb);
-		fth=(FragmentTabHost)findViewById(android.R.id.tabhost);
-		fth.setOnTabChangedListener(this);
-		
 	}
 
 	@Override
