@@ -127,6 +127,8 @@ public abstract class ServerListActivityBase7 extends ServerListActivityBaseFiel
 			domainChecked=  Collections.synchronizedList(new ArrayList<>(nCopied));
 			domainUsed=     Collections.synchronizedList(new ArrayList<>(nCopied));
 			deletingDomain= Collections.synchronizedList(new ArrayList<>(nCopied));
+			
+			Collections.sort(listedDomains);
 		}
 		
 		@Override
