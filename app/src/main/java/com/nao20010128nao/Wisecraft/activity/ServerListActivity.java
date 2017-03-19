@@ -35,6 +35,7 @@ import com.nao20010128nao.Wisecraft.settings.*;
 import java.io.*;
 import java.lang.ref.*;
 import java.util.*;
+import jp.wasabeef.recyclerview.animators.*;
 import permissions.dispatcher.*;
 
 import android.support.v4.util.Pair;
@@ -162,6 +163,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			rv.setAdapter(sl = new ServerList(this));
 		}
 		rv.setLongClickable(true);
+		rv.setItemAnimator(new LandingAnimator());
 		wd = new WorkingDialog(this);
         if (fetchNetworkState2() == FetchNetworkStateResult.WIFI)
             spp.online();
