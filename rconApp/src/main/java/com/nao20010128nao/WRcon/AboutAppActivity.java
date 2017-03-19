@@ -1,9 +1,12 @@
 package com.nao20010128nao.WRcon;
-import com.nao20010128nao.Wisecraft.AboutAppActivityBase;
-import android.os.Bundle;
-import android.view.View;
-import android.content.Intent;
-import android.net.Uri;
+import android.content.*;
+import android.net.*;
+import android.os.*;
+import android.view.*;
+import android.widget.*;
+import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.misc.*;
+import android.graphics.*;
 
 public class AboutAppActivity extends AboutAppActivityBase
 {
@@ -19,6 +22,12 @@ public class AboutAppActivity extends AboutAppActivityBase
 					intent.addCategory(Intent.CATEGORY_DEFAULT);
 					intent.setData(Uri.parse(getResources().getString(R.string.aboutAppTranslationUrl)));
 					startActivity(Intent.createChooser(intent,getResources().getString(R.string.gotoTranslationPage)));
+				}
+			});
+		new Handler().post(new Runnable(){
+				public void run(){
+					TextView tv=CompatUtils.getActionBarTextView(CompatUtils.getToolbar(AboutAppActivity.this));
+					if(tv!=null)tv.setTextColor(Color.WHITE);
 				}
 			});
 	}

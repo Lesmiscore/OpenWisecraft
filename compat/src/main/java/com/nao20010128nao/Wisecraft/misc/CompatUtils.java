@@ -1,14 +1,20 @@
 package com.nao20010128nao.Wisecraft.misc;
 
+import android.app.*;
 import android.content.*;
 import android.content.pm.*;
+import android.support.v7.widget.*;
 import android.text.*;
 import android.util.*;
 import android.view.*;
+import android.widget.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import java.io.*;
+import java.lang.reflect.*;
 import java.security.*;
 import java.util.*;
+
+import android.support.v7.widget.Toolbar;
 
 public class CompatUtils {
 	public static boolean equals(Object a, Object b) {
@@ -283,5 +289,52 @@ public class CompatUtils {
 		for (byte b:buf)
 			sb.append(Character.forDigit(b >> 4 & 0xF, 16)).append(Character.forDigit(b & 0xF, 16));
 		return sb.toString();
+	}
+	public static TextView getActionBarTextView(Toolbar mToolBar) {
+		if(TextUtils.isEmpty(mToolBar.getTitle()))return null;
+		try {
+			Field f = mToolBar.getClass().getDeclaredField("mTitleTextView");
+			f.setAccessible(true);
+			return (TextView) f.get(mToolBar);
+		} catch (NoSuchFieldException e) {
+		} catch (IllegalAccessException e) {
+		}
+		try {
+			Field f=Toolbar.LayoutParams.class.getDeclaredField("mViewType");
+			f.setAccessible(true);
+			for (int i=0;i < mToolBar.getChildCount();i++) {
+				View v=mToolBar.getChildAt(i);
+				if (v instanceof TextView) {
+					ViewGroup.LayoutParams lp=v.getLayoutParams();
+					int viewType=(int)f.get(lp);
+					if (viewType == 1) {
+						TextView tv=(TextView)v;
+						if(tv.getText().equals(mToolBar.getTitle())||tv.getText()==mToolBar.getTitle()){
+							return tv;
+						}
+					}
+				}
+			}
+		} catch (NoSuchFieldException e) {
+		} catch (IllegalAccessException e) {
+		} catch (SecurityException e) {
+		} catch (IllegalArgumentException e) {
+		}
+		try {
+			return (TextView)mToolBar.getChildAt(1);
+		}catch(Throwable e){
+
+		}
+		return null;
+	}
+	public static android.support.v7.widget.Toolbar getToolbar(Activity decor){
+		int[] ids=new int[]{R.id.appbar,R.id.toolbar,R.id.toolbar_layout,R.id.action_bar};
+		for(int id:ids){
+			View v=decor.getWindow().getDecorView().findViewById(id);
+			if(v instanceof android.support.v7.widget.Toolbar){
+				return (android.support.v7.widget.Toolbar)v;
+			}
+		}
+		return null;
 	}
 }
