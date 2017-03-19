@@ -16,7 +16,7 @@ import com.nao20010128nao.Wisecraft.misc.*;
 import java.io.*;
 import java.util.*;
 
-import drawable;
+import com.nao20010128nao.MaterialIcons.R.drawable;
 
 public class MainActivity extends MainActivityBase1
 {
