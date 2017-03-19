@@ -14,7 +14,7 @@
 		<item name="android:buttonStyle">@style/AppButton</item>-->
 	</style>
 	<style name="AppAlertDialog" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
-		<--<item name="colorPrimary">@color/upd_2</item>
+		<!--<item name="colorPrimary">@color/upd_2</item>
 		<item name="colorAccent">@color/upd_2</item>
 		<item name="android:buttonStyle">@style/AppButton</item>-->
 	</style>
