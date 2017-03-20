@@ -328,7 +328,7 @@ public class CompatUtils {
 		return null;
 	}
 	public static android.support.v7.widget.Toolbar getToolbar(Activity decor){
-		int[] ids=new int[]{R.id.appbar,R.id.toolbar,R.id.toolbar_layout,R.id.action_bar};
+		int[] ids=new int[]{R.id.toolbar,R.id.toolbar_layout,R.id.action_bar};
 		for(int id:ids){
 			View v=decor.getWindow().getDecorView().findViewById(id);
 			if(v instanceof android.support.v7.widget.Toolbar){
