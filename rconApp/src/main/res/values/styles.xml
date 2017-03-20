@@ -11,12 +11,10 @@
 		<item name="colorPrimary">@color/mainColor</item>
 		<item name="colorAccent">@color/mainColor</item>
 		<item name="android:windowContentOverlay">@null</item>
-		<item name="android:buttonStyle">@style/AppButton</item>-->
 	</style>
 	<style name="AppAlertDialog" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
 		<item name="colorPrimary">@color/mainColor</item>
 		<item name="colorAccent">@color/mainColor</item>
-		<item name="android:buttonStyle">@style/AppButton</item>-->
 	</style>
 	
 	<style name="AppTheme.NoActionBar" parent="AppTheme">
