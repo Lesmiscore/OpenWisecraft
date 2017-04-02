@@ -402,9 +402,6 @@ public class Utils extends PingerUtils{
 	public static <T> List<T> emptyList(){
 		return Factories.arrayList();
 	}
-	public static SharedPreferences getPreferences(Context c){
-		return PreferenceManager.getDefaultSharedPreferences(c);
-	}
 	public static String encodeForServerInfo(ServerStatus s){
 		byte[] data=PingSerializeProvider.dumpServerForFile(s);
 		return Base64.encodeToString(data, ServerInfoActivity.BASE64_FLAGS);

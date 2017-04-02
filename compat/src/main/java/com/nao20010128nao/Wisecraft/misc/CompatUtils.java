@@ -4,6 +4,7 @@ import android.app.*;
 import android.content.*;
 import android.content.pm.*;
 import android.net.*;
+import android.preference.*;
 import android.text.*;
 import android.util.*;
 import android.view.*;
@@ -305,5 +306,8 @@ public class CompatUtils {
 			}
 		}
 		return null;
+	}
+	public static SharedPreferences getPreferences(Context c){
+		return PreferenceManager.getDefaultSharedPreferences(c);
 	}
 }
