@@ -104,6 +104,16 @@ public class ThemePatcher{
 			)
 		);
 		themes.put(
+			OpenSourceActivity2.class,
+			new Themes(
+				R.style.AppTheme_OpenSource,
+				R.style.AppTheme_OpenSource,
+				R.style.AppTheme_OpenSource,
+				R.style.AppTheme_OpenSource,
+				R.style.AppTheme_OpenSource
+			)
+		);
+		themes.put(
 			AboutAppActivity.class,
 			new Themes(
 				R.style.AppTheme_OpenSource,
