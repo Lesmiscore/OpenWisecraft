@@ -159,7 +159,15 @@ public abstract class ServerListActivityBase7 extends ServerListActivityBaseFiel
 					p1.willDelete.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
 							public void onCheckedChanged(android.widget.CompoundButton p1, boolean state){
 								domainChecked.set(p2,state);
-								notifyItemChanged(p2);
+								runOnUiThread(new Runnable(){
+									public void run(){
+										try{
+											notifyItemChanged(p2);
+										}catch(Throwable e){
+											DebugWriter.writeToI("ServerListActivityBase7",e);
+										}
+									}
+								});
 							}
 						});
 				}

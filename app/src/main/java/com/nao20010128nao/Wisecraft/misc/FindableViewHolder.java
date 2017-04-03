@@ -11,6 +11,9 @@ public class FindableViewHolder extends RecyclerView.ViewHolder
 		return itemView.findViewById(resId);
 	}
 	public <T extends View> T findTypedViewById(int resId) {
-		return (T)itemView.findViewById(resId);
+		return (T)findViewById(resId);
+	}
+	public <T extends View> T find(int resId) {
+		return findTypedViewById(resId);
 	}
 }
