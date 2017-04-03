@@ -163,7 +163,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			rv.setAdapter(sl = new ServerList(this));
 		}
 		rv.setLongClickable(true);
-		rv.setItemAnimator(new LandingAnimator());
 		wd = new WorkingDialog(this);
         if (fetchNetworkState2() == FetchNetworkStateResult.WIFI)
             spp.online();
