@@ -201,7 +201,7 @@ dependencies {
 	compile files('libs/commons-codec-1.10.jar')
 	compile files('libs/jsocks.jar')
 	
-	compile('com.mikepenz:materialdrawer:+') {
+	compile('com.mikepenz:materialdrawer:5.7.+') {
 		transitive = true
 	}
 	//These lines are required to write code using AIDE. Please don't remove them.
