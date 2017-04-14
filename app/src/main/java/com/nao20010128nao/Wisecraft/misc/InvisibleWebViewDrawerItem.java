@@ -17,8 +17,8 @@ public class InvisibleWebViewDrawerItem extends AbstractDrawerItem<InvisibleWebV
     }
 	
 	@Override
-	public InvisibleWebViewDrawerItem.ViewHolder getViewHolder(ViewGroup parent) {
-		View v=LayoutInflater.from(parent.getContext()).inflate(getLayoutRes(),parent,false);
+	public InvisibleWebViewDrawerItem.ViewHolder getViewHolder(View parent) {
+		View v=LayoutInflater.from(parent.getContext()).inflate(getLayoutRes(),(ViewGroup)parent,false);
 		return new ViewHolder(v);
 	}
 
