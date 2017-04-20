@@ -450,6 +450,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 										case 1:
 											startRemoveDomainsActionMode();
 											break;
+										case 2:
+											removeOfflines();
+											break;
 									}
 								}
 							})
@@ -965,6 +968,22 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		sl.remove(s);
 		saveServers();
 		statLayout.removeStatus(ofs);
+	}
+	
+	public void removeOfflines(){
+		new AlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
+			.setTitle(R.string.load_typepath_simple)
+			.setMessage(R.string.auSure)
+			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
+				public void onClick(DialogInterface di, int w) {
+					for(Server s:selected){
+						if(!(s instanceof ServerStatus)){
+							sl.remove(s);
+						}
+					}
+				}
+			})
+			.show();
 	}
 
     private void startEditMode() {

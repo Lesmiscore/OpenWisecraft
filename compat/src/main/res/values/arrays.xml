@@ -28,6 +28,7 @@
 	<string-array name="serverAddSubMenu">
 		<item>@string/add.select</item>
 		<item>Remove unused domains</item>
+		<item>Remove offline servers</item>
 	</string-array>
 
 
