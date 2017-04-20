@@ -104,7 +104,7 @@ public abstract class ServerListActivityBase7 extends ServerListActivityBaseFiel
 		HashMultimap<String,Server> hmm=HashMultimap.<String,Server>create();
 		for(Server s:getServers()){
 			String ip=s.ip.toLowerCase();
-			if(!(ip.matches(Constant.IPV4_PATTERN)|ip.matches(Constant.IPV6_PATTERN)|"localhost".equalsIgnoreCase(ip))){
+			if(!(ip.matches(Constant.IPV4_PATTERN)||ip.matches(Constant.IPV6_PATTERN)||"localhost".equalsIgnoreCase(ip))){
 				hmm.put(ip,s);
 			}
 		}
