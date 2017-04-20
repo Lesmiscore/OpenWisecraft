@@ -972,11 +972,11 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	
 	public void removeOfflines(){
 		new AlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
-			.setTitle(R.string.load_typepath_simple)
+			//.setTitle(R.string.load_typepath_simple)
 			.setMessage(R.string.auSure)
-			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
+			.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener(){
 				public void onClick(DialogInterface di, int w) {
-					for(Server s:selected){
+					for(Server s:list){
 						if(!(s instanceof ServerStatus)){
 							sl.remove(s);
 						}
