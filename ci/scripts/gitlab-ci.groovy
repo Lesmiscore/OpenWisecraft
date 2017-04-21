@@ -61,7 +61,7 @@ mainLast.stage='postBuild'
 mainLast.script=[
       'unzip app-release.apk -d unzippedApkA > /dev/null',
       '\$ANDROID_HOME/build-tools/25.0.0/dexdump -d unzippedApkA/classes.dex > dexdump-app.txt',
-      'unzip rconApp-release.apk -d unzippedApkB > /dev/null".toString(),
+      'unzip rconApp-release.apk -d unzippedApkB > /dev/null',
       '\$ANDROID_HOME/build-tools/25.0.0/dexdump -d unzippedApkB/classes.dex > dexdump-rcon.txt',
       'unzip rconPassCrack-release.apk -d unzippedApkC > /dev/null',
       '\$ANDROID_HOME/build-tools/25.0.0/dexdump -d unzippedApkC/classes.dex > dexdump-rconPC.txt',
