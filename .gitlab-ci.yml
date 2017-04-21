@@ -25,7 +25,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -48,7 +49,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -71,7 +73,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -94,7 +97,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -117,7 +121,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -140,7 +145,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -163,7 +169,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -186,7 +193,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -210,7 +218,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -234,7 +243,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -257,7 +267,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "rcon",
         "variables": {
@@ -280,7 +291,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "rcon",
         "variables": {
@@ -303,7 +315,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "rcon",
         "variables": {
@@ -326,7 +339,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -349,7 +363,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -372,7 +387,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -395,7 +411,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -418,7 +435,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -441,7 +459,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -464,7 +483,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -487,7 +507,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -511,7 +532,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -535,7 +557,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -558,7 +581,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "rcon",
         "variables": {
@@ -581,7 +605,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "rcon",
         "variables": {
@@ -604,7 +629,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "rcon",
         "variables": {
@@ -627,7 +653,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -650,7 +677,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -673,7 +701,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -696,7 +725,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -719,7 +749,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -742,7 +773,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -765,7 +797,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -788,7 +821,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -812,7 +846,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -836,7 +871,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -859,7 +895,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "rcon",
         "variables": {
@@ -882,7 +919,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "rcon",
         "variables": {
@@ -905,7 +943,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "rcon",
         "variables": {
@@ -928,7 +967,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -951,7 +991,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -974,7 +1015,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -997,7 +1039,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -1020,7 +1063,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -1043,7 +1087,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -1066,7 +1111,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -1089,7 +1135,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -1113,7 +1160,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -1137,7 +1185,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "app",
         "variables": {
@@ -1160,7 +1209,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "rcon",
         "variables": {
@@ -1183,7 +1233,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "rcon",
         "variables": {
@@ -1206,7 +1257,8 @@
                 "*/build/outputs/mapping/*/*.txt",
                 "*/build/generated/source/*",
                 "autogen-*.*"
-            ]
+            ],
+            "when": "always"
         },
         "stage": "rcon",
         "variables": {
@@ -1247,7 +1299,12 @@
         "artifacts": {
             "paths": [
                 "test.gitlab-ci.yml"
-            ]
-        }
+            ],
+            "when": "always"
+        },
+        "when": "always",
+        "dependencies": [
+            
+        ]
     }
 }
