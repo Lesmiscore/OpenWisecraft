@@ -53,3 +53,5 @@
 
 -allowaccessmodification
 -optimizationpasses 10
+
+-useuniqueclassmembernames
