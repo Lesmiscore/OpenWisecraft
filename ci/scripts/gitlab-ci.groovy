@@ -32,6 +32,7 @@ def preScript=[
             this["app$it$split$ssv".toString()].artifacts.when='always'
             this["app$it$split$ssv".toString()].stage='app'
             this["app$it$split$ssv".toString()].variables.TASK=":app:assemble$it".toString()
+            this["app$it$split$ssv".toString()].dependencies=[]
         }
         def pre=["","Shrink"]
         pre.each{
@@ -40,6 +41,7 @@ def preScript=[
             this["app${it}Pre$split$ssv".toString()].artifacts.when='always'
             this["app${it}Pre$split$ssv".toString()].stage='app'
             this["app${it}Pre$split$ssv".toString()].variables.TASK=":app:assemble${it}Pre".toString()
+            this["app${it}Pre$split$ssv".toString()].dependencies=[]
         }
         // rcon
         def rcon=["App":["Release","Pre"],"PassCrack":["Release"]]
@@ -51,6 +53,7 @@ def preScript=[
                 this["rcon$module$build$split$ssv".toString()].artifacts.when='always'
                 this["rcon$module$build$split$ssv".toString()].stage='rcon'
                 this["rcon$module$build$split$ssv".toString()].variables.TASK=":rcon${module}:assemble$build".toString()
+                this["rcon$module$build$split$ssv".toString()].dependencies=[]
             }
         }
     }
