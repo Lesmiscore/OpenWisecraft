@@ -17,3 +17,4 @@ BuildConfig.java
 *BuildConfig*
 *.iml
 .idea/
+*/*.iml
