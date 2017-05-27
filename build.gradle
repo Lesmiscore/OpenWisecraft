@@ -35,10 +35,6 @@ printBoth(wisecraftBuild)
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-	ext{
-		supportLibVersion="25.3.1"
-		firebaseVersion="10.0.1"
-	}
 	repositories {
     	jcenter()
     	mavenCentral()
@@ -57,11 +53,7 @@ buildscript {
 }
 
 allprojects {
-	ext{
-		supportLibVersion="25.3.1"
-		firebaseVersion="10.0.1"
-	}
-    repositories {
+	repositories {
         jcenter()
 		mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
@@ -70,6 +62,13 @@ allprojects {
 		maven { url "https://raw.github.com/nao20010128nao/AndroidSupportRepo/master/m2repository" }
 		maven { url "https://raw.githubusercontent.com/nao20010128nao/MavenRepo/master/releases/" }
 		maven { url "https://jitpack.io" }
+	}
+}
+
+subprojects{
+	ext{
+		supportLibVersion="25.3.1"
+		firebaseVersion="10.0.1"
 	}
 }
 

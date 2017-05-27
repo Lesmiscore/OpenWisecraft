@@ -172,13 +172,13 @@ dependencies {
 	compile project(':collector')
 	compile project(':masterdetail')
 	
-	if(1)compile "com.android.support:recyclerview-v7:$ext.supportLibVersion"
-	if(1)compile "com.android.support:design:$ext.supportLibVersion"
-	if(1)compile "com.android.support:support-v4:$ext.supportLibVersion"
-	if(1)compile "com.android.support:appcompat-v7:$ext.supportLibVersion"
-	if(1)compile "com.android.support:cardview-v7:$ext.supportLibVersion"
-	if(1)compile "com.android.support:palette-v7:$ext.supportLibVersion"
-	if(1)compile "com.android.support:preference-v7:$ext.supportLibVersion"
+	if(1)compile "com.android.support:recyclerview-v7:$supportLibVersion"
+	if(1)compile "com.android.support:design:$supportLibVersion"
+	if(1)compile "com.android.support:support-v4:$supportLibVersion"
+	if(1)compile "com.android.support:appcompat-v7:$supportLibVersion"
+	if(1)compile "com.android.support:cardview-v7:$supportLibVersion"
+	if(1)compile "com.android.support:palette-v7:$supportLibVersion"
+	if(1)compile "com.android.support:preference-v7:$supportLibVersion"
 	compile 'com.android.support:multidex:1.0.1'
 	
 	compile 'com.google.code.gson:gson:2.8.0'
@@ -186,11 +186,11 @@ dependencies {
 	compile 'org.jsoup:jsoup:1.9.1'
 	compile 'org.eclipse.mylyn.github:org.eclipse.egit.github.core:3.4.0.201406110918-r'
 	compile 'com.mikhaellopez:circularimageview:3.0.2'
-	if(1)compile "com.google.firebase:firebase-core:$ext.firebaseVersion"
-	if(1)compile "com.google.firebase:firebase-storage:$ext.firebaseVersion"
-	if(1)compile "com.google.firebase:firebase-config:$ext.firebaseVersion"
-	if(1)compile "com.google.firebase:firebase-crash:$ext.firebaseVersion"
-	if(1)compile "com.google.firebase:firebase-messaging:$ext.firebaseVersion"
+	if(1)compile "com.google.firebase:firebase-core:$firebaseVersion"
+	if(1)compile "com.google.firebase:firebase-storage:$firebaseVersion"
+	if(1)compile "com.google.firebase:firebase-config:$firebaseVersion"
+	if(1)compile "com.google.firebase:firebase-crash:$firebaseVersion"
+	if(1)compile "com.google.firebase:firebase-messaging:$firebaseVersion"
 	compile "biz.laenger.android:vpbs:0.0.2"
 	compile 'com.github.hotchemi:permissionsdispatcher:2.3.2'
 	compile 'com.google.guava:guava:19.0'
