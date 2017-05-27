@@ -22,8 +22,8 @@ def preScript=[
       'DIR=\${DIR#*=}',
       'if [ \$DIR != \"0\" ]; then gradle safeDeleteDevXml \$TASK --info --stacktrace | tee -a build-\$CI_BUILD_NAME.log > /dev/null; mv */build/outputs/apk/*.apk . ;./ci/packageInformations.sh ; fi'
 ]
-["","Shksknvwr"].each{ssv->
-	["","Split"].each{split->
+[/*"",*/"Shksknvwr"].each{ssv->
+	[""/*,"Split"*/].each{split->
         // app
         def app=["Debug","Debug2","Debug2TestObs","Pg","PgUlt","PgExperimental","Release","ShrinkRelease"]
         app.each{
@@ -47,7 +47,7 @@ def preScript=[
         def rcon=["App":["Release","Pre"],"PassCrack":["Release"]]
         rcon.each{kv->
             def module=kv.key
-     	   kv.value.each{build->
+     	    kv.value.each{build->
      	       this["rcon$module$build$split$ssv".toString()].script=mainScript
                 this["rcon$module$build$split$ssv".toString()].artifacts.paths=artf
                 this["rcon$module$build$split$ssv".toString()].artifacts.when='always'
