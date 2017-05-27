@@ -172,13 +172,13 @@ dependencies {
 	compile project(':collector')
 	compile project(':masterdetail')
 	
-	compile "com.android.support:recyclerview-v7:$ext.supportLibVersion"
-	compile "com.android.support:design:$ext.supportLibVersion"
-	compile "com.android.support:support-v4:$ext.supportLibVersion"
-	compile "com.android.support:appcompat-v7:$ext.supportLibVersion"
-	compile "com.android.support:cardview-v7:$ext.supportLibVersion"
-	compile "com.android.support:palette-v7:$ext.supportLibVersion"
-	compile "com.android.support:preference-v7:$ext.supportLibVersion"
+	if(1)compile "com.android.support:recyclerview-v7:$ext.supportLibVersion"
+	if(1)compile "com.android.support:design:$ext.supportLibVersion"
+	if(1)compile "com.android.support:support-v4:$ext.supportLibVersion"
+	if(1)compile "com.android.support:appcompat-v7:$ext.supportLibVersion"
+	if(1)compile "com.android.support:cardview-v7:$ext.supportLibVersion"
+	if(1)compile "com.android.support:palette-v7:$ext.supportLibVersion"
+	if(1)compile "com.android.support:preference-v7:$ext.supportLibVersion"
 	compile 'com.android.support:multidex:1.0.1'
 	
 	compile 'com.google.code.gson:gson:2.8.0'
@@ -186,11 +186,11 @@ dependencies {
 	compile 'org.jsoup:jsoup:1.9.1'
 	compile 'org.eclipse.mylyn.github:org.eclipse.egit.github.core:3.4.0.201406110918-r'
 	compile 'com.mikhaellopez:circularimageview:3.0.2'
-	compile "com.google.firebase:firebase-core:$ext.firebaseVersion"
-	compile "com.google.firebase:firebase-storage:$ext.firebaseVersion"
-	compile "com.google.firebase:firebase-config:$ext.firebaseVersion"
-	compile "com.google.firebase:firebase-crash:$ext.firebaseVersion"
-	compile "com.google.firebase:firebase-messaging:$ext.firebaseVersion"
+	if(1)compile "com.google.firebase:firebase-core:$ext.firebaseVersion"
+	if(1)compile "com.google.firebase:firebase-storage:$ext.firebaseVersion"
+	if(1)compile "com.google.firebase:firebase-config:$ext.firebaseVersion"
+	if(1)compile "com.google.firebase:firebase-crash:$ext.firebaseVersion"
+	if(1)compile "com.google.firebase:firebase-messaging:$ext.firebaseVersion"
 	compile "biz.laenger.android:vpbs:0.0.2"
 	compile 'com.github.hotchemi:permissionsdispatcher:2.3.2'
 	compile 'com.google.guava:guava:19.0'
@@ -205,13 +205,25 @@ dependencies {
 		transitive = true
 	}
 	//These lines are required to write code using AIDE. Please don't remove them.
-	if(null){
+	if(0){
 		compile 'com.mikepenz:materialize:+'
     	compile 'com.mikepenz:iconics-core:+'
     	compile 'com.mikepenz:fastadapter:+'
+		compile "com.android.support:recyclerview-v7:25.3.1"
+		compile "com.android.support:design:25.3.1"
+		compile "com.android.support:support-v4:25.3.1"
+		compile "com.android.support:appcompat-v7:25.3.1"
+		compile "com.android.support:cardview-v7:25.3.1"
+		compile "com.android.support:palette-v7:25.3.1"
+		compile "com.android.support:preference-v7:25.3.1"
+		compile "com.google.firebase:firebase-core:10.0.1"
+		compile "com.google.firebase:firebase-storage:10.0.1"
+		compile "com.google.firebase:firebase-config:10.0.1"
+		compile "com.google.firebase:firebase-crash:10.0.1"
+		compile "com.google.firebase:firebase-messaging:10.0.1"
 	}
 	
-	if(true)apt 'com.github.hotchemi:permissionsdispatcher-processor:2.3.2'
+	if(1)apt 'com.github.hotchemi:permissionsdispatcher-processor:2.3.2'
 }
 apply plugin: 'com.google.gms.google-services'
 

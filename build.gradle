@@ -39,7 +39,7 @@ buildscript {
 		supportLibVersion="25.3.1"
 		firebaseVersion="10.0.1"
 	}
-    repositories {
+	repositories {
     	jcenter()
     	mavenCentral()
     	maven { url "https://repo.eclipse.org/content/repositories/egit-releases/" }
@@ -57,6 +57,10 @@ buildscript {
 }
 
 allprojects {
+	ext{
+		supportLibVersion="25.3.1"
+		firebaseVersion="10.0.1"
+	}
     repositories {
         jcenter()
 		mavenCentral()
