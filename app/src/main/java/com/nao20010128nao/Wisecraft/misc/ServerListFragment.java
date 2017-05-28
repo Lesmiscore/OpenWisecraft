@@ -3,6 +3,7 @@ import android.graphics.*;
 import android.graphics.drawable.*;
 import android.os.*;
 import android.support.v4.app.*;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.*;
 import android.util.*;
 import android.view.*;
@@ -32,7 +33,7 @@ public class ServerListFragment<T extends FragmentActivity> extends BaseFragment
 		super.onResume();
 		rv.setAdapter(slra);
 		setLayoutModeInternal(pref.getInt("serverListStyle2",0));
-		rv.setBackgroundDrawable(slsl.load());
+		ViewCompat.setBackground(rv,slsl.load());
 	}
 
 	@Override
