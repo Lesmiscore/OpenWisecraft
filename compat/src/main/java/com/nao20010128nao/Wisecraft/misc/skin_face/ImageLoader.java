@@ -41,9 +41,7 @@ public class ImageLoader
 						}
 						continue;
 					} finally {
-						try {
-							if (is != null)is.close();
-						} catch (IOException e) {}
+						CompatUtils.safeClose(is);
 					}
 					try {
 						dat.getValue().onSuccess(bmp, dat.getKey());

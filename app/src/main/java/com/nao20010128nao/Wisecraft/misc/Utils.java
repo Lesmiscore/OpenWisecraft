@@ -73,8 +73,7 @@ public class Utils extends PingerUtils{
 				os.write(buf, 0, r);
 			}
 		} finally {
-			is.close();
-			os.close();
+			CompatUtils.safeClose(is,os);
 		}
 	}
 	

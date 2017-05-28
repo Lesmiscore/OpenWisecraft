@@ -73,7 +73,7 @@ public class RconModule_Utils{
 				os.write(buf, 0, r);
 			}
 		} finally {
-			is.close();
+			CompatUtils.safeClose(is);
 		}
 		return os.toByteArray();
 	}

@@ -61,12 +61,7 @@ public abstract class OpenSourceActivity2Base extends AppCompatActivity
 			}catch(Throwable e){
 				WisecraftError.report("OpenSourceActivity2Base",e);
 			}finally{
-				try {
-					if (r != null)r.close();
-				} catch (IOException e) {}
-				try {
-					if (w != null)w.close();
-				} catch (IOException e) {}
+				CompatUtils.safeClose(r,w);
 			}
 			return null;
 		}
@@ -96,9 +91,7 @@ public abstract class OpenSourceActivity2Base extends AppCompatActivity
 				WisecraftError.report("OpenSourceActivity2Base",e);
 				return null;
 			}finally{
-				try {
-					if (r != null)r.close();
-				} catch (IOException e) {}
+				CompatUtils.safeClose(r);
 			}
 			return w.toString();
 		}

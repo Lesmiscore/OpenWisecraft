@@ -247,9 +247,7 @@ public class CompatUtils {
 		} catch (Throwable e) {
 			return false;
 		} finally {
-			try {
-				if (fos != null)fos.close();
-			} catch (IOException e) {}
+			safeClose(fos);
 		}
 	}
 	public static byte[] readWholeFileInBytes(File f) {
@@ -267,9 +265,7 @@ public class CompatUtils {
 		} catch (Throwable e) {
 			return null;
 		} finally {
-			try {
-				if (fis != null)fis.close();
-			} catch (IOException e) {}
+			safeClose(fis);
 		}
 	}
 	public static Context wrapContextForPreference(Context c){
@@ -309,5 +305,16 @@ public class CompatUtils {
 	}
 	public static SharedPreferences getPreferences(Context c){
 		return PreferenceManager.getDefaultSharedPreferences(c);
+	}
+
+	public static void safeClose(Closeable c){
+		if(c==null)return;
+		try {
+			c.close();
+		} catch (IOException e) {}
+	}
+	public static void safeClose(Closeable... cs){
+		if(cs==null)return;
+		for(Closeable c:cs)safeClose(c);
 	}
 }
