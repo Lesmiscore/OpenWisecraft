@@ -3,7 +3,6 @@ package com.nao20010128nao.Wisecraft.misc;
 import android.view.*;
 import android.webkit.*;
 import android.widget.*;
-import com.mikepenz.fastadapter.utils.*;
 import com.mikepenz.materialdrawer.model.*;
 import com.nao20010128nao.Wisecraft.*;
 import java.util.*;
@@ -16,11 +15,12 @@ public class InvisibleWebViewDrawerItem extends AbstractDrawerItem<InvisibleWebV
     public int getLayoutRes() {
         return R.layout.drawer_item_invisible_webview;
     }
-
-    @Override
-    public ViewHolderFactory<InvisibleWebViewDrawerItem.ViewHolder> getFactory() {
-        return new ItemFactory();//v->new ViewHolder(v)
-    }
+	
+	@Override
+	public InvisibleWebViewDrawerItem.ViewHolder getViewHolder(View parent) {
+		View v=LayoutInflater.from(parent.getContext()).inflate(getLayoutRes(),(ViewGroup)parent,false);
+		return new ViewHolder(v);
+	}
 
     @Override
     public int getType() {
@@ -46,11 +46,6 @@ public class InvisibleWebViewDrawerItem extends AbstractDrawerItem<InvisibleWebV
 
 
 
-    public static class ItemFactory implements ViewHolderFactory<ViewHolder>{
-        public ViewHolder create(View v){
-            return new ViewHolder(v);
-        }
-    }
     
     public static class ViewHolder extends FindableViewHolder{
         public FrameLayout container;
