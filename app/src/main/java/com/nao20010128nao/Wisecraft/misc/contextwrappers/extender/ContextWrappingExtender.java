@@ -2,6 +2,7 @@ package com.nao20010128nao.Wisecraft.misc.contextwrappers.extender;
 import android.content.*;
 import android.content.res.*;
 import android.preference.*;
+import android.support.v4.content.ContextCompat;
 import android.util.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
@@ -79,13 +80,13 @@ public class ContextWrappingExtender extends ContextWrapper
 			// color override
 			switch(id){
 				case R.color.stat_ok:
-					return pref.getInt("colorStatOk",getBaseContext().getColor(R.color.stat_ok));
+					return pref.getInt("colorStatOk",ContextCompat.getColor(getBaseContext(),R.color.stat_ok));
 				case R.color.stat_pending:
-					return pref.getInt("colorStatPending",getBaseContext().getColor(R.color.stat_pending));
+					return pref.getInt("colorStatPending",ContextCompat.getColor(getBaseContext(),R.color.stat_pending));
 				case R.color.stat_error:
-					return pref.getInt("colorStatError",getBaseContext().getColor(R.color.stat_error));
+					return pref.getInt("colorStatError",ContextCompat.getColor(getBaseContext(),R.color.stat_error));
 				case R.color.mainColor:case R.color.mainColor_Dark:
-					//return pref.getInt("colorMainColor",getBaseContext().getColor(R.color.mainColor));
+					//return pref.getInt("colorMainColor",ContextCompat.getColor(getBaseContext(),R.color.mainColor));
 				default:
 					return super.getColor(id, theme);
 			}
