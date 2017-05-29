@@ -41,15 +41,15 @@ android{
 }
 
 dependencies {
-	compile "com.android.support:support-compat:$supportLibVersion"
-	compile "com.android.support:support-fragment:$supportLibVersion"
-	compile "com.android.support:appcompat-v7:$supportLibVersion"
-	compile "com.android.support:design:$supportLibVersion"
-	compile "com.android.support:cardview-v7:$supportLibVersion"
-	compile "com.android.support:preference-v7:$supportLibVersion"
+	if(1)compile "com.android.support:support-compat:$supportLibVersion"
+	if(1)compile "com.android.support:support-fragment:$supportLibVersion"
+	if(1)compile "com.android.support:appcompat-v7:$supportLibVersion"
+	if(1)compile "com.android.support:design:$supportLibVersion"
+	if(1)compile "com.android.support:cardview-v7:$supportLibVersion"
+	if(1)compile "com.android.support:preference-v7:$supportLibVersion"
 	
-	compile "com.google.firebase:firebase-config:$firebaseVersion"
-	compile "com.google.firebase:firebase-crash:$firebaseVersion"
+	if(1)compile "com.google.firebase:firebase-config:$firebaseVersion"
+	if(1)compile "com.google.firebase:firebase-crash:$firebaseVersion"
 	
 	compile 'com.google.code.gson:gson:2.8.0'
 	compile 'com.github.fiskurgit:MarkdownView:1.1.0'
@@ -63,7 +63,7 @@ dependencies {
 		transitive = true
 	}
 	//These lines are required to write code using AIDE. Please not to remove them.
-	if(null){
+	if(0){
 		compile 'com.mikepenz:materialize:+'
     	compile 'com.mikepenz:iconics-core:+'
     	compile 'com.mikepenz:fastadapter:+'
