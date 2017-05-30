@@ -180,17 +180,18 @@ dependencies {
 	if(1)compile "com.android.support:palette-v7:$supportLibVersion"
 	if(1)compile "com.android.support:preference-v7:$supportLibVersion"
 	compile 'com.android.support:multidex:1.0.1'
+
+	if(1)compile "com.google.firebase:firebase-core:$firebaseVersion"
+	if(1)compile "com.google.firebase:firebase-storage:$firebaseVersion"
+	if(1)compile "com.google.firebase:firebase-config:$firebaseVersion"
+	if(1)compile "com.google.firebase:firebase-crash:$firebaseVersion"
+	if(1)compile "com.google.firebase:firebase-messaging:$firebaseVersion"
 	
 	compile 'com.google.code.gson:gson:2.8.0'
 	compile 'org.nanohttpd:nanohttpd:2.3.0'
 	compile 'org.jsoup:jsoup:1.9.1'
 	compile 'org.eclipse.mylyn.github:org.eclipse.egit.github.core:3.4.0.201406110918-r'
 	compile 'com.mikhaellopez:circularimageview:3.0.2'
-	if(1)compile "com.google.firebase:firebase-core:$firebaseVersion"
-	if(1)compile "com.google.firebase:firebase-storage:$firebaseVersion"
-	if(1)compile "com.google.firebase:firebase-config:$firebaseVersion"
-	if(1)compile "com.google.firebase:firebase-crash:$firebaseVersion"
-	if(1)compile "com.google.firebase:firebase-messaging:$firebaseVersion"
 	compile "biz.laenger.android:vpbs:0.0.2"
 	compile 'com.github.hotchemi:permissionsdispatcher:2.3.2'
 	compile 'com.google.guava:guava:19.0'
