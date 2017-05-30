@@ -872,12 +872,14 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		new Thread(){
 			public void run() {
 				ServerPingResult spr=null;
+				InputStream rdr=null;
 				try {
-					try(InputStream rdr=new BufferedInputStream(new FileInputStream(new File(fn)))){
-						spr = PingSerializeProvider.loadFromRawDumpFile(rdr);
-					}
+					rdr=new BufferedInputStream(new FileInputStream(new File(fn)));
+					spr = PingSerializeProvider.loadFromRawDumpFile(rdr);
 				} catch (Throwable e) {
 					WisecraftError.report("ServerListActivity#execOption#8",e);
+				}finally{
+					CompatUtils.safeClose(rdr);
 				}
 				final ServerStatus sv=new ServerStatus();
 				sv.ip="localhost";
