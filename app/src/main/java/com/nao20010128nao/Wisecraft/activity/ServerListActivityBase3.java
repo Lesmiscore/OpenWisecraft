@@ -17,24 +17,21 @@ abstract class ServerListActivityBase3 extends ServerListActivityBase4
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		addActivityResultReceiver(new DispatchActivityResult(){
-				@Override
-				public boolean dispatchActivityResult(int requestCode, int resultCode, Intent data,boolean consumed) {
-					if(localFileSelectResults.containsKey(requestCode)){
-						switch(resultCode){
-							case RESULT_OK:
-								localFileSelectResults.get(requestCode).onSelected(new File(data.getStringExtra("path")));
-								break;
-							case RESULT_CANCELED:
-								localFileSelectResults.get(requestCode).onSelectCancelled();
-								break;
-						}
-						localFileSelectResults.remove(requestCode);
-						return true;
-					}
-					return false;
-				}
-			});
+		addActivityResultReceiver((requestCode, resultCode, data, consumed) -> {
+            if(localFileSelectResults.containsKey(requestCode)){
+                switch(resultCode){
+                    case RESULT_OK:
+                        localFileSelectResults.get(requestCode).onSelected(new File(data.getStringExtra("path")));
+                        break;
+                    case RESULT_CANCELED:
+                        localFileSelectResults.get(requestCode).onSelectCancelled();
+                        break;
+                }
+                localFileSelectResults.remove(requestCode);
+                return true;
+            }
+            return false;
+        });
 	}
 	
 	@NeedsPermission({"android.permission.WRITE_EXTERNAL_STORAGE"})

@@ -11,6 +11,5 @@ public class SettingsDelegate{
 		}else{
 			a.startActivity(new Intent(a,FragmentSettingsActivity.class));
 		}
-		return;
 	}
 }

@@ -181,13 +181,11 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 			}
 			
 			background=findViewById(R.id.background);
-			background.setOnClickListener(new View.OnClickListener(){
-				public void onClick(View v){
-					if(behavior.getAllowUserDragging()){
-						behavior.setState(ViewPagerBottomSheetBehavior.STATE_HIDDEN);
-					}
-				}
-			});
+			background.setOnClickListener(v -> {
+                if(behavior.getAllowUserDragging()){
+                    behavior.setState(ViewPagerBottomSheetBehavior.STATE_HIDDEN);
+                }
+            });
 			background.setBackgroundColor(slsl.getBackgroundSimpleColor());
 			if (Build.VERSION.SDK_INT >= 21) {
 				getWindow().setStatusBarColor(0);
@@ -205,34 +203,28 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 			pin.setVisibility(View.GONE);
 			behavior.setAllowUserDragging(true);
 			pin.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_lock_open_black_48dp,Color.WHITE));//pinned
-			pin.setOnClickListener(new View.OnClickListener(){
-					public void onClick(View v){
-						behavior.setAllowUserDragging(!behavior.getAllowUserDragging());
-						if(behavior.getAllowUserDragging()){
-							pin.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_lock_open_black_48dp,Color.WHITE));//not pinned
-						}else{
-							pin.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_lock_black_48dp,Color.WHITE));//pinned
-						}
-					}
-				});
+			pin.setOnClickListener(v -> {
+                behavior.setAllowUserDragging(!behavior.getAllowUserDragging());
+                if(behavior.getAllowUserDragging()){
+                    pin.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_lock_open_black_48dp,Color.WHITE));//not pinned
+                }else{
+                    pin.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_lock_black_48dp,Color.WHITE));//pinned
+                }
+            });
 			if(getIntent().getBooleanExtra("bottomSheetPinned",false)){
 				pin.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_lock_black_48dp,Color.WHITE));//pinned
 				behavior.setAllowUserDragging(false);
-				new Handler().post(new Runnable(){
-						public void run(){
-							behavior.setState(ViewPagerBottomSheetBehavior.STATE_EXPANDED);
-							pin.show();
-						}
-					});
+				new Handler().post(() -> {
+                    behavior.setState(ViewPagerBottomSheetBehavior.STATE_EXPANDED);
+                    pin.show();
+                });
 			}
 		}
 		
-		new Handler().post(new Runnable(){
-			public void run(){
-				TextView tv=Utils.getActionBarTextView(Utils.getToolbar(ServerInfoActivityImpl.this));
-				if(tv!=null)tv.setTextColor(slsl.getTextColor());
-			}
-		});
+		new Handler().post(() -> {
+            TextView tv=Utils.getActionBarTextView(Utils.getToolbar(ServerInfoActivityImpl.this));
+            if(tv!=null)tv.setTextColor(slsl.getTextColor());
+        });
 	}
 
 	public void onBackPressed() {
@@ -400,26 +392,20 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				View dialogView_=getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
 				final EditText et_=(EditText)dialogView_.findViewById(R.id.filePath);
 				et_.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/pingresult.wisecraft-ping").toString());
-				dialogView_.findViewById(R.id.selectFile).setOnClickListener(new View.OnClickListener(){
-						public void onClick(View v) {
-							File f=new File(et_.getText().toString());
-							if ((!f.exists())|f.isFile())f = f.getParentFile();
-							ServerInfoActivityBase1PermissionsDispatcher.startChooseFileForOpenWithCheck(ServerInfoActivityImpl.this,f, new FileChooserResult(){
-									public void onSelected(File f) {
-										et_.setText(f.toString());
-									}
-									public void onSelectCancelled() {/*No-op*/}
-								});
-						}
-					});
+				dialogView_.findViewById(R.id.selectFile).setOnClickListener(v -> {
+                    File f=new File(et_.getText().toString());
+                    if ((!f.exists())|f.isFile())f = f.getParentFile();
+                    ServerInfoActivityBase1PermissionsDispatcher.startChooseFileForOpenWithCheck(ServerInfoActivityImpl.this,f, new FileChooserResult(){
+                            public void onSelected(File f) {
+                                et_.setText(f.toString());
+                            }
+                            public void onSelectCancelled() {/*No-op*/}
+                        });
+                });
 				new AlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
 					.setTitle(R.string.export_typepath_simple)
 					.setView(dialogView_)
-					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
-						public void onClick(DialogInterface di, int w) {
-							ServerInfoActivityImplPermissionsDispatcher.exportCurrentServerStatusWithCheck(ServerInfoActivityImpl.this,et_.getText().toString());
-						}
-					})
+					.setPositiveButton(android.R.string.ok, (di, w) -> ServerInfoActivityImplPermissionsDispatcher.exportCurrentServerStatusWithCheck(ServerInfoActivityImpl.this,et_.getText().toString()))
 					.show();
 				break;
 			case 2://Update
@@ -441,7 +427,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 					} else {
 						ll = (LinearLayout)TheApplication.instance.getLayoutInflater().inflate(R.layout.server_info_show_title, null);
 					}
-					ll.setBackgroundDrawable(slsl.load());
+					ViewCompat.setBackground(ll,slsl.load());
 				}
 				TextView serverNameView=(TextView)ll.findViewById(R.id.serverName);
 				serverNameView.setText(getTitle());
@@ -592,12 +578,10 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 					public void onPostExecute(final Bitmap bmp) {
 						skinFaceImages.add(bmp);
 						faces.put(player, bmp);
-						runOnUiThread(new Runnable(){
-								public void run() {
-									notifyItemChanged(indexOf(player));
-									Log.d("face", "ok:" + player);
-								}
-							});
+						runOnUiThread(() -> {
+                            notifyItemChanged(indexOf(player));
+                            Log.d("face", "ok:" + player);
+                        });
 					}
 				}.execute(bmp);
 			}
@@ -655,7 +639,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 		boolean pcMode;
 		
 		public PlayerNamesListAdapter(){
-			super(new ArrayList<String>());
+			super(new ArrayList<>());
 		}
 
 		@Override
@@ -679,13 +663,11 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				TypedArray ta=obtainStyledAttributes(new int[]{R.attr.selectableItemBackground});
 				parent.itemView.setBackground(ta.getDrawable(0));
 				ta.recycle();
-				Utils.applyHandlersForViewTree(parent.itemView,new View.OnClickListener(){
-						public void onClick(View v){
-							MCPlayerInfoDialog dialog=new MCPlayerInfoDialog(ServerInfoActivityImpl.this);
-							dialog.setPlayer(name);
-							dialog.show();
-						}
-					},null);
+				Utils.applyHandlersForViewTree(parent.itemView, v -> {
+                    MCPlayerInfoDialog dialog=new MCPlayerInfoDialog(ServerInfoActivityImpl.this);
+                    dialog.setPlayer(name);
+                    dialog.show();
+                },null);
 			}else{
 				parent.itemView.setBackground(null);
 				Utils.applyHandlersForViewTree(parent.itemView,null,null);
@@ -912,10 +894,10 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 
 					infos.clear();
 					List<Map.Entry<String,String>> data=new ArrayList<>();
-					data.add(new KVP<String,String>(getString(R.string.pc_maxPlayers), rep.players.max + ""));
-					data.add(new KVP<String,String>(getString(R.string.pc_nowPlayers), rep.players.online + ""));
-					data.add(new KVP<String,String>(getString(R.string.pc_softwareVersion), rep.version.name));
-					data.add(new KVP<String,String>(getString(R.string.pc_protocolVersion), rep.version.protocol + ""));
+					data.add(new KVP<>(getString(R.string.pc_maxPlayers), rep.players.max + ""));
+					data.add(new KVP<>(getString(R.string.pc_nowPlayers), rep.players.online + ""));
+					data.add(new KVP<>(getString(R.string.pc_softwareVersion), rep.version.name));
+					data.add(new KVP<>(getString(R.string.pc_protocolVersion), rep.version.protocol + ""));
 					infos.addAll(data);
 
 					if (rep.favicon != null) {
@@ -935,10 +917,10 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 
 					infos.clear();
 					List<Map.Entry<String,String>> data=new ArrayList<>();
-					data.add(new KVP<String,String>(getString(R.string.pc_maxPlayers), rep.players.max + ""));
-					data.add(new KVP<String,String>(getString(R.string.pc_nowPlayers), rep.players.online + ""));
-					data.add(new KVP<String,String>(getString(R.string.pc_softwareVersion), rep.version.name));
-					data.add(new KVP<String,String>(getString(R.string.pc_protocolVersion), rep.version.protocol + ""));
+					data.add(new KVP<>(getString(R.string.pc_maxPlayers), rep.players.max + ""));
+					data.add(new KVP<>(getString(R.string.pc_nowPlayers), rep.players.online + ""));
+					data.add(new KVP<>(getString(R.string.pc_softwareVersion), rep.version.name));
+					data.add(new KVP<>(getString(R.string.pc_protocolVersion), rep.version.protocol + ""));
 					infos.addAll(data);
 
 					if (rep.favicon != null) {
@@ -963,10 +945,10 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 
 					infos.clear();
 					List<Map.Entry<String,String>> data=new ArrayList<>();
-					data.add(new KVP<String,String>(getString(R.string.pc_maxPlayers), players.get("max").getAsInt() + ""));
-					data.add(new KVP<String,String>(getString(R.string.pc_nowPlayers), players.get("online").getAsInt() + ""));
-					data.add(new KVP<String,String>(getString(R.string.pc_softwareVersion), version.get("name").getAsString()));
-					data.add(new KVP<String,String>(getString(R.string.pc_protocolVersion), version.get("protocol").getAsInt() + ""));
+					data.add(new KVP<>(getString(R.string.pc_maxPlayers), players.get("max").getAsInt() + ""));
+					data.add(new KVP<>(getString(R.string.pc_nowPlayers), players.get("online").getAsInt() + ""));
+					data.add(new KVP<>(getString(R.string.pc_softwareVersion), version.get("name").getAsString()));
+					data.add(new KVP<>(getString(R.string.pc_protocolVersion), version.get("protocol").getAsInt() + ""));
 					infos.addAll(data);
 
 					if (rep.has("favicon")) {
@@ -1006,7 +988,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				lv.setHasFixedSize(false);
 
 
-				pluginNames = new SimpleRecyclerAdapter<String>(getParentActivity());
+				pluginNames = new SimpleRecyclerAdapter<>(getParentActivity());
 				pluginNames.setHasStableIds(false);
 				lv.setAdapter(pluginNames);
 				ServerStatus localStat=getParentActivity().localStat;
@@ -1021,7 +1003,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 					if (fs.getDataAsMap().containsKey("plugins")) {
 						String[] data=fs.getDataAsMap().get("plugins").split("\\: ");
 						if (data.length >= 2) {
-							ArrayList<String> plugins=new ArrayList<String>(Arrays.<String>asList(data[1].split("\\; ")));
+							ArrayList<String> plugins= new ArrayList<>(Arrays.<String>asList(data[1].split("\\; ")));
 							if (pref.getBoolean("sortPluginNames", false))
 								Collections.sort(plugins);
 							pluginNames.addAll(plugins);
@@ -1114,16 +1096,16 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				lv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
 				lv.setHasFixedSize(false);
 
-				KVRecyclerAdapter<String,String> adap=new KVRecyclerAdapter<String,String>(getActivity());
+				KVRecyclerAdapter<String,String> adap= new KVRecyclerAdapter<>(getActivity());
 				adap.setHasStableIds(false);
 				lv.setAdapter(adap);
 				List<Map.Entry<String,String>> otm=new ArrayList<>();
 				String[] values=result.getRaw().split("\\;");
-				otm.add(new KVP<String,String>(getString(R.string.ucp_serverName),      values[1]));
-				otm.add(new KVP<String,String>(getString(R.string.ucp_protocolVersion), values[2]));
-				otm.add(new KVP<String,String>(getString(R.string.ucp_mcpeVersion),     values[3]));
-				otm.add(new KVP<String,String>(getString(R.string.ucp_nowPlayers),      values[4]));
-				otm.add(new KVP<String,String>(getString(R.string.ucp_maxPlayers),      values[5]));
+				otm.add(new KVP<>(getString(R.string.ucp_serverName), values[1]));
+				otm.add(new KVP<>(getString(R.string.ucp_protocolVersion), values[2]));
+				otm.add(new KVP<>(getString(R.string.ucp_mcpeVersion), values[3]));
+				otm.add(new KVP<>(getString(R.string.ucp_nowPlayers), values[4]));
+				otm.add(new KVP<>(getString(R.string.ucp_maxPlayers), values[5]));
 				adap.addAll(otm);
 			} catch (Throwable e) {
 				WisecraftError.report("ServerInfoActivity.UcpDetailsFragment",e);

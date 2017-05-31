@@ -20,24 +20,21 @@ abstract class ServerListActivityBase5 extends ServerListActivityBase6
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		addActivityResultReceiver(new DispatchActivityResult(){
-				@Override
-				public boolean dispatchActivityResult(int requestCode, int resultCode, Intent data,boolean consumed) {
-					if(externalFileSelectResults.containsKey(requestCode)){
-						switch(resultCode){
-							case RESULT_OK:
-								externalFileSelectResults.get(requestCode).onSelected(data.getData());
-								break;
-							case RESULT_CANCELED:
-								externalFileSelectResults.get(requestCode).onSelectCancelled();
-								break;
-						}
-						externalFileSelectResults.remove(requestCode);
-						return true;
-					}
-					return false;
-				}
-			});
+		addActivityResultReceiver((requestCode, resultCode, data, consumed) -> {
+            if(externalFileSelectResults.containsKey(requestCode)){
+                switch(resultCode){
+                    case RESULT_OK:
+                        externalFileSelectResults.get(requestCode).onSelected(data.getData());
+                        break;
+                    case RESULT_CANCELED:
+                        externalFileSelectResults.get(requestCode).onSelectCancelled();
+                        break;
+                }
+                externalFileSelectResults.remove(requestCode);
+                return true;
+            }
+            return false;
+        });
 	}
 	
 	@NeedsPermission({"android.permission.WRITE_EXTERNAL_STORAGE"})
@@ -69,14 +66,14 @@ abstract class ServerListActivityBase5 extends ServerListActivityBase6
 		ServerListActivityBase5PermissionsDispatcher.onRequestPermissionsResult(this,requestCode,grantResults);
 	}
 	
-	public static interface FileChooserResult extends ChooserResult<File>{
+	public interface FileChooserResult extends ChooserResult<File>{
 		
 	}
-	public static interface UriFileChooserResult extends ChooserResult<Uri>{
+	public interface UriFileChooserResult extends ChooserResult<Uri>{
 		
 	}
-	public static interface ChooserResult<R>{
-		public void onSelected(R f);
-		public void onSelectCancelled();
+	public interface ChooserResult<R>{
+		void onSelected(R f);
+		void onSelectCancelled();
 	}
 }

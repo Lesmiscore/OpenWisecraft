@@ -30,7 +30,7 @@ public class ViewPagerChangeListenerObserver implements ViewPager.OnPageChangeLi
 	}
 	
 	private List<ViewPager.OnPageChangeListener> flatten(List<ViewPager.OnPageChangeListener> listeners){
-		ArrayList<ViewPager.OnPageChangeListener> result=new ArrayList<ViewPager.OnPageChangeListener>();
+		ArrayList<ViewPager.OnPageChangeListener> result= new ArrayList<>();
 		for(ViewPager.OnPageChangeListener pcl:listeners){
 			if(pcl instanceof ViewPagerChangeListenerObserver){
 				result.addAll(flatten(((ViewPagerChangeListenerObserver)pcl).listeners));

@@ -10,6 +10,7 @@ import android.util.*;
 import android.view.*;
 import android.webkit.*;
 import android.widget.*;
+import com.annimon.stream.Stream;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
@@ -44,15 +45,13 @@ abstract class ServerGetActivityImpl extends CompatWebViewActivity {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setDisplayShowHomeEnabled(true);
 		findViewById(R.id.bottomSheet).setVisibility(View.GONE);
-		new Handler().post(new Runnable(){
-					public void run(){
-						Toolbar tb=Utils.getToolbar(ServerGetActivityImpl.this);
-						TextView tv=Utils.getActionBarTextView(tb);
-						if(tv!=null){
-							tv.setGravity(Gravity.CENTER);
-						}
-					}
-				});
+		new Handler().post(() -> {
+            Toolbar tb=Utils.getToolbar(ServerGetActivityImpl.this);
+            TextView tv=Utils.getActionBarTextView(tb);
+            if(tv!=null){
+                tv.setGravity(Gravity.CENTER);
+            }
+        });
 		
 		bottomSheet=BottomSheetBehavior.from(findViewById(R.id.bottomSheet));
 		bottomSheet.setHideable(true);
@@ -74,59 +73,42 @@ abstract class ServerGetActivityImpl extends CompatWebViewActivity {
 		loadedServerListRv.setLayoutManager(new LinearLayoutManager(this));
 		loadedServerListRv.setAdapter(adapter=new Adapter());
 		
-		findViewById(R.id.yes).setOnClickListener(new View.OnClickListener(){
-				public void onClick(View v){
-					for(Server s:adapter.getSelection())
-						ServerListActivity.instance.get().addIntoList(s);
-					bottomSheet.setState(BottomSheetBehavior.STATE_HIDDEN);
-				}
-			});
-		findViewById(R.id.no).setOnClickListener(new View.OnClickListener(){
-				public void onClick(View v){
-					bottomSheet.setState(BottomSheetBehavior.STATE_HIDDEN);
-				}
-			});
+		findViewById(R.id.yes).setOnClickListener(v -> {
+            Stream.of(adapter.getSelection()).forEach(ServerListActivity.instance.get()::addIntoList);
+			bottomSheet.setState(BottomSheetBehavior.STATE_HIDDEN);
+        });
+		findViewById(R.id.no).setOnClickListener(v -> bottomSheet.setState(BottomSheetBehavior.STATE_HIDDEN));
 		
 		if(!Utils.isOnline(this)){
 			new AlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
 				.setMessage(R.string.offline)
 				.setTitle(R.string.error)
-				.setOnCancelListener(new DialogInterface.OnCancelListener(){
-					public void onCancel(DialogInterface di) {
-						finish();
-						Log.d("SGA", "cancel");
-					}
-				})
-				.setOnDismissListener(new DialogInterface.OnDismissListener(){
-					public void onDismiss(DialogInterface di) {
-						//finish();
-						Log.d("SGA", "dismiss");
-					}
-				})
+				.setOnCancelListener(di -> {
+                    finish();
+                    Log.d("SGA", "cancel");
+                })
+				.setOnDismissListener(di -> {
+                    //finish();
+                    Log.d("SGA", "dismiss");
+                })
 				.show();
 			return;
 		}
 		serverList = createServerListDomains();
 		new AlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
-			.setItems(serverList, new DialogInterface.OnClickListener(){
-				public void onClick(DialogInterface di, int w) {
-					di.dismiss();
-					loadUrl("http://" + (domain = serverList[w]) + "/");
-				}
-			})
+			.setItems(serverList, (di, w) -> {
+                di.dismiss();
+                loadUrl("http://" + (domain = serverList[w]) + "/");
+            })
 			.setTitle(R.string.selectWebSite)
-			.setOnCancelListener(new DialogInterface.OnCancelListener(){
-				public void onCancel(DialogInterface di) {
-					finish();
-					Log.d("SGA", "cancel");
-				}
-			})
-			.setOnDismissListener(new DialogInterface.OnDismissListener(){
-				public void onDismiss(DialogInterface di) {
-					//finish();
-					Log.d("SGA", "dismiss");
-				}
-			})
+			.setOnCancelListener(di -> {
+                finish();
+                Log.d("SGA", "cancel");
+            })
+			.setOnDismissListener(di -> {
+                //finish();
+                Log.d("SGA", "dismiss");
+            })
 			.show();
 		getWebView().setWebViewClient(new WebViewClient(){
 				public void onPageFinished(WebView wv, String url) {
@@ -179,18 +161,12 @@ abstract class ServerGetActivityImpl extends CompatWebViewActivity {
 							loadedServerListRv.setLayoutManager(new LinearLayoutManager(ServerGetActivityImpl.this));
 							loadedServerListRv.setAdapter(adapter);
 							adapter.addAll(serv);
-							mbsd.findViewById(R.id.yes).setOnClickListener(new View.OnClickListener(){
-									public void onClick(View v){
-										for(Server s:adapter.getSelection())
-											ServerListActivity.instance.get().addIntoList(s);
-										mbsd.dismiss();
-									}
-								});
-							mbsd.findViewById(R.id.no).setOnClickListener(new View.OnClickListener(){
-									public void onClick(View v){
-										mbsd.dismiss();
-									}
-								});
+							mbsd.findViewById(R.id.yes).setOnClickListener(v -> {
+                                for(Server s:adapter.getSelection())
+                                    ServerListActivity.instance.get().addIntoList(s);
+                                mbsd.dismiss();
+                            });
+							mbsd.findViewById(R.id.no).setOnClickListener(v -> mbsd.dismiss());
 							mbsd.show();
 						} else {
 							//Throwable
@@ -211,7 +187,7 @@ abstract class ServerGetActivityImpl extends CompatWebViewActivity {
 						}
 					}
 				public List<MslServer> getServers(List<MslServer> all, boolean[] balues) {
-					List<MslServer> lst=new ArrayList<MslServer>();
+					List<MslServer> lst= new ArrayList<>();
 						for (int i=0;i < balues.length;i++) {
 							if (balues[i]) {
 								lst.add(all.get(i));
@@ -272,7 +248,7 @@ abstract class ServerGetActivityImpl extends CompatWebViewActivity {
 	}
 	
 	class Adapter extends ListRecyclerViewAdapter<FindableViewHolder,MslServer> {
-		Map<MslServer,Boolean> selected=new NonNullableMap<MslServer>();
+		Map<MslServer,Boolean> selected= new NonNullableMap<>();
 		
 		@Override
 		public void onBindViewHolder(FindableViewHolder parent, int offset) {
@@ -304,7 +280,7 @@ abstract class ServerGetActivityImpl extends CompatWebViewActivity {
 		
 		public List<Server> getSelection(){
 			List<MslServer> result=new ArrayList<>();
-			for(MslServer srv:new ArrayList<MslServer>(this))
+			for(MslServer srv: new ArrayList<>(this))
 				if(selected.get(srv))
 					result.add(srv);
 			return Utils.convertServerObject(result);

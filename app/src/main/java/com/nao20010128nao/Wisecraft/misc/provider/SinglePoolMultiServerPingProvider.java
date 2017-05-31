@@ -22,7 +22,7 @@ public class SinglePoolMultiServerPingProvider implements ServerPingProvider
 		Utils.requireNonNull(server);
 		Utils.requireNonNull(handler);
 		Utils.prepareLooper();
-		queue.add(new KVP<Server,PingHandler>(server, handler));
+		queue.add(new KVP<>(server, handler));
 		if (pingThread.size()<max) {
 			new PingThread().start();
 		}

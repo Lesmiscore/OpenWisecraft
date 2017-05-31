@@ -53,17 +53,13 @@ public class ColorPickerPreferenceCompat extends Preference
 		super.onClick();
 		ColorPickerDialog cpd=ColorPickerDialog.createColorPickerDialog(getContext(),ColorPickerDialog.LIGHT_THEME);
 		cpd.setLastColor(getPersistedInt(defaultColor));
-		cpd.setOnColorPickedListener(new ColorPickerDialog.OnColorPickedListener(){
-			public void onColorPicked(int color,String hex){
-				persistInt(color);
-				notifyChanged();
-			}
-		});
-		cpd.setOnClosedListener(new ColorPickerDialog.OnClosedListener(){
-			public void onClosed(){
-				
-			}
-		});
+		cpd.setOnColorPickedListener((color, hex) -> {
+            persistInt(color);
+            notifyChanged();
+        });
+		cpd.setOnClosedListener(() -> {
+
+        });
 		cpd.show();
 	}
 }

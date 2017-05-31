@@ -38,11 +38,11 @@ public class FullStat implements ServerPingResult,PEPingResult {
 			String v = new String(temp[i + 1], CompatCharsets.UTF_8).trim();
 			if ("".equals(k))
 				continue;
-			datas.add(new KVP<String,String>(k, v));
+			datas.add(new KVP<>(k, v));
 			mapDatas.put(k,v);
 		}
 
-		playerList = new ArrayList<String>();
+		playerList = new ArrayList<>();
 		for (int i = dataEnds + 2; i < temp.length; i++)
 			playerList.add(new String(temp[i], CompatCharsets.UTF_8).trim());
 	}

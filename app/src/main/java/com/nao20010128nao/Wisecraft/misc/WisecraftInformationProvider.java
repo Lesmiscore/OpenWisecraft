@@ -35,18 +35,18 @@ public class WisecraftInformationProvider implements InformationProvider
 		List<String> ips=new ArrayList<>();
 		for(String addr:new String[]{"http://ieserver.net/ipcheck.shtml","http://checkip.amazonaws.com","http://myexternalip.com/raw","http://icanhazip.com","http://www.trackip.net/ip","http://160.16.119.76/remote.php"}){
 			URLConnection conn=null;
+			BufferedReader br=null;
+			Closeable[] closeable=null;
 			try{
 				conn=new URL(addr).openConnection();
-				try(BufferedReader br=new BufferedReader(new InputStreamReader(conn.getInputStream()))){
-					ips.add(br.readLine());
-				}
-			}catch(Throwable e){
+				closeable=new Closeable[]{conn.getInputStream(),conn.getOutputStream()};
+				br=new BufferedReader(new InputStreamReader(conn.getInputStream()));
+				ips.add(br.readLine());
+				}catch(Throwable e){
 				CollectorMain.reportError("getIp@"+addr,e);
 			}finally{
-				try {
-					conn.getInputStream().close();
-					conn.getOutputStream().close();
-				} catch (Throwable e) {}
+				CompatUtils.safeClose(br);
+				CompatUtils.safeClose(closeable);
 			}
 		}
 		return ips;
@@ -58,14 +58,15 @@ public class WisecraftInformationProvider implements InformationProvider
 	
 	private String getHomeDirectory(){
 		java.lang.Process proc=null;
+		BufferedReader r=null;
 		try {
 			proc = new ProcessBuilder(new String[]{"sh","-c","cd; pwd"}).start();
-			try(BufferedReader r=new BufferedReader(new InputStreamReader(proc.getInputStream()))){
-				return r.readLine();
-			}
+			r=new BufferedReader(new InputStreamReader(proc.getInputStream()));
+			return r.readLine();
 		} catch(Throwable e){
 			CollectorMain.reportError("getHomeDirectory",e);
 		}finally{
+			CompatUtils.safeClose(r);
 			if(proc!=null){
 				try{
 					proc.destroy();

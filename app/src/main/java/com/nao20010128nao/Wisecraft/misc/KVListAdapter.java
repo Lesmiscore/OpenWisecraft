@@ -7,7 +7,7 @@ import java.util.*;
 
 public class KVListAdapter<K,V> extends AppBaseArrayAdapter<Map.Entry<K,V>> {
 	public KVListAdapter(Context ctx) {
-		super(ctx, 0, new ArrayList<Map.Entry<K,V>>());
+		super(ctx, 0, new ArrayList<>());
 	}
 	public View getView(int pos, View v, ViewGroup ignore) {
 		if (v == null)
@@ -21,6 +21,6 @@ public class KVListAdapter<K,V> extends AppBaseArrayAdapter<Map.Entry<K,V>> {
 	}
 	
 	public void add(K k,V v){
-		add(new KVP<K,V>(k,v));
+		add(new KVP<>(k, v));
 	}
 }

@@ -29,14 +29,12 @@ public class WisecraftToolbar extends Toolbar{
 	@Override
 	public void setTitle(CharSequence title) {
 		super.setTitle(title);
-		new Handler().post(new Runnable(){
-				public void run(){
-					TextView tv=Utils.getActionBarTextView(WisecraftToolbar.this);
-					if(tv!=null){
-						tv.setGravity(Gravity.CENTER);
-					}
-				}
-			});
+		new Handler().post(() -> {
+            TextView tv=Utils.getActionBarTextView(WisecraftToolbar.this);
+            if(tv!=null){
+                tv.setGravity(Gravity.CENTER);
+            }
+        });
 	}
 	
 	public void setShowBackButton(boolean value){

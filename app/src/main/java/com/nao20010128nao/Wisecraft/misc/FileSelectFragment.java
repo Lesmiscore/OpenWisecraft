@@ -43,58 +43,50 @@ public class FileSelectFragment extends BaseFragment<AppCompatActivity>
 		pathForm=(LinearLayout)getView().findViewById(R.id.pathForm);
 		modeForm=(LinearLayout)getView().findViewById(R.id.modeForm);
 		
-		select.setOnClickListener(new View.OnClickListener(){
-			public void onClick(View v){
-				pathForm.setVisibility(View.GONE);
-				modeForm.setVisibility(View.VISIBLE);
-			}
-		});
-		fileLocal.setOnClickListener(new View.OnClickListener(){
-			public void onClick(View v){
-				modeForm.setVisibility(View.GONE);
-				pathForm.setVisibility(View.VISIBLE);
-				
-				File f=new File(path.getText().toString());
-				if ((!f.exists())|f.isFile())f = f.getParentFile();
-				startChooseFileForSelect(f, new ServerListActivity.FileChooserResult(){
-						public void onSelected(File f) {
-							path.setText(f.toString());
-							path.setEnabled(true);
-						}
-						public void onSelectCancelled() {/*No-op*/}
-					});
-			}
-		});
-		fileProvided.setOnClickListener(new View.OnClickListener(){
-			public void onClick(View v){
-				modeForm.setVisibility(View.GONE);
-				pathForm.setVisibility(View.VISIBLE);
-				startExtChooseFile(new ServerListActivity.UriFileChooserResult(){
-						public void onSelected(Uri f) {
-							path.setText("");
-							path.setEnabled(false);
-						}
-						public void onSelectCancelled() {/*No-op*/}
-					});
-			}
-		});
-		path.setOnTouchListener(new View.OnTouchListener(){
-			public boolean onTouch(View v,MotionEvent ev){
-				if(ev.getAction()!=MotionEvent.ACTION_UP)return false;
-				if(!v.isEnabled()){
-					v.setEnabled(true);
-					path.setText(getArguments().getString("default"));
-					lastResult=null;
-				}
-				return false;
-			}
-		});
+		select.setOnClickListener(v -> {
+            pathForm.setVisibility(View.GONE);
+            modeForm.setVisibility(View.VISIBLE);
+        });
+		fileLocal.setOnClickListener(v -> {
+            modeForm.setVisibility(View.GONE);
+            pathForm.setVisibility(View.VISIBLE);
+
+            File f=new File(path.getText().toString());
+            if ((!f.exists())|f.isFile())f = f.getParentFile();
+            startChooseFileForSelect(f, new ServerListActivity.FileChooserResult(){
+                    public void onSelected(File f) {
+                        path.setText(f.toString());
+                        path.setEnabled(true);
+                    }
+                    public void onSelectCancelled() {/*No-op*/}
+                });
+        });
+		fileProvided.setOnClickListener(v -> {
+            modeForm.setVisibility(View.GONE);
+            pathForm.setVisibility(View.VISIBLE);
+            startExtChooseFile(new ServerListActivity.UriFileChooserResult(){
+                    public void onSelected(Uri f) {
+                        path.setText("");
+                        path.setEnabled(false);
+                    }
+                    public void onSelectCancelled() {/*No-op*/}
+                });
+        });
+		path.setOnTouchListener((v, ev) -> {
+            if(ev.getAction()!=MotionEvent.ACTION_UP)return false;
+            if(!v.isEnabled()){
+                v.setEnabled(true);
+                path.setText(getArguments().getString("default"));
+                lastResult=null;
+            }
+            return false;
+        });
 		Bundle args=getArguments();
 		String s=Environment.getExternalStorageDirectory().toString();
-		if(args==null){
-			//no-op
-		}else if(args.containsKey("default")){
-			s=args.getString("default");
+		if (args != null) {
+			if(args.containsKey("default")){
+                s=args.getString("default");
+            }
 		}
 		path.setText(s);
 		fileLocal.setImageDrawable(TheApplication.getTintedDrawable(R.drawable.ic_file,Color.WHITE,getActivity()));

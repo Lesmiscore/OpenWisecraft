@@ -126,7 +126,7 @@ class TheApplicationImpl extends Application implements  com.nao20010128nao.Wise
 		ubuntuFont = TypefaceLoader.newInstance(getAssets(), "Ubuntu-Regular.ttf");
 		mplus1p = TypefaceLoader.newInstance(getAssets(), "Mplus1p-Light.ttf");
 
-		fontFilenames = new HashMap<TypefaceLoader,String>();
+		fontFilenames = new HashMap<>();
 		fontFilenames.put(droidSans, "DroidSans.ttf");
 		fontFilenames.put(latoLight, "lato-light.ttf");
 		fontFilenames.put(icomoon1, "icomoon.ttf");

@@ -27,7 +27,7 @@ public class TcpServerPingProvider implements ServerPingProvider
         Utils.requireNonNull(server);
         Utils.requireNonNull(handler);
 		Utils.prepareLooper();
-        queue.add(new KVP<Server,PingHandler>(server, handler));
+        queue.add(new KVP<>(server, handler));
         if (!pingThread.isAlive()) {
             pingThread = new PingThread();
             pingThread.start();

@@ -46,8 +46,8 @@ public class OverScrollViewPager extends ViewPager {
     }
 
     public interface OnSwipeOutListener {
-        public void onSwipeOutAtStart();
-        public void onSwipeOutAtEnd();
+        void onSwipeOutAtStart();
+        void onSwipeOutAtEnd();
     }
 
 }

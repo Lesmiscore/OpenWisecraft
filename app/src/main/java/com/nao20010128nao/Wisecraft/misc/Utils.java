@@ -105,14 +105,14 @@ public class Utils extends PingerUtils{
 		return os.toByteArray();
 	}
 	public static <T> List<T>  trueValues(List<T> all, boolean[] balues) {
-		List<T> lst=new ArrayList<T>();
+		List<T> lst= new ArrayList<>();
 		for (int i=0;i < balues.length;i++)
 			if (balues[i])
 				lst.add(all.get(i));
 		return lst;
 	}
 	public static <T> T[] trueValues(T[] all, boolean[] balues) {
-		List<T> lst=new ArrayList<T>();
+		List<T> lst= new ArrayList<>();
 		for (int i=0;i < balues.length;i++)
 			if (balues[i])
 				lst.add(all[i]);
@@ -654,11 +654,7 @@ public class Utils extends PingerUtils{
 					req.cancel();
 				}
 			})
-			.setOnDismissListener(new DialogInterface.OnDismissListener(){
-				public void onDismiss(DialogInterface a){
-					req.cancel();
-				}
-			})
+			.setOnDismissListener(a1 -> req.cancel())
 			.show();
 	}
 	

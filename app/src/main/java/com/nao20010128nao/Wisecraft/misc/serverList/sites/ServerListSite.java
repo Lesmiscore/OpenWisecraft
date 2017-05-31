@@ -16,17 +16,17 @@ public interface ServerListSite {
 	/**
 	 * Checks this class supports the URL.
 	 */
-	public boolean matches(URL url);
+    boolean matches(URL url);
 
 	/**
 	 * Checks there's more than one servers in a URL.
 	 */
-	public boolean hasMultipleServers(URL url) throws IOException;
+    boolean hasMultipleServers(URL url) throws IOException;
 
 	/**
 	 * Finds Minecraft multiplayer IP & port from a URL.
 	 *
 	 * @return A list that was found servers contains. Immutable.
 	 */
-	public List<MslServer> getServers(URL url) throws IOException;
+    List<MslServer> getServers(URL url) throws IOException;
 }

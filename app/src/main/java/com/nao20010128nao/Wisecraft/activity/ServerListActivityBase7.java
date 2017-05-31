@@ -30,10 +30,10 @@ public abstract class ServerListActivityBase7 extends ServerListActivityBaseFiel
 			Multimap<String,Server> domains;
 			DomainListAdapter domainLstAdptr;
 			DomainStatusChecker worker;
-			
-            public boolean onCreateActionMode(ActionMode p1, Menu p2) {
-                srl.setEnabled(false);
-                dl.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
+			public boolean onCreateActionMode(ActionMode p1, Menu p2) {
+				srl.setEnabled(false);
+				dl.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 				slaViewBackground=rv.getBackground();
 				slaDefaultAdapter=rv.getAdapter();
 				slaDefaultLayoutManager=rv.getLayoutManager();
@@ -45,18 +45,18 @@ public abstract class ServerListActivityBase7 extends ServerListActivityBaseFiel
 				(worker=new DomainStatusChecker()).execute(domainLstAdptr);
 				this.domains=domains;
 				isInSelectMode=false;
-                return true;
-            }
+				return true;
+			}
 
-            public boolean onPrepareActionMode(ActionMode p1, Menu p2) {
-                editMode = EDIT_MODE_REMOVE_UNUSED_DOMAINS;
+			public boolean onPrepareActionMode(ActionMode p1, Menu p2) {
+				editMode = EDIT_MODE_REMOVE_UNUSED_DOMAINS;
 				MenuItem delete=p2.add(0,0,0,R.string.delete)
-					.setIcon(TheApplication.instance.getTintedDrawable(R.drawable.ic_delete_forever_black_48dp,ThemePatcher.getMenuTintColor(ServerListActivityBase7.this)));
+						.setIcon(TheApplication.instance.getTintedDrawable(R.drawable.ic_delete_forever_black_48dp,ThemePatcher.getMenuTintColor(ServerListActivityBase7.this)));
 				MenuItemCompat.setShowAsAction(delete,MenuItem.SHOW_AS_ACTION_ALWAYS);
-                return true;
-            }
+				return true;
+			}
 
-            public boolean onActionItemClicked(ActionMode p1, MenuItem p2) {
+			public boolean onActionItemClicked(ActionMode p1, MenuItem p2) {
 				switch(p2.getItemId()){
 					case 0:
 						Set<Server> reallyDeletingServers=new HashSet<>();
@@ -71,35 +71,35 @@ public abstract class ServerListActivityBase7 extends ServerListActivityBaseFiel
 						p1.finish();
 						return true;
 				}
-                return false;
-            }
+				return false;
+			}
 
-            public void onDestroyActionMode(ActionMode p1) {
-                editMode = EDIT_MODE_NULL;
-                itemDecor.attachToRecyclerView(null);
-                srl.setEnabled(true);
-                dl.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+			public void onDestroyActionMode(ActionMode p1) {
+				editMode = EDIT_MODE_NULL;
+				itemDecor.attachToRecyclerView(null);
+				srl.setEnabled(true);
+				dl.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
 				rv.setAdapter(slaDefaultAdapter);
 				rv.setLayoutManager(slaDefaultLayoutManager);
 				ViewCompat.setBackground(rv,slaViewBackground);
 				if(worker.getStatus()==AsyncTask.Status.RUNNING){
 					worker.cancel(true);
 				}
-                saveServers();
+				saveServers();
 				isInSelectMode=false;
-            }
-        };
+			}
+		};
 	}
-	
+
 	/* Following methods are needed for this class */
 	public abstract void saveServers();
 	public abstract List<Server> getServers();
 	public abstract void removeFromList(Server s);
-	
+
 	public void startRemoveDomainsActionMode(){
 		startSupportActionMode(removeUnusedDomainsAm);
 	}
-	
+
 	Multimap<String,Server> listDomains(){
 		HashMultimap<String,Server> hmm=HashMultimap.<String,Server>create();
 		for(Server s:getServers()){
@@ -118,7 +118,7 @@ public abstract class ServerListActivityBase7 extends ServerListActivityBaseFiel
 		List<Boolean> domainChecked;
 		List<Boolean> domainUsed;
 		List<Boolean> deletingDomain;
-		
+
 		public DomainListAdapter(Multimap<String,Server> domains){
 			this.domains=domains;
 			listedDomains=  Collections.synchronizedList(new ArrayList<>(domains.keySet()));
@@ -127,10 +127,10 @@ public abstract class ServerListActivityBase7 extends ServerListActivityBaseFiel
 			domainChecked=  Collections.synchronizedList(new ArrayList<>(nCopied));
 			domainUsed=     Collections.synchronizedList(new ArrayList<>(nCopied));
 			deletingDomain= Collections.synchronizedList(new ArrayList<>(nCopied));
-			
+
 			Collections.sort(listedDomains);
 		}
-		
+
 		@Override
 		public void onBindViewHolder(Vh p1, final int p2) {
 			p1.domain.setText(listedDomains.get(p2));
@@ -156,31 +156,25 @@ public abstract class ServerListActivityBase7 extends ServerListActivityBaseFiel
 				}else{
 					//checkbox to ask user to delete
 					p1.showWillDelete(deletingDomain.get(p2));
-					p1.willDelete.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
-							public void onCheckedChanged(android.widget.CompoundButton p1, boolean state){
-								deletingDomain.set(p2,state);
-								runOnUiThread(new Runnable(){
-									public void run(){
-										try{
-											notifyItemChanged(p2);
-										}catch(Throwable e){
-											DebugWriter.writeToI("ServerListActivityBase7",e);
-										}
-									}
-								});
+					p1.willDelete.setOnCheckedChangeListener((p11, state) -> {
+						deletingDomain.set(p2,state);
+						runOnUiThread(() -> {
+							try{
+								notifyItemChanged(p2);
+							}catch(Throwable e){
+								DebugWriter.writeToI("ServerListActivityBase7",e);
 							}
 						});
+					});
 				}
 			}else{
 				//loading
 				p1.showLoading();
 			}
-			p1.expand.setOnClickListener(new View.OnClickListener(){
-					public void onClick(View v){
-						expandStates.set(p2,!expandStates.get(p2));
-						notifyItemChanged(p2);
-					}
-				});
+			p1.expand.setOnClickListener(v -> {
+				expandStates.set(p2,!expandStates.get(p2));
+				notifyItemChanged(p2);
+			});
 		}
 
 		@Override
@@ -213,30 +207,30 @@ public abstract class ServerListActivityBase7 extends ServerListActivityBaseFiel
 			willDelete=findTypedViewById(R.id.willDelete);
 			available=findTypedViewById(R.id.available);
 		}
-		
+
 		public void showLoading(){
 			loading.setVisibility(View.VISIBLE);
 			willDelete.setVisibility(View.GONE);
 			available.setVisibility(View.GONE);
 		}
-		
+
 		public void showWillDelete(boolean value){
 			loading.setVisibility(View.GONE);
 			willDelete.setVisibility(View.VISIBLE);
 			available.setVisibility(View.GONE);
 			willDelete.setChecked(value);
 		}
-		
+
 		public void showAvailable(){
 			loading.setVisibility(View.GONE);
 			willDelete.setVisibility(View.GONE);
 			available.setVisibility(View.VISIBLE);
 		}
 	}
-	
+
 	class DomainStatusChecker extends AsyncTask<DomainListAdapter,Map.Entry<Integer,Boolean>,Void> {
 		DomainListAdapter adapter;
-		
+
 		@Override
 		protected Void doInBackground(DomainListAdapter[] p1) {
 			adapter=p1[0];

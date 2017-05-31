@@ -6,16 +6,10 @@ import java.util.*;
 abstract class ServerListActivityBase2 extends ServerListActivityBase3
 {
 	public void doSort(final List<Server> sl, final SortKind sk, final SortFinishedCallback sfc){
-		new Thread(){
-			public void run(){
-				final List<Server> sortingServer=sk.doSort(sl);
-				runOnUiThread(new Runnable(){
-						public void run() {
-							sfc.onSortFinished(sortingServer);
-						}
-					});
-			}
-		}.start();
+		new Thread(() -> {
+            final List<Server> sortingServer=sk.doSort(sl);
+            runOnUiThread(() -> sfc.onSortFinished(sortingServer));
+        }).start();
 	}
 	
 	public static enum SortKind{
@@ -59,7 +53,7 @@ abstract class ServerListActivityBase2 extends ServerListActivityBase3
 		public abstract List<Server> doSort(List<Server> list);
 	}
 	
-	public static interface SortFinishedCallback{
-		public void onSortFinished(List<Server> result);
+	public interface SortFinishedCallback{
+		void onSortFinished(List<Server> result);
 	}
 }

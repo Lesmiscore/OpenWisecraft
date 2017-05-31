@@ -27,7 +27,7 @@ abstract class ServerListActivityBaseGrand extends WisecraftBaseActivity
 	}
 	
 	public interface DispatchActivityResult{
-		public boolean dispatchActivityResult(int requestCode, int resultCode, Intent data,boolean consumed);
+		boolean dispatchActivityResult(int requestCode, int resultCode, Intent data, boolean consumed);
 	}
 	
 	private class ActivityResultDispatcher extends ArrayList<DispatchActivityResult>{

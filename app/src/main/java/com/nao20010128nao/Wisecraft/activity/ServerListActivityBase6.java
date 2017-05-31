@@ -16,7 +16,7 @@ abstract class ServerListActivityBase6 extends ServerListActivityBase7 {
 		if(contextMenuHandlers.containsKey(v)){
 			Treatment<Duo<View,ContextMenu>> init=contextMenuHandlers.get(v).getA();
 			if(init!=null){
-				init.process(new Duo<View,ContextMenu>(v,menu));
+				init.process(new Duo<>(v, menu));
 				for(int i=0;i<menu.size();i++){
 					contextMenuItems.put(menu.getItem(i),v);
 				}
@@ -37,7 +37,7 @@ abstract class ServerListActivityBase6 extends ServerListActivityBase7 {
 				}
 				Predicate<Trio<View,ContextMenu,MenuItem>> selection=contextMenuHandlers.get(owner).getB();
 				if(selection!=null){
-					return selection.process(new Trio<View,ContextMenu,MenuItem>(owner,menu,item));
+					return selection.process(new Trio<>(owner, menu, item));
 				}
 			}
 		}
@@ -58,12 +58,12 @@ abstract class ServerListActivityBase6 extends ServerListActivityBase7 {
 	}
 
 	public void openContextMenu(View view,ViewGroup parent,Treatment<Duo<View,ContextMenu>> init,Predicate<Trio<View,ContextMenu,MenuItem>> selection) {
-		contextMenuHandlers.put(view,new Quartet<Treatment<Duo<View,ContextMenu>>,Predicate<Trio<View,ContextMenu,MenuItem>>,ViewGroup,Boolean>(init,selection,parent,false));
+		contextMenuHandlers.put(view, new Quartet<>(init, selection, parent, false));
 		if(!(parent!=null?parent.showContextMenuForChild(view):view.showContextMenu()))
 			contextMenuHandlers.remove(view);
 	}
 	
 	public void registerContextMenuHandler(View view,ViewGroup parent,Treatment<Duo<View,ContextMenu>> init,Predicate<Trio<View,ContextMenu,MenuItem>> selection){
-		contextMenuHandlers.put(view,new Quartet<Treatment<Duo<View,ContextMenu>>,Predicate<Trio<View,ContextMenu,MenuItem>>,ViewGroup,Boolean>(init,selection,parent,true));
+		contextMenuHandlers.put(view, new Quartet<>(init, selection, parent, true));
 	}
 }

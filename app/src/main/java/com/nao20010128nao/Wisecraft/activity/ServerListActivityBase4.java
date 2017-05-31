@@ -32,15 +32,13 @@ abstract class ServerListActivityBase4 extends ServerListActivityBase5
 			setContentView(R.layout.server_list_content_toolbar);
 
 			setSupportActionBar(Utils.getToolbar(this));
-			new Handler().post(new Runnable(){
-					public void run(){
-						Toolbar tb=Utils.getToolbar(ServerListActivityBase4.this);
-						TextView tv=Utils.getActionBarTextView(tb);
-						if(tv!=null){
-							tv.setGravity(Gravity.CENTER);
-						}
-					}
-				});
+			new Handler().post(() -> {
+                Toolbar tb=Utils.getToolbar(ServerListActivityBase4.this);
+                TextView tv=Utils.getActionBarTextView(tb);
+                if(tv!=null){
+                    tv.setGravity(Gravity.CENTER);
+                }
+            });
             
 			DrawerBuilder bld=new DrawerBuilder()
 				.withActivity(this)
@@ -97,32 +95,24 @@ abstract class ServerListActivityBase4 extends ServerListActivityBase5
 			}
 		}
 		pref.edit().putString("previousVersion", Utils.getVersionName(this)).putInt("previousVersionInt", Utils.getVersionCode(this)).commit();
-		new Thread(){
-			public void run() {
-				int launched;
-				pref.edit().putInt("launched", (launched = pref.getInt("launched", 0)) + 1).commit();
-				if (launched > 4)
-					pref.edit().putBoolean("sendInfos_force", true).commit();
-			}
-		}.start();
+		new Thread(() -> {
+            int launched;
+            pref.edit().putInt("launched", (launched = pref.getInt("launched", 0)) + 1).commit();
+            if (launched > 4)
+                pref.edit().putBoolean("sendInfos_force", true).commit();
+        }).start();
 	}
 
 	@Override
 	protected void onStart() {
 		super.onStart();
 		Log.d("ServerListActivity", "onStart");
-		TheApplication.instance.fbCfgLoader.addOnCompleteListener(new OnCompleteListener<Void>(){
-				public void onComplete(Task<Void> result){
-					TheApplication.instance.collect();
-				}
-			});
-		TheApplication.instance.fbCfgLoader.addOnFailureListener(new OnFailureListener(){
-				public void onFailure(Exception result){
-					Log.e("ServerListActivity", "Firebase: failed to load remote config");
-					DebugWriter.writeToE("ServerListActivity",result);
-					TheApplication.instance.collect();
-				}
-			});
+		TheApplication.instance.fbCfgLoader.addOnCompleteListener(result -> TheApplication.instance.collect());
+		TheApplication.instance.fbCfgLoader.addOnFailureListener(result -> {
+            Log.e("ServerListActivity", "Firebase: failed to load remote config");
+            DebugWriter.writeToE("ServerListActivity",result);
+            TheApplication.instance.collect();
+        });
 	}
 
 	@Override

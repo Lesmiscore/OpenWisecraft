@@ -42,85 +42,67 @@ import static com.nao20010128nao.Wisecraft.activity.FragmentSettingsActivityImpl
 @RuntimePermissions
 abstract class FragmentSettingsActivityImpl extends AppCompatActivity implements SettingsScreen{
 	public static final Map<String,Class<? extends Fragment>> FRAGMENT_CLASSES=new HashMap<String,Class<? extends Fragment>>(){{
-			put("root",HubPrefFragment.class);
-			put("basics",Basics.class);
-			put("features",Features.class);
-			//put("asfsls",Asfsls.class);
-			put("versionInfo",VersionInfoFragmentLocal.class);
+		put("root",HubPrefFragment.class);
+		put("basics",Basics.class);
+		put("features",Features.class);
+		//put("asfsls",Asfsls.class);
+		put("versionInfo",VersionInfoFragmentLocal.class);
 	}};
 	public static final String DIALOG_FRAGMENT_TAG_PREFIX="settings@com.nao20010128nao.Wisecraft#";
 	public static final List<Quartet<Integer,String,Treatment<SettingsScreen>,Boolean>> MAIN;
 	static{
 		List<Quartet<Integer,String,Treatment<SettingsScreen>,Boolean>> main=new ArrayList<>();
-		main.add(new Quartet<Integer,String,Treatment<SettingsScreen>,Boolean>(R.string.basics,"basics", new Treatment<SettingsScreen>(){
-					public void process(SettingsScreen ss) {
-						((AppCompatActivity)ss)
-							.getSupportFragmentManager()
-							.beginTransaction()
-							.replace(ss.getIdForFragment(),new Basics())
-							.addToBackStack("basics")
-							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-							.commit();
-					}
-				},true));
-		main.add(new Quartet<Integer,String,Treatment<SettingsScreen>,Boolean>(R.string.features,"features", new Treatment<SettingsScreen>(){
-					public void process(SettingsScreen ss) {
-						((AppCompatActivity)ss)
-							.getSupportFragmentManager()
-							.beginTransaction()
-							.replace(ss.getIdForFragment(),new Features())
-							.addToBackStack("features")
-							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-							.commit();
-					}
-				},true));
-		main.add(new Quartet<Integer,String,Treatment<SettingsScreen>,Boolean>(R.string.colorChange,"changeColor", new Treatment<SettingsScreen>(){
-					public void process(SettingsScreen ss) {
-						((AppCompatActivity)ss)
-							.getSupportFragmentManager()
-							.beginTransaction()
-							.replace(ss.getIdForFragment(),new ColorChanger())
-							.addToBackStack("changeColor")
-							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-							.commit();
-					}
-				},true));
-		main.add(new Quartet<Integer,String,Treatment<SettingsScreen>,Boolean>(R.string.osl,"osl", new Treatment<SettingsScreen>(){
-					public void process(SettingsScreen ss) {
-						AppCompatActivity act=(AppCompatActivity)ss;
-						act.startActivity(new Intent(act,OpenSourceActivity2.class));
-					}
-				},false));
-		main.add(new Quartet<Integer,String,Treatment<SettingsScreen>,Boolean>(R.string.aboutApp,"aboutApp", new Treatment<SettingsScreen>(){
-					public void process(SettingsScreen ss) {
-						AppCompatActivity act=(AppCompatActivity)ss;
-						act.startActivity(new Intent(act,AboutAppActivity.class));
-					}
-				},false));
-		main.add(new Quartet<Integer,String,Treatment<SettingsScreen>,Boolean>(R.string.versionInfo,"versionInfo", new Treatment<SettingsScreen>(){
-					public void process(SettingsScreen ss) {
-						VersionInfoFragmentLocal fragment=new VersionInfoFragmentLocal();
-						fragment.setShowBuildData(BuildConfig.SHOW_BUILD_DATA_ON_VERSIONS);
-						((AppCompatActivity)ss)
-							.getSupportFragmentManager()
-							.beginTransaction()
-							.replace(ss.getIdForFragment(),fragment)
-							.addToBackStack("versionInfo")
-							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-							.commit();
-					}
-				},true));
+		main.add(new Quartet<>(R.string.basics, "basics", ss -> ((AppCompatActivity) ss)
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .replace(ss.getIdForFragment(), new Basics())
+                .addToBackStack("basics")
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .commit(), true));
+		main.add(new Quartet<>(R.string.features, "features", ss -> ((AppCompatActivity) ss)
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .replace(ss.getIdForFragment(), new Features())
+                .addToBackStack("features")
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .commit(), true));
+		main.add(new Quartet<>(R.string.colorChange, "changeColor", ss -> ((AppCompatActivity) ss)
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .replace(ss.getIdForFragment(), new ColorChanger())
+                .addToBackStack("changeColor")
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .commit(), true));
+		main.add(new Quartet<>(R.string.osl, "osl", ss -> {
+            AppCompatActivity act = (AppCompatActivity) ss;
+            act.startActivity(new Intent(act, OpenSourceActivity2.class));
+        }, false));
+		main.add(new Quartet<>(R.string.aboutApp, "aboutApp", ss -> {
+            AppCompatActivity act = (AppCompatActivity) ss;
+            act.startActivity(new Intent(act, AboutAppActivity.class));
+        }, false));
+		main.add(new Quartet<>(R.string.versionInfo, "versionInfo", ss -> {
+            VersionInfoFragmentLocal fragment = new VersionInfoFragmentLocal();
+            fragment.setShowBuildData(BuildConfig.SHOW_BUILD_DATA_ON_VERSIONS);
+            ((AppCompatActivity) ss)
+                    .getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(ss.getIdForFragment(), fragment)
+                    .addToBackStack("versionInfo")
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .commit();
+        }, true));
 		MAIN=Collections.unmodifiableList(main);
 	}
-	
+
 	int which;
 	SharedPreferences pref;
 	boolean requireRestart=true;
-	
+
 	FrameLayout misc;
 	ViewPager pager;
 	ServerListFragment slf;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		pref=Utils.getPreferences(this);
@@ -129,16 +111,16 @@ abstract class FragmentSettingsActivityImpl extends AppCompatActivity implements
 		setContentView(R.layout.fragment_settings_with_preview);
 		if(savedInstanceState==null){
 			getSupportFragmentManager()
-				.beginTransaction()
-				.replace(R.id.preference,new HubPrefFragment())
-				.addToBackStack("root")
-				.commit();
+					.beginTransaction()
+					.replace(R.id.preference,new HubPrefFragment())
+					.addToBackStack("root")
+					.commit();
 		}
 	}
-	
+
 	@Override
 	protected void attachBaseContext(Context newBase) {
-        TheApplication.instance.initForActivities();
+		TheApplication.instance.initForActivities();
 		super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
 	}
 
@@ -171,7 +153,7 @@ abstract class FragmentSettingsActivityImpl extends AppCompatActivity implements
 	public void excecuteWithGpsPermission(Runnable e) {
 		FragmentSettingsActivityImplPermissionsDispatcher.excecuteWithGpsPermissionImplWithCheck(this,e);
 	}
-	
+
 	@NeedsPermission({"android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION"})
 	public void excecuteWithGpsPermissionImpl(Runnable r){
 		if(r!=null)r.run();
@@ -182,10 +164,10 @@ abstract class FragmentSettingsActivityImpl extends AppCompatActivity implements
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 		FragmentSettingsActivityImplPermissionsDispatcher.onRequestPermissionsResult(this,requestCode,grantResults);
 	}
-	
-	
-	
-	
+
+
+
+
 	public static class HubPrefFragment extends SettingsBaseFragment {
 		SharedPreferences pref;
 		@Override
@@ -197,11 +179,7 @@ abstract class FragmentSettingsActivityImpl extends AppCompatActivity implements
 				pref.setKey(t.getB());
 				pref.setTitle(t.getA());
 				final Treatment<SettingsScreen> proc=t.getC();
-				pref.setOnClickListener(new HandledPreference.OnClickListener(){
-						public void onClick(String a, String b, String c) {
-							proc.process((SettingsScreen)getActivity());
-						}
-					});
+				pref.setOnClickListener((HandledPreference.OnClickListener) (a, b, c1) -> proc.process((SettingsScreen)getActivity()));
 				getPreferenceScreen().addPreference(pref);
 			}
 		}
@@ -225,172 +203,106 @@ abstract class FragmentSettingsActivityImpl extends AppCompatActivity implements
 		@Override
 		public void onCreatePreferences(Bundle p1, String p2) {
 			addPreferencesFromResource(R.xml.settings_basic_compat);
-			sH("parallels", new HandledPreference.OnClickListener(){
-					public void onClick(String a, String b, String c) {
-						PreferenceUtils.showEditTextDialog(getActivity(),findPreference("parallels"),"6",new Treatment<View>(){
-							public void process(View v){
-								EditText text=(EditText)v.findViewById(android.R.id.edit);
-								text.setInputType(InputType.TYPE_CLASS_NUMBER|
-												  InputType.TYPE_TEXT_VARIATION_NORMAL|
-												  InputType.TYPE_NUMBER_FLAG_DECIMAL);
-								text.setFilters(new InputFilter[]{new InputFilter.LengthFilter(3)});
-							}
-						});
-					}
-				});
-			sH("serverListStyle", new HandledPreference.OnClickListener(){
-					public void onClick(String a, String b, String c) {
-						new AlertDialog.Builder(getActivity(),ThemePatcher.getDefaultDialogStyle(getContext()))
-							.setTitle(R.string.serverListStyle)
-							.setSingleChoiceItems(getResources().getStringArray(R.array.serverListStyles),which=pref.getInt("serverListStyle2",0),new DialogInterface.OnClickListener(){
-								public void onClick(DialogInterface di,int w){
-									which=w;
-								}
-							})
-							.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
-								public void onClick(DialogInterface di,int w){
-									pref.edit().putInt("serverListStyle2",which).commit();
-								}
-							})
-							.setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
-								public void onClick(DialogInterface di,int w){
+			sH("parallels", (a, b, c) -> PreferenceUtils.showEditTextDialog(getActivity(),findPreference("parallels"),"6", v -> {
+				EditText text=(EditText)v.findViewById(android.R.id.edit);
+				text.setInputType(InputType.TYPE_CLASS_NUMBER|
+						InputType.TYPE_TEXT_VARIATION_NORMAL|
+						InputType.TYPE_NUMBER_FLAG_DECIMAL);
+				text.setFilters(new InputFilter[]{new InputFilter.LengthFilter(3)});
+			}));
+			sH("serverListStyle", (a, b, c) -> new AlertDialog.Builder(getActivity(),ThemePatcher.getDefaultDialogStyle(getContext()))
+					.setTitle(R.string.serverListStyle)
+					.setSingleChoiceItems(getResources().getStringArray(R.array.serverListStyles),which=pref.getInt("serverListStyle2",0), (di, w) -> which=w)
+					.setPositiveButton(android.R.string.ok, (di, w) -> pref.edit().putInt("serverListStyle2",which).commit())
+					.setNegativeButton(android.R.string.cancel, (di, w) -> {
 
-								}
-							})
-							.show();
-					}
-				});
+					})
+					.show());
 			sH("selectFont",new HandledPreference.OnClickListener(){
-					public void onClick(String a,String b,String c){
-						String[] choice=getFontChoices();
-						String[] display=TheApplication.instance.getDisplayFontNames(choice);
-						final List<String> choiceList=Arrays.<String>asList(choice);
-						new AlertDialog.Builder(getActivity(),ThemePatcher.getDefaultDialogStyle(getContext()))
+				public void onClick(String a,String b,String c){
+					String[] choice=getFontChoices();
+					String[] display=TheApplication.instance.getDisplayFontNames(choice);
+					final List<String> choiceList=Arrays.<String>asList(choice);
+					new AlertDialog.Builder(getActivity(),ThemePatcher.getDefaultDialogStyle(getContext()))
 							.setSingleChoiceItems(display, choiceList.indexOf(TheApplication.instance.getFontFieldName())
-							, new DialogInterface.OnClickListener(){
-								public void onClick(DialogInterface di, int w) {
-									di.cancel();
-									TheApplication.instance.setFontFieldName(choiceList.get(w));
-									//Toast.makeText(getContext(),R.string.saved_fonts,Toast.LENGTH_LONG).show();
-								}
-							})
+									, (di, w) -> {
+										di.cancel();
+										TheApplication.instance.setFontFieldName(choiceList.get(w));
+										//Toast.makeText(getContext(),R.string.saved_fonts,Toast.LENGTH_LONG).show();
+									})
 							.show();
+				}
+				String[] getFontChoices() {
+					return getResources().getStringArray(R.array.fontNamesOrder);
+				}
+			});
+			sH("changeDpi", (a, b, c) -> PreferenceUtils.showEditTextDialog(getActivity(),findPreference("changeDpi"),"1.0", v -> ((EditText)v.findViewById(android.R.id.edit)).setInputType(InputType.TYPE_CLASS_NUMBER|
+					InputType.TYPE_TEXT_VARIATION_NORMAL|
+					InputType.TYPE_NUMBER_FLAG_DECIMAL)));
+			sH("addLessRows", (a, b, c) -> {
+				View v=getLayoutInflater(null).inflate(R.layout.quick_seekbar,null);
+				final SeekBar seekBar=(SeekBar)v.findViewById(R.id.seekbar);
+				((TextView)v.findViewById(R.id.max)).setText("5");
+				((TextView)v.findViewById(R.id.min)).setText("-5");
+				final TextView value=(TextView)v.findViewById(R.id.value);
+				seekBar.setMax(10);seekBar.setProgress(pref.getInt("addLessRows",0)+5);
+				seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
+					public void onProgressChanged(SeekBar p11, int p21, boolean p3){
+						value.setText((seekBar.getProgress()-5)+"");
 					}
-					String[] getFontChoices() {
-						return getResources().getStringArray(R.array.fontNamesOrder);
+
+					public void onStartTrackingTouch(SeekBar p11){
+
+					}
+
+					public void onStopTrackingTouch(SeekBar p11){
+
+					}
+
+					{
+						onProgressChanged(seekBar,0,false);
 					}
 				});
-			sH("changeDpi", new HandledPreference.OnClickListener(){
-					public void onClick(String a, String b, String c) {
-						PreferenceUtils.showEditTextDialog(getActivity(),findPreference("changeDpi"),"1.0",new Treatment<View>(){
-							public void process(View v){
-								((EditText)v.findViewById(android.R.id.edit)).setInputType(InputType.TYPE_CLASS_NUMBER|
-																							InputType.TYPE_TEXT_VARIATION_NORMAL|
-																							InputType.TYPE_NUMBER_FLAG_DECIMAL);
+				new AlertDialog.Builder(getActivity(),ThemePatcher.getDefaultDialogStyle(getContext()))
+						.setTitle(R.string.addLessRows)
+						.setView(v)
+						.setPositiveButton(android.R.string.ok, (di, w) -> pref.edit().putInt("addLessRows",seekBar.getProgress()-5).commit())
+						.setNegativeButton(android.R.string.cancel, (di, w) -> {
+
+						})
+						.show();
+			});
+			sH("serverListLooks", (a, b, c) -> startActivity(new Intent(getActivity(),FragmentSettingsActivity.ServerListStyleEditor.class)));
+			sH("widgetEditor", (a, b, c) -> startActivity(new Intent(getActivity(),WidgetsEditorActivity.class)));
+			sH("4.0themeMode", (a, b, c) -> {
+				final boolean[] gpsRequired=Utils.getBooleanArray(getContext(),R.array.themeMode_GpsRequired);
+				new AlertDialog.Builder(getActivity(),ThemePatcher.getDefaultDialogStyle(getContext()))
+						.setTitle(R.string.themeMode)
+						.setSingleChoiceItems(getResources().getStringArray(R.array.themeMode),which=pref.getInt("4.0themeMode",ThemePatcher.THEME_MODE_LIGHT), (di, w) -> which=w)
+						.setPositiveButton(android.R.string.ok, (di, w) -> {
+							if(gpsRequired[which]){
+								new AlertDialog.Builder(getActivity(),ThemePatcher.getDefaultDialogStyle(getContext()))
+										.setMessage(getResources().getString(R.string.gpsRequiredForDayNight).replace("{NO}",getResources().getString(android.R.string.no)))
+										.setPositiveButton(android.R.string.yes, (di1, w1) -> {
+//pref.edit().putInt("4.0themeMode",which).commit();
+											getSettingsScreen().excecuteWithGpsPermission(() -> pref.edit().putInt("4.0themeMode",which).commit());
+										})
+										.setNegativeButton(android.R.string.no,null)
+										.show();
+							}else{
+								pref.edit().putInt("4.0themeMode",which).commit();
 							}
-						});
-					}
-				});
-			sH("addLessRows", new HandledPreference.OnClickListener(){
-					public void onClick(String a, String b, String c) {
-						View v=getLayoutInflater(null).inflate(R.layout.quick_seekbar,null);
-						final SeekBar seekBar=(SeekBar)v.findViewById(R.id.seekbar);
-						((TextView)v.findViewById(R.id.max)).setText("5");
-						((TextView)v.findViewById(R.id.min)).setText("-5");
-						final TextView value=(TextView)v.findViewById(R.id.value);
-						seekBar.setMax(10);seekBar.setProgress(pref.getInt("addLessRows",0)+5);
-						seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
-								public void onProgressChanged(SeekBar p1, int p2, boolean p3){
-									value.setText((seekBar.getProgress()-5)+"");
-								}
-
-								public void onStartTrackingTouch(SeekBar p1){
-									
-								}
-
-								public void onStopTrackingTouch(SeekBar p1){
-									
-								}
-								
-								{
-									onProgressChanged(seekBar,0,false);
-								}
-						});
-						new AlertDialog.Builder(getActivity(),ThemePatcher.getDefaultDialogStyle(getContext()))
-							.setTitle(R.string.addLessRows)
-							.setView(v)
-							.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
-								public void onClick(DialogInterface di,int w){
-									pref.edit().putInt("addLessRows",seekBar.getProgress()-5).commit();
-								}
-							})
-							.setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
-								public void onClick(DialogInterface di,int w){
-
-								}
-							})
-							.show();
-					}
-				});
-			sH("serverListLooks", new HandledPreference.OnClickListener(){
-					public void onClick(String a, String b, String c) {
-						startActivity(new Intent(getActivity(),FragmentSettingsActivity.ServerListStyleEditor.class));
-					}
-				});
-			sH("widgetEditor", new HandledPreference.OnClickListener(){
-					public void onClick(String a, String b, String c) {
-						startActivity(new Intent(getActivity(),WidgetsEditorActivity.class));
-					}
-				});
-			sH("4.0themeMode", new HandledPreference.OnClickListener(){
-					public void onClick(String a, String b, String c) {
-						final boolean[] gpsRequired=Utils.getBooleanArray(getContext(),R.array.themeMode_GpsRequired);
-						new AlertDialog.Builder(getActivity(),ThemePatcher.getDefaultDialogStyle(getContext()))
-							.setTitle(R.string.themeMode)
-							.setSingleChoiceItems(getResources().getStringArray(R.array.themeMode),which=pref.getInt("4.0themeMode",ThemePatcher.THEME_MODE_LIGHT),new DialogInterface.OnClickListener(){
-								public void onClick(DialogInterface di,int w){
-									which=w;
-								}
-							})
-							.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
-								public void onClick(DialogInterface di,int w){
-									if(gpsRequired[which]){
-										new AlertDialog.Builder(getActivity(),ThemePatcher.getDefaultDialogStyle(getContext()))
-											.setMessage(getResources().getString(R.string.gpsRequiredForDayNight).replace("{NO}",getResources().getString(android.R.string.no)))
-											.setPositiveButton(android.R.string.yes,new DialogInterface.OnClickListener(){
-												public void onClick(DialogInterface di,int w){
-													//pref.edit().putInt("4.0themeMode",which).commit();
-													getSettingsScreen().excecuteWithGpsPermission(new Runnable(){
-														public void run(){
-															pref.edit().putInt("4.0themeMode",which).commit();
-														}
-													});
-												}
-											})
-											.setNegativeButton(android.R.string.no,null)
-											.show();
-									}else{
-										pref.edit().putInt("4.0themeMode",which).commit();
-									}
-								}
-							})
-							.setNegativeButton(android.R.string.cancel,null)
-							.show();
-					}
-				});
-			sH("retryIteration", new HandledPreference.OnClickListener(){
-					public void onClick(String a, String b, String c) {
-						PreferenceUtils.showEditTextDialog(getActivity(),findPreference("retryIteration"),"10",new Treatment<View>(){
-								public void process(View v){
-									EditText text=(EditText)v.findViewById(android.R.id.edit);
-									text.setInputType(InputType.TYPE_CLASS_NUMBER|
-													  InputType.TYPE_TEXT_VARIATION_NORMAL|
-													  InputType.TYPE_NUMBER_FLAG_DECIMAL);
-									text.setFilters(new InputFilter[]{new InputFilter.LengthFilter(3)});
-								}
-							});
-					}
-				});
+						})
+						.setNegativeButton(android.R.string.cancel,null)
+						.show();
+			});
+			sH("retryIteration", (a, b, c) -> PreferenceUtils.showEditTextDialog(getActivity(),findPreference("retryIteration"),"10", v -> {
+				EditText text=(EditText)v.findViewById(android.R.id.edit);
+				text.setInputType(InputType.TYPE_CLASS_NUMBER|
+						InputType.TYPE_TEXT_VARIATION_NORMAL|
+						InputType.TYPE_NUMBER_FLAG_DECIMAL);
+				text.setFilters(new InputFilter[]{new InputFilter.LengthFilter(3)});
+			}));
 		}
 
 		@Override
@@ -428,7 +340,7 @@ abstract class FragmentSettingsActivityImpl extends AppCompatActivity implements
 			addPreferencesFromResource(R.xml.settings_color_changer_compat);
 		}
 	}
-	
+
 	public static class VersionInfoFragmentLocal extends VersionInfoFragment{
 
 		@Override
@@ -436,12 +348,12 @@ abstract class FragmentSettingsActivityImpl extends AppCompatActivity implements
 			super.onResume();
 			getActivity().setTitle(R.string.versionInfo);
 		}
-		
+
 		@Override
 		public RecyclerView onCreateRecyclerView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
 			return super.onCreateRecyclerView(Utils.fixLayoutInflaterIfNeeded(CalligraphyContextWrapper.wrap(inflater.getContext()),getActivity()),
-											  parent, 
-											  savedInstanceState);
+					parent,
+					savedInstanceState);
 		}
 
 		@Override
@@ -449,14 +361,14 @@ abstract class FragmentSettingsActivityImpl extends AppCompatActivity implements
 			PreferenceUtils.onBindViewHolder(getActivity(),pref,viewHolder);
 		}
 	}
-	
-	
-	
-	
+
+
+
+
 
 	public abstract static class SettingsBaseFragment extends SHablePreferenceFragment {
 		protected SharedPreferences pref;
-		
+
 		LinearLayout miscContent;
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
@@ -485,28 +397,28 @@ abstract class FragmentSettingsActivityImpl extends AppCompatActivity implements
 		@Override
 		public RecyclerView onCreateRecyclerView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
 			return super.onCreateRecyclerView(Utils.fixLayoutInflaterIfNeeded(CalligraphyContextWrapper.wrap(inflater.getContext()),getActivity()),
-				parent, 
-				savedInstanceState);
+					parent,
+					savedInstanceState);
 		}
 
 		@Override
 		public void onModifyPreferenceViewHolder(PreferenceViewHolder viewHolder, Preference pref) {
 			PreferenceUtils.onBindViewHolder(getActivity(),pref,viewHolder);
 		}
-		
+
 		public int getIdForFragment(){
 			return getSettingsScreen().getIdForFragment();
 		}
-		
+
 		public SettingsScreen getSettingsScreen(){
 			return (SettingsScreen)getActivity();
 		}
-		
-		
-		
-		
+
+
+
+
 		protected void onMiscPartAvailable(LinearLayout misc){}
-		
+
 		public LinearLayout getMiscContent(){return miscContent;}
 	}
 }
@@ -536,23 +448,23 @@ abstract class MasterDetailSettingsImpl extends MasterDetailSupportActivity impl
 	public void excecuteWithGpsPermission(Runnable e) {
 		MasterDetailSettingsImplPermissionsDispatcher.excecuteWithGpsPermissionImplWithCheck(this,e);
 	}
-	
+
 	@NeedsPermission({"android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION"})
 	public void excecuteWithGpsPermissionImpl(Runnable r){
 		if(r!=null)r.run();
 	}
-	
+
 	@Override
 	public void onBackPressed() {
 		finish();
 	}
-	
+
 	@Override
 	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 		MasterDetailSettingsImplPermissionsDispatcher.onRequestPermissionsResult(this,requestCode,grantResults);
 	}
-	
+
 
 
 	final class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.vh> {
@@ -576,14 +488,12 @@ abstract class MasterDetailSettingsImpl extends MasterDetailSupportActivity impl
 		public void onBindViewHolder(vh p1, final int p2) {
 			p1.setTitle(MAIN.get(p2).getA());
 			p1.setSelected(p2==selected);
-			Utils.applyHandlersForViewTree(p1.itemView,new View.OnClickListener(){
-					public void onClick(View v){
-						if(p2==selected)return;
-						MAIN.get(p2).getC().process(MasterDetailSettingsImpl.this);
-						if(MAIN.get(p2).getD())
-							setSelected(p2);
-					}
-				});
+			Utils.applyHandlersForViewTree(p1.itemView, v -> {
+				if(p2==selected)return;
+				MAIN.get(p2).getC().process(MasterDetailSettingsImpl.this);
+				if(MAIN.get(p2).getD())
+					setSelected(p2);
+			});
 		}
 
 		@Override
@@ -654,136 +564,112 @@ abstract class ServerListStyleEditorImpl extends AppCompatActivity {
 
 		switch(slsl.getBgId()){
 			case ServerListStyleLoader.BACKGROUND_WHITE:
-			rdGrp.check(R.id.white);
-			break;
+				rdGrp.check(R.id.white);
+				break;
 			case ServerListStyleLoader.BACKGROUND_BLACK:
-			rdGrp.check(R.id.black);
-			break;
+				rdGrp.check(R.id.black);
+				break;
 			case ServerListStyleLoader.BACKGROUND_DIRT:
-			rdGrp.check(R.id.dirt);
-			break;
+				rdGrp.check(R.id.dirt);
+				break;
 			case ServerListStyleLoader.BACKGROUND_SINGLE_COLOR:
-			rdGrp.check(R.id.singleColor);
-			color.setImageDrawable(slsl.load());
-			selectedColor=slsl.getBackgroundSimpleColor();
-			break;
+				rdGrp.check(R.id.singleColor);
+				color.setImageDrawable(slsl.load());
+				selectedColor=slsl.getBackgroundSimpleColor();
+				break;
 			case ServerListStyleLoader.BACKGROUND_IMAGE:
-			rdGrp.check(R.id.image);
-			loadedBitmap=slsl.getImageBgBitmap();
-			image.setImageBitmap(loadedBitmap);
-			break;
+				rdGrp.check(R.id.image);
+				loadedBitmap=slsl.getImageBgBitmap();
+				image.setImageBitmap(loadedBitmap);
+				break;
 		}
 		selectedTextColor=slsl.getTextColor();
 		textColor.setImageDrawable(new ColorDrawable(selectedTextColor));
 
-		rdGrp.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
-				public void onCheckedChanged(RadioGroup p1, int p2){
-					switch(rdGrp.getCheckedRadioButtonId()){
-						case R.id.white:
-						case R.id.black:
-						case R.id.dirt:
-						case R.id.singleColor:
-						apply.setEnabled(true);
-						break;
-						case R.id.image:
-						apply.setEnabled(loadedBitmap!=null);
-						break;
+		rdGrp.setOnCheckedChangeListener((p1, p2) -> {
+			switch(rdGrp.getCheckedRadioButtonId()){
+				case R.id.white:
+				case R.id.black:
+				case R.id.dirt:
+				case R.id.singleColor:
+					apply.setEnabled(true);
+					break;
+				case R.id.image:
+					apply.setEnabled(loadedBitmap!=null);
+					break;
+			}
+		});
+		selectColor.setOnClickListener(v -> {
+			ColorPickerDialog cpd=ColorPickerDialog.createColorPickerDialog(ServerListStyleEditorImpl.this,ColorPickerDialog.LIGHT_THEME);
+			cpd.setLastColor(selectedColor);
+			cpd.setOnColorPickedListener((c, hex) -> {
+				selectedColor=c;
+				didOnceColorSelected=true;
+				color.setImageDrawable(new ColorDrawable(selectedColor));
+			});
+			cpd.setOnClosedListener(() -> {});
+			cpd.show();
+		});
+		selectImage.setOnClickListener(v -> new AsyncTask<Object,Void,Bitmap>(){
+			public Bitmap doInBackground(Object... a){
+				Log.d("slse image",a[0]+"");
+				String path=Utils.toString(a[0]);
+				InputStream is=null;
+				try{
+					is=tryOpen(path);
+					return BitmapFactory.decodeStream(is);
+				}catch(Throwable e){
+					WisecraftError.report("slse image",e);
+					DebugWriter.writeToE("slse image",e);
+					return null;
+				}finally{
+					try {
+						if (is != null)is.close();
+					} catch (IOException e) {
+						WisecraftError.report("slse image",e);
 					}
 				}
+			}
+			public void onPostExecute(Bitmap bmp){
+				loadedBitmap=bmp;
+				image.setImageBitmap(loadedBitmap);
+				apply.setEnabled(loadedBitmap!=null);
+				Log.d("slse image","loaded:"+bmp);
+			}
+		}.execute(getResult()));
+		selectTextColor.setOnClickListener(v -> {
+			ColorPickerDialog cpd=ColorPickerDialog.createColorPickerDialog(ServerListStyleEditorImpl.this,ColorPickerDialog.LIGHT_THEME);
+			cpd.setLastColor(selectedColor);
+			cpd.setOnColorPickedListener((c, hex) -> {
+				selectedTextColor=c;
+				textColor.setImageDrawable(new ColorDrawable(selectedTextColor));
 			});
-		selectColor.setOnClickListener(new View.OnClickListener(){
-				public void onClick(View v){
-					ColorPickerDialog cpd=ColorPickerDialog.createColorPickerDialog(ServerListStyleEditorImpl.this,ColorPickerDialog.LIGHT_THEME);
-					cpd.setLastColor(selectedColor);
-					cpd.setOnColorPickedListener(new ColorPickerDialog.OnColorPickedListener(){
-							public void onColorPicked(int c,String hex){
-								selectedColor=c;
-								didOnceColorSelected=true;
-								color.setImageDrawable(new ColorDrawable(selectedColor));
-							}
-						});
-					cpd.setOnClosedListener(new ColorPickerDialog.OnClosedListener(){
-							public void onClosed(){
-
-							}
-						});
-					cpd.show();
-				}
-			});
-		selectImage.setOnClickListener(new View.OnClickListener(){
-				public void onClick(View v){
-					new AsyncTask<Object,Void,Bitmap>(){
-						public Bitmap doInBackground(Object... a){
-							Log.d("slse image",a[0]+"");
-							String path=Utils.toString(a[0]);
-							InputStream is=null;
-							try{
-								is=tryOpen(path);
-								return BitmapFactory.decodeStream(is);
-							}catch(Throwable e){
-								WisecraftError.report("slse image",e);
-								DebugWriter.writeToE("slse image",e);
-								return null;
-							}finally{
-								try {
-									if (is != null)is.close();
-								} catch (IOException e) {
-									WisecraftError.report("slse image",e);
-								}
-							}
-						}
-						public void onPostExecute(Bitmap bmp){
-							loadedBitmap=bmp;
-							image.setImageBitmap(loadedBitmap);
-							apply.setEnabled(loadedBitmap!=null);
-							Log.d("slse image","loaded:"+bmp);
-						}
-					}.execute(getResult());
-				}
-			});
-		selectTextColor.setOnClickListener(new View.OnClickListener(){
-				public void onClick(View v){
-					ColorPickerDialog cpd=ColorPickerDialog.createColorPickerDialog(ServerListStyleEditorImpl.this,ColorPickerDialog.LIGHT_THEME);
-					cpd.setLastColor(selectedColor);
-					cpd.setOnColorPickedListener(new ColorPickerDialog.OnColorPickedListener(){
-							public void onColorPicked(int c,String hex){
-								selectedTextColor=c;
-								textColor.setImageDrawable(new ColorDrawable(selectedTextColor));
-							}
-						});
-					cpd.setOnClosedListener(new ColorPickerDialog.OnClosedListener(){
-							public void onClosed(){
-
-							}
-						});
-					cpd.show();
-				}
-			});
-		apply.setOnClickListener(new View.OnClickListener(){
-				public void onClick(View v){
-					switch(rdGrp.getCheckedRadioButtonId()){
-						case R.id.white:
-						slsl.setWhiteBg();
-						break;
-						case R.id.black:
-						slsl.setBlackBg();
-						break;
-						case R.id.dirt:
-						slsl.setDirtBg();
-						break;
-						case R.id.singleColor:
-						slsl.setSingleColorBg(selectedColor);
-						break;
-						case R.id.image:
-						if(loadedBitmap!=null)
-							slsl.setImageBg(loadedBitmap);
-						else return;
-						break;
-					}
-					slsl.setTextColor(selectedTextColor);
-					finish();
-				}
-			});
+			cpd.setOnClosedListener(() -> {});
+			cpd.show();
+		});
+		apply.setOnClickListener(v -> {
+			switch(rdGrp.getCheckedRadioButtonId()){
+				case R.id.white:
+					slsl.setWhiteBg();
+					break;
+				case R.id.black:
+					slsl.setBlackBg();
+					break;
+				case R.id.dirt:
+					slsl.setDirtBg();
+					break;
+				case R.id.singleColor:
+					slsl.setSingleColorBg(selectedColor);
+					break;
+				case R.id.image:
+					if(loadedBitmap!=null)
+						slsl.setImageBg(loadedBitmap);
+					else return;
+					break;
+			}
+			slsl.setTextColor(selectedTextColor);
+			finish();
+		});
 
 		//FSF
 		getLayoutInflater().inflate(R.layout.server_list_imp_exp,(ViewGroup)findViewById(R.id.fileSelectFrg));
@@ -794,52 +680,44 @@ abstract class ServerListStyleEditorImpl extends AppCompatActivity {
 		pathForm=(LinearLayout)findViewById(R.id.pathForm);
 		modeForm=(LinearLayout)findViewById(R.id.modeForm);
 
-		select.setOnClickListener(new View.OnClickListener(){
-				public void onClick(View v){
-					pathForm.setVisibility(View.GONE);
-					modeForm.setVisibility(View.VISIBLE);
-				}
-			});
-		fileLocal.setOnClickListener(new View.OnClickListener(){
-				public void onClick(View v){
-					modeForm.setVisibility(View.GONE);
-					pathForm.setVisibility(View.VISIBLE);
+		select.setOnClickListener(v -> {
+			pathForm.setVisibility(View.GONE);
+			modeForm.setVisibility(View.VISIBLE);
+		});
+		fileLocal.setOnClickListener(v -> {
+			modeForm.setVisibility(View.GONE);
+			pathForm.setVisibility(View.VISIBLE);
 
-					File f=new File(path.getText().toString());
-					if ((!f.exists())|f.isFile())f = f.getParentFile();
-					ServerListStyleEditorImplPermissionsDispatcher.startChooseFileForSelectWithCheck(ServerListStyleEditorImpl.this,f, new ServerListActivityBase5.FileChooserResult(){
-							public void onSelected(File f) {
-								path.setText(f.toString());
-								path.setEnabled(true);
-							}
-							public void onSelectCancelled() {/*No-op*/}
-						});
+			File f=new File(path.getText().toString());
+			if ((!f.exists())|f.isFile())f = f.getParentFile();
+			ServerListStyleEditorImplPermissionsDispatcher.startChooseFileForSelectWithCheck(ServerListStyleEditorImpl.this,f, new ServerListActivityBase5.FileChooserResult(){
+				public void onSelected(File f) {
+					path.setText(f.toString());
+					path.setEnabled(true);
 				}
+				public void onSelectCancelled() {/*No-op*/}
 			});
-		fileProvided.setOnClickListener(new View.OnClickListener(){
-				public void onClick(View v){
-					modeForm.setVisibility(View.GONE);
-					pathForm.setVisibility(View.VISIBLE);
-					ServerListStyleEditorImplPermissionsDispatcher.startExtChooseFileWithCheck(ServerListStyleEditorImpl.this,new ServerListActivityBase5.UriFileChooserResult(){
-							public void onSelected(Uri f) {
-								path.setText("");
-								path.setEnabled(false);
-							}
-							public void onSelectCancelled() {/*No-op*/}
-						});
+		});
+		fileProvided.setOnClickListener(v -> {
+			modeForm.setVisibility(View.GONE);
+			pathForm.setVisibility(View.VISIBLE);
+			ServerListStyleEditorImplPermissionsDispatcher.startExtChooseFileWithCheck(ServerListStyleEditorImpl.this,new ServerListActivityBase5.UriFileChooserResult(){
+				public void onSelected(Uri f) {
+					path.setText("");
+					path.setEnabled(false);
 				}
+				public void onSelectCancelled() {/*No-op*/}
 			});
-		path.setOnTouchListener(new View.OnTouchListener(){
-				public boolean onTouch(View v,MotionEvent ev){
-					if(ev.getAction()!=MotionEvent.ACTION_UP)return false;
-					if(!v.isEnabled()){
-						v.setEnabled(true);
-						path.setText(Environment.getExternalStorageDirectory().toString());
-						lastResult=null;
-					}
-					return false;
-				}
-			});
+		});
+		path.setOnTouchListener((v, ev) -> {
+			if(ev.getAction()!=MotionEvent.ACTION_UP)return false;
+			if(!v.isEnabled()){
+				v.setEnabled(true);
+				path.setText(Environment.getExternalStorageDirectory().toString());
+				lastResult=null;
+			}
+			return false;
+		});
 		path.setText(Environment.getExternalStorageDirectory().toString());
 		fileLocal.setImageDrawable(TheApplication.getTintedDrawable(R.drawable.ic_file,Color.WHITE,this));
 		fileProvided.setImageDrawable(TheApplication.getTintedDrawable(R.drawable.ic_launch_black_36dp,Color.WHITE,this));
@@ -891,18 +769,18 @@ abstract class ServerListStyleEditorImpl extends AppCompatActivity {
 		if(results.containsKey(requestCode)){
 			switch(resultCode){
 				case RESULT_OK:
-				if(results.get(requestCode) instanceof ServerListActivity.FileChooserResult){
-					((ServerListActivity.FileChooserResult)results.get(requestCode))
-						.onSelected((File)(lastResult=new File(data.getStringExtra("path"))));
-				}else if(results.get(requestCode) instanceof ServerListActivity.UriFileChooserResult){
-					((ServerListActivity.UriFileChooserResult)results.get(requestCode))
-						.onSelected((Uri)(lastResult=data.getData()));
-				}
-				Log.d("slse","select:"+lastResult);
-				break;
+					if(results.get(requestCode) instanceof ServerListActivity.FileChooserResult){
+						((ServerListActivity.FileChooserResult)results.get(requestCode))
+								.onSelected((File)(lastResult=new File(data.getStringExtra("path"))));
+					}else if(results.get(requestCode) instanceof ServerListActivity.UriFileChooserResult){
+						((ServerListActivity.UriFileChooserResult)results.get(requestCode))
+								.onSelected((Uri)(lastResult=data.getData()));
+					}
+					Log.d("slse","select:"+lastResult);
+					break;
 				case RESULT_CANCELED:
-				results.get(requestCode).onSelectCancelled();
-				break;
+					results.get(requestCode).onSelectCancelled();
+					break;
 			}
 			results.remove(requestCode);
 		}
@@ -1005,9 +883,9 @@ interface SettingsScreen{
 
 public class FragmentSettingsActivity extends FragmentSettingsActivityImpl{
 	public static class ServerListStyleEditor extends ServerListStyleEditorImpl{
-		
+
 	}
 	public static class MasterDetailSettings extends MasterDetailSettingsImpl{
-		
+
 	}
 }

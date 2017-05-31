@@ -96,32 +96,26 @@ public class MCSkinViewerDialog extends AppCompatDialog
 		public NanoHTTPD.Response serve(NanoHTTPD.IHTTPSession session) {
 			if(session.getUri().endsWith("/xhr/webgl_available")&!webGlChecked){
 				// WebGL is available so show WebView
-				h.post(new Runnable(){
-						public void run(){
-							progress.setVisibility(View.GONE);
-							skinViewer.setVisibility(View.VISIBLE);
-						}
-					});
+				h.post(() -> {
+                    progress.setVisibility(View.GONE);
+                    skinViewer.setVisibility(View.VISIBLE);
+                });
 				webGlChecked=true;
 				return newFixedLengthResponse("");
 			}
 			if(session.getUri().endsWith("/xhr/webgl_bad")&!webGlChecked){
 				// WebGL is NOT available so we use another browser
-				h.post(new Runnable(){
-						public void run(){
-							progress.setVisibility(View.GONE);
-							webglError.setVisibility(View.VISIBLE);
-							webglError.findViewById(R.id.openBrowser).setOnClickListener(new View.OnClickListener(){
-									public void onClick(View v){
-										Intent view=new Intent();
-										view.setData(Uri.parse(SERVER_URL));
-										view.setAction(Intent.ACTION_VIEW);
-										view.setFlags(view.getFlags()|Intent.FLAG_ACTIVITY_CLEAR_TOP/*|Intent.FLAG_ACTIVITY_NEW_TASK*/);
-										getContext().startActivity(Intent.createChooser(view,""));
-									}
-							});
-						}
-					});
+				h.post(() -> {
+                    progress.setVisibility(View.GONE);
+                    webglError.setVisibility(View.VISIBLE);
+                    webglError.findViewById(R.id.openBrowser).setOnClickListener(v -> {
+Intent view=new Intent();
+view.setData(Uri.parse(SERVER_URL));
+view.setAction(Intent.ACTION_VIEW);
+view.setFlags(view.getFlags()|Intent.FLAG_ACTIVITY_CLEAR_TOP/*|Intent.FLAG_ACTIVITY_NEW_TASK*/);
+getContext().startActivity(Intent.createChooser(view,""));
+});
+                });
 				webGlChecked=true;
 				return newFixedLengthResponse("");
 			}

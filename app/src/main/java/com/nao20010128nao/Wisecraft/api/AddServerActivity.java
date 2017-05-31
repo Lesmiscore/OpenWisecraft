@@ -69,40 +69,34 @@ public class AddServerActivity extends ApiBaseActivity
 		
 		setContentView(R.layout.api_server_add_activity);
 		ListView lv=(ListView)findViewById(R.id.list);
-		KVListAdapter<String,String> adapter=new KVListAdapter<String,String>(this);
+		KVListAdapter<String,String> adapter= new KVListAdapter<>(this);
 		lv.setAdapter(adapter);
 		adapter.add(getResources().getString(R.string.ipAddress),result.ip);
 		adapter.add(getResources().getString(R.string.port_single),result.port+"");
 		adapter.add(getResources().getString(R.string.kind),getResources().getString(result.mode==0?R.string.peServer:R.string.pcServer));
 		
-		findViewById(R.id.yes).setOnClickListener(new View.OnClickListener(){
-				public void onClick(View v){
-					if(ServerListActivity.instance.get()!=null){
-						//add a server at ServerListActivity for consistency
-						ServerListActivity.instance.get().addIntoList(result);
-					}else{
-						//deserialize a json, add a server, then save it
-						SharedPreferences pref=PreferenceManager.getDefaultSharedPreferences(AddServerActivity.this);
-						List<Server> servers=new Gson().fromJson(pref.getString("servers","[]"),ServerListArrayList.class);
-						servers.add(result);
-						pref.edit().putString("servers",new Gson().toJson(servers)).commit();
-					}
-					finish();
-				}
-			});
-		findViewById(R.id.no).setOnClickListener(new View.OnClickListener(){
-				public void onClick(View v){
-					finish();
-				}
-			});
+		findViewById(R.id.yes).setOnClickListener(v -> {
+            if(ServerListActivity.instance.get()!=null){
+                //add a server at ServerListActivity for consistency
+                ServerListActivity.instance.get().addIntoList(result);
+            }else{
+                //deserialize a json, add a server, then save it
+                SharedPreferences pref=PreferenceManager.getDefaultSharedPreferences(AddServerActivity.this);
+                List<Server> servers=new Gson().fromJson(pref.getString("servers","[]"),ServerListArrayList.class);
+                servers.add(result);
+                pref.edit().putString("servers",new Gson().toJson(servers)).commit();
+            }
+            finish();
+        });
+		findViewById(R.id.no).setOnClickListener(v -> finish());
 	}
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         WindowManager.LayoutParams lp=getWindow().getAttributes();
-        lp.width=lp.MATCH_PARENT;
-        lp.height=lp.MATCH_PARENT;
+        lp.width= ViewGroup.LayoutParams.MATCH_PARENT;
+        lp.height= ViewGroup.LayoutParams.MATCH_PARENT;
         getWindow().setAttributes(lp);
     }
 }

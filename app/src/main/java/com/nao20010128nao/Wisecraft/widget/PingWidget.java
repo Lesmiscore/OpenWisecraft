@@ -159,7 +159,7 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 	@Override
 	public void onRestored(Context context, int[] oldWidgetIds, int[] newWidgetIds) {
 		SharedPreferences widgetPref=getWidgetPref(context);
-		Map<String,Object> datas=new HashMap<String,Object>(widgetPref.getAll());
+		Map<String,Object> datas= new HashMap<>(widgetPref.getAll());
 		SharedPreferences.Editor edt=widgetPref.edit();
 		for(int i=0;i<oldWidgetIds.length;i++){
 			Log.d("WisecraftWidgets","onRestored(1): "+oldWidgetIds[i]+"=>"+newWidgetIds[i]);
@@ -179,7 +179,7 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 	public void onDisabled(Context context) {
 		SharedPreferences widgetPref=getWidgetPref(context);
 		SharedPreferences.Editor edt=widgetPref.edit();
-		for(String key:new HashSet<String>(widgetPref.getAll().keySet())){
+		for(String key: new HashSet<>(widgetPref.getAll().keySet())){
 			if("_version".startsWith(key))continue;
 			edt.remove(key);
 		}

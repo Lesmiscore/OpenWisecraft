@@ -156,6 +156,11 @@ android {
 			}
 		}
 	}
+
+	compileOptions {
+		sourceCompatibility JavaVersion.VERSION_1_8
+		targetCompatibility JavaVersion.VERSION_1_8
+	}
 }
 
 dependencies {
@@ -196,6 +201,7 @@ dependencies {
 	compile 'com.github.hotchemi:permissionsdispatcher:2.3.2'
 	compile 'com.google.guava:guava:19.0'
 	compile 'jp.wasabeef:recyclerview-animators:2.2.6'
+	compile 'com.annimon:stream:1.1.7'
 	
 	compile files('libs/fsb.jar')
 	compile files('libs/mcprox.jar')

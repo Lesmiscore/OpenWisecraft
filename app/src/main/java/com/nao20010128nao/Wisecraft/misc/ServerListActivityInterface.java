@@ -3,5 +3,5 @@ import android.content.Intent;
 
 public interface ServerListActivityInterface extends ActivityResultInterface
 {
-	public void addIntoList(Server s);
+	void addIntoList(Server s);
 }

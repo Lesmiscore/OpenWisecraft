@@ -51,11 +51,7 @@ public class PreferenceUtils
 			.setView(v)
 			.setCancelable(true)
 			.setNegativeButton(android.R.string.cancel,null)
-			.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
-				public void onClick(DialogInterface di,int w){
-					pref.edit().putString(preference.getKey(),((EditText)v.findViewById(android.R.id.edit)).getText().toString()).commit();
-				}
-			})
+			.setPositiveButton(android.R.string.ok, (di, w) -> pref.edit().putString(preference.getKey(),((EditText)v.findViewById(android.R.id.edit)).getText().toString()).commit())
 			.show();
 	}
 }

@@ -72,32 +72,22 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
 			new AlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
 				.setTitle(R.string.serverFinder)
 				.setView(dialog = getLayoutInflater().inflate(R.layout.server_finder_start, null, false))
-				.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
-					public void onClick(DialogInterface di, int w) {
-						String ip=((EditText)dialog.findViewById(R.id.ip)).getText().toString();
-						int startPort=new Integer(((EditText)dialog.findViewById(R.id.startPort)).getText().toString());
-						int endPort=new Integer(((EditText)dialog.findViewById(R.id.endPort)).getText().toString());
-						int mode=((CheckBox)dialog.findViewById(R.id.pc)).isChecked()?1:0;
-						launchService(ip, Math.min(startPort,endPort), Math.max(startPort,endPort), mode);
-					}
-				})
-				.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener(){
-					public void onClick(DialogInterface di, int w) {
-						finish();
-					}
-				})
-				.setOnCancelListener(new DialogInterface.OnCancelListener(){
-					public void onCancel(DialogInterface di) {
-						finish();
-					}
-				})
+				.setPositiveButton(android.R.string.ok, (di, w) -> {
+                    String ip=((EditText)dialog.findViewById(R.id.ip)).getText().toString();
+                    int startPort=Integer.valueOf(((EditText)dialog.findViewById(R.id.startPort)).getText().toString());
+                    int endPort=Integer.valueOf(((EditText)dialog.findViewById(R.id.endPort)).getText().toString());
+                    int mode=((CheckBox)dialog.findViewById(R.id.pc)).isChecked()?1:0;
+                    launchService(ip, Math.min(startPort,endPort), Math.max(startPort,endPort), mode);
+                })
+				.setNegativeButton(android.R.string.cancel, (di, w) -> finish())
+				.setOnCancelListener(di -> finish())
 				.show();
 			if (ip != null)((EditText)dialog.findViewById(R.id.ip)).setText(ip);
-			((CheckBox)dialog.findViewById(R.id.pc)).setChecked(mode == 0 ?false: true);
+			((CheckBox)dialog.findViewById(R.id.pc)).setChecked(mode != 0);
 		}
 		slsl=(ServerListStyleLoader)getSystemService(ContextWrappingExtender.SERVER_LIST_STYLE_LOADER);
 		
-		findViewById(android.R.id.content).setBackgroundDrawable(slsl.load());
+		ViewCompat.setBackground(findViewById(android.R.id.content),slsl.load());
 	}
 	
 	private void launchService(final String ip, final int startPort, final int endPort, final int mode) {
@@ -138,11 +128,7 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
 	private void updateList(){
 		ServerFinderService.State state=bound.getState(tag);
 		if(state.finished)return;
-		new Handler().postDelayed(new Runnable(){
-				public void run(){
-					updateList();
-				}
-			},1000);
+		new Handler().postDelayed(this::updateList,1000);
 		sl.clear();
 		sl.addAll(state.detected.values());
 	}
@@ -176,7 +162,7 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
 		ServerFinderActivityImpl sta;
 
 		public ServerList(ServerFinderActivityImpl parent) {
-			super(parent.list = new ArrayList<ServerStatus>());
+			super(parent.list = new ArrayList<>());
 			sta = parent;
 		}
 
@@ -235,12 +221,9 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
 				.setServerAddress(s.port + "")
 				.hideServerTitle();
 			applyHandlersForViewTree(viewHolder.itemView,
-				new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
+					v -> {
 						onItemClick(null, v, offset, Long.MIN_VALUE);
 					}
-				}
 			);
 		}
 
@@ -257,21 +240,19 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			final Server s=getItem(position);
-			if (s instanceof ServerStatus) {
+			if (s != null) {
 				new AlertDialog.Builder(ServerFinderActivityImpl.this,ThemePatcher.getDefaultDialogStyle(ServerFinderActivityImpl.this))
 					.setTitle(s.toString())
-					.setItems(R.array.serverFinderMenu, new DialogInterface.OnClickListener(){
-						public void onClick(DialogInterface di, int w) {
-							switch (w) {
-								case 0:
-									if(!ServerListActivityImpl.instance.get().list.contains(s)){
-										ServerListActivityImpl.instance.get().sl.add(s.cloneAsServer());
-										ServerListActivityImpl.instance.get().dryUpdate(s,true);
-									}
-									break;
-							}
-						}
-					})
+					.setItems(R.array.serverFinderMenu, (di, w) -> {
+                        switch (w) {
+                            case 0:
+                                if(!ServerListActivityImpl.instance.get().list.contains(s)){
+                                    ServerListActivityImpl.instance.get().sl.add(s.cloneAsServer());
+                                    ServerListActivityImpl.instance.get().dryUpdate(s,true);
+                                }
+                                break;
+                        }
+                    })
 					.show();
 			}
 		}

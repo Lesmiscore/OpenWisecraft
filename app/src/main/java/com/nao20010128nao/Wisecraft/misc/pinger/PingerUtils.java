@@ -86,7 +86,7 @@ public class PingerUtils extends CompatUtils{
 	}
 
 	public static byte[][] split(byte[] input) {
-		ArrayList<byte[]> temp = new ArrayList<byte[]>();
+		ArrayList<byte[]> temp = new ArrayList<>();
 
 		byte[][] output;
 		output = new byte[input.length][input.length];

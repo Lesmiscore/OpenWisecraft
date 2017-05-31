@@ -8,7 +8,7 @@ public class PreloadedViews extends HashMap<Integer,WeakReference<View>>
 	Map<Integer,WeakReference<View>> immutable;
 	public PreloadedViews(ViewGroup views,int[] ids){
 		for(int i:ids)
-			super.put(i,new WeakReference<View>(views.findViewById(i)));
+			super.put(i, new WeakReference<>(views.findViewById(i)));
 		immutable=Collections.unmodifiableMap(this);
 	}
 
