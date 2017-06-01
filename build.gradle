@@ -71,6 +71,11 @@ subprojects{
 		firebaseVersion="10.0.1"
 	}
 }
+subprojects.each{p->
+	p.android{
+		buildToolsVersion "25.0.0"
+	}
+}
 
 task("safeDeleteDevXml")<<{
 	def dir="./app/src/main/res/values/dev.xml"
