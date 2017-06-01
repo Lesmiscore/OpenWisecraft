@@ -13,13 +13,11 @@ public class AboutAppActivity extends AboutAppActivityBase
 		super.onCreate(savedInstanceState);
 		addCardAt(R.layout.about_app_2_local,0);
 		addCardAt(R.layout.about_app_1_local,0);
-		findViewById(R.id.gotoTranslationPage).setOnClickListener(new View.OnClickListener(){
-				public void onClick(View v){
-					Intent intent=new Intent(Intent.ACTION_VIEW);
-					intent.addCategory(Intent.CATEGORY_DEFAULT);
-					intent.setData(Uri.parse(getResources().getString(R.string.aboutAppTranslationUrl)));
-					startActivity(Intent.createChooser(intent,getResources().getString(R.string.gotoTranslationPage)));
-				}
-			});
+		findViewById(R.id.gotoTranslationPage).setOnClickListener(v -> {
+            Intent intent=new Intent(Intent.ACTION_VIEW);
+            intent.addCategory(Intent.CATEGORY_DEFAULT);
+            intent.setData(Uri.parse(getResources().getString(R.string.aboutAppTranslationUrl)));
+            startActivity(Intent.createChooser(intent,getResources().getString(R.string.gotoTranslationPage)));
+        });
 	}
 }

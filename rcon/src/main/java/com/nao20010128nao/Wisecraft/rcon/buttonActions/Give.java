@@ -70,53 +70,45 @@ public class Give extends NameSelectAction {
 		playerView = (TextView)v.findViewById(R.id.playerName);
 		itemView = (TextView)v.findViewById(R.id.itemId);
 
-		changeAmount.setOnClickListener(new View.OnClickListener(){
-				public void onClick(View v) {
-					hint = getResString(R.string.giveAmountHint);
-					list = getResources().getStringArray(R.array.giveAmountConst);
-					selecting = 0;
-					Give.super.onClick(v);
-				}
-			});
-		changePlayer.setOnClickListener(new View.OnClickListener(){
-				public void onClick(View v) {
-					hint = getResString(R.string.givePlayerHint);
-					list = null;
-					selecting = 1;
-					Give.super.onClick(v);
-				}
-			});
-		changeItem.setOnClickListener(new View.OnClickListener(){
-				public void onClick(View v) {
-					hint = getResString(R.string.giveItemHint);
-					list = getResources().getStringArray(R.array.giveItemConst);
-					selecting = 2;
-					Give.super.onClick(v);
-				}
-			});
-		executeButton.setOnClickListener(new View.OnClickListener(){
-				public void onClick(View v) {
-					if (isNullString(amount) || isNullString(player) || isNullString(item)) {
-						AlertDialog.Builder b=new AlertDialog.Builder(Give.this,getActivity().getPresenter().getDialogStyleId());
-						String mes="";
-						if (isNullString(amount)) {
-							mes += getResString(R.string.giveSelectAmount) + "\n";
-						}
-						if (isNullString(player)) {
-							mes += getResString(R.string.giveSelectPlayer) + "\n";
-						}
-						if (isNullString(item)) {
-							mes += getResString(R.string.giveSelectItem) + "\n";
-						}
-						b.setMessage(mes);
-						b.setPositiveButton(android.R.string.ok, RconModule_Constant.BLANK_DIALOG_CLICK_LISTENER);
-						b.show();
-					} else {
-						getActivity().performSend("give " + player + " " + item + " " + amount);
-						dialog.dismiss();
-					}
-				}
-			});
+		changeAmount.setOnClickListener(v14 -> {
+            hint = getResString(R.string.giveAmountHint);
+            list = getResources().getStringArray(R.array.giveAmountConst);
+            selecting = 0;
+            Give.super.onClick(v14);
+        });
+		changePlayer.setOnClickListener(v13 -> {
+            hint = getResString(R.string.givePlayerHint);
+            list = null;
+            selecting = 1;
+            Give.super.onClick(v13);
+        });
+		changeItem.setOnClickListener(v12 -> {
+            hint = getResString(R.string.giveItemHint);
+            list = getResources().getStringArray(R.array.giveItemConst);
+            selecting = 2;
+            Give.super.onClick(v12);
+        });
+		executeButton.setOnClickListener(v1 -> {
+            if (isNullString(amount) || isNullString(player) || isNullString(item)) {
+                AlertDialog.Builder b=new AlertDialog.Builder(Give.this,getActivity().getPresenter().getDialogStyleId());
+                String mes="";
+                if (isNullString(amount)) {
+                    mes += getResString(R.string.giveSelectAmount) + "\n";
+                }
+                if (isNullString(player)) {
+                    mes += getResString(R.string.giveSelectPlayer) + "\n";
+                }
+                if (isNullString(item)) {
+                    mes += getResString(R.string.giveSelectItem) + "\n";
+                }
+                b.setMessage(mes);
+                b.setPositiveButton(android.R.string.ok, RconModule_Constant.BLANK_DIALOG_CLICK_LISTENER);
+                b.show();
+            } else {
+                getActivity().performSend("give " + player + " " + item + " " + amount);
+                dialog.dismiss();
+            }
+        });
 		return v;
 	}
 

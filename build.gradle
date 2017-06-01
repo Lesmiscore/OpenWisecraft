@@ -42,7 +42,7 @@ buildscript {
     	maven { url "https://raw.githubusercontent.com/nao20010128nao/MavenRepo/master/releases/" }
 	}
     dependencies {
-        classpath('com.android.tools.build:gradle:2.4.0-alpha1')/*{
+        classpath('com.android.tools.build:gradle:2.4.0-alpha7')/*{
             exclude group: 'net.sf.proguard', module: 'proguard'
         }*/
         classpath 'com.google.gms:google-services:3.0.0'

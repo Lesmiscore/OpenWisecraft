@@ -14,11 +14,7 @@ public class Banlist extends BaseAction {
 	public void onClick(View p1) {
 		new AlertDialog.Builder(this,getActivity().getPresenter().getDialogStyleId())
 			.setMessage(R.string.auSure)
-			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
-				public void onClick(DialogInterface di, int w) {
-					getActivity().performSend("banlist");
-				}
-			})
+			.setPositiveButton(android.R.string.ok, (di, w) -> getActivity().performSend("banlist"))
 			.setNegativeButton(android.R.string.cancel, RconModule_Constant.BLANK_DIALOG_CLICK_LISTENER)
 			.show();
 	}

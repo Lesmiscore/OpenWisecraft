@@ -3,7 +3,7 @@ apply from: "$rootDir/ci_utils.gradle"
 
 android{
     compileSdkVersion 24
-    buildToolsVersion "24.0.0"
+    buildToolsVersion "25.0.0"
 
     defaultConfig {
         minSdkVersion 14
@@ -11,7 +11,7 @@ android{
         versionCode 1
         versionName "1.0"
 		
-		def root="${project.rootDir}"
+		def root="$project.rootDir"
 		def ext=project.ext
 		buildConfigField "String", "GIT_REVISION_HASH", "\"${getHashOfRepo('','Wisecraft',root)}\""
 		buildConfigField "String", "GIT_REVISION_HASH_I18N", "\"${getHashOfRepo('wisecraft-i18n','Wisecraft-Multilanguage',root)}\""
@@ -38,6 +38,11 @@ android{
 	lintOptions {
         abortOnError false
     }
+
+	compileOptions {
+		sourceCompatibility JavaVersion.VERSION_1_8
+		targetCompatibility JavaVersion.VERSION_1_8
+	}
 }
 
 dependencies {
@@ -53,6 +58,7 @@ dependencies {
 	
 	compile 'com.google.code.gson:gson:2.8.0'
 	compile 'com.github.fiskurgit:MarkdownView:1.1.0'
+	compile 'com.annimon:stream:1.1.7'
     
 	compile project(':scrolling')
 	compile project(':wisecraft-i18n')

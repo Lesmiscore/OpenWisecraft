@@ -10,6 +10,8 @@ import android.util.*;
 import android.view.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.security.*;
 import java.util.*;
 
@@ -307,14 +309,30 @@ public class CompatUtils {
 		return PreferenceManager.getDefaultSharedPreferences(c);
 	}
 
-	public static void safeClose(Closeable c){
+	public static void safeClose(Object c){
 		if(c==null)return;
-		try {
-			c.close();
-		} catch (IOException e) {}
+		if(c instanceof Closeable){
+			try {
+				((Closeable)c).close();
+			} catch (IOException e) {}
+		}else{
+			Method close;
+			try {
+				close=c.getClass().getMethod("close");
+			} catch (Throwable e) {
+				try {
+					close=c.getClass().getMethod("dispose");
+				} catch (Throwable e1) {
+					return;
+				}
+			}
+			try {
+				close.invoke(c);
+			} catch (Throwable e) {}
+		}
 	}
-	public static void safeClose(Closeable... cs){
+	public static void safeClose(Object... cs){
 		if(cs==null)return;
-		for(Closeable c:cs)safeClose(c);
+		for(Object c:cs)safeClose(c);
 	}
 }

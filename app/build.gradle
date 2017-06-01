@@ -43,9 +43,6 @@ android {
         versionCode generateVersionCode(version,preNum==0?0xf:preNum)
         versionName version
 		multiDexEnabled true
-		jackOptions {
-			enabled false
-		}
 		
 		buildConfigField "String", "HIDDEN_AD", "\"http://cur.lv/11juip\""
 		buildConfigField "boolean", "SHOW_BUILD_DATA_ON_VERSIONS", "false"

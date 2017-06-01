@@ -137,14 +137,11 @@ public class ModifiedBottomSheetDialog extends AppCompatDialog {
             bottomSheet.addView(view, params);
         }
         // We treat the CoordinatorLayout as outside the dialog though it is technically inside
-        coordinator.findViewById(R.id.touch_outside).setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					if (mCancelable && isShowing() && shouldWindowCloseOnTouchOutside()) {
-						cancel();
-					}
-				}
-			});
+        coordinator.findViewById(R.id.touch_outside).setOnClickListener(view1 -> {
+            if (mCancelable && isShowing() && shouldWindowCloseOnTouchOutside()) {
+                cancel();
+            }
+        });
         return decor;
     }
 

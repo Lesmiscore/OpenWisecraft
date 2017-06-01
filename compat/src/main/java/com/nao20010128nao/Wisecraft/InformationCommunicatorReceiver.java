@@ -18,12 +18,10 @@ public class InformationCommunicatorReceiver extends BroadcastReceiver
 	DisclosureResult res;
 	public InformationCommunicatorReceiver(){}
 	private InformationCommunicatorReceiver(DisclosureResult dr){
-		new Handler().postDelayed(new Runnable(){
-			public void run(){
-				res.disclosureTimeout();
-				res=null;
-			}
-		},1000000);
+		new Handler().postDelayed(() -> {
+            res.disclosureTimeout();
+            res=null;
+        },1000000);
 		res=dr;
 	}
 	@Override

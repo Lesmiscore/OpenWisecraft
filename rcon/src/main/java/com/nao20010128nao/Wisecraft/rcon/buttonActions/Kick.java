@@ -13,11 +13,7 @@ public class Kick extends NameSelectAction {
 	public void onSelected(final String s) {
 		new AlertDialog.Builder(this,getActivity().getPresenter().getDialogStyleId())
 			.setMessage(getResString(R.string.kickAsk).replace("[PLAYER]", s))
-			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
-				public void onClick(DialogInterface di, int w) {
-					getActivity().performSend("kick " + s);
-				}
-			})
+			.setPositiveButton(android.R.string.ok, (di, w) -> getActivity().performSend("kick " + s))
 			.setNegativeButton(android.R.string.cancel, RconModule_Constant.BLANK_DIALOG_CLICK_LISTENER)
 			.show();
 	}

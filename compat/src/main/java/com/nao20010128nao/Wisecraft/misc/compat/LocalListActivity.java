@@ -92,10 +92,5 @@ public class LocalListActivity extends SimpleCompatActivity {
 
     }
 
-    private AdapterView.OnItemClickListener mOnClickListener = new AdapterView.OnItemClickListener() {
-        public void onItemClick(AdapterView<?> parent, View v, int position, long id)
-        {
-            onListItemClick((ListView)parent, v, position, id);
-        }
-    };
+    private AdapterView.OnItemClickListener mOnClickListener = (parent, v, position, id) -> onListItemClick((ListView)parent, v, position, id);
 }

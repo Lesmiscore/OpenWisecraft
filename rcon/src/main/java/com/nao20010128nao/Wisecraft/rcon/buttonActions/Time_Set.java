@@ -15,11 +15,7 @@ public class Time_Set extends NameSelectAction {
 	public void onSelected(final String s) {
 		new AlertDialog.Builder(this,getActivity().getPresenter().getDialogStyleId())
 			.setMessage(getResString(R.string.setTimeAsk).replace("[TIME]", s))
-			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
-				public void onClick(DialogInterface di, int w) {
-					getActivity().performSend("time set " + s);
-				}
-			})
+			.setPositiveButton(android.R.string.ok, (di, w) -> getActivity().performSend("time set " + s))
 			.setNegativeButton(android.R.string.cancel, RconModule_Constant.BLANK_DIALOG_CLICK_LISTENER)
 			.show();
 	}
