@@ -287,9 +287,9 @@ public class Utils extends PingerUtils{
 		return getActionBarTextView(getToolbar(a));
 	}
 	public static Server makeServerFromBundle(Bundle bnd){
-		String ip=bnd.getString(Server.class.getName()+".ip");
-		int port=bnd.getInt(Server.class.getName()+".port");
-		int mode=bnd.getInt(Server.class.getName()+".mode");
+		String ip=bnd.getString("com.nao20010128nao.Wisecraft.misc.Server.ip");
+		int port=bnd.getInt("com.nao20010128nao.Wisecraft.misc.Server.port");
+		int mode=bnd.getInt("com.nao20010128nao.Wisecraft.misc.Server.mode");
 		Server s=new Server();
 		s.ip=ip;
 		s.port=port;
@@ -297,15 +297,15 @@ public class Utils extends PingerUtils{
 		return s;
 	}
 	public static Server[] makeServersFromBundle(Bundle bnd){
-		Parcelable[] data=bnd.getParcelableArray(Server.class.getName()+"#servers");
+		Parcelable[] data=bnd.getParcelableArray("com.nao20010128nao.Wisecraft.misc.Server#servers");
 		Server[] servers=new Server[data.length];
 		for(int i=0;i<data.length;i++)servers[i]=makeServerFromBundle((Bundle)data[i]);
 		return servers;
 	}
 	public static void putServerIntoBundle(Bundle bnd,Server s){
-		bnd.putString(Server.class.getName()+".ip",s.ip);
-		bnd.putInt(Server.class.getName()+".port",s.port);
-		bnd.putInt(Server.class.getName()+".mode",s.mode);
+		bnd.putString("com.nao20010128nao.Wisecraft.misc.Server.ip",s.ip);
+		bnd.putInt("com.nao20010128nao.Wisecraft.misc.Server.port",s.port);
+		bnd.putInt("com.nao20010128nao.Wisecraft.misc.Server.mode",s.mode);
 	}
 	public static Bundle putServerIntoBundle(Server s){
 		Bundle bnd=new Bundle();
@@ -315,7 +315,7 @@ public class Utils extends PingerUtils{
 	public static void putServersIntoBundle(Bundle bnd,Server[] s){
 		Bundle[] data=new Bundle[s.length];
 		for(int i=0;i<s.length;i++)data[i]=putServerIntoBundle(s[i]);
-		bnd.putParcelableArray(Server.class.getName()+"#servers",data);
+		bnd.putParcelableArray("com.nao20010128nao.Wisecraft.misc.Server#servers",data);
 	}
 	public static Bundle putServersIntoBundle(Server[] s){
 		Bundle bnd=new Bundle();
