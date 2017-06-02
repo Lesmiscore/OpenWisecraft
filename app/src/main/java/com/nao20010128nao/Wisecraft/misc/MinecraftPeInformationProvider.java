@@ -33,8 +33,8 @@ public class MinecraftPeInformationProvider implements InformationProvider
 			return BigInteger.valueOf(Long.MAX_VALUE);
 		}
 	}
-	private OrderTrustedMap<String,String> readSettings() {
-		OrderTrustedMap<String,String> data=new OrderTrustedMap<>();
+	private LinkedHashMap<String,String> readSettings() {
+		LinkedHashMap<String,String> data=new LinkedHashMap<>();
 		try{
 			for(String s:CompatUtils.lines(CompatUtils.readWholeFile(new File(Environment.getExternalStorageDirectory(), "games/com.mojang/minecraftpe/options.txt")))) {
 				int colonOfs=s.indexOf(':');
