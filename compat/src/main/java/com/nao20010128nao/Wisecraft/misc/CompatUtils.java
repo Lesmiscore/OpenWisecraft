@@ -335,4 +335,8 @@ public class CompatUtils {
 		if(cs==null)return;
 		for(Object c:cs)safeClose(c);
 	}
+	public static void safeClose(Closeable[] cs){
+		if(cs==null)return;
+		for(Object c:cs)safeClose(c);
+	}
 }

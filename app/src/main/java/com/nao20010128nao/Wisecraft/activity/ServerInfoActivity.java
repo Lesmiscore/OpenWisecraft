@@ -19,6 +19,7 @@ import android.widget.*;
 import biz.laenger.android.vpbs.*;
 import com.astuetz.*;
 import com.google.gson.*;
+import com.nao20010128nao.Wisecraft.R;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
@@ -27,13 +28,14 @@ import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
 import com.nao20010128nao.Wisecraft.misc.skin_face.*;
+import permissions.dispatcher.*;
+
 import java.io.*;
 import java.lang.ref.*;
 import java.math.*;
 import java.util.*;
-import permissions.dispatcher.*;
 
-import com.nao20010128nao.Wisecraft.R;
+import android.util.Base64;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 
@@ -161,7 +163,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 			new PstsTextStyleChanger(Typeface.BOLD, Typeface.NORMAL, tabs, psts)
 		));
 		
-		findViewById(R.id.appbar).setBackgroundDrawable(slsl.load());
+		ViewCompat.setBackground(findViewById(R.id.appbar),slsl.load());
 
 		int offset=getIntent().getIntExtra("offset", 0);
 		if (adapter.getCount() >= 2 & offset == 0)tabs.setCurrentItem(1);
@@ -196,7 +198,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 			}
 		}
 		TypedArray ta=ThemePatcher.getStyledContext(this).obtainStyledAttributes(new int[]{android.R.attr.windowBackground});
-		tabs.setBackgroundDrawable(ta.getDrawable(0));
+		ViewCompat.setBackground(tabs,ta.getDrawable(0));
 		ta.recycle();
 		
 		if(useBottomSheet){
@@ -500,11 +502,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		new Thread(){
-			public void run() {
-				pref.edit().putString("pcuseruuids", new Gson().toJson(TheApplication.instance.pcUserUUIDs)).commit();
-			}
-		}.start();
+		new Thread(() -> pref.edit().putString("pcuseruuids", new Gson().toJson(TheApplication.instance.pcUserUUIDs)).commit()).start();
 		if (serverIconBmp != null)serverIconBmp.recycle();
 	}
 
@@ -971,7 +969,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container) {
 			View lv= inflater.inflate(R.layout.data_tab_pc, container);
-			lv.findViewById(R.id.serverImageAndName).setBackgroundDrawable(getParentActivity().slsl.load());
+			ViewCompat.setBackground(lv.findViewById(R.id.serverImageAndName),getParentActivity().slsl.load());
 			((RecyclerView)lv.findViewById(R.id.data)).addItemDecoration(new DividerItemDecoration(getContext(),LinearLayoutManager.VERTICAL));
 			return lv;
 		}

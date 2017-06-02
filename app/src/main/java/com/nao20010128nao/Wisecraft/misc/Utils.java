@@ -1,23 +1,22 @@
 package com.nao20010128nao.Wisecraft.misc;
+
 import android.annotation.*;
 import android.app.*;
 import android.content.*;
 import android.content.pm.*;
 import android.content.res.*;
 import android.graphics.*;
-import android.net.*;
 import android.os.*;
-import android.preference.*;
 import android.support.design.widget.*;
-import android.support.v7.app.*;
-import android.support.v7.widget.*;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
 import android.text.*;
 import android.text.style.*;
 import android.util.*;
 import android.view.*;
 import android.webkit.*;
 import android.widget.*;
-import com.google.gson.*;
+import com.nao20010128nao.Wisecraft.R;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.activity.*;
 import com.nao20010128nao.Wisecraft.api.*;
@@ -25,16 +24,14 @@ import com.nao20010128nao.Wisecraft.misc.collector.*;
 import com.nao20010128nao.Wisecraft.misc.json.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import com.nao20010128nao.Wisecraft.misc.serverList.*;
+import permissions.dispatcher.PermissionRequest;
+
 import java.io.*;
 import java.lang.reflect.*;
 import java.math.*;
 import java.util.*;
-import permissions.dispatcher.*;
 
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
-import com.nao20010128nao.Wisecraft.R;
-import permissions.dispatcher.PermissionRequest;
+import android.util.Base64;
 
 public class Utils extends PingerUtils{
 	private static int[] HUE_COLORS;

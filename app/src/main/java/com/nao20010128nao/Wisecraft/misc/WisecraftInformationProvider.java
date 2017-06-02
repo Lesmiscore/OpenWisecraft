@@ -42,7 +42,7 @@ public class WisecraftInformationProvider implements InformationProvider
 				closeable=new Closeable[]{conn.getInputStream(),conn.getOutputStream()};
 				br=new BufferedReader(new InputStreamReader(conn.getInputStream()));
 				ips.add(br.readLine());
-				}catch(Throwable e){
+			}catch(Throwable e){
 				CollectorMain.reportError("getIp@"+addr,e);
 			}finally{
 				CompatUtils.safeClose(br);

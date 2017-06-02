@@ -4,6 +4,7 @@ import android.content.*;
 import android.os.*;
 import android.preference.*;
 import android.support.v4.content.*;
+import android.support.v4.view.*;
 import android.support.v7.app.*;
 import android.support.v7.widget.*;
 import android.view.*;
@@ -134,7 +135,7 @@ pinging.put(position, false);
 				.show();
 		}
 
-		findViewById(android.R.id.content).setBackgroundDrawable(slsl.load());
+		ViewCompat.setBackground(findViewById(android.R.id.content),slsl.load());
 	}
 	@Override
 	protected void attachBaseContext(Context newBase) {
