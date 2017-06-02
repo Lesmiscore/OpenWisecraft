@@ -1,4 +1,5 @@
 package com.nao20010128nao.Wisecraft.services;
+
 import android.app.*;
 import android.content.*;
 import android.graphics.*;
@@ -9,6 +10,7 @@ import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.activity.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.provider.*;
+
 import java.util.*;
 
 public class ServerFinderService extends Service

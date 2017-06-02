@@ -3,7 +3,6 @@ package com.nao20010128nao.Wisecraft.misc.view;
 import android.content.*;
 import android.support.design.widget.*;
 import android.util.*;
-import android.view.*;
 
 public class NestedScrollControllableCoordinatorLayout extends CoordinatorLayout 
 {

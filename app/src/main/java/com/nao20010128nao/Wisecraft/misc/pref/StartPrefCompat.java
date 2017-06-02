@@ -1,8 +1,7 @@
 package com.nao20010128nao.Wisecraft.misc.pref;
-import android.content.*;
+
 import android.graphics.*;
 import android.support.v7.preference.*;
-import android.util.*;
 import com.nao20010128nao.ToolBox.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 

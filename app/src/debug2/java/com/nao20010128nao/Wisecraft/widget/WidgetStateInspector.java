@@ -1,16 +1,6 @@
 package com.nao20010128nao.Wisecraft.widget;
 
-import android.content.*;
-import android.os.*;
-import android.preference.*;
-import android.support.v7.app.*;
-import android.support.v7.widget.*;
-import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.*;
-import com.nao20010128nao.Wisecraft.misc.*;
-import java.util.*;
-
-import com.nao20010128nao.Wisecraft.R;
 
 public class WidgetStateInspector extends AppCompatActivity 
 {

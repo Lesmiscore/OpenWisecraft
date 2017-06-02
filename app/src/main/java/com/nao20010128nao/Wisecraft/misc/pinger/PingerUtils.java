@@ -1,10 +1,11 @@
 package com.nao20010128nao.Wisecraft.misc.pinger;
 
+import com.nao20010128nao.Wisecraft.misc.*;
+
 import java.io.*;
 import java.lang.reflect.*;
 import java.nio.*;
 import java.util.*;
-import com.nao20010128nao.Wisecraft.misc.*;
 
 public class PingerUtils extends CompatUtils{
 

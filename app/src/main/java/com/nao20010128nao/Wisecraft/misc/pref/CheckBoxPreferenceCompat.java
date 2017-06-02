@@ -1,13 +1,10 @@
 package com.nao20010128nao.Wisecraft.misc.pref;
+
 import android.content.*;
-import android.content.res.*;
 import android.graphics.*;
 import android.support.v7.preference.*;
 import android.util.*;
 import com.nao20010128nao.Wisecraft.misc.*;
-import com.nao20010128nao.Wisecraft.misc.compat.*;
-
-import com.nao20010128nao.Wisecraft.misc.compat.R;
 
 public class CheckBoxPreferenceCompat extends android.support.v7.preference.CheckBoxPreference implements SetTextColor{
 	int color=Color.BLACK;

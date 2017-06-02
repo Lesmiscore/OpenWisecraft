@@ -4,17 +4,16 @@ import android.graphics.drawable.*;
 import android.os.*;
 import android.support.v4.view.*;
 import android.support.v4.widget.*;
-import android.support.v7.view.*;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.*;
 import android.view.*;
 import android.widget.*;
 import com.google.common.collect.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+
 import java.net.*;
 import java.util.*;
-
-import android.support.v7.view.ActionMode;
 
 //Remove servers on unused domains
 public abstract class ServerListActivityBase7 extends ServerListActivityBaseFields

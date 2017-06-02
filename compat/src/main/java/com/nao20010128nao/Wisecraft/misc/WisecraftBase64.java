@@ -725,5 +725,5 @@ public class WisecraftBase64 {
         }
     }
 
-    private Base64() { }   // don't instantiate
+    private WisecraftBase64() { }   // don't instantiate
 }

@@ -1,7 +1,9 @@
 package com.nao20010128nao.Wisecraft.activity;
+
 import android.content.*;
 import android.preference.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+
 import java.util.*;
 
 //Only most common things

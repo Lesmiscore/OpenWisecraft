@@ -1,9 +1,10 @@
 package com.nao20010128nao.Wisecraft.activity;
+
 import android.net.*;
 import android.os.*;
 import android.support.design.widget.*;
 import android.support.v4.widget.*;
-import android.support.v7.view.*;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.*;
 import android.support.v7.widget.helper.*;
 import android.support.v7.widget.helper.ItemTouchHelper.*;
@@ -11,16 +12,14 @@ import android.view.*;
 import com.google.gson.*;
 import com.mikepenz.materialdrawer.*;
 import com.mikepenz.materialdrawer.model.interfaces.*;
-import com.nao20010128nao.Wisecraft.activity.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.provider.*;
 import com.nao20010128nao.Wisecraft.misc.skin_face.*;
 import com.nao20010128nao.Wisecraft.misc.view.*;
+
 import java.io.*;
 import java.security.*;
 import java.util.*;
-
-import android.support.v7.view.ActionMode;
 
 //Fields
 abstract class ServerListActivityBaseFields extends ServerListActivityBaseGrand

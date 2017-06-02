@@ -1,15 +1,15 @@
 package com.nao20010128nao.Wisecraft.misc.pinger;
 
 import com.google.gson.*;
+import com.nao20010128nao.Wisecraft.BuildConfig;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
+
 import java.io.*;
 import java.util.*;
-
-import com.nao20010128nao.Wisecraft.BuildConfig;
 
 public class PingSerializeProvider 
 {

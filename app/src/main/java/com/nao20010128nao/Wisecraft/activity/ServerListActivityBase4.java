@@ -1,4 +1,5 @@
 package com.nao20010128nao.Wisecraft.activity;
+
 import android.content.*;
 import android.net.*;
 import android.os.*;
@@ -6,18 +7,16 @@ import android.support.design.widget.*;
 import android.support.v4.view.*;
 import android.support.v7.app.*;
 import android.support.v7.widget.*;
+import android.support.v7.widget.Toolbar;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
-import com.google.android.gms.tasks.*;
 import com.mikepenz.materialdrawer.*;
+import com.nao20010128nao.Wisecraft.R;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.server.*;
 import com.nao20010128nao.Wisecraft.misc.view.*;
-
-import android.support.v7.widget.Toolbar;
-import com.nao20010128nao.Wisecraft.R;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 

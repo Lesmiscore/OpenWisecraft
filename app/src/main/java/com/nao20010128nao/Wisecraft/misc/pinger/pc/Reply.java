@@ -1,9 +1,9 @@
 package com.nao20010128nao.Wisecraft.misc.pinger.pc;
 
 import com.google.gson.annotations.*;
-import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
+
 import java.util.*;
 
 /**

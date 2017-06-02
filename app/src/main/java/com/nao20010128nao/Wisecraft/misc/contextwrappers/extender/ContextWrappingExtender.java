@@ -1,14 +1,14 @@
 package com.nao20010128nao.Wisecraft.misc.contextwrappers.extender;
+
 import android.content.*;
 import android.content.res.*;
 import android.preference.*;
-import android.support.v4.content.ContextCompat;
+import android.support.v4.content.*;
 import android.util.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
-import java.math.*;
 
-import com.nao20010128nao.Wisecraft.R;
+import java.math.*;
 
 public class ContextWrappingExtender extends ContextWrapper
 {

@@ -1,4 +1,5 @@
 package com.nao20010128nao.Wisecraft.activity;
+
 import android.content.*;
 import android.content.res.*;
 import android.graphics.*;
@@ -15,29 +16,24 @@ import android.text.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
-import com.astuetz.*;
 import com.azeesoft.lib.colorpicker.*;
 import com.ipaulpro.afilechooser.*;
 import com.nao20010128nao.ToolBox.*;
+import com.nao20010128nao.Wisecraft.BuildConfig;
+import com.nao20010128nao.Wisecraft.R;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
-import com.nao20010128nao.Wisecraft.misc.compat.*;
-import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
-import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
 import com.nao20010128nao.Wisecraft.misc.pref.*;
 import com.nao20010128nao.Wisecraft.widget.*;
+import permissions.dispatcher.*;
+import uk.co.chrisjenx.calligraphy.*;
+
 import java.io.*;
 import java.net.*;
 import java.security.*;
 import java.util.*;
-import permissions.dispatcher.*;
-import uk.co.chrisjenx.calligraphy.*;
 
-import android.support.v7.widget.Toolbar;
-import com.nao20010128nao.Wisecraft.BuildConfig;
-import com.nao20010128nao.Wisecraft.R;
-
-import static com.nao20010128nao.Wisecraft.activity.FragmentSettingsActivityImpl.MAIN;
+import static com.nao20010128nao.Wisecraft.activity.FragmentSettingsActivityImpl.*;
 
 @RuntimePermissions
 abstract class FragmentSettingsActivityImpl extends AppCompatActivity implements SettingsScreen{

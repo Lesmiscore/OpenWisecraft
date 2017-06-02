@@ -1,18 +1,17 @@
 package com.nao20010128nao.Wisecraft.misc.pref;
+
 import android.app.*;
 import android.content.*;
 import android.content.res.*;
 import android.graphics.*;
 import android.support.v4.content.*;
-import android.support.v7.app.*;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.*;
 import android.view.*;
 import android.widget.*;
+import com.nao20010128nao.Wisecraft.R;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
-
-import android.support.v7.app.AlertDialog;
-import com.nao20010128nao.Wisecraft.R;
 
 public class PreferenceUtils
 {

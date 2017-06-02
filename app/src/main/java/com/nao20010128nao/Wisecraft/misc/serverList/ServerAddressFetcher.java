@@ -2,6 +2,7 @@ package com.nao20010128nao.Wisecraft.misc.serverList;
 
 import com.nao20010128nao.Wisecraft.misc.collector.*;
 import com.nao20010128nao.Wisecraft.misc.serverList.sites.*;
+
 import java.io.*;
 import java.net.*;
 import java.util.*;

@@ -1,10 +1,10 @@
 package com.nao20010128nao.Wisecraft.misc.serverList.sites;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.List;
+import com.nao20010128nao.Wisecraft.misc.serverList.*;
 
-import com.nao20010128nao.Wisecraft.misc.serverList.MslServer;
+import java.io.*;
+import java.net.*;
+import java.util.*;
 
 /**
  * A server list site.<br>

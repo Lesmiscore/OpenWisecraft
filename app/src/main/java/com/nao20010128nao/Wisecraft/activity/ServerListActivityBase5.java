@@ -5,11 +5,10 @@ import android.net.*;
 import android.os.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
-import java.io.*;
-import java.util.*;
 import permissions.dispatcher.*;
 
-import com.nao20010128nao.Wisecraft.R;
+import java.io.*;
+import java.util.*;
 
 @RuntimePermissions
 abstract class ServerListActivityBase5 extends ServerListActivityBase6 

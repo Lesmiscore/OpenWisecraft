@@ -1,10 +1,10 @@
 package com.nao20010128nao.Wisecraft.misc.serverList.sites;
 
 import android.text.*;
-import com.google.gson.*;
 import com.google.gson.annotations.*;
 import com.nao20010128nao.Wisecraft.misc.json.*;
 import com.nao20010128nao.Wisecraft.misc.serverList.*;
+
 import java.io.*;
 import java.net.*;
 import java.security.*;

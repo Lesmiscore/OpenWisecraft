@@ -1,6 +1,8 @@
 package com.nao20010128nao.Wisecraft.activity;
+
 import android.view.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+
 import java.util.*;
 
 //ContextMenu

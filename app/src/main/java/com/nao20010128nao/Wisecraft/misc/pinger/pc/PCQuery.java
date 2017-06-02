@@ -3,11 +3,12 @@ package com.nao20010128nao.Wisecraft.misc.pinger.pc;
 import android.annotation.*;
 import android.util.*;
 import com.google.gson.*;
+import com.nao20010128nao.Wisecraft.BuildConfig;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
+
 import java.io.*;
 import java.net.*;
-import com.nao20010128nao.Wisecraft.BuildConfig;
 public class PCQuery implements PingHost{
 	private Gson gson = new Gson();
 	private String host;
