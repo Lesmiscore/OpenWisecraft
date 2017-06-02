@@ -72,20 +72,14 @@ subprojects{
 		supportLibVersion="25.3.1"
 		firebaseVersion="10.0.1"
 	}
-}
-
-gradle.addListener(new BuildListener(){
-    void projectsEvaluated(Gradle gradle){
-        subprojects.each{p->
-	        p.android{
-		        buildToolsVersion "25.0.0"
-	        }
+	afterEvaluate {project ->
+        if (project.hasProperty("android")) {
+            android {
+                buildToolsVersion "25.0.0"
+            }
         }
     }
-    void buildStarted(Gradle gradle){}
-    void buildFinished(Gradle gradle){}
-    void projectsLoaded(Gradle gradle){}
-})
+}
 
 
 task("safeDeleteDevXml")<<{
