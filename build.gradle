@@ -1,7 +1,7 @@
 import java.net.*
 import java.math.*
 import groovy.json.*
-
+import org.gradle.*
 def printBoth(a){
 	println(a)
 	System.err.println(a)
@@ -71,11 +71,17 @@ subprojects{
 		firebaseVersion="10.0.1"
 	}
 }
-subprojects.each{p->
-	p.android{
-		buildToolsVersion "25.0.0"
-	}
-}
+
+gradle.addListener(new BuildListener(){
+    void projectsEvaluated(Gradle gradle){
+        subprojects.each{p->
+	        p.android{
+		        buildToolsVersion "25.0.0"
+	        }
+        }
+    }
+})
+
 
 task("safeDeleteDevXml")<<{
 	def dir="./app/src/main/res/values/dev.xml"
