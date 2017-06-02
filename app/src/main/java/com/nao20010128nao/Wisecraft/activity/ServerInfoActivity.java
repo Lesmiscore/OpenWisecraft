@@ -44,7 +44,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 	public static Map<String,Bitmap> faces=new HashMap<>();
 
 	public static int DIRT_BRIGHT,DIRT_DARK;
-	public static final int BASE64_FLAGS=WisecraftBase64.NO_WRAP|WisecraftBase64.NO_PADDING;
+	public static final int WisecraftBase64_FLAGS=WisecraftBase64.NO_WRAP|WisecraftBase64.NO_PADDING;
 
 	SharedPreferences pref;
 
@@ -88,7 +88,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 
 		String stat=getIntent().getStringExtra("stat");
 		if(stat==null){finish();return;}
-		byte[] statData=WisecraftBase64.decode(stat,BASE64_FLAGS);
+		byte[] statData=WisecraftBase64.decode(stat,WisecraftBase64_FLAGS);
 		localStat=PingSerializeProvider.loadFromServerDumpFile(statData);
 
 		if (localStat == null) {
@@ -311,7 +311,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 			if (resp instanceof Reply) {
 				Reply rep=(Reply)resp;
 				if (rep.favicon != null) {
-					byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
+					byte[] image=WisecraftBase64.decode(rep.favicon.split("\\,")[1], WisecraftBase64.NO_WRAP);
 					serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
 					serverIconObj = new BitmapDrawable(serverIconBmp);
 					color = Palette.generate(serverIconBmp).getLightVibrantColor(color);
@@ -321,7 +321,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 			} else if (resp instanceof Reply19) {
 				Reply19 rep=(Reply19)resp;
 				if (rep.favicon != null) {
-					byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
+					byte[] image=WisecraftBase64.decode(rep.favicon.split("\\,")[1], WisecraftBase64.NO_WRAP);
 					serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
 					serverIconObj = new BitmapDrawable(serverIconBmp);
 					color = Palette.generate(serverIconBmp).getLightVibrantColor(color);
@@ -331,7 +331,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 			}else if (resp instanceof RawJsonReply) {
 				WisecraftJsonObject rep=((RawJsonReply)resp).json;
 				if (rep.has("favicon")) {
-					byte[] image=Base64.decode(rep.get("favicon").getAsString().split("\\,")[1], Base64.NO_WRAP);
+					byte[] image=WisecraftBase64.decode(rep.get("favicon").getAsString().split("\\,")[1], WisecraftBase64.NO_WRAP);
 					serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
 					serverIconObj = new BitmapDrawable(serverIconBmp);
 				} else {
@@ -897,7 +897,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 					infos.addAll(data);
 
 					if (rep.favicon != null) {
-						byte[] image=WisecraftBase64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
+						byte[] image=WisecraftBase64.decode(rep.favicon.split("\\,")[1], WisecraftBase64.NO_WRAP);
 						serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
 						serverIconObj = new BitmapDrawable(serverIconBmp);
 					} else {
@@ -920,7 +920,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 					infos.addAll(data);
 
 					if (rep.favicon != null) {
-						byte[] image=WisecraftBase64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
+						byte[] image=WisecraftBase64.decode(rep.favicon.split("\\,")[1], WisecraftBase64.NO_WRAP);
 						serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
 						serverIconObj = new BitmapDrawable(serverIconBmp);
 					} else {
@@ -948,7 +948,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 					infos.addAll(data);
 
 					if (rep.has("favicon")) {
-						byte[] image=WisecraftBase64.decode(rep.get("favicon").getAsString().split("\\,")[1], Base64.NO_WRAP);
+						byte[] image=WisecraftBase64.decode(rep.get("favicon").getAsString().split("\\,")[1], WisecraftBase64.NO_WRAP);
 						serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
 						serverIconObj = new BitmapDrawable(serverIconBmp);
 					} else {
