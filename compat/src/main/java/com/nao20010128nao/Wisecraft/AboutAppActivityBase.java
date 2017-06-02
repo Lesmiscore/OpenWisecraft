@@ -1,20 +1,14 @@
 package com.nao20010128nao.Wisecraft;
-import android.widget.*;
 
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Rect;
-import android.graphics.Typeface;
-import android.net.Uri;
-import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
-import android.util.AttributeSet;
-import android.view.View;
+import android.content.*;
+import android.graphics.*;
+import android.net.*;
+import android.os.*;
+import android.support.v7.widget.*;
+import android.view.*;
+import android.widget.*;
+import com.nao20010128nao.TESTAPP.*;
 import com.nao20010128nao.Wisecraft.misc.compat.R;
-import com.nao20010128nao.TESTAPP.ScrollingActivity;
-import android.support.v7.widget.CardView;
-import android.view.ViewGroup;
-import java.lang.reflect.InvocationTargetException;
 
 public abstract class AboutAppActivityBase extends ScrollingActivity
 {

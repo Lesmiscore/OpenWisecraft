@@ -1,4 +1,5 @@
 package com.nao20010128nao.Wisecraft.widget;
+
 import android.content.*;
 import android.support.v4.content.*;
 import android.view.*;
@@ -7,7 +8,6 @@ import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.view.*;
 
-import com.nao20010128nao.Wisecraft.R;
 import java.util.*;
 
 public class PingWidgetEditorViewHolder extends FindableViewHolder implements ServerStatusViewController<PingWidgetEditorViewHolder>

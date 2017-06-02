@@ -1,7 +1,9 @@
 package com.nao20010128nao.Wisecraft.misc.skin_face;
+
 import android.graphics.*;
 import android.os.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+
 import java.net.*;
 
 public class CrafaterSkinFetcher implements SkinFetcherInterface

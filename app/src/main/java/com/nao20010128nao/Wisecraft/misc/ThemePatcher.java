@@ -1,16 +1,18 @@
 package com.nao20010128nao.Wisecraft.misc;
+
 import android.app.*;
 import android.content.*;
 import android.content.res.*;
 import android.graphics.*;
+import android.graphics.drawable.*;
 import android.support.v4.content.*;
 import android.support.v7.view.*;
 import android.util.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.activity.*;
 import com.nao20010128nao.Wisecraft.api.*;
+
 import java.util.*;
-import android.graphics.drawable.*;
 
 public class ThemePatcher{
 	private ThemePatcher(){}

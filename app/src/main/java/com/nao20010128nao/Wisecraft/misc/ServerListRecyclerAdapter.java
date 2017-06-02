@@ -1,10 +1,12 @@
 package com.nao20010128nao.Wisecraft.misc;
+
 import android.content.*;
 import android.preference.*;
 import android.text.*;
 import android.view.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
+
 import java.util.*;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;

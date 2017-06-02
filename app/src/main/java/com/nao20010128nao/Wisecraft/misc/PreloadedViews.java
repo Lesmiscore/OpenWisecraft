@@ -1,5 +1,7 @@
 package com.nao20010128nao.Wisecraft.misc;
+
 import android.view.*;
+
 import java.lang.ref.*;
 import java.util.*;
 

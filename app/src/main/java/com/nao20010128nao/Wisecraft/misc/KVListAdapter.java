@@ -1,8 +1,10 @@
 package com.nao20010128nao.Wisecraft.misc;
+
 import android.content.*;
 import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.*;
+
 import java.util.*;
 
 public class KVListAdapter<K,V> extends AppBaseArrayAdapter<Map.Entry<K,V>> {

@@ -1,15 +1,12 @@
 package com.nao20010128nao.Wisecraft;
-import android.content.BroadcastReceiver;
-import android.content.Intent;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.content.IntentFilter;
-import android.os.Handler;
-import android.util.Log;
-import java.util.Map;
-import java.util.HashMap;
-import com.google.gson.Gson;
+
+import android.content.*;
+import android.os.*;
+import android.preference.*;
+import android.util.*;
+import com.google.gson.*;
+
+import java.util.*;
 
 public class InformationCommunicatorReceiver extends BroadcastReceiver
 {

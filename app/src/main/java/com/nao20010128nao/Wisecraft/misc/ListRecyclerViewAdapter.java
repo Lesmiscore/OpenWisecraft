@@ -1,7 +1,8 @@
 package com.nao20010128nao.Wisecraft.misc;
+
 import android.support.v7.widget.*;
 import android.view.*;
-import com.annimon.stream.Stream;
+import com.annimon.stream.*;
 
 import java.util.*;
 

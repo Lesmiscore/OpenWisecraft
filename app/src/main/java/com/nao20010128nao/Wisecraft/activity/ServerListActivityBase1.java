@@ -1,14 +1,13 @@
 package com.nao20010128nao.Wisecraft.activity;
-import android.content.*;
+
 import android.content.pm.*;
+import android.os.*;
 import android.support.v4.app.*;
 import android.support.v4.content.*;
 import android.util.*;
+import com.nao20010128nao.Wisecraft.misc.*;
 
 import java.util.*;
-import android.os.*;
-
-import com.nao20010128nao.Wisecraft.misc.Factories;
 
 //Permission Request Part
 abstract class ServerListActivityBase1 extends ServerListActivityBase2

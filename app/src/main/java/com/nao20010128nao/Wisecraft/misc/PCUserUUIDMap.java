@@ -1,6 +1,7 @@
 package com.nao20010128nao.Wisecraft.misc;
+
 import java.util.*;
-import java.util.regex.Pattern;
+import java.util.regex.*;
 
 public class PCUserUUIDMap extends HashMap<String,String>
 {

@@ -1,7 +1,7 @@
 package com.nao20010128nao.Wisecraft.misc;
 
-import android.graphics.drawable.*;
 import android.graphics.*;
+import android.graphics.drawable.*;
 
 public class ForceExpandBitmapDrawable extends Drawable 
 {

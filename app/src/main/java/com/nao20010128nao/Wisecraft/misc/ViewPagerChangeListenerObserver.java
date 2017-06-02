@@ -1,6 +1,7 @@
 package com.nao20010128nao.Wisecraft.misc;
 
 import android.support.v4.view.*;
+
 import java.util.*;
 
 public class ViewPagerChangeListenerObserver implements ViewPager.OnPageChangeListener {

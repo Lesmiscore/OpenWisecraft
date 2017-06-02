@@ -1,10 +1,8 @@
 package com.nao20010128nao.Wisecraft.misc.compat;
 
+import android.os.*;
+import android.view.*;
 import android.widget.*;
-
-import android.os.Bundle;
-import android.os.Handler;
-import android.view.View;
 
 public class LocalListActivity extends SimpleCompatActivity {
     protected ListAdapter mAdapter;

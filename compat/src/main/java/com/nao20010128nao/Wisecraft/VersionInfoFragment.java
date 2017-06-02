@@ -1,15 +1,15 @@
 package com.nao20010128nao.Wisecraft;
+
 import android.content.*;
 import android.content.pm.*;
 import android.os.*;
 import android.support.v7.preference.*;
 import com.nao20010128nao.Wisecraft.misc.*;
-import com.nao20010128nao.Wisecraft.misc.compat.*;
-import java.util.*;
-
 import com.nao20010128nao.Wisecraft.misc.compat.BuildConfig;
 import com.nao20010128nao.Wisecraft.misc.compat.R;
 import com.nao20010128nao.Wisecraft.misc.pref.*;
+
+import java.util.*;
 
 public class VersionInfoFragment extends ViewHolderCatchablePreferenceFragment
 {

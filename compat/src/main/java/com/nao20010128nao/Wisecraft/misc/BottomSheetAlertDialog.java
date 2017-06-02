@@ -2,39 +2,26 @@ package com.nao20010128nao.Wisecraft.misc;
 
 
 import android.content.*;
-import android.database.*;
-import android.graphics.drawable.*;
-import android.os.*;
-import android.support.annotation.*;
-import android.support.design.widget.*;
-import android.support.v7.app.*;
-import android.util.*;
-import android.view.*;
-import android.widget.*;
-import com.nao20010128nao.Wisecraft.misc.compat.*;
-import android.content.*;
 import android.content.res.*;
 import android.database.*;
 import android.graphics.drawable.*;
 import android.os.*;
 import android.support.annotation.*;
 import android.support.v4.view.*;
+import android.support.v4.widget.CursorAdapter;
 import android.support.v4.widget.*;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.*;
 import android.text.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
-import android.widget.AdapterView.*;
 import android.widget.FrameLayout.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
+
 import java.lang.ref.*;
 
-import android.support.v4.widget.CursorAdapter;
-import android.support.v4.widget.SimpleCursorAdapter;
-import android.widget.FrameLayout.LayoutParams;
-
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.*;
 
 /**
  * A subclass of Dialog that can display one, two or three buttons. If you only want to

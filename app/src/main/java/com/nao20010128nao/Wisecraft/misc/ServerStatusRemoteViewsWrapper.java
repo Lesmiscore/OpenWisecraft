@@ -7,6 +7,7 @@ import android.widget.*;
 import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.widget.*;
+
 import java.util.*;
 
 public class ServerStatusRemoteViewsWrapper implements ServerStatusViewController<ServerStatusRemoteViewsWrapper> 

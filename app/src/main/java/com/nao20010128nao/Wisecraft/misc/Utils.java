@@ -12,7 +12,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.*;
 import android.text.style.*;
-import android.util.*;
 import android.view.*;
 import android.webkit.*;
 import android.widget.*;
@@ -30,8 +29,6 @@ import java.io.*;
 import java.lang.reflect.*;
 import java.math.*;
 import java.util.*;
-
-import android.util.Base64;
 
 public class Utils extends PingerUtils{
 	private static int[] HUE_COLORS;
@@ -400,7 +397,7 @@ public class Utils extends PingerUtils{
 	}
 	public static String encodeForServerInfo(ServerStatus s){
 		byte[] data=PingSerializeProvider.dumpServerForFile(s);
-		return Base64.encodeToString(data, ServerInfoActivity.BASE64_FLAGS);
+		return WisecraftBase64.encodeToString(data, ServerInfoActivity.BASE64_FLAGS);
 	}
 	public static Snackbar makeSB(Activity a,int t,int l){
 		return Snackbar.make(a.findViewById(android.R.id.content),t,l);

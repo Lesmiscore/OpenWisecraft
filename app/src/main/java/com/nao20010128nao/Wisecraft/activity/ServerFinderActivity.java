@@ -1,10 +1,8 @@
 package com.nao20010128nao.Wisecraft.activity;
+
 import android.content.*;
-import android.graphics.*;
-import android.graphics.drawable.*;
 import android.os.*;
 import android.preference.*;
-import android.support.design.widget.*;
 import android.support.v4.content.*;
 import android.support.v4.view.*;
 import android.support.v7.app.*;
@@ -16,15 +14,12 @@ import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
-import com.nao20010128nao.Wisecraft.misc.provider.*;
+import com.nao20010128nao.Wisecraft.services.*;
+
 import java.lang.ref.*;
 import java.util.*;
 
-import com.nao20010128nao.Wisecraft.R;
-
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
-import com.nao20010128nao.Wisecraft.services.*;
-import android.nfc.*;
 
 @ShowsServerList
 abstract class ServerFinderActivityImpl extends AppCompatActivity implements ServerListActivityInterface {

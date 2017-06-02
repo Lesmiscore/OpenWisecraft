@@ -9,9 +9,9 @@ import android.text.*;
 import android.util.*;
 import android.view.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
+
 import java.io.*;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.lang.reflect.*;
 import java.security.*;
 import java.util.*;
 
