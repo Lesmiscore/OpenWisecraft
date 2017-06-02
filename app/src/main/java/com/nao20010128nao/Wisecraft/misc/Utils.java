@@ -1,23 +1,21 @@
 package com.nao20010128nao.Wisecraft.misc;
+
 import android.annotation.*;
 import android.app.*;
 import android.content.*;
 import android.content.pm.*;
 import android.content.res.*;
 import android.graphics.*;
-import android.net.*;
 import android.os.*;
-import android.preference.*;
 import android.support.design.widget.*;
-import android.support.v7.app.*;
-import android.support.v7.widget.*;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
 import android.text.*;
 import android.text.style.*;
-import android.util.*;
 import android.view.*;
 import android.webkit.*;
 import android.widget.*;
-import com.google.gson.*;
+import com.nao20010128nao.Wisecraft.R;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.activity.*;
 import com.nao20010128nao.Wisecraft.api.*;
@@ -25,16 +23,12 @@ import com.nao20010128nao.Wisecraft.misc.collector.*;
 import com.nao20010128nao.Wisecraft.misc.json.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import com.nao20010128nao.Wisecraft.misc.serverList.*;
+import permissions.dispatcher.PermissionRequest;
+
 import java.io.*;
 import java.lang.reflect.*;
 import java.math.*;
 import java.util.*;
-import permissions.dispatcher.*;
-
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
-import com.nao20010128nao.Wisecraft.R;
-import permissions.dispatcher.PermissionRequest;
 
 public class Utils extends PingerUtils{
 	private static int[] HUE_COLORS;
@@ -287,9 +281,9 @@ public class Utils extends PingerUtils{
 		return getActionBarTextView(getToolbar(a));
 	}
 	public static Server makeServerFromBundle(Bundle bnd){
-		String ip=bnd.getString(Server.class.getName()+".ip");
-		int port=bnd.getInt(Server.class.getName()+".port");
-		int mode=bnd.getInt(Server.class.getName()+".mode");
+		String ip=bnd.getString("com.nao20010128nao.Wisecraft.misc.Server.ip");
+		int port=bnd.getInt("com.nao20010128nao.Wisecraft.misc.Server.port");
+		int mode=bnd.getInt("com.nao20010128nao.Wisecraft.misc.Server.mode");
 		Server s=new Server();
 		s.ip=ip;
 		s.port=port;
@@ -297,15 +291,15 @@ public class Utils extends PingerUtils{
 		return s;
 	}
 	public static Server[] makeServersFromBundle(Bundle bnd){
-		Parcelable[] data=bnd.getParcelableArray(Server.class.getName()+"#servers");
+		Parcelable[] data=bnd.getParcelableArray("com.nao20010128nao.Wisecraft.misc.Server#servers");
 		Server[] servers=new Server[data.length];
 		for(int i=0;i<data.length;i++)servers[i]=makeServerFromBundle((Bundle)data[i]);
 		return servers;
 	}
 	public static void putServerIntoBundle(Bundle bnd,Server s){
-		bnd.putString(Server.class.getName()+".ip",s.ip);
-		bnd.putInt(Server.class.getName()+".port",s.port);
-		bnd.putInt(Server.class.getName()+".mode",s.mode);
+		bnd.putString("com.nao20010128nao.Wisecraft.misc.Server.ip",s.ip);
+		bnd.putInt("com.nao20010128nao.Wisecraft.misc.Server.port",s.port);
+		bnd.putInt("com.nao20010128nao.Wisecraft.misc.Server.mode",s.mode);
 	}
 	public static Bundle putServerIntoBundle(Server s){
 		Bundle bnd=new Bundle();
@@ -315,7 +309,7 @@ public class Utils extends PingerUtils{
 	public static void putServersIntoBundle(Bundle bnd,Server[] s){
 		Bundle[] data=new Bundle[s.length];
 		for(int i=0;i<s.length;i++)data[i]=putServerIntoBundle(s[i]);
-		bnd.putParcelableArray(Server.class.getName()+"#servers",data);
+		bnd.putParcelableArray("com.nao20010128nao.Wisecraft.misc.Server#servers",data);
 	}
 	public static Bundle putServersIntoBundle(Server[] s){
 		Bundle bnd=new Bundle();
@@ -403,7 +397,7 @@ public class Utils extends PingerUtils{
 	}
 	public static String encodeForServerInfo(ServerStatus s){
 		byte[] data=PingSerializeProvider.dumpServerForFile(s);
-		return Base64.encodeToString(data, ServerInfoActivity.BASE64_FLAGS);
+		return WisecraftBase64.encodeToString(data, ServerInfoActivity.BASE64_FLAGS);
 	}
 	public static Snackbar makeSB(Activity a,int t,int l){
 		return Snackbar.make(a.findViewById(android.R.id.content),t,l);

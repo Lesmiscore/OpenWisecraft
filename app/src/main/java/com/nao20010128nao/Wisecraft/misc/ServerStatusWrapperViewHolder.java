@@ -1,15 +1,14 @@
 package com.nao20010128nao.Wisecraft.misc;
+
 import android.content.*;
 import android.support.v4.content.*;
-import android.support.v7.view.*;
+import android.support.v7.view.ContextThemeWrapper;
 import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.activity.*;
 import com.nao20010128nao.Wisecraft.misc.view.*;
 
-import android.support.v7.view.ContextThemeWrapper;
-import com.nao20010128nao.Wisecraft.R;
 import java.util.*;
 
 public class ServerStatusWrapperViewHolder extends FindableViewHolder implements ServerStatusViewController<ServerStatusWrapperViewHolder>

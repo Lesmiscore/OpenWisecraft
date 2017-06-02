@@ -1,4 +1,5 @@
 package com.nao20010128nao.Wisecraft.api;
+
 import android.content.*;
 import android.net.*;
 import android.os.*;
@@ -7,9 +8,8 @@ import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.activity.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.provider.*;
-import java.util.*;
 
-import com.nao20010128nao.Wisecraft.R;
+import java.util.*;
 
 public class RequestedServerInfoActivity extends ApiBaseActivity {
 	ServerPingProvider spp=new NormalServerPingProvider();

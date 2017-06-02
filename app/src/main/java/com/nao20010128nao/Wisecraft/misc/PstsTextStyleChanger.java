@@ -4,8 +4,8 @@ import android.support.v4.view.*;
 import android.view.*;
 import android.widget.*;
 import com.astuetz.*;
+
 import java.util.*;
-import android.graphics.*;
 
 public class PstsTextStyleChanger implements ViewPager.OnPageChangeListener {
 	int selected,unselected;

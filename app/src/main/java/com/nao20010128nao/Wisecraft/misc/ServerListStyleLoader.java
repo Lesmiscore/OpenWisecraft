@@ -6,12 +6,10 @@ import android.graphics.drawable.*;
 import android.preference.*;
 import android.support.v4.content.*;
 import android.support.v7.graphics.*;
-import android.util.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.activity.*;
-import java.io.*;
 
-import com.nao20010128nao.Wisecraft.R;
+import java.io.*;
 
 public class ServerListStyleLoader {
 	public static final int BACKGROUND_WHITE=0;
@@ -126,7 +124,7 @@ public class ServerListStyleLoader {
 	public void setImageBg(Bitmap bmp){
 		ByteArrayOutputStream baos=new ByteArrayOutputStream();
 		bmp.compress(Bitmap.CompressFormat.PNG,100,baos);
-		String encoded=Base64.encodeToString(baos.toByteArray(),ServerInfoActivity.BASE64_FLAGS);
+		String encoded=WisecraftBase64.encodeToString(baos.toByteArray(),ServerInfoActivity.BASE64_FLAGS);
 		pref.edit()
 			.putInt("serverListBgId",BACKGROUND_IMAGE)
 			.putString("serverListBgImg",encoded)
@@ -167,7 +165,7 @@ public class ServerListStyleLoader {
 	}
 	
 	public Bitmap getImageBgBitmap(){
-		byte[] data=Base64.decode(pref.getString("serverListBgImg",""),ServerInfoActivity.BASE64_FLAGS);
+		byte[] data=WisecraftBase64.decode(pref.getString("serverListBgImg",""),ServerInfoActivity.BASE64_FLAGS);
 		Bitmap bmp=BitmapFactory.decodeByteArray(data,0,data.length);
 		return bmp;
 	}

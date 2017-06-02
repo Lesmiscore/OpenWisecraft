@@ -9,13 +9,13 @@ import android.support.v7.app.*;
 import android.view.*;
 import android.widget.*;
 import com.ipaulpro.afilechooser.*;
+import com.nao20010128nao.Wisecraft.R;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.activity.*;
+
 import java.io.*;
 import java.security.*;
 import java.util.*;
-
-import com.nao20010128nao.Wisecraft.R;
 
 public class FileSelectFragment extends BaseFragment<AppCompatActivity> 
 {

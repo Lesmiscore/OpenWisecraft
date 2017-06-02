@@ -6,18 +6,17 @@ import android.graphics.*;
 import android.net.*;
 import android.os.*;
 import android.support.v7.app.*;
-import android.support.v7.view.*;
+import android.support.v7.view.ContextThemeWrapper;
 import android.view.*;
 import android.webkit.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.*;
 import fi.iki.elonen.*;
 import fi.iki.elonen.NanoHTTPD.*;
+
 import java.io.*;
 import java.net.*;
 import java.util.regex.*;
-
-import android.support.v7.view.ContextThemeWrapper;
 
 public class MCSkinViewerDialog extends AppCompatDialog 
 {

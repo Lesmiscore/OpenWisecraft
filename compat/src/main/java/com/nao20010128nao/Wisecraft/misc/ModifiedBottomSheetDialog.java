@@ -22,7 +22,6 @@ import android.os.*;
 import android.support.annotation.*;
 import android.support.design.widget.*;
 import android.support.v7.app.*;
-import android.util.*;
 import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;

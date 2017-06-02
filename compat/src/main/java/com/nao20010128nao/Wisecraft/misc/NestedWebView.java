@@ -16,14 +16,11 @@
 
 package com.nao20010128nao.Wisecraft.misc;
 
-import android.content.Context;
-import android.support.v4.view.MotionEventCompat;
-import android.support.v4.view.NestedScrollingChild;
-import android.support.v4.view.NestedScrollingChildHelper;
-import android.support.v4.view.ViewCompat;
-import android.util.AttributeSet;
-import android.view.MotionEvent;
-import android.webkit.WebView;
+import android.content.*;
+import android.support.v4.view.*;
+import android.util.*;
+import android.view.*;
+import android.webkit.*;
 
 public class NestedWebView extends WebView implements NestedScrollingChild {
     private int mLastY;

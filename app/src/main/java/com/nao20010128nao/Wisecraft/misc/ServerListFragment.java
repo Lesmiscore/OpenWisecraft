@@ -1,13 +1,13 @@
 package com.nao20010128nao.Wisecraft.misc;
-import android.graphics.*;
-import android.graphics.drawable.*;
+
 import android.os.*;
 import android.support.v4.app.*;
-import android.support.v4.view.ViewCompat;
+import android.support.v4.view.*;
 import android.support.v7.widget.*;
 import android.util.*;
 import android.view.*;
 import com.nao20010128nao.Wisecraft.*;
+
 import java.util.*;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;

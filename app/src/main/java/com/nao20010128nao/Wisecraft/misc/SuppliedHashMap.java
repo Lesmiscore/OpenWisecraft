@@ -1,7 +1,7 @@
 package com.nao20010128nao.Wisecraft.misc;
 
-import java.util.*;
 import java.lang.reflect.*;
+import java.util.*;
 
 public class SuppliedHashMap<K,V> extends HashMap<K,V> 
 {

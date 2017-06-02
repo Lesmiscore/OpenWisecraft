@@ -1,11 +1,11 @@
 package com.nao20010128nao.Wisecraft.misc.compat;
-import android.app.ActivityGroup;
-import android.content.res.Configuration;
-import android.os.Bundle;
+
+import android.app.*;
+import android.content.res.*;
+import android.os.*;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatDelegate;
-import android.view.MenuInflater;
-import android.view.View;
+import android.support.v7.app.*;
+import android.view.*;
 
 public class CompatActivityGroup extends ActivityGroup
 {

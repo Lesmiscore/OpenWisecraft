@@ -1,5 +1,7 @@
 package com.nao20010128nao.Wisecraft.misc;
+
 import com.google.common.collect.*;
+
 import java.util.*;
 
 public class Factories {

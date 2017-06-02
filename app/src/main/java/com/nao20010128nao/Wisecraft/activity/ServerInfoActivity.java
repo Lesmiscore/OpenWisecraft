@@ -19,6 +19,7 @@ import android.widget.*;
 import biz.laenger.android.vpbs.*;
 import com.astuetz.*;
 import com.google.gson.*;
+import com.nao20010128nao.Wisecraft.R;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
@@ -27,13 +28,12 @@ import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
 import com.nao20010128nao.Wisecraft.misc.skin_face.*;
+import permissions.dispatcher.*;
+
 import java.io.*;
 import java.lang.ref.*;
 import java.math.*;
 import java.util.*;
-import permissions.dispatcher.*;
-
-import com.nao20010128nao.Wisecraft.R;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 
@@ -44,7 +44,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 	public static Map<String,Bitmap> faces=new HashMap<>();
 
 	public static int DIRT_BRIGHT,DIRT_DARK;
-	public static final int BASE64_FLAGS=Base64.NO_WRAP|Base64.NO_PADDING;
+	public static final int BASE64_FLAGS=WisecraftBase64.NO_WRAP|WisecraftBase64.NO_PADDING;
 
 	SharedPreferences pref;
 
@@ -88,7 +88,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 
 		String stat=getIntent().getStringExtra("stat");
 		if(stat==null){finish();return;}
-		byte[] statData=Base64.decode(stat,BASE64_FLAGS);
+		byte[] statData=WisecraftBase64.decode(stat,BASE64_FLAGS);
 		localStat=PingSerializeProvider.loadFromServerDumpFile(statData);
 
 		if (localStat == null) {
@@ -161,7 +161,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 			new PstsTextStyleChanger(Typeface.BOLD, Typeface.NORMAL, tabs, psts)
 		));
 		
-		findViewById(R.id.appbar).setBackgroundDrawable(slsl.load());
+		ViewCompat.setBackground(findViewById(R.id.appbar),slsl.load());
 
 		int offset=getIntent().getIntExtra("offset", 0);
 		if (adapter.getCount() >= 2 & offset == 0)tabs.setCurrentItem(1);
@@ -196,7 +196,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 			}
 		}
 		TypedArray ta=ThemePatcher.getStyledContext(this).obtainStyledAttributes(new int[]{android.R.attr.windowBackground});
-		tabs.setBackgroundDrawable(ta.getDrawable(0));
+		ViewCompat.setBackground(tabs,ta.getDrawable(0));
 		ta.recycle();
 		
 		if(useBottomSheet){
@@ -500,11 +500,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		new Thread(){
-			public void run() {
-				pref.edit().putString("pcuseruuids", new Gson().toJson(TheApplication.instance.pcUserUUIDs)).commit();
-			}
-		}.start();
+		new Thread(() -> pref.edit().putString("pcuseruuids", new Gson().toJson(TheApplication.instance.pcUserUUIDs)).commit()).start();
 		if (serverIconBmp != null)serverIconBmp.recycle();
 	}
 
@@ -901,7 +897,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 					infos.addAll(data);
 
 					if (rep.favicon != null) {
-						byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
+						byte[] image=WisecraftBase64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
 						serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
 						serverIconObj = new BitmapDrawable(serverIconBmp);
 					} else {
@@ -924,7 +920,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 					infos.addAll(data);
 
 					if (rep.favicon != null) {
-						byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
+						byte[] image=WisecraftBase64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
 						serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
 						serverIconObj = new BitmapDrawable(serverIconBmp);
 					} else {
@@ -952,7 +948,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 					infos.addAll(data);
 
 					if (rep.has("favicon")) {
-						byte[] image=Base64.decode(rep.get("favicon").getAsString().split("\\,")[1], Base64.NO_WRAP);
+						byte[] image=WisecraftBase64.decode(rep.get("favicon").getAsString().split("\\,")[1], Base64.NO_WRAP);
 						serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
 						serverIconObj = new BitmapDrawable(serverIconBmp);
 					} else {
@@ -971,7 +967,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container) {
 			View lv= inflater.inflate(R.layout.data_tab_pc, container);
-			lv.findViewById(R.id.serverImageAndName).setBackgroundDrawable(getParentActivity().slsl.load());
+			ViewCompat.setBackground(lv.findViewById(R.id.serverImageAndName),getParentActivity().slsl.load());
 			((RecyclerView)lv.findViewById(R.id.data)).addItemDecoration(new DividerItemDecoration(getContext(),LinearLayoutManager.VERTICAL));
 			return lv;
 		}

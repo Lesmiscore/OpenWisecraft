@@ -9,9 +9,8 @@ import android.widget.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.serverList.*;
-import java.util.*;
 
-import com.nao20010128nao.Wisecraft.R;
+import java.util.*;
 
 public class WidgetsEditorActivity extends AppCompatActivity {
 	SharedPreferences widgetPref;

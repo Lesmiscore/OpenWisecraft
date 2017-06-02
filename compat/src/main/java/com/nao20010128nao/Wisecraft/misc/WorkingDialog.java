@@ -1,14 +1,14 @@
 package com.nao20010128nao.Wisecraft.misc;
+
 import android.app.*;
 import android.content.*;
 import android.os.*;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.*;
 import android.support.v7.widget.*;
 import android.view.*;
-import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.misc.compat.*;
 
-import android.support.v7.app.ActionBar;
-import com.nao20010128nao.Wisecraft.misc.compat.R;
 import java.util.*;
 
 public class WorkingDialog extends ContextWrapper {

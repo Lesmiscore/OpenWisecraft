@@ -13,10 +13,9 @@
  */
 package com.nao20010128nao.ToolBox;
 
-import android.content.Context;
-import android.util.AttributeSet;
-import android.view.View;
-import com.nao20010128nao.ToolBox.NormalButtonPreference;
+import android.content.*;
+import android.util.*;
+import android.view.*;
 
 public class HandledPreference
 extends NormalButtonPreference {

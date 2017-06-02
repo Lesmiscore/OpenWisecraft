@@ -1,8 +1,10 @@
 package com.nao20010128nao.Wisecraft.misc;
+
 import android.graphics.*;
 import android.text.*;
 import android.text.style.*;
 import android.util.*;
+
 import java.util.*;
 
 public class MinecraftFormattingCodeParser

@@ -1,7 +1,7 @@
 package com.nao20010128nao.Wisecraft.misc;
 
 import android.content.*;
-import com.nao20010128nao.OTC.*;
+
 import java.io.*;
 import java.util.*;
 

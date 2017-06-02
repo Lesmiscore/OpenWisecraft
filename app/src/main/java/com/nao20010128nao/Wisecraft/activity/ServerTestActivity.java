@@ -1,9 +1,12 @@
 package com.nao20010128nao.Wisecraft.activity;
+
 import android.app.*;
 import android.content.*;
 import android.os.*;
 import android.preference.*;
 import android.support.v4.content.*;
+import android.support.v4.view.*;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.*;
 import android.support.v7.widget.*;
 import android.view.*;
@@ -14,11 +17,9 @@ import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
 import com.nao20010128nao.Wisecraft.misc.provider.*;
+
 import java.lang.ref.*;
 import java.util.*;
-
-import android.support.v7.app.AlertDialog;
-import com.nao20010128nao.Wisecraft.R;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 
@@ -134,7 +135,7 @@ pinging.put(position, false);
 				.show();
 		}
 
-		findViewById(android.R.id.content).setBackgroundDrawable(slsl.load());
+		ViewCompat.setBackground(findViewById(android.R.id.content),slsl.load());
 	}
 	@Override
 	protected void attachBaseContext(Context newBase) {

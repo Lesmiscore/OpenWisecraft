@@ -1,12 +1,13 @@
 package com.nao20010128nao.Wisecraft.activity;
+
 import android.content.*;
-import android.support.v7.app.*;
 import com.ipaulpro.afilechooser.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+import permissions.dispatcher.*;
+
 import java.io.*;
 import java.security.*;
 import java.util.*;
-import permissions.dispatcher.*;
 
 
 //Wrapper for aFileChooser

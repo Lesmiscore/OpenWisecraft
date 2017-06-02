@@ -1,26 +1,27 @@
 package com.nao20010128nao.Wisecraft.activity;
+
 import android.content.*;
 import android.content.res.*;
 import android.graphics.*;
 import android.os.*;
 import android.support.design.widget.*;
+import android.support.v4.view.*;
 import android.support.v7.app.*;
 import android.support.v7.widget.*;
+import android.support.v7.widget.Toolbar;
 import android.util.*;
 import android.view.*;
 import android.webkit.*;
 import android.widget.*;
-import com.annimon.stream.Stream;
+import com.annimon.stream.*;
+import com.nao20010128nao.Wisecraft.R;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.serverList.*;
+
 import java.net.*;
 import java.util.*;
-
-import android.support.v7.widget.Toolbar;
-import com.nao20010128nao.Wisecraft.R;
-import android.support.v4.view.*;
 
 abstract class ServerGetActivityImpl extends CompatWebViewActivity {
 	public static List<String> addForServerList;

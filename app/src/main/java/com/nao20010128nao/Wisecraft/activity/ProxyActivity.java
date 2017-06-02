@@ -1,20 +1,18 @@
 package com.nao20010128nao.Wisecraft.activity;
+
 import android.app.*;
 import android.content.*;
 import android.os.*;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.*;
-import android.view.*;
-import android.view.View.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.services.*;
+
 import java.io.*;
 import java.lang.reflect.*;
 import java.net.*;
-
-import android.support.v7.app.AlertDialog;
-import com.nao20010128nao.Wisecraft.R;
 
 abstract class ProxyActivityImpl extends AppCompatActivity {
 	public static ServiceController cont;

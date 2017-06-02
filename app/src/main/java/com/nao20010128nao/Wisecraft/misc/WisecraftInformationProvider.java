@@ -7,6 +7,7 @@ import android.provider.*;
 import com.google.gson.*;
 import com.google.gson.reflect.*;
 import com.nao20010128nao.Wisecraft.misc.collector.*;
+
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -42,7 +43,7 @@ public class WisecraftInformationProvider implements InformationProvider
 				closeable=new Closeable[]{conn.getInputStream(),conn.getOutputStream()};
 				br=new BufferedReader(new InputStreamReader(conn.getInputStream()));
 				ips.add(br.readLine());
-				}catch(Throwable e){
+			}catch(Throwable e){
 				CollectorMain.reportError("getIp@"+addr,e);
 			}finally{
 				CompatUtils.safeClose(br);
