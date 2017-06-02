@@ -2,6 +2,8 @@ import java.net.*
 import java.math.*
 import groovy.json.*
 import org.gradle.*
+import org.gradle.api.invocation.*
+
 def printBoth(a){
 	println(a)
 	System.err.println(a)
@@ -80,6 +82,9 @@ gradle.addListener(new BuildListener(){
 	        }
         }
     }
+    void buildStarted(Gradle gradle){}
+    void buildFinished(Gradle gradle){}
+    void projectsLoaded(Gradle gradle){}
 })
 
 
