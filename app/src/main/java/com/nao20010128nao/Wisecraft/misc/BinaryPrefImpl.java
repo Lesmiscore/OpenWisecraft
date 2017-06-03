@@ -10,7 +10,7 @@ public class BinaryPrefImpl implements SharedPreferences {
 	boolean unchanged = false;
 
 	public BinaryPrefImpl() {
-		this(new OrderTrustedMap<>());
+		this(new LinkedHashMap<>());
 	}
 
 	public BinaryPrefImpl(Map<String, ?> map) {
