@@ -137,7 +137,7 @@ android {
     }
     
     dexOptions {
-    	if(!isEmptyStr(System.getenv('CI_BUILD_ID'))){//Check the environment
+    	if(System.getenv('CI_BUILD_ID')){//Check the environment
     		threadCount 8
 		}
 	}
