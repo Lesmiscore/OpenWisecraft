@@ -3,7 +3,7 @@ package com.nao20010128nao.Wisecraft.activity;
 import android.content.*;
 import android.net.*;
 import android.os.*;
-import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.R;
 import com.nao20010128nao.Wisecraft.misc.*;
 import permissions.dispatcher.*;
 
@@ -56,7 +56,7 @@ abstract class ServerListActivityBase5 extends ServerListActivityBase6
 	@OnPermissionDenied({"android.permission.WRITE_EXTERNAL_STORAGE"})
 	@Deprecated
 	public void _startExtChooseFileError(){
-		Utils.showPermissionError(this,new String[]{"android.permission.WRITE_EXTERNAL_STORAGE"},R.string.permissionsRequiredReasonSelectFile);
+		Utils.showPermissionError(this,new String[]{"android.permission.WRITE_EXTERNAL_STORAGE"}, R.string.permissionsRequiredReasonSelectFile);
 	}
 
 	@Override

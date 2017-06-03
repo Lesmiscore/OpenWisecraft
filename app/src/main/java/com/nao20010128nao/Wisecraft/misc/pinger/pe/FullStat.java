@@ -12,7 +12,7 @@ public class FullStat implements ServerPingResult,PEPingResult {
 	static byte SPACE = ' ';
 
 	private List<Map.Entry<String, String>> datas = new ArrayList<>();
-	private Map<String, String> mapDatas = new OrderTrustedMap<>();
+	private Map<String, String> mapDatas = new LinkedHashMap<>();
 	private List<String> playerList = new ArrayList<>();
 	private byte[] raw;
 

@@ -44,7 +44,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 	public static Map<String,Bitmap> faces=new HashMap<>();
 
 	public static int DIRT_BRIGHT,DIRT_DARK;
-	public static final int WisecraftBase64_FLAGS=WisecraftBase64.NO_WRAP|WisecraftBase64.NO_PADDING;
+	public static final int BASE64_FLAGS=WisecraftBase64.NO_WRAP|WisecraftBase64.NO_PADDING;
 
 	SharedPreferences pref;
 

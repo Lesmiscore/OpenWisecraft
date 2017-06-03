@@ -3,6 +3,7 @@ package com.nao20010128nao.Wisecraft.activity;
 import android.content.*;
 import android.os.*;
 import com.ipaulpro.afilechooser.*;
+import com.nao20010128nao.Wisecraft.R;
 import com.nao20010128nao.Wisecraft.misc.*;
 import permissions.dispatcher.*;
 
@@ -79,13 +80,13 @@ abstract class ServerListActivityBase3 extends ServerListActivityBase4
 	@OnShowRationale({"android.permission.WRITE_EXTERNAL_STORAGE"})
 	@Deprecated
 	public void _startExtChooseFileRationale(PermissionRequest req){
-		Utils.describeForPermissionRequired(this,new String[]{"android.permission.WRITE_EXTERNAL_STORAGE"},req,R.string.permissionsRequiredReasonSelectFile);
+		Utils.describeForPermissionRequired(this,new String[]{"android.permission.WRITE_EXTERNAL_STORAGE"},req, R.string.permissionsRequiredReasonSelectFile);
 	}
 
 	@OnPermissionDenied({"android.permission.WRITE_EXTERNAL_STORAGE"})
 	@Deprecated
 	public void _startExtChooseFileError(){
-		Utils.showPermissionError(this,new String[]{"android.permission.WRITE_EXTERNAL_STORAGE"},R.string.permissionsRequiredReasonSelectFile);
+		Utils.showPermissionError(this,new String[]{"android.permission.WRITE_EXTERNAL_STORAGE"}, R.string.permissionsRequiredReasonSelectFile);
 	}
 
 	@Override
