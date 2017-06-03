@@ -88,7 +88,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 
 		String stat=getIntent().getStringExtra("stat");
 		if(stat==null){finish();return;}
-		byte[] statData=WisecraftBase64.decode(stat,WisecraftBase64_FLAGS);
+		byte[] statData=WisecraftBase64.decode(stat,BASE64_FLAGS);
 		localStat=PingSerializeProvider.loadFromServerDumpFile(statData);
 
 		if (localStat == null) {
