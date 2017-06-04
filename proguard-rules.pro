@@ -25,7 +25,6 @@
 -keep class com.google.gson.stream.** { *; }
 -keep class com.google.gson.examples.android.model.** { *; }
 -dontwarn org.apache.**
--dontwarn android.support.v4.app.**
 -keep class uk.co.chrisjenx.calligraphy.** { *; }
 -keep class android.support.** { *; }
 
