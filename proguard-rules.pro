@@ -26,7 +26,7 @@
 -keep class com.google.gson.examples.android.model.** { *; }
 -dontwarn org.apache.**
 -keep class uk.co.chrisjenx.calligraphy.** { *; }
--keep class android.support.** { *; }
+-keep class android.support.**
 
 -keep class com.firebase.** { *; }
 -keepnames class org.apache.** { *; }
