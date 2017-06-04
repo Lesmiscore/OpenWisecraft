@@ -69,13 +69,13 @@ allprojects {
 
 subprojects{
 	ext{
-		supportLibVersion="25.3.1"
+		supportLibVersion="25.2.0"
 		firebaseVersion="10.0.1"
 	}
 	afterEvaluate {project ->
         if (project.hasProperty("android")) {
             android {
-                buildToolsVersion "25.0.0"
+                buildToolsVersion "25.2.5"
                 lintOptions {
                     abortOnError false
                 }
