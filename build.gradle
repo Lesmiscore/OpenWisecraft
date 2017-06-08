@@ -68,8 +68,9 @@ allprojects {
 }
 
 subprojects{
+	def slv='25.3.0'
 	ext{
-		supportLibVersion="25.3.0"
+		supportLibVersion=slv
 		firebaseVersion="10.0.1"
 	}
 	afterEvaluate {project ->
@@ -81,7 +82,23 @@ subprojects{
                 }
             }
         }
-    }
+		//configurations.compile.allDependencies.findAll{it.group=='com.android.support'}.collect{it.class}.each(System.out.&println)
+		//org.gradle.api.internal.artifacts.dependencies.DefaultExternalModuleDependency
+
+		// force change the version
+		try {
+			def field=Class
+					.forName('org.gradle.api.internal.artifacts.dependencies.AbstractExternalModuleDependency')
+					.getDeclaredField('version')
+			field.accessible=true
+			configurations.compile.allDependencies
+					.findAll{it.group=='com.android.support'}
+					.findAll{it.name!='multidex'}// multidex must be 1.0.1; exclude it
+					.each(field.&set.rcurry(slv))
+		}catch(Throwable e){
+			//e.printStackTrace()
+		}
+	}
 }
 
 
