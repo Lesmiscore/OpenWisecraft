@@ -79,7 +79,7 @@ public class RCONActivity extends RCONActivityBase implements TabHost.OnTabChang
 	@Override
 	protected void onResume() {
 		super.onResume();
-		onTabChanged("");
+		//onTabChanged("");
 	}
 	
 	public void onTabChanged(String a){

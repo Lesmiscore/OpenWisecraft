@@ -9,7 +9,7 @@ android {
         applicationId 'com.nao20010128nao.WRcon'
         minSdkVersion 17
         targetSdkVersion 21
-        versionCode 35
+        versionCode 36
         versionName "3.2"
         jackOptions {
 			enabled false
