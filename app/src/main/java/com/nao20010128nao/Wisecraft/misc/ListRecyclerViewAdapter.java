@@ -1,7 +1,11 @@
 package com.nao20010128nao.Wisecraft.misc;
+
 import android.support.v7.widget.*;
 import android.view.*;
+import com.annimon.stream.*;
+
 import java.util.*;
+
 public abstract class ListRecyclerViewAdapter<VH extends RecyclerView.ViewHolder,LType> extends RecyclerView.Adapter<VH> implements List<LType>
 {
 	List<LType> list;
@@ -10,7 +14,7 @@ public abstract class ListRecyclerViewAdapter<VH extends RecyclerView.ViewHolder
 		unmodifiableList=Collections.unmodifiableList(list=lst);
 	}
 	public ListRecyclerViewAdapter(){
-		this(new ArrayList<LType>());
+		this(new ArrayList<>());
 	}
 	public LType getItem(int ofs){
 		return list.get(ofs);
@@ -24,7 +28,7 @@ public abstract class ListRecyclerViewAdapter<VH extends RecyclerView.ViewHolder
 	}
 
 	public void addAll(LType[] items) {
-		for (LType s:items)add(s);
+		Stream.of(items).forEach(this::add);
 	}
 
 	public boolean addAll(Collection<? extends LType> collection) {

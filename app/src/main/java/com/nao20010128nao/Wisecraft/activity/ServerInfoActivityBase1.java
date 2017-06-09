@@ -1,12 +1,13 @@
 package com.nao20010128nao.Wisecraft.activity;
+
 import android.content.*;
-import android.support.v7.app.*;
 import com.ipaulpro.afilechooser.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+import permissions.dispatcher.*;
+
 import java.io.*;
 import java.security.*;
 import java.util.*;
-import permissions.dispatcher.*;
 
 
 //Wrapper for aFileChooser
@@ -30,8 +31,7 @@ abstract class ServerInfoActivityBase1 extends WisecraftBaseActivity
 			results.remove(requestCode);
 			return /*true*/;
 		}
-		return /*false*/;
-	}
+    }
 
 	@NeedsPermission({"android.permission.WRITE_EXTERNAL_STORAGE"})
 	public void startChooseFileForOpen(File startDir,FileChooserResult result){
@@ -81,8 +81,8 @@ abstract class ServerInfoActivityBase1 extends WisecraftBaseActivity
 		ServerInfoActivityBase1PermissionsDispatcher.onRequestPermissionsResult(this,requestCode,grantResults);
 	}
 
-	public static interface FileChooserResult{
-		public void onSelected(File f);
-		public void onSelectCancelled();
+	public interface FileChooserResult{
+		void onSelected(File f);
+		void onSelectCancelled();
 	}
 }

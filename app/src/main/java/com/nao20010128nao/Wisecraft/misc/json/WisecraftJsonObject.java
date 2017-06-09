@@ -3,45 +3,45 @@ package com.nao20010128nao.Wisecraft.misc.json;
 public interface WisecraftJsonObject extends Iterable<WisecraftJsonObject>
 {
 
-	public boolean getAsBoolean() ;
+	boolean getAsBoolean() ;
 	
-    public java.lang.Number getAsNumber() ;
+    java.lang.Number getAsNumber() ;
 
-    public java.lang.String getAsString() ;
+    java.lang.String getAsString() ;
 
-    public double getAsDouble() ;
+    double getAsDouble() ;
 
-    public float getAsFloat() ;
+    float getAsFloat() ;
 
-    public long getAsLong() ;
+    long getAsLong() ;
 
-    public int getAsInt() ;
+    int getAsInt() ;
 
-    public byte getAsByte() ;
+    byte getAsByte() ;
 
-    public char getAsCharacter() ;
+    char getAsCharacter() ;
 
-    public java.math.BigDecimal getAsBigDecimal() ;
+    java.math.BigDecimal getAsBigDecimal() ;
 
-    public java.math.BigInteger getAsBigInteger() ;
+    java.math.BigInteger getAsBigInteger() ;
 
-    public short getAsShort() ;
+    short getAsShort() ;
 	
-	public boolean isJsonArray() ;
+	boolean isJsonArray() ;
 
-    public boolean isJsonObject() ;
+    boolean isJsonObject() ;
 	
 	// JsonObject
-	public int size() ;
+    int size() ;
 
-    public boolean has(java.lang.String memberName) ;
+    boolean has(java.lang.String memberName) ;
 
-    public WisecraftJsonObject get(java.lang.String memberName) ;
+    WisecraftJsonObject get(java.lang.String memberName) ;
 	
 	// JsonArray
-    public boolean contains(WisecraftJsonObject element) ;
+    boolean contains(WisecraftJsonObject element) ;
 
-    public java.util.Iterator<WisecraftJsonObject> iterator() ;
+    java.util.Iterator<WisecraftJsonObject> iterator() ;
 
-    public WisecraftJsonObject get(int i) ;
+    WisecraftJsonObject get(int i) ;
 }

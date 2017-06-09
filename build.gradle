@@ -1,6 +1,8 @@
 import java.net.*
 import java.math.*
 import groovy.json.*
+import org.gradle.*
+import org.gradle.api.invocation.*
 
 def printBoth(a){
 	println(a)
@@ -42,7 +44,7 @@ buildscript {
     	maven { url "https://raw.githubusercontent.com/nao20010128nao/MavenRepo/master/releases/" }
 	}
     dependencies {
-        classpath('com.android.tools.build:gradle:2.1.3')/*{
+        classpath('com.android.tools.build:gradle:2.4.0-alpha7')/*{
             exclude group: 'net.sf.proguard', module: 'proguard'
         }*/
         classpath 'com.google.gms:google-services:3.0.0'
@@ -66,11 +68,36 @@ allprojects {
 }
 
 subprojects{
+	def slv='25.3.0'
 	ext{
-		supportLibVersion="25.3.1"
+		supportLibVersion=slv
 		firebaseVersion="10.0.1"
 	}
+	afterEvaluate {project ->
+        if (project.hasProperty("android")) {
+            android {
+                buildToolsVersion "25.0.3"
+                lintOptions {
+                    abortOnError false
+                }
+            }
+        }
+		//configurations.compile.allDependencies.findAll{it.group=='com.android.support'}.collect{it.class}.each(System.out.&println)
+		//org.gradle.api.internal.artifacts.dependencies.DefaultExternalModuleDependency
+
+		// force change the version
+		configurations.all {
+			resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+				def requested = details.requested
+				if (requested.group == 'com.android.support' &&
+						!requested.name.startsWith("multidex")) {
+					details.useVersion slv
+				}
+			}
+		}
+	}
 }
+
 
 task("safeDeleteDevXml")<<{
 	def dir="./app/src/main/res/values/dev.xml"

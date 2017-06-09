@@ -1,20 +1,14 @@
 package com.nao20010128nao.Wisecraft;
-import android.widget.*;
 
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Rect;
-import android.graphics.Typeface;
-import android.net.Uri;
-import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
-import android.util.AttributeSet;
-import android.view.View;
+import android.content.*;
+import android.graphics.*;
+import android.net.*;
+import android.os.*;
+import android.support.v7.widget.*;
+import android.view.*;
+import android.widget.*;
+import com.nao20010128nao.TESTAPP.*;
 import com.nao20010128nao.Wisecraft.misc.compat.R;
-import com.nao20010128nao.TESTAPP.ScrollingActivity;
-import android.support.v7.widget.CardView;
-import android.view.ViewGroup;
-import java.lang.reflect.InvocationTargetException;
 
 public abstract class AboutAppActivityBase extends ScrollingActivity
 {
@@ -38,41 +32,29 @@ public abstract class AboutAppActivityBase extends ScrollingActivity
 			twitter.setTextColor(0xff1da1f2);
 			twitter.setText(String.valueOf((char)0xe906));
 			
-			twitter.setOnClickListener(new View.OnClickListener(){
-					public void onClick(View v){
-						openUrlForDeveloper(getResources().getString(R.string.nao20010128naoTwitterLink));
-					}
-				});
+			twitter.setOnClickListener(v -> openUrlForDeveloper(getResources().getString(R.string.nao20010128naoTwitterLink)));
 		}
 		{
 			youtube=(Button)findViewById(R.id.youtube);
 			youtube.setTypeface(icons);
 			youtube.setTextColor(0xffe73128);
-			  youtube.setText(String.valueOf((char)0xe900));//Player icon (larger triangle)
+			youtube.setText(String.valueOf((char)0xe900));//Player icon (larger triangle)
 			//youtube.setText(String.valueOf((char)0xe901));//YouTube with frame
 			//youtube.setText(String.valueOf((char)0xe902));//simple YouTube
 			//youtube.setText(String.valueOf((char)0xe907));//Player icon (smaller triangle)
 			//youtube.setText(String.valueOf((char)0xe908));//horizontal YouTube
 			
-			youtube.setOnClickListener(new View.OnClickListener(){
-					public void onClick(View v){
-						openUrlForDeveloper(getResources().getString(R.string.nao20010128naoYouTubeLink));
-					}
-				});
+			youtube.setOnClickListener(v -> openUrlForDeveloper(getResources().getString(R.string.nao20010128naoYouTubeLink)));
 		}
 		{
 			googleplus=(Button)findViewById(R.id.googleplus);
 			googleplus.setTypeface(icons);
 			googleplus.setTextColor(0xffdd5044);
-			  googleplus.setText(String.valueOf((char)0xe903));//Google+ without frame
+			googleplus.setText(String.valueOf((char)0xe903));//Google+ without frame
 			//googleplus.setText(String.valueOf((char)0xe904));//Google+ with square frame (like older Google+ app icon)
 			//googleplus.setText(String.valueOf((char)0xe905));//Google+ with round frame (like Google+ app icon at present)
 			
-			googleplus.setOnClickListener(new View.OnClickListener(){
-					public void onClick(View v){
-						openUrlForDeveloper(getResources().getString(R.string.nao20010128naoGooglePlusLink));
-					}
-				});
+			googleplus.setOnClickListener(v -> openUrlForDeveloper(getResources().getString(R.string.nao20010128naoGooglePlusLink)));
 		}
 		{
 			noCm1=(TextView)findViewById(R.id.nonCommercial1);

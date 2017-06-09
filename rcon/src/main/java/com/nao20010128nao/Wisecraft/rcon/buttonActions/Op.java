@@ -12,14 +12,8 @@ public class Op extends NameSelectAction {
 	public void onSelected(final String s) {
 		new AlertDialog.Builder(this,getActivity().getPresenter().getDialogStyleId())
 			.setMessage(getResString(R.string.giveOpAsk).replace("[PLAYER]", s))
-			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
-				public void onClick(DialogInterface di, int w) {
-					getActivity().performSend("op " + s);
-				}
-			})
-			.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener(){
-				public void onClick(DialogInterface di, int w) {}
-			})
+			.setPositiveButton(android.R.string.ok, (di, w) -> getActivity().performSend("op " + s))
+			.setNegativeButton(android.R.string.cancel, (di, w) -> {})
 			.show();
 	}
 

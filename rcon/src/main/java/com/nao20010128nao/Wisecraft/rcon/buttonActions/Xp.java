@@ -64,42 +64,36 @@ public class Xp extends NameSelectAction {
 		amountView = (TextView)v.findViewById(R.id.amountView);
 		playerView = (TextView)v.findViewById(R.id.playerName);
 
-		changeAmount.setOnClickListener(new View.OnClickListener(){
-				public void onClick(View v) {
-					hint = getResString(R.string.giveAmountHint);
-					list = getResources().getStringArray(R.array.giveAmountConst);
-					selecting = 0;
-					Xp.super.onClick(v);
-				}
-			});
-		changePlayer.setOnClickListener(new View.OnClickListener(){
-				public void onClick(View v) {
-					hint = getResString(R.string.givePlayerHint);
-					list = null;
-					selecting = 1;
-					Xp.super.onClick(v);
-				}
-			});
-		executeButton.setOnClickListener(new View.OnClickListener(){
-				public void onClick(View v) {
-					if (isNullString(amount) || isNullString(player)) {
-						AlertDialog.Builder b=new AlertDialog.Builder(Xp.this,getActivity().getPresenter().getDialogStyleId());
-						String mes="";
-						if (isNullString(amount)) {
-							mes += getResString(R.string.giveSelectAmount) + "\n";
-						}
-						if (isNullString(player)) {
-							mes += getResString(R.string.giveSelectPlayer) + "\n";
-						}
-						b.setMessage(mes);
-						b.setPositiveButton(android.R.string.ok, RconModule_Constant.BLANK_DIALOG_CLICK_LISTENER);
-						b.show();
-					} else {
-						getActivity().performSend("xp " + amount + "L " + player);
-						dialog.dismiss();
-					}
-				}
-			});
+		changeAmount.setOnClickListener(v13 -> {
+            hint = getResString(R.string.giveAmountHint);
+            list = getResources().getStringArray(R.array.giveAmountConst);
+            selecting = 0;
+            Xp.super.onClick(v13);
+        });
+		changePlayer.setOnClickListener(v12 -> {
+            hint = getResString(R.string.givePlayerHint);
+            list = null;
+            selecting = 1;
+            Xp.super.onClick(v12);
+        });
+		executeButton.setOnClickListener(v1 -> {
+            if (isNullString(amount) || isNullString(player)) {
+                AlertDialog.Builder b=new AlertDialog.Builder(Xp.this,getActivity().getPresenter().getDialogStyleId());
+                String mes="";
+                if (isNullString(amount)) {
+                    mes += getResString(R.string.giveSelectAmount) + "\n";
+                }
+                if (isNullString(player)) {
+                    mes += getResString(R.string.giveSelectPlayer) + "\n";
+                }
+                b.setMessage(mes);
+                b.setPositiveButton(android.R.string.ok, RconModule_Constant.BLANK_DIALOG_CLICK_LISTENER);
+                b.show();
+            } else {
+                getActivity().performSend("xp " + amount + "L " + player);
+                dialog.dismiss();
+            }
+        });
 		return v;
 	}
 

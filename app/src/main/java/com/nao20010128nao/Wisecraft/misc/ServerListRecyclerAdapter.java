@@ -1,10 +1,12 @@
 package com.nao20010128nao.Wisecraft.misc;
+
 import android.content.*;
 import android.preference.*;
 import android.text.*;
 import android.view.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
+
 import java.util.*;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
@@ -21,7 +23,7 @@ public class ServerListRecyclerAdapter extends ListRecyclerViewAdapter<ServerSta
 	ServerListStyleLoader slsl;
 	
 	public ServerListRecyclerAdapter(Context ctx){
-		this(new ArrayList<Server>(),ctx);
+		this(new ArrayList<>(),ctx);
 	}
 	public ServerListRecyclerAdapter(List<Server> list,Context ctx){
 		this(new ServerListArrayList(list),ctx);
@@ -178,8 +180,8 @@ public class ServerListRecyclerAdapter extends ListRecyclerViewAdapter<ServerSta
 		for(BindViewHolderListener lis:bhListeners)lis.onBindViewHolder(viewHolder,offset);
 	}
 	
-	public static interface BindViewHolderListener{
-		public void onBindViewHolder(ServerStatusWrapperViewHolder parent, int offset);
+	public interface BindViewHolderListener{
+		void onBindViewHolder(ServerStatusWrapperViewHolder parent, int offset);
 	}
 	
 	private class PingingMap extends NonNullableMap<Server> {

@@ -4,6 +4,7 @@ import android.util.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
+
 import java.io.*;
 import java.util.*;
 
@@ -22,7 +23,7 @@ public class SinglePoolMultiServerPingProvider implements ServerPingProvider
 		Utils.requireNonNull(server);
 		Utils.requireNonNull(handler);
 		Utils.prepareLooper();
-		queue.add(new KVP<Server,PingHandler>(server, handler));
+		queue.add(new KVP<>(server, handler));
 		if (pingThread.size()<max) {
 			new PingThread().start();
 		}

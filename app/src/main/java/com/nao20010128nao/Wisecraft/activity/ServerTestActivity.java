@@ -1,9 +1,12 @@
 package com.nao20010128nao.Wisecraft.activity;
+
 import android.app.*;
 import android.content.*;
 import android.os.*;
 import android.preference.*;
 import android.support.v4.content.*;
+import android.support.v4.view.*;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.*;
 import android.support.v7.widget.*;
 import android.view.*;
@@ -14,11 +17,9 @@ import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
 import com.nao20010128nao.Wisecraft.misc.provider.*;
+
 import java.lang.ref.*;
 import java.util.*;
-
-import android.support.v7.app.AlertDialog;
-import com.nao20010128nao.Wisecraft.R;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 
@@ -90,63 +91,51 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 			new AlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
 				.setTitle(R.string.testServer)
 				.setView(dialog = getLayoutInflater().inflate(R.layout.test_server_dialog, null, false))
-				.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
-					public void onClick(DialogInterface di, int w) {
-						di.dismiss();
-						String nu=((EditText)dialog.findViewById(R.id.pingTimes)).getText().toString();
-						try {
-							times = Integer.valueOf(nu);
-						} catch (NumberFormatException e) {
-							finish();
-							return;
-						}
-						setTitle(ip+":"+port+" x "+times);
-						for (int i=0;i < times;i++) {
-							Server s=new Server();
-							s.ip = ip;
-							s.port = port;
-							s.mode = mode;
-							sl.add(s);
-                            final int position=i;
-							pinging.put(position, true);
-							spp.putInQueue(s, new ServerPingProvider.PingHandler(){
-									public void onPingFailed(final Server s) {
-										runOnUiThread(new Runnable(){
-												public void run() {
-													list.set(position, s);
-                                                    sl.notifyItemChanged(position);
-													pinging.put(position, false);
-												}
-											});
-									}
-									public void onPingArrives(final ServerStatus sv) {
-										runOnUiThread(new Runnable(){
-												public void run() {
-													list.set(position, sv);
-                                                    sl.notifyItemChanged(position);
-                                                    pinging.put(position, false);
-												}
-											});
-									}
-								});
-						}
-					}
-				})
-				.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener(){
-					public void onClick(DialogInterface di, int w) {
-						di.dismiss();
-						finish();
-					}
-				})
-				.setOnCancelListener(new DialogInterface.OnCancelListener(){
-					public void onCancel(DialogInterface di) {
-						finish();
-					}
-				})
+				.setPositiveButton(android.R.string.ok, (di, w) -> {
+                    di.dismiss();
+                    String nu=((EditText)dialog.findViewById(R.id.pingTimes)).getText().toString();
+                    try {
+                        times = Integer.valueOf(nu);
+                    } catch (NumberFormatException e) {
+                        finish();
+                        return;
+                    }
+                    setTitle(ip+":"+port+" x "+times);
+                    for (int i=0;i < times;i++) {
+                        Server s=new Server();
+                        s.ip = ip;
+                        s.port = port;
+                        s.mode = mode;
+                        sl.add(s);
+final int position=i;
+                        pinging.put(position, true);
+                        spp.putInQueue(s, new ServerPingProvider.PingHandler(){
+                                public void onPingFailed(final Server s) {
+                                    runOnUiThread(() -> {
+list.set(position, s);
+sl.notifyItemChanged(position);
+pinging.put(position, false);
+});
+                                }
+                                public void onPingArrives(final ServerStatus sv) {
+                                    runOnUiThread(() -> {
+list.set(position, sv);
+sl.notifyItemChanged(position);
+pinging.put(position, false);
+});
+                                }
+                            });
+                    }
+                })
+				.setNegativeButton(android.R.string.cancel, (di, w) -> {
+                    di.dismiss();
+                    finish();
+                })
+				.setOnCancelListener(di -> finish())
 				.show();
 		}
 
-		findViewById(android.R.id.content).setBackgroundDrawable(slsl.load());
+		ViewCompat.setBackground(findViewById(android.R.id.content),slsl.load());
 	}
 	@Override
 	protected void attachBaseContext(Context newBase) {
@@ -183,7 +172,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 		ServerTestActivityImpl sta;
 
 		public ServerList(ServerTestActivityImpl parent) {
-			super(parent.list = new ArrayList<Server>());
+			super(parent.list = new ArrayList<>());
 			sta = parent;
 		}
 
@@ -293,11 +282,9 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
 					viewHolder.offline(s,sta);
 				}
 			}
-			applyHandlersForViewTree(viewHolder.itemView, new View.OnClickListener(){
-					public void onClick(View v) {
-						onItemClick(null, v, offset, Long.MIN_VALUE);
-					}
-				});
+			applyHandlersForViewTree(viewHolder.itemView, v -> {
+                onItemClick(null, v, offset, Long.MIN_VALUE);
+            });
 		}
 
 		@Override

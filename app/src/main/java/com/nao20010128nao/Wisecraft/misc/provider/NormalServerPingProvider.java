@@ -1,9 +1,10 @@
 package com.nao20010128nao.Wisecraft.misc.provider;
+
 import android.util.*;
-import com.google.common.collect.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
+
 import java.io.*;
 import java.util.*;
 
@@ -16,7 +17,7 @@ public class NormalServerPingProvider implements ServerPingProvider {
 		Utils.requireNonNull(server);
 		Utils.requireNonNull(handler);
 		Utils.prepareLooper();
-		queue.add(new KVP<Server,PingHandler>(server, handler));
+		queue.add(new KVP<>(server, handler));
 		if (!pingThread.isAlive()) {
 			pingThread = new PingThread();
 			pingThread.start();

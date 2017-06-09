@@ -1,7 +1,9 @@
 package com.nao20010128nao.Wisecraft.misc.json;
+
 import com.google.gson.*;
-import java.util.*;
+
 import java.math.*;
+import java.util.*;
 
 public class GsonWJO implements WisecraftJsonObject
 {

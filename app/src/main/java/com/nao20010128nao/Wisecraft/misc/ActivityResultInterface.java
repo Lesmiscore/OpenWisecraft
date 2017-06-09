@@ -3,5 +3,5 @@ import android.content.*;
 
 public interface ActivityResultInterface
 {
-	public void onActivityResult(int requestCode, int resultCode, Intent data);
+	void onActivityResult(int requestCode, int resultCode, Intent data);
 }

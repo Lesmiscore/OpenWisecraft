@@ -1,15 +1,15 @@
 package com.nao20010128nao.Wisecraft.misc.pinger;
 
 import com.google.gson.*;
+import com.nao20010128nao.Wisecraft.BuildConfig;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
+
 import java.io.*;
 import java.util.*;
-
-import com.nao20010128nao.Wisecraft.BuildConfig;
 
 public class PingSerializeProvider 
 {
@@ -144,8 +144,8 @@ public class PingSerializeProvider
         return -1;
     }
 	
-	private static interface Deserializer{
-		public ServerPingResult deserialize(byte[] resultBytes,int resultClassNumber,Class<? extends ServerPingResult> resultClass);
+	private interface Deserializer{
+		ServerPingResult deserialize(byte[] resultBytes, int resultClassNumber, Class<? extends ServerPingResult> resultClass);
 	}
 	
 	static{
@@ -178,43 +178,31 @@ public class PingSerializeProvider
 		
 		
 		Map<Integer,Deserializer> pingDeserializer=new HashMap<>();
-		pingDeserializer.put(0x0000,new Deserializer(){
-				public ServerPingResult deserialize(byte[] resultBytes,int resultClassNumber,Class<? extends ServerPingResult> resultClass){
-					return new FullStat(resultBytes);
-				}
-			});
-		pingDeserializer.put(0x0001,new Deserializer(){
-				public ServerPingResult deserialize(byte[] resultBytes,int resultClassNumber,Class<? extends ServerPingResult> resultClass){
-					return new UnconnectedPing.UnconnectedPingResult(new String(resultBytes,32,resultBytes.length-32, CompatCharsets.UTF_8), 0, resultBytes);
-				}
-			});
-		pingDeserializer.put(0x1002,new Deserializer(){
-				public ServerPingResult deserialize(byte[] resultBytes,int resultClassNumber,Class<? extends ServerPingResult> resultClass){
-					PCQueryResult result;
-					String json=new String(resultBytes, CompatCharsets.UTF_8);
-					if(BuildConfig.OBFUSCATED){
-						result = new RawJsonReply(json);
-					}else{
-						if(resultClassNumber==0x1005){
-							result=new RawJsonReply(json);
-						}else{
-							result = (PCQueryResult)new Gson().fromJson(json, resultClass);
-						}
-					}
-					result.setRaw(json);
-					return result;
-				}
-			});
+		pingDeserializer.put(0x0000, (resultBytes, resultClassNumber, resultClass) -> new FullStat(resultBytes));
+		pingDeserializer.put(0x0001, (resultBytes, resultClassNumber, resultClass) -> new UnconnectedPing.UnconnectedPingResult(new String(resultBytes,32,resultBytes.length-32, CompatCharsets.UTF_8), 0, resultBytes));
+		pingDeserializer.put(0x1002, (resultBytes, resultClassNumber, resultClass) -> {
+            PCQueryResult result;
+            String json=new String(resultBytes, CompatCharsets.UTF_8);
+            if(BuildConfig.OBFUSCATED){
+                result = new RawJsonReply(json);
+            }else{
+                if(resultClassNumber==0x1005){
+                    result=new RawJsonReply(json);
+                }else{
+                    result = (PCQueryResult)new Gson().fromJson(json, resultClass);
+                }
+            }
+            result.setRaw(json);
+            return result;
+        });
 		pingDeserializer.put(0x1003,pingDeserializer.get(0x1002));
-		pingDeserializer.put(0xf004,new Deserializer(){
-				public ServerPingResult deserialize(byte[] resultBytes,int resultClassNumber,Class<? extends ServerPingResult> resultClass){
-					SprPair pair = new SprPair();
-					DataInputStream dis2 = new DataInputStream(new ByteArrayInputStream(resultBytes));
-					pair.setA(loadFromRawDump(dis2));
-					pair.setB(loadFromRawDump(dis2));
-					return pair;
-				}
-			});
+		pingDeserializer.put(0xf004, (resultBytes, resultClassNumber, resultClass) -> {
+            SprPair pair = new SprPair();
+            DataInputStream dis2 = new DataInputStream(new ByteArrayInputStream(resultBytes));
+            pair.setA(loadFromRawDump(dis2));
+            pair.setB(loadFromRawDump(dis2));
+            return pair;
+        });
 		pingDeserializer.put(0x1005,pingDeserializer.get(0x1002));
 
 		PING_DESERIALIZERS=Collections.unmodifiableMap(pingDeserializer);

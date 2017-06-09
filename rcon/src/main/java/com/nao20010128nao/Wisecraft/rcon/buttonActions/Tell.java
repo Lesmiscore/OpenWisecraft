@@ -64,42 +64,36 @@ public class Tell extends NameSelectAction {
 		playerView = (TextView)v.findViewById(R.id.playerName);
 		itemView = (TextView)v.findViewById(R.id.itemId);
 
-		changePlayer.setOnClickListener(new View.OnClickListener(){
-				public void onClick(View v) {
-					hint = getResString(R.string.givePlayerHint);
-					list = null;
-					selecting = 1;
-					Tell.super.onClick(v);
-				}
-			});
-		changeItem.setOnClickListener(new View.OnClickListener(){
-				public void onClick(View v) {
-					hint = getResString(R.string.tellMessageHint);
-					list = RconModule_Constant.EMPTY_STRING_ARRAY;
-					selecting = 2;
-					Tell.super.onClick(v);
-				}
-			});
-		executeButton.setOnClickListener(new View.OnClickListener(){
-				public void onClick(View v) {
-					if (isNullString(player) || isNullString(item)) {
-						AlertDialog.Builder b=new AlertDialog.Builder(Tell.this,getActivity().getPresenter().getDialogStyleId());
-						String mes="";
-						if (isNullString(player)) {
-							mes += getResString(R.string.giveSelectPlayer) + "\n";
-						}
-						if (isNullString(item)) {
-							mes += getResString(R.string.tellSetMessage) + "\n";
-						}
-						b.setMessage(mes);
-						b.setPositiveButton(android.R.string.ok, RconModule_Constant.BLANK_DIALOG_CLICK_LISTENER);
-						b.show();
-					} else {
-						getActivity().performSend("tell " + player + " " + item);
-						dialog.dismiss();
-					}
-				}
-			});
+		changePlayer.setOnClickListener(v13 -> {
+            hint = getResString(R.string.givePlayerHint);
+            list = null;
+            selecting = 1;
+            Tell.super.onClick(v13);
+        });
+		changeItem.setOnClickListener(v12 -> {
+            hint = getResString(R.string.tellMessageHint);
+            list = RconModule_Constant.EMPTY_STRING_ARRAY;
+            selecting = 2;
+            Tell.super.onClick(v12);
+        });
+		executeButton.setOnClickListener(v1 -> {
+            if (isNullString(player) || isNullString(item)) {
+                AlertDialog.Builder b=new AlertDialog.Builder(Tell.this,getActivity().getPresenter().getDialogStyleId());
+                String mes="";
+                if (isNullString(player)) {
+                    mes += getResString(R.string.giveSelectPlayer) + "\n";
+                }
+                if (isNullString(item)) {
+                    mes += getResString(R.string.tellSetMessage) + "\n";
+                }
+                b.setMessage(mes);
+                b.setPositiveButton(android.R.string.ok, RconModule_Constant.BLANK_DIALOG_CLICK_LISTENER);
+                b.show();
+            } else {
+                getActivity().performSend("tell " + player + " " + item);
+                dialog.dismiss();
+            }
+        });
 		return v;
 	}
 

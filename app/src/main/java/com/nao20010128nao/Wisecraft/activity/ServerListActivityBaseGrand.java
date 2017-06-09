@@ -1,7 +1,9 @@
 package com.nao20010128nao.Wisecraft.activity;
+
 import android.content.*;
 import android.preference.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+
 import java.util.*;
 
 //Only most common things
@@ -27,7 +29,7 @@ abstract class ServerListActivityBaseGrand extends WisecraftBaseActivity
 	}
 	
 	public interface DispatchActivityResult{
-		public boolean dispatchActivityResult(int requestCode, int resultCode, Intent data,boolean consumed);
+		boolean dispatchActivityResult(int requestCode, int resultCode, Intent data, boolean consumed);
 	}
 	
 	private class ActivityResultDispatcher extends ArrayList<DispatchActivityResult>{

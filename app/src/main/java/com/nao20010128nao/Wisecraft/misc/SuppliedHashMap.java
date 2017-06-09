@@ -1,7 +1,7 @@
 package com.nao20010128nao.Wisecraft.misc;
 
-import java.util.*;
 import java.lang.reflect.*;
+import java.util.*;
 
 public class SuppliedHashMap<K,V> extends HashMap<K,V> 
 {
@@ -29,54 +29,46 @@ public class SuppliedHashMap<K,V> extends HashMap<K,V>
 	}
 	
 	public static <K,V> SuppliedHashMap<K,V> fromConstant(final V value,boolean putWhenNotKnown){
-		return new SuppliedHashMap<K,V>(new Supplier<K,V>(){
-				public V supply(K a){
-					return value;
-				}
-			},putWhenNotKnown);
+		return new SuppliedHashMap<>(a -> value, putWhenNotKnown);
 	}
 	public static <K,V> SuppliedHashMap<K,V> fromClass(final Class<? extends V> clazz,boolean putWhenNotKnown){
-		return new SuppliedHashMap<K,V>(new Supplier<K,V>(){
-				public V supply(K a){
-					try {
-						return clazz.newInstance();
-					} catch (InstantiationException e) {
-						
-					} catch (IllegalAccessException e) {
-						
-					}
-					return null;
-				}
-			},putWhenNotKnown);
+		return new SuppliedHashMap<>(a -> {
+			try {
+				return clazz.newInstance();
+			} catch (InstantiationException e) {
+
+			} catch (IllegalAccessException e) {
+
+			}
+			return null;
+		}, putWhenNotKnown);
 	}
 	public static <K,V> SuppliedHashMap<K,V> fromClass(final Class<? extends V> clazz,final Class<K> klazz,boolean putWhenNotKnown){
-		return new SuppliedHashMap<K,V>(new Supplier<K,V>(){
-				public V supply(K a){
-					try {
-						return clazz.newInstance();
-					} catch (InstantiationException e) {
+		return new SuppliedHashMap<>(a -> {
+			try {
+				return clazz.newInstance();
+			} catch (InstantiationException e) {
 
-					} catch (IllegalAccessException e) {
+			} catch (IllegalAccessException e) {
 
-					}
-					try {
-						Constructor c=clazz.getDeclaredConstructor(klazz);
-						return (V)c.newInstance(a);
-					} catch (NoSuchMethodException e) {
-						
-					} catch (InstantiationException e) {
-						
-					} catch (InvocationTargetException e) {
-						
-					} catch (SecurityException e) {
-						
-					} catch (IllegalAccessException e) {
-						
-					} catch (IllegalArgumentException e) {
-						
-					}
-					return null;
-				}
-			},putWhenNotKnown);
+			}
+			try {
+				Constructor c = clazz.getDeclaredConstructor(klazz);
+				return (V) c.newInstance(a);
+			} catch (NoSuchMethodException e) {
+
+			} catch (InstantiationException e) {
+
+			} catch (InvocationTargetException e) {
+
+			} catch (SecurityException e) {
+
+			} catch (IllegalAccessException e) {
+
+			} catch (IllegalArgumentException e) {
+
+			}
+			return null;
+		}, putWhenNotKnown);
 	}
 }

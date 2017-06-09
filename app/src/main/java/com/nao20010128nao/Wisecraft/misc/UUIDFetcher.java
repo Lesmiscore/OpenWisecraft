@@ -4,6 +4,7 @@ package com.nao20010128nao.Wisecraft.misc;
 
 import com.google.common.collect.*;
 import com.google.gson.*;
+
 import java.io.*;
 import java.net.*;
 import java.nio.*;
@@ -27,7 +28,7 @@ public class UUIDFetcher implements Callable<Map<String, UUID>> {
     }
 
     public Map<String, UUID> call() throws Exception {
-        Map<String, UUID> uuidMap = new HashMap<String, UUID>();
+        Map<String, UUID> uuidMap = new HashMap<>();
         int requests = (int) Math.ceil(names.size() / PROFILES_PER_REQUEST);
         for (int i = 0; i < requests; i++) {
             HttpURLConnection connection = createConnection();

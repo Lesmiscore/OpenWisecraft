@@ -1,5 +1,7 @@
 package com.nao20010128nao.Wisecraft.misc;
+
 import com.google.common.collect.*;
+
 import java.util.*;
 
 public class Factories {
@@ -14,10 +16,10 @@ public class Factories {
 		return new byte[size];
 	}
 	public static <T> ArrayList<T> arrayList(){
-		return new ArrayList<T>();
+		return new ArrayList<>();
 	}
 	public static <T> ArrayList<T> arrayList(Collection<T> list){
-		return new ArrayList<T>(list);
+		return new ArrayList<>(list);
 	}
 
 	public static <V> Queue<V> newDefaultQueue(){

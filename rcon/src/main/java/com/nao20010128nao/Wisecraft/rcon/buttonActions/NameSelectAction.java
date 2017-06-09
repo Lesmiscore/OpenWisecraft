@@ -31,26 +31,19 @@ public abstract class NameSelectAction extends BaseAction {
 		online = (ListView)v.findViewById(R.id.players);
 		name = (EditText)v.findViewById(R.id.playerName);
 		submit = (Button)v.findViewById(R.id.ok);
-		final ArrayAdapter<String> aa=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+		final ArrayAdapter<String> aa= new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
 		online.setAdapter(aa);
-		online.setOnItemClickListener(new ListView.OnItemClickListener(){
-				public void onItemClick(AdapterView a, View v, int o, long i) {
-					name.setText(aa.getItem(o).toString());
-				}
-			});
-		submit.setOnClickListener(new View.OnClickListener(){
-				@Override
-				public void onClick(View p1) {
-					try {
-						dialog.cancel();
-						dialog.dismiss();
-						dialog.hide();
-						dialog = null;
-					} finally {
-						onSelected(name.getText().toString());
-					}
-				}
-			});
+		online.setOnItemClickListener((a, v1, o, i) -> name.setText(aa.getItem(o).toString()));
+		submit.setOnClickListener(p1 -> {
+            try {
+                dialog.cancel();
+                dialog.dismiss();
+                dialog.hide();
+                dialog = null;
+            } finally {
+                onSelected(name.getText().toString());
+            }
+        });
 		String hint=onPlayerNameHint();
 		if (hint != null) {
 			name.setHint(hint);

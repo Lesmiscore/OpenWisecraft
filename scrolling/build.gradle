@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.0"
+    buildToolsVersion "25.0.0"
 
     defaultConfig {
         minSdkVersion 9
@@ -22,8 +22,14 @@ android {
 }
 
 dependencies {
-	compile 'com.android.support:appcompat-v7:25.1.0'
-	compile 'com.android.support:support-compat:25.1.0'
-	compile 'com.android.support:design:25.1.0'
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+	if(1)compile "com.android.support:appcompat-v7:$supportLibVersion"
+    if(1)compile "com.android.support:support-compat:$supportLibVersion"
+    if(1)compile "com.android.support:design:$supportLibVersion"
+    compile fileTree(dir: 'libs',include: ['*.jar'])
+
+    if(0){
+        compile 'com.android.support:appcompat-v7:25.1.0'
+        compile 'com.android.support:support-compat:25.1.0'
+        compile 'com.android.support:design:25.1.0'
+    }
 }

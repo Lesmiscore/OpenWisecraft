@@ -1,4 +1,5 @@
 package com.nao20010128nao.Wisecraft.misc.pref;
+
 import android.content.res.*;
 import android.graphics.*;
 import android.graphics.drawable.*;
@@ -6,8 +7,6 @@ import android.support.v7.preference.*;
 import android.view.*;
 import android.widget.*;
 import com.azeesoft.lib.colorpicker.*;
-import com.nao20010128nao.Wisecraft.*;
-
 import com.nao20010128nao.Wisecraft.R;
 
 public class ColorPickerPreferenceCompat extends Preference
@@ -53,17 +52,13 @@ public class ColorPickerPreferenceCompat extends Preference
 		super.onClick();
 		ColorPickerDialog cpd=ColorPickerDialog.createColorPickerDialog(getContext(),ColorPickerDialog.LIGHT_THEME);
 		cpd.setLastColor(getPersistedInt(defaultColor));
-		cpd.setOnColorPickedListener(new ColorPickerDialog.OnColorPickedListener(){
-			public void onColorPicked(int color,String hex){
-				persistInt(color);
-				notifyChanged();
-			}
-		});
-		cpd.setOnClosedListener(new ColorPickerDialog.OnClosedListener(){
-			public void onClosed(){
-				
-			}
-		});
+		cpd.setOnColorPickedListener((color, hex) -> {
+            persistInt(color);
+            notifyChanged();
+        });
+		cpd.setOnClosedListener(() -> {
+
+        });
 		cpd.show();
 	}
 }

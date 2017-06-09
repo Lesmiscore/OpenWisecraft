@@ -4,6 +4,7 @@ import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.json.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
+
 import java.io.*;
 
 //For ProGuarded code

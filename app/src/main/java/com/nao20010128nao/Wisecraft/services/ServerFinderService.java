@@ -1,4 +1,5 @@
 package com.nao20010128nao.Wisecraft.services;
+
 import android.app.*;
 import android.content.*;
 import android.graphics.*;
@@ -9,6 +10,7 @@ import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.activity.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.provider.*;
+
 import java.util.*;
 
 public class ServerFinderService extends Service
@@ -22,13 +24,11 @@ public class ServerFinderService extends Service
 	private static final String ACTION_DELETED="action_deleted";
 	private static final String ACTION_CANCEL="action_cancel";
 	
-	private static Map<String,State> sessions=new SuppliedHashMap<String,State>(new Supplier<String,State>(){
-			public State supply(String tag){
-				State stt=new State();
-				stt.tag=tag;
-				return stt;
-			}
-		},true);
+	private static Map<String,State> sessions= new SuppliedHashMap<>(tag -> {
+        State stt = new State();
+        stt.tag = tag;
+        return stt;
+    }, true);
 	
 	@Override
 	public IBinder onBind(Intent p1) {
@@ -210,7 +210,7 @@ public class ServerFinderService extends Service
 	}
 	
 	public static class State{
-		public final Map<Integer,ServerStatus> detected=Collections.<Integer,ServerStatus>synchronizedMap(new HashMap<Integer,ServerStatus>());
+		public final Map<Integer,ServerStatus> detected=Collections.<Integer,ServerStatus>synchronizedMap(new HashMap<>());
 		public volatile String tag,ip;
 		public volatile AsyncTask<Void,ServerStatus,Void> worker;
 		public volatile boolean finished=false,notificationRemoved=false,activityClosed=true,cancelled=false;

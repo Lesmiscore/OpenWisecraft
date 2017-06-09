@@ -1,7 +1,6 @@
 package com.nao20010128nao.Wisecraft.misc;
-import java.util.*;
 
-import static com.nao20010128nao.Wisecraft.misc.CompatUtils.*;
+import java.util.*;
 
 public class QuintetWalker<A,B,C,D,E> extends ArrayList<Quintet<A,B,C,D,E>> 
 {

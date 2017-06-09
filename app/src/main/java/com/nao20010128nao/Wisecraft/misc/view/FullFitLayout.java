@@ -3,7 +3,6 @@ package com.nao20010128nao.Wisecraft.misc.view;
 import android.content.*;
 import android.util.*;
 import android.view.*;
-import android.view.ViewGroup.*;
 
 public class FullFitLayout extends ViewGroup 
 {

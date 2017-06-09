@@ -37,16 +37,8 @@ public class RCONActivity extends RCONActivityBase implements TabHost.OnTabChang
 	public void exitActivity() {
 		new AlertDialog.Builder(this,R.style.AppAlertDialog)
 			.setMessage(R.string.auSure_exit)
-			.setNegativeButton(android.R.string.ok,new DialogInterface.OnClickListener(){
-				public void onClick(DialogInterface di,int w){
-					RCONActivity.super.exitActivity();
-				}
-			})
-			.setPositiveButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
-				public void onClick(DialogInterface di,int w){
-					RCONActivity.super.cancelExitActivity();
-				}
-			})
+			.setNegativeButton(android.R.string.ok, (di, w) -> RCONActivity.super.exitActivity())
+			.setPositiveButton(android.R.string.cancel, (di, w) -> RCONActivity.super.cancelExitActivity())
 			.setCancelable(false)
 			.show();
 	}

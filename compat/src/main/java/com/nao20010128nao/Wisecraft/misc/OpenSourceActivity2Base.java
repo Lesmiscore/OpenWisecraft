@@ -1,14 +1,14 @@
 package com.nao20010128nao.Wisecraft.misc;
+
 import android.os.*;
 import android.support.v7.app.*;
 import android.view.*;
 import com.nao20010128nao.Wisecraft.*;
-import com.nao20010128nao.Wisecraft.misc.compat.*;
+import com.nao20010128nao.Wisecraft.misc.compat.R;
 import eu.fiskur.markdownview.*;
+
 import java.io.*;
 import java.net.*;
-
-import com.nao20010128nao.Wisecraft.misc.compat.R;
 
 public abstract class OpenSourceActivity2Base extends AppCompatActivity
 {

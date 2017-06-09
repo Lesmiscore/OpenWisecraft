@@ -8,9 +8,9 @@
  */
 package com.nao20010128nao.ToolBox;
 
-import android.content.Context;
-import android.preference.Preference;
-import android.util.AttributeSet;
+import android.content.*;
+import android.preference.*;
+import android.util.*;
 
 public abstract class NormalButtonPreference
 extends Preference {

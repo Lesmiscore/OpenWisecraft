@@ -1,11 +1,13 @@
 package com.nao20010128nao.Wisecraft.misc;
+
 import android.annotation.*;
 import android.os.*;
+
+import javax.crypto.*;
+import javax.crypto.spec.*;
 import java.io.*;
 import java.security.*;
 import java.util.*;
-import javax.crypto.*;
-import javax.crypto.spec.*;
 
 public class EncryptedBinaryPref extends BinaryPrefImpl
 {

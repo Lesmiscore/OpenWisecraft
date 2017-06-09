@@ -16,11 +16,7 @@ public class Tp extends BaseAction {
 	public void onClick(View p1) {
 		dialog = new AlertDialog.Builder(this,getActivity().getPresenter().getDialogStyleId())
 			.setView(inflateDialogView())
-			.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
-				public void onClick(DialogInterface di,int w){
-					getActivity().performSend("tp " + cmd.getText());
-				}
-			})
+			.setPositiveButton(android.R.string.ok, (di, w) -> getActivity().performSend("tp " + cmd.getText()))
 			.show();
 	}
 
