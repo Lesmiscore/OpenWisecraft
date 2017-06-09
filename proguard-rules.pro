@@ -1,3 +1,5 @@
+-dontoptimize
+
 -keepnames public !abstract class * extends android.app.Activity
 -keepnames public !abstract class * extends android.app.Service
 -keepnames public !abstract class * extends android.content.BroadcastReceiver
@@ -26,7 +28,8 @@
 -keep class com.google.gson.examples.android.model.** { *; }
 -dontwarn org.apache.**
 -keep class uk.co.chrisjenx.calligraphy.** { *; }
--keep class android.support.**
+-keep class android.support.** { *; }
+-keep class android.support.v4.os.CancellationSignal { *; }
 
 -keep class com.firebase.** { *; }
 -keepnames class org.apache.** { *; }
