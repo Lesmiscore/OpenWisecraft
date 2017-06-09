@@ -53,7 +53,7 @@ public class ServerListStyleLoader {
 			case BACKGROUND_BLACK:
 				return new ColorDrawable(Color.BLACK);
 			case BACKGROUND_DIRT:
-				BitmapDrawable bd=(BitmapDrawable)ctx.getResources().getDrawable(R.drawable.soil);
+				BitmapDrawable bd=(BitmapDrawable)ContextCompat.getDrawable(ctx,R.drawable.soil);
 				bd.setTargetDensity(ctx.getResources().getDisplayMetrics());
 				bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
 				return bd;
@@ -83,7 +83,7 @@ public class ServerListStyleLoader {
 				Bitmap bmp=null;
 				try{
 					bmp=getImageBgBitmap();
-					Palette palette=Palette.generate(bmp);
+					Palette palette=new Palette.Builder(bmp).generate();
 					return ServerInfoActivity.darker(palette.getDarkVibrantColor(Color.BLACK));
 				}finally{
 					if(bmp!=null)bmp.recycle();

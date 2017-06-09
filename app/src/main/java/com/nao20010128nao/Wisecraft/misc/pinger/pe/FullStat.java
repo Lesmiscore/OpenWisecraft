@@ -24,7 +24,7 @@ public class FullStat implements ServerPingResult,PEPingResult {
 		byte[] d;
 		int dataEnds = 0;
 		for (int i = 2; i < temp.length; i++) {
-			if ((d = temp[i]).length == 0 ? false : d[0] == 1) {
+			if ((d = temp[i]).length != 0 && d[0] == 1) {
 				dataEnds = i;
 				break;
 			}

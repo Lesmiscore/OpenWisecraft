@@ -1,5 +1,6 @@
 package com.nao20010128nao.Wisecraft.activity;
 
+import android.annotation.*;
 import android.content.*;
 import android.content.res.*;
 import android.graphics.*;
@@ -313,8 +314,8 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				if (rep.favicon != null) {
 					byte[] image=WisecraftBase64.decode(rep.favicon.split("\\,")[1], WisecraftBase64.NO_WRAP);
 					serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
-					serverIconObj = new BitmapDrawable(serverIconBmp);
-					color = Palette.generate(serverIconBmp).getLightVibrantColor(color);
+					serverIconObj = new BitmapDrawable(getResources(),serverIconBmp);
+					color = new Palette.Builder(serverIconBmp).generate().getLightVibrantColor(color);
 				} else {
 					serverIconObj = new ColorDrawable(Color.TRANSPARENT);
 				}
@@ -323,8 +324,8 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				if (rep.favicon != null) {
 					byte[] image=WisecraftBase64.decode(rep.favicon.split("\\,")[1], WisecraftBase64.NO_WRAP);
 					serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
-					serverIconObj = new BitmapDrawable(serverIconBmp);
-					color = Palette.generate(serverIconBmp).getLightVibrantColor(color);
+					serverIconObj = new BitmapDrawable(getResources(),serverIconBmp);
+					color = new Palette.Builder(serverIconBmp).generate().getLightVibrantColor(color);
 				} else {
 					serverIconObj = new ColorDrawable(Color.TRANSPARENT);
 				}
@@ -333,7 +334,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				if (rep.has("favicon")) {
 					byte[] image=WisecraftBase64.decode(rep.get("favicon").getAsString().split("\\,")[1], WisecraftBase64.NO_WRAP);
 					serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
-					serverIconObj = new BitmapDrawable(serverIconBmp);
+					serverIconObj = new BitmapDrawable(getResources(),serverIconBmp);
 				} else {
 					serverIconObj = null;
 				}
@@ -420,7 +421,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				AlertDialog.Builder ab=new AlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this));
 				LinearLayout ll;
 				boolean dark;
-				dark = pref.getBoolean("colorFormattedText", false) ?pref.getBoolean("darkBackgroundForServerName", false): false;
+				dark = pref.getBoolean("colorFormattedText", false) && pref.getBoolean("darkBackgroundForServerName", false);
 				{
 					if (dark) {
 						ll = (LinearLayout)TheApplication.instance.getLayoutInflater().inflate(R.layout.server_info_show_title_dark, null);
@@ -899,7 +900,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 					if (rep.favicon != null) {
 						byte[] image=WisecraftBase64.decode(rep.favicon.split("\\,")[1], WisecraftBase64.NO_WRAP);
 						serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
-						serverIconObj = new BitmapDrawable(serverIconBmp);
+						serverIconObj = new BitmapDrawable(getResources(),serverIconBmp);
 					} else {
 						serverIconObj = null;
 					}
@@ -922,7 +923,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 					if (rep.favicon != null) {
 						byte[] image=WisecraftBase64.decode(rep.favicon.split("\\,")[1], WisecraftBase64.NO_WRAP);
 						serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
-						serverIconObj = new BitmapDrawable(serverIconBmp);
+						serverIconObj = new BitmapDrawable(getResources(),serverIconBmp);
 					} else {
 						serverIconObj = null;
 					}
@@ -950,7 +951,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 					if (rep.has("favicon")) {
 						byte[] image=WisecraftBase64.decode(rep.get("favicon").getAsString().split("\\,")[1], WisecraftBase64.NO_WRAP);
 						serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
-						serverIconObj = new BitmapDrawable(serverIconBmp);
+						serverIconObj = new BitmapDrawable(getResources(),serverIconBmp);
 					} else {
 						serverIconObj = null;
 					}
@@ -1170,6 +1171,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 			}
 		}
 	}
+	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 	class ColorUpdateCallback extends UpdateCallback{
 		int r,g,b;
 		public ColorUpdateCallback(){
