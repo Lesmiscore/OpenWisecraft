@@ -1,5 +1,4 @@
 package com.nao20010128nao.Wisecraft.rcon;
-import android.content.*;
 import android.content.res.*;
 import android.graphics.*;
 import android.os.*;
@@ -7,19 +6,17 @@ import android.support.v4.content.*;
 import android.support.v4.view.*;
 import android.support.v4.widget.*;
 import android.support.v7.app.*;
-import android.support.v7.widget.*;
 import android.text.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
-import com.annimon.stream.Stream;
+import com.annimon.stream.*;
 import com.astuetz.*;
 import com.mikepenz.materialdrawer.*;
 import com.mikepenz.materialdrawer.model.*;
 import com.mikepenz.materialdrawer.model.interfaces.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.rcon.*;
-import com.nao20010128nao.Wisecraft.rcon.*;
 import com.nao20010128nao.Wisecraft.rcon.buttonActions.*;
 import java.io.*;
 import java.lang.ref.*;
@@ -27,11 +24,10 @@ import java.math.*;
 import java.util.*;
 
 import android.support.v7.widget.Toolbar;
-import com.nao20010128nao.Wisecraft.rcon.R;
 
 public abstract class RCONActivityBase extends AppCompatActivity {
 	public static WeakReference<RCONActivityBase> instance=new WeakReference(null);
-	static List<String> consoleLogs=new ArrayList<>();
+	static List<ConsoleTextEntry> consoleLogs=new ArrayList<>();
 	static RCon rcon;
 
 	PasswordAsking pa;
@@ -126,14 +122,16 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 		}
 	}
 
-	public void appendIntoConsole(String s) {
+	public void appendIntoConsole(String s,ConsoleTextKind kind) {
 		final ArrayList<String> lines= new ArrayList<>(Arrays.asList(RconModule_Utils.lines(s)));
 		runOnUiThread(() -> {
-            consoleLogs.addAll(lines);
-            if(console!=null)
-				Stream.of(lines).map(this::newTextViewForConsole).forEach(console::addView);
-			if(scrollingConsole!=null)
-                if(doAutoScroll())
+            Stream.of(lines)
+					.map(a->new ConsoleTextEntry(a,kind))
+					.filter(consoleLogs::add)
+					.filter(a-> console!=null)//if(console!=null)
+					.map(this::newTextViewForConsole)//Stream.of(entries).map(this::newTextViewForConsole).forEach(console::addView);
+					.forEach(console::addView);
+            if(scrollingConsole!=null&&doAutoScroll())
                     scrollingConsole.fullScroll(ScrollView.FOCUS_DOWN);
         });
 		for(String l:lines)
@@ -188,9 +186,10 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 			}
 		}.execute();
 	}
-	TextView newTextViewForConsole(String s) {
+	TextView newTextViewForConsole(ConsoleTextEntry s) {
 		TextView tv=(TextView)getLayoutInflater().inflate(R.layout.rcon_line_textview,console,false);
-		tv.setText(s);
+		tv.setText(s.text);
+		s.kind.process(tv,this);
 		return tv;
 	}
 
@@ -227,10 +226,12 @@ public abstract class RCONActivityBase extends AppCompatActivity {
                     if (TextUtils.isEmpty(s)) {
                         s = getResources().getString(R.string.emptyResponse);
                     }
-                    appendIntoConsole(s);
-                } catch (Throwable e) {
+					if(shouldShowUserCommand())
+						appendIntoConsole("> "+cmd,ConsoleTextKind.COMMAND);
+					appendIntoConsole(s,ConsoleTextKind.OUTPUT);
+				} catch (Throwable e) {
                     DebugWriter.writeToE("RCON",e);
-                    appendIntoConsole(getResources().getString(R.string.rconSendError));
+                    appendIntoConsole(getResources().getString(R.string.rconSendError),ConsoleTextKind.ERROR);
                 }
             }).start();
 		}
@@ -261,6 +262,9 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 	}
 	public boolean shouldCloseDrawer(){
 		return false;
+	}
+	public boolean shouldShowUserCommand(){
+		return true;
 	}
 	public PrimaryDrawerItem onCreatePrimaryDrawerItem(){
 		return new PrimaryDrawerItem();
@@ -367,7 +371,7 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 				.show();
 		}
 		public void tryConnectWithDialog(final String s){
-			appendIntoConsole(getResources().getString(R.string.connecting));
+			appendIntoConsole(getResources().getString(R.string.connecting),ConsoleTextKind.INFO);
 			new AsyncTask<Void,Void,Boolean>(){
 				public Boolean doInBackground(Void[] o) {
 					return tryConnect(s);
@@ -375,12 +379,12 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 				public void onPostExecute(Boolean result) {
 					if (!living)return;
 					if (result) {
-						appendIntoConsole(getResources().getString(R.string.connected));
+						appendIntoConsole(getResources().getString(R.string.connected),ConsoleTextKind.SUCCESSFUL);
 						applyHandlers();
 						refreshPlayers();
 						onConnectionSuccess(s);
 					} else {
-						appendIntoConsole(getResources().getString(R.string.incorrectPassword));
+						appendIntoConsole(getResources().getString(R.string.incorrectPassword),ConsoleTextKind.ERROR);
 						getPresenter().showSelfMessage(RCONActivityBase.this, R.string.incorrectPassword, Presenter.MESSAGE_SHOW_LENGTH_SHORT);
 						askPassword();
 						onConnectionFailed();
@@ -414,5 +418,46 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 			getParentActivity().setUpdatePlayersButton((ImageButton)v.findViewById(R.id.updatePlayers));
 			return v;
 		}
+	}
+
+
+	private static class ConsoleTextEntry{
+		final String text;
+		final ConsoleTextKind kind;
+		ConsoleTextEntry(String t,ConsoleTextKind c){
+			text=t;
+			kind =c;
+		}
+	}
+
+	private enum ConsoleTextKind{
+		OUTPUT {
+			@Override
+			void process(TextView tv,RCONActivityBase act) {
+				
+			}
+		},COMMAND {
+			@Override
+			void process(TextView tv,RCONActivityBase act) {
+				tv.setAlpha(0.8f);
+			}
+		},INFO {
+			@Override
+			void process(TextView tv,RCONActivityBase act) {
+
+			}
+		},SUCCESSFUL {
+			@Override
+			void process(TextView tv,RCONActivityBase act) {
+
+			}
+		},ERROR {
+			@Override
+			void process(TextView tv,RCONActivityBase act) {
+
+			}
+		};
+
+		abstract void process(TextView tv,RCONActivityBase act);
 	}
 }
