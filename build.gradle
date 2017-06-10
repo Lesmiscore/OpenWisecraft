@@ -1,3 +1,6 @@
+import com.android.build.gradle.internal.dsl.JackOptions
+import com.android.build.gradle.internal.dsl.ProductFlavor
+
 import java.net.*
 import java.math.*
 import groovy.json.*
@@ -229,3 +232,5 @@ task("convertConfigSlurperToBuildscript")<<{
     json gitlabCiConfig
     new File(rootDir,"test.gitlab-ci.yml").text=json.toPrettyString()
 }
+
+ProductFlavor.metaClass.jackOptions={Action<JackOptions> action->/*no-op*/}
