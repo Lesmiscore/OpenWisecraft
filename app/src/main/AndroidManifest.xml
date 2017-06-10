@@ -28,7 +28,8 @@
             android:label="@string/app_name"
             android:name=".activity.ServerListActivity"
 			android:theme="@style/AppTheme.NoActionBar"
-			android:enabled="false">
+			android:enabled="true"
+			android:exported="false">
             <!-- Hide this activity because this is for the alias -->
         </activity>
 		<activity-alias 
@@ -161,6 +162,12 @@
 			android:exported="false"
 			android:theme="@style/AppTheme.OpenSource">
         </activity>
+		<activity
+			android:label="@string/osl"
+			android:name=".activity.OpenSourceActivity2"
+			android:exported="false"
+			android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
 			android:label="@string/aboutApp"
 			android:name=".activity.AboutAppActivity"
@@ -191,6 +198,18 @@
 				<action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
 			</intent-filter>
 		</service>
+
+		<service
+			android:name=".services.ServerFinderService"
+			android:exported="false">
+		</service>
+		
+		<receiver android:name=".services.ServerFinderService$NotificationDetector">
+			<intent-filter>
+                <action android:name="action_deleted" />
+				<action android:name="action_cancel" />
+            </intent-filter>
+		</receiver>
 		
 		
 		<!-- Widgets -->

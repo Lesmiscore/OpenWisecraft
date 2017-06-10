@@ -1,5 +1,7 @@
 package com.nao20010128nao.Wisecraft.misc.provider;
+
 import com.nao20010128nao.Wisecraft.misc.*;
+
 import java.util.*;
 
 public class PCMultiServerPingProvider implements ServerPingProvider {
@@ -36,6 +38,11 @@ public class PCMultiServerPingProvider implements ServerPingProvider {
 		for (ServerPingProvider spp:objects) {
 			spp.clearQueue();
 		}
+	}
+	@Override
+	public void clearAndStop() {
+		clearAndStop();
+		stop();
 	}
     @Override
     public void offline() {

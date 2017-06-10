@@ -13,23 +13,36 @@ android {
 	def isEmptyStr={CharSequence str->
         str == null || str.length() == 0
     }
+	def generateVersionCode={String n,int p->
+		def bitWidth=4//shouldn't be changed from 4
+	
+		def splitted=n.split("\\.")
+		def major=new Integer(splitted[0])
+		def minor=new Integer(splitted[1])
+		def reserved1=0//splitted[2]
+		def reserved2=0//splitted[3]
+		return major<<(bitWidth*4)|minor<<(bitWidth*3)|reserved1<<(bitWidth*2)|reserved2<<(bitWidth*1)|p
+	}
 	
 	def wsi="Widget Status Inspector"
-	def preNum=0 //0 is stable release
+	def preNum=1 //0 is stable release
+	def version="5.0"
 
     compileSdkVersion 25
     buildToolsVersion "25.0.0"
 
+	/*
+	versionCode:
+	40 is 4.0 pre 5
+	41 is 4.0
+	*/
     defaultConfig {
         applicationId 'com.nao20010128nao.Wisecraft'
         minSdkVersion 17
         targetSdkVersion 24
-        versionCode 41
-        versionName "4.0"
+        versionCode generateVersionCode(version,preNum==0?0xf:preNum)
+        versionName version
 		multiDexEnabled true
-		jackOptions {
-			enabled false
-		}
 		
 		buildConfigField "String", "HIDDEN_AD", "\"http://cur.lv/11juip\""
 		buildConfigField "boolean", "SHOW_BUILD_DATA_ON_VERSIONS", "false"
@@ -124,7 +137,9 @@ android {
     }
     
     dexOptions {
-    	threadCount 8
+    	if(System.getenv('CI_BUILD_ID')){//Check the environment
+    		threadCount 8
+		}
 	}
 	
 	splits{
@@ -137,6 +152,11 @@ android {
 				include "ja","en"
 			}
 		}
+	}
+
+	compileOptions {
+		sourceCompatibility JavaVersion.VERSION_1_8
+		targetCompatibility JavaVersion.VERSION_1_8
 	}
 }
 
@@ -154,45 +174,60 @@ dependencies {
 	compile project(':collector')
 	compile project(':masterdetail')
 	
-	compile 'com.android.support:recyclerview-v7:25.1.0'
-	compile 'com.android.support:design:25.1.0'
-	compile 'com.android.support:support-v4:25.1.0'
-	compile 'com.android.support:appcompat-v7:25.1.0'
-	compile 'com.android.support:cardview-v7:25.1.0'
-	compile 'com.android.support:palette-v7:25.1.0'
-	compile 'com.android.support:preference-v7:25.1.0'
+	if(1)compile "com.android.support:recyclerview-v7:$supportLibVersion"
+	if(1)compile "com.android.support:design:$supportLibVersion"
+	if(1)compile "com.android.support:support-v4:$supportLibVersion"
+	if(1)compile "com.android.support:appcompat-v7:$supportLibVersion"
+	if(1)compile "com.android.support:cardview-v7:$supportLibVersion"
+	if(1)compile "com.android.support:palette-v7:$supportLibVersion"
+	if(1)compile "com.android.support:preference-v7:$supportLibVersion"
 	compile 'com.android.support:multidex:1.0.1'
+
+	if(1)compile "com.google.firebase:firebase-core:$firebaseVersion"
+	if(1)compile "com.google.firebase:firebase-storage:$firebaseVersion"
+	if(1)compile "com.google.firebase:firebase-config:$firebaseVersion"
+	if(1)compile "com.google.firebase:firebase-crash:$firebaseVersion"
+	if(1)compile "com.google.firebase:firebase-messaging:$firebaseVersion"
 	
 	compile 'com.google.code.gson:gson:2.8.0'
 	compile 'org.nanohttpd:nanohttpd:2.3.0'
 	compile 'org.jsoup:jsoup:1.9.1'
 	compile 'org.eclipse.mylyn.github:org.eclipse.egit.github.core:3.4.0.201406110918-r'
-	compile 'com.mikhaellopez:circularimageview:+'
-	compile 'com.google.firebase:firebase-core:10.0.1'
-	compile 'com.google.firebase:firebase-storage:10.0.1'
-	compile 'com.google.firebase:firebase-config:10.0.1'
-	compile 'com.google.firebase:firebase-crash:10.0.1'
-	compile 'com.google.firebase:firebase-messaging:10.0.1'
+	compile 'com.mikhaellopez:circularimageview:3.0.2'
 	compile "biz.laenger.android:vpbs:0.0.2"
-	compile 'com.github.hotchemi:permissionsdispatcher:2.3.1'
+	compile 'com.github.hotchemi:permissionsdispatcher:2.3.2'
 	compile 'com.google.guava:guava:19.0'
-    
+	compile 'jp.wasabeef:recyclerview-animators:2.2.6'
+	compile 'com.annimon:stream:1.1.7'
+	
 	compile files('libs/fsb.jar')
 	compile files('libs/mcprox.jar')
 	compile files('libs/commons-codec-1.10.jar')
 	compile files('libs/jsocks.jar')
 	
-	compile('com.mikepenz:materialdrawer:+') {
+	compile('com.mikepenz:materialdrawer:5.9.0') {
 		transitive = true
 	}
 	//These lines are required to write code using AIDE. Please don't remove them.
-	if(null){
+	if(0){
 		compile 'com.mikepenz:materialize:+'
     	compile 'com.mikepenz:iconics-core:+'
     	compile 'com.mikepenz:fastadapter:+'
+		compile "com.android.support:recyclerview-v7:25.3.1"
+		compile "com.android.support:design:25.3.1"
+		compile "com.android.support:support-v4:25.3.1"
+		compile "com.android.support:appcompat-v7:25.3.1"
+		compile "com.android.support:cardview-v7:25.3.1"
+		compile "com.android.support:palette-v7:25.3.1"
+		compile "com.android.support:preference-v7:25.3.1"
+		compile "com.google.firebase:firebase-core:10.0.1"
+		compile "com.google.firebase:firebase-storage:10.0.1"
+		compile "com.google.firebase:firebase-config:10.0.1"
+		compile "com.google.firebase:firebase-crash:10.0.1"
+		compile "com.google.firebase:firebase-messaging:10.0.1"
 	}
 	
-	if(true)apt 'com.github.hotchemi:permissionsdispatcher-processor:2.3.1'
+	if(1)apt 'com.github.hotchemi:permissionsdispatcher-processor:2.3.2'
 }
 apply plugin: 'com.google.gms.google-services'
 

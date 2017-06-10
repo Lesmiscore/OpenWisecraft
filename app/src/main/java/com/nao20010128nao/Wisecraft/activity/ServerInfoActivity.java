@@ -1,6 +1,6 @@
 package com.nao20010128nao.Wisecraft.activity;
 
-import android.app.*;
+import android.annotation.*;
 import android.content.*;
 import android.content.res.*;
 import android.graphics.*;
@@ -20,21 +20,21 @@ import android.widget.*;
 import biz.laenger.android.vpbs.*;
 import com.astuetz.*;
 import com.google.gson.*;
+import com.nao20010128nao.Wisecraft.R;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
+import com.nao20010128nao.Wisecraft.misc.json.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
 import com.nao20010128nao.Wisecraft.misc.skin_face.*;
+import permissions.dispatcher.*;
+
 import java.io.*;
 import java.lang.ref.*;
 import java.math.*;
 import java.util.*;
-import permissions.dispatcher.*;
-
-import android.support.v7.app.AlertDialog;
-import com.nao20010128nao.Wisecraft.R;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 
@@ -45,7 +45,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 	public static Map<String,Bitmap> faces=new HashMap<>();
 
 	public static int DIRT_BRIGHT,DIRT_DARK;
-	public static final int BASE64_FLAGS=Base64.NO_WRAP|Base64.NO_PADDING;
+	public static final int BASE64_FLAGS=WisecraftBase64.NO_WRAP|WisecraftBase64.NO_PADDING;
 
 	SharedPreferences pref;
 
@@ -89,7 +89,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 
 		String stat=getIntent().getStringExtra("stat");
 		if(stat==null){finish();return;}
-		byte[] statData=Base64.decode(stat,BASE64_FLAGS);
+		byte[] statData=WisecraftBase64.decode(stat,BASE64_FLAGS);
 		localStat=PingSerializeProvider.loadFromServerDumpFile(statData);
 
 		if (localStat == null) {
@@ -111,6 +111,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 		setSupportActionBar((android.support.v7.widget.Toolbar)findViewById(R.id.toolbar));
 		tabs = (ViewPager)findViewById(R.id.pager);
 		tabs.setAdapter(adapter = new InternalPagerAdapter());
+		tabs.setPageTransformer(true,new ZoomOutPageTransformer());
 		PagerSlidingTabStrip psts=(PagerSlidingTabStrip)findViewById(R.id.tabs);
 		psts.setViewPager(tabs);
 		
@@ -161,7 +162,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 			new PstsTextStyleChanger(Typeface.BOLD, Typeface.NORMAL, tabs, psts)
 		));
 		
-		findViewById(R.id.appbar).setBackgroundDrawable(slsl.load());
+		ViewCompat.setBackground(findViewById(R.id.appbar),slsl.load());
 
 		int offset=getIntent().getIntExtra("offset", 0);
 		if (adapter.getCount() >= 2 & offset == 0)tabs.setCurrentItem(1);
@@ -181,13 +182,11 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 			}
 			
 			background=findViewById(R.id.background);
-			background.setOnClickListener(new View.OnClickListener(){
-				public void onClick(View v){
-					if(behavior.getAllowUserDragging()){
-						behavior.setState(ViewPagerBottomSheetBehavior.STATE_HIDDEN);
-					}
-				}
-			});
+			background.setOnClickListener(v -> {
+                if(behavior.getAllowUserDragging()){
+                    behavior.setState(ViewPagerBottomSheetBehavior.STATE_HIDDEN);
+                }
+            });
 			background.setBackgroundColor(slsl.getBackgroundSimpleColor());
 			if (Build.VERSION.SDK_INT >= 21) {
 				getWindow().setStatusBarColor(0);
@@ -198,34 +197,35 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 			}
 		}
 		TypedArray ta=ThemePatcher.getStyledContext(this).obtainStyledAttributes(new int[]{android.R.attr.windowBackground});
-		tabs.setBackgroundDrawable(ta.getDrawable(0));
+		ViewCompat.setBackground(tabs,ta.getDrawable(0));
 		ta.recycle();
 		
 		if(useBottomSheet){
 			pin.setVisibility(View.GONE);
 			behavior.setAllowUserDragging(true);
 			pin.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_lock_open_black_48dp,Color.WHITE));//pinned
-			pin.setOnClickListener(new View.OnClickListener(){
-					public void onClick(View v){
-						behavior.setAllowUserDragging(!behavior.getAllowUserDragging());
-						if(behavior.getAllowUserDragging()){
-							pin.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_lock_open_black_48dp,Color.WHITE));//not pinned
-						}else{
-							pin.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_lock_black_48dp,Color.WHITE));//pinned
-						}
-					}
-				});
+			pin.setOnClickListener(v -> {
+                behavior.setAllowUserDragging(!behavior.getAllowUserDragging());
+                if(behavior.getAllowUserDragging()){
+                    pin.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_lock_open_black_48dp,Color.WHITE));//not pinned
+                }else{
+                    pin.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_lock_black_48dp,Color.WHITE));//pinned
+                }
+            });
 			if(getIntent().getBooleanExtra("bottomSheetPinned",false)){
 				pin.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_lock_black_48dp,Color.WHITE));//pinned
 				behavior.setAllowUserDragging(false);
-				new Handler().post(new Runnable(){
-						public void run(){
-							behavior.setState(ViewPagerBottomSheetBehavior.STATE_EXPANDED);
-							pin.show();
-						}
-					});
+				new Handler().post(() -> {
+                    behavior.setState(ViewPagerBottomSheetBehavior.STATE_EXPANDED);
+                    pin.show();
+                });
 			}
 		}
+		
+		new Handler().post(() -> {
+            TextView tv=Utils.getActionBarTextView(Utils.getToolbar(ServerInfoActivityImpl.this));
+            if(tv!=null)tv.setTextColor(slsl.getTextColor());
+        });
 	}
 
 	public void onBackPressed() {
@@ -241,7 +241,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				}
 			}
 		}else{
-			finish();
+			supportFinishAfterTransition();
 		}
 	}
 	
@@ -249,10 +249,10 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 		if(useBottomSheet){
 			behavior.setState(ViewPagerBottomSheetBehavior.STATE_HIDDEN);
 		}else{
-			finish();
+			supportFinishAfterTransition();
 		}
 	}
-
+	
 	@ServerInfoParser
 	public synchronized void update(final ServerPingResult resp) {
 		if (resp instanceof FullStat) {
@@ -283,15 +283,11 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 			}
 		} else if (resp instanceof RawJsonReply) {
 			RawJsonReply rep = (RawJsonReply) resp;
-			String title;
+			CharSequence title;
 			if (!rep.json.has("description")) {
 				title = localStat.toString();
 			} else {
-				if(rep.json.get("description").isJsonObject()){
-					title = rep.json.get("description").getAsJsonObject().get("text").getAsString();
-				}else{
-					title = rep.json.get("description").getAsString();
-				}
+				title=Utils.parseMinecraftDescriptionJson(rep.json.get("description"));
 			}
 			setTitle(title);
 		} else if (resp instanceof SprPair) {
@@ -316,29 +312,29 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 			if (resp instanceof Reply) {
 				Reply rep=(Reply)resp;
 				if (rep.favicon != null) {
-					byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
+					byte[] image=WisecraftBase64.decode(rep.favicon.split("\\,")[1], WisecraftBase64.NO_WRAP);
 					serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
-					serverIconObj = new BitmapDrawable(serverIconBmp);
-					color = Palette.generate(serverIconBmp).getLightVibrantColor(color);
+					serverIconObj = new BitmapDrawable(getResources(),serverIconBmp);
+					color = new Palette.Builder(serverIconBmp).generate().getLightVibrantColor(color);
 				} else {
 					serverIconObj = new ColorDrawable(Color.TRANSPARENT);
 				}
 			} else if (resp instanceof Reply19) {
 				Reply19 rep=(Reply19)resp;
 				if (rep.favicon != null) {
-					byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
+					byte[] image=WisecraftBase64.decode(rep.favicon.split("\\,")[1], WisecraftBase64.NO_WRAP);
 					serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
-					serverIconObj = new BitmapDrawable(serverIconBmp);
-					color = Palette.generate(serverIconBmp).getLightVibrantColor(color);
+					serverIconObj = new BitmapDrawable(getResources(),serverIconBmp);
+					color = new Palette.Builder(serverIconBmp).generate().getLightVibrantColor(color);
 				} else {
 					serverIconObj = new ColorDrawable(Color.TRANSPARENT);
 				}
 			}else if (resp instanceof RawJsonReply) {
-				JsonObject rep=((JsonElement)((RawJsonReply)resp).json).getAsJsonObject();
+				WisecraftJsonObject rep=((RawJsonReply)resp).json;
 				if (rep.has("favicon")) {
-					byte[] image=Base64.decode(rep.get("favicon").getAsString().split("\\,")[1], Base64.NO_WRAP);
+					byte[] image=WisecraftBase64.decode(rep.get("favicon").getAsString().split("\\,")[1], WisecraftBase64.NO_WRAP);
 					serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
-					serverIconObj = new BitmapDrawable(serverIconBmp);
+					serverIconObj = new BitmapDrawable(getResources(),serverIconBmp);
 				} else {
 					serverIconObj = null;
 				}
@@ -397,26 +393,20 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				View dialogView_=getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
 				final EditText et_=(EditText)dialogView_.findViewById(R.id.filePath);
 				et_.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/pingresult.wisecraft-ping").toString());
-				dialogView_.findViewById(R.id.selectFile).setOnClickListener(new View.OnClickListener(){
-						public void onClick(View v) {
-							File f=new File(et_.getText().toString());
-							if ((!f.exists())|f.isFile())f = f.getParentFile();
-							ServerInfoActivityBase1PermissionsDispatcher.startChooseFileForOpenWithCheck(ServerInfoActivityImpl.this,f, new FileChooserResult(){
-									public void onSelected(File f) {
-										et_.setText(f.toString());
-									}
-									public void onSelectCancelled() {/*No-op*/}
-								});
-						}
-					});
+				dialogView_.findViewById(R.id.selectFile).setOnClickListener(v -> {
+                    File f=new File(et_.getText().toString());
+                    if ((!f.exists())|f.isFile())f = f.getParentFile();
+                    ServerInfoActivityBase1PermissionsDispatcher.startChooseFileForOpenWithCheck(ServerInfoActivityImpl.this,f, new FileChooserResult(){
+                            public void onSelected(File f) {
+                                et_.setText(f.toString());
+                            }
+                            public void onSelectCancelled() {/*No-op*/}
+                        });
+                });
 				new AlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
 					.setTitle(R.string.export_typepath_simple)
 					.setView(dialogView_)
-					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
-						public void onClick(DialogInterface di, int w) {
-							ServerInfoActivityImplPermissionsDispatcher.exportCurrentServerStatusWithCheck(ServerInfoActivityImpl.this,et_.getText().toString());
-						}
-					})
+					.setPositiveButton(android.R.string.ok, (di, w) -> ServerInfoActivityImplPermissionsDispatcher.exportCurrentServerStatusWithCheck(ServerInfoActivityImpl.this,et_.getText().toString()))
 					.show();
 				break;
 			case 2://Update
@@ -431,14 +421,14 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				AlertDialog.Builder ab=new AlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this));
 				LinearLayout ll;
 				boolean dark;
-				dark = pref.getBoolean("colorFormattedText", false) ?pref.getBoolean("darkBackgroundForServerName", false): false;
+				dark = pref.getBoolean("colorFormattedText", false) && pref.getBoolean("darkBackgroundForServerName", false);
 				{
 					if (dark) {
 						ll = (LinearLayout)TheApplication.instance.getLayoutInflater().inflate(R.layout.server_info_show_title_dark, null);
 					} else {
 						ll = (LinearLayout)TheApplication.instance.getLayoutInflater().inflate(R.layout.server_info_show_title, null);
 					}
-					ll.setBackgroundDrawable(slsl.load());
+					ViewCompat.setBackground(ll,slsl.load());
 				}
 				TextView serverNameView=(TextView)ll.findViewById(R.id.serverName);
 				serverNameView.setText(getTitle());
@@ -479,6 +469,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 	@Override
 	public void setTitle(CharSequence title) {
 		if (title == null) {
+			Log.d("ServerInfoActivity","title == null");
 			if (pref.getBoolean("serverListColorFormattedText", false)) {
 				SpannableStringBuilder ssb=new SpannableStringBuilder();
 				ssb.append(localStat.toString());
@@ -488,10 +479,21 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				super.setTitle(localStat.toString());
 			}
 		} else {
+			Log.d("ServerInfoActivity","title != null");
+			Log.d("ServerInfoActivity","length: "+title.length());
+			Log.d("ServerInfoActivity",title.toString());
 			if (pref.getBoolean("serverListColorFormattedText", false)) {
-				super.setTitle(Utils.parseMinecraftFormattingCode(title.toString(),slsl.getTextColor()));
+				if(title instanceof String){
+					super.setTitle(Utils.parseMinecraftFormattingCode(title.toString()));
+				}else{
+					super.setTitle(title);
+				}
 			} else {
-				super.setTitle(Utils.deleteDecorations(title.toString()));
+				if(title instanceof String){
+					super.setTitle(Utils.deleteDecorations(title.toString()));
+				}else{
+					super.setTitle(title.toString());
+				}
 			}
 		}
 	}
@@ -499,11 +501,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		new Thread(){
-			public void run() {
-				pref.edit().putString("pcuseruuids", new Gson().toJson(TheApplication.instance.pcUserUUIDs)).commit();
-			}
-		}.start();
+		new Thread(() -> pref.edit().putString("pcuseruuids", new Gson().toJson(TheApplication.instance.pcUserUUIDs)).commit()).start();
 		if (serverIconBmp != null)serverIconBmp.recycle();
 	}
 
@@ -577,12 +575,10 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 					public void onPostExecute(final Bitmap bmp) {
 						skinFaceImages.add(bmp);
 						faces.put(player, bmp);
-						runOnUiThread(new Runnable(){
-								public void run() {
-									notifyItemChanged(indexOf(player));
-									Log.d("face", "ok:" + player);
-								}
-							});
+						runOnUiThread(() -> {
+                            notifyItemChanged(indexOf(player));
+                            Log.d("face", "ok:" + player);
+                        });
 					}
 				}.execute(bmp);
 			}
@@ -596,10 +592,11 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 
 		@Override
 		public FindableViewHolder onCreateViewHolder(ViewGroup parent, int type) {
-			if(type==0)
-				return new VH(getLayoutInflater().inflate(R.layout.void_view,null));
-			else
-				return new VH(getLayoutInflater().inflate(R.layout.mod_info_content, parent, false));
+			switch(type){
+				case  0:return new VH(getLayoutInflater().inflate(R.layout.void_view,parent,false));
+				case  1:return new VH(getLayoutInflater().inflate(R.layout.mod_info_content, parent, false));
+				default:return null;
+			}
 		}
 
 		@Override
@@ -617,8 +614,8 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				Reply19.ModListContent mlc=(Reply19.ModListContent)o;
 				((TextView)v.findViewById(R.id.modName)).setText(mlc.modid);
 				((TextView)v.findViewById(R.id.modVersion)).setText(mlc.version);
-			} else if(o instanceof RawJsonReply){
-				JsonObject mlc=((JsonElement)((RawJsonReply)o).json).getAsJsonObject();
+			} else if(o instanceof WisecraftJsonObject){
+				WisecraftJsonObject mlc=(WisecraftJsonObject)o;
 				((TextView)v.findViewById(R.id.modName)).setText(mlc.get("modid").getAsString());
 				((TextView)v.findViewById(R.id.modVersion)).setText(mlc.get("version").getAsString());
 			}
@@ -639,7 +636,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 		boolean pcMode;
 		
 		public PlayerNamesListAdapter(){
-			super(new ArrayList<String>());
+			super(new ArrayList<>());
 		}
 
 		@Override
@@ -663,13 +660,11 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				TypedArray ta=obtainStyledAttributes(new int[]{R.attr.selectableItemBackground});
 				parent.itemView.setBackground(ta.getDrawable(0));
 				ta.recycle();
-				Utils.applyHandlersForViewTree(parent.itemView,new View.OnClickListener(){
-						public void onClick(View v){
-							MCPlayerInfoDialog dialog=new MCPlayerInfoDialog(ServerInfoActivityImpl.this);
-							dialog.setPlayer(name);
-							dialog.show();
-						}
-					},null);
+				Utils.applyHandlersForViewTree(parent.itemView, v -> {
+                    MCPlayerInfoDialog dialog=new MCPlayerInfoDialog(ServerInfoActivityImpl.this);
+                    dialog.setPlayer(name);
+                    dialog.show();
+                },null);
 			}else{
 				parent.itemView.setBackground(null);
 				Utils.applyHandlersForViewTree(parent.itemView,null,null);
@@ -780,12 +775,11 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 					}
 					player.setPcMode(true);
 				} else if (resp instanceof RawJsonReply) {
-					JsonObject rep=((RawJsonReply)resp).json;
+					WisecraftJsonObject rep=((RawJsonReply)resp).json;
 					if (rep.has("players")) {
-						if (rep.get("players").getAsJsonObject().has("sample")) {
+						if (rep.get("players").has("sample")) {
 							final ArrayList<String> sort=new ArrayList<>();
-							for (JsonElement je:rep.get("players").getAsJsonObject().get("sample").getAsJsonArray()) {
-								JsonObject o=je.getAsJsonObject();
+							for (WisecraftJsonObject o:rep.get("players").get("sample")) {
 								sort.add(o.get("name").getAsString());
 								TheApplication.instance.pcUserUUIDs.put(o.get("name").getAsString(), o.get("id").getAsString());
 							}
@@ -890,82 +884,79 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				if (resp instanceof Reply) {
 					Reply rep=(Reply)resp;
 					if (pref.getBoolean("serverListColorFormattedText", false)) {
-						serverNameStr = Utils.parseMinecraftFormattingCode(rep.description, getParentActivity().slsl.getTextColor());
+						serverNameStr = Utils.parseMinecraftFormattingCode(rep.description);
 					} else {
 						serverNameStr = Utils.deleteDecorations(rep.description);
 					}
 
 					infos.clear();
 					List<Map.Entry<String,String>> data=new ArrayList<>();
-					data.add(new KVP<String,String>(getString(R.string.pc_maxPlayers), rep.players.max + ""));
-					data.add(new KVP<String,String>(getString(R.string.pc_nowPlayers), rep.players.online + ""));
-					data.add(new KVP<String,String>(getString(R.string.pc_softwareVersion), rep.version.name));
-					data.add(new KVP<String,String>(getString(R.string.pc_protocolVersion), rep.version.protocol + ""));
+					data.add(new KVP<>(getString(R.string.pc_maxPlayers), rep.players.max + ""));
+					data.add(new KVP<>(getString(R.string.pc_nowPlayers), rep.players.online + ""));
+					data.add(new KVP<>(getString(R.string.pc_softwareVersion), rep.version.name));
+					data.add(new KVP<>(getString(R.string.pc_protocolVersion), rep.version.protocol + ""));
 					infos.addAll(data);
 
 					if (rep.favicon != null) {
-						byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
+						byte[] image=WisecraftBase64.decode(rep.favicon.split("\\,")[1], WisecraftBase64.NO_WRAP);
 						serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
-						serverIconObj = new BitmapDrawable(serverIconBmp);
+						serverIconObj = new BitmapDrawable(getResources(),serverIconBmp);
 					} else {
 						serverIconObj = null;
 					}
 				} else if (resp instanceof Reply19) {
 					Reply19 rep=(Reply19)resp;
 					if (pref.getBoolean("serverListColorFormattedText", false)) {
-						serverNameStr = Utils.parseMinecraftFormattingCode(rep.description.text, getParentActivity().slsl.getTextColor());
+						serverNameStr = Utils.parseMinecraftFormattingCode(rep.description.text);
 					} else {
 						serverNameStr = Utils.deleteDecorations(rep.description.text);
 					}
 
 					infos.clear();
 					List<Map.Entry<String,String>> data=new ArrayList<>();
-					data.add(new KVP<String,String>(getString(R.string.pc_maxPlayers), rep.players.max + ""));
-					data.add(new KVP<String,String>(getString(R.string.pc_nowPlayers), rep.players.online + ""));
-					data.add(new KVP<String,String>(getString(R.string.pc_softwareVersion), rep.version.name));
-					data.add(new KVP<String,String>(getString(R.string.pc_protocolVersion), rep.version.protocol + ""));
+					data.add(new KVP<>(getString(R.string.pc_maxPlayers), rep.players.max + ""));
+					data.add(new KVP<>(getString(R.string.pc_nowPlayers), rep.players.online + ""));
+					data.add(new KVP<>(getString(R.string.pc_softwareVersion), rep.version.name));
+					data.add(new KVP<>(getString(R.string.pc_protocolVersion), rep.version.protocol + ""));
 					infos.addAll(data);
 
 					if (rep.favicon != null) {
-						byte[] image=Base64.decode(rep.favicon.split("\\,")[1], Base64.NO_WRAP);
+						byte[] image=WisecraftBase64.decode(rep.favicon.split("\\,")[1], WisecraftBase64.NO_WRAP);
 						serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
-						serverIconObj = new BitmapDrawable(serverIconBmp);
+						serverIconObj = new BitmapDrawable(getResources(),serverIconBmp);
 					} else {
 						serverIconObj = null;
 					}
 				} else if (resp instanceof RawJsonReply) {
-					JsonObject rep=((RawJsonReply)resp).json;
-					String text;
-					if (rep.get("description").isJsonObject()) {
-						text = rep.get("description").getAsJsonObject().get("text").getAsString();
-					} else {
-						text = rep.get("description").getAsString();
-					}
+					WisecraftJsonObject rep=((RawJsonReply)resp).json;
+					CharSequence text;
+					text=Utils.parseMinecraftDescriptionJson(rep.get("description"));
 					if (pref.getBoolean("serverListColorFormattedText", false)) {
-						serverNameStr = Utils.parseMinecraftFormattingCode(text, getParentActivity().slsl.getTextColor());
+						serverNameStr = text;
 					} else {
-						serverNameStr = Utils.deleteDecorations(text);
+						serverNameStr = text.toString();
 					}
-
-					JsonObject players=rep.get("players").getAsJsonObject();
-					JsonObject version=rep.get("version").getAsJsonObject();
+					
+					WisecraftJsonObject players=rep.get("players");
+					WisecraftJsonObject version=rep.get("version");
 
 					infos.clear();
 					List<Map.Entry<String,String>> data=new ArrayList<>();
-					data.add(new KVP<String,String>(getString(R.string.pc_maxPlayers), players.get("max").getAsInt() + ""));
-					data.add(new KVP<String,String>(getString(R.string.pc_nowPlayers), players.get("online").getAsInt() + ""));
-					data.add(new KVP<String,String>(getString(R.string.pc_softwareVersion), version.get("name").getAsString()));
-					data.add(new KVP<String,String>(getString(R.string.pc_protocolVersion), version.get("protocol").getAsInt() + ""));
+					data.add(new KVP<>(getString(R.string.pc_maxPlayers), players.get("max").getAsInt() + ""));
+					data.add(new KVP<>(getString(R.string.pc_nowPlayers), players.get("online").getAsInt() + ""));
+					data.add(new KVP<>(getString(R.string.pc_softwareVersion), version.get("name").getAsString()));
+					data.add(new KVP<>(getString(R.string.pc_protocolVersion), version.get("protocol").getAsInt() + ""));
 					infos.addAll(data);
 
 					if (rep.has("favicon")) {
-						byte[] image=Base64.decode(rep.get("favicon").getAsString().split("\\,")[1], Base64.NO_WRAP);
+						byte[] image=WisecraftBase64.decode(rep.get("favicon").getAsString().split("\\,")[1], WisecraftBase64.NO_WRAP);
 						serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
-						serverIconObj = new BitmapDrawable(serverIconBmp);
+						serverIconObj = new BitmapDrawable(getResources(),serverIconBmp);
 					} else {
 						serverIconObj = null;
 					}
 				}
+				serverName.setTextColor(getParentActivity().slsl.getTextColor());
 				serverName.setText(serverNameStr);
 				serverIcon.setImageDrawable(serverIconObj);
 			} catch (Throwable e) {
@@ -977,7 +968,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container) {
 			View lv= inflater.inflate(R.layout.data_tab_pc, container);
-			lv.findViewById(R.id.serverImageAndName).setBackgroundDrawable(getParentActivity().slsl.load());
+			ViewCompat.setBackground(lv.findViewById(R.id.serverImageAndName),getParentActivity().slsl.load());
 			((RecyclerView)lv.findViewById(R.id.data)).addItemDecoration(new DividerItemDecoration(getContext(),LinearLayoutManager.VERTICAL));
 			return lv;
 		}
@@ -994,7 +985,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				lv.setHasFixedSize(false);
 
 
-				pluginNames = new SimpleRecyclerAdapter<String>(getParentActivity());
+				pluginNames = new SimpleRecyclerAdapter<>(getParentActivity());
 				pluginNames.setHasStableIds(false);
 				lv.setAdapter(pluginNames);
 				ServerStatus localStat=getParentActivity().localStat;
@@ -1009,7 +1000,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 					if (fs.getDataAsMap().containsKey("plugins")) {
 						String[] data=fs.getDataAsMap().get("plugins").split("\\: ");
 						if (data.length >= 2) {
-							ArrayList<String> plugins=new ArrayList<String>(Arrays.<String>asList(data[1].split("\\; ")));
+							ArrayList<String> plugins= new ArrayList<>(Arrays.<String>asList(data[1].split("\\; ")));
 							if (pref.getBoolean("sortPluginNames", false))
 								Collections.sort(plugins);
 							pluginNames.addAll(plugins);
@@ -1061,10 +1052,10 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 						modLoaderTypeName = rep.modinfo.type;
 					}
 				} else if (resp instanceof RawJsonReply) {
-					JsonObject rep=((RawJsonReply)resp).json;
+					WisecraftJsonObject rep=((RawJsonReply)resp).json;
 					if (rep.has("modinfo")) {
-						JsonObject modInfo=rep.get("modinfo").getAsJsonObject();
-						modInfos.addAll(Utils.iterableToCollection(modInfo.get("modList").getAsJsonArray()));
+						WisecraftJsonObject modInfo=rep.get("modinfo");
+						modInfos.addAll(Utils.iterableToCollection(modInfo.get("modList")));
 						modLoaderTypeName = modInfo.get("type").getAsString();
 					}
 				}
@@ -1102,16 +1093,16 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 				lv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
 				lv.setHasFixedSize(false);
 
-				KVRecyclerAdapter<String,String> adap=new KVRecyclerAdapter<String,String>(getActivity());
+				KVRecyclerAdapter<String,String> adap= new KVRecyclerAdapter<>(getActivity());
 				adap.setHasStableIds(false);
 				lv.setAdapter(adap);
 				List<Map.Entry<String,String>> otm=new ArrayList<>();
 				String[] values=result.getRaw().split("\\;");
-				otm.add(new KVP<String,String>(getString(R.string.ucp_serverName),      values[1]));
-				otm.add(new KVP<String,String>(getString(R.string.ucp_protocolVersion), values[2]));
-				otm.add(new KVP<String,String>(getString(R.string.ucp_mcpeVersion),     values[3]));
-				otm.add(new KVP<String,String>(getString(R.string.ucp_nowPlayers),      values[4]));
-				otm.add(new KVP<String,String>(getString(R.string.ucp_maxPlayers),      values[5]));
+				otm.add(new KVP<>(getString(R.string.ucp_serverName), values[1]));
+				otm.add(new KVP<>(getString(R.string.ucp_protocolVersion), values[2]));
+				otm.add(new KVP<>(getString(R.string.ucp_mcpeVersion), values[3]));
+				otm.add(new KVP<>(getString(R.string.ucp_nowPlayers), values[4]));
+				otm.add(new KVP<>(getString(R.string.ucp_maxPlayers), values[5]));
 				adap.addAll(otm);
 			} catch (Throwable e) {
 				WisecraftError.report("ServerInfoActivity.UcpDetailsFragment",e);
@@ -1180,6 +1171,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 			}
 		}
 	}
+	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 	class ColorUpdateCallback extends UpdateCallback{
 		int r,g,b;
 		public ColorUpdateCallback(){

@@ -2,12 +2,14 @@ package com.nao20010128nao.Wisecraft.misc.pinger.pc;
 
 import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
+import com.nao20010128nao.Wisecraft.misc.json.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
+
 import java.io.*;
 
 //For ProGuarded code
 public class RawJsonReply implements ServerPingResult,PCQueryResult {
-	public final JsonObject json;
+	public final WisecraftJsonObject json;
 	
 	public RawJsonReply(String s){
 		this(new JsonParser().parse(s));
@@ -18,7 +20,11 @@ public class RawJsonReply implements ServerPingResult,PCQueryResult {
 	}
 	
 	public RawJsonReply(JsonElement s){
-		json=s.getAsJsonObject();
+		this(new GsonWJO(s));
+	}
+	
+	public RawJsonReply(WisecraftJsonObject s){
+		json=s;
 	}
 	
 	private String raw;

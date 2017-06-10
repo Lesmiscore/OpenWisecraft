@@ -13,10 +13,10 @@ public class RconModule_Factories {
 		return new byte[size];
 	}
 	public static <T> ArrayList<T> arrayList(){
-		return new ArrayList<T>();
+		return new ArrayList<>();
 	}
 	public static <T> ArrayList<T> arrayList(List<T> list){
-		return new ArrayList<T>(list);
+		return new ArrayList<>(list);
 	}
 	public final static class FreeSizeNullLenList<T> implements List<T> {
 		static Map<Integer,FreeSizeNullLenList> cache=new HashMap<>();

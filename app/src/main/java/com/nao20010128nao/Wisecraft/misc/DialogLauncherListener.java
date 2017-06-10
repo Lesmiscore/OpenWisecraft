@@ -2,10 +2,8 @@ package com.nao20010128nao.Wisecraft.misc;
 
 import android.app.*;
 import android.content.*;
-import android.support.v7.app.*;
-import android.view.*;
-
 import android.support.v7.app.AlertDialog;
+import android.view.*;
 
 public class DialogLauncherListener<T> implements DialogInterface.OnClickListener,View.OnClickListener,Treatment<T>
 {

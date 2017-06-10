@@ -1,18 +1,20 @@
 package com.nao20010128nao.Wisecraft.misc.provider;
+
 import android.text.*;
 import android.util.*;
+import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+import com.nao20010128nao.Wisecraft.misc.pinger.*;
+
 import java.io.*;
 import java.net.*;
 import java.util.*;
-import com.nao20010128nao.Wisecraft.misc.pinger.*;
-import com.nao20010128nao.Wisecraft.*;
 
 public class HttpServerPingProvider implements ServerPingProvider
 {
     String head;
     boolean offline;
-    Queue<Map.Entry<Server,PingHandler>> queue=new LinkedList<>();
+    Queue<Map.Entry<Server,PingHandler>> queue=Factories.newDefaultQueue();
 	Thread pingThread=new PingThread();
     
     public HttpServerPingProvider(String host){
@@ -28,7 +30,8 @@ public class HttpServerPingProvider implements ServerPingProvider
     public void putInQueue(Server server, PingHandler handler) {
         Utils.requireNonNull(server);
         Utils.requireNonNull(handler);
-        queue.add(new KVP<Server,PingHandler>(server, handler));
+		Utils.prepareLooper();
+        queue.add(new KVP<>(server, handler));
         if (!pingThread.isAlive()) {
             pingThread = new PingThread();
             pingThread.start();
@@ -47,7 +50,11 @@ public class HttpServerPingProvider implements ServerPingProvider
     public void clearQueue() {
         queue.clear();
     }
-
+	@Override
+	public void clearAndStop() {
+		clearQueue();
+		stop();
+	}
     @Override
     public void offline() {
         offline=true;

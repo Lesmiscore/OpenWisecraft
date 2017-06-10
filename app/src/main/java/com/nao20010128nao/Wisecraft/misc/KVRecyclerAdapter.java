@@ -3,9 +3,9 @@ package com.nao20010128nao.Wisecraft.misc;
 import android.content.*;
 import android.view.*;
 import android.widget.*;
-import java.util.*;
+import com.nao20010128nao.Wisecraft.*;
 
-import com.nao20010128nao.Wisecraft.R;
+import java.util.*;
 
 public class KVRecyclerAdapter<K,V> extends ListRecyclerViewAdapter<KVRecyclerAdapter.KVVH,Map.Entry<K,V>> 
 {
@@ -31,10 +31,10 @@ public class KVRecyclerAdapter<K,V> extends ListRecyclerViewAdapter<KVRecyclerAd
 			super(v);
 		}
 		public TextView getK(){
-			return (TextView)findViewById(R.id.k);
+			return findTypedViewById(R.id.k);
 		}
 		public TextView getV(){
-			return (TextView)findViewById(R.id.v);
+			return findTypedViewById(R.id.v);
 		}
 	}
 }

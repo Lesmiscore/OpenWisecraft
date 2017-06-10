@@ -1,3 +1,5 @@
+-dontoptimize
+
 -keepnames public !abstract class * extends android.app.Activity
 -keepnames public !abstract class * extends android.app.Service
 -keepnames public !abstract class * extends android.content.BroadcastReceiver
@@ -25,9 +27,9 @@
 -keep class com.google.gson.stream.** { *; }
 -keep class com.google.gson.examples.android.model.** { *; }
 -dontwarn org.apache.**
--dontwarn android.support.v4.app.**
 -keep class uk.co.chrisjenx.calligraphy.** { *; }
 -keep class android.support.** { *; }
+-keep class android.support.v4.os.CancellationSignal { *; }
 
 -keep class com.firebase.** { *; }
 -keepnames class org.apache.** { *; }
@@ -47,13 +49,11 @@
 -keepclassmembers class * implements com.nao20010128nao.Wisecraft.misc.ShouldBeKept2
 -keepclassmembers @com.nao20010128nao.Wisecraft.misc.ShouldBeKept class *
 
--keepclassmembers class * extends java.lang.Enum {
-    <fields>;
-    public static **[] values();
-    public static ** valueOf(java.lang.String);
-}
+-keepclassmembers public enum * { *; }
 
 -repackageclasses wisecraft
 
 -allowaccessmodification
 -optimizationpasses 10
+
+-useuniqueclassmembernames

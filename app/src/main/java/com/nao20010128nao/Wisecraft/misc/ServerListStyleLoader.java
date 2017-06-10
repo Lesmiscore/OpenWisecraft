@@ -6,12 +6,10 @@ import android.graphics.drawable.*;
 import android.preference.*;
 import android.support.v4.content.*;
 import android.support.v7.graphics.*;
-import android.util.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.activity.*;
-import java.io.*;
 
-import com.nao20010128nao.Wisecraft.R;
+import java.io.*;
 
 public class ServerListStyleLoader {
 	public static final int BACKGROUND_WHITE=0;
@@ -55,7 +53,7 @@ public class ServerListStyleLoader {
 			case BACKGROUND_BLACK:
 				return new ColorDrawable(Color.BLACK);
 			case BACKGROUND_DIRT:
-				BitmapDrawable bd=(BitmapDrawable)ctx.getResources().getDrawable(R.drawable.soil);
+				BitmapDrawable bd=(BitmapDrawable)ContextCompat.getDrawable(ctx,R.drawable.soil);
 				bd.setTargetDensity(ctx.getResources().getDisplayMetrics());
 				bd.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
 				return bd;
@@ -85,7 +83,7 @@ public class ServerListStyleLoader {
 				Bitmap bmp=null;
 				try{
 					bmp=getImageBgBitmap();
-					Palette palette=Palette.generate(bmp);
+					Palette palette=new Palette.Builder(bmp).generate();
 					return ServerInfoActivity.darker(palette.getDarkVibrantColor(Color.BLACK));
 				}finally{
 					if(bmp!=null)bmp.recycle();
@@ -126,7 +124,7 @@ public class ServerListStyleLoader {
 	public void setImageBg(Bitmap bmp){
 		ByteArrayOutputStream baos=new ByteArrayOutputStream();
 		bmp.compress(Bitmap.CompressFormat.PNG,100,baos);
-		String encoded=Base64.encodeToString(baos.toByteArray(),ServerInfoActivity.BASE64_FLAGS);
+		String encoded=WisecraftBase64.encodeToString(baos.toByteArray(),ServerInfoActivity.BASE64_FLAGS);
 		pref.edit()
 			.putInt("serverListBgId",BACKGROUND_IMAGE)
 			.putString("serverListBgImg",encoded)
@@ -167,7 +165,7 @@ public class ServerListStyleLoader {
 	}
 	
 	public Bitmap getImageBgBitmap(){
-		byte[] data=Base64.decode(pref.getString("serverListBgImg",""),ServerInfoActivity.BASE64_FLAGS);
+		byte[] data=WisecraftBase64.decode(pref.getString("serverListBgImg",""),ServerInfoActivity.BASE64_FLAGS);
 		Bitmap bmp=BitmapFactory.decodeByteArray(data,0,data.length);
 		return bmp;
 	}

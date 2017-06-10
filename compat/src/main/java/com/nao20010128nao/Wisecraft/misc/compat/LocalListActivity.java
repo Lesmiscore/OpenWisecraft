@@ -1,10 +1,8 @@
 package com.nao20010128nao.Wisecraft.misc.compat;
 
+import android.os.*;
+import android.view.*;
 import android.widget.*;
-
-import android.os.Bundle;
-import android.os.Handler;
-import android.view.View;
 
 public class LocalListActivity extends SimpleCompatActivity {
     protected ListAdapter mAdapter;
@@ -92,10 +90,5 @@ public class LocalListActivity extends SimpleCompatActivity {
 
     }
 
-    private AdapterView.OnItemClickListener mOnClickListener = new AdapterView.OnItemClickListener() {
-        public void onItemClick(AdapterView<?> parent, View v, int position, long id)
-        {
-            onListItemClick((ListView)parent, v, position, id);
-        }
-    };
+    private AdapterView.OnItemClickListener mOnClickListener = (parent, v, position, id) -> onListItemClick((ListView)parent, v, position, id);
 }

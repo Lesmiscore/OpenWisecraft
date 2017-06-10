@@ -1,20 +1,18 @@
 package com.nao20010128nao.Wisecraft.activity;
+
 import android.app.*;
 import android.content.*;
 import android.os.*;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.*;
-import android.view.*;
-import android.view.View.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.services.*;
+
 import java.io.*;
 import java.lang.reflect.*;
 import java.net.*;
-
-import android.support.v7.app.AlertDialog;
-import com.nao20010128nao.Wisecraft.R;
 
 abstract class ProxyActivityImpl extends AppCompatActivity {
 	public static ServiceController cont;
@@ -41,12 +39,10 @@ abstract class ProxyActivityImpl extends AppCompatActivity {
 		serverCon = (TextView)findViewById(R.id.serverCon);
 		stop = (Button)findViewById(R.id.stop);
 		
-		stop.setOnClickListener(new OnClickListener(){
-				public void onClick(View a) {
-					if(cont!=null)cont.stopService();
-					finish();
-				}
-			});
+		stop.setOnClickListener(a -> {
+            if(cont!=null)cont.stopService();
+            finish();
+        });
 			
 		serverCon.setText("localhost:64321");
 		
@@ -57,11 +53,7 @@ abstract class ProxyActivityImpl extends AppCompatActivity {
 					.setMessage(R.string.mtlIsAlreadyRunning)
 					.setCancelable(false)
 					.setTitle(R.string.error)
-					.setPositiveButton(android.R.string.ok, new AlertDialog.OnClickListener(){
-						public void onClick(DialogInterface di, int w) {
-							finish();
-						}
-					})
+					.setPositiveButton(android.R.string.ok, (di, w) -> finish())
 					.show();
 				return;
 			}
@@ -76,35 +68,18 @@ abstract class ProxyActivityImpl extends AppCompatActivity {
 				finish();
 				return;
 			}
-			cont.getServer(new ServiceController$GetServerResult(){
-				public void onResult(final Server s){
-					runOnUiThread(new Runnable(){
-						public void run(){
-							serverIp.setText(s.toString());
-						}
-					});
-				}
-			});
+			cont.getServer(s -> runOnUiThread(() -> serverIp.setText(s.toString())));
 		}else{
 			finish();
-			return;
-		}
+        }
 	}
 
 	public void dialog1() {
 		new AlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
 			.setMessage(R.string.mtl_attention_1)
 			.setCancelable(false)
-			.setPositiveButton(R.string.next, new AlertDialog.OnClickListener(){
-				public void onClick(DialogInterface di, int w) {
-					dialog2();
-				}
-			})
-			.setNegativeButton(R.string.close, new AlertDialog.OnClickListener(){
-				public void onClick(DialogInterface di, int w) {
-					finish();
-				}
-			})
+			.setPositiveButton(R.string.next, (di, w) -> dialog2())
+			.setNegativeButton(R.string.close, (di, w) -> finish())
 			.setTitle("1/2")
 			.show();
 	}
@@ -113,16 +88,8 @@ abstract class ProxyActivityImpl extends AppCompatActivity {
 		new AlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
 			.setMessage(R.string.mtl_attention_2)
 			.setCancelable(false)
-			.setPositiveButton(R.string.next, new AlertDialog.OnClickListener(){
-				public void onClick(DialogInterface di, int w) {
-					start();
-				}
-			})
-			.setNegativeButton(R.string.close, new AlertDialog.OnClickListener(){
-				public void onClick(DialogInterface di, int w) {
-					finish();
-				}
-			})
+			.setPositiveButton(R.string.next, (di, w) -> start())
+			.setNegativeButton(R.string.close, (di, w) -> finish())
 			.setTitle("2/2")
 			.show();
 	}
@@ -161,40 +128,36 @@ abstract class ProxyActivityImpl extends AppCompatActivity {
 			port=p;
 		}
 		public void stopService(){
-			new Thread(){
-				public void run(){
-					try {
-						DatagramPacket dp=new DatagramPacket(new byte[]{0}, 0, 1);
-						dp.setAddress(InetAddress.getLocalHost());
-						dp.setPort(port);
-						sock.send(dp);
-					} catch (IOException e) {}
-				}
-			}.start();
+			new Thread(() -> {
+                try {
+                    DatagramPacket dp=new DatagramPacket(new byte[]{0}, 0, 1);
+                    dp.setAddress(InetAddress.getLocalHost());
+                    dp.setPort(port);
+                    sock.send(dp);
+                } catch (IOException e) {}
+            }).start();
 		}
 		public void getServer(final ServiceController$GetServerResult result){
-			new Thread(){
-				public void run(){
-					try {
-						DatagramPacket dp=new DatagramPacket(new byte[]{1}, 0, 1);
-						dp.setAddress(InetAddress.getLocalHost());
-						dp.setPort(port);
-						sock.send(dp);
-						dp=new DatagramPacket(new byte[1000],0,1000);
-						sock.receive(dp);
-						Server s=new Server();
-						DataInputStream dis=new DataInputStream(new ByteArrayInputStream(dp.getData(),0,dp.getLength()));
-						s.ip=dis.readUTF();
-						s.port=dis.readInt();
-						result.onResult(s);
-					} catch (IOException e) {}
-				}
-			}.start();
+			new Thread(() -> {
+                try {
+                    DatagramPacket dp=new DatagramPacket(new byte[]{1}, 0, 1);
+                    dp.setAddress(InetAddress.getLocalHost());
+                    dp.setPort(port);
+                    sock.send(dp);
+                    dp=new DatagramPacket(new byte[1000],0,1000);
+                    sock.receive(dp);
+                    Server s=new Server();
+                    DataInputStream dis=new DataInputStream(new ByteArrayInputStream(dp.getData(),0,dp.getLength()));
+                    s.ip=dis.readUTF();
+                    s.port=dis.readInt();
+                    result.onResult(s);
+                } catch (IOException e) {}
+            }).start();
 		}
 	}
 	
-	public static interface ServiceController$GetServerResult{
-		public void onResult(Server s);
+	public interface ServiceController$GetServerResult{
+		void onResult(Server s);
 	}
 }
 public class ProxyActivity extends ProxyActivityImpl{

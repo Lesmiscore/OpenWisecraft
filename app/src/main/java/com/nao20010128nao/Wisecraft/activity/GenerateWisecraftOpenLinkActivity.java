@@ -9,8 +9,6 @@ import android.widget.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 
-import com.nao20010128nao.Wisecraft.R;
-
 public class GenerateWisecraftOpenLinkActivity extends AppCompatActivity {
 	static final String PREFIX="wisecraft://";
 	
@@ -47,31 +45,27 @@ public class GenerateWisecraftOpenLinkActivity extends AppCompatActivity {
 			mode.check(data.getIntExtra("mode",0)==0?R.id.pe:R.id.pc);
 		}
 		
-		generate.setOnClickListener(new View.OnClickListener(){
-				public void onClick(View v){
-					StringBuilder sb=new StringBuilder();
-					sb.append(PREFIX);
-					switch(action.getCheckedRadioButtonId()){
-						case R.id.addServer:sb.append(ADD_SERVER);break;
-						case R.id.serverDetails:sb.append(SERVER_DETAILS);break;
-					}
-					sb.append('/').append(ip.getText()).append('/').append(port.getText()).append('/');
-					switch(mode.getCheckedRadioButtonId()){
-						case R.id.pc:sb.append(PC);break;
-						case R.id.pe:sb.append(PE);break;
-					}
-					result.setVisibility(View.VISIBLE);
-					result.setText(sb);
-					copy.setVisibility(View.VISIBLE);
-				}
-			});
-		copy.setOnClickListener(new View.OnClickListener(){
-				public void onClick(View v){
-					ClipboardManager cm=(ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
-					cm.setText(result.getText().toString());
-					Snackbar.make(copy,R.string.copied,Snackbar.LENGTH_LONG).show();
-				}
-			});
+		generate.setOnClickListener(v -> {
+            StringBuilder sb=new StringBuilder();
+            sb.append(PREFIX);
+            switch(action.getCheckedRadioButtonId()){
+                case R.id.addServer:sb.append(ADD_SERVER);break;
+                case R.id.serverDetails:sb.append(SERVER_DETAILS);break;
+            }
+            sb.append('/').append(ip.getText()).append('/').append(port.getText()).append('/');
+            switch(mode.getCheckedRadioButtonId()){
+                case R.id.pc:sb.append(PC);break;
+                case R.id.pe:sb.append(PE);break;
+            }
+            result.setVisibility(View.VISIBLE);
+            result.setText(sb);
+            copy.setVisibility(View.VISIBLE);
+        });
+		copy.setOnClickListener(v -> {
+            ClipboardManager cm=(ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
+            cm.setText(result.getText().toString());
+            Snackbar.make(copy,R.string.copied,Snackbar.LENGTH_LONG).show();
+        });
 	}
 
 	@Override

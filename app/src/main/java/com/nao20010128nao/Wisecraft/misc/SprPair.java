@@ -1,6 +1,8 @@
 package com.nao20010128nao.Wisecraft.misc;
+
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
+
 import java.io.*;
 
 public class SprPair extends Duo<ServerPingResult,ServerPingResult> implements ServerPingResult {

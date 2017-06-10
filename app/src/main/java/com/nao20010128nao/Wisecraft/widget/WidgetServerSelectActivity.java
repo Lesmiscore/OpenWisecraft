@@ -14,9 +14,8 @@ import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.serverList.*;
-import java.util.*;
 
-import com.nao20010128nao.Wisecraft.R;
+import java.util.*;
 
 abstract class WidgetServerSelectActivityImpl extends AppCompatActivity {
 	RecyclerView rv;
@@ -72,56 +71,50 @@ abstract class WidgetServerSelectActivityImpl extends AppCompatActivity {
 				pe_port.setText("19132");
 				split.setChecked(false);
 
-				split.setOnClickListener(new View.OnClickListener(){
-						public void onClick(View v) {
-							if (split.isChecked()) {
-								//PE->PC
-								peFrame.setVisibility(View.GONE);
-								pcFrame.setVisibility(View.VISIBLE);
-								split.setText(R.string.pc);
-								StringBuilder result=new StringBuilder();
-								result.append(pe_ip.getText());
-								int port=Integer.valueOf(pe_port.getText().toString()).intValue();
-								if (!(port == 25565 | port == 19132))
-									result.append(':').append(pe_port.getText());
-								pc_ip.setText(result);
-							} else {
-								//PC->PE
-								pcFrame.setVisibility(View.GONE);
-								peFrame.setVisibility(View.VISIBLE);
-								split.setText(R.string.pe);
-								Server s=Utils.convertServerObject(Arrays.asList(MslServer.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
-								pe_ip.setText(s.ip);
-								pe_port.setText(s.port + "");
-							}
-						}
-					});
+				split.setOnClickListener(v -> {
+                    if (split.isChecked()) {
+                        //PE->PC
+                        peFrame.setVisibility(View.GONE);
+                        pcFrame.setVisibility(View.VISIBLE);
+                        split.setText(R.string.pc);
+                        StringBuilder result=new StringBuilder();
+                        result.append(pe_ip.getText());
+                        int port=Integer.valueOf(pe_port.getText().toString()).intValue();
+                        if (!(port == 25565 | port == 19132))
+                            result.append(':').append(pe_port.getText());
+                        pc_ip.setText(result);
+                    } else {
+                        //PC->PE
+                        pcFrame.setVisibility(View.GONE);
+                        peFrame.setVisibility(View.VISIBLE);
+                        split.setText(R.string.pe);
+                        Server s=Utils.convertServerObject(Arrays.asList(MslServer.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
+                        pe_ip.setText(s.ip);
+                        pe_port.setText(s.port + "");
+                    }
+                });
 
 				new AlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this)).
 					setView(dialog).
-					setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener(){
-						public void onClick(DialogInterface d, int sel) {
-							Server s;
-							if (split.isChecked()) {
-								s = Utils.convertServerObject(Arrays.asList(MslServer.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
-							} else {
-								s = new Server();
-								s.ip = pe_ip.getText().toString();
-								s.port = Integer.valueOf(pe_port.getText().toString());
-								s.mode = 0;
-							}
-							
-							widgetPref.edit().putString(wid+"",gson.toJson(s)).commit();
-							sendBroadcast(new Intent(WidgetServerSelectActivityImpl.this,PingWidget.PingHandler.class).putExtra("wid",wid));
-							setResult(RESULT_OK,new Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, wid));
-							finish();
-						}
-					}).
-					setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener(){
-						public void onClick(DialogInterface d, int sel) {
+					setPositiveButton(android.R.string.yes, (d, sel) -> {
+                        Server s;
+                        if (split.isChecked()) {
+                            s = Utils.convertServerObject(Arrays.asList(MslServer.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
+                        } else {
+                            s = new Server();
+                            s.ip = pe_ip.getText().toString();
+                            s.port = Integer.valueOf(pe_port.getText().toString());
+                            s.mode = 0;
+                        }
 
-						}
-					}).
+                        widgetPref.edit().putString(wid+"",gson.toJson(s)).commit();
+                        sendBroadcast(new Intent(WidgetServerSelectActivityImpl.this,PingWidget.PingHandler.class).putExtra("wid",wid));
+                        setResult(RESULT_OK,new Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, wid));
+                        finish();
+                    }).
+					setNegativeButton(android.R.string.no, (d, sel) -> {
+
+                    }).
 					show();
 				return true;
 		}

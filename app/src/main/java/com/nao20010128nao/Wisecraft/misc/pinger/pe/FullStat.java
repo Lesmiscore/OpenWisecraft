@@ -1,10 +1,10 @@
 package com.nao20010128nao.Wisecraft.misc.pinger.pe;
 
 import android.annotation.*;
-import com.nao20010128nao.OTC.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
+
 import java.util.*;
 
 public class FullStat implements ServerPingResult,PEPingResult {
@@ -12,7 +12,7 @@ public class FullStat implements ServerPingResult,PEPingResult {
 	static byte SPACE = ' ';
 
 	private List<Map.Entry<String, String>> datas = new ArrayList<>();
-	private Map<String, String> mapDatas = new OrderTrustedMap<>();
+	private Map<String, String> mapDatas = new LinkedHashMap<>();
 	private List<String> playerList = new ArrayList<>();
 	private byte[] raw;
 
@@ -24,7 +24,7 @@ public class FullStat implements ServerPingResult,PEPingResult {
 		byte[] d;
 		int dataEnds = 0;
 		for (int i = 2; i < temp.length; i++) {
-			if ((d = temp[i]).length == 0 ? false : d[0] == 1) {
+			if ((d = temp[i]).length != 0 && d[0] == 1) {
 				dataEnds = i;
 				break;
 			}
@@ -38,11 +38,11 @@ public class FullStat implements ServerPingResult,PEPingResult {
 			String v = new String(temp[i + 1], CompatCharsets.UTF_8).trim();
 			if ("".equals(k))
 				continue;
-			datas.add(new KVP<String,String>(k, v));
+			datas.add(new KVP<>(k, v));
 			mapDatas.put(k,v);
 		}
 
-		playerList = new ArrayList<String>();
+		playerList = new ArrayList<>();
 		for (int i = dataEnds + 2; i < temp.length; i++)
 			playerList.add(new String(temp[i], CompatCharsets.UTF_8).trim());
 	}

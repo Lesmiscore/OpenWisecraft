@@ -1,7 +1,9 @@
 package com.nao20010128nao.Wisecraft.misc.skin_face;
+
 import android.graphics.*;
 import android.util.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -41,9 +43,7 @@ public class ImageLoader
 						}
 						continue;
 					} finally {
-						try {
-							if (is != null)is.close();
-						} catch (IOException e) {}
+						CompatUtils.safeClose(is);
 					}
 					try {
 						dat.getValue().onSuccess(bmp, dat.getKey());

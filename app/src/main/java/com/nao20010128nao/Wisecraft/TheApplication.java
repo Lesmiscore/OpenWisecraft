@@ -1,4 +1,5 @@
 package com.nao20010128nao.Wisecraft;
+
 import android.app.*;
 import android.content.*;
 import android.content.res.*;
@@ -11,23 +12,22 @@ import android.support.design.widget.*;
 import android.support.multidex.*;
 import android.support.v4.graphics.drawable.*;
 import android.support.v7.app.*;
-import android.util.*;
 import android.view.*;
 import com.google.android.gms.tasks.*;
 import com.google.firebase.analytics.*;
 import com.google.firebase.remoteconfig.*;
 import com.google.gson.*;
-import com.google.gson.reflect.*;
 import com.nao20010128nao.Wisecraft.activity.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+import com.nao20010128nao.Wisecraft.misc.collector.*;
 import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
 import com.nao20010128nao.Wisecraft.misc.tfl.*;
 import com.nao20010128nao.Wisecraft.rcon.*;
 import com.nao20010128nao.Wisecraft.services.*;
+import uk.co.chrisjenx.calligraphy.*;
+
 import java.lang.reflect.*;
 import java.util.*;
-import uk.co.chrisjenx.calligraphy.*;
-import com.nao20010128nao.Wisecraft.misc.collector.*;
 
 class TheApplicationImpl extends Application implements  com.nao20010128nao.Wisecraft.rcon.Presenter,
 															com.ipaulpro.afilechooser.Presenter,
@@ -126,7 +126,7 @@ class TheApplicationImpl extends Application implements  com.nao20010128nao.Wise
 		ubuntuFont = TypefaceLoader.newInstance(getAssets(), "Ubuntu-Regular.ttf");
 		mplus1p = TypefaceLoader.newInstance(getAssets(), "Mplus1p-Light.ttf");
 
-		fontFilenames = new HashMap<TypefaceLoader,String>();
+		fontFilenames = new HashMap<>();
 		fontFilenames.put(droidSans, "DroidSans.ttf");
 		fontFilenames.put(latoLight, "lato-light.ttf");
 		fontFilenames.put(icomoon1, "icomoon.ttf");

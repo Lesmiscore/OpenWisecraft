@@ -1,7 +1,7 @@
 package com.nao20010128nao.Wisecraft.misc;
 
 import android.content.*;
-import com.nao20010128nao.OTC.*;
+
 import java.io.*;
 import java.util.*;
 
@@ -10,7 +10,7 @@ public class BinaryPrefImpl implements SharedPreferences {
 	boolean unchanged = false;
 
 	public BinaryPrefImpl() {
-		this(new OrderTrustedMap<String,Object>());
+		this(new LinkedHashMap<>());
 	}
 
 	public BinaryPrefImpl(Map<String, ?> map) {
@@ -288,7 +288,7 @@ public class BinaryPrefImpl implements SharedPreferences {
 			if (o instanceof String) {
 				result.put(ent.getKey(), o);
 			} else if (o instanceof Set<?>) {
-				result.put(ent.getKey(), Collections.unmodifiableSet(new HashSet<String>((Set<String>)o)));
+				result.put(ent.getKey(), Collections.unmodifiableSet(new HashSet<>((Set<String>) o)));
 			} else if (o instanceof Integer) {
 				result.put(ent.getKey(), o);
 			} else if (o instanceof Long) {

@@ -1,10 +1,8 @@
 package com.nao20010128nao.Wisecraft.activity;
+
 import android.content.*;
-import android.graphics.*;
-import android.graphics.drawable.*;
 import android.os.*;
 import android.preference.*;
-import android.support.design.widget.*;
 import android.support.v4.content.*;
 import android.support.v4.view.*;
 import android.support.v7.app.*;
@@ -16,11 +14,10 @@ import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
-import com.nao20010128nao.Wisecraft.misc.provider.*;
+import com.nao20010128nao.Wisecraft.services.*;
+
 import java.lang.ref.*;
 import java.util.*;
-
-import com.nao20010128nao.Wisecraft.R;
 
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 
@@ -31,10 +28,12 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
 	String ip;
 	int mode;
 	View dialog,dialog2;
-	ServerPingProvider spp;
 	SharedPreferences pref;
 	RecyclerView rv;
 	ServerListStyleLoader slsl;
+	ServiceConnection lastConnection;
+	String tag;
+	ServerFinderService.InternalBinder bound;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,96 +57,77 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
 				break;
 		}
 		rv.setAdapter(sl);
-		ip = getIntent().getStringExtra("ip");
-		mode = getIntent().getIntExtra("mode", 0);
-		new AlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
-			.setTitle(R.string.serverFinder)
-			.setView(dialog = getLayoutInflater().inflate(R.layout.server_finder_start, null, false))
-			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
-				public void onClick(DialogInterface di, int w) {
-					String ip=((EditText)dialog.findViewById(R.id.ip)).getText().toString();
-					int startPort=new Integer(((EditText)dialog.findViewById(R.id.startPort)).getText().toString());
-					int endPort=new Integer(((EditText)dialog.findViewById(R.id.endPort)).getText().toString());
-					boolean isPC=((CheckBox)dialog.findViewById(R.id.pc)).isChecked();
-					startFinding(ip, Math.min(startPort,endPort), Math.max(startPort,endPort), isPC);
-				}
-			})
-			.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener(){
-				public void onClick(DialogInterface di, int w) {
-					finish();
-				}
-			})
-			.setOnCancelListener(new DialogInterface.OnCancelListener(){
-				public void onCancel(DialogInterface di) {
-					finish();
-				}
-			})
-			.show();
-		if (ip != null)((EditText)dialog.findViewById(R.id.ip)).setText(ip);
-		((CheckBox)dialog.findViewById(R.id.pc)).setChecked(mode == 0 ?false: true);
+		
+		if(getIntent().hasExtra("tag")){
+			tag=getIntent().getStringExtra("tag");
+			launchService();
+		}else{
+			ip = getIntent().getStringExtra("ip");
+			mode = getIntent().getIntExtra("mode", 0);
+			new AlertDialog.Builder(this,ThemePatcher.getDefaultDialogStyle(this))
+				.setTitle(R.string.serverFinder)
+				.setView(dialog = getLayoutInflater().inflate(R.layout.server_finder_start, null, false))
+				.setPositiveButton(android.R.string.ok, (di, w) -> {
+                    String ip=((EditText)dialog.findViewById(R.id.ip)).getText().toString();
+                    int startPort=Integer.valueOf(((EditText)dialog.findViewById(R.id.startPort)).getText().toString());
+                    int endPort=Integer.valueOf(((EditText)dialog.findViewById(R.id.endPort)).getText().toString());
+                    int mode=((CheckBox)dialog.findViewById(R.id.pc)).isChecked()?1:0;
+                    launchService(ip, Math.min(startPort,endPort), Math.max(startPort,endPort), mode);
+                })
+				.setNegativeButton(android.R.string.cancel, (di, w) -> finish())
+				.setOnCancelListener(di -> finish())
+				.show();
+			if (ip != null)((EditText)dialog.findViewById(R.id.ip)).setText(ip);
+			((CheckBox)dialog.findViewById(R.id.pc)).setChecked(mode != 0);
+		}
 		slsl=(ServerListStyleLoader)getSystemService(ContextWrappingExtender.SERVER_LIST_STYLE_LOADER);
 		
-		findViewById(android.R.id.content).setBackgroundDrawable(slsl.load());
+		ViewCompat.setBackground(findViewById(android.R.id.content),slsl.load());
 	}
-	private void startFinding(final String ip, final int startPort, final int endPort, final boolean isPC) {
-		final PopupWindow pw=new PopupWindow(this);
-		pw.setTouchable(false);
-		pw.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-		pw.setContentView(dialog2 = getLayoutInflater().inflate(R.layout.server_finder_finding, null, false));
-		pw.setWidth(Utils.getScreenWidth(ServerFinderActivityImpl.this));
-		pw.setHeight(getResources().getDimensionPixelSize(R.dimen.server_finder_finding_height));
-
-		ViewCompat.setAlpha(dialog2, 0.7f);
-
-		pw.showAtLocation(getWindow().getDecorView().findViewById(android.R.id.content), Gravity.CENTER, 0, 0);
-		;
-		setTitle(ip+":("+startPort+"~"+endPort+")");
-		new AsyncTask<Void,ServerStatus,Void>(){
-			public Void doInBackground(Void... l) {
-				final int max=endPort - startPort;
-
-				int threads=Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(ServerFinderActivityImpl.this).getString("parallels", "6"));
-				if (isPC) {
-					spp = new PCMultiServerPingProvider(threads);
-				} else {
-					spp = new UnconnectedMultiServerPingProvider(threads);
+	
+	private void launchService(final String ip, final int startPort, final int endPort, final int mode) {
+		bindService(new Intent(this,ServerFinderService.class),new ServiceConnection(){
+				public void onServiceConnected(android.content.ComponentName p1, android.os.IBinder p2){
+					lastConnection=this;
+					tag=(bound=(ServerFinderService.InternalBinder)p2).startExploration(ip,mode,startPort,endPort);
+					startIntervalUpdate();
 				}
 
-				for (int p=startPort;p < endPort;p++) {
-					Server s=new Server();
-					s.ip = ip;
-					s.port = p;
-					s.mode = isPC ?1: 0;
-					spp.putInQueue(s, new ServerPingProvider.PingHandler(){
-							public void onPingArrives(ServerStatus s) {
-								publishProgress(s);
-								update(max);
-							}
-							public void onPingFailed(Server s) {
-								update(max);
-							}
-						});
+				public void onServiceDisconnected(android.content.ComponentName p1){
+					finish();
 				}
-				return null;
-			}
-			public void onProgressUpdate(ServerStatus... s) {
-				sl.addAll(s);
-			}
-			private void update(final int max) {
-				runOnUiThread(new Runnable(){
-						public void run() {
-							((ProgressBar)dialog2.findViewById(R.id.perc)).setMax(max);
-							((ProgressBar)dialog2.findViewById(R.id.perc)).setProgress(((ProgressBar)dialog2.findViewById(R.id.perc)).getProgress() + 1);
-							((TextView)dialog2.findViewById(R.id.status)).setText(((ProgressBar)dialog2.findViewById(R.id.perc)).getProgress() + "/" + max);
-							if (((ProgressBar)dialog2.findViewById(R.id.perc)).getProgress() == max) {
-								pw.dismiss();
-								Snackbar.make(getWindow().getDecorView(), getResources().getString(R.string.foundServersCount).replace("[NUMBER]", "" + sl.getItemCount()), Snackbar.LENGTH_SHORT).show();
-							}
-						}
-					});
-			}
-		}.execute();
+			},Context.BIND_AUTO_CREATE);
 	}
+	
+	private void launchService() {
+		bindService(new Intent(this,ServerFinderService.class),new ServiceConnection(){
+				public void onServiceConnected(android.content.ComponentName p1, android.os.IBinder p2){
+					lastConnection=this;
+					bound=(ServerFinderService.InternalBinder)p2;
+					startIntervalUpdate();
+				}
+
+				public void onServiceDisconnected(android.content.ComponentName p1){
+					finish();
+				}
+			},Context.BIND_AUTO_CREATE);
+	}
+	
+	private void startIntervalUpdate(){
+		ServerFinderService.State state=bound.getState(tag);
+		setTitle(state.ip+":("+state.start+"~"+state.end+")");
+		state.activityClosed=false;
+		updateList();
+	}
+	
+	private void updateList(){
+		ServerFinderService.State state=bound.getState(tag);
+		if(state.finished)return;
+		new Handler().postDelayed(this::updateList,1000);
+		sl.clear();
+		sl.addAll(state.detected.values());
+	}
+	
 	@Override
 	protected void attachBaseContext(Context newBase) {
 		super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
@@ -156,9 +136,11 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		if (spp != null) {
-			spp.clearQueue();
-			spp.stop();
+		if(lastConnection!=null){
+			ServerFinderService.State state=bound.getState(tag);
+			state.activityClosed=true;
+			ServerFinderService.checkDead(tag);
+			unbindService(lastConnection);
 		}
 	}
 
@@ -175,7 +157,7 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
 		ServerFinderActivityImpl sta;
 
 		public ServerList(ServerFinderActivityImpl parent) {
-			super(parent.list = new ArrayList<ServerStatus>());
+			super(parent.list = new ArrayList<>());
 			sta = parent;
 		}
 
@@ -185,7 +167,7 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
 			sta.slsl.applyTextColorTo(viewHolder);
 			ServerStatus s=getItem(offset);
 			
-			final String title;
+			final CharSequence title;
 			if (s.response instanceof Reply19) {//PC 1.9~
 				Reply19 rep=(Reply19)s.response;
 				if (rep.description == null) {
@@ -205,11 +187,7 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
 				if (!rep.json.has("description")) {
 					title = s.toString();
 				} else {
-					if(rep.json.get("description").isJsonObject()){
-						title = rep.json.get("description").getAsJsonObject().get("text").getAsString();
-					}else{
-						title = rep.json.get("description").getAsString();
-					}
+					title=Utils.parseMinecraftDescriptionJson(rep.json.get("description"));
 				}
 			} else if (s.response instanceof UnconnectedPing.UnconnectedPingResult) {
 				title = ((UnconnectedPing.UnconnectedPingResult)s.response).getServerName();
@@ -217,9 +195,17 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
 				title = s.toString();
 			}
 			if (sta.pref.getBoolean("serverListColorFormattedText", false)) {
-				viewHolder.setServerName(parseMinecraftFormattingCode(title,sta.slsl.getTextColor()));
+				if(title instanceof String){
+					viewHolder.setServerName(parseMinecraftFormattingCode(title.toString()));
+				}else{
+					viewHolder.setServerName(title);
+				}
 			} else {
-				viewHolder.setServerName(deleteDecorations(title));
+				if(title instanceof String){
+					viewHolder.setServerName(deleteDecorations(title.toString()));
+				}else{
+					viewHolder.setServerName(title.toString());
+				}
 			}
 			viewHolder
 				.setStatColor(ContextCompat.getColor(sta, R.color.stat_ok))
@@ -230,12 +216,9 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
 				.setServerAddress(s.port + "")
 				.hideServerTitle();
 			applyHandlersForViewTree(viewHolder.itemView,
-				new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
+					v -> {
 						onItemClick(null, v, offset, Long.MIN_VALUE);
 					}
-				}
 			);
 		}
 
@@ -252,21 +235,19 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			final Server s=getItem(position);
-			if (s instanceof ServerStatus) {
+			if (s != null) {
 				new AlertDialog.Builder(ServerFinderActivityImpl.this,ThemePatcher.getDefaultDialogStyle(ServerFinderActivityImpl.this))
 					.setTitle(s.toString())
-					.setItems(R.array.serverFinderMenu, new DialogInterface.OnClickListener(){
-						public void onClick(DialogInterface di, int w) {
-							switch (w) {
-								case 0:
-									if(!ServerListActivityImpl.instance.get().list.contains(s)){
-										ServerListActivityImpl.instance.get().sl.add(s.cloneAsServer());
-										ServerListActivityImpl.instance.get().dryUpdate(s,true);
-									}
-									break;
-							}
-						}
-					})
+					.setItems(R.array.serverFinderMenu, (di, w) -> {
+                        switch (w) {
+                            case 0:
+                                if(!ServerListActivityImpl.instance.get().list.contains(s)){
+                                    ServerListActivityImpl.instance.get().sl.add(s.cloneAsServer());
+                                    ServerListActivityImpl.instance.get().dryUpdate(s,true);
+                                }
+                                break;
+                        }
+                    })
 					.show();
 			}
 		}

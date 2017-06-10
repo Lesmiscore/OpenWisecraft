@@ -12,6 +12,7 @@ import android.text.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
+import com.annimon.stream.Stream;
 import com.astuetz.*;
 import com.mikepenz.materialdrawer.*;
 import com.mikepenz.materialdrawer.model.*;
@@ -82,7 +83,7 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 		psts=(PagerSlidingTabStrip)findViewById(R.id.tabs);
 		UsefulPagerAdapter upa=new UsefulPagerAdapter(this);
 
-		playersList = new AppBaseArrayAdapter<String>(this, android.R.layout.simple_list_item_1, playersListInternal = new ArrayList<>(10));
+		playersList = new AppBaseArrayAdapter<>(this, android.R.layout.simple_list_item_1, playersListInternal = new ArrayList<>(10));
 
 		upa.addTab(ConsoleFragment.class, getResources().getString(R.string.console));
 		upa.addTab(PlayersFragment.class, getResources().getString(R.string.players));
@@ -120,44 +121,34 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 	}
 
 	public void appendIntoConsole(String s) {
-		final ArrayList<String> lines=new ArrayList<String>(Arrays.asList(RconModule_Utils.lines(s)));
-		runOnUiThread(new Runnable(){
-				public void run() {
-					consoleLogs.addAll(lines);
-					if(console!=null)
-						for(String s:lines)
-							console.addView(newTextViewForConsole(s));
-					if(scrollingConsole!=null)
-						if(doAutoScroll())
-							scrollingConsole.fullScroll(ScrollView.FOCUS_DOWN);
-				}
-			});
+		final ArrayList<String> lines= new ArrayList<>(Arrays.asList(RconModule_Utils.lines(s)));
+		runOnUiThread(() -> {
+            consoleLogs.addAll(lines);
+            if(console!=null)
+				Stream.of(lines).map(this::newTextViewForConsole).forEach(console::addView);
+			if(scrollingConsole!=null)
+                if(doAutoScroll())
+                    scrollingConsole.fullScroll(ScrollView.FOCUS_DOWN);
+        });
 		for(String l:lines)
 			Log.d("RCON_CONSOLE_LINE",l);
 	}
 	public void setConsoleLayout(LinearLayout lv) {
 		console = lv;
 		lv.removeAllViews();
-		for (String s:consoleLogs)
-			lv.addView(newTextViewForConsole(s));
+		Stream.of(consoleLogs).map(this::newTextViewForConsole).forEach(lv::addView);
 	}
 	public void setCommandTextBox(EditText et) {
 		command = et;
 	}
 	public void setCommandOk(Button bt) {
 		ok = bt;
-		ok.setOnClickListener(new View.OnClickListener(){
-				public void onClick(View v) {
-					if (rcon != null) {
-						performSend(command.getText().toString());
-						runOnUiThread(new Runnable(){
-							public void run() {
-								command.setText("");
-							}
-						});
-					}
-				}
-			});
+		ok.setOnClickListener(v -> {
+            if (rcon != null) {
+                performSend(command.getText().toString());
+                runOnUiThread(() -> command.setText(""));
+            }
+        });
 	}
 	public void setPlayersListView(ListView lv) {
 		(players = lv).setAdapter(playersList);
@@ -166,11 +157,7 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 		playersCount = tv;
 	}
 	public void setUpdatePlayersButton(ImageButton tv) {
-		(updatePlayers = tv).setOnClickListener(new View.OnClickListener(){
-				public void onClick(View v) {
-					refreshPlayers();
-				}
-			});
+		(updatePlayers = tv).setOnClickListener(v -> refreshPlayers());
 	}
 	public void refreshPlayers() {
 		new AsyncTask<Void,Void,String[]>(){
@@ -191,11 +178,7 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 					playersCount.setText(getResources().getString(R.string.indicatePlayers).replace("[PLAYERS]", s.length + ""));
 			}
 			public void notifyRetriveError(){
-				runOnUiThread(new Runnable(){
-					public void run(){
-						getPresenter().showSelfMessage(RCONActivityBase.this,R.string.rconListError,Presenter.MESSAGE_SHOW_LENGTH_LONG);
-					}
-				});
+				runOnUiThread(() -> getPresenter().showSelfMessage(RCONActivityBase.this,R.string.rconListError,Presenter.MESSAGE_SHOW_LENGTH_LONG));
 			}
 		}.execute();
 	}
@@ -232,20 +215,18 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 	}
 	public void performSend(final String cmd) {
 		if (rcon != null) {
-			new Thread(){
-				public void run() {
-					try {
-						String s=rcon.send(cmd);
-						if (TextUtils.isEmpty(s)) {
-							s = getResources().getString(R.string.emptyResponse);
-						}
-						appendIntoConsole(s);
-					} catch (Throwable e) {
-						DebugWriter.writeToE("RCON",e);
-						appendIntoConsole(getResources().getString(R.string.rconSendError));
-					}
-				}
-			}.start();
+			new Thread(() -> {
+                try {
+                    String s=rcon.send(cmd);
+                    if (TextUtils.isEmpty(s)) {
+                        s = getResources().getString(R.string.emptyResponse);
+                    }
+                    appendIntoConsole(s);
+                } catch (Throwable e) {
+                    DebugWriter.writeToE("RCON",e);
+                    appendIntoConsole(getResources().getString(R.string.rconSendError));
+                }
+            }).start();
 		}
 	}
 	private boolean hasActionBarOnTheme(){
@@ -327,13 +308,11 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 		items.add(new Banlist(this).newDrawerItem());
 		
 		db.withDrawerItems(items).withDrawerWidthRes(R.dimen.drawer_width);
-		db.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener(){
-				public boolean onItemClick(View v,int i,IDrawerItem di){
-					drw.deselect();
-					if(shouldCloseDrawer())drw.closeDrawer();
-					return true;
-				}
-		});
+		db.withOnDrawerItemClickListener((v, i, di) -> {
+            drw.deselect();
+            if(shouldCloseDrawer())drw.closeDrawer();
+            return true;
+        });
 		drw=db.build();
 		drawer=drw.getDrawerLayout();
 	}
@@ -377,16 +356,8 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 			new AlertDialog.Builder(this,getPresenter().getDialogStyleId())
 				.setView(inflateDialogView())
 				.setCancelable(false)
-				.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
-					public void onClick(DialogInterface di, int whi) {
-						tryConnectWithDialog(password.getText().toString());
-					}
-				})
-				.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener(){
-					public void onClick(DialogInterface di, int whi) {
-						exitActivity();
-					}
-				})
+				.setPositiveButton(android.R.string.ok, (di, whi) -> tryConnectWithDialog(password.getText().toString()))
+				.setNegativeButton(android.R.string.cancel, (di, whi) -> exitActivity())
 				.show();
 		}
 		public void tryConnectWithDialog(final String s){

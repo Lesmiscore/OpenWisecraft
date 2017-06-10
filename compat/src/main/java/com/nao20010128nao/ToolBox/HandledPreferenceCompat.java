@@ -13,10 +13,7 @@
  */
 package com.nao20010128nao.ToolBox;
 
-import android.content.Context;
-import android.util.AttributeSet;
-import android.view.View;
-import com.nao20010128nao.ToolBox.NormalButtonPreference;
+import android.view.*;
 
 public class HandledPreferenceCompat
 extends NormalButtonPreferenceCompat {
@@ -40,12 +37,7 @@ extends NormalButtonPreferenceCompat {
     }
     
     public static OnClickListener createListenerFrom(final View.OnClickListener onClickListener) {
-        return new OnClickListener(){
-            @Override
-            public void onClick(String string, String string2, String string3) {
-                onClickListener.onClick(null);
-            }
-        };
+        return (string, string2, string3) -> onClickListener.onClick(null);
     }
 
     private String getKeySafety() {

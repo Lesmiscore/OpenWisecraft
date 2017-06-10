@@ -28,11 +28,7 @@ public class RconModule_Utils{
 		return sb.toString();
 	}
 	public static boolean isNullString(String s) {
-		if (s == null) 
-			return true;
-		if ("".equals(s)) 
-			return true;
-		return false;
+		return TextUtils.isEmpty(s);
 	}
 	public static String[] lines(String s) {
 		try {
@@ -73,19 +69,19 @@ public class RconModule_Utils{
 				os.write(buf, 0, r);
 			}
 		} finally {
-			is.close();
+			CompatUtils.safeClose(is);
 		}
 		return os.toByteArray();
 	}
 	public <T> List<T>  trueValues(List<T> all, boolean[] balues) {
-		List<T> lst=new ArrayList<T>();
+		List<T> lst= new ArrayList<>();
 		for (int i=0;i < balues.length;i++)
 			if (balues[i])
 				lst.add(all.get(i));
 		return lst;
 	}
 	public <T> T[] trueValues(T[] all, boolean[] balues) {
-		List<T> lst=new ArrayList<T>();
+		List<T> lst= new ArrayList<>();
 		for (int i=0;i < balues.length;i++)
 			if (balues[i])
 				lst.add(all[i]);

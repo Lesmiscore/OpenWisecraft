@@ -22,7 +22,7 @@ public class OldServer19 {
 			return false;
 		}
 		OldServer19 os=(OldServer19)o;
-		return os.ip.equals(ip) & os.port == port & (os.isPC ^ isPC) == false;
+		return os.ip.equals(ip) & os.port == port & os.isPC == isPC;
 	}
 
 	@Override

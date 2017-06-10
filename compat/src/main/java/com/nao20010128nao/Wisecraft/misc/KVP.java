@@ -7,6 +7,9 @@ public class KVP<K,V> implements Map.Entry<K,V> {
 		this.k = k;
 		this.v = v;
 	}
+	public KVP(Map.Entry<K,V> kv) {
+		this(kv.getKey(),kv.getValue());
+	}
 	@Override
 	public V setValue(V nV) {
 		V old=v;
@@ -20,5 +23,9 @@ public class KVP<K,V> implements Map.Entry<K,V> {
 	@Override
 	public V getValue() {
 		return v;
+	}
+
+	public static <Kout,Vout> Map.Entry<Kout,Vout> forceCast(Map.Entry in){
+		return new KVP<>((Kout) in.getKey(), (Vout) in.getValue());
 	}
 }

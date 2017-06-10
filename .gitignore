@@ -15,4 +15,6 @@ app/src/debug/
 */BuildConfig.java
 BuildConfig.java
 *BuildConfig*
-
+*.iml
+.idea/
+*/*.iml

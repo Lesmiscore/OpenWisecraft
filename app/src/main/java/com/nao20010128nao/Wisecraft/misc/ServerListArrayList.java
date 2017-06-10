@@ -1,7 +1,8 @@
 package com.nao20010128nao.Wisecraft.misc;
 import java.util.*;
+import java.util.concurrent.*;
 
-public class ServerListArrayList extends ArrayList<Server> implements ServerListProvider
+public class ServerListArrayList extends CopyOnWriteArrayList<Server> implements ServerListProvider
 {
 	public ServerListArrayList(){
 		
@@ -10,15 +11,13 @@ public class ServerListArrayList extends ArrayList<Server> implements ServerList
 		super(col);
 	}
 	public ServerListArrayList(int cap){
-		super(cap);
 	}
 
 	@Override
 	public boolean contains(Object object) {
 		if(object==null)return false;
-		Iterator<Server> i=iterator();
-		while(i.hasNext())
-			if(i.next().equals(object))
+		for(Server s:this)
+			if(s.equals(object))
 				return true;
 		return false;
 	}
@@ -43,5 +42,15 @@ public class ServerListArrayList extends ArrayList<Server> implements ServerList
 	@Override
 	public void addIntoList(Server s) {
 		add(s);
+	}
+
+	@Override
+	public void removeFromList(Server s) {
+		remove(s);
+	}
+
+	@Override
+	public boolean contains(Server s) {
+		return contains((Object)s);
 	}
 }

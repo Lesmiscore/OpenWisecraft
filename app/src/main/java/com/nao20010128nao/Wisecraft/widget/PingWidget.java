@@ -11,20 +11,19 @@ import android.util.*;
 import android.widget.*;
 import com.google.gson.*;
 import com.google.gson.annotations.*;
+import com.google.gson.reflect.*;
 import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.activity.*;
 import com.nao20010128nao.Wisecraft.api.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+import com.nao20010128nao.Wisecraft.misc.json.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
 import com.nao20010128nao.Wisecraft.misc.provider.*;
+
 import java.util.*;
 
-import com.nao20010128nao.Wisecraft.R;
-
 import static com.nao20010128nao.Wisecraft.misc.Utils.*;
-import android.widget.RemoteViewsService.*;
-import com.nao20010128nao.Wisecraft.activity.*;
-import com.google.gson.reflect.*;
 
 abstract class PingWidgetImpl extends WisecraftWidgetBase {
 	public static final int STATUS_ONLINE=0;
@@ -161,7 +160,7 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 	@Override
 	public void onRestored(Context context, int[] oldWidgetIds, int[] newWidgetIds) {
 		SharedPreferences widgetPref=getWidgetPref(context);
-		Map<String,Object> datas=new HashMap<String,Object>(widgetPref.getAll());
+		Map<String,Object> datas= new HashMap<>(widgetPref.getAll());
 		SharedPreferences.Editor edt=widgetPref.edit();
 		for(int i=0;i<oldWidgetIds.length;i++){
 			Log.d("WisecraftWidgets","onRestored(1): "+oldWidgetIds[i]+"=>"+newWidgetIds[i]);
@@ -181,7 +180,7 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 	public void onDisabled(Context context) {
 		SharedPreferences widgetPref=getWidgetPref(context);
 		SharedPreferences.Editor edt=widgetPref.edit();
-		for(String key:new HashSet<String>(widgetPref.getAll().keySet())){
+		for(String key: new HashSet<>(widgetPref.getAll().keySet())){
 			if("_version".startsWith(key))continue;
 			edt.remove(key);
 		}
@@ -236,7 +235,7 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 			RemoteViews rvs=(RemoteViews)ssrvw.getTag();
 			
 			ssrvw.setStatColor(ContextCompat.getColor(c, R.color.stat_ok));
-			final String title;
+			final CharSequence title;
 			List<String> players=Collections.emptyList();
 			if (s.response instanceof FullStat) {//PE
 				FullStat fs = (FullStat) s.response;
@@ -285,22 +284,17 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 					}
 				}
 			} else if (s.response instanceof RawJsonReply) {//PC (Obfuscated)
-				JsonObject rep = ((RawJsonReply) s.response).json;
+				WisecraftJsonObject rep = ((RawJsonReply) s.response).json;
 				if (!rep.has("description")) {
 					title = s.toString();
 				} else {
-					if(rep.get("description").isJsonObject()){
-						title = rep.get("description").getAsJsonObject().get("text").getAsString();
-					}else{
-						title = rep.get("description").getAsString();
-					}
+					title=Utils.parseMinecraftDescriptionJson(rep.get("description"));
 				}
-				ssrvw.setServerPlayers(rep.get("players").getAsJsonObject().get("online").getAsInt(), rep.get("players").getAsJsonObject().get("max").getAsInt());
+				ssrvw.setServerPlayers(rep.get("players").get("online").getAsInt(), rep.get("players").get("max").getAsInt());
 				if (rep.has("players")) {
-					if (rep.get("players").getAsJsonObject().has("sample")) {
+					if (rep.get("players").has("sample")) {
 						final ArrayList<String> sort=new ArrayList<>();
-						for (JsonElement je:rep.get("players").getAsJsonObject().get("sample").getAsJsonArray()) {
-							JsonObject o=je.getAsJsonObject();
+						for (WisecraftJsonObject o:rep.get("players").get("sample")) {
 							sort.add(o.get("name").getAsString());
 						}
 						players=sort;
@@ -337,9 +331,17 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 				ssrvw.setServerPlayers();
 			}
 			if (pref.getBoolean("serverListColorFormattedText", false)) {
-				ssrvw.setServerName(parseMinecraftFormattingCode(title,Color.WHITE));
+				if(title instanceof String){
+					ssrvw.setServerName(parseMinecraftFormattingCode(title.toString()));
+				}else{
+					ssrvw.setServerName(title);
+				}
 			} else {
-				ssrvw.setServerName(deleteDecorations(title));
+				if(title instanceof String){
+					ssrvw.setServerName(deleteDecorations(title.toString()));
+				}else{
+					ssrvw.setServerName(title.toString());
+				}
 			}
 			players=new ArrayList<>(players);//cast List into ArrayList exactly to sort
 			if (pref.getBoolean("sortPlayerNames", true))

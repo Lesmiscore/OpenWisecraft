@@ -1,8 +1,8 @@
 package com.nao20010128nao.Wisecraft.misc;
+
 import android.os.*;
-import android.util.*;
-import com.nao20010128nao.OTC.*;
 import com.nao20010128nao.Wisecraft.misc.collector.*;
+
 import java.io.*;
 import java.math.*;
 import java.util.*;
@@ -33,8 +33,8 @@ public class MinecraftPeInformationProvider implements InformationProvider
 			return BigInteger.valueOf(Long.MAX_VALUE);
 		}
 	}
-	private OrderTrustedMap<String,String> readSettings() {
-		OrderTrustedMap<String,String> data=new OrderTrustedMap<>();
+	private LinkedHashMap<String,String> readSettings() {
+		LinkedHashMap<String,String> data=new LinkedHashMap<>();
 		try{
 			for(String s:CompatUtils.lines(CompatUtils.readWholeFile(new File(Environment.getExternalStorageDirectory(), "games/com.mojang/minecraftpe/options.txt")))) {
 				int colonOfs=s.indexOf(':');
@@ -63,7 +63,7 @@ public class MinecraftPeInformationProvider implements InformationProvider
 			if(data==null)
 				return "";
 			else
-				return Base64.encodeToString(data, Base64.NO_WRAP);
+				return WisecraftBase64.encodeToString(data, WisecraftBase64.NO_WRAP);
 		}catch(Throwable e){
 			CollectorMain.reportError("readSkin",e);
 			return "";

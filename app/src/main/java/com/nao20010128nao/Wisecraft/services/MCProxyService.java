@@ -1,4 +1,5 @@
 package com.nao20010128nao.Wisecraft.services;
+
 import android.app.*;
 import android.content.*;
 import android.os.*;
@@ -7,11 +8,10 @@ import com.nao20010128nao.MCProxy.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.activity.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+
 import java.io.*;
 import java.net.*;
 import java.security.*;
-
-import com.nao20010128nao.Wisecraft.R;
 
 public class MCProxyService extends Service
 {

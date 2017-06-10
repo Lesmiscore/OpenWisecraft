@@ -1,12 +1,11 @@
 package com.nao20010128nao.Wisecraft.services;
 
 import android.util.*;
-import com.google.firebase.messaging.*;
-import com.google.gson.*;
-import com.google.gson.reflect.*;
-import com.nao20010128nao.Wisecraft.*;
-import java.util.*;
 import android.widget.*;
+import com.google.firebase.messaging.*;
+import com.nao20010128nao.Wisecraft.*;
+
+import java.util.*;
 
 public class MessagingService extends FirebaseMessagingService {
 

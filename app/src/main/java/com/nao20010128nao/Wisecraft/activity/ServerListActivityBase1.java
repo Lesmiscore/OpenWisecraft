@@ -1,14 +1,13 @@
 package com.nao20010128nao.Wisecraft.activity;
-import android.content.*;
+
 import android.content.pm.*;
+import android.os.*;
 import android.support.v4.app.*;
 import android.support.v4.content.*;
 import android.util.*;
+import com.nao20010128nao.Wisecraft.misc.*;
 
 import java.util.*;
-import android.os.*;
-
-import com.nao20010128nao.Wisecraft.misc.Factories;
 
 //Permission Request Part
 abstract class ServerListActivityBase1 extends ServerListActivityBase2
@@ -28,12 +27,10 @@ abstract class ServerListActivityBase1 extends ServerListActivityBase2
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		addActivityResultReceiver(new DispatchActivityResult(){
-				public boolean dispatchActivityResult(int request,int result,Intent data,boolean consumed){
-					if(consumed)return true;
-					return permReqResults.get(request);
-				}
-			});
+		addActivityResultReceiver((request, result, data, consumed) -> {
+            if(consumed)return true;
+            return permReqResults.get(request);
+        });
 	}
 	
 	public void doAfterRequirePerm(RequirePermissionResult r,String[] perms){
@@ -89,9 +86,9 @@ abstract class ServerListActivityBase1 extends ServerListActivityBase2
 		permRequire.remove(requestCode);
 	}
 	
-	public static interface RequirePermissionResult{
-		public void onSuccess();
-		public void onFailed(String[] corruptPerms,String[] unconfirmable);
+	public interface RequirePermissionResult{
+		void onSuccess();
+		void onFailed(String[] corruptPerms, String[] unconfirmable);
 	}
 	
 	class Metadata{

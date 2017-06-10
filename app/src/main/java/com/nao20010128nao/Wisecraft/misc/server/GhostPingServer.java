@@ -1,4 +1,5 @@
 package com.nao20010128nao.Wisecraft.misc.server;
+
 import android.annotation.*;
 import android.os.*;
 import android.preference.*;
@@ -7,6 +8,7 @@ import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
+
 import java.io.*;
 import java.net.*;
 import java.security.*;

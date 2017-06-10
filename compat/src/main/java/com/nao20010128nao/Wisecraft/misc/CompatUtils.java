@@ -3,12 +3,14 @@ package com.nao20010128nao.Wisecraft.misc;
 import android.app.*;
 import android.content.*;
 import android.content.pm.*;
-import android.support.v7.widget.*;
+import android.net.*;
+import android.preference.*;
 import android.text.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
+
 import java.io.*;
 import java.lang.reflect.*;
 import java.security.*;
@@ -250,9 +252,7 @@ public class CompatUtils {
 		} catch (Throwable e) {
 			return false;
 		} finally {
-			try {
-				if (fos != null)fos.close();
-			} catch (IOException e) {}
+			safeClose(fos);
 		}
 	}
 	public static byte[] readWholeFileInBytes(File f) {
@@ -270,9 +270,7 @@ public class CompatUtils {
 		} catch (Throwable e) {
 			return null;
 		} finally {
-			try {
-				if (fis != null)fis.close();
-			} catch (IOException e) {}
+			safeClose(fis);
 		}
 	}
 	public static Context wrapContextForPreference(Context c){
@@ -290,45 +288,18 @@ public class CompatUtils {
 			sb.append(Character.forDigit(b >> 4 & 0xF, 16)).append(Character.forDigit(b & 0xF, 16));
 		return sb.toString();
 	}
-	public static TextView getActionBarTextView(Toolbar mToolBar) {
-		if(TextUtils.isEmpty(mToolBar.getTitle()))return null;
-		try {
-			Field f = mToolBar.getClass().getDeclaredField("mTitleTextView");
-			f.setAccessible(true);
-			return (TextView) f.get(mToolBar);
-		} catch (NoSuchFieldException e) {
-		} catch (IllegalAccessException e) {
-		}
-		try {
-			Field f=Toolbar.LayoutParams.class.getDeclaredField("mViewType");
-			f.setAccessible(true);
-			for (int i=0;i < mToolBar.getChildCount();i++) {
-				View v=mToolBar.getChildAt(i);
-				if (v instanceof TextView) {
-					ViewGroup.LayoutParams lp=v.getLayoutParams();
-					int viewType=(int)f.get(lp);
-					if (viewType == 1) {
-						TextView tv=(TextView)v;
-						if(tv.getText().equals(mToolBar.getTitle())||tv.getText()==mToolBar.getTitle()){
-							return tv;
-						}
-					}
-				}
-			}
-		} catch (NoSuchFieldException e) {
-		} catch (IllegalAccessException e) {
-		} catch (SecurityException e) {
-		} catch (IllegalArgumentException e) {
-		}
-		try {
-			return (TextView)mToolBar.getChildAt(1);
-		}catch(Throwable e){
-
-		}
-		return null;
+	public static <T> T requireNonNull(T obj) {
+		if (obj == null)
+			throw new NullPointerException();
+		return obj;
+	}
+	public static boolean isOnline(Context ctx){
+		ConnectivityManager cm=(ConnectivityManager)ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        return (networkInfo != null && networkInfo.isConnected());
 	}
 	public static android.support.v7.widget.Toolbar getToolbar(Activity decor){
-		int[] ids=new int[]{R.id.toolbar,R.id.toolbar_layout,R.id.action_bar};
+		int[] ids=new int[]{R.id.appbar,R.id.toolbar,R.id.toolbar_layout,R.id.action_bar};
 		for(int id:ids){
 			View v=decor.getWindow().getDecorView().findViewById(id);
 			if(v instanceof android.support.v7.widget.Toolbar){
@@ -336,5 +307,39 @@ public class CompatUtils {
 			}
 		}
 		return null;
+	}
+	public static SharedPreferences getPreferences(Context c){
+		return PreferenceManager.getDefaultSharedPreferences(c);
+	}
+
+	public static void safeClose(Object c){
+		if(c==null)return;
+		if(c instanceof Closeable){
+			try {
+				((Closeable)c).close();
+			} catch (IOException e) {}
+		}else{
+			Method close;
+			try {
+				close=c.getClass().getMethod("close");
+			} catch (Throwable e) {
+				try {
+					close=c.getClass().getMethod("dispose");
+				} catch (Throwable e1) {
+					return;
+				}
+			}
+			try {
+				close.invoke(c);
+			} catch (Throwable e) {}
+		}
+	}
+	public static void safeClose(Object... cs){
+		if(cs==null)return;
+		for(Object c:cs)safeClose(c);
+	}
+	public static void safeClose(Closeable[] cs){
+		if(cs==null)return;
+		for(Object c:cs)safeClose(c);
 	}
 }

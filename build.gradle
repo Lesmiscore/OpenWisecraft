@@ -1,5 +1,8 @@
 import java.net.*
 import java.math.*
+import groovy.json.*
+import org.gradle.*
+import org.gradle.api.invocation.*
 
 def printBoth(a){
 	println(a)
@@ -34,14 +37,14 @@ printBoth(wisecraftBuild)
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    repositories {
+	repositories {
     	jcenter()
     	mavenCentral()
     	maven { url "https://repo.eclipse.org/content/repositories/egit-releases/" }
     	maven { url "https://raw.githubusercontent.com/nao20010128nao/MavenRepo/master/releases/" }
 	}
     dependencies {
-        classpath('com.android.tools.build:gradle:2.1.3')/*{
+        classpath('com.android.tools.build:gradle:2.4.0-alpha7')/*{
             exclude group: 'net.sf.proguard', module: 'proguard'
         }*/
         classpath 'com.google.gms:google-services:3.0.0'
@@ -52,7 +55,7 @@ buildscript {
 }
 
 allprojects {
-    repositories {
+	repositories {
         jcenter()
 		mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
@@ -60,147 +63,59 @@ allprojects {
 		maven { url "https://raw.github.com/laenger/maven-releases/master/releases" }
 		maven { url "https://raw.github.com/nao20010128nao/AndroidSupportRepo/master/m2repository" }
 		maven { url "https://raw.githubusercontent.com/nao20010128nao/MavenRepo/master/releases/" }
+		maven { url "https://jitpack.io" }
 	}
 }
 
-def download(String url,String dir){
-	printBoth("downloading from: "+url)
-	def is=null;
-	def os=null;
-	try{
-		def conn=new URL(url).openConnection();
-		is=conn.getInputStream();
-		def filename=url.split("\\/").last();
-		def file=new File(dir,filename);
-		os=new FileOutputStream(file);
-		byte[] buf=new byte[100];
-		while (true) {
-			def r=is.read(buf);
-			if (r <= 0)
-				break;
-			os.write(buf, 0, r);
-		}
-		println "success."
-		return file;
-	}catch(Throwable e){
-		e.printStackTrace();
-		println "failed."
-		return null;
-	}finally{
-		if(is!=null)is.close();
-		if(os!=null)os.close();
+subprojects{
+	def slv='25.3.0'
+	ext{
+		supportLibVersion=slv
+		firebaseVersion="10.0.1"
 	}
-}
+	afterEvaluate {project ->
+        if (project.hasProperty("android")) {
+            android {
+                buildToolsVersion "25.0.3"
+                lintOptions {
+                    abortOnError false
+                }
+            }
+        }
+		//configurations.compile.allDependencies.findAll{it.group=='com.android.support'}.collect{it.class}.each(System.out.&println)
+		//org.gradle.api.internal.artifacts.dependencies.DefaultExternalModuleDependency
 
-/*
-def jars=[
-	"https://repo.eclipse.org/content/groups/releases/org/eclipse/mylyn/github/org.eclipse.egit.github.core/4.4.0.201606070830-r/org.eclipse.egit.github.core-4.4.0.201606070830-r.jar",
-	"http://central.maven.org/maven2/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar",
-	"http://central.maven.org/maven2/org/objenesis/objenesis/1.0/objenesis-1.0.jar"
-];
-def outputs=new ArrayList<File>();
-def dir=System.getProperty("user.dir");
-for(String s:jars)
-	outputs.add(download(s,dir));
-def classLoader=LocalClass.class.getClassLoader();
-for(File f:outputs)
-	classLoader.addURL(f.toURI().toURL());
-*/
-
-class LocalClass{}
-
-class PowOf2 extends Thread{
-	public void run(){
-		if(System.getenv("POW_OF_2")!="true"){
-			System.err.println("Pow of 2 thread is disabled.");
-			return;
-		}
-		FileWriter fw=new FileWriter(new File(System.getProperty("user.dir"),"powof2.txt"));
-		BigInteger bi=BigInteger.ONE;BigInteger loop=BigInteger.ZERO;
-		BigInteger TWO=BigInteger.valueOf(2);
-		while(true){
-			fw.append("2^"+loop+": "+bi+"\n");
-			bi=bi.multiply(TWO);
-			loop=loop.add(BigInteger.ONE);
+		// force change the version
+		configurations.all {
+			resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+				def requested = details.requested
+				if (requested.group == 'com.android.support' &&
+						!requested.name.startsWith("multidex")) {
+					details.useVersion slv
+				}
+			}
 		}
 	}
 }
 
-def t=new PowOf2();
-t.setDaemon(true);
-t.start();
 
-task("modifyBooleansXml")<<{
-	def dir,f,sb
-	dir="./app/src/main/res/values/booleans.xml"
-	printBoth("Editing "+dir);
-	f=null;
-	sb=new StringBuilder();
-	try{
-		f=new BufferedReader(new FileReader(dir));
-		def line=null;
-		while((line=f.readLine())!=null){
-			if(line.contains("bool name=\"inspectorEnabled\""))continue;
-			sb.append(line).append('\n');
-		}
-	}finally{
-		if(f!=null)f.close()
-		f=null
-	}
-	new File(dir).delete();
-	try{
-		f=new FileWriter(dir);
-		f.write(sb.toString());
-	}finally{
-		if(f!=null)f.close()
-		f=null
-	}
-}
-task("modifyValuesXml")<<{
-	def dir,f,sb
-	dir="./app/src/main/res/values/values.xml"
-	printBoth("Editing "+dir);
-	f=null;
-	sb=new StringBuilder();
-	try{
-		f=new BufferedReader(new FileReader(dir));
-		def line=null;
-		while((line=f.readLine())!=null){
-			if(line.contains("string name=\"wsi\""))continue;
-			sb.append(line).append('\n');
-		}
-	}finally{
-		if(f!=null)f.close()
-		f=null
-	}
-	new File(dir).delete();
-	try{
-		f=new FileWriter(dir);
-		f.write(sb.toString());
-	}finally{
-		if(f!=null)f.close()
-		f=null
-	}
-}
 task("safeDeleteDevXml")<<{
 	def dir="./app/src/main/res/values/dev.xml"
 	def file=new File(dir)
-	if(file.exists())file.delete();
+	if(file.exists())file.delete()
 }
 
-
-
 task("rollbackFiles")<<{
-	printBoth("Rolling back ");
-	["git","checkout","--","."].execute(null,dir).in.text.trim()
+	printBoth("Rolling back ")
+	["git", "checkout", "--", "."].execute(null,dir).in.text.trim()
 }
 
 def finder(list,fille,suffix){
-	if(fille.isFile()){
+	if(fille.file){
     	if(fille.toString().endsWith(suffix)){
     		list.add(fille)
 		}
-	}else if(fille.isDirectory()){
+	}else if(fille.directory){
 		fille.listFiles().each {File fiile->
 			finder(list,fiile,suffix)
 		}
@@ -213,9 +128,9 @@ task("eliminateImplementTodo") << {
 		autoGeneratedJpn.append(moji)
 	}
 	autoGeneratedJpn=autoGeneratedJpn.toString()
-	def list=new ArrayList<File>();
+	def list=new ArrayList<File>()
 	println "Finding .java files..."
-	finder(list,new File("."),".java");
+	finder(list,new File("."),".java")
 	list=list.sort()
 	println "Found "+list.size()+" files."
 	list.each{File listingF->
@@ -233,7 +148,7 @@ task("eliminateImplementTodo") << {
 			while((line=fr.readLine())!=null){
 				if(line.trim().contains("// TODO: Implement this method")|line.trim().contains("// TODO")|(line.trim().contains(autoGeneratedJpn)&line.trim().contains("TODO"))){
 					eliminated++
-					continue;
+					continue
 				}
 				sbld.append(line).append('\n')
 			}
@@ -246,8 +161,7 @@ task("eliminateImplementTodo") << {
 			fr=new FileWriter(ddir)
 			fr.write(sbld.toString())
 		}finally{
-			if(fr!=null)fr.close()
-			fr=null
+			fr?.close()
 		}
 	}
 	println "Done. "+eliminated+" lines are eliminated in "+list.size()+" files."
@@ -264,7 +178,7 @@ def connectTor(){
 		if(System.getProperty("os.name").toLowerCase().contains("windows")){
 			return new File("${proc}.exe").exists()
 		}else{
-			return !isEmptyStr(["sh","-c","which ${proc}"].execute().in.text.trim())
+			return !isEmptyStr(["sh","-c","which $proc"].execute().in.text.trim())
 		}
 	}
 	def downloadOneLine={addr->
@@ -306,4 +220,12 @@ def connectTor(){
 
 if(System.getenv("USE_TOR")=="true"){
 	connectTor()
+}
+
+task("convertConfigSlurperToBuildscript")<<{
+    def gitlabCi=new File(rootDir,"ci/scripts/gitlab-ci.groovy").toURI().toURL()
+    def gitlabCiConfig=new ConfigSlurper().parse(gitlabCi)
+    def json=new JsonBuilder()
+    json gitlabCiConfig
+    new File(rootDir,"test.gitlab-ci.yml").text=json.toPrettyString()
 }

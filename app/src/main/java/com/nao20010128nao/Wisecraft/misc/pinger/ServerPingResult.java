@@ -1,5 +1,5 @@
 package com.nao20010128nao.Wisecraft.misc.pinger;
 
 public interface ServerPingResult {
-	public byte[] getRawResult();
+	byte[] getRawResult();
 }

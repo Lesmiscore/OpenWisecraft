@@ -1,4 +1,5 @@
 package com.nao20010128nao.Wisecraft.api;
+
 import android.content.*;
 import android.net.*;
 import android.os.*;
@@ -7,9 +8,8 @@ import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.activity.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.provider.*;
-import java.util.*;
 
-import com.nao20010128nao.Wisecraft.R;
+import java.util.*;
 
 public class RequestedServerInfoActivity extends ApiBaseActivity {
 	ServerPingProvider spp=new NormalServerPingProvider();
@@ -73,7 +73,7 @@ public class RequestedServerInfoActivity extends ApiBaseActivity {
             return;
 		}
 		requested = result.cloneAsServer();
-		wd.showWorkingDialog();
+		wd.showWorkingDialog(result);
 		spp.putInQueue(requested, new PingHandlingImpl());
 	}
 
@@ -83,7 +83,7 @@ public class RequestedServerInfoActivity extends ApiBaseActivity {
 			case 0:
 				switch (resultCode) {
 					case Constant.ACTIVITY_RESULT_UPDATE:
-						wd.showWorkingDialog();
+						wd.showWorkingDialog(requested);
 						spp.putInQueue(requested, new PingHandlingImpl(data.getIntExtra("offset",0)));
 						break;
 					default:
@@ -103,32 +103,20 @@ public class RequestedServerInfoActivity extends ApiBaseActivity {
 			offset=ofs;
 		}
 		public void onPingArrives(final ServerStatus s) {
-            runOnUiThread(new Runnable(){
-                    public void run(){
-                        startActivityForResult(((Intent)si.clone()).putExtra("offset",offset).putExtra("bottomSheet",false).putExtra("stat",Utils.encodeForServerInfo(s)), 0);
-                        wd.hideWorkingDialog();
-                    }
-                });
+            runOnUiThread(() -> {
+                startActivityForResult(((Intent)si.clone()).putExtra("offset",offset).putExtra("bottomSheet",false).putExtra("stat",Utils.encodeForServerInfo(s)), 0);
+                wd.hideWorkingDialog(s);
+            });
 		}
-		public void onPingFailed(Server s) {
-            runOnUiThread(new Runnable(){
-                    public void run(){
-                        wd.hideWorkingDialog();
-                        new AlertDialog.Builder(RequestedServerInfoActivity.this,ThemePatcher.getDefaultDialogStyle(RequestedServerInfoActivity.this))
-                            .setMessage(R.string.serverOffline)
-                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
-                                public void onClick(DialogInterface di, int t) {
-                                    finish();
-                                }
-                            })
-							.setOnDismissListener(new DialogInterface.OnDismissListener(){
-                                public void onDismiss(DialogInterface di) {
-                                    finish();
-                                }
-                            })
-                            .show();
-                    }
-                });
+		public void onPingFailed(final Server s) {
+            runOnUiThread(() -> {
+                wd.hideWorkingDialog(s);
+                new AlertDialog.Builder(RequestedServerInfoActivity.this,ThemePatcher.getDefaultDialogStyle(RequestedServerInfoActivity.this))
+                    .setMessage(R.string.serverOffline)
+                    .setPositiveButton(android.R.string.ok, (di, t) -> finish())
+                    .setOnDismissListener(di -> finish())
+                    .show();
+            });
 		}
 	}
 }

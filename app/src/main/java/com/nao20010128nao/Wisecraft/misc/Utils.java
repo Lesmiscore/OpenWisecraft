@@ -1,37 +1,34 @@
 package com.nao20010128nao.Wisecraft.misc;
+
 import android.annotation.*;
 import android.app.*;
 import android.content.*;
 import android.content.pm.*;
 import android.content.res.*;
 import android.graphics.*;
-import android.net.*;
 import android.os.*;
-import android.preference.*;
 import android.support.design.widget.*;
-import android.support.v7.app.*;
-import android.support.v7.widget.*;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
 import android.text.*;
 import android.text.style.*;
-import android.util.*;
 import android.view.*;
+import android.webkit.*;
 import android.widget.*;
-import com.google.gson.*;
+import com.nao20010128nao.Wisecraft.R;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.activity.*;
 import com.nao20010128nao.Wisecraft.api.*;
 import com.nao20010128nao.Wisecraft.misc.collector.*;
+import com.nao20010128nao.Wisecraft.misc.json.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import com.nao20010128nao.Wisecraft.misc.serverList.*;
+import permissions.dispatcher.PermissionRequest;
+
 import java.io.*;
 import java.lang.reflect.*;
 import java.math.*;
 import java.util.*;
-import permissions.dispatcher.*;
-
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
-import com.nao20010128nao.Wisecraft.R;
 
 public class Utils extends PingerUtils{
 	private static int[] HUE_COLORS;
@@ -50,11 +47,10 @@ public class Utils extends PingerUtils{
 		}
 		return sb.toString();
 	}
-	public static CharSequence parseMinecraftFormattingCode(String s,int defColor){
+	public static CharSequence parseMinecraftFormattingCode(String s){
 		try {
 			MinecraftFormattingCodeParser mfcp=new MinecraftFormattingCodeParser();
 			mfcp.loadFlags(s);
-			mfcp.defaultColor=defColor;
 			return mfcp.build();
 		} catch (Throwable e) {
 			return s;
@@ -71,14 +67,8 @@ public class Utils extends PingerUtils{
 				os.write(buf, 0, r);
 			}
 		} finally {
-			is.close();
-			os.close();
+			CompatUtils.safeClose(is,os);
 		}
-	}
-	public static <T> T requireNonNull(T obj) {
-		if (obj == null)
-			throw new NullPointerException();
-		return obj;
 	}
 	
 	public static List<Server> convertServerObject(List<MslServer> from) {
@@ -109,18 +99,55 @@ public class Utils extends PingerUtils{
 		return os.toByteArray();
 	}
 	public static <T> List<T>  trueValues(List<T> all, boolean[] balues) {
-		List<T> lst=new ArrayList<T>();
+		List<T> lst= new ArrayList<>();
 		for (int i=0;i < balues.length;i++)
 			if (balues[i])
 				lst.add(all.get(i));
 		return lst;
 	}
 	public static <T> T[] trueValues(T[] all, boolean[] balues) {
-		List<T> lst=new ArrayList<T>();
+		List<T> lst= new ArrayList<>();
 		for (int i=0;i < balues.length;i++)
 			if (balues[i])
 				lst.add(all[i]);
 		return lst.toArray((T[])Array.newInstance(all.getClass().getComponentType(),lst.size()));
+	}
+	public static TextView getActionBarTextView(Toolbar mToolBar) {
+		if(TextUtils.isEmpty(mToolBar.getTitle()))return null;
+		try {
+			Field f = mToolBar.getClass().getDeclaredField("mTitleTextView");
+			f.setAccessible(true);
+			return (TextView) f.get(mToolBar);
+		} catch (NoSuchFieldException e) {
+		} catch (IllegalAccessException e) {
+		}
+		try {
+			Field f=Toolbar.LayoutParams.class.getDeclaredField("mViewType");
+			f.setAccessible(true);
+			for (int i=0;i < mToolBar.getChildCount();i++) {
+				View v=mToolBar.getChildAt(i);
+				if (v instanceof TextView) {
+					ViewGroup.LayoutParams lp=v.getLayoutParams();
+					int viewType=(int)f.get(lp);
+					if (viewType == 1) {
+						TextView tv=(TextView)v;
+						if(tv.getText().equals(mToolBar.getTitle())||tv.getText()==mToolBar.getTitle()){
+							return tv;
+						}
+					}
+				}
+			}
+		} catch (NoSuchFieldException e) {
+		} catch (IllegalAccessException e) {
+		} catch (SecurityException e) {
+		} catch (IllegalArgumentException e) {
+		}
+		try {
+			return (TextView)mToolBar.getChildAt(1);
+		}catch(Throwable e){
+			
+		}
+		return null;
 	}
 	public static Point getDisplaySize(Context activity){
         Display display = ((WindowManager)activity.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
@@ -250,18 +277,13 @@ public class Utils extends PingerUtils{
 	public static Object tryExecuteMethod(Object object,String methodName){
 		return tryExecuteMethod(object,methodName);
 	}
-	public static boolean isOnline(Context ctx){
-		ConnectivityManager cm=(ConnectivityManager)ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-        return (networkInfo != null && networkInfo.isConnected());
-	}
 	public static TextView getActionBarTextView(Activity a) {
 		return getActionBarTextView(getToolbar(a));
 	}
 	public static Server makeServerFromBundle(Bundle bnd){
-		String ip=bnd.getString(Server.class.getName()+".ip");
-		int port=bnd.getInt(Server.class.getName()+".port");
-		int mode=bnd.getInt(Server.class.getName()+".mode");
+		String ip=bnd.getString("com.nao20010128nao.Wisecraft.misc.Server.ip");
+		int port=bnd.getInt("com.nao20010128nao.Wisecraft.misc.Server.port");
+		int mode=bnd.getInt("com.nao20010128nao.Wisecraft.misc.Server.mode");
 		Server s=new Server();
 		s.ip=ip;
 		s.port=port;
@@ -269,15 +291,15 @@ public class Utils extends PingerUtils{
 		return s;
 	}
 	public static Server[] makeServersFromBundle(Bundle bnd){
-		Parcelable[] data=bnd.getParcelableArray(Server.class.getName()+"#servers");
+		Parcelable[] data=bnd.getParcelableArray("com.nao20010128nao.Wisecraft.misc.Server#servers");
 		Server[] servers=new Server[data.length];
 		for(int i=0;i<data.length;i++)servers[i]=makeServerFromBundle((Bundle)data[i]);
 		return servers;
 	}
 	public static void putServerIntoBundle(Bundle bnd,Server s){
-		bnd.putString(Server.class.getName()+".ip",s.ip);
-		bnd.putInt(Server.class.getName()+".port",s.port);
-		bnd.putInt(Server.class.getName()+".mode",s.mode);
+		bnd.putString("com.nao20010128nao.Wisecraft.misc.Server.ip",s.ip);
+		bnd.putInt("com.nao20010128nao.Wisecraft.misc.Server.port",s.port);
+		bnd.putInt("com.nao20010128nao.Wisecraft.misc.Server.mode",s.mode);
 	}
 	public static Bundle putServerIntoBundle(Server s){
 		Bundle bnd=new Bundle();
@@ -287,7 +309,7 @@ public class Utils extends PingerUtils{
 	public static void putServersIntoBundle(Bundle bnd,Server[] s){
 		Bundle[] data=new Bundle[s.length];
 		for(int i=0;i<s.length;i++)data[i]=putServerIntoBundle(s[i]);
-		bnd.putParcelableArray(Server.class.getName()+"#servers",data);
+		bnd.putParcelableArray("com.nao20010128nao.Wisecraft.misc.Server#servers",data);
 	}
 	public static Bundle putServersIntoBundle(Server[] s){
 		Bundle bnd=new Bundle();
@@ -371,14 +393,11 @@ public class Utils extends PingerUtils{
 		return 0;
 	}
 	public static <T> List<T> emptyList(){
-		return new ArrayList<T>();
-	}
-	public static SharedPreferences getPreferences(Context c){
-		return PreferenceManager.getDefaultSharedPreferences(c);
+		return Factories.arrayList();
 	}
 	public static String encodeForServerInfo(ServerStatus s){
 		byte[] data=PingSerializeProvider.dumpServerForFile(s);
-		return Base64.encodeToString(data, ServerInfoActivity.BASE64_FLAGS);
+		return WisecraftBase64.encodeToString(data, ServerInfoActivity.BASE64_FLAGS);
 	}
 	public static Snackbar makeSB(Activity a,int t,int l){
 		return Snackbar.make(a.findViewById(android.R.id.content),t,l);
@@ -423,10 +442,7 @@ public class Utils extends PingerUtils{
 		}
 	}
 	public static int getMenuTintColor(Context context){
-		TypedArray ta=context.obtainStyledAttributes(new int[]{R.attr.wcMenuTintColor});
-		int color=ta.getColor(0,Color.BLACK);
-		ta.recycle();
-		return color;
+		return ThemePatcher.getMenuTintColor(context);
 	}
 	public static boolean[] getBooleanArray(Context ctx,int resId){
 		TypedArray ta=ctx.getResources().obtainTypedArray(resId);
@@ -440,10 +456,9 @@ public class Utils extends PingerUtils{
 		return o==null?"null":o.toString();
 	}
 	public static int determineServerListJsonVersion(String json){
-		JsonArray ja=new JsonParser().parse(json).getAsJsonArray();
+		WisecraftJsonObject ja=WJOUtils.parse(json);
 		int maybe=-1;
-		for(JsonElement je:ja){
-			JsonObject entry=je.getAsJsonObject();
+		for(WisecraftJsonObject entry:ja){
 			if(!(entry.has("ip")&entry.has("port"))){
 				continue;
 			}
@@ -633,11 +648,7 @@ public class Utils extends PingerUtils{
 					req.cancel();
 				}
 			})
-			.setOnDismissListener(new DialogInterface.OnDismissListener(){
-				public void onDismiss(DialogInterface a){
-					req.cancel();
-				}
-			})
+			.setOnDismissListener(a1 -> req.cancel())
 			.show();
 	}
 	
@@ -660,10 +671,99 @@ public class Utils extends PingerUtils{
 		Toast.makeText(a,sb.toString(),Toast.LENGTH_LONG).show();
 	}
 	public static <T> Collection<T> iterableToCollection(Iterable<T> input){
-		List<T> result=new ArrayList<>();
+		List<T> result=emptyList();
 		for(T t:input){
 			result.add(t);
 		}
 		return result;
+	}
+	public static void prepareLooper(){
+		try{
+			Looper.prepare();
+		}catch(Throwable a){
+			
+		}
+	}
+	public static String getMimeType(String filePath){
+		int index;
+		if((index=filePath.lastIndexOf(".")) > 0){
+			return MimeTypeMap.getSingleton().getMimeTypeFromExtension(filePath.substring(index + 1));
+		}
+		return null;
+	}
+	
+	public static List<Server> jsonToServers(String json){
+		WisecraftJsonObject ja=WJOUtils.parse(json);
+		List<Server> servers=new ArrayList<>();
+		for(WisecraftJsonObject entry:ja){
+			if(!(entry.has("ip")&entry.has("port"))){
+				continue;
+			}
+			Server s=new Server();
+			if(entry.has("isPC")){
+				// mode 19
+				s.ip=entry.get("ip").getAsString();
+				s.port=entry.get("port").getAsInt();
+				s.mode=entry.get("isPC").getAsBoolean()?1:0;
+			}else if(entry.has("mode")){
+				// mode 35
+				s.ip=entry.get("ip").getAsString();
+				s.port=entry.get("port").getAsInt();
+				s.mode=entry.get("mode").getAsInt();
+				if(entry.has("name")){
+					// current structure
+					s.name=entry.get("name").getAsString();
+				}
+			}else{
+				// so old!
+				s.ip=entry.get("ip").getAsString();
+				s.port=entry.get("port").getAsInt();
+				s.mode=0;// forces PE to use
+			}
+			servers.add(s);
+		}
+		return servers;
+	}
+	
+	public static CharSequence parseMinecraftDescriptionJson(WisecraftJsonObject description){
+		if(!description.isJsonObject()){
+			return parseMinecraftFormattingCode(description.getAsString());
+		}
+		if(description.has("extra")&&description.get("extra").isJsonArray()){
+			SpannableStringBuilder ssb=new SpannableStringBuilder();
+			Map<String,Integer> nameToColor=MinecraftFormattingCodeParser.NAME_TO_COLOR;
+			for(WisecraftJsonObject part:description.get("extra")){
+				if(part.isJsonObject()){
+					// styled
+					SpannableStringBuilder partSsb=new SpannableStringBuilder();
+					String base=part.get("text").getAsString();
+					int bend=base.length();
+					partSsb.append(base);
+					if(part.has("bold")&&part.get("bold").getAsBoolean()){
+						partSsb.setSpan(new StyleSpan(Typeface.BOLD),0,bend,SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+					}
+					if(part.has("italic")&&part.get("italic").getAsBoolean()){
+						partSsb.setSpan(new StyleSpan(Typeface.ITALIC),0,bend,SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+					}
+					if(part.has("strikethrough")&&part.get("strikethrough").getAsBoolean()){
+						partSsb.setSpan(new StrikethroughSpan(),0,bend,SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+					}
+					if(part.has("underlined")&&part.get("underlined").getAsBoolean()){
+						partSsb.setSpan(new UnderlineSpan(),0,bend,SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+					}
+					// ignore obfuscated: not supported on Android
+					if(part.has("color")&&nameToColor.containsKey(part.get("color").getAsString())){
+						partSsb.setSpan(new ForegroundColorSpan(nameToColor.get(part.get("color").getAsString())),0,bend,SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+					}
+					ssb.append(partSsb);
+				}else{
+					// non-styled
+					ssb.append(parseMinecraftFormattingCode(part.getAsString()));
+				}
+			}
+			return ssb;
+		}else{
+			return parseMinecraftFormattingCode(description.get("text").getAsString());
+		}
 	}
 }

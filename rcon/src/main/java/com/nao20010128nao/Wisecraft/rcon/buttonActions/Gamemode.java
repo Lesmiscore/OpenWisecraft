@@ -26,19 +26,15 @@ public class Gamemode extends NameSelectAction {
 		}
 		new AlertDialog.Builder(this,getActivity().getPresenter().getDialogStyleId())
 			.setMessage(getResString(R.string.gamemodeAsk).replace("[PLAYER]", player).replace("[MODE]", s))
-			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
-				public void onClick(DialogInterface di, int w) {
-					getActivity().performSend("gamemode " + s + " " + player);
-					player = null;
-					isPlayer = true;
-				}
-			})
-			.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener(){
-				public void onClick(DialogInterface di, int w) {
-					player = null;
-					isPlayer = true;
-				}
-			})
+			.setPositiveButton(android.R.string.ok, (di, w) -> {
+                getActivity().performSend("gamemode " + s + " " + player);
+                player = null;
+                isPlayer = true;
+            })
+			.setNegativeButton(android.R.string.cancel, (di, w) -> {
+                player = null;
+                isPlayer = true;
+            })
 			.show();
 	}
 

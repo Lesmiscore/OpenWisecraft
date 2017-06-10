@@ -1,9 +1,11 @@
 package com.nao20010128nao.Wisecraft.misc;
+
 import java.util.*;
+import java.util.regex.*;
 
 public class PCUserUUIDMap extends HashMap<String,String>
 {
-	private final String ALLOWED_CHARACTERS="abcdefghijklmnopqrstuvwxyzABCDEGHIJKLMNOPQRSTUVWXYZ_";
+	private final Pattern MC_USERNAME=Pattern.compile("[a-zA-Z_]{2,15}");
 	@Override
 	public String put(String key, String value) {
 		if(!allowedAsUsername(key))
@@ -11,10 +13,6 @@ public class PCUserUUIDMap extends HashMap<String,String>
 		return super.put(key, value);
 	}
 	private boolean allowedAsUsername(String s){
-		if(s.length()>15)return false;
-		for(char c:s.toCharArray())
-			if(!ALLOWED_CHARACTERS.contains(String.valueOf(c)))
-				return false;
-		return true;
+		return MC_USERNAME.matcher(s).matches();
 	}
 }

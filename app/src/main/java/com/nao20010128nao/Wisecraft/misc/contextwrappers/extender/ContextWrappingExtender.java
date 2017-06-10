@@ -1,13 +1,14 @@
 package com.nao20010128nao.Wisecraft.misc.contextwrappers.extender;
+
 import android.content.*;
 import android.content.res.*;
 import android.preference.*;
+import android.support.v4.content.*;
 import android.util.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
-import java.math.*;
 
-import com.nao20010128nao.Wisecraft.R;
+import java.math.*;
 
 public class ContextWrappingExtender extends ContextWrapper
 {
@@ -79,13 +80,13 @@ public class ContextWrappingExtender extends ContextWrapper
 			// color override
 			switch(id){
 				case R.color.stat_ok:
-					return pref.getInt("colorStatOk",getBaseContext().getColor(R.color.stat_ok));
+					return pref.getInt("colorStatOk",ContextCompat.getColor(getBaseContext(),R.color.stat_ok));
 				case R.color.stat_pending:
-					return pref.getInt("colorStatPending",getBaseContext().getColor(R.color.stat_pending));
+					return pref.getInt("colorStatPending",ContextCompat.getColor(getBaseContext(),R.color.stat_pending));
 				case R.color.stat_error:
-					return pref.getInt("colorStatError",getBaseContext().getColor(R.color.stat_error));
+					return pref.getInt("colorStatError",ContextCompat.getColor(getBaseContext(),R.color.stat_error));
 				case R.color.mainColor:case R.color.mainColor_Dark:
-					//return pref.getInt("colorMainColor",getBaseContext().getColor(R.color.mainColor));
+					//return pref.getInt("colorMainColor",ContextCompat.getColor(getBaseContext(),R.color.mainColor));
 				default:
 					return super.getColor(id, theme);
 			}
@@ -93,27 +94,12 @@ public class ContextWrappingExtender extends ContextWrapper
 
 		@Override
 		public int getDimensionPixelSize(int id) throws Resources.NotFoundException {
-			{
-				final int sysUiResA = getIdentifier("navigation_bar_height", "dimen", "android");
-				final int sysUiResB = getIdentifier("navigation_bar_height_landscape", "dimen", "android");
-				if(id==sysUiResA|id==sysUiResB){
-					if(pref.contains("changeDpi")){
-						return getDimensionPixelSizeFixed(id);
-					}
-				}
-			}
-			{
-				int resourceId = getIdentifier("status_bar_height", "dimen", "android");
-				if (resourceId > 0) {
-					if(id==resourceId){
-						return getDimensionPixelSizeFixed(id);
-					}
-				}
-			}
-			{
-				if(id==R.dimen.tool_bar_top_padding){
-					return getDimensionPixelSizeFixed(id);
-				}
+			final int sysUiResA = getIdentifier("navigation_bar_height", "dimen", "android");
+			final int sysUiResB = getIdentifier("navigation_bar_height_landscape", "dimen", "android");
+			final int statusBarHeightRes = getIdentifier("status_bar_height", "dimen", "android");
+
+			if(id==sysUiResA||id==sysUiResB||id==statusBarHeightRes){
+				//return getDimensionPixelSizeFixed(id);
 			}
 			return super.getDimensionPixelSize(id);
 		}

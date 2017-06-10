@@ -1,6 +1,8 @@
 package com.nao20010128nao.Wisecraft.misc;
+
 import android.util.*;
 import com.nao20010128nao.Wisecraft.*;
+
 import java.io.*;
 
 public class DebugWriter

@@ -1,5 +1,6 @@
 package com.nao20010128nao.Wisecraft.misc.rcon;
 
+import com.nao20010128nao.Wisecraft.misc.CompatUtils;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import java.io.*;
 import java.net.*;
@@ -69,7 +70,7 @@ public class RCon {
 	public void close() throws IOException {
 		synchronized (syncObject) {
 			if (!socket.isClosed()) {
-				socket.close();
+				CompatUtils.safeClose(socket);
 			}
 		}
 	}

@@ -22,7 +22,6 @@ import android.os.*;
 import android.support.annotation.*;
 import android.support.design.widget.*;
 import android.support.v7.app.*;
-import android.util.*;
 import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
@@ -137,14 +136,11 @@ public class ModifiedBottomSheetDialog extends AppCompatDialog {
             bottomSheet.addView(view, params);
         }
         // We treat the CoordinatorLayout as outside the dialog though it is technically inside
-        coordinator.findViewById(R.id.touch_outside).setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					if (mCancelable && isShowing() && shouldWindowCloseOnTouchOutside()) {
-						cancel();
-					}
-				}
-			});
+        coordinator.findViewById(R.id.touch_outside).setOnClickListener(view1 -> {
+            if (mCancelable && isShowing() && shouldWindowCloseOnTouchOutside()) {
+                cancel();
+            }
+        });
         return decor;
     }
 

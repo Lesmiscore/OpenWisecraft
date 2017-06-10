@@ -1,14 +1,14 @@
 package com.nao20010128nao.Wisecraft.misc.view;
+
 import android.os.*;
 import android.support.v7.app.*;
-import android.support.v7.widget.*;
+import android.support.v7.widget.Toolbar;
 import android.view.*;
 import android.widget.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+
 import java.lang.reflect.*;
 import java.util.*;
-
-import android.support.v7.widget.Toolbar;
 
 // com.nao20010128nao.Wisecraft.misc.view.WisecraftToolbar
 public class WisecraftToolbar extends Toolbar{
@@ -29,14 +29,12 @@ public class WisecraftToolbar extends Toolbar{
 	@Override
 	public void setTitle(CharSequence title) {
 		super.setTitle(title);
-		new Handler().post(new Runnable(){
-				public void run(){
-					TextView tv=Utils.getActionBarTextView(WisecraftToolbar.this);
-					if(tv!=null){
-						tv.setGravity(Gravity.CENTER);
-					}
-				}
-			});
+		new Handler().post(() -> {
+            TextView tv=Utils.getActionBarTextView(WisecraftToolbar.this);
+            if(tv!=null){
+                tv.setGravity(Gravity.CENTER);
+            }
+        });
 	}
 	
 	public void setShowBackButton(boolean value){

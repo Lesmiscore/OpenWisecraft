@@ -2,39 +2,26 @@ package com.nao20010128nao.Wisecraft.misc;
 
 
 import android.content.*;
-import android.database.*;
-import android.graphics.drawable.*;
-import android.os.*;
-import android.support.annotation.*;
-import android.support.design.widget.*;
-import android.support.v7.app.*;
-import android.util.*;
-import android.view.*;
-import android.widget.*;
-import com.nao20010128nao.Wisecraft.misc.compat.*;
-import android.content.*;
 import android.content.res.*;
 import android.database.*;
 import android.graphics.drawable.*;
 import android.os.*;
 import android.support.annotation.*;
 import android.support.v4.view.*;
+import android.support.v4.widget.CursorAdapter;
 import android.support.v4.widget.*;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.*;
 import android.text.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
-import android.widget.AdapterView.*;
 import android.widget.FrameLayout.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
+
 import java.lang.ref.*;
 
-import android.support.v4.widget.CursorAdapter;
-import android.support.v4.widget.SimpleCursorAdapter;
-import android.widget.FrameLayout.LayoutParams;
-
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.*;
 
 /**
  * A subclass of Dialog that can display one, two or three buttons. If you only want to
@@ -1441,21 +1428,9 @@ public class BottomSheetAlertDialog extends ModifiedBottomSheetDialog implements
 					if (mMessage != null) {
 						// We're just showing the ScrollView, set up listener.
 						mScrollView.setOnScrollChangeListener(
-							new NestedScrollView.OnScrollChangeListener() {
-								@Override
-								public void onScrollChange(NestedScrollView v, int scrollX,
-									int scrollY,
-									int oldScrollX, int oldScrollY) {
-									manageScrollIndicators(v, top, bottom);
-								}
-							});
+                                (NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> manageScrollIndicators(v, top, bottom));
 						// Set up the indicators following layout.
-						mScrollView.post(new Runnable() {
-								@Override
-								public void run() {
-									manageScrollIndicators(mScrollView, top, bottom);
-								}
-							});
+						mScrollView.post(() -> manageScrollIndicators(mScrollView, top, bottom));
 					} else if (mListView != null) {
 						// We're just showing the AbsListView, set up listener.
 						mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -1469,12 +1444,7 @@ public class BottomSheetAlertDialog extends ModifiedBottomSheetDialog implements
 								}
 							});
 						// Set up the indicators following layout.
-						mListView.post(new Runnable() {
-								@Override
-								public void run() {
-									manageScrollIndicators(mListView, top, bottom);
-								}
-							});
+						mListView.post(() -> manageScrollIndicators(mListView, top, bottom));
 					} else {
 						// We don't have any content to scroll, remove the indicators.
 						if (top != null) {
@@ -1850,26 +1820,20 @@ public class BottomSheetAlertDialog extends ModifiedBottomSheetDialog implements
 				dialog.mCheckedItem = mCheckedItem;
 
 				if (mOnClickListener != null) {
-					listView.setOnItemClickListener(new OnItemClickListener() {
-							@Override
-							public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-								mOnClickListener.onClick(dialog.mDialog, position);
-								if (!mIsSingleChoice) {
-									dialog.mDialog.dismiss();
-								}
-							}
-						});
+					listView.setOnItemClickListener((parent, v, position, id) -> {
+                        mOnClickListener.onClick(dialog.mDialog, position);
+                        if (!mIsSingleChoice) {
+                            dialog.mDialog.dismiss();
+                        }
+                    });
 				} else if (mOnCheckboxClickListener != null) {
-					listView.setOnItemClickListener(new OnItemClickListener() {
-							@Override
-							public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-								if (mCheckedItems != null) {
-									mCheckedItems[position] = listView.isItemChecked(position);
-								}
-								mOnCheckboxClickListener.onClick(
-									dialog.mDialog, position, listView.isItemChecked(position));
-							}
-						});
+					listView.setOnItemClickListener((parent, v, position, id) -> {
+                        if (mCheckedItems != null) {
+                            mCheckedItems[position] = listView.isItemChecked(position);
+                        }
+                        mOnCheckboxClickListener.onClick(
+                            dialog.mDialog, position, listView.isItemChecked(position));
+                    });
 				}
 
 				// Attach a given OnItemSelectedListener to the ListView

@@ -3,6 +3,7 @@ package com.nao20010128nao.Wisecraft.misc.tfl;
 import android.content.*;
 import android.content.res.*;
 import android.graphics.*;
+
 import java.io.*;
 
 public abstract class TypefaceLoader {

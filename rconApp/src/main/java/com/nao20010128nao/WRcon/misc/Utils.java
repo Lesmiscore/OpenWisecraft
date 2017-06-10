@@ -5,6 +5,7 @@ import android.graphics.*;
 import android.text.*;
 import android.text.style.*;
 import com.google.gson.*;
+import com.nao20010128nao.Wisecraft.misc.CompatUtils;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.rcon.*;
 import com.nao20010128nao.Wisecraft.rcon.*;
@@ -61,9 +62,7 @@ public class Utils{
 		} catch (Throwable e) {
 			return false;
 		} finally {
-			try {
-				if (fos != null)fos.close();
-			} catch (IOException e) {}
+			CompatUtils.safeClose(fos);
 		}
 	}
 	public static byte[] readWholeFileInBytes(File f) {
@@ -81,9 +80,7 @@ public class Utils{
 		} catch (Throwable e) {
 			return null;
 		} finally {
-			try {
-				if (fis != null)fis.close();
-			} catch (IOException e) {}
+			CompatUtils.safeClose(fis);
 		}
 	}
 	public static void copyAndClose(InputStream is, OutputStream os)throws IOException {
@@ -96,8 +93,7 @@ public class Utils{
 				os.write(buf, 0, r);
 			}
 		} finally {
-			is.close();
-			os.close();
+			CompatUtils.safeClose(is,os);
 		}
 	}
 	public static <T> T requireNonNull(T obj) {
@@ -146,7 +142,7 @@ public class Utils{
 				os.write(buf, 0, r);
 			}
 		} finally {
-			is.close();
+			CompatUtils.safeClose(is);
 		}
 		return os.toByteArray();
 	}
