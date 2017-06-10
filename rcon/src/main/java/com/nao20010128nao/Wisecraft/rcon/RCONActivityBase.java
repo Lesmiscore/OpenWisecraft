@@ -106,6 +106,12 @@ public abstract class RCONActivityBase extends AppCompatActivity {
         
         pager.setCurrentItem(1);
         pager.setCurrentItem(0);
+
+        runOnUiThread(()-> {
+        	TextView title=CompatUtils.getActionBarTextView(this);
+			if(title!=null)
+				title.setGravity(Gravity.CENTER);
+		});
 	}
 	
 	public boolean tryConnect(String pass) {

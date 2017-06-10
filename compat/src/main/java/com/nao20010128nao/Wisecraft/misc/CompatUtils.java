@@ -342,4 +342,45 @@ public class CompatUtils {
 		if(cs==null)return;
 		for(Object c:cs)safeClose(c);
 	}
+
+	public static TextView getActionBarTextView(Activity a) {
+		return getActionBarTextView(getToolbar(a));
+	}
+	public static TextView getActionBarTextView(Toolbar mToolBar) {
+		if(TextUtils.isEmpty(mToolBar.getTitle()))return null;
+		try {
+			Field f = mToolBar.getClass().getDeclaredField("mTitleTextView");
+			f.setAccessible(true);
+			return (TextView) f.get(mToolBar);
+		} catch (NoSuchFieldException e) {
+		} catch (IllegalAccessException e) {
+		}
+		try {
+			Field f=Toolbar.LayoutParams.class.getDeclaredField("mViewType");
+			f.setAccessible(true);
+			for (int i=0;i < mToolBar.getChildCount();i++) {
+				View v=mToolBar.getChildAt(i);
+				if (v instanceof TextView) {
+					ViewGroup.LayoutParams lp=v.getLayoutParams();
+					int viewType=(int)f.get(lp);
+					if (viewType == 1) {
+						TextView tv=(TextView)v;
+						if(tv.getText().equals(mToolBar.getTitle())||tv.getText()==mToolBar.getTitle()){
+							return tv;
+						}
+					}
+				}
+			}
+		} catch (NoSuchFieldException e) {
+		} catch (IllegalAccessException e) {
+		} catch (SecurityException e) {
+		} catch (IllegalArgumentException e) {
+		}
+		try {
+			return (TextView)mToolBar.getChildAt(1);
+		}catch(Throwable e){
+
+		}
+		return null;
+	}
 }
