@@ -90,7 +90,6 @@ public class PingerUtils extends CompatUtils{
 		ArrayList<byte[]> temp = new ArrayList<>();
 
 		byte[][] output;
-		output = new byte[input.length][input.length];
 
 		int index_cache = 0;
 		for (int i = 0; i < input.length; i++) {
@@ -116,8 +115,7 @@ public class PingerUtils extends CompatUtils{
 
 	public static byte[] padArrayEnd(byte[] arr, int amount) {
 		byte[] arr2 = new byte[arr.length + amount];
-		for (int i = 0; i < arr.length; i++)
-			arr2[i] = arr[i];
+		System.arraycopy(arr, 0, arr2, 0, arr.length);
 		for (int i = arr.length; i < arr2.length; i++)
 			arr2[i] = 0;
 		return arr2;
@@ -132,7 +130,7 @@ public class PingerUtils extends CompatUtils{
 	public static byte[] intToBytes(int in) {
 		byte[] b;
 		b = new byte[] { (byte) (in >>> 24 & 0xFF), (byte) (in >>> 16 & 0xFF),
-			(byte) (in >>> 8 & 0xFF), (byte) (in >>> 0 & 0xFF) };
+			(byte) (in >>> 8 & 0xFF), (byte) (in & 0xFF) };
 		return b;
 	}
 
