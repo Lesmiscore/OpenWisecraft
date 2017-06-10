@@ -6,6 +6,7 @@
 		<item name="colorPrimaryDark">@color/upd_2</item>
 		<item name="android:windowContentOverlay">@null</item>-->
 		<item name="rconConsoleSendButtonStyle">@style/AppButton</item>
+		<item name="rconTabTextColor">#fff</item>
 	</style>
 	<style name="AppDialog" parent="@style/Theme.AppCompat.Light.Dialog">
 		<item name="colorPrimary">@color/mainColor</item>
