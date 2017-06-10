@@ -67,12 +67,10 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 			String password=getIntent().getStringExtra("password");
 			if(password!=null){
 				pa.tryConnectWithDialog(password);
-			}else{
-				if (rcon == null) {
-					pa.askPassword();
-				} else {
-					applyHandlers();
-				}
+			}else if (rcon == null) {
+				pa.askPassword();
+			} else {
+				applyHandlers();
 			}
 		}
 		pager=(ViewPager)findViewById(R.id.pager);
