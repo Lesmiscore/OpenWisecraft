@@ -67,6 +67,7 @@ allprojects {
 		maven { url "https://raw.github.com/nao20010128nao/AndroidSupportRepo/master/m2repository" }
 		maven { url "https://raw.githubusercontent.com/nao20010128nao/MavenRepo/master/releases/" }
 		maven { url "https://jitpack.io" }
+		maven { url "https://maven.google.com" }
 	}
 }
 

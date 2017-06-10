@@ -1,3 +1,28 @@
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
+import java.time.LocalDate
+
+// most crazy way to modify env
+def privEnv=('java.lang.ProcessEnvironment'as Class).getDeclaredField('theCaseInsensitiveEnvironment').with {
+    accessible=true
+    get(null)
+}
+assert privEnv instanceof Map
+//com.android.build.gradle.internal.NonFinalPluginExpiry
+privEnv.ANDROID_DAILY_OVERRIDE=({
+    def now=LocalDate.now()
+    final MessageDigest crypt = MessageDigest.getInstance("SHA-1")
+    crypt.reset()
+    crypt.update(
+            String.format(
+                    '%1$s:%2$s:%3$s',
+                    now.getYear(),
+                    now.getMonthValue() -1,
+                    now.getDayOfMonth())
+                    .getBytes("utf8"))
+    return new BigInteger(1, crypt.digest()).toString(16)
+})()
+
 include ':app', ':wisecraft-i18n', ':compat'
 include ':scrolling', ':statusesLayout', ':rcon'
 include ':rconApp', ':rconPassCrack', ':MaterialIcons'
