@@ -400,7 +400,7 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 	public static class ConsoleFragment extends BaseFragment<RCONActivityBase> {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-			View v=inflater.inflate(R.layout.console, null, false);
+			View v=inflater.inflate(R.layout.console, container, false);
 			getParentActivity().setConsoleLayout((LinearLayout)v.findViewById(R.id.consoleText));
 			getParentActivity().setCommandOk((Button)v.findViewById(R.id.send));
 			getParentActivity().setCommandTextBox((EditText)v.findViewById(R.id.command));
@@ -411,7 +411,7 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 	public static class PlayersFragment extends BaseFragment<RCONActivityBase> {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-			View v=inflater.inflate(R.layout.rcon_players_tab, null, false);
+			View v=inflater.inflate(R.layout.rcon_players_tab, container, false);
 			getParentActivity().setPlayersListView((ListView)v.findViewById(R.id.players));
 			getParentActivity().setPlayersCountTextView((TextView)v.findViewById(R.id.playersCount));
 			getParentActivity().setUpdatePlayersButton((ImageButton)v.findViewById(R.id.updatePlayers));
