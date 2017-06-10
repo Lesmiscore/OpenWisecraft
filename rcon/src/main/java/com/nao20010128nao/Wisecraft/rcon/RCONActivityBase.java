@@ -188,8 +188,7 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 	}
 	TextView newTextViewForConsole(ConsoleTextEntry s) {
 		TextView tv=(TextView)getLayoutInflater().inflate(R.layout.rcon_line_textview,console,false);
-		tv.setText(s.text);
-		s.kind.process(tv,this);
+		s.kind.process(tv,s.text,this);
 		return tv;
 	}
 
@@ -433,31 +432,32 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 	private enum ConsoleTextKind{
 		OUTPUT {
 			@Override
-			void process(TextView tv,RCONActivityBase act) {
-				
+			void process(TextView tv,String txt,RCONActivityBase act) {
+				tv.setText(txt);
 			}
 		},COMMAND {
 			@Override
-			void process(TextView tv,RCONActivityBase act) {
+			void process(TextView tv,String txt,RCONActivityBase act) {
+				tv.setText(txt);
 				tv.setAlpha(0.8f);
 			}
 		},INFO {
 			@Override
-			void process(TextView tv,RCONActivityBase act) {
-
+			void process(TextView tv,String txt,RCONActivityBase act) {
+				tv.setText(txt);
 			}
 		},SUCCESSFUL {
 			@Override
-			void process(TextView tv,RCONActivityBase act) {
-
+			void process(TextView tv,String txt,RCONActivityBase act) {
+				tv.setText(txt);
 			}
 		},ERROR {
 			@Override
-			void process(TextView tv,RCONActivityBase act) {
-
+			void process(TextView tv,String txt,RCONActivityBase act) {
+				tv.setText(txt);
 			}
 		};
 
-		abstract void process(TextView tv,RCONActivityBase act);
+		abstract void process(TextView tv,String txt,RCONActivityBase act);
 	}
 }
