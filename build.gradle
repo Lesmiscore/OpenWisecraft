@@ -233,4 +233,8 @@ task("convertConfigSlurperToBuildscript")<<{
     new File(rootDir,"test.gitlab-ci.yml").text=json.toPrettyString()
 }
 
+task("beforeBuild"){
+	dependsOn "convertConfigSlurperToBuildscript","safeDeleteDevXml"
+}
+
 ProductFlavor.metaClass.jackOptions={Action<JackOptions> action->/*no-op*/}

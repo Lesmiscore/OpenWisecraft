@@ -28,7 +28,26 @@ android{
 		buildConfigField "String","CI_BUILD_NAME","\"${ext.buildName()}\""
 		buildConfigField "String","CI_PIPELINE_ID","\"${ext.pipeline()}\""
 		buildConfigField "String","APP_BUILT_ON","\"${ext.builtOn()}\""
-    }
+
+		def oslData=new URL("https://github.com/nao20010128nao/Wisecraft/raw/master/OPEN_SOURCE_LICENSES.md").text
+		def oslParts=[]
+		def lengthPerParts=100
+		((int)Math.ceil(oslData.length()/lengthPerParts)).times{
+			def partial=oslData.substring(it*lengthPerParts,Math.min((it+1)*lengthPerParts-1,oslData.length()))
+			partial=partial.replace('\\','\\\\')
+			partial=partial.replace('"','\\"')
+			partial=partial.replace('\'','\\\'')
+			partial=partial.replace('\t','\\t')
+			partial=partial.replace('\r\n','\n')
+			partial=partial.replace('\n','\\n')
+			partial="\"$partial\""
+
+			oslParts<<partial
+		}
+		def oslCombined="new StringBuilder().append(${oslParts.join(").append(")}).toString()"
+
+		buildConfigField "String", "OPEN_SOURCE_LICENSE",oslCombined
+	}
     buildTypes {
         release {
             minifyEnabled false
