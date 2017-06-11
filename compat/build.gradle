@@ -44,9 +44,11 @@ android{
 
 			oslParts<<partial
 		}
-		def oslCombined="new StringBuilder().append(${oslParts.join(").append(")}).toString()"
+		def oslCombined="StringBuilder sb=new StringBuilder();"
+		oslCombined+="sb.append(${oslParts.join(");sb.append(")});"
+		oslCombined+="OPEN_SOURCE_LICENSE=sb.toString();"
 
-		buildConfigField "String", "OPEN_SOURCE_LICENSE",oslCombined
+		buildConfigField "String", "OPEN_SOURCE_LICENSE;//","\nstatic{$oslCombined }"
 	}
     buildTypes {
         release {
