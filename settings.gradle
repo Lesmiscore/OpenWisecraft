@@ -13,9 +13,13 @@ import java.time.LocalDate
     }catch(Throwable e){
         try{
             /* for *nix: use theEnvironment instead of theCaseInsensitiveEnvironment */
-            privEnv=('java.lang.ProcessEnvironment'as Class).getDeclaredField('theEnvironment').with {
+            def envTmp=('java.lang.ProcessEnvironment'as Class).getDeclaredField('theEnvironment').with {
                 accessible=true
                 get(null)
+            }
+            privEnv=('java.lang.ProcessEnvironment$StringEnvironment'as Class).declaredConstructors.find{it.parameterTypes[0].name==Map.name}.with{
+                accessible=true
+                newInstance(envTmp)
             }
         }catch(Throwable e_){
             println 'Failed to modify env. Build will fail.'
