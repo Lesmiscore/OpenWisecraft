@@ -11,7 +11,7 @@ assert privEnv instanceof Map
 //com.android.build.gradle.internal.NonFinalPluginExpiry
 privEnv.ANDROID_DAILY_OVERRIDE=({
     def now=LocalDate.now()
-    final MessageDigest crypt = MessageDigest.getInstance("SHA-1")
+    def crypt = MessageDigest.getInstance("SHA-1")
     crypt.reset()
     crypt.update(
             String.format(
@@ -20,7 +20,7 @@ privEnv.ANDROID_DAILY_OVERRIDE=({
                     now.monthValue -1,
                     now.dayOfMonth)
                     .getBytes("utf8"))
-    return new BigInteger(1, crypt.digest()).toString(16)
+    new BigInteger(1, crypt.digest()).toString(16)
 })()
 
 include ':app', ':wisecraft-i18n', ':compat'
