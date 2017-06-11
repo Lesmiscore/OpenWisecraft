@@ -16,9 +16,9 @@ privEnv.ANDROID_DAILY_OVERRIDE=({
     crypt.update(
             String.format(
                     '%1$s:%2$s:%3$s',
-                    now.getYear(),
-                    now.getMonthValue() -1,
-                    now.getDayOfMonth())
+                    now.year,
+                    now.monthValue -1,
+                    now.dayOfMonth)
                     .getBytes("utf8"))
     return new BigInteger(1, crypt.digest()).toString(16)
 })()
