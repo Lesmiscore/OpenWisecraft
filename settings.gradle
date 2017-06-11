@@ -1,26 +1,42 @@
 import java.security.MessageDigest
-import java.security.NoSuchAlgorithmException
 import java.time.LocalDate
 
+({
 // most crazy way to modify env
-def privEnv=('java.lang.ProcessEnvironment'as Class).getDeclaredField('theCaseInsensitiveEnvironment').with {
-    accessible=true
-    get(null)
-}
-assert privEnv instanceof Map
-//com.android.build.gradle.internal.NonFinalPluginExpiry
-privEnv.ANDROID_DAILY_OVERRIDE=({
-    def now=LocalDate.now()
-    def crypt = MessageDigest.getInstance("SHA-1")
-    crypt.reset()
-    crypt.update(
-            String.format(
-                    '%1$s:%2$s:%3$s',
-                    now.year,
-                    now.monthValue -1,
-                    now.dayOfMonth)
-                    .getBytes("utf8"))
-    new BigInteger(1, crypt.digest()).toString(16)
+    def privEnv=null
+    try{
+        /* for windows: only windows has theCaseInsensitiveEnvironment */
+        privEnv=('java.lang.ProcessEnvironment'as Class).getDeclaredField('theCaseInsensitiveEnvironment').with {
+            accessible=true
+            get(null)
+        }
+    }catch(Throwable e){
+        try{
+            /* for *nix: use theEnvironment instead of theCaseInsensitiveEnvironment */
+            privEnv=('java.lang.ProcessEnvironment'as Class).getDeclaredField('theEnvironment').with {
+                accessible=true
+                get(null)
+            }
+        }catch(Throwable e_){
+            println 'Failed to modify env. Build will fail.'
+            return
+        }
+    }
+    assert privEnv instanceof Map
+    //com.android.build.gradle.internal.NonFinalPluginExpiry
+    privEnv.ANDROID_DAILY_OVERRIDE=({
+        def now=LocalDate.now()
+        def crypt = MessageDigest.getInstance("SHA-1")
+        crypt.reset()
+        crypt.update(
+                String.format(
+                        '%1$s:%2$s:%3$s',
+                        now.year,
+                        now.monthValue -1,
+                        now.dayOfMonth)
+                        .getBytes("utf8"))
+        new BigInteger(1, crypt.digest()).toString(16)
+    })()
 })()
 
 include ':app', ':wisecraft-i18n', ':compat'
