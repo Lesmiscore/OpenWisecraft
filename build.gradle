@@ -73,9 +73,10 @@ allprojects {
 
 subprojects{
 	def slv='25.3.0'
+	def fbv='10.2.6'
 	ext{
 		supportLibVersion=slv
-		firebaseVersion="10.0.1"
+		firebaseVersion=fbv
 	}
 	afterEvaluate {project ->
         if (project.hasProperty("android")) {
@@ -96,6 +97,12 @@ subprojects{
 				if (requested.group == 'com.android.support' &&
 						!requested.name.startsWith("multidex")) {
 					details.useVersion slv
+				}
+			}
+			resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+				def requested = details.requested
+				if (requested.group == 'com.google.firebase') {
+					details.useVersion fbv
 				}
 			}
 		}
