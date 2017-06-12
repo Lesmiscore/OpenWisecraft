@@ -246,3 +246,8 @@ task("beforeBuild"){
 }
 
 ProductFlavor.metaClass.jackOptions={Action<JackOptions> action->/*no-op*/}
+tasks.whenTaskAdded { task ->
+    if (task.name.contains("lint")) {
+        task.enabled = false
+    }
+}
