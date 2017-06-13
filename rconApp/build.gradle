@@ -11,9 +11,6 @@ android {
         targetSdkVersion 21
         versionCode 36
         versionName "3.2"
-        jackOptions {
-			enabled false
-		}
     }
 
 	signingConfigs {
