@@ -1000,7 +1000,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 					if (fs.getDataAsMap().containsKey("plugins")) {
 						String[] data=fs.getDataAsMap().get("plugins").split("\\: ");
 						if (data.length >= 2) {
-							ArrayList<String> plugins= new ArrayList<>(Arrays.<String>asList(data[1].split("\\; ")));
+							ArrayList<String> plugins= new ArrayList<>(Arrays.asList(data[1].split("\\; ")));
 							if (pref.getBoolean("sortPluginNames", false))
 								Collections.sort(plugins);
 							pluginNames.addAll(plugins);

@@ -622,7 +622,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	public void saveServers() {
 		new Thread(() -> {
             List<Server> toSave=new ArrayList<>();
-            for (Server s:list)toSave.add(s.cloneAsServer());
+            Stream.of(list).map(Server::cloneAsServer).forEach(toSave::add);
             String json;
             pref.edit().putString("servers", json = gson.toJson(toSave)).commit();
             Log.d("json", json);
@@ -884,7 +884,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		in.setClass(this, ServerInfoActivity.class);
 		boolean useBottomSheet=in.getBooleanExtra("bottomSheet",true)&!pref.getBoolean("noScrollServerInfo",false);
 		if(!useBottomSheet&(objPos>=0|objPos<list.size())&rv.findViewHolderForAdapterPosition(objPos)!=null){
-			ActivityOptionsCompat opt=ActivityOptionsCompat.makeSceneTransitionAnimation(this,Pair.<View,String>create(rv.findViewHolderForAdapterPosition(objPos).itemView,getResources().getString(R.string.serverInfoTrans1)));
+			ActivityOptionsCompat opt=ActivityOptionsCompat.makeSceneTransitionAnimation(this,Pair.create(rv.findViewHolderForAdapterPosition(objPos).itemView,getResources().getString(R.string.serverInfoTrans1)));
 			startActivityForResult(in, 0,opt.toBundle());
 		}else{
 			startActivityForResult(in, 0);
@@ -1147,7 +1147,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							pcFrame.setVisibility(View.GONE);
 							peFrame.setVisibility(View.VISIBLE);
 							split.setText(R.string.pe);
-							Server s = Utils.convertServerObject(Collections.<MslServer>singletonList(MslServer.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
+							Server s = Utils.convertServerObject(Collections.singletonList(MslServer.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
 							pe_ip.setText(s.ip);
 							pe_port.setText(s.port + "");
 						}
@@ -1158,7 +1158,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							setPositiveButton(android.R.string.yes, (d, sel) -> {
 								Server s;
 								if (split.isChecked()) {
-									s = Utils.convertServerObject(Collections.<MslServer>singletonList(MslServer.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
+									s = Utils.convertServerObject(Collections.singletonList(MslServer.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
 								} else {
 									s = new Server();
 									s.ip = pe_ip.getText().toString();

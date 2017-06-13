@@ -218,7 +218,7 @@ abstract class FragmentSettingsActivityImpl extends AppCompatActivity implements
 				public void onClick(String a,String b,String c){
 					String[] choice=getFontChoices();
 					String[] display=TheApplication.instance.getDisplayFontNames(choice);
-					final List<String> choiceList=Arrays.<String>asList(choice);
+					final List<String> choiceList=Arrays.asList(choice);
 					new AlertDialog.Builder(getActivity(),ThemePatcher.getDefaultDialogStyle(getContext()))
 							.setSingleChoiceItems(display, choiceList.indexOf(TheApplication.instance.getFontFieldName())
 									, (di, w) -> {

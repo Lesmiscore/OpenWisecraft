@@ -23,6 +23,6 @@ public class Factories {
 	}
 
 	public static <V> Queue<V> newDefaultQueue(){
-		return (Queue<V>)Queues.<V>synchronizedQueue(Lists.<V>newLinkedList());
+		return (Queue<V>)Queues.synchronizedQueue(Lists.newLinkedList());
 	}
 }

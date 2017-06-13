@@ -364,7 +364,7 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 			Log.d("WisecraftWidgets","Ping NG for: "+id);
 			ServerStatusRemoteViewsWrapper ssrvw=new ServerStatusRemoteViewsWrapper(c,id);
 			RemoteViews rvs=(RemoteViews)ssrvw.getTag();
-			ssrvw.offline(server,c).setServerPlayers(Collections.<String>emptyList());
+			ssrvw.offline(server,c).setServerPlayers(Collections.emptyList());
 			setupHandlers(rvs, c, id);
 			setWidgetStatus(c,id,STATUS_OFFLINE,true);
 			awm.updateAppWidget(id,rvs);
