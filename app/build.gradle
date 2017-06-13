@@ -227,7 +227,7 @@ dependencies {
 		compile "com.google.firebase:firebase-messaging:10.0.1"
 	}
 	
-	if(1)apt 'com.github.hotchemi:permissionsdispatcher-processor:2.3.2'
+	if(1)annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:2.3.2'
 }
 apply plugin: 'com.google.gms.google-services'
 

@@ -51,7 +51,7 @@ buildscript {
             exclude group: 'net.sf.proguard', module: 'proguard'
         }*/
         classpath 'com.google.gms:google-services:3.0.0'
-		classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+		//classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
 		//classpath "com.nao20010128nao:proguard-japanese:5.3.2"
 		//classpath "net.sf.proguard:proguard-gradle:5.3.2"
     }
