@@ -427,7 +427,7 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 		}
 	}
 
-	private enum ConsoleTextKind{
+	protected enum ConsoleTextKind{
 		OUTPUT {
 			@Override
 			void process(TextView tv,String txt,RCONActivityBase act) {
