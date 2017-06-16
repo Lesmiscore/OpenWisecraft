@@ -1,0 +1,32 @@
+syntax = "proto2";
+
+package protocol;
+
+option java_package = "com.nao20010128nao.Wisecraft.misc";
+option java_outer_classname = "Protobufs";
+
+message Server{
+    required string ip=1;
+    required int32 port=2;
+    required Mode mode=3;
+
+    enum Mode{
+        PE=0;
+        PC=1;
+    }
+}
+
+message ServerCrawlerEntry{
+    required bool notifyOnline=1;
+    required bool notifyOffline=2;
+    required Server server=3;
+    required int64 interval=4;
+    required int64 start=5;
+    required string name=6;
+    required int64 id=7;
+    required bool enabled=8;
+}
+
+message ServerCrawlerSet{
+    repeated ServerCrawlerEntry entries=1;
+}

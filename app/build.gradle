@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.protobuf'
 
 import java.security.SecureRandom;
 
@@ -198,6 +199,7 @@ dependencies {
 	compile 'com.google.guava:guava:19.0'
 	compile 'jp.wasabeef:recyclerview-animators:2.2.6'
 	compile 'com.annimon:stream:1.1.7'
+	compile 'com.google.protobuf:protobuf-lite:3.0.0'
 	
 	compile files('libs/fsb.jar')
 	compile files('libs/mcprox.jar')
@@ -207,6 +209,9 @@ dependencies {
 	compile('com.mikepenz:materialdrawer:5.9.0') {
 		transitive = true
 	}
+
+	protobuf fileTree('../protos')
+
 	//These lines are required to write code using AIDE. Please don't remove them.
 	if(0){
 		compile 'com.mikepenz:materialize:+'
@@ -227,6 +232,24 @@ dependencies {
 	}
 	
 	if(1)annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:2.3.2'
+}
+
+protobuf {
+	protoc {
+		artifact = 'com.google.protobuf:protoc:3.0.0'
+	}
+	plugins {
+		javalite {
+			artifact = 'com.google.protobuf:protoc-gen-javalite:3.0.0'
+		}
+	}
+	generateProtoTasks {
+		all().each { task ->
+			task.plugins {
+				javalite { }
+			}
+		}
+	}
 }
 apply plugin: 'com.google.gms.google-services'
 

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="crawlerStartDateTime">"Based date and time: "</string>
+    <string name="crawlerInterval">"Interval: "</string>
+    <string name="crawlerEnabled">"Enabled: "</string>
+    <string name="reschedule">Re-schedule</string>
+    <string name="yesWord">Yes</string>
+    <string name="noWord">No</string>
+</resources>

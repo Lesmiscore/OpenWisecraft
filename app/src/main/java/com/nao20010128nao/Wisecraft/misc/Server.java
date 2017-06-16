@@ -8,7 +8,7 @@ public class Server {
 	public String ip;
 	@SerializedName("port")
 	public int port;
-	@SerializedName("mode")
+	@SerializedName("mode")//TODO: change to enum, if I can
 	public int mode;//0 is PE, 1 is PC
 	@SerializedName("name")
 	public String name;//,tag;
@@ -51,8 +51,12 @@ public class Server {
 		cloneInto(s);
 		return s;
 	}
-    
-    public final void cloneInto(Server dest){
+
+	public Protobufs.Server toProtobufServer() {
+		return Protobufs.Server.newBuilder().setIp(ip).setPort(port).setMode(Protobufs.Server.Mode.forNumber(mode)).build();
+	}
+
+	public final void cloneInto(Server dest){
         dest.ip=ip;
         dest.port=port;
         dest.mode=mode;
@@ -72,6 +76,14 @@ public class Server {
 		s.ip=a.ip;
 		s.port=a.port;
 		s.mode=a.isPC?1:0;
+		return s;
+	}
+
+	public static Server from(Protobufs.Server a){
+		Server s=new Server();
+		s.ip=a.getIp();
+		s.port=a.getPort();
+		s.mode=a.getMode().ordinal();
 		return s;
 	}
 }

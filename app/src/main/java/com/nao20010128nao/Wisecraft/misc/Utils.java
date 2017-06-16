@@ -28,6 +28,7 @@ import permissions.dispatcher.PermissionRequest;
 import java.io.*;
 import java.lang.reflect.*;
 import java.math.*;
+import java.text.*;
 import java.util.*;
 
 public class Utils extends PingerUtils{
@@ -725,5 +726,31 @@ public class Utils extends PingerUtils{
 		}else{
 			return parseMinecraftFormattingCode(description.get("text").getAsString());
 		}
+	}
+
+	public static boolean nonNull(Object obj) {
+		return obj != null;
+	}
+
+	public static String formatDate(long millis){
+		DateFormat sdf=SimpleDateFormat.getDateTimeInstance();
+		Calendar calendar=Calendar.getInstance();
+		calendar.setTimeInMillis(millis);
+		return sdf.format(calendar.getTime());
+	}
+
+	public static String formatTimeSpan(long millis){
+		long millisec,seconds,minutes,hours,days;
+		millisec=millis%1000;
+		seconds=millis/1000;
+		minutes=seconds/60;
+		hours=minutes/60;
+		days=hours/24;
+
+		seconds=seconds%60;
+		minutes=minutes%60;
+		hours=hours%24;
+
+		return String.format(Locale.getDefault(),"%01d:%02d:%02d:%02d %03d",days,hours,minutes,seconds,millisec);
 	}
 }

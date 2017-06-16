@@ -1,310 +1,344 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
-    package="com.nao20010128nao.Wisecraft">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          package="com.nao20010128nao.Wisecraft">
+
     <uses-sdk
-        android:minSdkVersion="17"
-        android:targetSdkVersion="21"/>
+            android:minSdkVersion="17"
+            android:targetSdkVersion="21"/>
+
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-	
-	<uses-feature android:name="android.hardware.location" android:required="false" />
-    <uses-feature android:name="android.hardware.location.gps" android:required="false" />
-    <uses-feature android:name="android.hardware.location.network" android:required="false" />
-	
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+    <uses-feature
+            android:name="android.hardware.location"
+            android:required="false"/>
+    <uses-feature
+            android:name="android.hardware.location.gps"
+            android:required="false"/>
+    <uses-feature
+            android:name="android.hardware.location.network"
+            android:required="false"/>
+
+    <android:uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
     <application
-		android:icon="@drawable/ic_launcher"
-		android:label="@string/app_name"
-		android:theme="@style/AppTheme"
-		android:name=".TheApplication"
-		android:resizeableActivity="true"
-		android:allowBackup="false"
-		tools:replace="android:allowBackup">
-        <activity
+            android:name=".TheApplication"
+            android:allowBackup="false"
+            android:icon="@drawable/ic_launcher"
             android:label="@string/app_name"
-            android:name=".activity.ServerListActivity"
-			android:theme="@style/AppTheme.NoActionBar"
-			android:enabled="true"
-			android:exported="false">
+            android:resizeableActivity="true"
+            android:theme="@style/AppTheme"
+            tools:replace="android:allowBackup">
+        <activity
+                android:name=".activity.ServerListActivity"
+                android:enabled="true"
+                android:exported="false"
+                android:label="@string/app_name"
+                android:theme="@style/AppTheme.NoActionBar">
+
             <!-- Hide this activity because this is for the alias -->
         </activity>
-		<activity-alias 
-            android:name=".ServerListActivity" 
-            android:targetActivity=".activity.ServerListActivity" 
-            android:label="@string/app_name"
-			android:theme="@style/AppTheme.NoActionBar">
+
+        <activity-alias
+                android:name=".ServerListActivity"
+                android:label="@string/app_name"
+                android:targetActivity=".activity.ServerListActivity"
+                android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity-alias>
-        <activity
-			android:label="@string/app_name"
-			android:name=".activity.ServerInfoActivity"
-			android:exported="false"
-			android:theme="@style/AppTheme.ServerInfo">
-        </activity>
-        <activity
-			android:label="@string/testServer"
-			android:name=".activity.ServerTestActivity"
-			android:exported="false">
-        </activity>
-        <activity
-			android:label="@string/rcon"
-			android:name=".activity.RCONActivity"
-			android:exported="false"
-			android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity
-			android:label="@string/mtl"
-			android:name=".activity.ProxyActivity"
-			android:exported="false">
-        </activity>
 
         <activity
-			android:label="@string/app_name"
-			android:name=".api.RequestedServerInfoActivity"
-			android:theme="@style/AppTheme.Translucent">
-            <intent-filter >
-                <action android:name="com.nao20010128nao.Wisecraft.SERVER_INFO" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                android:name=".activity.ServerInfoActivity"
+                android:exported="false"
+                android:label="@string/app_name"
+                android:theme="@style/AppTheme.ServerInfo">
+        </activity>
+        <activity
+                android:name=".activity.ServerTestActivity"
+                android:exported="false"
+                android:label="@string/testServer">
+        </activity>
+        <activity
+                android:name=".activity.RCONActivity"
+                android:exported="false"
+                android:label="@string/rcon"
+                android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+                android:name=".activity.ProxyActivity"
+                android:exported="false"
+                android:label="@string/mtl">
+        </activity>
+        <activity
+                android:name=".api.RequestedServerInfoActivity"
+                android:label="@string/app_name"
+                android:theme="@style/AppTheme.Translucent">
+            <intent-filter>
+                <action android:name="com.nao20010128nao.Wisecraft.SERVER_INFO"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-            <intent-filter >
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" /> 
-                <action android:name="android.intent.action.SEND" />
-                <action android:name="android.intent.action.VIEW" />
-                <data android:scheme="wisecraft" android:host="serverinfo"/>
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <action android:name="android.intent.action.SEND"/>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <data
+                        android:host="serverinfo"
+                        android:scheme="wisecraft"/>
             </intent-filter>
-            <intent-filter >
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" /> 
-                <action android:name="android.intent.action.SEND" />
-                <action android:name="android.intent.action.VIEW" />
-                <data android:scheme="wisecraft" android:host="info"/>
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <action android:name="android.intent.action.SEND"/>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <data
+                        android:host="info"
+                        android:scheme="wisecraft"/>
             </intent-filter>
         </activity>
-		<activity
-			android:label="@string/add"
-			android:name=".api.AddServerActivity"
-			android:theme="@style/AppDialog">
-            <intent-filter >
-                <action android:name="com.nao20010128nao.Wisecraft.ADD_SERVER" />
-                <category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
-			<intent-filter >
-				<category android:name="android.intent.category.DEFAULT" />
-				<category android:name="android.intent.category.BROWSABLE" /> 
-				<action android:name="android.intent.action.SEND" />
-				<action android:name="android.intent.action.VIEW" />
-				<data android:scheme="wisecraft" android:host="addserver"/>
+        <activity
+                android:name=".api.AddServerActivity"
+                android:label="@string/add"
+                android:theme="@style/AppDialog">
+            <intent-filter>
+                <action android:name="com.nao20010128nao.Wisecraft.ADD_SERVER"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-			<intent-filter >
-				<category android:name="android.intent.category.DEFAULT" />
-				<category android:name="android.intent.category.BROWSABLE" /> 
-				<action android:name="android.intent.action.SEND" />
-				<action android:name="android.intent.action.VIEW" />
-				<data android:scheme="mccqp"/>
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <action android:name="android.intent.action.SEND"/>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <data
+                        android:host="addserver"
+                        android:scheme="wisecraft"/>
             </intent-filter>
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <action android:name="android.intent.action.SEND"/>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <data android:scheme="mccqp"/>
+            </intent-filter>
+        </activity>
+        <activity
+                android:name=".activity.FragmentSettingsActivity"
+                android:exported="false"
+                android:fitsSystemWindows="false"
+                android:label="@string/settings">
+        </activity>
+        <activity
+                android:name=".activity.FragmentSettingsActivity$ServerListStyleEditor"
+                android:exported="false"
+                android:fitsSystemWindows="false"
+                android:label="@string/serverListLooks">
+        </activity>
+        <activity
+                android:name=".activity.FragmentSettingsActivity$MasterDetailSettings"
+                android:exported="false"
+                android:fitsSystemWindows="false"
+                android:label="@string/settings"
+                android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+                android:name=".activity.ServerFinderActivity"
+                android:exported="false"
+                android:label="@string/serverFinder">
+        </activity>
+        <activity
+                android:name=".activity.ServerGetActivity"
+                android:exported="false"
+                android:label="@string/addServerFromServerListSite"
+                android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+                android:name=".activity.ServerTestActivity$Content"
+                android:exported="false"
+                android:label="@string/app_name">
+        </activity>
+        <activity
+                android:name=".activity.ServerFinderActivity$Content"
+                android:exported="false"
+                android:label="@string/serverFinder">
+        </activity>
+        <activity
+                android:name=".activity.OpenSourceActivity"
+                android:exported="false"
+                android:label="@string/osl"
+                android:theme="@style/AppTheme.OpenSource">
+        </activity>
+        <activity
+                android:name=".activity.OpenSourceActivity2"
+                android:exported="false"
+                android:label="@string/osl"
+                android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+                android:name=".activity.AboutAppActivity"
+                android:exported="false"
+                android:label="@string/aboutApp"
+                android:theme="@style/AppTheme.OpenSource">
+        </activity>
+        <activity
+                android:name=".activity.GenerateWisecraftOpenLinkActivity"
+                android:exported="false"
+                android:label="@string/genLink">
         </activity>
 
-		<activity
-			android:label="@string/settings"
-			android:name=".activity.FragmentSettingsActivity"
-			android:exported="false"
-			android:fitsSystemWindows="false">
-        </activity>
-		<activity
-			android:label="@string/serverListLooks"
-			android:name=".activity.FragmentSettingsActivity$ServerListStyleEditor"
-			android:exported="false"
-			android:fitsSystemWindows="false">
-        </activity>
-		<activity
-			android:label="@string/settings"
-			android:name=".activity.FragmentSettingsActivity$MasterDetailSettings"
-			android:exported="false"
-			android:fitsSystemWindows="false"
-			android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-		
-        <activity
-			android:label="@string/serverFinder"
-			android:name=".activity.ServerFinderActivity"
-			android:exported="false">
-        </activity>
-        <activity
-			android:label="@string/addServerFromServerListSite"
-			android:name=".activity.ServerGetActivity"
-			android:exported="false"
-			android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-		
-        <activity
-			android:label="@string/app_name"
-			android:name=".activity.ServerTestActivity$Content"
-			android:exported="false">
-        </activity>
-
-        <activity
-			android:label="@string/serverFinder"
-			android:name=".activity.ServerFinderActivity$Content"
-			android:exported="false">
-        </activity>
-
-        <activity
-			android:label="@string/osl"
-			android:name=".activity.OpenSourceActivity"
-			android:exported="false"
-			android:theme="@style/AppTheme.OpenSource">
-        </activity>
-		<activity
-			android:label="@string/osl"
-			android:name=".activity.OpenSourceActivity2"
-			android:exported="false"
-			android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity
-			android:label="@string/aboutApp"
-			android:name=".activity.AboutAppActivity"
-			android:exported="false"
-			android:theme="@style/AppTheme.OpenSource">
-        </activity>
-		
-		<activity
-			android:label="@string/genLink"
-			android:name=".activity.GenerateWisecraftOpenLinkActivity"
-			android:exported="false">
-        </activity>
-		
         <service
-			android:label="@string/app_name"
-			android:name=".services.MCProxyService"
-			android:exported="false">
+                android:name=".services.MCProxyService"
+                android:exported="false"
+                android:label="@string/app_name">
         </service>
-		<service
-			android:name=".services.MessagingService">
-			<intent-filter>
-				<action android:name="com.google.firebase.MESSAGING_EVENT"/>
-			</intent-filter>
-		</service>
-		<service
-			android:name=".services.InstanceIdService">
-			<intent-filter>
-				<action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
-			</intent-filter>
-		</service>
+        <service android:name=".services.MessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <service android:name=".services.InstanceIdService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+        <service
+                android:name=".services.ServerFinderService"
+                android:exported="false">
+        </service>
 
-		<service
-			android:name=".services.ServerFinderService"
-			android:exported="false">
-		</service>
-		
-		<receiver android:name=".services.ServerFinderService$NotificationDetector">
-			<intent-filter>
-                <action android:name="action_deleted" />
-				<action android:name="action_cancel" />
-            </intent-filter>
-		</receiver>
-		
-		
-		<!-- Widgets -->
-		
-		
-		<activity
-			android:label="@string/select"
-			android:name=".widget.WidgetServerSelectActivity$Type1"
-			android:exported="false"
-			android:fitsSystemWindows="false">
-			<intent-filter>  
-				<action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>  
-			</intent-filter> 
-        </activity>
-		<activity
-			android:label="@string/select"
-			android:name=".widget.WidgetServerSelectActivity$Type2"
-			android:exported="false"
-			android:fitsSystemWindows="false">
-			<intent-filter>  
-				<action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>  
-			</intent-filter> 
-        </activity>
-		<activity
-			android:label="@string/select"
-			android:name=".widget.WidgetServerSelectActivity$Type3"
-			android:exported="false"
-			android:fitsSystemWindows="false">
-			<intent-filter>  
-				<action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>  
-			</intent-filter> 
-        </activity>
-		<activity
-			android:label="@string/widgetEditor"
-			android:name=".widget.WidgetsEditorActivity"
-			android:exported="false"
-			android:fitsSystemWindows="false">
-        </activity>
-		
-		<receiver android:name=".widget.PingWidget" >
+        <receiver android:name=".services.ServerFinderService$NotificationDetector">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_BIND" />
-				<action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
-				<action android:name="android.appwidget.action.APPWIDGET_DELETED" />
-				<action android:name="android.appwidget.action.APPWIDGET_DISABLED" />
-				<action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
-				<action android:name="android.appwidget.action.APPWIDGET_HOST_RESTORED" />
-				<action android:name="android.appwidget.action.APPWIDGET_UPDATE_OPTIONS" />
-				<action android:name="android.appwidget.action.APPWIDGET_PICK" />
-				<action android:name="android.appwidget.action.APPWIDGET_RESTORED" />
-				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="action_deleted"/>
+                <action android:name="action_cancel"/>
             </intent-filter>
-            <meta-data android:name="android.appwidget.provider"
-                android:resource="@xml/ping_widget" />
         </receiver>
-		<receiver android:name=".widget.PingWidget$Type2" >
+
+        <!-- Widgets -->
+
+        <activity
+                android:name=".widget.WidgetServerSelectActivity$Type1"
+                android:exported="false"
+                android:fitsSystemWindows="false"
+                android:label="@string/select">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_BIND" />
-				<action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
-				<action android:name="android.appwidget.action.APPWIDGET_DELETED" />
-				<action android:name="android.appwidget.action.APPWIDGET_DISABLED" />
-				<action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
-				<action android:name="android.appwidget.action.APPWIDGET_HOST_RESTORED" />
-				<action android:name="android.appwidget.action.APPWIDGET_UPDATE_OPTIONS" />
-				<action android:name="android.appwidget.action.APPWIDGET_PICK" />
-				<action android:name="android.appwidget.action.APPWIDGET_RESTORED" />
-				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
-            <meta-data android:name="android.appwidget.provider"
-                android:resource="@xml/ping_widget_2" />
-        </receiver>
-		<receiver android:name=".widget.PingWidget$Type3" >
+        </activity>
+        <activity
+                android:name=".widget.WidgetServerSelectActivity$Type2"
+                android:exported="false"
+                android:fitsSystemWindows="false"
+                android:label="@string/select">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_BIND" />
-				<action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
-				<action android:name="android.appwidget.action.APPWIDGET_DELETED" />
-				<action android:name="android.appwidget.action.APPWIDGET_DISABLED" />
-				<action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
-				<action android:name="android.appwidget.action.APPWIDGET_HOST_RESTORED" />
-				<action android:name="android.appwidget.action.APPWIDGET_UPDATE_OPTIONS" />
-				<action android:name="android.appwidget.action.APPWIDGET_PICK" />
-				<action android:name="android.appwidget.action.APPWIDGET_RESTORED" />
-				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
-            <meta-data android:name="android.appwidget.provider"
-                android:resource="@xml/ping_widget_3" />
+        </activity>
+        <activity
+                android:name=".widget.WidgetServerSelectActivity$Type3"
+                android:exported="false"
+                android:fitsSystemWindows="false"
+                android:label="@string/select">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
+        </activity>
+        <activity
+                android:name=".widget.WidgetsEditorActivity"
+                android:exported="false"
+                android:fitsSystemWindows="false"
+                android:label="@string/widgetEditor">
+        </activity>
+
+        <receiver android:name=".widget.PingWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_BIND"/>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+                <action android:name="android.appwidget.action.APPWIDGET_DELETED"/>
+                <action android:name="android.appwidget.action.APPWIDGET_DISABLED"/>
+                <action android:name="android.appwidget.action.APPWIDGET_ENABLED"/>
+                <action android:name="android.appwidget.action.APPWIDGET_HOST_RESTORED"/>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE_OPTIONS"/>
+                <action android:name="android.appwidget.action.APPWIDGET_PICK"/>
+                <action android:name="android.appwidget.action.APPWIDGET_RESTORED"/>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+
+            <meta-data
+                    android:name="android.appwidget.provider"
+                    android:resource="@xml/ping_widget"/>
         </receiver>
-		<receiver android:name=".widget.PingWidget$PingHandler">
-			<intent-filter>
-                <action android:name="update" />
+        <receiver android:name=".widget.PingWidget$Type2">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_BIND"/>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+                <action android:name="android.appwidget.action.APPWIDGET_DELETED"/>
+                <action android:name="android.appwidget.action.APPWIDGET_DISABLED"/>
+                <action android:name="android.appwidget.action.APPWIDGET_ENABLED"/>
+                <action android:name="android.appwidget.action.APPWIDGET_HOST_RESTORED"/>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE_OPTIONS"/>
+                <action android:name="android.appwidget.action.APPWIDGET_PICK"/>
+                <action android:name="android.appwidget.action.APPWIDGET_RESTORED"/>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>
-		</receiver>
-		
-		<service 
-			android:name=".widget.PingWidget$ListViewUpdater"
-            android:permission="android.permission.BIND_REMOTEVIEWS"/>
+
+            <meta-data
+                    android:name="android.appwidget.provider"
+                    android:resource="@xml/ping_widget_2"/>
+        </receiver>
+        <receiver android:name=".widget.PingWidget$Type3">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_BIND"/>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+                <action android:name="android.appwidget.action.APPWIDGET_DELETED"/>
+                <action android:name="android.appwidget.action.APPWIDGET_DISABLED"/>
+                <action android:name="android.appwidget.action.APPWIDGET_ENABLED"/>
+                <action android:name="android.appwidget.action.APPWIDGET_HOST_RESTORED"/>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE_OPTIONS"/>
+                <action android:name="android.appwidget.action.APPWIDGET_PICK"/>
+                <action android:name="android.appwidget.action.APPWIDGET_RESTORED"/>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+
+            <meta-data
+                    android:name="android.appwidget.provider"
+                    android:resource="@xml/ping_widget_3"/>
+        </receiver>
+        <receiver android:name=".widget.PingWidget$PingHandler">
+            <intent-filter>
+                <action android:name="update"/>
+            </intent-filter>
+        </receiver>
+
+        <service
+                android:name=".widget.PingWidget$ListViewUpdater"
+                android:permission="android.permission.BIND_REMOTEVIEWS"/>
+
+        <activity android:name=".activity.ServerCrawlerConfigActivity">
+        </activity>
+
+        <receiver
+                android:name=".receivers.ServerCrawlerReceiver"
+                android:enabled="true"
+                android:exported="false">
+        </receiver>
     </application>
+
 </manifest>
