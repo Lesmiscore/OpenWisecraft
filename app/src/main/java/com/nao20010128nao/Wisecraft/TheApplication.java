@@ -59,7 +59,7 @@ class TheApplicationImpl extends Application implements com.nao20010128nao.Wisec
         implInstance = this;
 
         ///////
-        pcUserUUIDs = new Gson().fromJson(pref.getString("pcuseruuids", "{}"), PCUserUUIDMap.class);
+        pcUserUUIDs = Utils.newGson().fromJson(pref.getString("pcuseruuids", "{}"), PCUserUUIDMap.class);
         ///////
         InformationCommunicatorReceiver.startDisclosureRequestIfNeeded(this, this);
         genPassword();

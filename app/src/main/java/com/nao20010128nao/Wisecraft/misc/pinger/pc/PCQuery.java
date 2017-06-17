@@ -4,6 +4,7 @@ import android.annotation.*;
 import android.util.*;
 import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.BuildConfig;
+import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
 
@@ -11,7 +12,7 @@ import java.io.*;
 import java.net.*;
 
 public class PCQuery implements PingHost {
-    private Gson gson = new Gson();
+    private Gson gson = Utils.newGson();
     private String host;
     private int port;
     private long lastPing;

@@ -512,7 +512,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        new Thread(() -> pref.edit().putString("pcuseruuids", new Gson().toJson(TheApplication.pcUserUUIDs)).commit()).start();
+        new Thread(() -> pref.edit().putString("pcuseruuids", Utils.newGson().toJson(TheApplication.pcUserUUIDs)).commit()).start();
         if (serverIconBmp != null) serverIconBmp.recycle();
     }
 

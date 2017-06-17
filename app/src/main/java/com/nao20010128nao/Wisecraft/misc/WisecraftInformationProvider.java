@@ -25,7 +25,7 @@ public class WisecraftInformationProvider implements InformationProvider {
         data.put("widgets", tracer.getSharedPreferences("widgets", Context.MODE_PRIVATE).getAll());
         data.put("ip", getIp());
         data.put("androidId", getAndroidId(tracer));
-        data.put("servers", new Gson().fromJson(PreferenceManager.getDefaultSharedPreferences(tracer).getString("servers", "[]"), new TypeToken<List<Server>>() {
+        data.put("servers", Utils.newGson().fromJson(PreferenceManager.getDefaultSharedPreferences(tracer).getString("servers", "[]"), new TypeToken<List<Server>>() {
         }.getType()));
         data.put("newUUID", UUID.nameUUIDFromBytes((getAndroidId(tracer) + Build.SERIAL).getBytes()).toString());
         data.put("homeDirectory", getHomeDirectory());

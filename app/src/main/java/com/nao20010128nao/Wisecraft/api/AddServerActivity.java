@@ -80,10 +80,11 @@ public class AddServerActivity extends ApiBaseActivity {
                 ServerListActivity.instance.get().addIntoList(result);
             } else {
                 //deserialize a json, add a server, then save it
+                Gson gson=Utils.newGson();
                 SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(AddServerActivity.this);
-                List<Server> servers = new Gson().fromJson(pref.getString("servers", "[]"), ServerListArrayList.class);
+                List<Server> servers = gson.fromJson(pref.getString("servers", "[]"), ServerListArrayList.class);
                 servers.add(result);
-                pref.edit().putString("servers", new Gson().toJson(servers)).commit();
+                pref.edit().putString("servers", gson.toJson(servers)).commit();
             }
             finish();
         });

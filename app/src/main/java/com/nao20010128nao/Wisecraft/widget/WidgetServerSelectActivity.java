@@ -20,7 +20,7 @@ import java.util.*;
 abstract class WidgetServerSelectActivityImpl extends AppCompatActivity {
     RecyclerView rv;
     Adapter a;
-    Gson gson = new Gson();
+    Gson gson = Utils.newGson();
     SharedPreferences pref, widgetPref;
     int wid;
 

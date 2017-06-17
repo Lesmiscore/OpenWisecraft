@@ -35,7 +35,7 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         SharedPreferences widgetPref = getWidgetPref(context);
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        Gson gson = new Gson();
+        Gson gson = Utils.newGson();
         widgetPref.edit().putInt("_version", 2).putInt("_version.data", 0).commit();
         {/*
             int version=widgetPref.getInt("_version", 2);
@@ -104,19 +104,19 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
     }
 
     public static WidgetData getWidgetData(Context c, int wid) {
-        return new Gson().fromJson(getWidgetPref(c).getString(wid + ".data", "{}"), WidgetData.class);
+        return Utils.newGson().fromJson(getWidgetPref(c).getString(wid + ".data", "{}"), WidgetData.class);
     }
 
     public static void setWidgetData(Context c, int wid, WidgetData data) {
-        getWidgetPref(c).edit().putString(wid + ".data", new Gson().toJson(data)).commit();
+        getWidgetPref(c).edit().putString(wid + ".data", Utils.newGson().toJson(data)).commit();
     }
 
     public static Server getServer(Context c, int wid) {
-        return new Gson().fromJson(getWidgetPref(c).getString(wid + "", "{}"), Server.class);
+        return Utils.newGson().fromJson(getWidgetPref(c).getString(wid + "", "{}"), Server.class);
     }
 
     public static void setServer(Context c, int wid, Server data) {
-        getWidgetPref(c).edit().putString(wid + "", new Gson().toJson(data)).commit();
+        getWidgetPref(c).edit().putString(wid + "", Utils.newGson().toJson(data)).commit();
     }
 
     public static void setWidgetStatus(Context c, int wid, int status, boolean notify) {
@@ -135,13 +135,13 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 
     static void setupHandlers(RemoteViews rvs, Context context, int wid) {
         SharedPreferences widgetPref = getWidgetPref(context);
-        Server s = new Gson().fromJson(widgetPref.getString("" + wid, "{}"), Server.class);
+        Server s = Utils.newGson().fromJson(widgetPref.getString("" + wid, "{}"), Server.class);
         String addr = new StringBuilder("wisecraft://info/")
                 .append(s.ip)
                 .append('/')
                 .append(s.port)
                 .append('/')
-                .append(s.mode == 0 ? "PE" : "PC")
+                .append(s.mode == Protobufs.Server.Mode.PE ? "PE" : "PC")
                 .toString();
 
         rvs.setOnClickPendingIntent(R.id.update, PendingIntent.getBroadcast(context, wid, new Intent(context, PingWidget.PingHandler.class).setAction("update").putExtra("wid", wid), 0));
@@ -207,7 +207,7 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
             int wid = p2.getIntExtra("wid", 0);
             Log.d("WisecraftWidgets", "Update Issued: " + wid);
             SharedPreferences widgetPref = getWidgetPref(p1);
-            Gson gson = new Gson();
+            Gson gson = Utils.newGson();
             Server s = gson.fromJson(widgetPref.getString(wid + "", "{}"), Server.class);
             NormalServerPingProvider nspp = new NormalServerPingProvider();
             NonBrodRevPingHandler ph = new NonBrodRevPingHandler();
@@ -411,7 +411,7 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
             public void onCreate() {
                 SharedPreferences widgetPref = getWidgetPref(c);
                 if (widgetPref.contains(wid + ".players")) {
-                    array = new Gson().fromJson(widgetPref.getString(wid + ".players", "[]"), new TypeToken<ArrayList<String>>() {
+                    array = Utils.newGson().fromJson(widgetPref.getString(wid + ".players", "[]"), new TypeToken<ArrayList<String>>() {
                     }.getType());
                 }
                 for (String s : array) {

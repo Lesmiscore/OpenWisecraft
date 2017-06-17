@@ -860,4 +860,8 @@ public class Utils extends PingerUtils {
 
         return String.format(Locale.getDefault(), "%01d:%02d:%02d:%02d %03d", days, hours, minutes, seconds, millisec);
     }
+
+    public static Gson newGson(){
+        return new GsonBuilder().registerTypeAdapter(Protobufs.Server.Mode.class,new GsonModeConverter()).create();
+    }
 }

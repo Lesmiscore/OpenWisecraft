@@ -195,7 +195,7 @@ public class PingSerializeProvider {
                 if (resultClassNumber == 0x1005) {
                     result = new RawJsonReply(json);
                 } else {
-                    result = (PCQueryResult) new Gson().fromJson(json, resultClass);
+                    result = (PCQueryResult) Utils.newGson().fromJson(json, resultClass);
                 }
             }
             result.setRaw(json);

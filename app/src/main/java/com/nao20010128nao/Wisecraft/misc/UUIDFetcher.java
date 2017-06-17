@@ -32,7 +32,7 @@ public class UUIDFetcher implements Callable<Map<String, UUID>> {
         int requests = (int) Math.ceil(names.size() / PROFILES_PER_REQUEST);
         for (int i = 0; i < requests; i++) {
             HttpURLConnection connection = createConnection();
-            String body = new Gson().toJson(names.subList(i * 100, Math.min((i + 1) * 100, names.size())));
+            String body = Utils.newGson().toJson(names.subList(i * 100, Math.min((i + 1) * 100, names.size())));
             writeBody(connection, body);
             JsonArray array = (JsonArray) jsonParser.parse(new InputStreamReader(connection.getInputStream()));
             for (Object profile : array) {

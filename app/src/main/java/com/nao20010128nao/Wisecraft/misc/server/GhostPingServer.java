@@ -219,7 +219,7 @@ public class GhostPingServer extends Thread {
     }
 
     private Server[] getServers() {
-        Server[] sa = new Gson().fromJson(PreferenceManager.getDefaultSharedPreferences(TheApplication.instance).getString("servers", "[]"), Server[].class);
+        Server[] sa = Utils.newGson().fromJson(PreferenceManager.getDefaultSharedPreferences(TheApplication.instance).getString("servers", "[]"), Server[].class);
         return sa;
     }
 
