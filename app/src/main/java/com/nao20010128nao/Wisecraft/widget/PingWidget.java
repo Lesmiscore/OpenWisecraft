@@ -45,9 +45,9 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
 			 				if("_version".startsWith(key))continue;
 							
 						}
-						OldServer19[] sa=gson.fromJson(pref.getString("servers", "[]"), OldServer19[].class);
+						OldServerW1_3[] sa=gson.fromJson(pref.getString("servers", "[]"), OldServerW1_3[].class);
 						List<OldServer35> ns=new ArrayList<>();
-						for (OldServer19 s:sa) {
+						for (OldServerW1_3 s:sa) {
 							OldServer35 nso=new OldServer35();
 							nso.ip = s.ip;
 							nso.port = s.port;
