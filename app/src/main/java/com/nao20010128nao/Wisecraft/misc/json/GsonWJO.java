@@ -100,6 +100,21 @@ public class GsonWJO implements WisecraftJsonObject {
     }
 
     @Override
+    public boolean isNumber() {
+        return isPrimitive() && element.getAsJsonPrimitive().isNumber();
+    }
+
+    @Override
+    public boolean isString() {
+        return isPrimitive() && element.getAsJsonPrimitive().isString();
+    }
+
+    @Override
+    public boolean isPrimitive() {
+        return element.isJsonPrimitive();
+    }
+
+    @Override
     public boolean has(String memberName) {
         // TODO: Implement this method
         return element.getAsJsonObject().has(memberName);

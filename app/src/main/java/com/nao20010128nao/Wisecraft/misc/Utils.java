@@ -15,6 +15,7 @@ import android.text.style.*;
 import android.view.*;
 import android.webkit.*;
 import android.widget.*;
+import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.R;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.activity.*;
@@ -748,6 +749,17 @@ public class Utils extends PingerUtils {
         return null;
     }
 
+    public static Protobufs.Server.Mode jsonElementToMode(WisecraftJsonObject json){
+        if(!json.isPrimitive())throw new JsonParseException("Error: Not a primitive: "+json);
+        if(json.isNumber()){
+            return Protobufs.Server.Mode.forNumber(json.getAsInt());
+        }else if(json.isString()){
+            return Protobufs.Server.Mode.valueOf(json.getAsString().toUpperCase());
+        }else{
+            throw new JsonParseException("Error: Denied value: "+json);
+        }
+    }
+
     public static List<Server> jsonToServers(String json) {
         WisecraftJsonObject ja = WJOUtils.parse(json);
         List<Server> servers = new ArrayList<>();
@@ -765,7 +777,7 @@ public class Utils extends PingerUtils {
                 // mode 35
                 s.ip = entry.get("ip").getAsString();
                 s.port = entry.get("port").getAsInt();
-                s.mode = Protobufs.Server.Mode.forNumber(entry.get("mode").getAsInt());
+                s.mode = jsonElementToMode(entry.get("mode"));
                 if (entry.has("name")) {
                     // current structure
                     s.name = entry.get("name").getAsString();

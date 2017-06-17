@@ -30,6 +30,12 @@ public interface WisecraftJsonObject extends Iterable<WisecraftJsonObject> {
 
     boolean isJsonObject();
 
+    boolean isNumber();
+
+    boolean isString();
+
+    boolean isPrimitive();
+
     // JsonObject
     int size();
 

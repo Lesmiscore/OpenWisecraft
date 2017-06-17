@@ -1,6 +1,7 @@
 package com.nao20010128nao.Wisecraft.misc;
 
 import com.google.gson.*;
+import com.nao20010128nao.Wisecraft.misc.json.*;
 
 import java.lang.reflect.*;
 
@@ -10,15 +11,7 @@ import java.lang.reflect.*;
 public class GsonModeConverter implements JsonDeserializer<Protobufs.Server.Mode>,JsonSerializer<Protobufs.Server.Mode>{
     @Override
     public Protobufs.Server.Mode deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        if(!json.isJsonPrimitive())throw new JsonParseException("Error: Not a primitive: "+json);
-        JsonPrimitive prim=json.getAsJsonPrimitive();
-        if(prim.isNumber()){
-            return Protobufs.Server.Mode.forNumber(json.getAsInt());
-        }else if(prim.isString()){
-            return Protobufs.Server.Mode.valueOf(json.getAsString().toUpperCase());
-        }else{
-            throw new JsonParseException("Error: Denied value: "+json);
-        }
+        return Utils.jsonElementToMode(WJOUtils.from(json));
     }
 
     @Override
