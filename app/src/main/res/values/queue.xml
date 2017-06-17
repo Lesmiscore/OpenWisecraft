@@ -6,4 +6,7 @@
     <string name="reschedule">Re-schedule</string>
     <string name="yesWord">Yes</string>
     <string name="noWord">No</string>
+    <string name="serverFinderFound">Server Finder - [COUNT] servers found</string>
+    <string name="serverFinderChecked">Checked [PORTS] port(s)</string>
+    <string name="serverFinderFinished">Finished</string>
 </resources>

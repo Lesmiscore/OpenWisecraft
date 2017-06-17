@@ -37,7 +37,7 @@ public class ServerFinderService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         String ip = intent.getStringExtra(EXTRA_IP);
-        int mode = intent.getIntExtra(EXTRA_MODE, 0);
+        Protobufs.Server.Mode mode = (Protobufs.Server.Mode) intent.getSerializableExtra(EXTRA_MODE);
         int start = intent.getIntExtra(EXTRA_START_PORT, 0);
         int end = intent.getIntExtra(EXTRA_END_PORT, 0);
         explore(ip, start, end, mode);
@@ -53,8 +53,8 @@ public class ServerFinderService extends Service {
     private static Notification createProgressNotification(Context c, int now, int max, String tag, Map<Integer, ServerStatus> servers) {
         NotificationCompat.Builder ntf = new NotificationCompat.Builder(c);
         // Add title like "Server Finder - ** servers found"
-        ntf.setContentTitle("Server Finder - [COUNT] servers found".replace("[COUNT]", servers.size() + ""));
-        ntf.setContentText("Checked [PORTS] port(s)".replace("[PORTS]", now + ""));
+        ntf.setContentTitle(c.getResources().getString(R.string.serverFinderFound).replace("[COUNT]", servers.size() + ""));
+        ntf.setContentText(c.getResources().getString(R.string.serverFinderChecked).replace("[PORTS]", now + ""));
         ntf.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
         ntf.setColor(ThemePatcher.getMainColor(c));
         ntf.setProgress(max, now, false);
@@ -87,8 +87,8 @@ public class ServerFinderService extends Service {
     private static Notification createFinishedNotification(Context c, String tag, Map<Integer, ServerStatus> servers) {
         NotificationCompat.Builder ntf = new NotificationCompat.Builder(c);
         // Add title like "Server Finder - ** servers found"
-        ntf.setContentTitle("Server Finder - [COUNT] servers found".replace("[COUNT]", servers.size() + ""));
-        ntf.setContentText("Finished");
+        ntf.setContentTitle(c.getResources().getString(R.string.serverFinderFound).replace("[COUNT]", servers.size() + ""));
+        ntf.setContentText(c.getResources().getString(R.string.serverFinderFinished));
         ntf.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
         ntf.setColor(ThemePatcher.getMainColor(c));
         if (servers.size() != 0) {
@@ -98,7 +98,7 @@ public class ServerFinderService extends Service {
             for (int port : l) {
                 bts.addLine(servers.get(port).toString());
             }
-            bts.setSummaryText("Finished");
+            bts.setSummaryText(c.getResources().getString(R.string.serverFinderFinished));
             ntf.setStyle(bts);
         }
         ntf.setSmallIcon(R.drawable.ic_search_black_48dp);
@@ -107,7 +107,7 @@ public class ServerFinderService extends Service {
         return ntf.build();
     }
 
-    private String explore(final String ip, final int startPort, final int endPort, final int mode) {
+    private String explore(final String ip, final int startPort, final int endPort, final Protobufs.Server.Mode mode) {
         final String tag = Utils.randomText();
         sessions.get(tag).ip = ip;
         sessions.get(tag).start = startPort;
@@ -120,7 +120,7 @@ public class ServerFinderService extends Service {
 
                 int threads = Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(ServerFinderService.this).getString("parallels", "6"));
                 ServerPingProvider spp;
-                if (mode == 1) {
+                if (mode == Protobufs.Server.Mode.PC) {
                     spp = new PCMultiServerPingProvider(threads);
                 } else {
                     spp = new UnconnectedMultiServerPingProvider(threads);
@@ -184,7 +184,7 @@ public class ServerFinderService extends Service {
     }
 
     public class InternalBinder extends Binder {
-        public String startExploration(String ip, int mode, int start, int end) {
+        public String startExploration(String ip, Protobufs.Server.Mode mode, int start, int end) {
             return explore(ip, start, end, mode);
         }
 
@@ -218,7 +218,8 @@ public class ServerFinderService extends Service {
         public volatile String tag, ip;
         public volatile AsyncTask<Void, ServerStatus, Void> worker;
         public volatile boolean finished = false, notificationRemoved = false, activityClosed = true, cancelled = false;
-        public volatile int start, end, mode;
+        public volatile int start, end;
+        public volatile Protobufs.Server.Mode mode;
         ServerPingProvider pinger;
     }
 }
