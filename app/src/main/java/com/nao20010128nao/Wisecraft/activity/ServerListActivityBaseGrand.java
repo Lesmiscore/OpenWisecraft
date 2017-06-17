@@ -23,7 +23,7 @@ abstract class ServerListActivityBaseGrand extends WisecraftBaseActivity {
         resultDerived.call(requestCode, resultCode, data);
     }
 
-    public void addActivityResultReceiver(DispatchActivityResult dar) {
+    public final void addActivityResultReceiver(DispatchActivityResult dar) {
         resultDerived.add(dar);
     }
 

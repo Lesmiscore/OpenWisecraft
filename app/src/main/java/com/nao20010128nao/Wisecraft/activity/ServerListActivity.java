@@ -330,6 +330,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                     switch (resultCode) {
                         case Constant.ACTIVITY_RESULT_UPDATE:
                             Bundle obj = data.getBundleExtra("object");
+                            if(clicked<0)return false;
                             Server serv = list.get(clicked);
                             updater.putInQueue(serv, new PingHandlerImpl(true, data, true));
                             pinging.add(serv);
@@ -406,7 +407,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                             s = new Server();
                             s.ip = pe_ip.getText().toString();
                             s.port = Integer.valueOf(pe_port.getText().toString());
-                            s.mode = split.isChecked() ? 1 : 0;
+                            s.mode = split.isChecked() ? Protobufs.Server.Mode.PC : Protobufs.Server.Mode.PE;
                         }
                         if (!TextUtils.isEmpty(serverName.getText()))
                             s.name = serverName.getText().toString();
@@ -702,7 +703,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                     Server svr = new Server();
                     svr.ip = s[2];
                     svr.port = Integer.valueOf(s[3]);
-                    svr.mode = 0;
+                    svr.mode = Protobufs.Server.Mode.PE;
                     svr.name = s[1];
                     sv.add(svr);
                 } catch (NumberFormatException e) {
@@ -788,15 +789,15 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             sv.ping = 0;
             sv.response = spr;
             if (spr instanceof PEPingResult) {
-                sv.mode = 0;
+                sv.mode = Protobufs.Server.Mode.PE;
             } else if (spr instanceof PCQueryResult) {
-                sv.mode = 1;
+                sv.mode = Protobufs.Server.Mode.PC;
             } else if (spr instanceof SprPair) {
                 SprPair pair = (SprPair) spr;
                 if (pair.getA() instanceof PEPingResult | pair.getB() instanceof PEPingResult) {
-                    sv.mode = 0;
+                    sv.mode = Protobufs.Server.Mode.PE;
                 } else if (pair.getA() instanceof PCQueryResult | pair.getB() instanceof PCQueryResult) {
-                    sv.mode = 1;
+                    sv.mode = Protobufs.Server.Mode.PC;
                 }
             }
             String _stat = null;
@@ -1123,7 +1124,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                     final CheckBox split = (CheckBox) dialog.findViewById(R.id.switchFirm);
                     final EditText serverName = (EditText) dialog.findViewById(R.id.serverName);
 
-                    if (data.mode == 1) {
+                    if (data.mode == Protobufs.Server.Mode.PC) {
                         if (data.port == 25565) {
                             pc_ip.setText(data.ip);
                         } else {
@@ -1133,8 +1134,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                         pe_ip.setText(data.ip);
                         pe_port.setText(data.port + "");
                     }
-                    split.setChecked(data.mode == 1);
-                    if (data.mode == 1) {
+                    split.setChecked(data.mode == Protobufs.Server.Mode.PC);
+                    if (data.mode == Protobufs.Server.Mode.PC) {
                         peFrame.setVisibility(View.GONE);
                         pcFrame.setVisibility(View.VISIBLE);
                         split.setText(R.string.pc);
@@ -1180,7 +1181,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                                     s = new Server();
                                     s.ip = pe_ip.getText().toString();
                                     s.port = Integer.valueOf(pe_port.getText().toString());
-                                    s.mode = 0;
+                                    s.mode = Protobufs.Server.Mode.PE;
                                 }
                                 if (!TextUtils.isEmpty(serverName.getText()))
                                     s.name = serverName.getText().toString();
@@ -1244,7 +1245,7 @@ sla.statLayout.setStatusAt(p3, 1);*/
 
                 all = new ArrayList<>(executes);
 
-                if (getItem(p3).mode == 1) {
+                if (getItem(p3).mode == Protobufs.Server.Mode.PC) {
                     executes.remove(all.get(5));
                     executes.remove(all.get(6));
                 }

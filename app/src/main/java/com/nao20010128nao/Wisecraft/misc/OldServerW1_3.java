@@ -4,7 +4,7 @@ package com.nao20010128nao.Wisecraft.misc;
 
 import com.google.gson.annotations.*;
 
-public class OldServer19 {
+public class OldServerW1_3 {
     @SerializedName("ip")
     public String ip;
     @SerializedName("port")
@@ -19,10 +19,10 @@ public class OldServer19 {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof OldServer19)) {
+        if (!(o instanceof OldServerW1_3)) {
             return false;
         }
-        OldServer19 os = (OldServer19) o;
+        OldServerW1_3 os = (OldServerW1_3) o;
         return os.ip.equals(ip) & os.port == port & os.isPC == isPC;
     }
 
@@ -31,8 +31,8 @@ public class OldServer19 {
         return ip + ":" + port;
     }
 
-    public OldServer19 cloneAsServer() {
-        OldServer19 s = new OldServer19();
+    public OldServerW1_3 cloneAsServer() {
+        OldServerW1_3 s = new OldServerW1_3();
         s.ip = ip;
         s.port = port;
         s.isPC = isPC;
