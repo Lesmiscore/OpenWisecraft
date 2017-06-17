@@ -79,6 +79,14 @@ public class Server {
         return s;
     }
 
+    public static Server from(OldServerW4_0 a) {
+        Server s = new Server();
+        s.ip = a.ip;
+        s.port = a.port;
+        s.mode = a.mode==1 ? Protobufs.Server.Mode.PC : Protobufs.Server.Mode.PE;
+        return s;
+    }
+
     public static Server from(Protobufs.Server a) {
         Server s = new Server();
         s.ip = a.getIp();

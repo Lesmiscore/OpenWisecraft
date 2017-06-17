@@ -26,10 +26,10 @@ public class AddServerActivity extends ApiBaseActivity {
                 port = values.getIntExtra(ApiActions.ADD_SERVER_PORT, -1);
             } else {
                 switch (result.mode) {
-                    case 0:
+                    case PE:
                         port = 19132;
                         break;
-                    case 1:
+                    case PC:
                         port = 25565;
                         break;
                 }
@@ -54,14 +54,14 @@ public class AddServerActivity extends ApiBaseActivity {
             } else if ("mccqp".equalsIgnoreCase(data.getScheme())) {
                 result.ip = data.getHost();
                 result.port = data.getPort();
-                result.mode = 1;//always PC
+                result.mode = Protobufs.Server.Mode.PC;//always PC
                 if (result.port == -1) result.port = 25565;
             } else {
                 finish();
                 return;
             }
         }
-        if (result.mode < 0 | result.mode > 1) {
+        if (result.mode == null) {
             finish();
             return;
         }
@@ -72,7 +72,7 @@ public class AddServerActivity extends ApiBaseActivity {
         lv.setAdapter(adapter);
         adapter.add(getResources().getString(R.string.ipAddress), result.ip);
         adapter.add(getResources().getString(R.string.port_single), result.port + "");
-        adapter.add(getResources().getString(R.string.kind), getResources().getString(result.mode == 0 ? R.string.peServer : R.string.pcServer));
+        adapter.add(getResources().getString(R.string.kind), getResources().getString(result.mode == Protobufs.Server.Mode.PE ? R.string.peServer : R.string.pcServer));
 
         findViewById(R.id.yes).setOnClickListener(v -> {
             if (ServerListActivity.instance.get() != null) {

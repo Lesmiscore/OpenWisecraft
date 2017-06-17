@@ -79,7 +79,7 @@ public class Utils extends PingerUtils {
             Server wcs = new Server();
             wcs.ip = obj.ip;
             wcs.port = obj.port;
-            wcs.mode = obj.isPE ? 0 : 1;
+            wcs.mode = obj.isPE ? Protobufs.Server.Mode.PE : Protobufs.Server.Mode.PC;
             result.add(wcs);
         }
         return result;
@@ -311,7 +311,7 @@ public class Utils extends PingerUtils {
         Server s = new Server();
         s.ip = ip;
         s.port = port;
-        s.mode = mode;
+        s.mode = Protobufs.Server.Mode.forNumber(mode);
         return s;
     }
 
@@ -325,7 +325,7 @@ public class Utils extends PingerUtils {
     public static void putServerIntoBundle(Bundle bnd, Server s) {
         bnd.putString("com.nao20010128nao.Wisecraft.misc.Server.ip", s.ip);
         bnd.putInt("com.nao20010128nao.Wisecraft.misc.Server.port", s.port);
-        bnd.putInt("com.nao20010128nao.Wisecraft.misc.Server.mode", s.mode);
+        bnd.putInt("com.nao20010128nao.Wisecraft.misc.Server.mode", s.mode.ordinal());
     }
 
     public static Bundle putServerIntoBundle(Server s) {
@@ -401,32 +401,36 @@ public class Utils extends PingerUtils {
         }
     }
 
-    public static int getModeFromIntent(Intent values) {
+    public static Protobufs.Server.Mode getModeFromIntent(Intent values) {
         if (values.hasExtra(ApiActions.SERVER_INFO_MODE)) {
-            return values.getIntExtra(ApiActions.SERVER_INFO_MODE, 0);
+            Object mode=values.getExtras().get(ApiActions.SERVER_INFO_MODE);
+            if(mode instanceof Protobufs.Server.Mode){
+                return (Protobufs.Server.Mode) mode;
+            }else if(mode instanceof Integer){
+                return Protobufs.Server.Mode.forNumber((int)mode);
+            }else{
+                return Protobufs.Server.Mode.PE;
+            }
         } else if (values.hasExtra(ApiActions.SERVER_INFO_ISPC)) {
-            return values.getBooleanExtra(ApiActions.SERVER_INFO_ISPC, false) ? 1 : 0;
+            return values.getBooleanExtra(ApiActions.SERVER_INFO_ISPC, false) ? Protobufs.Server.Mode.PC : Protobufs.Server.Mode.PE;
         } else {
-            return 0;
+            return Protobufs.Server.Mode.PE;
         }
     }
 
-    public static int parseModeName(String name) {
+    public static Protobufs.Server.Mode parseModeName(String name) {
         try {
-            return Integer.valueOf(name);
+            return Protobufs.Server.Mode.forNumber(Integer.valueOf(name));
         } catch (Throwable e) {
             name = name.toLowerCase();
-            //PE
             if (name.matches("^(pe|phone|android|ios|pocket)$")) {
-                return 0;
-            } else
-
-                //PC
-                if (name.matches("^(pc|desktop|windows|mac|linux|java)$")) {
-                    return 1;
-                }
+                return Protobufs.Server.Mode.PE;
+            }
+            if (name.matches("^(pc|desktop|windows|mac|linux|java)$")) {
+                return Protobufs.Server.Mode.PC;
+            }
         }
-        return 0;
+        return Protobufs.Server.Mode.PE;
     }
 
     public static <T> List<T> emptyList() {
@@ -756,12 +760,12 @@ public class Utils extends PingerUtils {
                 // mode 19
                 s.ip = entry.get("ip").getAsString();
                 s.port = entry.get("port").getAsInt();
-                s.mode = entry.get("isPC").getAsBoolean() ? 1 : 0;
+                s.mode = entry.get("isPC").getAsBoolean() ? Protobufs.Server.Mode.PC : Protobufs.Server.Mode.PE;
             } else if (entry.has("mode")) {
                 // mode 35
                 s.ip = entry.get("ip").getAsString();
                 s.port = entry.get("port").getAsInt();
-                s.mode = entry.get("mode").getAsInt();
+                s.mode = Protobufs.Server.Mode.forNumber(entry.get("mode").getAsInt());
                 if (entry.has("name")) {
                     // current structure
                     s.name = entry.get("name").getAsString();
@@ -770,7 +774,7 @@ public class Utils extends PingerUtils {
                 // so old!
                 s.ip = entry.get("ip").getAsString();
                 s.port = entry.get("port").getAsInt();
-                s.mode = 0;// forces PE to use
+                s.mode = Protobufs.Server.Mode.PE;// forces PE to use
             }
             servers.add(s);
         }
