@@ -77,14 +77,14 @@ public class PCServerPingProvider implements ServerPingProvider {
                     stat.mode = now.getKey().mode;
                     Log.d("PCSPP", stat.ip + ":" + stat.port + " " + stat.mode);
                     switch (now.getKey().mode) {
-                        case 0:
+                        case PE:
                             try {
                                 now.getValue().onPingFailed(now.getKey());
                             } catch (Throwable h) {
 
                             }
                             continue;
-                        case 1:
+                        case PC:
                             Log.d("PCSPP", "PC");
                             PCQuery query = new PCQuery(stat.ip, stat.port);
                             try {

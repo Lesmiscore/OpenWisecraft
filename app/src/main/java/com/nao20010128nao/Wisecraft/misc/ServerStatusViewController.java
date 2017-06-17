@@ -33,7 +33,7 @@ public interface ServerStatusViewController<T extends ServerStatusViewController
 
     T setTextColor(int color);
 
-    T setTarget(int mode);
+    T setTarget(Protobufs.Server.Mode mode);
 
     T setTarget(String target);
 

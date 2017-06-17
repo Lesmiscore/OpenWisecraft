@@ -17,11 +17,7 @@ public final class ServerSorter implements Comparator<Server> {
                 if (p1.mode == p2.mode) {
                     return 0;
                 } else {
-                    if (p1.mode == 0) {
-                        return 1;
-                    } else {
-                        return -1;
-                    }
+                    return p1.mode.compareTo(p2.mode);
                 }
             } else {
                 return p1.port > p2.port ? 1 : -1;

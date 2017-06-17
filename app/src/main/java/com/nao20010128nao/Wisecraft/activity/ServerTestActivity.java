@@ -34,7 +34,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
     ProgressDialog waitDialog;
     int times, port;
     String ip;
-    int mode;
+    Protobufs.Server.Mode mode;
     View dialog;
     SharedPreferences pref;
     RecyclerView rv;
@@ -86,10 +86,8 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
         rv.setAdapter(sl);
         ip = getIntent().getStringExtra("ip");
         port = getIntent().getIntExtra("port", -1);
-        mode = getIntent().getIntExtra("ispc", 0);
-        if (usesOldInstance & sl.getItemCount() != 0) {
-
-        } else {
+        mode = (Protobufs.Server.Mode) getIntent().getSerializableExtra("mode");
+        if (!(usesOldInstance & sl.getItemCount() != 0)) {
             new AlertDialog.Builder(this, ThemePatcher.getDefaultDialogStyle(this))
                     .setTitle(R.string.testServer)
                     .setView(dialog = getLayoutInflater().inflate(R.layout.test_server_dialog, null, false))

@@ -137,17 +137,17 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
                 adapter.addTab(UcpDetailsFragment.class, getResources().getString(R.string.data));
             } else {
                 switch (localStat.mode) {
-                    case 0:
+                    case PE:
                         adapter.addTab(DataFragmentPE.class, getResources().getString(R.string.data));
                         break;
-                    case 1:
+                    case PC:
                         adapter.addTab(DataFragmentPC.class, getResources().getString(R.string.data));
                         break;
                 }
             }
         }
 
-        if (!(hidePlugins | localStat.mode == 1)) {
+        if (!(hidePlugins | localStat.mode == Protobufs.Server.Mode.PC)) {
             if (localStat.response instanceof UnconnectedPing.UnconnectedPingResult) {
                 adapter.addTab(UcpInfoFragment.class, getResources().getString(R.string.plugins));
             } else {
@@ -350,7 +350,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
             }
             CompatTaskDescription td;
             switch (localStat.mode) {
-                case 1:
+                case PC:
                     if (serverIconBmp != null) {
                         td = new CompatTaskDescription(
                                 getTitle().toString(),
@@ -512,7 +512,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        new Thread(() -> pref.edit().putString("pcuseruuids", new Gson().toJson(TheApplication.instance.pcUserUUIDs)).commit()).start();
+        new Thread(() -> pref.edit().putString("pcuseruuids", new Gson().toJson(TheApplication.pcUserUUIDs)).commit()).start();
         if (serverIconBmp != null) serverIconBmp.recycle();
     }
 
@@ -523,7 +523,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
     }
 
     public void addModsTab() {
-        if ((!hideMods) | localStat.mode == 1) {
+        if ((!hideMods) | localStat.mode == Protobufs.Server.Mode.PC) {
             adapter.addTab(ModsFragment.class, getResources().getString(R.string.mods));
         }
     }
@@ -556,7 +556,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
                 iv.setScaleType(ImageView.ScaleType.FIT_CENTER);
             } else {
                 iv.setVisibility(View.GONE);
-                String uuid = TheApplication.instance.pcUserUUIDs.get(playerName);
+                String uuid = TheApplication.pcUserUUIDs.get(playerName);
                 sff.requestLoadSkin(playerName, uuid, new Handler());
                 iv.setImageBitmap(null);
             }
@@ -729,7 +729,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 
                 ServerStatus localStat = getParentActivity().localStat;
                 ServerPingResult resp = localStat.response;
-                if (pref.getBoolean("showPcUserFace", false) & localStat.mode == 1 & canInflateSkinFaceList()) {
+                if (pref.getBoolean("showPcUserFace", false) & localStat.mode == Protobufs.Server.Mode.PC & canInflateSkinFaceList()) {
                     getParentActivity().skinFaceImages = new ArrayList<>();
                     getParentActivity().sff = new SkinFaceFetcher(new SkinFetcher());
                     player = getParentActivity().new PCUserFaceAdapter();
@@ -760,7 +760,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
                             final ArrayList<String> sort = new ArrayList<>();
                             for (Reply.Player o : rep.players.sample) {
                                 sort.add(o.name);
-                                TheApplication.instance.pcUserUUIDs.put(o.name, o.id);
+                                TheApplication.pcUserUUIDs.put(o.name, o.id);
                             }
                             if (pref.getBoolean("sortPlayerNames", true))
                                 Collections.sort(sort);
@@ -780,7 +780,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
                             final ArrayList<String> sort = new ArrayList<>();
                             for (Reply19.Player o : rep.players.sample) {
                                 sort.add(o.name);
-                                TheApplication.instance.pcUserUUIDs.put(o.name, o.id);
+                                TheApplication.pcUserUUIDs.put(o.name, o.id);
                             }
                             if (pref.getBoolean("sortPlayerNames", true))
                                 Collections.sort(sort);
@@ -800,7 +800,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
                             final ArrayList<String> sort = new ArrayList<>();
                             for (WisecraftJsonObject o : rep.get("players").get("sample")) {
                                 sort.add(o.get("name").getAsString());
-                                TheApplication.instance.pcUserUUIDs.put(o.get("name").getAsString(), o.get("id").getAsString());
+                                TheApplication.pcUserUUIDs.put(o.get("name").getAsString(), o.get("id").getAsString());
                             }
                             if (pref.getBoolean("sortPlayerNames", true))
                                 Collections.sort(sort);

@@ -73,8 +73,8 @@ public class PingWidgetEditorViewHolder extends FindableViewHolder implements Se
         return this;
     }
 
-    public PingWidgetEditorViewHolder setTarget(int mode) {
-        return setTarget(mode == 0 ? "PE" : "PC");
+    public PingWidgetEditorViewHolder setTarget(Protobufs.Server.Mode mode) {
+        return setTarget(mode == Protobufs.Server.Mode.PE ? "PE" : "PC");
     }
 
     public PingWidgetEditorViewHolder setTarget(String target) {

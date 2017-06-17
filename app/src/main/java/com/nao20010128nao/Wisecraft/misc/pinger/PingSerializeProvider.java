@@ -51,7 +51,7 @@ public class PingSerializeProvider {
             dos.writeLong(server.ping);
             dos.writeUTF(server.ip);
             dos.writeInt(server.port);
-            dos.writeInt(server.mode);
+            dos.writeInt(server.mode.getNumber());
         } catch (IOException e) {
             WisecraftError.report("PingSerializeProvider#doRawDumpForFile", e);
         }
@@ -123,7 +123,7 @@ public class PingSerializeProvider {
             result.ping = dis.readLong();
             result.ip = dis.readUTF();
             result.port = dis.readInt();
-            result.mode = dis.readInt();
+            result.mode = Protobufs.Server.Mode.forNumber(dis.readInt());
             return result;
         } catch (IOException e) {
             return null;

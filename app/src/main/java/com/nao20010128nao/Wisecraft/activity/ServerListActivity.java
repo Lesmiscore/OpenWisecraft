@@ -1200,7 +1200,7 @@ sla.statLayout.setStatusAt(p3, 1);*/
                             }).
                             show();
                 }, R.string.edit));
-                executes.add(3, new Duo<>(() -> sla.startActivity(new Intent(sla, ServerTestActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port).putExtra("ispc", getItem(p3).mode)), R.string.testServer));
+                executes.add(3, new Duo<>(() -> sla.startActivity(new Intent(sla, ServerTestActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port).putExtra("mode", getItem(p3).mode)), R.string.testServer));
                 executes.add(4, new Duo<>(() -> sla.startActivity(new Intent(sla, RCONActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port)), R.string.rcon));
                 executes.add(5, new Duo<>(() -> new Thread(() -> {
                     File servLst = new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt");

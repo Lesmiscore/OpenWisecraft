@@ -77,7 +77,7 @@ public class UnconnectedServerPingProvider implements ServerPingProvider {
                     stat.mode = now.getKey().mode;
                     Log.d("UPP", stat.ip + ":" + stat.port + " " + stat.mode);
                     switch (now.getKey().mode) {
-                        case 0:
+                        case PE:
                             try {
                                 UnconnectedPing.UnconnectedPingResult res = UnconnectedPing.doPing(stat.ip, stat.port);
                                 stat.response = res;
@@ -89,7 +89,7 @@ public class UnconnectedServerPingProvider implements ServerPingProvider {
                                 continue;
                             }
                             break;
-                        case 1:
+                        case PC:
                             try {
                                 now.getValue().onPingFailed(now.getKey());
                             } catch (Throwable h) {

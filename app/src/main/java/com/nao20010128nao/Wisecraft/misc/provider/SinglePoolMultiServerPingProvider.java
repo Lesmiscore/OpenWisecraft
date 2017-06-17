@@ -84,7 +84,7 @@ public class SinglePoolMultiServerPingProvider implements ServerPingProvider {
                         now.getKey().cloneInto(stat);
                         Log.d("SPMSPP", stat.ip + ":" + stat.port + " " + stat.mode);
                         switch (now.getKey().mode) {
-                            case 0: {
+                            case PE: {
                                 Log.d("SPMSPP", "PE");
                                 PEQuery query = new PEQuery(stat.ip, stat.port);
                                 try {
@@ -121,7 +121,7 @@ public class SinglePoolMultiServerPingProvider implements ServerPingProvider {
                                 }
                             }
                             break;
-                            case 1: {
+                            case PC: {
                                 Log.d("SPMSPP", "PC");
                                 PCQuery query = new PCQuery(stat.ip, stat.port);
                                 try {

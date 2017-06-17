@@ -77,7 +77,7 @@ public class NormalServerPingProvider implements ServerPingProvider {
                     now.getKey().cloneInto(stat);
                     Log.d("NSPP", stat.ip + ":" + stat.port + " " + stat.mode);
                     switch (now.getKey().mode) {
-                        case 0: {
+                        case PE: {
                             Log.d("NSPP", "PE");
                             PEQuery query = new PEQuery(stat.ip, stat.port);
                             try {
@@ -114,7 +114,7 @@ public class NormalServerPingProvider implements ServerPingProvider {
                             }
                         }
                         break;
-                        case 1: {
+                        case PC: {
                             Log.d("NSPP", "PC");
                             PCQuery query = new PCQuery(stat.ip, stat.port);
                             try {

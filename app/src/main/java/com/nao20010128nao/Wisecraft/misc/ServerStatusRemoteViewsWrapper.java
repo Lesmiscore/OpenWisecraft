@@ -86,8 +86,8 @@ public class ServerStatusRemoteViewsWrapper implements ServerStatusViewControlle
         return this;
     }
 
-    public ServerStatusRemoteViewsWrapper setTarget(int mode) {
-        return setTarget(mode == 0 ? "PE" : "PC");
+    public ServerStatusRemoteViewsWrapper setTarget(Protobufs.Server.Mode mode) {
+        return setTarget(mode == Protobufs.Server.Mode.PE ? "PE" : "PC");
     }
 
     public ServerStatusRemoteViewsWrapper setTarget(String target) {

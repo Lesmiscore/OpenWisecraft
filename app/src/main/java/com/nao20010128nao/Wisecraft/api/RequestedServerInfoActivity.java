@@ -39,10 +39,10 @@ public class RequestedServerInfoActivity extends ApiBaseActivity {
                 port = values.getIntExtra(ApiActions.SERVER_INFO_PORT, -1);
             } else {
                 switch (result.mode) {
-                    case 0:
+                    case PE:
                         port = 19132;
                         break;
-                    case 1:
+                    case PC:
                         port = 25565;
                         break;
                 }
@@ -69,7 +69,7 @@ public class RequestedServerInfoActivity extends ApiBaseActivity {
                 return;
             }
         }
-        if (result.mode < 0 | result.mode > 1) {
+        if (result.mode == null) {
             finish();
             return;
         }

@@ -6,6 +6,7 @@ import android.support.v7.app.*;
 import android.support.v7.widget.*;
 import android.view.*;
 import android.widget.*;
+import com.annimon.stream.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.serverList.*;
@@ -74,11 +75,12 @@ public class WidgetsEditorActivity extends AppCompatActivity {
 
     List<String> listWidgets() {
         ArrayList<String> list = new ArrayList<>();
-        for (String s : widgetPref.getAll().keySet())
-            if (s.endsWith(".data")) continue;
-            else if (s.endsWith(".status")) continue;
-            else if (s.startsWith("_version")) continue;
-            else list.add(s);
+        Stream.of(widgetPref.getAll().keySet())
+                .filter(s->s.endsWith(".data"))
+                .filter(s->s.endsWith(".status"))
+                .filter(s->s.endsWith("_version"))
+                .sortBy(a->a)
+                .forEach(list::add);
         Collections.sort(list);
         return list;
     }
@@ -121,14 +123,14 @@ public class WidgetsEditorActivity extends AppCompatActivity {
         serverName.setVisibility(View.GONE);
 
         switch (sv.mode) {
-            case 0://PE
+            case PE:
                 pe_ip.setText(sv.ip);
                 pe_port.setText(sv.port + "");
                 split.setChecked(false);
                 pcFrame.setVisibility(View.GONE);
                 peFrame.setVisibility(View.VISIBLE);
                 break;
-            case 1://PC
+            case PC:
                 pc_ip.setText(sv.toString());
                 split.setChecked(true);
                 peFrame.setVisibility(View.GONE);
@@ -171,7 +173,7 @@ public class WidgetsEditorActivity extends AppCompatActivity {
                         s = new Server();
                         s.ip = pe_ip.getText().toString();
                         s.port = Integer.valueOf(pe_port.getText().toString());
-                        s.mode = 0;
+                        s.mode = Protobufs.Server.Mode.PE;
                     }
 
                     PingWidget.setServer(WidgetsEditorActivity.this, wid, s);

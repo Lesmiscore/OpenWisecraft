@@ -105,7 +105,7 @@ abstract class WidgetServerSelectActivityImpl extends AppCompatActivity {
                                 s = new Server();
                                 s.ip = pe_ip.getText().toString();
                                 s.port = Integer.valueOf(pe_port.getText().toString());
-                                s.mode = 0;
+                                s.mode = Protobufs.Server.Mode.PE;
                             }
 
                             widgetPref.edit().putString(wid + "", gson.toJson(s)).commit();
@@ -152,7 +152,7 @@ abstract class WidgetServerSelectActivityImpl extends AppCompatActivity {
             } else {
                 sb.append(sv.name).append(" (").append(sv).append(") ");
             }
-            sb.append(sv.mode == 0 ? "PE" : "PC");
+            sb.append(sv.mode == Protobufs.Server.Mode.PE ? "PE" : "PC");
             return sb.toString();
         }
 

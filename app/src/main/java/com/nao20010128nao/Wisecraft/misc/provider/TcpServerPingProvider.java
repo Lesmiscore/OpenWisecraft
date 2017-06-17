@@ -94,7 +94,7 @@ public class TcpServerPingProvider implements ServerPingProvider {
                             DataOutputStream dos = new DataOutputStream(sock.getOutputStream());
                             dos.writeUTF(s.ip);
                             dos.writeInt(s.port);
-                            dos.writeInt(s.mode);
+                            dos.writeInt(s.mode.getNumber());
                             dos.flush();
                             is = new BufferedInputStream(sock.getInputStream());
                             stat = PingSerializeProvider.loadFromServerDumpFile(is);
