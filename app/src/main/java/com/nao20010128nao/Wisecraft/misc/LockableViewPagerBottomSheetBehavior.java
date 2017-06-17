@@ -8,6 +8,7 @@ import biz.laenger.android.vpbs.*;
 
 public class LockableViewPagerBottomSheetBehavior<V extends View> extends ViewPagerBottomSheetBehavior<V> {
     private boolean mAllowUserDragging = true;
+
     /**
      * Default constructor for instantiating BottomSheetBehaviors.
      */
@@ -28,10 +29,10 @@ public class LockableViewPagerBottomSheetBehavior<V extends View> extends ViewPa
     public void setAllowUserDragging(boolean allowUserDragging) {
         mAllowUserDragging = allowUserDragging;
     }
-	
-	public boolean getAllowUserDragging(){
-		return mAllowUserDragging;
-	}
+
+    public boolean getAllowUserDragging() {
+        return mAllowUserDragging;
+    }
 
     @Override
     public boolean onInterceptTouchEvent(CoordinatorLayout parent, V child, MotionEvent event) {
@@ -41,19 +42,19 @@ public class LockableViewPagerBottomSheetBehavior<V extends View> extends ViewPa
         return super.onInterceptTouchEvent(parent, child, event);
     }
 
-	@Override
-	public boolean onTouchEvent(CoordinatorLayout parent, V child, MotionEvent event) {
-		if (!mAllowUserDragging) {
+    @Override
+    public boolean onTouchEvent(CoordinatorLayout parent, V child, MotionEvent event) {
+        if (!mAllowUserDragging) {
             return false;
         }
-		return super.onTouchEvent(parent, child, event);
-	}
+        return super.onTouchEvent(parent, child, event);
+    }
 
-	@Override
-	public boolean onStartNestedScroll(CoordinatorLayout coordinatorLayout, V child, View directTargetChild, View target, int nestedScrollAxes) {
-		if (!mAllowUserDragging) {
+    @Override
+    public boolean onStartNestedScroll(CoordinatorLayout coordinatorLayout, V child, View directTargetChild, View target, int nestedScrollAxes) {
+        if (!mAllowUserDragging) {
             return false;
         }
-		return super.onStartNestedScroll(coordinatorLayout, child, directTargetChild, target, nestedScrollAxes);
-	}
+        return super.onStartNestedScroll(coordinatorLayout, child, directTargetChild, target, nestedScrollAxes);
+    }
 }

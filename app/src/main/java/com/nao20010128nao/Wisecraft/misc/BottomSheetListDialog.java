@@ -7,52 +7,52 @@ import android.widget.*;
 import com.nao20010128nao.Wisecraft.*;
 
 public class BottomSheetListDialog extends ModifiedBottomSheetDialog {
-	private RecyclerView rv;
-	private TextView title;
-	
-	public BottomSheetListDialog(@NonNull Context context) {
+    private RecyclerView rv;
+    private TextView title;
+
+    public BottomSheetListDialog(@NonNull Context context) {
         super(context);
-		init(context);
+        init(context);
     }
 
     public BottomSheetListDialog(@NonNull Context context, @StyleRes int theme) {
         super(context, theme);
         init(context);
     }
-	
-	private void init(Context context){
-		setContentView(R.layout.bottom_sheet_list_dialog);
-		rv=(RecyclerView)findViewById(R.id.list);
-		title=(TextView)findViewById(R.id.title);
-	}
 
-	@Override
-	public void setTitle(CharSequence title0) {
-		title.setText(title0);
-	}
+    private void init(Context context) {
+        setContentView(R.layout.bottom_sheet_list_dialog);
+        rv = (RecyclerView) findViewById(R.id.list);
+        title = (TextView) findViewById(R.id.title);
+    }
 
-	@Override
-	public void setTitle(int titleId) {
-		title.setText(titleId);
-	}
-	
-	public RecyclerView getRecyclerView(){
-		return rv;
-	}
-	
-	public RecyclerView.Adapter getAdapter(){
-		return rv.getAdapter();
-	}
-	
-	public void setAdapter(RecyclerView.Adapter adap){
-		rv.setAdapter(adap);
-	}
+    @Override
+    public void setTitle(CharSequence title0) {
+        title.setText(title0);
+    }
 
-	public RecyclerView.LayoutManager getLayoutManager(){
-		return rv.getLayoutManager();
-	}
+    @Override
+    public void setTitle(int titleId) {
+        title.setText(titleId);
+    }
 
-	public void setLayoutManager(RecyclerView.LayoutManager lm){
-		rv.setLayoutManager(lm);
-	}
+    public RecyclerView getRecyclerView() {
+        return rv;
+    }
+
+    public RecyclerView.Adapter getAdapter() {
+        return rv.getAdapter();
+    }
+
+    public void setAdapter(RecyclerView.Adapter adap) {
+        rv.setAdapter(adap);
+    }
+
+    public RecyclerView.LayoutManager getLayoutManager() {
+        return rv.getLayoutManager();
+    }
+
+    public void setLayoutManager(RecyclerView.LayoutManager lm) {
+        rv.setLayoutManager(lm);
+    }
 }

@@ -1,147 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_height="match_parent"
-	android:layout_width="match_parent">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
 
-	<ScrollView
-		android:layout_height="match_parent"
-		android:layout_width="match_parent">
+    <ScrollView
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
 
-		<LinearLayout
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:orientation="vertical"
-			android:gravity="center_horizontal"
-			android:layout_gravity="fill">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:layout_gravity="fill">
 
-			<TextView
-				android:layout_height="wrap_content"
-				android:textAppearance="?android:attr/textAppearanceLarge"
-				android:layout_width="wrap_content"
-				android:text="@string/action"/>
+            <TextView
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:layout_width="wrap_content"
+                    android:text="@string/action"/>
 
-			<RadioGroup
-				android:layout_height="wrap_content"
-				android:layout_width="match_parent"
-				android:orientation="vertical"
-				android:gravity="center_horizontal"
-				android:id="@+id/action">
+            <RadioGroup
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal"
+                    android:id="@+id/action">
 
-				<RadioButton
-					android:layout_height="wrap_content"
-					android:layout_width="wrap_content"
-					android:text="@string/serverDetails"
-					android:id="@+id/serverDetails"
-					android:checked="true"/>
+                <RadioButton
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="@string/serverDetails"
+                        android:id="@+id/serverDetails"
+                        android:checked="true"/>
 
-				<RadioButton
-					android:layout_height="wrap_content"
-					android:layout_width="wrap_content"
-					android:text="@string/addServer"
-					android:id="@+id/addServer"/>
+                <RadioButton
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="@string/addServer"
+                        android:id="@+id/addServer"/>
 
-			</RadioGroup>
+            </RadioGroup>
 
-			<TextView
-				android:layout_height="wrap_content"
-				android:textAppearance="?android:attr/textAppearanceLarge"
-				android:layout_width="wrap_content"
-				android:text="@string/ipOrHost"
-				android:layout_marginTop="10dp"/>
+            <TextView
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:layout_width="wrap_content"
+                    android:text="@string/ipOrHost"
+                    android:layout_marginTop="10dp"/>
 
-			<EditText
-				android:layout_height="wrap_content"
-				android:layout_width="match_parent"
-				android:ems="10"
-				android:id="@+id/ip"
-				android:text="localhost"/>
+            <EditText
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:ems="10"
+                    android:id="@+id/ip"
+                    android:text="localhost"/>
 
-			<TextView
-				android:layout_height="wrap_content"
-				android:textAppearance="?android:attr/textAppearanceLarge"
-				android:layout_width="wrap_content"
-				android:text="@string/port_single"
-				android:layout_marginTop="10dp"/>
+            <TextView
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:layout_width="wrap_content"
+                    android:text="@string/port_single"
+                    android:layout_marginTop="10dp"/>
 
-			<EditText
-				android:layout_height="wrap_content"
-				android:layout_width="match_parent"
-				android:ems="10"
-				android:inputType="number"
-				android:id="@+id/port"
-				android:text="19132"/>
+            <EditText
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:id="@+id/port"
+                    android:text="19132"/>
 
-			<TextView
-				android:layout_height="wrap_content"
-				android:textAppearance="?android:attr/textAppearanceLarge"
-				android:layout_width="wrap_content"
-				android:text="@string/mode"
-				android:layout_marginTop="10dp"/>
+            <TextView
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:layout_width="wrap_content"
+                    android:text="@string/mode"
+                    android:layout_marginTop="10dp"/>
 
-			<RadioGroup
-				android:layout_height="wrap_content"
-				android:layout_width="match_parent"
-				android:orientation="vertical"
-				android:gravity="center_horizontal"
-				android:id="@+id/mode">
+            <RadioGroup
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal"
+                    android:id="@+id/mode">
 
-				<RadioButton
-					android:layout_height="wrap_content"
-					android:layout_width="wrap_content"
-					android:text="@string/peServer"
-					android:id="@+id/pe"
-					android:checked="true"/>
+                <RadioButton
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="@string/peServer"
+                        android:id="@+id/pe"
+                        android:checked="true"/>
 
-				<RadioButton
-					android:layout_height="wrap_content"
-					android:layout_width="wrap_content"
-					android:text="@string/pcServer"
-					android:id="@+id/pc"/>
+                <RadioButton
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="@string/pcServer"
+                        android:id="@+id/pc"/>
 
-			</RadioGroup>
+            </RadioGroup>
 
-			<TextView
-				android:layout_height="wrap_content"
-				android:textAppearance="?android:attr/textAppearanceLarge"
-				android:layout_width="wrap_content"
-				android:text="@string/result"
-				android:layout_marginTop="25dp"/>
+            <TextView
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:layout_width="wrap_content"
+                    android:text="@string/result"
+                    android:layout_marginTop="25dp"/>
 
-			<TextView
-				android:layout_height="wrap_content"
-				android:textAppearance="?android:attr/textAppearanceMedium"
-				android:layout_width="match_parent"
-				android:gravity="center"
-				android:textIsSelectable="true"
-				android:id="@+id/result"
-				android:visibility="gone"/>
+            <TextView
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:textIsSelectable="true"
+                    android:id="@+id/result"
+                    android:visibility="gone"/>
 
-			<LinearLayout
-				android:layout_height="wrap_content"
-				android:layout_width="match_parent"
-				android:orientation="horizontal"
-				android:gravity="center">
+            <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center">
 
-				<Button
-					android:layout_height="wrap_content"
-					android:layout_width="wrap_content"
-					android:text="@string/generate"
-					android:id="@+id/generate"/>
+                <Button
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="@string/generate"
+                        android:id="@+id/generate"/>
 
-				<Button
-					android:layout_height="wrap_content"
-					android:layout_width="wrap_content"
-					android:text="@string/copyToClipboard"
-					android:layout_marginLeft="15dp"
-					android:visibility="gone"
-					android:id="@+id/copy"/>
+                <Button
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="@string/copyToClipboard"
+                        android:layout_marginLeft="15dp"
+                        android:visibility="gone"
+                        android:id="@+id/copy"/>
 
-			</LinearLayout>
+            </LinearLayout>
 
-		</LinearLayout>
+        </LinearLayout>
 
-	</ScrollView>
+    </ScrollView>
 
 </FrameLayout>
 

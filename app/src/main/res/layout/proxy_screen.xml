@@ -1,55 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_height="match_parent"
-	android:layout_width="match_parent"
-	android:orientation="vertical">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
 
-	<LinearLayout
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		android:layout_weight="1.0"
-		android:orientation="vertical"
-		android:gravity="center_horizontal">
+    <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
 
-		<android.support.v7.widget.AppCompatTextView
-			android:layout_height="wrap_content"
-			android:textAppearance="?android:attr/textAppearanceLarge"
-			android:layout_width="wrap_content"
-			android:text="@string/connecting_colon"/>
+        <android.support.v7.widget.AppCompatTextView
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_width="wrap_content"
+                android:text="@string/connecting_colon"/>
 
-		<android.support.v7.widget.AppCompatTextView
-			android:layout_height="wrap_content"
-			android:textAppearance="?android:attr/textAppearanceMedium"
-			android:layout_width="wrap_content"
-			android:id="@+id/serverIp"/>
+        <android.support.v7.widget.AppCompatTextView
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="wrap_content"
+                android:id="@+id/serverIp"/>
 
-		<android.support.v7.widget.AppCompatTextView
-			android:layout_height="wrap_content"
-			android:textAppearance="?android:attr/textAppearanceLarge"
-			android:layout_width="wrap_content"
-			android:text="@string/connect_to"/>
+        <android.support.v7.widget.AppCompatTextView
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_width="wrap_content"
+                android:text="@string/connect_to"/>
 
-		<android.support.v7.widget.AppCompatTextView
-			android:layout_height="wrap_content"
-			android:textAppearance="?android:attr/textAppearanceMedium"
-			android:layout_width="wrap_content"
-			android:id="@+id/serverCon"/>
+        <android.support.v7.widget.AppCompatTextView
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="wrap_content"
+                android:id="@+id/serverCon"/>
 
-		<com.nao20010128nao.Wisecraft.misc.view.ExtendedImageView
-			android:layout_height="100dp"
-			android:layout_width="100dp"
-			android:src="@drawable/ic_launcher"
-			android:visibility="gone"/>
+        <com.nao20010128nao.Wisecraft.misc.view.ExtendedImageView
+                android:layout_height="100dp"
+                android:layout_width="100dp"
+                android:src="@drawable/ic_launcher"
+                android:visibility="gone"/>
 
-	</LinearLayout>
+    </LinearLayout>
 
-	<android.support.v7.widget.AppCompatButton
-		style="?android:attr/buttonBarButtonStyle"
-		android:layout_height="wrap_content"
-		android:layout_width="match_parent"
-		android:text="@string/stop_prox"
-		android:id="@+id/stop"/>
+    <android.support.v7.widget.AppCompatButton
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="@string/stop_prox"
+            android:id="@+id/stop"/>
 
 </LinearLayout>
 

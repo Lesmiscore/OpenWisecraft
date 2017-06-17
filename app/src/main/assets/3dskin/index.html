@@ -17,16 +17,17 @@
 
 Latest code should be available at https://github.com/earthiverse
 -->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>3d tests</title>
     <script src="js/2dskin.js" type="text/javascript"></script>
     <script src="js/three.min.js" type="text/javascript"></script>
     <script src="js/webgl_check.js" type="text/javascript"></script>
-    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lato" media="all" />
-    <link rel="stylesheet" type="text/css" href="/background.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lato" media="all"/>
+    <link rel="stylesheet" type="text/css" href="/background.css" media="all"/>
     <style>
         
         body {
@@ -103,33 +104,34 @@ Latest code should be available at https://github.com/earthiverse
                 color: #FFFFFF;
                 font-weight: bold;
             }
+
     </style>
 </head>
 <body>
-    <canvas id="canvas" width="64" height="64"></canvas>
-    <div id="sidebar">
-        <strong>Toggle Visibility - Body Parts</strong>
-        <label><input id="headToggle" type="checkbox" checked />Head</label>
-        <label><input id="bodyToggle" type="checkbox" checked />Body</label>
-        <label><input id="leftArmToggle" type="checkbox" checked />Left Arm</label>
-        <label><input id="rightArmToggle" type="checkbox" checked />Right Arm</label>
-        <label><input id="leftLegToggle" type="checkbox" checked />Left Leg</label>
-        <label><input id="rightLegToggle" type="checkbox" checked />Right Leg</label>
+<canvas id="canvas" width="64" height="64"></canvas>
+<div id="sidebar">
+    <strong>Toggle Visibility - Body Parts</strong>
+    <label><input id="headToggle" type="checkbox" checked/>Head</label>
+    <label><input id="bodyToggle" type="checkbox" checked/>Body</label>
+    <label><input id="leftArmToggle" type="checkbox" checked/>Left Arm</label>
+    <label><input id="rightArmToggle" type="checkbox" checked/>Right Arm</label>
+    <label><input id="leftLegToggle" type="checkbox" checked/>Left Leg</label>
+    <label><input id="rightLegToggle" type="checkbox" checked/>Right Leg</label>
 
-        <strong>Toggle Visibility - Secondary Layer</strong>
-        <label><input id="head2Toggle" type="checkbox" checked />Head</label>
-        <label><input id="body2Toggle" type="checkbox" checked />Body</label>
-        <label><input id="leftArm2Toggle" type="checkbox" checked />Left Arm</label>
-        <label><input id="rightArm2Toggle" type="checkbox" checked />Right Arm</label>
-        <label><input id="leftLeg2Toggle" type="checkbox" checked />Left Leg</label>
-        <label><input id="rightLeg2Toggle" type="checkbox" checked />Right Leg</label>
-    </div>
-    <div id="model">
-    </div>
-    <div id="info">
-        3D Skin Viewer v2 by <a href="https://github.com/earthiverse/3D-Minecraft-Skin-Viewer">earthiverse</a><br />
-    </div>
-    <script type="text/javascript">
+    <strong>Toggle Visibility - Secondary Layer</strong>
+    <label><input id="head2Toggle" type="checkbox" checked/>Head</label>
+    <label><input id="body2Toggle" type="checkbox" checked/>Body</label>
+    <label><input id="leftArm2Toggle" type="checkbox" checked/>Left Arm</label>
+    <label><input id="rightArm2Toggle" type="checkbox" checked/>Right Arm</label>
+    <label><input id="leftLeg2Toggle" type="checkbox" checked/>Left Leg</label>
+    <label><input id="rightLeg2Toggle" type="checkbox" checked/>Right Leg</label>
+</div>
+<div id="model">
+</div>
+<div id="info">
+    3D Skin Viewer v2 by <a href="https://github.com/earthiverse/3D-Minecraft-Skin-Viewer">earthiverse</a><br/>
+</div>
+<script type="text/javascript">
         var scene, camera, renderer;
         var geometry, material, mesh;
 
@@ -995,6 +997,7 @@ Latest code should be available at https://github.com/earthiverse
             var rightLeg2 = scene.getObjectByName("rightLeg2", false);
             rightLeg2.visible = rightLeg2Toggle.checked;
         }
-    </script>
+
+</script>
 </body>
 </html>

@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	android:orientation="vertical"
-	android:gravity="center_horizontal">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
-	<android.support.v7.widget.AppCompatTextView
-		android:layout_height="wrap_content"
-		android:textAppearance="?android:attr/textAppearanceMedium"
-		android:layout_width="wrap_content"
-		android:text="@string/testTimes"/>
+    <android.support.v7.widget.AppCompatTextView
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_width="wrap_content"
+            android:text="@string/testTimes"/>
 
-	<android.support.v7.widget.AppCompatEditText
-		android:layout_height="wrap_content"
-		android:inputType="number"
-		android:layout_width="match_parent"
-		android:ems="10"
-		android:id="@+id/pingTimes"/>
+    <android.support.v7.widget.AppCompatEditText
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:layout_width="match_parent"
+            android:ems="10"
+            android:id="@+id/pingTimes"/>
 
 </LinearLayout>
 

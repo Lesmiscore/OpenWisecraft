@@ -10,23 +10,23 @@
         <item name="wcDefaultPreferenceTextColor">#000000</item>
         <item name="wcMenuTintColor">#ffffff</item>
         <item name="dialogTheme">@style/AppAlertDialog.Black</item>
-		<item name="toolbarStyle">?attr/wcToolbarTheme</item>
-		<item name="wcUnselectedTextColor">#000</item>
-		<item name="wcSelectedTextColor">#fff</item>
-		<item name="popupTheme">@style/Theme.AppCompat.Light.DarkActionBar</item>
-		<item name="android:windowContentTransitions">true</item>
-		<!--MaterialDrawer-->
+        <item name="toolbarStyle">?attr/wcToolbarTheme</item>
+        <item name="wcUnselectedTextColor">#000</item>
+        <item name="wcSelectedTextColor">#fff</item>
+        <item name="popupTheme">@style/Theme.AppCompat.Light.DarkActionBar</item>
+        <item name="android:windowContentTransitions">true</item>
+        <!--MaterialDrawer-->
         <item name="material_drawer_background">?android:attr/windowBackground</item>
         <item name="material_drawer_primary_text">@color/black</item>
         <item name="material_drawer_selected_text">?attr/material_drawer_primary_text</item>
-		<!--RCON-->
-		<item name="rconConsoleSendButtonStyle">@style/AppButton</item>
-		<item name="rconTabColor">#fff</item>
-		<!--AppButton-->
-		<item name="wcAppButtonTextColor">#fff</item>
-		<item name="wcAppButtonBgColor">#000</item>
+        <!--RCON-->
+        <item name="rconConsoleSendButtonStyle">@style/AppButton</item>
+        <item name="rconTabColor">#fff</item>
+        <!--AppButton-->
+        <item name="wcAppButtonTextColor">#fff</item>
+        <item name="wcAppButtonBgColor">#000</item>
     </style>
-    
+
     <style name="AppDialog.Black" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorAccent">#304FFE</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -37,7 +37,7 @@
         <item name="dialogTheme">@style/AppAlertDialog.Black</item>
         <item name="toolbarStyle">?attr/wcToolbarTheme</item>
     </style>
-    
+
     <style name="AppAlertDialog.Black" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorAccent">#304FFE</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -53,24 +53,24 @@
         <item name="windowNoTitle">true</item>
         <item name="preferenceTheme">@style/AppTheme.Preference</item>
     </style>
-    
+
     <style name="AppTheme.ServerInfo.Black" parent="AppTheme.NoActionBar.Black">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
-    
-	<style name="AppTheme.ServerGet.Black" parent="AppTheme.NoActionBar.Black">
-		<item name="wcBottomSheetDialogDecor">@layout/server_get_activity_select_servers_dialog_decor</item>
-		<item name="modifiedBottomSheetDialogTheme">@style/AppTheme.BottomSheetDialog.Black</item>
-	</style>
-	
-	<style name="AppTheme.Toolbar.Black" parent="Widget.AppCompat.Toolbar.Wisecraft">
-		<item name="colorControlNormal">#ffffff</item>
-		<item name="titleTextColor">#fff</item>
-		<item name="android:textColor">#fff</item>
-	</style>
 
-	<style name="AppTheme.BottomSheetDialog.Black" parent="Theme.LibCompat.Light.BottomSheetDialog">
-		<item name="wcBottomSheetDialogDecor">@layout/server_get_activity_select_servers_dialog_decor</item>
-	</style>
+    <style name="AppTheme.ServerGet.Black" parent="AppTheme.NoActionBar.Black">
+        <item name="wcBottomSheetDialogDecor">@layout/server_get_activity_select_servers_dialog_decor</item>
+        <item name="modifiedBottomSheetDialogTheme">@style/AppTheme.BottomSheetDialog.Black</item>
+    </style>
+
+    <style name="AppTheme.Toolbar.Black" parent="Widget.AppCompat.Toolbar.Wisecraft">
+        <item name="colorControlNormal">#ffffff</item>
+        <item name="titleTextColor">#fff</item>
+        <item name="android:textColor">#fff</item>
+    </style>
+
+    <style name="AppTheme.BottomSheetDialog.Black" parent="Theme.LibCompat.Light.BottomSheetDialog">
+        <item name="wcBottomSheetDialogDecor">@layout/server_get_activity_select_servers_dialog_decor</item>
+    </style>
 </resources>

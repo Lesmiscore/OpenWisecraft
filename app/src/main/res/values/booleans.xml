@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<bool name="isBeta">false</bool>
-	
-	<bool name="shouldExpandTab">false</bool>
-	<bool name="padMiddle">true</bool>
+    <bool name="isBeta">false</bool>
+
+    <bool name="shouldExpandTab">false</bool>
+    <bool name="padMiddle">true</bool>
 </resources>

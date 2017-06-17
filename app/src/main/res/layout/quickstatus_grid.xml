@@ -1,118 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_height="wrap_content"
-	android:layout_width="match_parent"
-	android:layout_margin="4dp">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_margin="4dp">
 
-	<LinearLayout
-		android:layout_width="fill_parent"
-		android:layout_height="match_parent"
-		android:orientation="vertical">
+    <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-		<LinearLayout
-			android:layout_height="wrap_content"
-			android:layout_width="match_parent"
-			android:orientation="horizontal">
+        <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="horizontal">
 
-			<TextView
-				style="@style/AppTheme.QuickStatus.SingleLineTextView"
-				android:layout_height="wrap_content"
-				android:textAppearance="?android:attr/textAppearanceLarge"
-				android:layout_width="match_parent"
-				android:text="ERROR"
-				android:gravity="center"
-				android:id="@+id/serverTitle"/>
+            <TextView
+                    style="@style/AppTheme.QuickStatus.SingleLineTextView"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:layout_width="match_parent"
+                    android:text="ERROR"
+                    android:gravity="center"
+                    android:id="@+id/serverTitle"/>
 
-		</LinearLayout>
+        </LinearLayout>
 
-		<LinearLayout
-			android:layout_height="match_parent"
-			android:layout_width="match_parent"
-			android:orientation="vertical"
-			android:layout_weight="1.0">
+        <LinearLayout
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1.0">
 
-			<LinearLayout
-				android:layout_height="wrap_content"
-				android:layout_width="match_parent"
-				android:orientation="horizontal">
+            <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal">
 
-				<TextView
-					style="@style/AppTheme.QuickStatus.SingleLineTextView"
-					android:layout_height="wrap_content"
-					android:textAppearance="?android:attr/textAppearanceLarge"
-					android:layout_width="match_parent"
-					android:text="ERROR"
-					android:id="@+id/serverName"
-					android:layout_weight="1.0"/>
+                <TextView
+                        style="@style/AppTheme.QuickStatus.SingleLineTextView"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:layout_width="match_parent"
+                        android:text="ERROR"
+                        android:id="@+id/serverName"
+                        android:layout_weight="1.0"/>
 
-				<TextView
-					style="@style/AppTheme.QuickStatus.SingleLineTextView"
-					android:layout_height="match_parent"
-					android:textAppearance="?android:attr/textAppearanceMedium"
-					android:layout_width="wrap_content"
-					android:text="XX"
-					android:gravity="center"
-					android:id="@+id/target"/>
+                <TextView
+                        style="@style/AppTheme.QuickStatus.SingleLineTextView"
+                        android:layout_height="match_parent"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:layout_width="wrap_content"
+                        android:text="XX"
+                        android:gravity="center"
+                        android:id="@+id/target"/>
 
-			</LinearLayout>
+            </LinearLayout>
 
-			<TextView
-				style="@style/AppTheme.QuickStatus.SingleLineTextView"
-				android:layout_height="wrap_content"
-				android:textAppearance="?android:attr/textAppearanceMedium"
-				android:layout_width="wrap_content"
-				android:text="ERROR"
-				android:id="@+id/serverAddress"/>
+            <TextView
+                    style="@style/AppTheme.QuickStatus.SingleLineTextView"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_width="wrap_content"
+                    android:text="ERROR"
+                    android:id="@+id/serverAddress"/>
 
-			<LinearLayout
-				android:layout_height="wrap_content"
-				android:layout_width="match_parent"
-				android:orientation="horizontal">
+            <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal">
 
-				<TextView
-					style="@style/AppTheme.QuickStatus.SingleLineTextView"
-					android:layout_height="wrap_content"
-					android:textAppearance="?android:attr/textAppearanceMedium"
-					android:layout_width="wrap_content"
-					android:text="-/-"
-					android:id="@+id/serverPlayers"
-					android:gravity="center"
-					android:layout_weight="1.0"/>
+                <TextView
+                        style="@style/AppTheme.QuickStatus.SingleLineTextView"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:layout_width="wrap_content"
+                        android:text="-/-"
+                        android:id="@+id/serverPlayers"
+                        android:gravity="center"
+                        android:layout_weight="1.0"/>
 
-				<TextView
-					android:layout_height="wrap_content"
-					android:textAppearance="?android:attr/textAppearanceMedium"
-					android:layout_width="wrap_content"
-					android:text="@string/notResponding"
-					android:id="@+id/pingMillis"
-					android:gravity="right"/>
+                <TextView
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:layout_width="wrap_content"
+                        android:text="@string/notResponding"
+                        android:id="@+id/pingMillis"
+                        android:gravity="right"/>
 
-			</LinearLayout>
+            </LinearLayout>
 
-		</LinearLayout>
+        </LinearLayout>
 
-		<com.nao20010128nao.Wisecraft.misc.view.ExtendedImageView
-			android:layout_height="4dp"
-			android:layout_width="match_parent"
-			android:id="@+id/statColor"/>
+        <com.nao20010128nao.Wisecraft.misc.view.ExtendedImageView
+                android:layout_height="4dp"
+                android:layout_width="match_parent"
+                android:id="@+id/statColor"/>
 
-	</LinearLayout>
+    </LinearLayout>
 
-	<FrameLayout
-		android:layout_height="match_parent"
-		android:layout_width="match_parent"
-		android:id="@+id/checkBackground"
-		android:visibility="gone">
+    <FrameLayout
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:id="@+id/checkBackground"
+            android:visibility="gone">
 
-		<ImageView
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			android:src="@drawable/ic_check_black_48dp"
-			android:layout_gravity="center"
-			android:id="@+id/checkMark"/>
+        <ImageView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_check_black_48dp"
+                android:layout_gravity="center"
+                android:id="@+id/checkMark"/>
 
-	</FrameLayout>
+    </FrameLayout>
 
 </FrameLayout>
 

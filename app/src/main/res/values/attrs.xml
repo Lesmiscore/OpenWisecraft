@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<declare-styleable name="RawResourceTextView">
-		<attr name="rawRes" format="string"/>
-		<attr name="async" format="boolean"/>
-	</declare-styleable>
-	<declare-styleable name="ColorPickerPreferenceCompat">
-		<attr name="color"/>
-	</declare-styleable>
-	<declare-styleable name="MasterDetailSettings">
-		<attr name="wcSelectedTextColor"/>
-		<attr name="wcUnselectedTextColor"/>
-	</declare-styleable>
-	<declare-styleable name="ServerGetActivity">
-		<attr name="wcMenuTintColor"/>
-		<attr name="wcSgaCheckColor"/>
-	</declare-styleable>
-	
-	<attr name="colorPickerPreferenceStyle" format="reference"/>
-	<attr name="wcToolbarTheme" format="reference"/>
-	<attr name="wcDefaultPreferenceTextColor" format="color"/>
-	<attr name="wcMenuTintColor" format="color"/>
-	<attr name="wcAppButtonTextColor" format="color"/>
-	<attr name="wcAppButtonBgColor" format="color"/>
-	<attr name="wcUnselectedTextColor" format="color"/>
-	<attr name="wcSelectedTextColor" format="color"/>
-	<attr name="wcSgaCheckColor" format="color"/>
+    <declare-styleable name="RawResourceTextView">
+        <attr name="rawRes" format="string"/>
+        <attr name="async" format="boolean"/>
+    </declare-styleable>
+    <declare-styleable name="ColorPickerPreferenceCompat">
+        <attr name="color"/>
+    </declare-styleable>
+    <declare-styleable name="MasterDetailSettings">
+        <attr name="wcSelectedTextColor"/>
+        <attr name="wcUnselectedTextColor"/>
+    </declare-styleable>
+    <declare-styleable name="ServerGetActivity">
+        <attr name="wcMenuTintColor"/>
+        <attr name="wcSgaCheckColor"/>
+    </declare-styleable>
+
+    <attr name="colorPickerPreferenceStyle" format="reference"/>
+    <attr name="wcToolbarTheme" format="reference"/>
+    <attr name="wcDefaultPreferenceTextColor" format="color"/>
+    <attr name="wcMenuTintColor" format="color"/>
+    <attr name="wcAppButtonTextColor" format="color"/>
+    <attr name="wcAppButtonBgColor" format="color"/>
+    <attr name="wcUnselectedTextColor" format="color"/>
+    <attr name="wcSelectedTextColor" format="color"/>
+    <attr name="wcSgaCheckColor" format="color"/>
 </resources>

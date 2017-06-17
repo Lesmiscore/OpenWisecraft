@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:orientation="vertical"
-	android:id="@+id/ynDecor">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:id="@+id/ynDecor">
 
-	<include
-		layout="@layout/design_bottom_sheet_dialog"
-		android:layout="@layout/design_bottom_sheet_dialog"
-		android:id="@+id/coordinator"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_weight="1.0"/>
+    <include
+            layout="@layout/design_bottom_sheet_dialog"
+            android:layout="@layout/design_bottom_sheet_dialog"
+            android:id="@+id/coordinator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"/>
 
-	<LinearLayout
-		android:layout_height="wrap_content"
-		android:layout_width="match_parent"
-		android:orientation="horizontal"
-		android:background="?android:attr/colorBackground">
+    <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:background="?android:attr/colorBackground">
 
-		<Button
-			style="?android:attr/buttonBarButtonStyle"
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			android:text="@android:string/yes"
-			android:layout_weight="1.0"
-			android:id="@+id/yes"/>
+        <Button
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@android:string/yes"
+                android:layout_weight="1.0"
+                android:id="@+id/yes"/>
 
-		<Button
-			style="?android:attr/buttonBarButtonStyle"
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			android:text="@android:string/no"
-			android:layout_weight="1.0"
-			android:id="@+id/no"/>
+        <Button
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@android:string/no"
+                android:layout_weight="1.0"
+                android:id="@+id/no"/>
 
-	</LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>
 

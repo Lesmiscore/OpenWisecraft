@@ -12,24 +12,24 @@
         <item name="wcDefaultPreferenceTextColor">#000000</item>
         <item name="wcMenuTintColor">#ffffff</item>
         <item name="dialogTheme">@style/AppAlertDialog.Violet</item>
-		<item name="toolbarStyle">?attr/wcToolbarTheme</item>
-		<item name="wcUnselectedTextColor">#000</item>
-		<item name="wcSelectedTextColor">#fff</item>
-		<item name="popupTheme">@style/Theme.AppCompat.Light.DarkActionBar</item>
-		<item name="wcSgaCheckColor">#000000</item>
-		<item name="android:windowContentTransitions">true</item>
-		<!--MaterialDrawer-->
+        <item name="toolbarStyle">?attr/wcToolbarTheme</item>
+        <item name="wcUnselectedTextColor">#000</item>
+        <item name="wcSelectedTextColor">#fff</item>
+        <item name="popupTheme">@style/Theme.AppCompat.Light.DarkActionBar</item>
+        <item name="wcSgaCheckColor">#000000</item>
+        <item name="android:windowContentTransitions">true</item>
+        <!--MaterialDrawer-->
         <item name="material_drawer_background">?android:attr/windowBackground</item>
         <item name="material_drawer_primary_text">@color/black</item>
         <item name="material_drawer_selected_text">?attr/material_drawer_primary_text</item>
-		<!--RCON-->
-		<item name="rconConsoleSendButtonStyle">@style/AppButton</item>
-		<item name="rconTabColor">#fff</item>
-		<!--AppButton-->
-		<item name="wcAppButtonTextColor">#fff</item>
-		<item name="wcAppButtonBgColor">#FF4081</item>
+        <!--RCON-->
+        <item name="rconConsoleSendButtonStyle">@style/AppButton</item>
+        <item name="rconTabColor">#fff</item>
+        <!--AppButton-->
+        <item name="wcAppButtonTextColor">#fff</item>
+        <item name="wcAppButtonBgColor">#FF4081</item>
     </style>
-    
+
     <style name="AppDialog.Violet" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorPrimary">#3F51B5</item>
         <item name="colorPrimaryDark">#303F9F</item>
@@ -42,7 +42,7 @@
         <item name="dialogTheme">@style/AppAlertDialog.Violet</item>
         <item name="toolbarStyle">?attr/wcToolbarTheme</item>
     </style>
-    
+
     <style name="AppAlertDialog.Violet" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorPrimary">#3F51B5</item>
         <item name="colorPrimaryDark">#303F9F</item>
@@ -55,7 +55,7 @@
         <item name="dialogTheme">@style/AppAlertDialog.Violet</item>
         <item name="toolbarStyle">?attr/wcToolbarTheme</item>
     </style>
-    
+
     <style name="AppTheme.NoActionBar.Violet" parent="AppTheme.Violet">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -67,18 +67,18 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
-	<style name="AppTheme.ServerGet.Violet" parent="AppTheme.NoActionBar.Violet">
-		<item name="wcBottomSheetDialogDecor">@layout/server_get_activity_select_servers_dialog_decor</item>
-		<item name="modifiedBottomSheetDialogTheme">@style/AppTheme.BottomSheetDialog.Violet</item>
-	</style>
-	
-	<style name="AppTheme.Toolbar.Violet" parent="Widget.AppCompat.Toolbar.Wisecraft">
-		<item name="colorControlNormal">#ffffff</item>
-		<item name="titleTextColor">#fff</item>
-		<item name="android:textColor">#fff</item>
-	</style>
+    <style name="AppTheme.ServerGet.Violet" parent="AppTheme.NoActionBar.Violet">
+        <item name="wcBottomSheetDialogDecor">@layout/server_get_activity_select_servers_dialog_decor</item>
+        <item name="modifiedBottomSheetDialogTheme">@style/AppTheme.BottomSheetDialog.Violet</item>
+    </style>
 
-	<style name="AppTheme.BottomSheetDialog.Violet" parent="Theme.LibCompat.Light.BottomSheetDialog">
-		<item name="wcBottomSheetDialogDecor">@layout/server_get_activity_select_servers_dialog_decor</item>
-	</style>
+    <style name="AppTheme.Toolbar.Violet" parent="Widget.AppCompat.Toolbar.Wisecraft">
+        <item name="colorControlNormal">#ffffff</item>
+        <item name="titleTextColor">#fff</item>
+        <item name="android:textColor">#fff</item>
+    </style>
+
+    <style name="AppTheme.BottomSheetDialog.Violet" parent="Theme.LibCompat.Light.BottomSheetDialog">
+        <item name="wcBottomSheetDialogDecor">@layout/server_get_activity_select_servers_dialog_decor</item>
+    </style>
 </resources>

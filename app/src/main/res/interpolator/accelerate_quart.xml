@@ -18,4 +18,4 @@
 -->
 
 <accelerateInterpolator xmlns:android="http://schemas.android.com/apk/res/android"
-        android:factor="2.0" />
+                        android:factor="2.0"/>

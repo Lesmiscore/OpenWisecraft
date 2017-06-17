@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:orientation="vertical">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
 
-	<ScrollView
-		android:layout_height="match_parent"
-		android:layout_width="match_parent"
-		android:id="@+id/scrollView"
-		android:layout_weight="1.0">
+    <ScrollView
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:id="@+id/scrollView"
+            android:layout_weight="1.0">
 
-		<include
-			layout="@layout/settings_server_list_style_editor_content"/>
+        <include
+                layout="@layout/settings_server_list_style_editor_content"/>
 
-	</ScrollView>
+    </ScrollView>
 
-	<LinearLayout
-		android:layout_height="wrap_content"
-		android:layout_width="match_parent"
-		android:orientation="horizontal">
+    <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal">
 
-		<Button
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			android:text="@android:string/ok"
-			android:layout_weight="1.0"
-			android:id="@+id/apply"/>
+        <Button
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@android:string/ok"
+                android:layout_weight="1.0"
+                android:id="@+id/apply"/>
 
-	</LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>
 

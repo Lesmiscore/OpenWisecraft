@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:orientation="vertical">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
 
-	<LinearLayout
-		android:layout_height="wrap_content"
-		android:layout_width="match_parent"
-		android:orientation="horizontal"
-		android:gravity="center_vertical"
-		android:id="@+id/serverImageAndName">
+    <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:id="@+id/serverImageAndName">
 
-		<com.nao20010128nao.Wisecraft.misc.view.ExtendedImageView
-			android:layout_height="64dp"
-			android:layout_width="64dp"
-			android:src="@drawable/ic_launcher"
-			android:id="@+id/serverIcon"/>
+        <com.nao20010128nao.Wisecraft.misc.view.ExtendedImageView
+                android:layout_height="64dp"
+                android:layout_width="64dp"
+                android:src="@drawable/ic_launcher"
+                android:id="@+id/serverIcon"/>
 
-		<TextView
-			android:layout_height="wrap_content"
-			android:textAppearance="?android:attr/textAppearanceMedium"
-			android:layout_width="wrap_content"
-			android:text="Medium Text"
-			android:id="@+id/serverTitle"
-			android:textColor="#000000"/>
+        <TextView
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="wrap_content"
+                android:text="Medium Text"
+                android:id="@+id/serverTitle"
+                android:textColor="#000000"/>
 
-	</LinearLayout>
+    </LinearLayout>
 
-	<android.support.v7.widget.RecyclerView
-		android:layout_height="match_parent"
-		android:layout_width="match_parent"
-		android:id="@+id/data"/>
+    <android.support.v7.widget.RecyclerView
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:id="@+id/data"/>
 
 </LinearLayout>
 

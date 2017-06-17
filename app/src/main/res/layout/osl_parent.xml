@@ -6,237 +6,237 @@
         android:layout_height="fill_parent"
         android:orientation="vertical">
 
-	<android.support.v7.widget.CardView
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		card_view:cardCornerRadius="4dp"
-		android:layout_marginLeft="10dp"
-		android:layout_marginRight="10dp"
-		android:layout_marginTop="5dp"
-		android:id="@+id/cardView1">
+    <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            card_view:cardCornerRadius="4dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:id="@+id/cardView1">
 
-		<LinearLayout
-			android:layout_height="wrap_content"
-			android:layout_width="match_parent"
-			android:orientation="vertical">
+        <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="vertical">
 
-			<TextView
-				android:layout_height="wrap_content"
-				android:textAppearance="?android:attr/textAppearanceLarge"
-				android:layout_width="wrap_content"
-				android:text="@string/aosp"
-				android:layout_marginLeft="10dp"
-				android:layout_marginRight="10dp"/>
+            <TextView
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:layout_width="wrap_content"
+                    android:text="@string/aosp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"/>
 
-			<TextView
-				android:layout_height="wrap_content"
-				android:textAppearance="?android:attr/textAppearanceSmall"
-				android:layout_width="wrap_content"
-				android:text="@string/aosp_license"
-				android:typeface="monospace"/>
+            <TextView
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:layout_width="wrap_content"
+                    android:text="@string/aosp_license"
+                    android:typeface="monospace"/>
 
-		</LinearLayout>
+        </LinearLayout>
 
-	</android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>
 
-	<android.support.v7.widget.CardView
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		card_view:cardCornerRadius="4dp"
-		android:layout_marginLeft="10dp"
-		android:layout_marginRight="10dp"
-		android:layout_marginTop="5dp"
-		android:id="@+id/cardView2">
+    <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            card_view:cardCornerRadius="4dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:id="@+id/cardView2">
 
-		<LinearLayout
-			android:layout_height="wrap_content"
-			android:layout_width="match_parent"
-			android:orientation="vertical">
+        <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="vertical">
 
-			<TextView
-				android:layout_height="wrap_content"
-				android:textAppearance="?android:attr/textAppearanceLarge"
-				android:layout_width="wrap_content"
-				android:text="@string/gson"
-				android:layout_marginLeft="10dp"
-				android:layout_marginRight="10dp"/>
+            <TextView
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:layout_width="wrap_content"
+                    android:text="@string/gson"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"/>
 
-			<TextView
-				android:layout_height="wrap_content"
-				android:textAppearance="?android:attr/textAppearanceSmall"
-				android:layout_width="wrap_content"
-				android:text="@string/gson_license"
-				android:typeface="monospace"/>
+            <TextView
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:layout_width="wrap_content"
+                    android:text="@string/gson_license"
+                    android:typeface="monospace"/>
 
-		</LinearLayout>
+        </LinearLayout>
 
-	</android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>
 
-	<android.support.v7.widget.CardView
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		card_view:cardCornerRadius="4dp"
-		android:layout_marginLeft="10dp"
-		android:layout_marginRight="10dp"
-		android:layout_marginTop="5dp"
-		android:id="@+id/cardView3">
+    <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            card_view:cardCornerRadius="4dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:id="@+id/cardView3">
 
-		<LinearLayout
-			android:layout_height="wrap_content"
-			android:layout_width="match_parent"
-			android:orientation="vertical">
+        <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="vertical">
 
-			<TextView
-				android:layout_height="wrap_content"
-				android:textAppearance="?android:attr/textAppearanceLarge"
-				android:layout_width="wrap_content"
-				android:text="@string/apacheHttp"
-				android:layout_marginLeft="10dp"
-				android:layout_marginRight="10dp"/>
+            <TextView
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:layout_width="wrap_content"
+                    android:text="@string/apacheHttp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"/>
 
-			<TextView
-				android:layout_height="wrap_content"
-				android:textAppearance="?android:attr/textAppearanceSmall"
-				android:layout_width="wrap_content"
-				android:text="@string/ahc_license"
-				android:typeface="monospace"/>
+            <TextView
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:layout_width="wrap_content"
+                    android:text="@string/ahc_license"
+                    android:typeface="monospace"/>
 
-		</LinearLayout>
+        </LinearLayout>
 
-	</android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>
 
-	<android.support.v7.widget.CardView
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		card_view:cardCornerRadius="4dp"
-		android:layout_marginLeft="10dp"
-		android:layout_marginRight="10dp"
-		android:layout_marginTop="5dp"
-		android:id="@+id/cardView4">
+    <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            card_view:cardCornerRadius="4dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:id="@+id/cardView4">
 
-		<LinearLayout
-			android:layout_height="wrap_content"
-			android:layout_width="match_parent"
-			android:orientation="vertical">
+        <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="vertical">
 
-			<TextView
-				android:layout_height="wrap_content"
-				android:textAppearance="?android:attr/textAppearanceLarge"
-				android:layout_width="wrap_content"
-				android:text="@string/nanohttpd"
-				android:layout_marginLeft="10dp"
-				android:layout_marginRight="10dp"/>
+            <TextView
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:layout_width="wrap_content"
+                    android:text="@string/nanohttpd"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"/>
 
-			<TextView
-				android:layout_height="wrap_content"
-				android:textAppearance="?android:attr/textAppearanceSmall"
-				android:layout_width="wrap_content"
-				android:text="@string/nanohttpd_license"
-				android:typeface="monospace"/>
+            <TextView
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:layout_width="wrap_content"
+                    android:text="@string/nanohttpd_license"
+                    android:typeface="monospace"/>
 
-		</LinearLayout>
+        </LinearLayout>
 
-	</android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>
 
-	<android.support.v7.widget.CardView
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		card_view:cardCornerRadius="4dp"
-		android:layout_marginLeft="10dp"
-		android:layout_marginRight="10dp"
-		android:layout_marginTop="5dp"
-		android:id="@+id/cardView5">
+    <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            card_view:cardCornerRadius="4dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:id="@+id/cardView5">
 
-		<LinearLayout
-			android:layout_height="wrap_content"
-			android:layout_width="match_parent"
-			android:orientation="vertical">
+        <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="vertical">
 
-			<TextView
-				android:layout_height="wrap_content"
-				android:textAppearance="?android:attr/textAppearanceLarge"
-				android:layout_width="wrap_content"
-				android:text="@string/jsoup"
-				android:layout_marginLeft="10dp"
-				android:layout_marginRight="10dp"/>
+            <TextView
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:layout_width="wrap_content"
+                    android:text="@string/jsoup"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"/>
 
-			<TextView
-				android:layout_height="wrap_content"
-				android:textAppearance="?android:attr/textAppearanceSmall"
-				android:layout_width="wrap_content"
-				android:text="@string/jsoup_license"
-				android:typeface="monospace"/>
+            <TextView
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:layout_width="wrap_content"
+                    android:text="@string/jsoup_license"
+                    android:typeface="monospace"/>
 
-		</LinearLayout>
+        </LinearLayout>
 
-	</android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>
 
-	<android.support.v7.widget.CardView
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		card_view:cardCornerRadius="4dp"
-		android:layout_marginLeft="10dp"
-		android:layout_marginRight="10dp"
-		android:layout_marginTop="5dp"
-		android:id="@+id/cardView6">
+    <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            card_view:cardCornerRadius="4dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:id="@+id/cardView6">
 
-		<LinearLayout
-			android:layout_height="wrap_content"
-			android:layout_width="match_parent"
-			android:orientation="vertical">
+        <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="vertical">
 
-			<TextView
-				android:layout_height="wrap_content"
-				android:textAppearance="?android:attr/textAppearanceLarge"
-				android:layout_width="wrap_content"
-				android:text="@string/calligraphy"
-				android:layout_marginLeft="10dp"
-				android:layout_marginRight="10dp"/>
+            <TextView
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:layout_width="wrap_content"
+                    android:text="@string/calligraphy"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"/>
 
-			<TextView
-				android:layout_height="wrap_content"
-				android:textAppearance="?android:attr/textAppearanceSmall"
-				android:layout_width="wrap_content"
-				android:text="@string/calligraphy_license"
-				android:typeface="monospace"/>
+            <TextView
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:layout_width="wrap_content"
+                    android:text="@string/calligraphy_license"
+                    android:typeface="monospace"/>
 
-		</LinearLayout>
+        </LinearLayout>
 
-	</android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>
 
-	<android.support.v7.widget.CardView
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		card_view:cardCornerRadius="4dp"
-		android:layout_marginLeft="10dp"
-		android:layout_marginRight="10dp"
-		android:layout_marginTop="5dp"
-		android:id="@+id/cardView7"
-		android:layout_marginBottom="8dp">
+    <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            card_view:cardCornerRadius="4dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:id="@+id/cardView7"
+            android:layout_marginBottom="8dp">
 
-		<LinearLayout
-			android:layout_height="wrap_content"
-			android:layout_width="match_parent"
-			android:orientation="vertical">
+        <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="vertical">
 
-			<TextView
-				android:layout_height="wrap_content"
-				android:textAppearance="?android:attr/textAppearanceLarge"
-				android:layout_width="wrap_content"
-				android:text="@string/ubuntu_font"
-				android:layout_marginLeft="10dp"
-				android:layout_marginRight="10dp"/>
+            <TextView
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:layout_width="wrap_content"
+                    android:text="@string/ubuntu_font"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"/>
 
-			<TextView
-				android:layout_height="wrap_content"
-				android:textAppearance="?android:attr/textAppearanceSmall"
-				android:layout_width="wrap_content"
-				android:text="@string/ubuntu_font_license"
-				android:typeface="monospace"/>
+            <TextView
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:layout_width="wrap_content"
+                    android:text="@string/ubuntu_font_license"
+                    android:typeface="monospace"/>
 
-		</LinearLayout>
+        </LinearLayout>
 
-	</android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>
 

@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:orientation="vertical"
-	android:layout_margin="5dp">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:layout_margin="5dp">
 
-	<TextView
-		android:layout_height="wrap_content"
-		android:textAppearance="?android:attr/textAppearanceMedium"
-		android:layout_width="match_parent"
-		android:text="@string/aboutAppText6"
-		android:gravity="center"/>
+    <TextView
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_width="match_parent"
+            android:text="@string/aboutAppText6"
+            android:gravity="center"/>
 
-	<TextView
-		android:layout_height="wrap_content"
-		android:textAppearance="?android:attr/textAppearanceSmall"
-		android:layout_width="match_parent"
-		android:text="@string/wisecraftToolsText"
-		android:gravity="center"/>
+    <TextView
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:text="@string/wisecraftToolsText"
+            android:gravity="center"/>
 
-	<Button
-		style="?android:attr/buttonBarButtonStyle"
-		android:layout_height="wrap_content"
-		android:layout_width="match_parent"
-		android:text="@string/gotoWisecraftTools"
-		android:id="@+id/gotoWisecraftTools"/>
+    <Button
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="@string/gotoWisecraftTools"
+            android:id="@+id/gotoWisecraftTools"/>
 
 </LinearLayout>
 

@@ -3,72 +3,74 @@ package com.nao20010128nao.Wisecraft.misc;
 import java.lang.reflect.*;
 import java.util.*;
 
-public class SuppliedHashMap<K,V> extends HashMap<K,V> 
-{
-	final Supplier<K,V> creator;
-	final boolean putWhenNotKnown;
-	public SuppliedHashMap(Supplier<K,V> creator){
-		this(creator,true);
-	}
+public class SuppliedHashMap<K, V> extends HashMap<K, V> {
+    final Supplier<K, V> creator;
+    final boolean putWhenNotKnown;
 
-	public SuppliedHashMap(Supplier<K,V> creator,boolean putWhenNotKnown){
-		this.creator=creator;
-		this.putWhenNotKnown=putWhenNotKnown;
-	}
-	
-	@Override
-	public V get(Object key) {
-		if(creator!=null & !containsKey(key)){
-			V v=creator.supply((K)key);
-			if(putWhenNotKnown){
-				put((K)key,v);
-			}
-			return v;
-		}
-		return super.get(key);
-	}
-	
-	public static <K,V> SuppliedHashMap<K,V> fromConstant(final V value,boolean putWhenNotKnown){
-		return new SuppliedHashMap<>(a -> value, putWhenNotKnown);
-	}
-	public static <K,V> SuppliedHashMap<K,V> fromClass(final Class<? extends V> clazz,boolean putWhenNotKnown){
-		return new SuppliedHashMap<>(a -> {
-			try {
-				return clazz.newInstance();
-			} catch (InstantiationException e) {
+    public SuppliedHashMap(Supplier<K, V> creator) {
+        this(creator, true);
+    }
 
-			} catch (IllegalAccessException e) {
+    public SuppliedHashMap(Supplier<K, V> creator, boolean putWhenNotKnown) {
+        this.creator = creator;
+        this.putWhenNotKnown = putWhenNotKnown;
+    }
 
-			}
-			return null;
-		}, putWhenNotKnown);
-	}
-	public static <K,V> SuppliedHashMap<K,V> fromClass(final Class<? extends V> clazz,final Class<K> klazz,boolean putWhenNotKnown){
-		return new SuppliedHashMap<>(a -> {
-			try {
-				return clazz.newInstance();
-			} catch (InstantiationException e) {
+    @Override
+    public V get(Object key) {
+        if (creator != null & !containsKey(key)) {
+            V v = creator.supply((K) key);
+            if (putWhenNotKnown) {
+                put((K) key, v);
+            }
+            return v;
+        }
+        return super.get(key);
+    }
 
-			} catch (IllegalAccessException e) {
+    public static <K, V> SuppliedHashMap<K, V> fromConstant(final V value, boolean putWhenNotKnown) {
+        return new SuppliedHashMap<>(a -> value, putWhenNotKnown);
+    }
 
-			}
-			try {
-				Constructor c = clazz.getDeclaredConstructor(klazz);
-				return (V) c.newInstance(a);
-			} catch (NoSuchMethodException e) {
+    public static <K, V> SuppliedHashMap<K, V> fromClass(final Class<? extends V> clazz, boolean putWhenNotKnown) {
+        return new SuppliedHashMap<>(a -> {
+            try {
+                return clazz.newInstance();
+            } catch (InstantiationException e) {
 
-			} catch (InstantiationException e) {
+            } catch (IllegalAccessException e) {
 
-			} catch (InvocationTargetException e) {
+            }
+            return null;
+        }, putWhenNotKnown);
+    }
 
-			} catch (SecurityException e) {
+    public static <K, V> SuppliedHashMap<K, V> fromClass(final Class<? extends V> clazz, final Class<K> klazz, boolean putWhenNotKnown) {
+        return new SuppliedHashMap<>(a -> {
+            try {
+                return clazz.newInstance();
+            } catch (InstantiationException e) {
 
-			} catch (IllegalAccessException e) {
+            } catch (IllegalAccessException e) {
 
-			} catch (IllegalArgumentException e) {
+            }
+            try {
+                Constructor c = clazz.getDeclaredConstructor(klazz);
+                return (V) c.newInstance(a);
+            } catch (NoSuchMethodException e) {
 
-			}
-			return null;
-		}, putWhenNotKnown);
-	}
+            } catch (InstantiationException e) {
+
+            } catch (InvocationTargetException e) {
+
+            } catch (SecurityException e) {
+
+            } catch (IllegalAccessException e) {
+
+            } catch (IllegalArgumentException e) {
+
+            }
+            return null;
+        }, putWhenNotKnown);
+    }
 }

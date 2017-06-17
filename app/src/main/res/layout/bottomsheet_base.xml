@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:id="@+id/coordinator">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/coordinator">
 
-	<FrameLayout
-		android:id="@+id/main"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"/>
+    <FrameLayout
+            android:id="@+id/main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
-	<FrameLayout
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		app:layout_behavior="@string/bottom_sheet_behavior"
-		app:behavior_peekHeight="@dimen/bottomSheet_peek"
-		android:id="@+id/bottomSheet"
-		android:background="?android:attr/windowBackground">
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/bottom_sheet_behavior"
+            app:behavior_peekHeight="@dimen/bottomSheet_peek"
+            android:id="@+id/bottomSheet"
+            android:background="?android:attr/windowBackground">
 
-	</FrameLayout>
+    </FrameLayout>
 
 </android.support.design.widget.CoordinatorLayout>
 

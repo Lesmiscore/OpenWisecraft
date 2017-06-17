@@ -1,81 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_height="wrap_content"
-	android:layout_width="match_parent"
-	android:background="#66000000"
-	android:layout_margin="2dp">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:background="#66000000"
+        android:layout_margin="2dp">
 
-	<LinearLayout
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:orientation="vertical"
-		android:layout_margin="2dp"
-		android:layout_marginTop="4dp"
-		android:layout_marginBottom="4dp">
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="2dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp">
 
-		<LinearLayout
-			android:layout_height="wrap_content"
-			android:layout_width="match_parent"
-			android:orientation="horizontal">
+        <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="horizontal">
 
-			<TextView
-				style="@style/AppTheme.QuickStatus.SingleLineTextView"
-				android:layout_height="wrap_content"
-				android:textAppearance="?android:attr/textAppearanceLarge"
-				android:layout_width="match_parent"
-				android:text="ERROR"
-				android:id="@+id/serverAddress"
-				android:layout_weight="1.0"
-				android:textColor="#FFFFFF"/>
+            <TextView
+                    style="@style/AppTheme.QuickStatus.SingleLineTextView"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:layout_width="match_parent"
+                    android:text="ERROR"
+                    android:id="@+id/serverAddress"
+                    android:layout_weight="1.0"
+                    android:textColor="#FFFFFF"/>
 
-			<TextView
-				style="@style/AppTheme.QuickStatus.SingleLineTextView"
-				android:layout_height="match_parent"
-				android:textAppearance="?android:attr/textAppearanceMedium"
-				android:layout_width="wrap_content"
-				android:text="XX"
-				android:gravity="center"
-				android:id="@+id/target"
-				android:textColor="#FFFFFF"/>
+            <TextView
+                    style="@style/AppTheme.QuickStatus.SingleLineTextView"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_width="wrap_content"
+                    android:text="XX"
+                    android:gravity="center"
+                    android:id="@+id/target"
+                    android:textColor="#FFFFFF"/>
 
-		</LinearLayout>
+        </LinearLayout>
 
-		<com.nao20010128nao.Wisecraft.misc.view.ExtendedImageView
-			android:layout_height="4dp"
-			android:layout_width="match_parent"
-			android:id="@+id/statColor"/>
+        <com.nao20010128nao.Wisecraft.misc.view.ExtendedImageView
+                android:layout_height="4dp"
+                android:layout_width="match_parent"
+                android:id="@+id/statColor"/>
 
-		<LinearLayout
-			android:layout_height="match_parent"
-			android:layout_width="match_parent"
-			android:orientation="horizontal"
-			android:layout_weight="1.0"
-			android:gravity="bottom">
+        <LinearLayout
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="1.0"
+                android:gravity="bottom">
 
-			<ImageButton
-				style="?android:attr/buttonBarButtonStyle"
-				android:layout_height="60dp"
-				android:layout_width="match_parent"
-				android:src="@drawable/ic_launch_white_36dp"
-				android:textColor="#FFFFFF"
-				android:id="@+id/edit"
-				android:scaleType="center"
-				android:layout_weight="1.0"/>
+            <ImageButton
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_height="60dp"
+                    android:layout_width="match_parent"
+                    android:src="@drawable/ic_launch_white_36dp"
+                    android:textColor="#FFFFFF"
+                    android:id="@+id/edit"
+                    android:scaleType="center"
+                    android:layout_weight="1.0"/>
 
-			<ImageButton
-				style="?android:attr/buttonBarButtonStyle"
-				android:layout_height="60dp"
-				android:layout_width="match_parent"
-				android:src="@drawable/ic_sync_white_36dp"
-				android:textColor="#FFFFFF"
-				android:id="@+id/update"
-				android:scaleType="center"
-				android:layout_weight="1.0"/>
+            <ImageButton
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_height="60dp"
+                    android:layout_width="match_parent"
+                    android:src="@drawable/ic_sync_white_36dp"
+                    android:textColor="#FFFFFF"
+                    android:id="@+id/update"
+                    android:scaleType="center"
+                    android:layout_weight="1.0"/>
 
-		</LinearLayout>
+        </LinearLayout>
 
-	</LinearLayout>
+    </LinearLayout>
 
 </FrameLayout>
 

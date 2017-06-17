@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent"
-	android:layout_height="wrap_content"
-	android:orientation="horizontal">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-	<com.nao20010128nao.Wisecraft.misc.view.ExtendedImageView
-		android:layout_height="@dimen/list_height"
-		android:layout_width="@dimen/list_height"
-		android:visibility="gone"
-		android:id="@+id/image"/>
+    <com.nao20010128nao.Wisecraft.misc.view.ExtendedImageView
+            android:layout_height="@dimen/list_height"
+            android:layout_width="@dimen/list_height"
+            android:visibility="gone"
+            android:id="@+id/image"/>
 
-	<include
-		layout="@layout/simple_list_item_1"/>
+    <include
+            layout="@layout/simple_list_item_1"/>
 
 </LinearLayout>
 

@@ -1,143 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:orientation="vertical">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
 
-	<TextView
-		android:layout_height="wrap_content"
-		android:textAppearance="?android:attr/textAppearanceMedium"
-		android:layout_width="wrap_content"
-		android:text="@string/textColor"
-		android:layout_gravity="center"/>
+    <TextView
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_width="wrap_content"
+            android:text="@string/textColor"
+            android:layout_gravity="center"/>
 
-	<LinearLayout
-		android:layout_height="wrap_content"
-		android:layout_width="match_parent"
-		android:orientation="horizontal">
+    <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal">
 
-		<LinearLayout
-			android:layout_height="wrap_content"
-			android:layout_width="match_parent"
-			android:orientation="horizontal"
-			android:layout_weight="1.0">
+        <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="1.0">
 
-			<ImageView
-				android:layout_height="50dp"
-				android:layout_width="50dp"
-				android:id="@+id/textColorIndicate"/>
+            <ImageView
+                    android:layout_height="50dp"
+                    android:layout_width="50dp"
+                    android:id="@+id/textColorIndicate"/>
 
-		</LinearLayout>
+        </LinearLayout>
 
-		<Button
-			android:layout_height="match_parent"
-			android:layout_width="wrap_content"
-			android:text="@string/select"
-			android:id="@+id/selectTextColor"/>
+        <Button
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:text="@string/select"
+                android:id="@+id/selectTextColor"/>
 
-	</LinearLayout>
+    </LinearLayout>
 
-	<View
-		android:background="#EEEEEE"
-		android:layout_height="1dp"
-		android:layout_width="match_parent"/>
+    <View
+            android:background="#EEEEEE"
+            android:layout_height="1dp"
+            android:layout_width="match_parent"/>
 
-	<TextView
-		android:layout_height="wrap_content"
-		android:textAppearance="?android:attr/textAppearanceMedium"
-		android:layout_width="wrap_content"
-		android:text="@string/background"
-		android:layout_gravity="center"/>
+    <TextView
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_width="wrap_content"
+            android:text="@string/background"
+            android:layout_gravity="center"/>
 
-	<RadioGroup
-		android:layout_height="match_parent"
-		android:layout_width="match_parent"
-		android:orientation="vertical"
-		android:id="@+id/checkGroup">
+    <RadioGroup
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/checkGroup">
 
-		<RadioButton
-			android:layout_height="wrap_content"
-			android:layout_width="match_parent"
-			android:id="@+id/white"
-			android:text="@string/white"/>
+        <RadioButton
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/white"
+                android:text="@string/white"/>
 
-		<RadioButton
-			android:layout_height="wrap_content"
-			android:layout_width="match_parent"
-			android:id="@+id/black"
-			android:text="@string/black"/>
+        <RadioButton
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/black"
+                android:text="@string/black"/>
 
-		<RadioButton
-			android:layout_height="wrap_content"
-			android:layout_width="match_parent"
-			android:id="@+id/dirt"
-			android:text="@string/dirt"/>
+        <RadioButton
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/dirt"
+                android:text="@string/dirt"/>
 
-		<RadioButton
-			android:layout_height="wrap_content"
-			android:layout_width="match_parent"
-			android:id="@+id/singleColor"
-			android:text="@string/singleColor"/>
+        <RadioButton
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/singleColor"
+                android:text="@string/singleColor"/>
 
-		<LinearLayout
-			android:layout_height="wrap_content"
-			android:layout_width="match_parent"
-			android:orientation="horizontal">
+        <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="horizontal">
 
-			<LinearLayout
-				android:layout_height="wrap_content"
-				android:layout_width="match_parent"
-				android:orientation="horizontal"
-				android:layout_weight="1.0">
+            <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_weight="1.0">
 
-				<ImageView
-					android:layout_height="50dp"
-					android:layout_width="50dp"
-					android:id="@+id/singleColorIndicate"/>
+                <ImageView
+                        android:layout_height="50dp"
+                        android:layout_width="50dp"
+                        android:id="@+id/singleColorIndicate"/>
 
-			</LinearLayout>
+            </LinearLayout>
 
-			<Button
-				android:layout_height="match_parent"
-				android:layout_width="wrap_content"
-				android:text="@string/select"
-				android:id="@+id/selectColor"/>
+            <Button
+                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:text="@string/select"
+                    android:id="@+id/selectColor"/>
 
-		</LinearLayout>
+        </LinearLayout>
 
-		<RadioButton
-			android:layout_height="wrap_content"
-			android:layout_width="match_parent"
-			android:id="@+id/image"
-			android:text="@string/image"/>
+        <RadioButton
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/image"
+                android:text="@string/image"/>
 
-		<LinearLayout
-			android:layout_height="wrap_content"
-			android:layout_width="match_parent"
-			android:orientation="vertical">
+        <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="vertical">
 
-			<FrameLayout
-				android:layout_height="wrap_content"
-				android:layout_width="match_parent"
-				android:id="@+id/fileSelectFrg"/>
+            <FrameLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:id="@+id/fileSelectFrg"/>
 
-			<Button
-				android:layout_height="wrap_content"
-				android:layout_width="match_parent"
-				android:text="@string/select"
-				android:layout_gravity="center"
-				android:id="@+id/selectImage"/>
+            <Button
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:text="@string/select"
+                    android:layout_gravity="center"
+                    android:id="@+id/selectImage"/>
 
-			<ImageView
-				android:layout_height="match_parent"
-				android:layout_width="match_parent"
-				android:layout_weight="1.0"
-				android:id="@+id/imagePreview"/>
+            <ImageView
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1.0"
+                    android:id="@+id/imagePreview"/>
 
-		</LinearLayout>
+        </LinearLayout>
 
-	</RadioGroup>
+    </RadioGroup>
 
 </LinearLayout>
 

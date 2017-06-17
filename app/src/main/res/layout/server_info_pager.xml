@@ -1,68 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:id="@+id/coordinator">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/coordinator">
 
-	<FrameLayout
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:id="@+id/background"
-		android:alpha="0"/>
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/background"
+            android:alpha="0"/>
 
-	<LinearLayout
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		app:layout_behavior="com.nao20010128nao.Wisecraft.misc.LockableViewPagerBottomSheetBehavior"
-		app:behavior_peekHeight="@dimen/bottomSheet_peek"
-		android:background="@android:color/white"
-		android:id="@+id/serverInfoFragment"
-		android:orientation="vertical"
-		android:transitionName="@string/serverInfoTrans1">
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="com.nao20010128nao.Wisecraft.misc.LockableViewPagerBottomSheetBehavior"
+            app:behavior_peekHeight="@dimen/bottomSheet_peek"
+            android:background="@android:color/white"
+            android:id="@+id/serverInfoFragment"
+            android:orientation="vertical"
+            android:transitionName="@string/serverInfoTrans1">
 
-		<android.support.design.widget.AppBarLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:id="@+id/appbar">
+        <android.support.design.widget.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/appbar">
 
-			<com.nao20010128nao.Wisecraft.misc.view.WisecraftToolbar
-				android:id="@+id/toolbar"
-				android:layout_height="?attr/actionBarSize"
-				android:layout_width="match_parent"
-				app:layout_scrollFlags="scroll|enterAlways"/>
+            <com.nao20010128nao.Wisecraft.misc.view.WisecraftToolbar
+                    android:id="@+id/toolbar"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_width="match_parent"
+                    app:layout_scrollFlags="scroll|enterAlways"/>
 
-			<com.astuetz.PagerSlidingTabStrip
-				android:id="@+id/tabs"
-				android:layout_width="match_parent"
-				android:layout_height="?attr/actionBarSize"
-				android:background="#00000000"
-				app:pstsIndicatorHeight="3dp"
-				app:pstsShouldExpand="@bool/shouldExpandTab"
-				app:pstsPaddingMiddle="@bool/padMiddle"
-				app:pstsTabTextStyle="coded"
-				android:paddingLeft="10dp"
-				android:paddingRight="10dp"
-				android:gravity="center"/>
+            <com.astuetz.PagerSlidingTabStrip
+                    android:id="@+id/tabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="#00000000"
+                    app:pstsIndicatorHeight="3dp"
+                    app:pstsShouldExpand="@bool/shouldExpandTab"
+                    app:pstsPaddingMiddle="@bool/padMiddle"
+                    app:pstsTabTextStyle="coded"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:gravity="center"/>
 
-		</android.support.design.widget.AppBarLayout>
+        </android.support.design.widget.AppBarLayout>
 
-		<com.nao20010128nao.Wisecraft.misc.view.OverScrollViewPager
-			android:layout_height="match_parent"
-			android:layout_width="match_parent"
-			android:id="@+id/pager"
-			app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        <com.nao20010128nao.Wisecraft.misc.view.OverScrollViewPager
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:id="@+id/pager"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-	</LinearLayout>
+    </LinearLayout>
 
-	<android.support.design.widget.FloatingActionButton
-		android:id="@+id/pin"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_gravity="bottom|right"
-		android:layout_marginBottom="16dp"
-		android:layout_marginRight="16dp"/>
+    <android.support.design.widget.FloatingActionButton
+            android:id="@+id/pin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"/>
 
 </android.support.design.widget.CoordinatorLayout>
 

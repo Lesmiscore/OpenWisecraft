@@ -7,22 +7,24 @@ import com.nao20010128nao.Wisecraft.*;
 
 import java.util.*;
 
-public class KVListAdapter<K,V> extends AppBaseArrayAdapter<Map.Entry<K,V>> {
-	public KVListAdapter(Context ctx) {
-		super(ctx, 0, new ArrayList<>());
-	}
-	public View getView(int pos, View v, ViewGroup ignore) {
-		if (v == null)
-			v = getLayoutInflater().inflate(R.layout.data, ignore,false);
-		((TextView)v.findViewById(R.id.k)).setText(getItem(pos).getKey().toString());
-		((TextView)v.findViewById(R.id.v)).setText(getItem(pos).getValue().toString());
-		return v;
-	}
-	LayoutInflater getLayoutInflater() {
-		return (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	}
-	
-	public void add(K k,V v){
-		add(new KVP<>(k, v));
-	}
+public class KVListAdapter<K, V> extends AppBaseArrayAdapter<Map.Entry<K, V>> {
+    public KVListAdapter(Context ctx) {
+        super(ctx, 0, new ArrayList<>());
+    }
+
+    public View getView(int pos, View v, ViewGroup ignore) {
+        if (v == null)
+            v = getLayoutInflater().inflate(R.layout.data, ignore, false);
+        ((TextView) v.findViewById(R.id.k)).setText(getItem(pos).getKey().toString());
+        ((TextView) v.findViewById(R.id.v)).setText(getItem(pos).getValue().toString());
+        return v;
+    }
+
+    LayoutInflater getLayoutInflater() {
+        return (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+    public void add(K k, V v) {
+        add(new KVP<>(k, v));
+    }
 }

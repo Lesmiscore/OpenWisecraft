@@ -1,77 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	android:orientation="vertical">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-	<LinearLayout
-		android:layout_height="70dp"
-		android:layout_width="match_parent"
-		android:orientation="vertical"
-		android:gravity="center">
+    <LinearLayout
+            android:layout_height="70dp"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
 
-		<LinearLayout
-			android:layout_height="wrap_content"
-			android:layout_width="match_parent"
-			android:orientation="horizontal"
-			android:layout_weight="1.0"
-			android:id="@+id/topPad"/>
+        <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="1.0"
+                android:id="@+id/topPad"/>
 
-		<SeekBar
-			android:layout_height="wrap_content"
-			android:layout_width="match_parent"
-			android:id="@+id/seekbar"/>
+        <SeekBar
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/seekbar"/>
 
-		<LinearLayout
-			android:layout_height="wrap_content"
-			android:layout_width="match_parent"
-			android:orientation="horizontal"
-			android:layout_weight="1.0"
-			android:gravity="center"
-			android:id="@+id/bottomPad">
+        <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="1.0"
+                android:gravity="center"
+                android:id="@+id/bottomPad">
 
-			<LinearLayout
-				android:layout_height="match_parent"
-				android:layout_width="wrap_content"
-				android:orientation="horizontal"
-				android:layout_weight="1.0"
-				android:gravity="left|center"
-				android:id="@+id/bottomLeft">
+            <LinearLayout
+                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_weight="1.0"
+                    android:gravity="left|center"
+                    android:id="@+id/bottomLeft">
 
-				<TextView
-					android:layout_height="wrap_content"
-					android:textAppearance="?android:attr/textAppearanceMedium"
-					android:layout_width="wrap_content"
-					android:id="@+id/min"/>
+                <TextView
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:layout_width="wrap_content"
+                        android:id="@+id/min"/>
 
-			</LinearLayout>
+            </LinearLayout>
 
-			<TextView
-				android:layout_height="wrap_content"
-				android:textAppearance="?android:attr/textAppearanceMedium"
-				android:layout_width="wrap_content"
-				android:id="@+id/value"/>
+            <TextView
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_width="wrap_content"
+                    android:id="@+id/value"/>
 
-			<LinearLayout
-				android:layout_height="match_parent"
-				android:layout_width="wrap_content"
-				android:orientation="horizontal"
-				android:layout_weight="1.0"
-				android:gravity="right|center"
-				android:id="@+id/bottomRight">
+            <LinearLayout
+                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_weight="1.0"
+                    android:gravity="right|center"
+                    android:id="@+id/bottomRight">
 
-				<TextView
-					android:layout_height="wrap_content"
-					android:textAppearance="?android:attr/textAppearanceMedium"
-					android:layout_width="wrap_content"
-					android:id="@+id/max"/>
+                <TextView
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:layout_width="wrap_content"
+                        android:id="@+id/max"/>
 
-			</LinearLayout>
+            </LinearLayout>
 
-		</LinearLayout>
+        </LinearLayout>
 
-	</LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>
 
