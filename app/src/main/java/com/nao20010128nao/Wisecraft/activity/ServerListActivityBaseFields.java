@@ -34,7 +34,7 @@ abstract class ServerListActivityBaseFields extends ServerListActivityBaseGrand 
 
     protected final SextetWalker<Integer, Integer, Treatment<ServerListActivity>, Treatment<ServerListActivity>, IDrawerItem, UUID> appMenu = new SextetWalker<>();
     protected ServerPingProvider spp, updater;
-    protected Gson gson = new GsonBuilder()/*.registerTypeAdapter(Void.class,null)*/.create();
+    protected Gson gson = new GsonBuilder().registerTypeAdapter(Protobufs.Server.Mode.class,new GsonModeConverter()).create();
     protected int clicked = -1;
     protected WorkingDialog wd;
     protected SwipeRefreshLayout srl;
