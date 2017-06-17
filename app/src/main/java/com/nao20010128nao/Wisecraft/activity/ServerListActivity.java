@@ -729,9 +729,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
         Utils.makeNonClickableSB(ServerListActivityImpl.this, R.string.exporting, Snackbar.LENGTH_LONG).show();
         new AsyncTask<String, Void, File>() {
             public File doInBackground(String... texts) {
-                Server[] servs = new Server[list.size()];
-                for (int i = 0; i < servs.length; i++)
-                    servs[i] = list.get(i).cloneAsServer();
+                Server[] servs = Stream.of(list).map(Server::cloneAsServer).toArray(Server[]::new);
                 File f = new File(Environment.getExternalStorageDirectory(), "/Wisecraft");
                 f.mkdirs();
                 if (writeToFile(f = new File(texts[0]), gson.toJson(servs, Server[].class)))

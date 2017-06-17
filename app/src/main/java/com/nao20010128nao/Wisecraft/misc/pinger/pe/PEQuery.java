@@ -6,91 +6,91 @@ import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import java.net.*;
 
 public class PEQuery implements PingHost {
-	final static byte HANDSHAKE = 9;
-	final static byte STAT = 0;
+    final static byte HANDSHAKE = 9;
+    final static byte STAT = 0;
 
-	String serverAddress = "localhost";
-	int queryPort = 25565;
-	
-	private DatagramSocket socket = null;
-	private int token;
+    String serverAddress = "localhost";
+    int queryPort = 25565;
 
-	long lastPing;
+    private DatagramSocket socket = null;
+    private int token;
 
-	public PEQuery(String address, int port) {
-		serverAddress = address;
-		queryPort = port;
-	}
+    long lastPing;
 
-	private void handshake() {
-		Request req = new Request();
-		req.type = HANDSHAKE;
-		req.sessionID = generateSessionID();
+    public PEQuery(String address, int port) {
+        serverAddress = address;
+        queryPort = port;
+    }
 
-		int val = 11 - req.toBytes().length;
-		byte[] input = PingerUtils.padArrayEnd(req.toBytes(), val);
-		byte[] result = sendUDP(input);
+    private void handshake() {
+        Request req = new Request();
+        req.type = HANDSHAKE;
+        req.sessionID = generateSessionID();
 
-		token = Integer.valueOf(new String(result).trim());
-	}
+        int val = 11 - req.toBytes().length;
+        byte[] input = PingerUtils.padArrayEnd(req.toBytes(), val);
+        byte[] result = sendUDP(input);
 
-	public FullStat fullStat() {
-		long t1=System.currentTimeMillis();
-		handshake();
-		t1 = System.currentTimeMillis() - t1;
+        token = Integer.valueOf(new String(result).trim());
+    }
 
-		Request req = new Request();
-		req.type = STAT;
-		req.sessionID = generateSessionID();
-		req.setPayload(token);
-		req.payload = PingerUtils.padArrayEnd(req.payload, 4);
+    public FullStat fullStat() {
+        long t1 = System.currentTimeMillis();
+        handshake();
+        t1 = System.currentTimeMillis() - t1;
 
-		byte[] send = req.toBytes();
+        Request req = new Request();
+        req.type = STAT;
+        req.sessionID = generateSessionID();
+        req.setPayload(token);
+        req.payload = PingerUtils.padArrayEnd(req.payload, 4);
 
-		long t2=System.currentTimeMillis();
-		byte[] result = sendUDP(send);
-		t2 = System.currentTimeMillis() - t2;
+        byte[] send = req.toBytes();
 
-		lastPing = t1 + t2;
+        long t2 = System.currentTimeMillis();
+        byte[] result = sendUDP(send);
+        t2 = System.currentTimeMillis() - t2;
 
-		return new FullStat(result);
-	}
+        lastPing = t1 + t2;
 
-	private byte[] sendUDP(byte[] input) {
-		try {
-			if(socket==null)
-				socket = new DatagramSocket();
+        return new FullStat(result);
+    }
 
-			InetAddress address = InetAddress.getByName(serverAddress);
-			DatagramPacket packet1 = new DatagramPacket(input, input.length, address, queryPort);
-			socket.send(packet1);
+    private byte[] sendUDP(byte[] input) {
+        try {
+            if (socket == null)
+                socket = new DatagramSocket();
 
-			byte[] out = new byte[1024 * 100];
-			DatagramPacket packet = new DatagramPacket(out, out.length);
-			socket.setSoTimeout(2500);
-			socket.receive(packet);
+            InetAddress address = InetAddress.getByName(serverAddress);
+            DatagramPacket packet1 = new DatagramPacket(input, input.length, address, queryPort);
+            socket.send(packet1);
 
-			byte[] result=new byte[packet.getLength()];
-			System.arraycopy(packet.getData(), 0, result, 0, result.length);
-			return result;
-		} catch (Throwable e) {
-			DebugWriter.writeToE("PEQuery", e);
-		}
+            byte[] out = new byte[1024 * 100];
+            DatagramPacket packet = new DatagramPacket(out, out.length);
+            socket.setSoTimeout(2500);
+            socket.receive(packet);
 
-		return null;
-	}
+            byte[] result = new byte[packet.getLength()];
+            System.arraycopy(packet.getData(), 0, result, 0, result.length);
+            return result;
+        } catch (Throwable e) {
+            DebugWriter.writeToE("PEQuery", e);
+        }
 
-	private int generateSessionID() {
-		return 1;
-	}
+        return null;
+    }
 
-	@Override
-	public void finalize() {
-		socket.close();
-	}
+    private int generateSessionID() {
+        return 1;
+    }
 
-	@Override
-	public long getLatestPingElapsed() {
-		return lastPing;
-	}
+    @Override
+    public void finalize() {
+        socket.close();
+    }
+
+    @Override
+    public long getLatestPingElapsed() {
+        return lastPing;
+    }
 }

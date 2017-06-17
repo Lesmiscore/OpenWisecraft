@@ -5,13 +5,15 @@ import com.nao20010128nao.Wisecraft.misc.*;
 import java.util.*;
 
 public class HttpMultiServerPingProvider implements ServerPingProvider {
-    List<HttpServerPingProvider> objects=new ArrayList<>();
-    int count=0;
-    public HttpMultiServerPingProvider(String head,int parallels) {
-        for (int i=0;i < parallels;i++) {
+    List<HttpServerPingProvider> objects = new ArrayList<>();
+    int count = 0;
+
+    public HttpMultiServerPingProvider(String head, int parallels) {
+        for (int i = 0; i < parallels; i++) {
             objects.add(new HttpServerPingProvider(head));
         }
     }
+
     @Override
     public void putInQueue(Server server, ServerPingProvider.PingHandler handler) {
         objects.get(count).putInQueue(server, handler);
@@ -21,39 +23,43 @@ public class HttpMultiServerPingProvider implements ServerPingProvider {
 
     @Override
     public int getQueueRemain() {
-        int i=0;
-        for (ServerPingProvider spp:objects) {
+        int i = 0;
+        for (ServerPingProvider spp : objects) {
             i += spp.getQueueRemain();
         }
         return i;
     }
+
     @Override
     public void stop() {
-        for (ServerPingProvider spp:objects) {
+        for (ServerPingProvider spp : objects) {
             spp.stop();
         }
     }
+
     @Override
     public void clearQueue() {
-        for (ServerPingProvider spp:objects) {
+        for (ServerPingProvider spp : objects) {
             spp.clearQueue();
         }
     }
-	@Override
-	public void clearAndStop() {
-		clearAndStop();
-		stop();
-	}
+
+    @Override
+    public void clearAndStop() {
+        clearAndStop();
+        stop();
+    }
+
     @Override
     public void offline() {
-        for (ServerPingProvider spp:objects) {
+        for (ServerPingProvider spp : objects) {
             spp.offline();
         }
     }
 
     @Override
     public void online() {
-        for (ServerPingProvider spp:objects) {
+        for (ServerPingProvider spp : objects) {
             spp.online();
         }
     }

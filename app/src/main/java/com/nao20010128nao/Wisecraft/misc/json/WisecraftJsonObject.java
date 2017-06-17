@@ -1,47 +1,46 @@
 package com.nao20010128nao.Wisecraft.misc.json;
 
-public interface WisecraftJsonObject extends Iterable<WisecraftJsonObject>
-{
+public interface WisecraftJsonObject extends Iterable<WisecraftJsonObject> {
 
-	boolean getAsBoolean() ;
-	
-    java.lang.Number getAsNumber() ;
+    boolean getAsBoolean();
 
-    java.lang.String getAsString() ;
+    java.lang.Number getAsNumber();
 
-    double getAsDouble() ;
+    java.lang.String getAsString();
 
-    float getAsFloat() ;
+    double getAsDouble();
 
-    long getAsLong() ;
+    float getAsFloat();
 
-    int getAsInt() ;
+    long getAsLong();
 
-    byte getAsByte() ;
+    int getAsInt();
 
-    char getAsCharacter() ;
+    byte getAsByte();
 
-    java.math.BigDecimal getAsBigDecimal() ;
+    char getAsCharacter();
 
-    java.math.BigInteger getAsBigInteger() ;
+    java.math.BigDecimal getAsBigDecimal();
 
-    short getAsShort() ;
-	
-	boolean isJsonArray() ;
+    java.math.BigInteger getAsBigInteger();
 
-    boolean isJsonObject() ;
-	
-	// JsonObject
-    int size() ;
+    short getAsShort();
 
-    boolean has(java.lang.String memberName) ;
+    boolean isJsonArray();
 
-    WisecraftJsonObject get(java.lang.String memberName) ;
-	
-	// JsonArray
-    boolean contains(WisecraftJsonObject element) ;
+    boolean isJsonObject();
 
-    java.util.Iterator<WisecraftJsonObject> iterator() ;
+    // JsonObject
+    int size();
 
-    WisecraftJsonObject get(int i) ;
+    boolean has(java.lang.String memberName);
+
+    WisecraftJsonObject get(java.lang.String memberName);
+
+    // JsonArray
+    boolean contains(WisecraftJsonObject element);
+
+    java.util.Iterator<WisecraftJsonObject> iterator();
+
+    WisecraftJsonObject get(int i);
 }

@@ -1,46 +1,47 @@
 package com.nao20010128nao.Wisecraft.misc.pref;
+
 import android.content.*;
 import android.graphics.*;
 import android.support.v7.preference.*;
 import android.util.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 
-public class EditTextPreferenceCompat extends android.support.v7.preference.EditTextPreference implements SetTextColor{
-	int color=Color.BLACK;
-	
-	public EditTextPreferenceCompat(Context context, AttributeSet attrs, int defStyleAttr) {
+public class EditTextPreferenceCompat extends android.support.v7.preference.EditTextPreference implements SetTextColor {
+    int color = Color.BLACK;
+
+    public EditTextPreferenceCompat(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-		color=PreferenceUtils.getDefaultPreferenceTextColor(context);
+        color = PreferenceUtils.getDefaultPreferenceTextColor(context);
     }
 
     public EditTextPreferenceCompat(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-		color=PreferenceUtils.getDefaultPreferenceTextColor(context);
+        color = PreferenceUtils.getDefaultPreferenceTextColor(context);
     }
 
     public EditTextPreferenceCompat(Context context, AttributeSet attrs) {
         super(context, attrs);
-		color=PreferenceUtils.getDefaultPreferenceTextColor(context);
+        color = PreferenceUtils.getDefaultPreferenceTextColor(context);
     }
 
     public EditTextPreferenceCompat(Context context) {
         super(context);
-		color=PreferenceUtils.getDefaultPreferenceTextColor(context);
+        color = PreferenceUtils.getDefaultPreferenceTextColor(context);
     }
 
-	@Override
-	public void onBindViewHolder(PreferenceViewHolder holder) {
-		super.onBindViewHolder(holder);
-		PreferenceUtils.onBindViewHolder(getContext(),this,holder);
-	}
+    @Override
+    public void onBindViewHolder(PreferenceViewHolder holder) {
+        super.onBindViewHolder(holder);
+        PreferenceUtils.onBindViewHolder(getContext(), this, holder);
+    }
 
-	@Override
-	public void setTextColor(int color) {
-		this.color=color;
-	}
-	
-	@Override
-	public int getTextColor() {
-		return color;
-	}
+    @Override
+    public void setTextColor(int color) {
+        this.color = color;
+    }
+
+    @Override
+    public int getTextColor() {
+        return color;
+    }
 }

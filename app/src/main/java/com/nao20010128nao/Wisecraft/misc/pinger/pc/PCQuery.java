@@ -9,120 +9,121 @@ import com.nao20010128nao.Wisecraft.misc.pinger.*;
 
 import java.io.*;
 import java.net.*;
-public class PCQuery implements PingHost{
-	private Gson gson = new Gson();
-	private String host;
-	private int port;
-	private long lastPing;
 
-	public PCQuery(String host, int port) {
-		this.host = host;
-		this.port = port;
-	}
+public class PCQuery implements PingHost {
+    private Gson gson = new Gson();
+    private String host;
+    private int port;
+    private long lastPing;
 
-	/* handshake->Request->statJson->ping */
-	private void writeHandshake(DataOutputStream out, String host, int port)
-			throws IOException {
-		ByteArrayOutputStream handshake_bytes = new ByteArrayOutputStream();
-		DataOutputStream handshake = new DataOutputStream(handshake_bytes);
+    public PCQuery(String host, int port) {
+        this.host = host;
+        this.port = port;
+    }
 
-		handshake.writeByte(PingerUtils.PACKET_HANDSHAKE);
-		PingerUtils.writeVarInt(handshake, PingerUtils.PROTOCOL_VERSION);
-		PingerUtils.writeVarInt(handshake, host.length());
-		handshake.writeBytes(host);
-		handshake.writeShort(port);
-		PingerUtils.writeVarInt(handshake, PingerUtils.STATUS_HANDSHAKE);
+    /* handshake->Request->statJson->ping */
+    private void writeHandshake(DataOutputStream out, String host, int port)
+            throws IOException {
+        ByteArrayOutputStream handshake_bytes = new ByteArrayOutputStream();
+        DataOutputStream handshake = new DataOutputStream(handshake_bytes);
 
-		PingerUtils.writeVarInt(out, handshake_bytes.size());
-		out.write(handshake_bytes.toByteArray());
+        handshake.writeByte(PingerUtils.PACKET_HANDSHAKE);
+        PingerUtils.writeVarInt(handshake, PingerUtils.PROTOCOL_VERSION);
+        PingerUtils.writeVarInt(handshake, host.length());
+        handshake.writeBytes(host);
+        handshake.writeShort(port);
+        PingerUtils.writeVarInt(handshake, PingerUtils.STATUS_HANDSHAKE);
 
-	}
+        PingerUtils.writeVarInt(out, handshake_bytes.size());
+        out.write(handshake_bytes.toByteArray());
 
-	private void writeRequest(DataOutputStream out) throws IOException {
-		out.writeByte(0x01); // Size of packet
-		out.writeByte(PingerUtils.PACKET_STATUSREQUEST);
-	}
+    }
 
-	@TargetApi(9)
-	private String getStatJson(DataInputStream in) throws IOException {
-		PingerUtils.readVarInt(in); // Size
-		int id = PingerUtils.readVarInt(in);
+    private void writeRequest(DataOutputStream out) throws IOException {
+        out.writeByte(0x01); // Size of packet
+        out.writeByte(PingerUtils.PACKET_STATUSREQUEST);
+    }
 
-		PingerUtils.io(id == -1, "Server prematurely ended stream.");
-		PingerUtils.io(id != PingerUtils.PACKET_STATUSREQUEST,
-				"Server returned invalid packet.");
+    @TargetApi(9)
+    private String getStatJson(DataInputStream in) throws IOException {
+        PingerUtils.readVarInt(in); // Size
+        int id = PingerUtils.readVarInt(in);
 
-		int length = PingerUtils.readVarInt(in);
-		PingerUtils.io(length == -1, "Server prematurely ended stream.");
-		PingerUtils.io(length == 0, "Server returned unexpected value.");
+        PingerUtils.io(id == -1, "Server prematurely ended stream.");
+        PingerUtils.io(id != PingerUtils.PACKET_STATUSREQUEST,
+                "Server returned invalid packet.");
 
-		byte[] data = new byte[length];
-		in.readFully(data);
-		String json = new String(data, CompatCharsets.UTF_8);
-		return json;
-	}
+        int length = PingerUtils.readVarInt(in);
+        PingerUtils.io(length == -1, "Server prematurely ended stream.");
+        PingerUtils.io(length == 0, "Server returned unexpected value.");
 
-	private void doPing(DataOutputStream out, DataInputStream in)
-			throws IOException {
+        byte[] data = new byte[length];
+        in.readFully(data);
+        String json = new String(data, CompatCharsets.UTF_8);
+        return json;
+    }
 
-		out.writeByte(0x09);
-		out.writeByte(PingerUtils.PACKET_PING);
-		out.writeLong(System.currentTimeMillis());
+    private void doPing(DataOutputStream out, DataInputStream in)
+            throws IOException {
 
-		PingerUtils.readVarInt(in); // Size
-		int id = PingerUtils.readVarInt(in);
-		PingerUtils.io(id == -1, "Server prematurely ended stream.");
-		PingerUtils.io(id != PingerUtils.PACKET_PING, "Server returned invalid packet.");
-	}
+        out.writeByte(0x09);
+        out.writeByte(PingerUtils.PACKET_PING);
+        out.writeLong(System.currentTimeMillis());
 
-	// ///////
-	public PCQueryResult fetchReply() throws IOException {
-		Socket sock = null;
-		try {
-			sock = new Socket(host, port);
-			sock.setSoTimeout(5000);
-			DataInputStream dis = new DataInputStream(sock.getInputStream());
-			DataOutputStream dos = new DataOutputStream(sock.getOutputStream());
-			long t=System.currentTimeMillis();
-			writeHandshake(dos, host, port);
-			writeRequest(dos);
-			String s = getStatJson(dis);
-			Log.i("ping_pc",s);
-			lastPing=System.currentTimeMillis()-t;
-			PCQueryResult result;
-			if(BuildConfig.OBFUSCATED){
-				result=new RawJsonReply(s);
-			}else{
-				try {
-					result= gson.fromJson(s, Reply.class);
-				} catch (JsonSyntaxException e) {
-					result= gson.fromJson(s, Reply19.class);
-				}
-			}
-			result.setRaw(s);
-			return result;
-		} finally {
-			if (sock != null)
-				sock.close();
-		}
-	}
+        PingerUtils.readVarInt(in); // Size
+        int id = PingerUtils.readVarInt(in);
+        PingerUtils.io(id == -1, "Server prematurely ended stream.");
+        PingerUtils.io(id != PingerUtils.PACKET_PING, "Server returned invalid packet.");
+    }
 
-	public void doPingOnce() throws IOException {
-		Socket sock = null;
-		try {
-			sock = new Socket(host, port);
-			sock.setSoTimeout(5000);
-			DataInputStream dis = new DataInputStream(sock.getInputStream());
-			DataOutputStream dos = new DataOutputStream(sock.getOutputStream());
-			doPing(dos, dis);
-		} finally {
-			if (sock != null)
-				sock.close();
-		}
-	}
+    // ///////
+    public PCQueryResult fetchReply() throws IOException {
+        Socket sock = null;
+        try {
+            sock = new Socket(host, port);
+            sock.setSoTimeout(5000);
+            DataInputStream dis = new DataInputStream(sock.getInputStream());
+            DataOutputStream dos = new DataOutputStream(sock.getOutputStream());
+            long t = System.currentTimeMillis();
+            writeHandshake(dos, host, port);
+            writeRequest(dos);
+            String s = getStatJson(dis);
+            Log.i("ping_pc", s);
+            lastPing = System.currentTimeMillis() - t;
+            PCQueryResult result;
+            if (BuildConfig.OBFUSCATED) {
+                result = new RawJsonReply(s);
+            } else {
+                try {
+                    result = gson.fromJson(s, Reply.class);
+                } catch (JsonSyntaxException e) {
+                    result = gson.fromJson(s, Reply19.class);
+                }
+            }
+            result.setRaw(s);
+            return result;
+        } finally {
+            if (sock != null)
+                sock.close();
+        }
+    }
 
-	@Override
-	public long getLatestPingElapsed() {
-		return lastPing;
-	}
+    public void doPingOnce() throws IOException {
+        Socket sock = null;
+        try {
+            sock = new Socket(host, port);
+            sock.setSoTimeout(5000);
+            DataInputStream dis = new DataInputStream(sock.getInputStream());
+            DataOutputStream dos = new DataOutputStream(sock.getOutputStream());
+            doPing(dos, dis);
+        } finally {
+            if (sock != null)
+                sock.close();
+        }
+    }
+
+    @Override
+    public long getLatestPingElapsed() {
+        return lastPing;
+    }
 }
