@@ -43,7 +43,7 @@ abstract class ServerListActivityBaseFields extends ServerListActivityBaseGrand
     protected DrawerLayout dl;
     protected boolean drawerOpened;
     protected boolean skipSave=false;
-	protected Map<Server,Boolean> pinging= new NonNullableMap<>();
+	protected Set<Server> pinging= new HashSet<>();
 
     protected int editMode=EDIT_MODE_NULL;
 	protected boolean isInSelectMode=false;

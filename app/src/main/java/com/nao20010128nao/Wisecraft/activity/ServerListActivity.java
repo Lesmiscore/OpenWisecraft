@@ -234,7 +234,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 								.setNegativeButton(android.R.string.ok,new QuickDialogClickListener(){
 									public void onClick(int which){
 										for(Server s:selected){
-											if(pinging.get(s))continue;
+											if(pinging.contains(s))continue;
 											dryUpdate(s,true);
 											if(list.indexOf(s)!=-1){
 												statLayout.setStatusAt(list.indexOf(s),1);
@@ -320,7 +320,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							Bundle obj=data.getBundleExtra("object");
 							Server serv=list.get(clicked);
 							updater.putInQueue(serv, new PingHandlerImpl(true, data, true));
-							pinging.put(serv, true);
+							pinging.add(serv);
 							statLayout.setStatusAt(clicked, 1);
 							sl.notifyItemChanged(clicked);
 							wd.showWorkingDialog(serv);
@@ -403,7 +403,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 						} else {
 							sl.add(s);
 							spp.putInQueue(s, new PingHandlerImpl(true, new Intent().putExtra("offset", -1), false));
-							pinging.put(s, true);
+							pinging.add(s);
 						}
 						saveServers();
 					}).
@@ -515,7 +515,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                                             final int[] datas = new int[list.size()];
                                             for (int i = 0; i < datas.length; i++) {
                                                 Server s = lList.get(i);
-                                                if (pinging.get(s)) {
+                                                if (pinging.contains(s)) {
                                                     datas[i] = 1;
                                                 } else {
                                                     if (s instanceof ServerStatus) {
@@ -630,15 +630,15 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 	}
 
 	public void dryUpdate(Server s, boolean isUpdate) {
-		if (pinging.get(s))return;
+		if (pinging.contains(s))return;
 		(isUpdate?updater:spp).putInQueue(s, new PingHandlerImpl(true, new Intent().putExtra("offset",-1),false));
-		pinging.put(s, true);
+		pinging.add(s);
 		sl.notifyItemChanged(list.indexOf(s));
 	}
 
 	private void updateAllWithConditions(final Predicate<Server> pred) {
 		for (int i=0;i < list.size();i++) {
-			if (pinging.get(list.get(i)) || !pred.process(list.get(i)))
+			if (pinging.contains(list.get(i)) || !pred.process(list.get(i)))
 				continue;
 			statLayout.setStatusAt(i, 1);
 			sl.notifyItemChanged(i);
@@ -648,7 +648,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		new Thread(){
 			public void run() {
 				for (Server aList : list) {
-					if (pinging.get(aList) || !pred.process(aList))
+					if (pinging.contains(aList) || !pred.process(aList))
 						continue;
 					spp.putInQueue(aList, new PingHandlerImpl(false, new Intent().putExtra("offset", -1), false) {
 						public void onPingFailed(final Server s) {
@@ -661,7 +661,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 							runOnUiThread(() -> wd.hideWorkingDialog(s));
 						}
 					});
-					pinging.put(aList, true);
+					pinging.add(aList);
 				}
 			}
 		}.start();
@@ -699,7 +699,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                     for (Server s:sv) {
                         if (!list.contains(s)) {
                             spp.putInQueue(s, new PingHandlerImpl(true, new Intent().putExtra("offset",-1),false));
-                            pinging.put(s, true);
+                            pinging.add(s);
                             sl.add(s);
                         }
                     }
@@ -840,7 +840,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 		if (list.contains(s))return;
 		sl.add(s);
 		spp.putInQueue(s, new PingHandlerImpl(true, new Intent().putExtra("offset",-1),false));
-		pinging.put(s, true);
+		pinging.add(s);
 	}
 
 	@Override
@@ -928,7 +928,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 						viewHolder.showServerTitle();
 					}
 					sla.slsl.applyTextColorTo(viewHolder);
-					if (sla.pinging.get(sv)) {
+					if (sla.pinging.contains(sv)) {
 						viewHolder.pending(sv,sla);
 					} else {
 						if (sv instanceof ServerStatus) {
@@ -1054,13 +1054,13 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 			if(sla.editMode!=EDIT_MODE_NULL)return;
 			Server s=getItem(p3);
 			sla.clicked = p3;
-			if (sla.pinging.get(s))return;
+			if (sla.pinging.contains(s))return;
 			if (s instanceof ServerStatus) {
 				Bundle bnd=new Bundle();
 				sla.startServerInfoActivity(new Intent().putExtra("stat", Utils.encodeForServerInfo((ServerStatus)s)).putExtra("object", bnd),p3);
 			} else {
 				sla.updater.putInQueue(s, new PingHandlerImpl(true, new Intent().putExtra("offset",0), true));
-				sla.pinging.put(s, true);
+				sla.pinging.add(s);
 				sla.statLayout.setStatusAt(p3, 1);
 				sla.sl.notifyItemChanged(p3);
 				sla.wd.showWorkingDialog(s);
@@ -1087,9 +1087,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 						.show(), R.string.remove));
 				executes.add(1, new Duo<>(() -> {
 					Server svr = getItem(p3);
-					if (sla.pinging.get(svr)) return;
+					if (sla.pinging.contains(svr)) return;
 					sla.updater.putInQueue(svr, new PingHandlerImpl(true, new Intent().putExtra("offset", -1), false));
-					sla.pinging.put(svr, true);
+					sla.pinging.add(svr);
 					sla.statLayout.setStatusAt(p3, 1);
 					sla.sl.notifyItemChanged(p3);
 					sla.wd.showWorkingDialog(svr);
@@ -1376,12 +1376,12 @@ sla.statLayout.setStatusAt(p3, 1);*/
 					}
 					Server sn=s.cloneAsServer();
 					act().list.set(i_, sn);
-					act().pinging.put(sn, false);
+					act().pinging.add(sn);
 					act().statLayout.setStatusAt(i_, 0);
 					act().sl.notifyItemChanged(i_);
 					if (closeDialog)
 						act().wd.hideWorkingDialog(sn);
-					if (!act().pinging.containsValue(true))
+					if (!act().pinging.contains(sn))
 						act().srl.setRefreshing(false);
 					if(act().pref.getBoolean("letRetryPing",false)){
 						if(act().retrying.containsKey(s)){
@@ -1395,7 +1395,7 @@ sla.statLayout.setStatusAt(p3, 1);*/
 								kvp.setValue(remaining-1);
 								act().getWindow().getDecorView().getHandler().postDelayed(() -> {
 									(kvp.getKey()?act().updater:act().spp).putInQueue(s,PingHandlerImpl.this);
-									act().pinging.put(s,true);
+									act().pinging.add(s);
 									if(closeDialog)
 										act().wd.showWorkingDialog(s);
 								},1000);
@@ -1404,7 +1404,7 @@ sla.statLayout.setStatusAt(p3, 1);*/
 							act().retrying.put(s, new KVP<>(isUpd, Integer.valueOf(act().pref.getString("retryIteration", "10"))));
 							act().getWindow().getDecorView().getHandler().postDelayed(() -> {
 								(isUpd?act().updater:act().spp).putInQueue(s,PingHandlerImpl.this);
-								act().pinging.put(s,true);
+								act().pinging.add(s);
 								if(closeDialog)
 									act().wd.showWorkingDialog(s);
 							},1000);
@@ -1426,7 +1426,7 @@ sla.statLayout.setStatusAt(p3, 1);*/
 						return;
 					}
 					act().list.set(i_, s);
-					act().pinging.put(s, false);
+					act().pinging.add(s);
 					act().statLayout.setStatusAt(i_, 2);
 					act().sl.notifyItemChanged(i_);
 					if (extras.getIntExtra("offset",-1) != -1) {
@@ -1440,7 +1440,7 @@ sla.statLayout.setStatusAt(p3, 1);*/
 						act().wd.hideWorkingDialog(s);
 					}
 
-					if (!act().pinging.containsValue(true)) {
+					if (!act().pinging.contains(s)) {
 						act().srl.setRefreshing(false);
 					}
 					act().retrying.remove(s);
