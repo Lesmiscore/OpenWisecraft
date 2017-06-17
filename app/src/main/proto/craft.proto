@@ -16,6 +16,10 @@ message Server{
     }
 }
 
+message ServerList{
+    repeated Server servers=1;
+}
+
 message ServerCrawlerEntry{
     required bool notifyOnline=1;
     required bool notifyOffline=2;

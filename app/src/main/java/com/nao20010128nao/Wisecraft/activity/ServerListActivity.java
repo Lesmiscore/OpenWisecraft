@@ -631,8 +631,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
 	public void dryUpdate(Server s, boolean isUpdate) {
 		if (pinging.get(s))return;
-		if (isUpdate)updater.putInQueue(s, new PingHandlerImpl(true, new Intent().putExtra("offset",-1),false));
-		else spp.putInQueue(s, new PingHandlerImpl(true, new Intent().putExtra("offset",-1),false));
+		(isUpdate?updater:spp).putInQueue(s, new PingHandlerImpl(true, new Intent().putExtra("offset",-1),false));
 		pinging.put(s, true);
 		sl.notifyItemChanged(list.indexOf(s));
 	}
