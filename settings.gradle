@@ -11,6 +11,7 @@ import java.time.LocalDate
             get(null)
         }
     }catch(Throwable e){
+        e.printStackTrace()
         try{
             /* for *nix: use theEnvironment instead of theCaseInsensitiveEnvironment */
             def envTmp=('java.lang.ProcessEnvironment'as Class).getDeclaredField('theEnvironment').with {
@@ -22,13 +23,15 @@ import java.time.LocalDate
                 newInstance(envTmp)
             }
         }catch(Throwable e_){
+            e_.printStackTrace()
             println 'Failed to modify env. Build will fail.'
             return
         }
     }
     assert privEnv instanceof Map
     //com.android.build.gradle.internal.NonFinalPluginExpiry
-    privEnv.ANDROID_DAILY_OVERRIDE=({
+    //java.lang.ProcessEnvironment
+    def value=privEnv.ANDROID_DAILY_OVERRIDE=({
         def now=LocalDate.now()
         def crypt = MessageDigest.getInstance("SHA-1")
         crypt.reset()
@@ -37,10 +40,13 @@ import java.time.LocalDate
                         '%1$s:%2$s:%3$s',
                         now.year,
                         now.monthValue -1,
-                        now.dayOfMonth)
-                        .getBytes("utf8"))
+                        now.dayOfMonth
+                ).getBytes("utf8")
+        )
         new BigInteger(1, crypt.digest()).toString(16)
     })()
+    //check the env has intended value
+    assert value==System.getenv("ANDROID_DAILY_OVERRIDE")
 })()
 
 include ':app', ':wisecraft-i18n', ':compat'
