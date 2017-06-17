@@ -26,7 +26,7 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
     ServerList sl;
     List<ServerStatus> list;
     String ip;
-    int mode;
+    Protobufs.Server.Mode mode;
     View dialog, dialog2;
     SharedPreferences pref;
     RecyclerView rv;
@@ -64,7 +64,7 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
             launchService();
         } else {
             ip = getIntent().getStringExtra("ip");
-            mode = getIntent().getIntExtra("mode", 0);
+            mode = (Protobufs.Server.Mode) getIntent().getSerializableExtra("mode");
             new AlertDialog.Builder(this, ThemePatcher.getDefaultDialogStyle(this))
                     .setTitle(R.string.serverFinder)
                     .setView(dialog = getLayoutInflater().inflate(R.layout.server_finder_start, null, false))
@@ -72,21 +72,21 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
                         String ip = ((EditText) dialog.findViewById(R.id.ip)).getText().toString();
                         int startPort = Integer.valueOf(((EditText) dialog.findViewById(R.id.startPort)).getText().toString());
                         int endPort = Integer.valueOf(((EditText) dialog.findViewById(R.id.endPort)).getText().toString());
-                        int mode = ((CheckBox) dialog.findViewById(R.id.pc)).isChecked() ? 1 : 0;
+                        Protobufs.Server.Mode mode = ((CheckBox) dialog.findViewById(R.id.pc)).isChecked() ? Protobufs.Server.Mode.PC : Protobufs.Server.Mode.PE;
                         launchService(ip, Math.min(startPort, endPort), Math.max(startPort, endPort), mode);
                     })
                     .setNegativeButton(android.R.string.cancel, (di, w) -> finish())
                     .setOnCancelListener(di -> finish())
                     .show();
             if (ip != null) ((EditText) dialog.findViewById(R.id.ip)).setText(ip);
-            ((CheckBox) dialog.findViewById(R.id.pc)).setChecked(mode != 0);
+            ((CheckBox) dialog.findViewById(R.id.pc)).setChecked(mode != Protobufs.Server.Mode.PE);
         }
         slsl = (ServerListStyleLoader) getSystemService(ContextWrappingExtender.SERVER_LIST_STYLE_LOADER);
 
         ViewCompat.setBackground(findViewById(android.R.id.content), slsl.load());
     }
 
-    private void launchService(final String ip, final int startPort, final int endPort, final int mode) {
+    private void launchService(final String ip, final int startPort, final int endPort, final Protobufs.Server.Mode mode) {
         bindService(new Intent(this, ServerFinderService.class), new ServiceConnection() {
             public void onServiceConnected(android.content.ComponentName p1, android.os.IBinder p2) {
                 lastConnection = this;
