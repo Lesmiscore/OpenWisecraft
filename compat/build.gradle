@@ -1,6 +1,10 @@
 apply plugin: 'com.android.library'
 apply from: "$rootDir/ci_utils.gradle"
 
+import org.jsoup.*
+import org.jsoup.nodes.*
+import org.mozilla.javascript.*
+
 android{
     compileSdkVersion 24
     buildToolsVersion "25.0.0"
@@ -29,11 +33,45 @@ android{
 		buildConfigField "String","CI_PIPELINE_ID","\"${ext.pipeline()}\""
 		buildConfigField "String","APP_BUILT_ON","\"${ext.builtOn()}\""
 
-		def oslData=new URL("https://github.com/nao20010128nao/Wisecraft/raw/master/OPEN_SOURCE_LICENSES.md").text
+		def oslData=({
+			def oslMarkdown=new URL("https://github.com/nao20010128nao/Wisecraft/raw/master/OPEN_SOURCE_LICENSES.md").text
+			def oslCss=new URL('https://github.com/fiskurgit/MarkdownView/raw/master/library/src/main/assets/githubmarkdown.css').text
+
+			def markedCode=new URL('https://github.com/chjj/marked/raw/master/lib/marked.js').text
+			def ctx=Context.enter()
+			ctx.optimizationLevel=9
+			def scope=ctx.initStandardObjects()
+			ctx.evaluateString(scope, markedCode, "marked.js", 1, null)
+			ctx.evaluateString(scope, '''
+				function bridgeMarked(markdown){
+    				return marked(new String(markdown))
+				}
+			''', 'marked.help.js', 1, null)
+			def marked={String str->
+				def func=(Function) Context.jsToJava(scope.get("bridgeMarked", scope), Function)
+				func(ctx,scope,scope,[str])
+			}
+			def doc=Jsoup.parse('''
+				<!doctype html>
+				<html>
+					<head>
+						<title></title>
+						<style>
+						</style>
+					</head>
+					<body>
+						<div id="content">$s</div>
+					</body>
+				</html>
+			'''.stripIndent().trim())
+			doc.select('div#content')[0].html(marked(oslMarkdown))
+			doc.select('style')[0].text(oslCss)
+			return doc.html()
+		})()
 		def oslParts=[]
 		def lengthPerParts=100
 		((int)Math.ceil(oslData.length()/lengthPerParts)).times{
-			def partial=oslData.substring(it*lengthPerParts,Math.min((it+1)*lengthPerParts-1,oslData.length()))
+			def partial=oslData.substring(it*lengthPerParts,Math.min((it+1)*lengthPerParts,oslData.length()))
 			partial=partial.replace('\\','\\\\')
 			partial=partial.replace('"','\\"')
 			partial=partial.replace('\'','\\\'')
@@ -108,10 +146,10 @@ dependencies {
 
 def getHashOfRepo(String modul,String name,root){
 	def revisionHash
-	if(!System.getProperty("os.name").toLowerCase().contains("windows")){
-		revisionHash = ["sh",  "-c",  "cd $root/$modul ; git rev-parse HEAD"].execute().in.text.trim()
-	}else{
-		revisionHash = ["cmd",  "/c",  "git rev-parse HEAD"].execute(null,new File(root,modul)).in.text.trim()
+	try {
+		revisionHash=["git", "rev-parse", "HEAD"].execute(null,new File(root,modul)).in.text.trim()
+	}catch(Throwable e){
+		revisionHash='Unknown'
 	}
 	if(!revisionHash.matches("^[0-9a-fA-F]+\$")){
 		revisionHash = "Unknown"

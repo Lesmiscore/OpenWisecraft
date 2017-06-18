@@ -55,7 +55,9 @@ buildscript {
 		//classpath "com.nao20010128nao:proguard-japanese:5.3.2"
 		//classpath "net.sf.proguard:proguard-gradle:5.3.2"
 		classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.1'
-    }
+		classpath 'org.mozilla:rhino:1.7.7.1'
+		classpath 'org.jsoup:jsoup:1.9.1'
+	}
 }
 
 allprojects {
@@ -243,7 +245,7 @@ task("convertConfigSlurperToBuildscript")<<{
 }
 
 task("beforeBuild"){
-	dependsOn "convertConfigSlurperToBuildscript","safeDeleteDevXml"
+	dependsOn "convertConfigSlurperToBuildscript","safeDeleteDevXml",':compat:assembleOpenSourceLicenseHtml'
 }
 
 ProductFlavor.metaClass.jackOptions={Action<JackOptions> action->/*no-op*/}

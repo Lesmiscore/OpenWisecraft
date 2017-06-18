@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.protobuf'
 
-import java.security.SecureRandom;
+import java.security.SecureRandom
 
 android {
 	def getRandomBetaSuffix={->
@@ -252,4 +252,3 @@ protobuf {
 	}
 }
 apply plugin: 'com.google.gms.google-services'
-
