@@ -26,7 +26,7 @@
         <item name="rconConsoleSendButtonStyle">@style/AppButton</item>
         <item name="rconTabColor">@color/mainColor</item>
         <!--AppButton-->
-        <item name="wcAppButtonTextColor">#000</item>
+        <item name="wcAppButtonTextColor">#fff</item>
         <item name="wcAppButtonBgColor">@color/mainColor</item>
     </style>
     <style name="AppDialog" parent="@style/Theme.AppCompat.Light.Dialog">
