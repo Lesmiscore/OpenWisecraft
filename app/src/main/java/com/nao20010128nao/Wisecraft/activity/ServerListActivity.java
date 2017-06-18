@@ -1392,15 +1392,17 @@ sla.statLayout.setStatusAt(p3, 1);*/
         }
 
         public void onPingFailed(final Server s) {
+            Log.d("SLA-PingHandlerImpl","onPingFailed: "+s);
             act().runOnUiThread(() -> {
                 try {
+                    Log.d("SLA-PingHandlerImpl","runOnUiThread: "+s);
                     int i_ = act().list.indexOf(s);
                     if (i_ == -1) {
                         return;
                     }
                     Server sn = s.cloneAsServer();
                     act().list.set(i_, sn);
-                    act().pinging.add(sn);
+                    act().pinging.remove(sn);
                     act().statLayout.setStatusAt(i_, 0);
                     act().sl.notifyItemChanged(i_);
                     if (closeDialog)
@@ -1419,7 +1421,7 @@ sla.statLayout.setStatusAt(p3, 1);*/
                                 kvp.setValue(remaining - 1);
                                 act().getWindow().getDecorView().getHandler().postDelayed(() -> {
                                     (kvp.getKey() ? act().updater : act().spp).putInQueue(s, PingHandlerImpl.this);
-                                    act().pinging.add(s);
+                                    act().pinging.remove(s);
                                     if (closeDialog)
                                         act().wd.showWorkingDialog(s);
                                 }, 1000);
@@ -1428,7 +1430,7 @@ sla.statLayout.setStatusAt(p3, 1);*/
                             act().retrying.put(s, new KVP<>(isUpd, Integer.valueOf(act().pref.getString("retryIteration", "10"))));
                             act().getWindow().getDecorView().getHandler().postDelayed(() -> {
                                 (isUpd ? act().updater : act().spp).putInQueue(s, PingHandlerImpl.this);
-                                act().pinging.add(s);
+                                act().pinging.remove(s);
                                 if (closeDialog)
                                     act().wd.showWorkingDialog(s);
                             }, 1000);
@@ -1437,6 +1439,7 @@ sla.statLayout.setStatusAt(p3, 1);*/
                         if (extras.getIntExtra("offset", -1) != -1)
                             Utils.makeNonClickableSB(act(), R.string.serverOffline, Snackbar.LENGTH_SHORT).show();
                     }
+                    Log.d("SLA-PingHandlerImpl","runOnUiThread: fin: "+s);
                 } catch (final Throwable e) {
                     CollectorMain.reportError("ServerListActivity#onPingFailed", e);
                 }
@@ -1444,14 +1447,16 @@ sla.statLayout.setStatusAt(p3, 1);*/
         }
 
         public void onPingArrives(final ServerStatus s) {
+            Log.d("SLA-PingHandlerImpl","onPingArrives: "+s);
             act().runOnUiThread(() -> {
+                Log.d("SLA-PingHandlerImpl","runOnUiThread: "+s);
                 try {
                     int i_ = act().list.indexOf(s);
                     if (i_ == -1) {
                         return;
                     }
                     act().list.set(i_, s);
-                    act().pinging.add(s);
+                    act().pinging.remove(s);
                     act().statLayout.setStatusAt(i_, 2);
                     act().sl.notifyItemChanged(i_);
                     if (extras.getIntExtra("offset", -1) != -1) {
@@ -1469,6 +1474,7 @@ sla.statLayout.setStatusAt(p3, 1);*/
                         act().srl.setRefreshing(false);
                     }
                     act().retrying.remove(s);
+                    Log.d("SLA-PingHandlerImpl","runOnUiThread: fin: "+s);
                 } catch (final Throwable e) {
                     CollectorMain.reportError("ServerListActivity#onPingArrives", e);
                     onPingFailed(s);
