@@ -712,13 +712,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             sv.removeAll(list);
             runOnUiThread(() -> {
                 if (sv.size() != 0) {
-                    for (Server s : sv) {
-                        if (!list.contains(s)) {
-                            spp.putInQueue(s, new PingHandlerImpl(true, new Intent().putExtra("offset", -1), false));
-                            pinging.add(s);
-                            sl.add(s);
-                        }
-                    }
+                    Stream.of(sv).forEach(this::addIntoList);
                 }
                 saveServers();
             });
@@ -755,11 +749,10 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
         new Thread(() -> {
             File f = new File(fn);
             if (f.exists()) {
-                final List<Server> sv;
                 String json = readWholeFile(f);
-                sv = Utils.jsonToServers(json);
+                final List<Server> sv = Utils.jsonToServers(json);
                 runOnUiThread(() -> {
-                    sl.addAll(sv);
+                    Stream.of(sv).forEach(this::addIntoList);
                     saveServers();
                     Utils.makeNonClickableSB(ServerListActivityImpl.this, getResources().getString(R.string.imported).replace("[PATH]", fn), Snackbar.LENGTH_LONG).show();
                 });
