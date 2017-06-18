@@ -9,8 +9,10 @@ import java.util.*;
 /**
  * References: http://wiki.vg/Server_List_Ping
  * https://gist.github.com/thinkofdeath/6927216
+ *
+ * @deprecated Will be removed, using RawJsonReply instead
  */
-
+@Deprecated
 public class Reply implements ServerPingResult, PCQueryResult {
     @SerializedName("description")
     public String description;

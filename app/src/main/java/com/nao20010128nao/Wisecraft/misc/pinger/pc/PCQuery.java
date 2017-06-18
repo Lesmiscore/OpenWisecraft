@@ -91,16 +91,9 @@ public class PCQuery implements PingHost {
             String s = getStatJson(dis);
             Log.i("ping_pc", s);
             lastPing = System.currentTimeMillis() - t;
-            PCQueryResult result;
-            if (BuildConfig.OBFUSCATED) {
-                result = new RawJsonReply(s);
-            } else {
-                try {
-                    result = gson.fromJson(s, Reply.class);
-                } catch (JsonSyntaxException e) {
-                    result = gson.fromJson(s, Reply19.class);
-                }
-            }
+            PCQueryResult result = new RawJsonReply(s);
+            // Reply/Reply19 is going to be removed in the future
+            // They uses fixed Json structure, and they causing me confused and having low quality
             result.setRaw(s);
             return result;
         } finally {
