@@ -9,6 +9,7 @@ message Server {
     required string ip = 1;
     required int32 port = 2;
     required Mode mode = 3;
+    required string name = 4;
 
     enum Mode {
         PE = 0;
