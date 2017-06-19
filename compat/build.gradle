@@ -60,7 +60,7 @@ android{
 						</style>
 					</head>
 					<body>
-						<div id="content">$s</div>
+						<div id="content"></div>
 					</body>
 				</html>
 			'''.stripIndent().trim())
