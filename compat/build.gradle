@@ -121,7 +121,6 @@ dependencies {
 	if(1)compile "com.google.firebase:firebase-crash:$firebaseVersion"
 	
 	compile 'com.google.code.gson:gson:2.8.0'
-	compile 'com.github.fiskurgit:MarkdownView:1.1.0'
 	compile 'com.annimon:stream:1.1.7'
     
 	compile project(':scrolling')
