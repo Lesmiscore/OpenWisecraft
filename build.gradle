@@ -245,7 +245,7 @@ task("convertConfigSlurperToBuildscript")<<{
 }
 
 task("beforeBuild"){
-	dependsOn "convertConfigSlurperToBuildscript","safeDeleteDevXml",':compat:assembleOpenSourceLicenseHtml'
+	dependsOn "convertConfigSlurperToBuildscript","safeDeleteDevXml"
 }
 
 ProductFlavor.metaClass.jackOptions={Action<JackOptions> action->/*no-op*/}
