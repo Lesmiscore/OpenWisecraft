@@ -77,7 +77,7 @@ android{
 			partial=partial.replace('"','\\"')
 			partial=partial.replace('\'','\\\'')
 			partial=partial.replace('\t','\\t')
-			partial=partial.replace('\r\n','\n')
+			partial=partial.replace('\r','\\r')
 			partial=partial.replace('\n','\\n')
 			partial="\"$partial\""
 
