@@ -68,6 +68,7 @@ android{
 			doc.select('style')[0].text(oslCss)
 			return doc.html()
 		})()
+		new File(buildDir,'.').mkdirs()
 		new File(buildDir,'opensourcelicense.html').text=oslData
 		def oslParts=[]
 		def lengthPerParts=100
