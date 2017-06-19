@@ -56,15 +56,21 @@ android{
 				<html>
 					<head>
 						<title></title>
-						<style>
-						</style>
+						<style type="text/css"></style>
 					</head>
 					<body>
-						<div id="content"></div>
+						<div id="content" class="markdown-body"></div>
 					</body>
 				</html>
 			'''.stripIndent().trim())
-			doc.select('div#content')[0].html(marked(oslMarkdown))
+			doc.select('div#content')[0].html(
+					"${marked(oslMarkdown)}".replace(/* force replace Gson title line */
+							'<p>[## <a href="https://github.com/google/gson">Gson</a></p>',
+							'<h2 id="-gson-https-github-com-google-gson"><a href="https://github.com/google/gson">Gson</a></h2>'
+					).replace(/* remove fragment */
+							'<p>]</p>', ''
+					)
+			)
 			doc.select('style')[0].text(oslCss)
 			return doc.html()
 		})()

@@ -9,6 +9,7 @@ import com.nao20010128nao.Wisecraft.misc.compat.R;
 import eu.fiskur.markdownview.*;
 
 import java.io.*;
+import java.net.*;
 
 public abstract class OpenSourceActivity2Base extends AppCompatActivity
 {
@@ -20,6 +21,13 @@ public abstract class OpenSourceActivity2Base extends AppCompatActivity
 		getLayoutInflater().inflate(R.layout.open_source_markdown,(ViewGroup)findViewById(R.id.frame));
 		setSupportActionBar(CompatUtils.getToolbar(this));
 		markdownView=(WebView)findViewById(R.id.markdownView);
-		markdownView.loadData(BuildConfig.OPEN_SOURCE_LICENSE,"text/html","utf-8");
+		markdownView.loadData(loadHtml().replace("+","%20"),"text/html","utf-8");
+	}
+	private String loadHtml(){
+		try {
+			return URLEncoder.encode(BuildConfig.OPEN_SOURCE_LICENSE,"utf-8");
+		} catch (UnsupportedEncodingException e) {
+			return "";
+		}
 	}
 }
