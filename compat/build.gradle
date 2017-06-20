@@ -80,7 +80,8 @@ android{
 		def lengthPerParts=100
 		((int)Math.ceil(oslData.length()/lengthPerParts)).times{
 			def partial=oslData.substring(it*lengthPerParts,Math.min((it+1)*lengthPerParts,oslData.length()))
-			partial=partial.replace('\\','\\\\').replace('"','\\"')
+			partial=partial
+					.replace('\\','\\\\').replace('"','\\"')
 					.replace('\'','\\\'').replace('\t','\\t')
 					.replace('\r','\\r').replace('\n','\\n')
 			partial="\"$partial\""
