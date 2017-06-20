@@ -1,69 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:orientation="vertical"
-	android:layout_margin="5dp">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:layout_margin="5dp">
 
-	<TextView
-		android:layout_height="wrap_content"
-		android:textAppearance="?android:attr/textAppearanceLarge"
-		android:layout_width="wrap_content"
-		android:text="@string/aboutDeveloper"/>
+    <TextView
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:text="@string/aboutDeveloper"/>
 
-	<View
-		android:background="#cccccc"
-		android:layout_height="1dp"
-		android:layout_width="match_parent"/>
+    <View
+            android:background="#cccccc"
+            android:layout_height="1dp"
+            android:layout_width="match_parent"/>
 
-	<LinearLayout
-		android:layout_height="wrap_content"
-		android:layout_width="match_parent"
-		android:orientation="horizontal">
+    <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal">
 
-		<Button
-			style="?android:attr/buttonBarButtonStyle"
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			android:src="@android:drawable/ic_menu_close_clear_cancel"
-			android:layout_weight="1.0"
-			android:id="@+id/twitter"
-			android:textSize="28sp"/>
+        <Button
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                android:layout_weight="1.0"
+                android:id="@+id/twitter"
+                android:textSize="28sp"/>
 
-		<View
-			android:background="#cccccc"
-			android:layout_height="match_parent"
-			android:layout_width="1dp"
-			android:layout_marginTop="5dp"
-			android:layout_marginBottom="5dp"/>
+        <View
+                android:background="#cccccc"
+                android:layout_height="match_parent"
+                android:layout_width="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"/>
 
-		<Button
-			style="?android:attr/buttonBarButtonStyle"
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			android:src="@android:drawable/ic_menu_close_clear_cancel"
-			android:layout_weight="1.0"
-			android:id="@+id/googleplus"
-			android:textSize="28sp"/>
+        <Button
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                android:layout_weight="1.0"
+                android:id="@+id/googleplus"
+                android:textSize="28sp"/>
 
-		<View
-			android:background="#cccccc"
-			android:layout_height="match_parent"
-			android:layout_width="1dp"
-			android:layout_marginTop="5dp"
-			android:layout_marginBottom="5dp"/>
+        <View
+                android:background="#cccccc"
+                android:layout_height="match_parent"
+                android:layout_width="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"/>
 
-		<Button
-			style="?android:attr/buttonBarButtonStyle"
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			android:src="@android:drawable/ic_menu_close_clear_cancel"
-			android:layout_weight="1.0"
-			android:id="@+id/youtube"
-			android:textSize="28sp"/>
+        <Button
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                android:layout_weight="1.0"
+                android:id="@+id/youtube"
+                android:textSize="28sp"/>
 
-	</LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>
 

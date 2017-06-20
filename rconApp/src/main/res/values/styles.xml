@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<style name="AppTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
-		<item name="colorPrimary">@color/mainColor</item>
-		<item name="colorAccent">@color/mainColor</item>
-		<item name="colorPrimaryDark">@color/upd_2</item>
-		<item name="android:windowContentOverlay">@null</item>-->
-		<item name="rconConsoleSendButtonStyle">@style/AppButton</item>
-		<item name="rconTabTextColor">#fff</item>
-	</style>
-	<style name="AppDialog" parent="@style/Theme.AppCompat.Light.Dialog">
-		<item name="colorPrimary">@color/mainColor</item>
-		<item name="colorAccent">@color/mainColor</item>
-		<item name="android:windowContentOverlay">@null</item>
-	</style>
-	<style name="AppAlertDialog" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
-		<item name="colorPrimary">@color/mainColor</item>
-		<item name="colorAccent">@color/mainColor</item>
-	</style>
-	
-	<style name="AppTheme.NoActionBar" parent="AppTheme">
-		<item name="windowActionBar">false</item>
-		<item name="windowNoTitle">true</item>
-	</style>
-	
-	<style name="AppTheme.OpenSource" parent="AppTheme.NoActionBar">
-		<item name="android:statusBarColor">@color/upd_2</item>
-		<item name="colorPrimary">@color/mainColor</item>-->
-		<item name="android:windowContentOverlay">@null</item>
-	</style>
-	
-	<style name="AppButton" parent="@style/Widget.AppCompat.Button.Colored">
-		<item name="android:textColor">#fff</item>
+    <style name="AppTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/mainColor</item>
+        <item name="colorAccent">@color/mainColor</item>
+        <item name="colorPrimaryDark">@color/upd_2</item>
+        <item name="android:windowContentOverlay">@null</item>-->
+        <item name="rconConsoleSendButtonStyle">@style/AppButton</item>
+        <item name="rconTabTextColor">#fff</item>
+    </style>
+    <style name="AppDialog" parent="@style/Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/mainColor</item>
+        <item name="colorAccent">@color/mainColor</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+    <style name="AppAlertDialog" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorPrimary">@color/mainColor</item>
+        <item name="colorAccent">@color/mainColor</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.OpenSource" parent="AppTheme.NoActionBar">
+        <item name="android:statusBarColor">@color/upd_2</item>
+        <item name="colorPrimary">@color/mainColor</item>-->
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="AppButton" parent="@style/Widget.AppCompat.Button.Colored">
+        <item name="android:textColor">#fff</item>
         <item name="android:gravity">center</item>
-		<item name="colorButtonNormal">@color/upd_2</item>
-		<item name="colorControlNormal">@color/upd_2</item>
-	</style>
+        <item name="colorButtonNormal">@color/upd_2</item>
+        <item name="colorControlNormal">@color/upd_2</item>
+    </style>
 </resources>

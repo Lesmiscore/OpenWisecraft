@@ -7,81 +7,81 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.*;
 import android.view.*;
 
-public class CompatActivityGroup extends ActivityGroup
-{
-	AppCompatDelegate dlg;
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		dlg=AppCompatDelegate.create(this,null);
-		dlg.installViewFactory();
-		dlg.onCreate(savedInstanceState);
-		super.onCreate(savedInstanceState);
-	}
+public class CompatActivityGroup extends ActivityGroup {
+    AppCompatDelegate dlg;
 
-	public ActionBar getSupportActionBar(){
-		return dlg.getSupportActionBar();
-	}
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        dlg = AppCompatDelegate.create(this, null);
+        dlg.installViewFactory();
+        dlg.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
+    }
 
-	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
-		dlg.onConfigurationChanged(newConfig);
-	}
+    public ActionBar getSupportActionBar() {
+        return dlg.getSupportActionBar();
+    }
 
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		dlg.onDestroy();
-	}
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        dlg.onConfigurationChanged(newConfig);
+    }
 
-	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
-		dlg.onPostCreate(savedInstanceState);
-	}
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dlg.onDestroy();
+    }
 
-	@Override
-	protected void onPostResume() {
-		super.onPostResume();
-		dlg.onPostResume();
-	}
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        dlg.onPostCreate(savedInstanceState);
+    }
 
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		dlg.onSaveInstanceState(outState);
-	}
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        dlg.onPostResume();
+    }
 
-	@Override
-	protected void onStop() {
-		super.onStop();
-		dlg.onStop();
-	}
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        dlg.onSaveInstanceState(outState);
+    }
 
-	@Override
-	public MenuInflater getMenuInflater() {
-		return dlg.getMenuInflater();
-	}
+    @Override
+    protected void onStop() {
+        super.onStop();
+        dlg.onStop();
+    }
 
-	@Override
-	protected void onTitleChanged(CharSequence title, int color) {
-		super.onTitleChanged(title, color);
-		dlg.setTitle(title);
-	}
+    @Override
+    public MenuInflater getMenuInflater() {
+        return dlg.getMenuInflater();
+    }
 
-	@Override
-	public void invalidateOptionsMenu() {
-		super.invalidateOptionsMenu();
-		dlg.invalidateOptionsMenu();
-	}
+    @Override
+    protected void onTitleChanged(CharSequence title, int color) {
+        super.onTitleChanged(title, color);
+        dlg.setTitle(title);
+    }
 
-	@Override
-	public void setContentView(View view) {
-		dlg.setContentView(view);
-	}
+    @Override
+    public void invalidateOptionsMenu() {
+        super.invalidateOptionsMenu();
+        dlg.invalidateOptionsMenu();
+    }
 
-	@Override
-	public void setContentView(int layoutResID) {
-		dlg.setContentView(layoutResID);
-	}
+    @Override
+    public void setContentView(View view) {
+        dlg.setContentView(view);
+    }
+
+    @Override
+    public void setContentView(int layoutResID) {
+        dlg.setContentView(layoutResID);
+    }
 }

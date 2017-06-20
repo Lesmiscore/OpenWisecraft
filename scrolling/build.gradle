@@ -16,18 +16,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-	lintOptions {
+    lintOptions {
         abortOnError false
     }
 }
 
 dependencies {
-	if(1)compile "com.android.support:appcompat-v7:$supportLibVersion"
-    if(1)compile "com.android.support:support-compat:$supportLibVersion"
-    if(1)compile "com.android.support:design:$supportLibVersion"
-    compile fileTree(dir: 'libs',include: ['*.jar'])
+    if (1) compile "com.android.support:appcompat-v7:$supportLibVersion"
+    if (1) compile "com.android.support:support-compat:$supportLibVersion"
+    if (1) compile "com.android.support:design:$supportLibVersion"
+    compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    if(0){
+    if (0) {
         compile 'com.android.support:appcompat-v7:25.1.0'
         compile 'com.android.support:support-compat:25.1.0'
         compile 'com.android.support:design:25.1.0'

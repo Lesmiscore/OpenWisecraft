@@ -11,17 +11,17 @@ package com.nao20010128nao.ToolBox;
 import android.support.v7.preference.*;
 
 public abstract class NormalButtonPreferenceCompat
-extends Preference {
+        extends Preference {
     public NormalButtonPreferenceCompat(android.content.Context context, android.util.AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context,attrs,defStyleAttr,defStyleRes);
+        super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     public NormalButtonPreferenceCompat(android.content.Context context, android.util.AttributeSet attrs, int defStyleAttr) {
-        super(context,attrs,defStyleAttr);
+        super(context, attrs, defStyleAttr);
     }
 
     public NormalButtonPreferenceCompat(android.content.Context context, android.util.AttributeSet attrs) {
-        super(context,attrs);
+        super(context, attrs);
     }
 
     public NormalButtonPreferenceCompat(android.content.Context context) {

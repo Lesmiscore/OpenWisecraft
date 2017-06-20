@@ -18,17 +18,17 @@ import android.util.*;
 import android.view.*;
 
 public class HandledPreference
-extends NormalButtonPreference {
-	static final NullClickListener defHandler=new NullClickListener();
-    OnClickListener clickListener=defHandler;
+        extends NormalButtonPreference {
+    static final NullClickListener defHandler = new NullClickListener();
+    OnClickListener clickListener = defHandler;
 
     public HandledPreference(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
-		try {
-			Class.forName("com.nao20010128nao.Wisecraft.misc.pref.StartPref").getField("as").set(null,attributeSet);
-		} catch (Throwable e) {
-			
-		}
+        try {
+            Class.forName("com.nao20010128nao.Wisecraft.misc.pref.StartPref").getField("as").set(null, attributeSet);
+        } catch (Throwable e) {
+
+        }
     }
 
     public static OnClickListener createListenerFrom(final View.OnClickListener onClickListener) {
@@ -45,19 +45,19 @@ extends NormalButtonPreference {
     }
 
     private String getSummarySafety() {
-		if (getSummary() == null) {
-			return null;
-		} else {
-			return getSummary().toString();
-		}
+        if (getSummary() == null) {
+            return null;
+        } else {
+            return getSummary().toString();
+        }
     }
 
     private String getTitleSafety() {
-		if (getTitle() == null) {
-			return null;
-		} else {
-			return getTitle().toString();
-		}
+        if (getTitle() == null) {
+            return null;
+        } else {
+            return getTitle().toString();
+        }
     }
 
     public OnClickListener getOnClickListener() {

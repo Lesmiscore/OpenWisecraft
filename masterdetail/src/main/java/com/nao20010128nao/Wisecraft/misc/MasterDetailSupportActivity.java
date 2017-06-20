@@ -1,17 +1,15 @@
 package com.nao20010128nao.Wisecraft.misc;
 
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
-
-import com.nao20010128nao.Wisecraft.misc.MasterDetail.R;
+import android.os.*;
+import android.support.annotation.*;
+import android.support.v7.app.*;
+import android.support.v7.widget.*;
+import android.view.*;
+import com.nao20010128nao.Wisecraft.misc.MasterDetail.*;
 
 public abstract class MasterDetailSupportActivity extends AppCompatActivity {
 
-    private boolean mTwoPane=false;
+    private boolean mTwoPane = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +29,7 @@ public abstract class MasterDetailSupportActivity extends AppCompatActivity {
         }
     }
 
-    public boolean isTwoPane(){
+    public boolean isTwoPane() {
         return mTwoPane;
     }
 

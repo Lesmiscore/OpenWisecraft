@@ -1,11 +1,11 @@
 apply plugin: 'com.android.library'
 apply from: "$rootDir/ci_utils.gradle"
 
-import org.jsoup.*
-import org.jsoup.nodes.*
-import org.mozilla.javascript.*
+import org.jsoup.Jsoup
+import org.mozilla.javascript.Context
+import org.mozilla.javascript.Function
 
-android{
+android {
     compileSdkVersion 24
     buildToolsVersion "25.0.0"
 
@@ -14,44 +14,44 @@ android{
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
-		
-		def root="$project.rootDir"
-		def ext=project.ext
-		buildConfigField "String", "GIT_REVISION_HASH", "\"${getHashOfRepo('','Wisecraft',root)}\""
-		buildConfigField "String", "GIT_REVISION_HASH_I18N", "\"${getHashOfRepo('wisecraft-i18n','Wisecraft-Multilanguage',root)}\""
-		buildConfigField "String", "GIT_REVISION_HASH_STATUSES_LAYOUT", "\"${getHashOfRepo('statusesLayout','StatusesLayout',root)}\""
-		buildConfigField "String", "GIT_REVISION_HASH_MATERIAL_ICONS", "\"${getHashOfRepo('MaterialIcons','MaterialIconsLight',root)}\""
-		buildConfigField "String", "GIT_REVISION_HASH_CALLIGRAPHY", "\"${getHashOfRepo('calligraphy','Calligraphy-Wisecraft',root)}\""
-		buildConfigField "String", "GIT_REVISION_HASH_PSTS", "\"${getHashOfRepo('psts','Wisecraft-PagerSlidingTabStrip',root)}\""
-		buildConfigField "String", "GIT_REVISION_HASH_COLOR_PICKER", "\"${getHashOfRepo('colorPicker','Wisecraft-AndroidPhotoshopColorPicker',root)}\""
-		
-		buildConfigField "String","CI_BUILD_ID","\"${ext.buildId()}\""
-		buildConfigField "String","CI_BUILD_REF_NAME","\"${ext.buildRef()}\""
-		buildConfigField "String","CI_RUNNER_ID","\"${ext.runnerId()}\""
-		buildConfigField "String","CI_BUILD_STAGE","\"${ext.buildStage()}\""
-		buildConfigField "String","CI_BUILD_NAME","\"${ext.buildName()}\""
-		buildConfigField "String","CI_PIPELINE_ID","\"${ext.pipeline()}\""
-		buildConfigField "String","APP_BUILT_ON","\"${ext.builtOn()}\""
 
-		def oslData=({
-			def oslMarkdown=new URL("https://github.com/nao20010128nao/Wisecraft/raw/master/OPEN_SOURCE_LICENSES.md").text
-			def oslCss=new URL('https://github.com/fiskurgit/MarkdownView/raw/master/library/src/main/assets/githubmarkdown.css').text
+        def root = "$project.rootDir"
+        def ext = project.ext
+        buildConfigField "String", "GIT_REVISION_HASH", "\"${getHashOfRepo('', 'Wisecraft', root)}\""
+        buildConfigField "String", "GIT_REVISION_HASH_I18N", "\"${getHashOfRepo('wisecraft-i18n', 'Wisecraft-Multilanguage', root)}\""
+        buildConfigField "String", "GIT_REVISION_HASH_STATUSES_LAYOUT", "\"${getHashOfRepo('statusesLayout', 'StatusesLayout', root)}\""
+        buildConfigField "String", "GIT_REVISION_HASH_MATERIAL_ICONS", "\"${getHashOfRepo('MaterialIcons', 'MaterialIconsLight', root)}\""
+        buildConfigField "String", "GIT_REVISION_HASH_CALLIGRAPHY", "\"${getHashOfRepo('calligraphy', 'Calligraphy-Wisecraft', root)}\""
+        buildConfigField "String", "GIT_REVISION_HASH_PSTS", "\"${getHashOfRepo('psts', 'Wisecraft-PagerSlidingTabStrip', root)}\""
+        buildConfigField "String", "GIT_REVISION_HASH_COLOR_PICKER", "\"${getHashOfRepo('colorPicker', 'Wisecraft-AndroidPhotoshopColorPicker', root)}\""
 
-			def markedCode=new URL('https://github.com/chjj/marked/raw/master/lib/marked.js').text
-			def ctx=Context.enter()
-			ctx.optimizationLevel=9
-			def scope=ctx.initStandardObjects()
-			ctx.evaluateString(scope, markedCode, "marked.js", 1, null)
-			ctx.evaluateString(scope, '''
+        buildConfigField "String", "CI_BUILD_ID", "\"${ext.buildId()}\""
+        buildConfigField "String", "CI_BUILD_REF_NAME", "\"${ext.buildRef()}\""
+        buildConfigField "String", "CI_RUNNER_ID", "\"${ext.runnerId()}\""
+        buildConfigField "String", "CI_BUILD_STAGE", "\"${ext.buildStage()}\""
+        buildConfigField "String", "CI_BUILD_NAME", "\"${ext.buildName()}\""
+        buildConfigField "String", "CI_PIPELINE_ID", "\"${ext.pipeline()}\""
+        buildConfigField "String", "APP_BUILT_ON", "\"${ext.builtOn()}\""
+
+        def oslData = ({
+            def oslMarkdown = new URL("https://github.com/nao20010128nao/Wisecraft/raw/master/OPEN_SOURCE_LICENSES.md").text
+            def oslCss = new URL('https://github.com/fiskurgit/MarkdownView/raw/master/library/src/main/assets/githubmarkdown.css').text
+
+            def markedCode = new URL('https://github.com/chjj/marked/raw/master/lib/marked.js').text
+            def ctx = Context.enter()
+            ctx.optimizationLevel = 9
+            def scope = ctx.initStandardObjects()
+            ctx.evaluateString(scope, markedCode, "marked.js", 1, null)
+            ctx.evaluateString(scope, '''
 				function bridgeMarked(markdown){
     				return marked(new String(markdown))
 				}
 			''', 'marked.help.js', 1, null)
-			def marked={String str->
-				def func=(Function) Context.jsToJava(scope.get("bridgeMarked", scope), Function)
-				func(ctx,scope,scope,[str])
-			}
-			def doc=Jsoup.parse('''
+            def marked = { String str ->
+                def func = (Function) Context.jsToJava(scope.get("bridgeMarked", scope), Function)
+                func(ctx, scope, scope, [str])
+            }
+            def doc = Jsoup.parse('''
 				<!doctype html>
 				<html>
 					<head>
@@ -63,103 +63,103 @@ android{
 					</body>
 				</html>
 			'''.stripIndent().trim())
-			doc.select('div#content')[0].html(
-					"${marked(oslMarkdown)}".replace(/* force replace Gson title line */
-							'<p>[## <a href="https://github.com/google/gson">Gson</a></p>',
-							'<h2 id="-gson-https-github-com-google-gson"><a href="https://github.com/google/gson">Gson</a></h2>'
-					).replace(/* remove fragment */
-							'<p>]</p>', ''
-					)
-			)
-			doc.select('style')[0].text(oslCss)
-			return doc.html()
-		})()
-		new File(buildDir,'.').mkdirs()
-		new File(buildDir,'opensourcelicense.html').text=oslData
-		def oslParts=[]
-		def lengthPerParts=100
-		((int)Math.ceil(oslData.length()/lengthPerParts)).times{
-			def partial=oslData.substring(it*lengthPerParts,Math.min((it+1)*lengthPerParts,oslData.length()))
-			partial=partial
-					.replace('\\','\\\\').replace('"','\\"')
-					.replace('\'','\\\'').replace('\t','\\t')
-					.replace('\r','\\r').replace('\n','\\n')
-			partial="\"$partial\""
+            doc.select('div#content')[0].html(
+                    "${marked(oslMarkdown)}".replace(/* force replace Gson title line */
+                            '<p>[## <a href="https://github.com/google/gson">Gson</a></p>',
+                            '<h2 id="-gson-https-github-com-google-gson"><a href="https://github.com/google/gson">Gson</a></h2>'
+                    ).replace(/* remove fragment */
+                            '<p>]</p>', ''
+                    )
+            )
+            doc.select('style')[0].text(oslCss)
+            return doc.html()
+        })()
+        new File(buildDir, '.').mkdirs()
+        new File(buildDir, 'opensourcelicense.html').text = oslData
+        def oslParts = []
+        def lengthPerParts = 100
+        ((int) Math.ceil(oslData.length() / lengthPerParts)).times {
+            def partial = oslData.substring(it * lengthPerParts, Math.min((it + 1) * lengthPerParts, oslData.length()))
+            partial = partial
+                    .replace('\\', '\\\\').replace('"', '\\"')
+                    .replace('\'', '\\\'').replace('\t', '\\t')
+                    .replace('\r', '\\r').replace('\n', '\\n')
+            partial = "\"$partial\""
 
-			oslParts<<partial
-		}
-		def oslCombined="StringBuilder sb=new StringBuilder();"
-		oslCombined+="sb.append(${oslParts.join(");sb.append(")});"
-		oslCombined+="OPEN_SOURCE_LICENSE=sb.toString();"
+            oslParts << partial
+        }
+        def oslCombined = "StringBuilder sb=new StringBuilder();"
+        oslCombined += "sb.append(${oslParts.join(");sb.append(")});"
+        oslCombined += "OPEN_SOURCE_LICENSE=sb.toString();"
 
-		buildConfigField "String", "OPEN_SOURCE_LICENSE;//","\nstatic{$oslCombined }"
-	}
+        buildConfigField "String", "OPEN_SOURCE_LICENSE;//", "\nstatic{$oslCombined }"
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-	lintOptions {
+    lintOptions {
         abortOnError false
     }
 
-	compileOptions {
-		sourceCompatibility JavaVersion.VERSION_1_8
-		targetCompatibility JavaVersion.VERSION_1_8
-	}
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
-	if(1)compile "com.android.support:support-compat:$supportLibVersion"
-	if(1)compile "com.android.support:support-fragment:$supportLibVersion"
-	if(1)compile "com.android.support:appcompat-v7:$supportLibVersion"
-	if(1)compile "com.android.support:design:$supportLibVersion"
-	if(1)compile "com.android.support:cardview-v7:$supportLibVersion"
-	if(1)compile "com.android.support:preference-v7:$supportLibVersion"
-	
-	if(1)compile "com.google.firebase:firebase-config:$firebaseVersion"
-	if(1)compile "com.google.firebase:firebase-crash:$firebaseVersion"
-	
-	compile 'com.google.code.gson:gson:2.8.0'
-	compile 'com.annimon:stream:1.1.7'
-    
-	compile project(':scrolling')
-	compile project(':wisecraft-i18n')
-	compile project(':psts')
+    if (1) compile "com.android.support:support-compat:$supportLibVersion"
+    if (1) compile "com.android.support:support-fragment:$supportLibVersion"
+    if (1) compile "com.android.support:appcompat-v7:$supportLibVersion"
+    if (1) compile "com.android.support:design:$supportLibVersion"
+    if (1) compile "com.android.support:cardview-v7:$supportLibVersion"
+    if (1) compile "com.android.support:preference-v7:$supportLibVersion"
+
+    if (1) compile "com.google.firebase:firebase-config:$firebaseVersion"
+    if (1) compile "com.google.firebase:firebase-crash:$firebaseVersion"
+
+    compile 'com.google.code.gson:gson:2.8.0'
+    compile 'com.annimon:stream:1.1.7'
+
+    compile project(':scrolling')
+    compile project(':wisecraft-i18n')
+    compile project(':psts')
     compile fileTree(dir: 'libs', include: ['*.jar'])
-	
-	compile('com.mikepenz:materialdrawer:+') {
-		transitive = true
-	}
-	//These lines are required to write code using AIDE. Please not to remove them.
-	if(0){
-		compile 'com.mikepenz:materialize:+'
-    	compile 'com.mikepenz:iconics-core:+'
-    	compile 'com.mikepenz:fastadapter:+'
-		compile "com.android.support:support-compat:25.3.1"
-		compile "com.android.support:support-fragment:25.3.1"
-		compile "com.android.support:appcompat-v7:25.3.1"
-		compile "com.android.support:design:25.3.1"
-		compile "com.android.support:cardview-v7:25.3.1"
-		compile "com.android.support:preference-v7:25.3.1"
-		compile "com.google.firebase:firebase-config:10.0.1"
-		compile "com.google.firebase:firebase-crash:10.0.1"
-	}
+
+    compile('com.mikepenz:materialdrawer:+') {
+        transitive = true
+    }
+    //These lines are required to write code using AIDE. Please not to remove them.
+    if (0) {
+        compile 'com.mikepenz:materialize:+'
+        compile 'com.mikepenz:iconics-core:+'
+        compile 'com.mikepenz:fastadapter:+'
+        compile "com.android.support:support-compat:25.3.1"
+        compile "com.android.support:support-fragment:25.3.1"
+        compile "com.android.support:appcompat-v7:25.3.1"
+        compile "com.android.support:design:25.3.1"
+        compile "com.android.support:cardview-v7:25.3.1"
+        compile "com.android.support:preference-v7:25.3.1"
+        compile "com.google.firebase:firebase-config:10.0.1"
+        compile "com.google.firebase:firebase-crash:10.0.1"
+    }
 }
 
 
-def getHashOfRepo(String modul,String name,root){
-	def revisionHash
-	try {
-		revisionHash=["git", "rev-parse", "HEAD"].execute(null,new File(root,modul)).in.text.trim()
-	}catch(Throwable e){
-		revisionHash='Unknown'
-	}
-	if(!revisionHash.matches("^[0-9a-fA-F]+\$")){
-		revisionHash = "Unknown"
-	}
-	println "Git Revision of $name is: $revisionHash"
-	return revisionHash
+def getHashOfRepo(String modul, String name, root) {
+    def revisionHash
+    try {
+        revisionHash = ["git", "rev-parse", "HEAD"].execute(null, new File(root, modul)).in.text.trim()
+    } catch (Throwable e) {
+        revisionHash = 'Unknown'
+    }
+    if (!revisionHash.matches("^[0-9a-fA-F]+\$")) {
+        revisionHash = "Unknown"
+    }
+    println "Git Revision of $name is: $revisionHash"
+    return revisionHash
 }
 

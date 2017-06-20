@@ -16,26 +16,26 @@ package com.nao20010128nao.ToolBox;
 import android.view.*;
 
 public class HandledPreferenceCompat
-extends NormalButtonPreferenceCompat {
-	static final NullClickListener defHandler=new NullClickListener();
-    HandledPreference.OnClickListener clickListener=defHandler;
+        extends NormalButtonPreferenceCompat {
+    static final NullClickListener defHandler = new NullClickListener();
+    HandledPreference.OnClickListener clickListener = defHandler;
 
     public HandledPreferenceCompat(android.content.Context context, android.util.AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context,attrs,defStyleAttr,defStyleRes);
+        super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     public HandledPreferenceCompat(android.content.Context context, android.util.AttributeSet attrs, int defStyleAttr) {
-        super(context,attrs,defStyleAttr);
+        super(context, attrs, defStyleAttr);
     }
 
     public HandledPreferenceCompat(android.content.Context context, android.util.AttributeSet attrs) {
-        super(context,attrs);
+        super(context, attrs);
     }
 
     public HandledPreferenceCompat(android.content.Context context) {
         super(context);
     }
-    
+
     public static OnClickListener createListenerFrom(final View.OnClickListener onClickListener) {
         return (string, string2, string3) -> onClickListener.onClick(null);
     }
@@ -50,19 +50,19 @@ extends NormalButtonPreferenceCompat {
     }
 
     private String getSummarySafety() {
-		if (getSummary() == null) {
-			return null;
-		} else {
-			return getSummary().toString();
-		}
+        if (getSummary() == null) {
+            return null;
+        } else {
+            return getSummary().toString();
+        }
     }
 
     private String getTitleSafety() {
-		if (getTitle() == null) {
-			return null;
-		} else {
-			return getTitle().toString();
-		}
+        if (getTitle() == null) {
+            return null;
+        } else {
+            return getTitle().toString();
+        }
     }
 
     public HandledPreference.OnClickListener getOnClickListener() {
@@ -80,13 +80,13 @@ extends NormalButtonPreferenceCompat {
     public void setOnClickListener(OnClickListener onClickListener) {
         clickListener = onClickListener == null ? defHandler : onClickListener;
     }
-	
-	public void setOnClickListener(HandledPreference.OnClickListener onClickListener) {
+
+    public void setOnClickListener(HandledPreference.OnClickListener onClickListener) {
         clickListener = onClickListener == null ? defHandler : onClickListener;
     }
-	
-    public static interface OnClickListener extends HandledPreference.OnClickListener{
-		public void onClick(String var1, String var2, String var3);
+
+    public static interface OnClickListener extends HandledPreference.OnClickListener {
+        public void onClick(String var1, String var2, String var3);
     }
 
     private static class NullClickListener implements OnClickListener {

@@ -19,12 +19,12 @@ android {
 }
 
 dependencies {
-    if(1)compile "com.android.support:appcompat-v7:$supportLibVersion"
-    if(1)compile "com.android.support:support-v4:$supportLibVersion"
-    if(1)compile "com.android.support:recyclerview-v7:$supportLibVersion"
-    if(1)compile "com.android.support:design:$supportLibVersion"
+    if (1) compile "com.android.support:appcompat-v7:$supportLibVersion"
+    if (1) compile "com.android.support:support-v4:$supportLibVersion"
+    if (1) compile "com.android.support:recyclerview-v7:$supportLibVersion"
+    if (1) compile "com.android.support:design:$supportLibVersion"
 
-    if(0){
+    if (0) {
         compile 'com.android.support:appcompat-v7:25.1.0'
         compile 'com.android.support:support-v4:25.1.0'
         compile 'com.android.support:recyclerview-v7:25.1.0'

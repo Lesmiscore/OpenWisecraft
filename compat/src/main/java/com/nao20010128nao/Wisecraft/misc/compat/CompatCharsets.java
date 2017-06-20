@@ -1,32 +1,33 @@
 package com.nao20010128nao.Wisecraft.misc.compat;
+
 import java.nio.charset.*;
 
-public class CompatCharsets
-{
-	public static final Charset UTF_8,US_ASCII;
-	static{
-		Class charsets;
-		try {
-			charsets=Class.forName("java.nio.charset.StandardCharsets");
-		} catch (ClassNotFoundException e) {
-			charsets=null;
-		}
+public class CompatCharsets {
+    public static final Charset UTF_8, US_ASCII;
 
-		Charset utf8=null,usAscii=null;
+    static {
+        Class charsets;
+        try {
+            charsets = Class.forName("java.nio.charset.StandardCharsets");
+        } catch (ClassNotFoundException e) {
+            charsets = null;
+        }
 
-		if(charsets!=null){
-			try {
-				utf8=(Charset)charsets.getField("UTF_8").get(null);
-			} catch (Throwable e) {/*ignore*/}
-			try {
-				usAscii=(Charset)charsets.getField("US_ASCII").get(null);
-			} catch (Throwable e) {/*ignore*/}
-		}
+        Charset utf8 = null, usAscii = null;
 
-		if(utf8==null)utf8=Charset.forName("UTF-8");
-		if(usAscii==null)usAscii=Charset.forName("US-ASCII");
+        if (charsets != null) {
+            try {
+                utf8 = (Charset) charsets.getField("UTF_8").get(null);
+            } catch (Throwable e) {/*ignore*/}
+            try {
+                usAscii = (Charset) charsets.getField("US_ASCII").get(null);
+            } catch (Throwable e) {/*ignore*/}
+        }
 
-		UTF_8=utf8;
-		US_ASCII=usAscii;
-	}
+        if (utf8 == null) utf8 = Charset.forName("UTF-8");
+        if (usAscii == null) usAscii = Charset.forName("US-ASCII");
+
+        UTF_8 = utf8;
+        US_ASCII = usAscii;
+    }
 }

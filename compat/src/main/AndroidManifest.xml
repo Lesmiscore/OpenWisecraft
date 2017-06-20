@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.nao20010128nao.Wisecraft.misc.compat" >
-    <uses-sdk 
-        android:minSdkVersion="8" 
-        android:targetSdkVersion="21" />
+          package="com.nao20010128nao.Wisecraft.misc.compat">
+    <uses-sdk
+            android:minSdkVersion="8"
+            android:targetSdkVersion="21"/>
     <application>
-		<receiver
-			android:name="com.nao20010128nao.Wisecraft.InformationCommunicatorReceiver">
-			<intent-filter>
-				<action android:name="com.nao20010128nao.Wisecraft.DISCLOSURE_REQUEST"/>
-			</intent-filter>
-		</receiver>
+        <receiver
+                android:name="com.nao20010128nao.Wisecraft.InformationCommunicatorReceiver">
+            <intent-filter>
+                <action android:name="com.nao20010128nao.Wisecraft.DISCLOSURE_REQUEST"/>
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>
 

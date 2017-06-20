@@ -4,38 +4,38 @@ import android.support.v4.app.*;
 
 import java.util.*;
 
-public class UsefulPagerAdapter extends FragmentPagerAdapter{
-	List<Map.Entry<Class,String>> pages=new ArrayList<>();
+public class UsefulPagerAdapter extends FragmentPagerAdapter {
+    List<Map.Entry<Class, String>> pages = new ArrayList<>();
 
-	public UsefulPagerAdapter(FragmentManager fm){
-		super(fm);
-	}
-	
-	public UsefulPagerAdapter(FragmentActivity fa){
-		this(fa.getSupportFragmentManager());
-	}
+    public UsefulPagerAdapter(FragmentManager fm) {
+        super(fm);
+    }
 
-	public void addTab(Class<? extends Fragment> clat,String title){
-		pages.add(new KVP<Class,String>(clat,title));
-		notifyDataSetChanged();
-	}
+    public UsefulPagerAdapter(FragmentActivity fa) {
+        this(fa.getSupportFragmentManager());
+    }
 
-	@Override
-	public int getCount() {
-		return pages.size();
-	}
+    public void addTab(Class<? extends Fragment> clat, String title) {
+        pages.add(new KVP<Class, String>(clat, title));
+        notifyDataSetChanged();
+    }
 
-	@Override
-	public Fragment getItem(int p1) {
-		try {
-			return (Fragment)pages.get(p1).getKey().newInstance();
-		} catch (Throwable e) {
-			return null;
-		}
-	}
+    @Override
+    public int getCount() {
+        return pages.size();
+    }
 
-	@Override
-	public CharSequence getPageTitle(int position) {
-		return pages.get(position).getValue();
-	}
+    @Override
+    public Fragment getItem(int p1) {
+        try {
+            return (Fragment) pages.get(p1).getKey().newInstance();
+        } catch (Throwable e) {
+            return null;
+        }
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return pages.get(position).getValue();
+    }
 }

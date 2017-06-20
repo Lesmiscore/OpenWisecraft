@@ -12,131 +12,133 @@ import com.nao20010128nao.Wisecraft.misc.compat.*;
 import java.util.*;
 
 public class WorkingDialog extends ContextWrapper {
-	ProgressDialog waitDialog;
-	Set<Object> locks=new HashSet<>();
-	CharSequence message;
-	
-	public WorkingDialog(Activity c) {
-		super(c);
-		setMessage(getResources().getString(R.string.working));
-	}
-	
-	public WorkingDialog(Activity c,CharSequence cs) {
-		super(c);
-		setMessage(cs);
-	}
-	
-	public WorkingDialog(Activity c,int cs) {
-		super(c);
-		setMessage(cs);
-	}
-	
-	public void setMessage(CharSequence message) {
-		this.message = message;
-	}
-	
-	public void setMessage(int message) {
-		this.message = getResources().getString(message);
-	}
-	
-	public CharSequence getMessage() {
-		return message;
-	}
-	
-	public void showWorkingDialog(Object lock) {
-		locks.add(CompatUtils.requireNonNull(lock));
-		if(waitDialog==null){
-			waitDialog = new AppCompatProgressDialog(this){
+    ProgressDialog waitDialog;
+    Set<Object> locks = new HashSet<>();
+    CharSequence message;
 
-				@Override
-				public void onBackPressed() {
+    public WorkingDialog(Activity c) {
+        super(c);
+        setMessage(getResources().getString(R.string.working));
+    }
+
+    public WorkingDialog(Activity c, CharSequence cs) {
+        super(c);
+        setMessage(cs);
+    }
+
+    public WorkingDialog(Activity c, int cs) {
+        super(c);
+        setMessage(cs);
+    }
+
+    public void setMessage(CharSequence message) {
+        this.message = message;
+    }
+
+    public void setMessage(int message) {
+        this.message = getResources().getString(message);
+    }
+
+    public CharSequence getMessage() {
+        return message;
+    }
+
+    public void showWorkingDialog(Object lock) {
+        locks.add(CompatUtils.requireNonNull(lock));
+        if (waitDialog == null) {
+            waitDialog = new AppCompatProgressDialog(this) {
+
+                @Override
+                public void onBackPressed() {
+                    /* no-op */
+                }
+
+                @Override
+                public void setTitle(CharSequence title) {
 					/* no-op */
-				}
+                }
 
-				@Override
-				public void setTitle(CharSequence title) {
+                @Override
+                public void setTitle(int titleId) {
 					/* no-op */
-				}
+                }
 
-				@Override
-				public void setTitle(int titleId) {
+                @Override
+                public void setCustomTitle(View customTitleView) {
 					/* no-op */
-				}
+                }
+            };
+            waitDialog.setIndeterminate(true);
+            waitDialog.setMessage(message);
+            waitDialog.setCancelable(false);
+            waitDialog.show();
+        }
+    }
 
-				@Override
-				public void setCustomTitle(View customTitleView) {
-					/* no-op */
-				}
-			};
-			waitDialog.setIndeterminate(true);
-			waitDialog.setMessage(message);
-			waitDialog.setCancelable(false);
-			waitDialog.show();
-		}
-	}
-	public void hideWorkingDialog(Object lock) {
-		locks.remove(CompatUtils.requireNonNull(lock));
-		if(locks.isEmpty()){
-			if (waitDialog == null) {
-				return;
-			}
-			waitDialog.cancel();
-			waitDialog = null;
-		}
-	}
-	
-	class AppCompatProgressDialog extends ProgressDialog{
-		AppCompatDelegate dlg;
-		public AppCompatProgressDialog(Context ctx){
-			super(ctx);
-			dlg=AppCompatDelegate.create(this,null);
-		}
+    public void hideWorkingDialog(Object lock) {
+        locks.remove(CompatUtils.requireNonNull(lock));
+        if (locks.isEmpty()) {
+            if (waitDialog == null) {
+                return;
+            }
+            waitDialog.cancel();
+            waitDialog = null;
+        }
+    }
+
+    class AppCompatProgressDialog extends ProgressDialog {
+        AppCompatDelegate dlg;
+
+        public AppCompatProgressDialog(Context ctx) {
+            super(ctx);
+            dlg = AppCompatDelegate.create(this, null);
+        }
 
 
-		@Override
-		protected void onCreate(Bundle savedInstanceState) {
-			dlg.installViewFactory();
-			dlg.onCreate(savedInstanceState);
-			dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
-			super.onCreate(savedInstanceState);
-		}
-		
-		public ActionBar getSupportActionBar() {
-			return dlg.getSupportActionBar();
-		}
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            dlg.installViewFactory();
+            dlg.onCreate(savedInstanceState);
+            dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            super.onCreate(savedInstanceState);
+        }
 
-		public void setSupportActionBar(Toolbar toolbar) {
-			dlg.setSupportActionBar(toolbar);
-		}
+        public ActionBar getSupportActionBar() {
+            return dlg.getSupportActionBar();
+        }
 
-		@Override
-		public void setContentView(int layoutResID) {
-			dlg.setContentView(layoutResID);
-		}
+        public void setSupportActionBar(Toolbar toolbar) {
+            dlg.setSupportActionBar(toolbar);
+        }
 
-		@Override
-		public void setContentView(View view) {
-			dlg.setContentView(view);
-		}
+        @Override
+        public void setContentView(int layoutResID) {
+            dlg.setContentView(layoutResID);
+        }
 
-		@Override
-		public void setContentView(View view, ViewGroup.LayoutParams params) {
-			dlg.setContentView(view, params);
-		}
+        @Override
+        public void setContentView(View view) {
+            dlg.setContentView(view);
+        }
 
-		@Override
-		public void addContentView(View view, ViewGroup.LayoutParams params) {
-			dlg.addContentView(view, params);
-		}
+        @Override
+        public void setContentView(View view, ViewGroup.LayoutParams params) {
+            dlg.setContentView(view, params);
+        }
 
-		@Override
-		protected void onStop() {
-			super.onStop();
-			dlg.onStop();
-		}
+        @Override
+        public void addContentView(View view, ViewGroup.LayoutParams params) {
+            dlg.addContentView(view, params);
+        }
 
-		public void invalidateOptionsMenu() {
-			dlg.invalidateOptionsMenu();
-		}
-	}
+        @Override
+        protected void onStop() {
+            super.onStop();
+            dlg.onStop();
+        }
+
+        public void invalidateOptionsMenu() {
+            dlg.invalidateOptionsMenu();
+        }
+    }
 }

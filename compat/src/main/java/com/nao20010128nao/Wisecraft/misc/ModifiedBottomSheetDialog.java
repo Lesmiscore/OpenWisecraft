@@ -49,7 +49,7 @@ public class ModifiedBottomSheetDialog extends AppCompatDialog {
     }
 
     protected ModifiedBottomSheetDialog(@NonNull Context context, boolean cancelable,
-		OnCancelListener cancelListener) {
+                                        OnCancelListener cancelListener) {
         super(context, cancelable, cancelListener);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         mCancelable = cancelable;
@@ -64,7 +64,7 @@ public class ModifiedBottomSheetDialog extends AppCompatDialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setLayout(
-			ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
     }
 
     @Override
@@ -97,32 +97,32 @@ public class ModifiedBottomSheetDialog extends AppCompatDialog {
         mCanceledOnTouchOutside = cancel;
         mCanceledOnTouchOutsideSet = true;
     }
-	
-	public void setMBehavior(BottomSheetBehavior<FrameLayout> mBehavior) {
-		this.mBehavior = mBehavior;
-	}
 
-	public BottomSheetBehavior<FrameLayout> getMBehavior() {
-		return mBehavior;
-	}
+    public void setMBehavior(BottomSheetBehavior<FrameLayout> mBehavior) {
+        this.mBehavior = mBehavior;
+    }
 
-	@Override
-	public void cancel() {
-		mBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-	}
+    public BottomSheetBehavior<FrameLayout> getMBehavior() {
+        return mBehavior;
+    }
 
-	@Override
-	public void dismiss() {
-		mBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-	}
-	
-	private void forceCancel(){
-		super.dismiss();//cancel() calls dismiss() inside at Dialog class
-	}
-	
+    @Override
+    public void cancel() {
+        mBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+    }
+
+    @Override
+    public void dismiss() {
+        mBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+    }
+
+    private void forceCancel() {
+        super.dismiss();//cancel() calls dismiss() inside at Dialog class
+    }
+
     private View wrapInBottomSheet(int layoutResId, View view, ViewGroup.LayoutParams params) {
-        final View decor=View.inflate(getContext(), getDecorResourceId(getContext()), null);
-		final CoordinatorLayout coordinator = (CoordinatorLayout) (decor instanceof CoordinatorLayout?decor:decor.findViewById(R.id.coordinator));
+        final View decor = View.inflate(getContext(), getDecorResourceId(getContext()), null);
+        final CoordinatorLayout coordinator = (CoordinatorLayout) (decor instanceof CoordinatorLayout ? decor : decor.findViewById(R.id.coordinator));
         if (layoutResId != 0 && view == null) {
             view = getLayoutInflater().inflate(layoutResId, coordinator, false);
         }
@@ -150,7 +150,7 @@ public class ModifiedBottomSheetDialog extends AppCompatDialog {
                 mCanceledOnTouchOutside = true;
             } else {
                 TypedArray a = getContext().obtainStyledAttributes(
-					new int[]{android.R.attr.windowCloseOnTouchOutside});
+                        new int[]{android.R.attr.windowCloseOnTouchOutside});
                 mCanceledOnTouchOutside = a.getBoolean(0, true);
                 a.recycle();
             }
@@ -162,34 +162,34 @@ public class ModifiedBottomSheetDialog extends AppCompatDialog {
     static int getThemeResId(Context context, int themeId) {
         if (themeId == 0) {
             // If the provided theme is 0, then retrieve the dialogTheme from our theme
-			TypedArray ta=context.getTheme().obtainStyledAttributes(R.styleable.ModifiedBottomSheetDialog);
-			if(ta.hasValue(R.styleable.ModifiedBottomSheetDialog_modifiedBottomSheetDialogTheme)){
-				themeId=ta.getResourceId(R.styleable.ModifiedBottomSheetDialog_modifiedBottomSheetDialogTheme,0);
-			}else if(ta.hasValue(R.styleable.ModifiedBottomSheetDialog_bottomSheetDialogTheme)){
-				themeId=ta.getResourceId(R.styleable.ModifiedBottomSheetDialog_bottomSheetDialogTheme,0);
-			}else{
-				themeId = R.style.Theme_LibCompat_Light_BottomSheetDialog;
-			}
-			ta.recycle();
+            TypedArray ta = context.getTheme().obtainStyledAttributes(R.styleable.ModifiedBottomSheetDialog);
+            if (ta.hasValue(R.styleable.ModifiedBottomSheetDialog_modifiedBottomSheetDialogTheme)) {
+                themeId = ta.getResourceId(R.styleable.ModifiedBottomSheetDialog_modifiedBottomSheetDialogTheme, 0);
+            } else if (ta.hasValue(R.styleable.ModifiedBottomSheetDialog_bottomSheetDialogTheme)) {
+                themeId = ta.getResourceId(R.styleable.ModifiedBottomSheetDialog_bottomSheetDialogTheme, 0);
+            } else {
+                themeId = R.style.Theme_LibCompat_Light_BottomSheetDialog;
+            }
+            ta.recycle();
         }
         return themeId;
     }
-	
-	private static int getDecorResourceId(Context c){
-		int res=R.layout.design_bottom_sheet_dialog;
-		TypedArray ta=c.getTheme().obtainStyledAttributes(R.styleable.ModifiedBottomSheetDialog);
-		if(ta.hasValue(R.styleable.ModifiedBottomSheetDialog_wcBottomSheetDialogDecor)){
-			res=ta.getResourceId(R.styleable.ModifiedBottomSheetDialog_wcBottomSheetDialogDecor,res);
-		}
-		ta.recycle();
-		return res;
-	}
+
+    private static int getDecorResourceId(Context c) {
+        int res = R.layout.design_bottom_sheet_dialog;
+        TypedArray ta = c.getTheme().obtainStyledAttributes(R.styleable.ModifiedBottomSheetDialog);
+        if (ta.hasValue(R.styleable.ModifiedBottomSheetDialog_wcBottomSheetDialogDecor)) {
+            res = ta.getResourceId(R.styleable.ModifiedBottomSheetDialog_wcBottomSheetDialogDecor, res);
+        }
+        ta.recycle();
+        return res;
+    }
 
     private BottomSheetBehavior.BottomSheetCallback mBottomSheetCallback
-	= new BottomSheetBehavior.BottomSheetCallback() {
+            = new BottomSheetBehavior.BottomSheetCallback() {
         @Override
         public void onStateChanged(@NonNull View bottomSheet,
-			@BottomSheetBehavior.State int newState) {
+                                   @BottomSheetBehavior.State int newState) {
             if (newState == BottomSheetBehavior.STATE_HIDDEN) {
                 forceCancel();
             }

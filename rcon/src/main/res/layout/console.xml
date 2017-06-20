@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:orientation="vertical">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
 
-	<ScrollView
-		android:layout_height="match_parent"
-		android:layout_width="match_parent"
-		android:layout_weight="1"
-		android:id="@+id/consoleScroll">
+    <ScrollView
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/consoleScroll">
 
-		<LinearLayout
-			android:layout_height="match_parent"
-			android:layout_width="match_parent"
-			android:orientation="vertical"
-			android:id="@+id/consoleText"/>
+        <LinearLayout
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:id="@+id/consoleText"/>
 
-	</ScrollView>
+    </ScrollView>
 
-	<LinearLayout
-		android:layout_height="47dp"
-		android:layout_width="match_parent"
-		android:orientation="horizontal"
-		android:layout_weight="0">
+    <LinearLayout
+            android:layout_height="47dp"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="0">
 
-		<EditText
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			android:ems="10"
-			android:id="@+id/command"
-			android:layout_weight="1.0"/>
+        <EditText
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:ems="10"
+                android:id="@+id/command"
+                android:layout_weight="1.0"/>
 
-		<Button
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			android:text="@string/send"
-			android:id="@+id/send"
-			style="?attr/rconConsoleSendButtonStyle"/>
+        <Button
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/send"
+                android:id="@+id/send"
+                style="?attr/rconConsoleSendButtonStyle"/>
 
-	</LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>
 

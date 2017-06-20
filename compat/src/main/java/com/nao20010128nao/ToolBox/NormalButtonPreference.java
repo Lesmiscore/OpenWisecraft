@@ -13,7 +13,7 @@ import android.preference.*;
 import android.util.*;
 
 public abstract class NormalButtonPreference
-extends Preference {
+        extends Preference {
     public NormalButtonPreference(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
     }

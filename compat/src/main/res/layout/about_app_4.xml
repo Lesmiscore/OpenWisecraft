@@ -1,52 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent"
-	android:layout_height="wrap_content"
-	android:orientation="vertical"
-	android:layout_margin="5dp">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="5dp">
 
-	<LinearLayout
-		android:layout_height="wrap_content"
-		android:layout_width="match_parent"
-		android:orientation="horizontal"
-		android:gravity="center">
+    <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center">
 
-		<TextView
-			android:layout_height="wrap_content"
-			android:layout_width="match_parent"
-			android:textColor="#FF0000"
-			android:textSize="100sp"
-			android:id="@+id/nonCommercial1"
-			android:text="©"
-			android:layout_weight="1.0"
-			android:gravity="center"/>
+        <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:textColor="#FF0000"
+                android:textSize="100sp"
+                android:id="@+id/nonCommercial1"
+                android:text="©"
+                android:layout_weight="1.0"
+                android:gravity="center"/>
 
-		<TextView
-			android:layout_height="wrap_content"
-			android:layout_width="match_parent"
-			android:textColor="#FF0000"
-			android:textSize="100sp"
-			android:id="@+id/nonCommercial2"
-			android:text="©"
-			android:layout_weight="1.0"
-			android:gravity="center"/>
+        <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:textColor="#FF0000"
+                android:textSize="100sp"
+                android:id="@+id/nonCommercial2"
+                android:text="©"
+                android:layout_weight="1.0"
+                android:gravity="center"/>
 
-	</LinearLayout>
+    </LinearLayout>
 
-	<LinearLayout
-		android:layout_height="wrap_content"
-		android:layout_width="match_parent"
-		android:orientation="vertical">
+    <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="vertical">
 
-		<TextView
-			android:layout_height="match_parent"
-			android:textAppearance="?android:attr/textAppearanceMedium"
-			android:layout_width="match_parent"
-			android:text="@string/aboutAppText4"
-			android:gravity="center"/>
+        <TextView
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="match_parent"
+                android:text="@string/aboutAppText4"
+                android:gravity="center"/>
 
-	</LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>
 

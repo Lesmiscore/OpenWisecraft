@@ -36,11 +36,11 @@ public class LocalListActivity extends SimpleCompatActivity {
     public void onContentChanged() {
         super.onContentChanged();
         View emptyView = findViewById(android.R.id.empty);
-        mList = (ListView)findViewById(android.R.id.list);
+        mList = (ListView) findViewById(android.R.id.list);
         if (mList == null) {
             throw new RuntimeException(
-				"Your content must have a ListView whose id attribute is " +
-				"'android.R.id.list'");
+                    "Your content must have a ListView whose id attribute is " +
+                            "'android.R.id.list'");
         }
         if (emptyView != null) {
             mList.setEmptyView(emptyView);
@@ -90,5 +90,5 @@ public class LocalListActivity extends SimpleCompatActivity {
 
     }
 
-    private AdapterView.OnItemClickListener mOnClickListener = (parent, v, position, id) -> onListItemClick((ListView)parent, v, position, id);
+    private AdapterView.OnItemClickListener mOnClickListener = (parent, v, position, id) -> onListItemClick((ListView) parent, v, position, id);
 }

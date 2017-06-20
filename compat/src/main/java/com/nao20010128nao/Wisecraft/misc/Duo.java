@@ -1,37 +1,42 @@
 package com.nao20010128nao.Wisecraft.misc;
 
-public class Duo<A,B>
-{
-	protected A a;
-	protected B b;
-	public Duo(){}
-	public Duo(A a,B b){this.a=a;this.b=b;}
+public class Duo<A, B> {
+    protected A a;
+    protected B b;
 
-	public void setA(A a) {
-		this.a = a;
-	}
+    public Duo() {
+    }
 
-	public A getA() {
-		return a;
-	}
+    public Duo(A a, B b) {
+        this.a = a;
+        this.b = b;
+    }
 
-	public void setB(B b) {
-		this.b = b;
-	}
+    public void setA(A a) {
+        this.a = a;
+    }
 
-	public B getB() {
-		return b;
-	}
+    public A getA() {
+        return a;
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if(!(o instanceof Duo))return false;
-		Duo d=(Duo)o;
-		return CompatUtils.equals(a,d.a)&CompatUtils.equals(b,d.b);
-	}
+    public void setB(B b) {
+        this.b = b;
+    }
 
-	@Override
-	public int hashCode() {
-		return CompatUtils.hash(a,b);
-	}
+    public B getB() {
+        return b;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Duo)) return false;
+        Duo d = (Duo) o;
+        return CompatUtils.equals(a, d.a) & CompatUtils.equals(b, d.b);
+    }
+
+    @Override
+    public int hashCode() {
+        return CompatUtils.hash(a, b);
+    }
 }
