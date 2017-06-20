@@ -4,9 +4,7 @@ import android.os.*;
 import android.support.v7.app.*;
 import android.view.*;
 import android.webkit.*;
-import com.nao20010128nao.Wisecraft.misc.compat.BuildConfig;
-import com.nao20010128nao.Wisecraft.misc.compat.R;
-import eu.fiskur.markdownview.*;
+import com.nao20010128nao.Wisecraft.misc.compat.*;
 
 import java.io.*;
 import java.net.*;
