@@ -1,7 +1,7 @@
-package com.nao20010128nao.Wisecraft.misc.pinger.pe;
+package com.nao20010128nao.Wisecraft.misc.ping.methods.pe;
 
 import android.util.*;
-import com.nao20010128nao.Wisecraft.misc.pinger.*;
+import com.nao20010128nao.Wisecraft.misc.ping.methods.*;
 
 import java.io.*;
 import java.math.*;

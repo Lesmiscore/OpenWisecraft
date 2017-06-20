@@ -1,10 +1,10 @@
-package com.nao20010128nao.Wisecraft.misc.pingMethods;
+package com.nao20010128nao.Wisecraft.misc.ping.processors;
 
 import android.text.*;
 import android.util.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
-import com.nao20010128nao.Wisecraft.misc.pinger.*;
+import com.nao20010128nao.Wisecraft.misc.ping.methods.*;
 
 import java.io.*;
 import java.net.*;

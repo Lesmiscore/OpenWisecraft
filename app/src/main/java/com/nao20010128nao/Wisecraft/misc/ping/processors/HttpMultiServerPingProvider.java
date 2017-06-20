@@ -1,4 +1,4 @@
-package com.nao20010128nao.Wisecraft.misc.pingMethods;
+package com.nao20010128nao.Wisecraft.misc.ping.processors;
 
 import com.nao20010128nao.Wisecraft.misc.*;
 

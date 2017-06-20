@@ -1,12 +1,11 @@
-package com.nao20010128nao.Wisecraft.misc.pinger;
+package com.nao20010128nao.Wisecraft.misc.ping.methods;
 
-import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.BuildConfig;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
-import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
-import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
+import com.nao20010128nao.Wisecraft.misc.ping.methods.pc.*;
+import com.nao20010128nao.Wisecraft.misc.ping.methods.pe.*;
 
 import java.io.*;
 import java.util.*;
@@ -164,23 +163,23 @@ public class PingSerializeProvider {
         //D is id
         pingClassNumber.put(FullStat.class, 0x0000);
         pingClassNumber.put(UnconnectedPing.UnconnectedPingResult.class, 0x0001);
-        pingClassNumber.put(Reply.class, 0x1002);
-        pingClassNumber.put(Reply19.class, 0x1003);
+        //pingClassNumber.put(Reply.class, 0x1002);
+        //pingClassNumber.put(Reply19.class, 0x1003);
         pingClassNumber.put(SprPair.class, 0xf004);
         pingClassNumber.put(RawJsonReply.class, 0x1005);
 
         PING_CLASS_NUMBER = Collections.unmodifiableMap(pingClassNumber);
 
 
-        Map<Integer, Class<? extends ServerPingResult>> pingClassNumbetReversed = new HashMap<>();
-        pingClassNumbetReversed.put(0x0000, FullStat.class);
-        pingClassNumbetReversed.put(0x0001, UnconnectedPing.UnconnectedPingResult.class);
-        pingClassNumbetReversed.put(0x1002, Reply.class);
-        pingClassNumbetReversed.put(0x1003, Reply19.class);
-        pingClassNumbetReversed.put(0xf004, SprPair.class);
-        pingClassNumbetReversed.put(0x1005, RawJsonReply.class);
+        Map<Integer, Class<? extends ServerPingResult>> pingClassNumberReversed = new HashMap<>();
+        pingClassNumberReversed.put(0x0000, FullStat.class);
+        pingClassNumberReversed.put(0x0001, UnconnectedPing.UnconnectedPingResult.class);
+        pingClassNumberReversed.put(0x1002, RawJsonReply.class);
+        pingClassNumberReversed.put(0x1003, RawJsonReply.class);
+        pingClassNumberReversed.put(0xf004, SprPair.class);
+        pingClassNumberReversed.put(0x1005, RawJsonReply.class);
 
-        PING_CLASS_NUMBER_REVERSED = Collections.unmodifiableMap(pingClassNumbetReversed);
+        PING_CLASS_NUMBER_REVERSED = Collections.unmodifiableMap(pingClassNumberReversed);
 
 
         Map<Integer, Deserializer> pingDeserializer = new HashMap<>();

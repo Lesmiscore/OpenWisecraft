@@ -1,4 +1,4 @@
-package com.nao20010128nao.Wisecraft.misc.pinger;
+package com.nao20010128nao.Wisecraft.misc.ping.methods;
 
 public interface PingHost {
     long getLatestPingElapsed();

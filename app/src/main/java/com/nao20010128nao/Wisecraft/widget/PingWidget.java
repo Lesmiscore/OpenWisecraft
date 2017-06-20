@@ -17,9 +17,9 @@ import com.nao20010128nao.Wisecraft.activity.*;
 import com.nao20010128nao.Wisecraft.api.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.json.*;
-import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
-import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
-import com.nao20010128nao.Wisecraft.misc.pingMethods.*;
+import com.nao20010128nao.Wisecraft.misc.ping.methods.pc.*;
+import com.nao20010128nao.Wisecraft.misc.ping.methods.pe.*;
+import com.nao20010128nao.Wisecraft.misc.ping.processors.*;
 
 import java.util.*;
 

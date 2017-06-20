@@ -8,7 +8,7 @@ import android.support.v4.app.*;
 import android.support.v4.content.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
-import com.nao20010128nao.Wisecraft.misc.pingMethods.*;
+import com.nao20010128nao.Wisecraft.misc.ping.processors.*;
 
 public class ServerCrawlerReceiver extends BroadcastReceiver {
     public ServerCrawlerReceiver() {

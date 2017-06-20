@@ -9,7 +9,6 @@ import android.graphics.*;
 import android.os.*;
 import android.support.design.widget.*;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
 import android.text.*;
 import android.text.style.*;
 import android.view.*;
@@ -22,7 +21,7 @@ import com.nao20010128nao.Wisecraft.activity.*;
 import com.nao20010128nao.Wisecraft.api.*;
 import com.nao20010128nao.Wisecraft.misc.collector.*;
 import com.nao20010128nao.Wisecraft.misc.json.*;
-import com.nao20010128nao.Wisecraft.misc.pinger.*;
+import com.nao20010128nao.Wisecraft.misc.ping.methods.*;
 import com.nao20010128nao.Wisecraft.misc.serverList.*;
 import permissions.dispatcher.PermissionRequest;
 

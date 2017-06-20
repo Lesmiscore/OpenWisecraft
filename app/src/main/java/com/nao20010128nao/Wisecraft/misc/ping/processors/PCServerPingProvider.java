@@ -1,8 +1,8 @@
-package com.nao20010128nao.Wisecraft.misc.pingMethods;
+package com.nao20010128nao.Wisecraft.misc.ping.processors;
 
 import android.util.*;
 import com.nao20010128nao.Wisecraft.misc.*;
-import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
+import com.nao20010128nao.Wisecraft.misc.ping.methods.pc.*;
 
 import java.io.*;
 import java.util.*;

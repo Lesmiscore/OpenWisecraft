@@ -1,6 +1,6 @@
-package com.nao20010128nao.Wisecraft.misc.pinger.pe;
+package com.nao20010128nao.Wisecraft.misc.ping.methods.pe;
 
-import com.nao20010128nao.Wisecraft.misc.pinger.*;
+import com.nao20010128nao.Wisecraft.misc.ping.methods.*;
 
 public interface PEPingResult extends ServerPingResult {
 }

@@ -19,15 +19,14 @@ import android.view.*;
 import android.widget.*;
 import biz.laenger.android.vpbs.*;
 import com.astuetz.*;
-import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.R;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
 import com.nao20010128nao.Wisecraft.misc.json.*;
-import com.nao20010128nao.Wisecraft.misc.pinger.*;
-import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
-import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
+import com.nao20010128nao.Wisecraft.misc.ping.methods.*;
+import com.nao20010128nao.Wisecraft.misc.ping.methods.pc.*;
+import com.nao20010128nao.Wisecraft.misc.ping.methods.pe.*;
 import com.nao20010128nao.Wisecraft.misc.skin_face.*;
 import permissions.dispatcher.*;
 

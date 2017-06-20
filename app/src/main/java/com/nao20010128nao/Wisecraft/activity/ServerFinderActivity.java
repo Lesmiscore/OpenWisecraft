@@ -12,8 +12,8 @@ import android.widget.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
-import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
-import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
+import com.nao20010128nao.Wisecraft.misc.ping.methods.pc.*;
+import com.nao20010128nao.Wisecraft.misc.ping.methods.pe.*;
 import com.nao20010128nao.Wisecraft.services.*;
 
 import java.lang.ref.*;
