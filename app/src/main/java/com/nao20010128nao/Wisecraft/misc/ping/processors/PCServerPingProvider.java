@@ -1,13 +1,13 @@
-package com.nao20010128nao.Wisecraft.misc.provider;
+package com.nao20010128nao.Wisecraft.misc.pingMethods;
 
 import android.util.*;
 import com.nao20010128nao.Wisecraft.misc.*;
-import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
+import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 
 import java.io.*;
 import java.util.*;
 
-public class UnconnectedServerPingProvider implements ServerPingProvider {
+public class PCServerPingProvider implements ServerPingProvider {
     Queue<Map.Entry<Server, PingHandler>> queue = Factories.newDefaultQueue();
     Thread pingThread = new PingThread();
     boolean offline = false;
@@ -59,11 +59,11 @@ public class UnconnectedServerPingProvider implements ServerPingProvider {
         public void run() {
             Map.Entry<Server, PingHandler> now = null;
             while (!(queue.isEmpty() | isInterrupted())) {
+                Log.d("PCSPP", "Starting ping");
                 try {
-                    Log.d("UPP", "Starting ping");
                     now = queue.poll();
                     if (offline) {
-                        Log.d("UPP", "Offline");
+                        Log.d("PCSPP", "Offline");
                         try {
                             now.getValue().onPingFailed(now.getKey());
                         } catch (Throwable ex_) {
@@ -75,27 +75,33 @@ public class UnconnectedServerPingProvider implements ServerPingProvider {
                     stat.ip = now.getKey().ip;
                     stat.port = now.getKey().port;
                     stat.mode = now.getKey().mode;
-                    Log.d("UPP", stat.ip + ":" + stat.port + " " + stat.mode);
+                    Log.d("PCSPP", stat.ip + ":" + stat.port + " " + stat.mode);
                     switch (now.getKey().mode) {
                         case PE:
-                            try {
-                                UnconnectedPing.UnconnectedPingResult res = UnconnectedPing.doPing(stat.ip, stat.port);
-                                stat.response = res;
-                                stat.ping = res.getLatestPingElapsed();
-                                Log.d("UPP", "Success: Unconnected Ping");
-                            } catch (IOException e) {
-                                Log.d("UPP", "Failed");
-                                now.getValue().onPingFailed(now.getKey());
-                                continue;
-                            }
-                            break;
-                        case PC:
                             try {
                                 now.getValue().onPingFailed(now.getKey());
                             } catch (Throwable h) {
 
                             }
                             continue;
+                        case PC:
+                            Log.d("PCSPP", "PC");
+                            PCQuery query = new PCQuery(stat.ip, stat.port);
+                            try {
+                                stat.response = query.fetchReply();
+                                Log.d("PCSPP", "Success");
+                            } catch (IOException e) {
+                                DebugWriter.writeToE("PCSPP", e);
+                                Log.d("PCSPP", "Failed");
+                                try {
+                                    now.getValue().onPingFailed(now.getKey());
+                                } catch (Throwable ex) {
+
+                                }
+                                continue;
+                            }
+                            stat.ping = query.getLatestPingElapsed();
+                            break;
                     }
                     try {
                         now.getValue().onPingArrives(stat);
@@ -105,7 +111,7 @@ public class UnconnectedServerPingProvider implements ServerPingProvider {
                 } catch (Throwable e) {
                     e.printStackTrace();
                 }
-                Log.d("UPP", "Next");
+                Log.d("PCSPP", "Next");
             }
         }
     }

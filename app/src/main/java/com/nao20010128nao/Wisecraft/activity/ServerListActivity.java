@@ -32,7 +32,7 @@ import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pc.*;
 import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
-import com.nao20010128nao.Wisecraft.misc.provider.*;
+import com.nao20010128nao.Wisecraft.misc.pingMethods.*;
 import com.nao20010128nao.Wisecraft.misc.serverList.*;
 import com.nao20010128nao.Wisecraft.settings.*;
 import permissions.dispatcher.*;

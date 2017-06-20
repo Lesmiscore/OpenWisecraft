@@ -13,7 +13,7 @@ import com.google.gson.*;
 import com.mikepenz.materialdrawer.*;
 import com.mikepenz.materialdrawer.model.interfaces.*;
 import com.nao20010128nao.Wisecraft.misc.*;
-import com.nao20010128nao.Wisecraft.misc.provider.*;
+import com.nao20010128nao.Wisecraft.misc.pingMethods.*;
 import com.nao20010128nao.Wisecraft.misc.skin_face.*;
 import com.nao20010128nao.Wisecraft.misc.view.*;
 

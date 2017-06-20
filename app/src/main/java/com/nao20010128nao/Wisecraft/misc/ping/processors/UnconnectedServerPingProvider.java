@@ -1,30 +1,16 @@
-package com.nao20010128nao.Wisecraft.misc.provider;
+package com.nao20010128nao.Wisecraft.misc.pingMethods;
 
-import android.text.*;
 import android.util.*;
-import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
-import com.nao20010128nao.Wisecraft.misc.pinger.*;
+import com.nao20010128nao.Wisecraft.misc.pinger.pe.*;
 
 import java.io.*;
-import java.net.*;
 import java.util.*;
 
-public class HttpServerPingProvider implements ServerPingProvider {
-    String head;
-    boolean offline;
+public class UnconnectedServerPingProvider implements ServerPingProvider {
     Queue<Map.Entry<Server, PingHandler>> queue = Factories.newDefaultQueue();
     Thread pingThread = new PingThread();
-
-    public HttpServerPingProvider(String host) {
-        if (TextUtils.isEmpty(host)) throw new IllegalArgumentException("host");
-        if (host.startsWith("http://") | host.startsWith("https://")) {
-            head = host;
-        } else {
-            head = "http://" + host;
-        }
-        if (!head.endsWith("/")) head += "/";
-    }
+    boolean offline = false;
 
     public void putInQueue(Server server, PingHandler handler) {
         Utils.requireNonNull(server);
@@ -68,17 +54,16 @@ public class HttpServerPingProvider implements ServerPingProvider {
         offline = false;
     }
 
-
     private class PingThread extends Thread implements Runnable {
         @Override
         public void run() {
             Map.Entry<Server, PingHandler> now = null;
             while (!(queue.isEmpty() | isInterrupted())) {
-                Log.d("HSPP", "Starting ping");
                 try {
+                    Log.d("UPP", "Starting ping");
                     now = queue.poll();
                     if (offline) {
-                        Log.d("HSPP", "Offline");
+                        Log.d("UPP", "Offline");
                         try {
                             now.getValue().onPingFailed(now.getKey());
                         } catch (Throwable ex_) {
@@ -86,33 +71,41 @@ public class HttpServerPingProvider implements ServerPingProvider {
                         }
                         continue;
                     }
+                    ServerStatus stat = new ServerStatus();
+                    stat.ip = now.getKey().ip;
+                    stat.port = now.getKey().port;
+                    stat.mode = now.getKey().mode;
+                    Log.d("UPP", stat.ip + ":" + stat.port + " " + stat.mode);
+                    switch (now.getKey().mode) {
+                        case PE:
+                            try {
+                                UnconnectedPing.UnconnectedPingResult res = UnconnectedPing.doPing(stat.ip, stat.port);
+                                stat.response = res;
+                                stat.ping = res.getLatestPingElapsed();
+                                Log.d("UPP", "Success: Unconnected Ping");
+                            } catch (IOException e) {
+                                Log.d("UPP", "Failed");
+                                now.getValue().onPingFailed(now.getKey());
+                                continue;
+                            }
+                            break;
+                        case PC:
+                            try {
+                                now.getValue().onPingFailed(now.getKey());
+                            } catch (Throwable h) {
+
+                            }
+                            continue;
+                    }
                     try {
-                        ServerStatus stat = null;
-                        Server s = now.getKey();
-                        InputStream is = null;
-                        try {
-                            is = new URL(head + "ping?ip=" + s.ip + "&port=" + s.port + "&mode=" + s.mode).openConnection().getInputStream();
-                            stat = PingSerializeProvider.loadFromServerDumpFile(is);
-                        } finally {
-                            if (is != null) is.close();
-                        }
-                        try {
-                            now.getValue().onPingArrives(stat);
-                        } catch (Throwable f) {
+                        now.getValue().onPingArrives(stat);
+                    } catch (Throwable f) {
 
-                        }
-                    } catch (Throwable e) {
-                        WisecraftError.report("HttpServerPingProvider", e);
-                        try {
-                            now.getValue().onPingFailed(now.getKey());
-                        } catch (Throwable ex_) {
-
-                        }
                     }
                 } catch (Throwable e) {
                     e.printStackTrace();
                 }
-                Log.d("HSPP", "Next");
+                Log.d("UPP", "Next");
             }
         }
     }

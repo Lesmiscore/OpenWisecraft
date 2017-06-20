@@ -1,4 +1,4 @@
-package com.nao20010128nao.Wisecraft.misc.provider;
+package com.nao20010128nao.Wisecraft.misc.pingMethods;
 
 import android.text.*;
 import android.util.*;
