@@ -54,58 +54,26 @@ public class UnconnectedServerPingProvider implements ServerPingProvider {
         offline = false;
     }
 
+    @Override
+    public String getClassName() {
+        return "UnconnectedServerPingProvider";
+    }
+
     private class PingThread extends Thread implements Runnable {
         @Override
         public void run() {
+            final String TAG=getLogTag();
+
             Map.Entry<Server, PingHandler> now = null;
             while (!(queue.isEmpty() | isInterrupted())) {
                 try {
-                    Log.d("UPP", "Starting ping");
+                    Log.d(TAG, "Starting ping");
                     now = queue.poll();
-                    if (offline) {
-                        Log.d("UPP", "Offline");
-                        try {
-                            now.getValue().onPingFailed(now.getKey());
-                        } catch (Throwable ex_) {
-
-                        }
-                        continue;
-                    }
-                    ServerStatus stat = new ServerStatus();
-                    stat.ip = now.getKey().ip;
-                    stat.port = now.getKey().port;
-                    stat.mode = now.getKey().mode;
-                    Log.d("UPP", stat.ip + ":" + stat.port + " " + stat.mode);
-                    switch (now.getKey().mode) {
-                        case PE:
-                            try {
-                                UnconnectedPing.UnconnectedPingResult res = UnconnectedPing.doPing(stat.ip, stat.port);
-                                stat.response = res;
-                                stat.ping = res.getLatestPingElapsed();
-                                Log.d("UPP", "Success: Unconnected Ping");
-                            } catch (IOException e) {
-                                Log.d("UPP", "Failed");
-                                now.getValue().onPingFailed(now.getKey());
-                                continue;
-                            }
-                            break;
-                        case PC:
-                            try {
-                                now.getValue().onPingFailed(now.getKey());
-                            } catch (Throwable h) {
-
-                            }
-                            continue;
-                    }
-                    try {
-                        now.getValue().onPingArrives(stat);
-                    } catch (Throwable f) {
-
-                    }
+                    doPingFull(now.getKey(),now.getValue(),offline,true,false,true);
                 } catch (Throwable e) {
                     e.printStackTrace();
                 }
-                Log.d("UPP", "Next");
+                Log.d(TAG, "Next");
             }
         }
     }

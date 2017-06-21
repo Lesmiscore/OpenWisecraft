@@ -70,13 +70,15 @@ public class TcpServerPingProvider implements ServerPingProvider {
     private class PingThread extends Thread implements Runnable {
         @Override
         public void run() {
+            final String TAG=getLogTag();
+
             Map.Entry<Server, PingHandler> now = null;
             while (!(queue.isEmpty() | isInterrupted())) {
-                Log.d("HSPP", "Starting ping");
+                Log.d(TAG, "Starting ping");
                 try {
                     now = queue.poll();
                     if (offline) {
-                        Log.d("TSPP", "Offline");
+                        Log.d(TAG, "Offline");
                         try {
                             now.getValue().onPingFailed(now.getKey());
                         } catch (Throwable ex_) {
@@ -103,7 +105,7 @@ public class TcpServerPingProvider implements ServerPingProvider {
                                 if (sock != null) sock.close();
                                 if (is != null) is.close();
                             } catch (Throwable e) {
-                                WisecraftError.report("TcpServerPingProvider", e);
+                                WisecraftError.report(TAG, e);
                             }
                         }
                         try {
@@ -112,7 +114,7 @@ public class TcpServerPingProvider implements ServerPingProvider {
 
                         }
                     } catch (Throwable e) {
-                        WisecraftError.report("TcpServerPingProvider", e);
+                        WisecraftError.report(TAG, e);
                         try {
                             now.getValue().onPingFailed(now.getKey());
                         } catch (Throwable ex_) {
@@ -122,7 +124,7 @@ public class TcpServerPingProvider implements ServerPingProvider {
                 } catch (Throwable e) {
                     e.printStackTrace();
                 }
-                Log.d("HSPP", "Next");
+                Log.d(TAG, "Next");
             }
         }
     }

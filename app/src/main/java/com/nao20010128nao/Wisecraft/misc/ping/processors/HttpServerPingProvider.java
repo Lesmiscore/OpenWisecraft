@@ -68,17 +68,23 @@ public class HttpServerPingProvider implements ServerPingProvider {
         offline = false;
     }
 
+    @Override
+    public String getClassName() {
+        return "HttpServerPingProvider";
+    }
 
     private class PingThread extends Thread implements Runnable {
         @Override
         public void run() {
+            final String TAG=getLogTag();
+
             Map.Entry<Server, PingHandler> now = null;
             while (!(queue.isEmpty() | isInterrupted())) {
-                Log.d("HSPP", "Starting ping");
+                Log.d(TAG, "Starting ping");
                 try {
                     now = queue.poll();
                     if (offline) {
-                        Log.d("HSPP", "Offline");
+                        Log.d(TAG, "Offline");
                         try {
                             now.getValue().onPingFailed(now.getKey());
                         } catch (Throwable ex_) {
@@ -102,7 +108,7 @@ public class HttpServerPingProvider implements ServerPingProvider {
 
                         }
                     } catch (Throwable e) {
-                        WisecraftError.report("HttpServerPingProvider", e);
+                        WisecraftError.report(TAG, e);
                         try {
                             now.getValue().onPingFailed(now.getKey());
                         } catch (Throwable ex_) {
@@ -112,7 +118,7 @@ public class HttpServerPingProvider implements ServerPingProvider {
                 } catch (Throwable e) {
                     e.printStackTrace();
                 }
-                Log.d("HSPP", "Next");
+                Log.d(TAG, "Next");
             }
         }
     }

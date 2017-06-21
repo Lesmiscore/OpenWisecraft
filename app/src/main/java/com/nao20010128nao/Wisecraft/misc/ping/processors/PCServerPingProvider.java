@@ -54,64 +54,26 @@ public class PCServerPingProvider implements ServerPingProvider {
         offline = false;
     }
 
+    @Override
+    public String getClassName() {
+        return "PCServerPingProvider";
+    }
+
     private class PingThread extends Thread implements Runnable {
         @Override
         public void run() {
+            final String TAG=getLogTag();
+
             Map.Entry<Server, PingHandler> now = null;
             while (!(queue.isEmpty() | isInterrupted())) {
-                Log.d("PCSPP", "Starting ping");
+                Log.d(TAG, "Starting ping");
                 try {
                     now = queue.poll();
-                    if (offline) {
-                        Log.d("PCSPP", "Offline");
-                        try {
-                            now.getValue().onPingFailed(now.getKey());
-                        } catch (Throwable ex_) {
-
-                        }
-                        continue;
-                    }
-                    ServerStatus stat = new ServerStatus();
-                    stat.ip = now.getKey().ip;
-                    stat.port = now.getKey().port;
-                    stat.mode = now.getKey().mode;
-                    Log.d("PCSPP", stat.ip + ":" + stat.port + " " + stat.mode);
-                    switch (now.getKey().mode) {
-                        case PE:
-                            try {
-                                now.getValue().onPingFailed(now.getKey());
-                            } catch (Throwable h) {
-
-                            }
-                            continue;
-                        case PC:
-                            Log.d("PCSPP", "PC");
-                            PCQuery query = new PCQuery(stat.ip, stat.port);
-                            try {
-                                stat.response = query.fetchReply();
-                                Log.d("PCSPP", "Success");
-                            } catch (IOException e) {
-                                DebugWriter.writeToE("PCSPP", e);
-                                Log.d("PCSPP", "Failed");
-                                try {
-                                    now.getValue().onPingFailed(now.getKey());
-                                } catch (Throwable ex) {
-
-                                }
-                                continue;
-                            }
-                            stat.ping = query.getLatestPingElapsed();
-                            break;
-                    }
-                    try {
-                        now.getValue().onPingArrives(stat);
-                    } catch (Throwable f) {
-
-                    }
+                    doPingFull(now.getKey(),now.getValue(),offline,false,true,false);
                 } catch (Throwable e) {
                     e.printStackTrace();
                 }
-                Log.d("PCSPP", "Next");
+                Log.d(TAG, "Next");
             }
         }
     }

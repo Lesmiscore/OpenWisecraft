@@ -61,95 +61,28 @@ public class SinglePoolMultiServerPingProvider implements ServerPingProvider {
         offline = false;
     }
 
+    @Override
+    public String getClassName() {
+        return "SinglePoolMultiServerPingProvider";
+    }
+
     private class PingThread extends Thread implements Runnable {
         @Override
         public void run() {
+            final String TAG=getLogTag();
+
             pingThread.add(this);
             try {
                 Map.Entry<Server, PingHandler> now = null;
                 while (!(queue.isEmpty() | isInterrupted())) {
-                    Log.d("SPMSPP", "Starting ping");
+                    Log.d(TAG, "Starting ping");
                     try {
                         now = queue.poll();
-                        if (offline) {
-                            Log.d("SPMSPP", "Offline");
-                            try {
-                                now.getValue().onPingFailed(now.getKey());
-                            } catch (Throwable ex_) {
-
-                            }
-                            continue;
-                        }
-                        ServerStatus stat = new ServerStatus();
-                        now.getKey().cloneInto(stat);
-                        Log.d("SPMSPP", stat.ip + ":" + stat.port + " " + stat.mode);
-                        switch (now.getKey().mode) {
-                            case PE: {
-                                Log.d("SPMSPP", "PE");
-                                PEQuery query = new PEQuery(stat.ip, stat.port);
-                                try {
-                                    stat.response = query.fullStat();
-                                    try {
-                                        UnconnectedPing.UnconnectedPingResult res = UnconnectedPing.doPing(stat.ip, stat.port);
-                                        SprPair pair = new SprPair();
-                                        pair.setA(stat.response);
-                                        pair.setB(res);
-                                        stat.response = pair;
-                                        Log.d("SPMSPP", "Success: Full Stat & Unconnected Ping");
-                                    } catch (IOException e) {
-                                        DebugWriter.writeToE("SPMSPP", e);
-                                        Log.d("SPMSPP", "Success: Full Stat");
-                                    }
-                                    stat.ping = query.getLatestPingElapsed();
-                                } catch (Throwable e) {
-                                    DebugWriter.writeToE("SPMSPP", e);
-                                    try {
-                                        UnconnectedPing.UnconnectedPingResult res = UnconnectedPing.doPing(stat.ip, stat.port);
-                                        stat.response = res;
-                                        stat.ping = res.getLatestPingElapsed();
-                                        Log.d("SPMSPP", "Success: Unconnected Ping");
-                                    } catch (IOException ex) {
-                                        DebugWriter.writeToE("NSPP", ex);
-                                        try {
-                                            now.getValue().onPingFailed(now.getKey());
-                                        } catch (Throwable ex_) {
-
-                                        }
-                                        Log.d("SPMSPP", "Failed");
-                                        continue;
-                                    }
-                                }
-                            }
-                            break;
-                            case PC: {
-                                Log.d("SPMSPP", "PC");
-                                PCQuery query = new PCQuery(stat.ip, stat.port);
-                                try {
-                                    stat.response = query.fetchReply();
-                                    Log.d("SPMSPP", "Success");
-                                } catch (IOException e) {
-                                    DebugWriter.writeToE("NSPP", e);
-                                    Log.d("SPMSPP", "Failed");
-                                    try {
-                                        now.getValue().onPingFailed(now.getKey());
-                                    } catch (Throwable ex) {
-
-                                    }
-                                    continue;
-                                }
-                                stat.ping = query.getLatestPingElapsed();
-                            }
-                            break;
-                        }
-                        try {
-                            now.getValue().onPingArrives(stat);
-                        } catch (Throwable f) {
-
-                        }
+                        doPingFull(now.getKey(),now.getValue(),offline,true,true,false);
                     } catch (Throwable e) {
                         e.printStackTrace();
                     }
-                    Log.d("SPMSPP", "Next");
+                    Log.d(TAG, "Next");
                 }
             } finally {
                 pingThread.remove(this);
