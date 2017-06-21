@@ -58,14 +58,6 @@
                 android:id="@+id/bottomSheet"
                 android:background="?android:attr/windowBackground"
                 android:visibility="gone"/>
-
-        <com.nao20010128nao.Wisecraft.misc.view.StatusesLayout
-                android:layout_height="10dp"
-                android:layout_width="match_parent"
-                android:id="@+id/serverStatuses"
-                app:layout_scrollFlags="enterAlways"
-                android:gravity="bottom"/>
-
     </android.support.design.widget.CoordinatorLayout>
 
 </LinearLayout>

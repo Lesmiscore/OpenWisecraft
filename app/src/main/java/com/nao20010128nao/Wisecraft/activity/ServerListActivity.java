@@ -94,22 +94,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
         //srl.setColorSchemeResources(R.color.upd_1, R.color.upd_2, R.color.upd_3, R.color.upd_4);
         srl.setColorSchemeColors(Utils.getHueRotatedColors());
         srl.setOnRefreshListener(() -> appMenu.findByA(R.string.update_all).getC().process(ServerListActivity.instance.get()));
-        if (pref.getBoolean("statusBarTouchScroll", false))
-            statLayout.setOnTouchListener((v, event) -> {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_MOVE:
-                    case MotionEvent.ACTION_UP:
-                        int dest;
-                        if (event.getX() == 0) {
-                            dest = 0;
-                        } else {
-                            dest = (int) Math.floor(event.getX() * sl.getItemCount() / statLayout.getWidth());
-                        }
-                        rv.smoothScrollToPosition(dest);
-                        break;
-                }
-                return true;
-            });
         boolean usesOldInstance = false;
         if (instance.get() != null) {
             list = instance.get().list;
@@ -118,8 +102,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             spp = instance.get().spp;
             updater = instance.get().updater;
             clicked = instance.get().clicked;
-            statLayout.setStatuses(instance.get().statLayout.getStatuses());
-            instance.get().statLayout = statLayout;
             editMode = instance.get().editMode;
             selected = instance.get().selected;
             instance.get().editMode = EDIT_MODE_NULL;
@@ -154,7 +136,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             spp.offline();
         if (!usesOldInstance) {
             loadServers();
-            statLayout.initStatuses(list.size(), 1);
             for (Server aList : list) dryUpdate(aList, false);
         }
         ViewCompat.setBackground(findViewById(android.R.id.content), slsl.load());
@@ -166,7 +147,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                 final int toPos = target.getAdapterPosition();
                 sl.notifyItemMoved(fromPos, toPos);
                 list.add(toPos, list.remove(fromPos));
-                statLayout.moveStatus(fromPos, toPos);
                 return true;
             }
 
@@ -238,9 +218,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                                         for (Server s : selected) {
                                             if (pinging.contains(s)) continue;
                                             dryUpdate(s, true);
-                                            if (list.indexOf(s) != -1) {
-                                                statLayout.setStatusAt(list.indexOf(s), 1);
-                                            }
                                         }
                                         p1.finish();
                                     }
@@ -334,7 +311,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                             Server serv = list.get(clicked);
                             updater.putInQueue(serv, new PingHandlerImpl(true, data, true));
                             pinging.add(serv);
-                            statLayout.setStatusAt(clicked, 1);
                             sl.notifyItemChanged(clicked);
                             wd.showWorkingDialog(serv);
                             break;
@@ -524,23 +500,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                                         saveServers();
                                         sl.notifyItemRangeChanged(0, list.size() - 1);
                                         rv.smoothScrollToPosition(0);
-                                        new Thread(() -> {
-                                            List<Server> lList = new ArrayList<>(list);
-                                            final int[] datas = new int[list.size()];
-                                            for (int i = 0; i < datas.length; i++) {
-                                                Server s = lList.get(i);
-                                                if (pinging.contains(s)) {
-                                                    datas[i] = 1;
-                                                } else {
-                                                    if (s instanceof ServerStatus) {
-                                                        datas[i] = 2;
-                                                    } else {
-                                                        datas[i] = 0;
-                                                    }
-                                                }
-                                            }
-                                            runOnUiThread(() -> statLayout.setStatuses(datas));
-                                        }).start();
                                     });
                                 }
                                 di.dismiss();
@@ -655,7 +614,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
         for (int i = 0; i < list.size(); i++) {
             if (pinging.contains(list.get(i)) || !pred.process(list.get(i)))
                 continue;
-            statLayout.setStatusAt(i, 1);
             sl.notifyItemChanged(i);
             if (!srl.isRefreshing())
                 srl.setRefreshing(true);
@@ -862,7 +820,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
         int ofs = list.indexOf(s);
         sl.remove(s);
         saveServers();
-        statLayout.removeStatus(ofs);
     }
 
     public void removeOfflines() {
@@ -1050,7 +1007,13 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
         @Override
         public int getItemViewType(int position) {
-            return sla.statLayout.getStatusAt(position);
+            if(sla.pinging.contains(getItem(position))){
+                return 2;
+            }else if(getItem(position) instanceof ServerStatus){
+                return 1;
+            }else{
+                return 0;
+            }
         }
 
         @Override
@@ -1073,7 +1036,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             } else {
                 sla.updater.putInQueue(s, new PingHandlerImpl(true, new Intent().putExtra("offset", 0), true));
                 sla.pinging.add(s);
-                sla.statLayout.setStatusAt(p3, 1);
                 sla.sl.notifyItemChanged(p3);
                 sla.wd.showWorkingDialog(s);
             }
@@ -1092,7 +1054,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                         .setNegativeButton(android.R.string.yes, (di, i) -> {
                             sla.sl.remove(sla.list.get(sla.clicked));
                             sla.saveServers();
-                            sla.statLayout.removeStatus(sla.clicked);
                         })
                         .setPositiveButton(android.R.string.no, (di, i) -> {
                         })
@@ -1102,7 +1063,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                     if (sla.pinging.contains(svr)) return;
                     sla.updater.putInQueue(svr, new PingHandlerImpl(true, new Intent().putExtra("offset", -1), false));
                     sla.pinging.add(svr);
-                    sla.statLayout.setStatusAt(p3, 1);
                     sla.sl.notifyItemChanged(p3);
                     sla.wd.showWorkingDialog(svr);
                 }, R.string.update));
@@ -1182,9 +1142,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                                 sla.list.set(p3, s);
                                 sla.sl.notifyItemChanged(p3);
 
-//Never update when the server is only edited
-/*sla.dryUpdate(s, true);
-sla.statLayout.setStatusAt(p3, 1);*/
+                                //Never update when the server is only edited
+                                /*sla.dryUpdate(s, true);*/
 
                                 sla.saveServers();
                             }).
@@ -1326,7 +1285,6 @@ sla.statLayout.setStatusAt(p3, 1);*/
 
         public void add(Server object) {
             if (!sla.list.contains(object)) {
-                sla.statLayout.addStatuses(1);
                 sla.list.add(object);
                 notifyItemInserted(getItemCount());
             }
@@ -1396,7 +1354,6 @@ sla.statLayout.setStatusAt(p3, 1);*/
                     Server sn = s.cloneAsServer();
                     act().list.set(i_, sn);
                     act().pinging.remove(sn);
-                    act().statLayout.setStatusAt(i_, 0);
                     act().sl.notifyItemChanged(i_);
                     if (closeDialog)
                         act().wd.hideWorkingDialog(sn);
@@ -1450,7 +1407,6 @@ sla.statLayout.setStatusAt(p3, 1);*/
                     }
                     act().list.set(i_, s);
                     act().pinging.remove(s);
-                    act().statLayout.setStatusAt(i_, 2);
                     act().sl.notifyItemChanged(i_);
                     if (extras.getIntExtra("offset", -1) != -1) {
                         Intent caller = new Intent().putExtras(extras).putExtra("stat", Utils.encodeForServerInfo(s));

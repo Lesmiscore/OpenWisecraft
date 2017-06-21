@@ -38,9 +38,7 @@ abstract class ServerListActivityBaseFields extends ServerListActivityBaseGrand 
     protected int clicked = -1;
     protected WorkingDialog wd;
     protected SwipeRefreshLayout srl;
-    protected List<MenuItem> items = new ArrayList<>();
     protected DrawerLayout dl;
-    protected boolean drawerOpened;
     protected boolean skipSave = false;
     protected Set<Server> pinging = new HashSet<>();
 
@@ -56,10 +54,6 @@ abstract class ServerListActivityBaseFields extends ServerListActivityBaseGrand 
     //base4
     protected int newVersionAnnounce = 0;
     protected Drawer drawer;
-    protected MiniDrawer sideMenu;
     protected RecyclerView rv;
     protected Snackbar indicator;
-    protected StatusesLayout statLayout;
-    protected Uri userImage;
-    protected ImageLoader imageLoader = new ImageLoader();
 }

@@ -62,9 +62,6 @@ abstract class ServerListActivityBase4 extends ServerListActivityBase5 {
                 rv.setLayoutManager(sglm);
                 break;
         }
-        statLayout = (StatusesLayout) findViewById(R.id.serverStatuses);
-        statLayout.setColorRes(R.color.stat_error, R.color.stat_pending, R.color.stat_ok);
-        if (true | !pref.getBoolean("showStatusesBar", false)) statLayout.setVisibility(View.GONE);
 
         coordinator = (CoordinatorLayout) findViewById(R.id.coordinator);
     }
