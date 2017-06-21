@@ -4,7 +4,7 @@ import com.nao20010128nao.Wisecraft.misc.*;
 
 import java.util.*;
 
-public class ExperimentalServerPingProvider implements ServerPingProvider {
+public class ExperimentalServerPingProvider extends ServerPingProvider {
     List<NormalServerPingProvider> objects = new ArrayList<>();
 
     public ExperimentalServerPingProvider(int parallels) {

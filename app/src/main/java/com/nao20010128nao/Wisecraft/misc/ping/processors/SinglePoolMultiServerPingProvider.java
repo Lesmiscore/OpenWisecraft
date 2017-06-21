@@ -8,7 +8,7 @@ import com.nao20010128nao.Wisecraft.misc.ping.methods.pe.*;
 import java.io.*;
 import java.util.*;
 
-public class SinglePoolMultiServerPingProvider implements ServerPingProvider {
+public class SinglePoolMultiServerPingProvider extends ServerPingProvider {
     final Queue<Map.Entry<Server, PingHandler>> queue = Factories.newDefaultQueue();
     final Set<PingThread> pingThread = Collections.synchronizedSet(new HashSet<PingThread>());
     final int max;

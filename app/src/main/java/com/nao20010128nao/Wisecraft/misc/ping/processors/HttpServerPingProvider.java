@@ -10,7 +10,7 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
-public class HttpServerPingProvider implements ServerPingProvider {
+public class HttpServerPingProvider extends ServerPingProvider {
     String head;
     boolean offline;
     Queue<Map.Entry<Server, PingHandler>> queue = Factories.newDefaultQueue();

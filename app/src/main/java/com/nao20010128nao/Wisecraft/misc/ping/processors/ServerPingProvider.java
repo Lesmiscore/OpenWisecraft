@@ -10,24 +10,26 @@ import com.nao20010128nao.Wisecraft.misc.ping.methods.pe.*;
 
 import java.io.*;
 import java.util.*;
+//TODO: change back to interface, if possible
+//MEMO: public abstract ** -> **
+//MEMO: protected ** -> default **
+public abstract class ServerPingProvider {
+    public abstract void putInQueue(Server server, PingHandler handler);
 
-public interface ServerPingProvider {
-    void putInQueue(Server server, PingHandler handler);
+    public abstract int getQueueRemain();
 
-    int getQueueRemain();
+    public abstract void stop();
 
-    void stop();
+    public abstract void clearQueue();
 
-    void clearQueue();
+    public abstract void offline();
 
-    void offline();
+    public abstract void online();
 
-    void online();
-
-    void clearAndStop();
+    public abstract void clearAndStop();
 
     @TargetApi(Build.VERSION_CODES.N)
-    default void doPingFull(Server server, PingHandler handler, boolean offline, boolean pe, boolean pc, boolean onlyPeUcp) {
+    protected void doPingFull(Server server, PingHandler handler, boolean offline, boolean pe, boolean pc, boolean onlyPeUcp) {
         final String TAG = getLogTag();
 
         Log.d(TAG, "Starting ping");
@@ -147,7 +149,7 @@ public interface ServerPingProvider {
     }
 
     @TargetApi(Build.VERSION_CODES.N)
-    default String getLogTag() {
+    protected String getLogTag() {
         return Stream.of(new Iterator<Character>() {
             final String cn = getClassName();
             int now = -1;
@@ -168,11 +170,11 @@ public interface ServerPingProvider {
     }
 
     @TargetApi(Build.VERSION_CODES.N)
-    default String getClassName() {
+    protected String getClassName() {
         return "ServerPingProvider";
     }
 
-    interface PingHandler {
+    public interface PingHandler {
         void onPingArrives(ServerStatus stat);
 
         void onPingFailed(Server server);
