@@ -138,7 +138,7 @@ public class ProcessorUtils {
     public static String getLogTag(final ServerPingProvider serverPingProvider) {
         return Stream.of(new Iterator<Character>() {
             final String cn = serverPingProvider.getClassName();
-            int now = -1;
+            int now = 0;
 
             @Override
             public boolean hasNext() {
@@ -147,7 +147,7 @@ public class ProcessorUtils {
 
             @Override
             public Character next() {
-                return cn.charAt(++now);
+                return cn.charAt(now++);
             }
         })
                 .filter(Character::isUpperCase)
