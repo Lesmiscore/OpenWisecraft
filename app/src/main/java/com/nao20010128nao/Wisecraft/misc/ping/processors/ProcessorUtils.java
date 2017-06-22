@@ -151,7 +151,7 @@ public class ProcessorUtils {
             }
         })
                 .filter(Character::isUpperCase)
-                .collect(StringBuilder::new, StringBuilder::append)
-                .toString();
+                .map(String::valueOf)
+                .reduce("",(a,b)->a+b);
     }
 }
