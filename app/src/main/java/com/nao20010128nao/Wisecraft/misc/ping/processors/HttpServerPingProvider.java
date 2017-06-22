@@ -76,7 +76,7 @@ public class HttpServerPingProvider implements ServerPingProvider {
     private class PingThread extends Thread implements Runnable {
         @Override
         public void run() {
-            final String TAG=getLogTag();
+            final String TAG= ProcessorUtils.getLogTag(ServerPingProvider.this);
 
             Map.Entry<Server, PingHandler> now = null;
             while (!(queue.isEmpty() | isInterrupted())) {

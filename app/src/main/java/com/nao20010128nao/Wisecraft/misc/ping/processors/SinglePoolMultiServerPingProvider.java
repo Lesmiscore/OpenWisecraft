@@ -2,10 +2,7 @@ package com.nao20010128nao.Wisecraft.misc.ping.processors;
 
 import android.util.*;
 import com.nao20010128nao.Wisecraft.misc.*;
-import com.nao20010128nao.Wisecraft.misc.ping.methods.pc.*;
-import com.nao20010128nao.Wisecraft.misc.ping.methods.pe.*;
 
-import java.io.*;
 import java.util.*;
 
 public class SinglePoolMultiServerPingProvider implements ServerPingProvider {
@@ -69,7 +66,7 @@ public class SinglePoolMultiServerPingProvider implements ServerPingProvider {
     private class PingThread extends Thread implements Runnable {
         @Override
         public void run() {
-            final String TAG=getLogTag();
+            final String TAG= ProcessorUtils.getLogTag(ServerPingProvider.this);
 
             pingThread.add(this);
             try {
@@ -78,7 +75,7 @@ public class SinglePoolMultiServerPingProvider implements ServerPingProvider {
                     Log.d(TAG, "Starting ping");
                     try {
                         now = queue.poll();
-                        doPingFull(now.getKey(),now.getValue(),offline,true,true,false);
+                        ProcessorUtils.doPingFull(now.getKey(),now.getValue(),offline,true,true,false);
                     } catch (Throwable e) {
                         e.printStackTrace();
                     }

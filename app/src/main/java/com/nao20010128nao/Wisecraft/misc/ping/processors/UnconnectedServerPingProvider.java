@@ -2,9 +2,7 @@ package com.nao20010128nao.Wisecraft.misc.ping.processors;
 
 import android.util.*;
 import com.nao20010128nao.Wisecraft.misc.*;
-import com.nao20010128nao.Wisecraft.misc.ping.methods.pe.*;
 
-import java.io.*;
 import java.util.*;
 
 public class UnconnectedServerPingProvider implements ServerPingProvider {
@@ -62,14 +60,14 @@ public class UnconnectedServerPingProvider implements ServerPingProvider {
     private class PingThread extends Thread implements Runnable {
         @Override
         public void run() {
-            final String TAG=getLogTag();
+            final String TAG= ProcessorUtils.getLogTag(ServerPingProvider.this);
 
             Map.Entry<Server, PingHandler> now = null;
             while (!(queue.isEmpty() | isInterrupted())) {
                 try {
                     Log.d(TAG, "Starting ping");
                     now = queue.poll();
-                    doPingFull(now.getKey(),now.getValue(),offline,true,false,true);
+                    ProcessorUtils.doPingFull(now.getKey(),now.getValue(),offline,true,false,true);
                 } catch (Throwable e) {
                     e.printStackTrace();
                 }
