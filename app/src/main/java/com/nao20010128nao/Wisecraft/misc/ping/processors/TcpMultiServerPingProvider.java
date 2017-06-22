@@ -63,4 +63,9 @@ public class TcpMultiServerPingProvider implements ServerPingProvider {
             spp.online();
         }
     }
+
+    @Override
+    public String getClassName() {
+        return "TcpMultiServerPingProvider";
+    }
 }

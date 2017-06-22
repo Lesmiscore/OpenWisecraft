@@ -60,14 +60,14 @@ public class PCServerPingProvider implements ServerPingProvider {
     private class PingThread extends Thread implements Runnable {
         @Override
         public void run() {
-            final String TAG= ProcessorUtils.getLogTag(ServerPingProvider.this);
+            final String TAG= ProcessorUtils.getLogTag(PCServerPingProvider.this);
 
             Map.Entry<Server, PingHandler> now = null;
             while (!(queue.isEmpty() | isInterrupted())) {
                 Log.d(TAG, "Starting ping");
                 try {
                     now = queue.poll();
-                    ProcessorUtils.doPingFull(now.getKey(),now.getValue(),offline,false,true,false);
+                    ProcessorUtils.doPingFull(PCServerPingProvider.this,now.getKey(),now.getValue(),offline,false,true,false);
                 } catch (Throwable e) {
                     e.printStackTrace();
                 }

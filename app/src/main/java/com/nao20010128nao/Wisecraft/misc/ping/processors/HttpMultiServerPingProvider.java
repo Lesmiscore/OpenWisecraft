@@ -51,6 +51,11 @@ public class HttpMultiServerPingProvider implements ServerPingProvider {
     }
 
     @Override
+    public String getClassName() {
+        return "HttpMultiServerPingProvider";
+    }
+
+    @Override
     public void offline() {
         for (ServerPingProvider spp : objects) {
             spp.offline();

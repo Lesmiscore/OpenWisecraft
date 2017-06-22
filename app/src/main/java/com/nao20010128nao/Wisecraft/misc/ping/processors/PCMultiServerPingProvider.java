@@ -51,6 +51,11 @@ public class PCMultiServerPingProvider implements ServerPingProvider {
     }
 
     @Override
+    public String getClassName() {
+        return "PCMultiServerPingProvider";
+    }
+
+    @Override
     public void offline() {
         for (ServerPingProvider spp : objects) {
             spp.offline();

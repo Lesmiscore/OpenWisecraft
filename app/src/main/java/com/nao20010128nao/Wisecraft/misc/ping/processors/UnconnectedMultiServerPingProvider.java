@@ -51,6 +51,11 @@ public class UnconnectedMultiServerPingProvider implements ServerPingProvider {
     }
 
     @Override
+    public String getClassName() {
+        return "UnconnectedMultiServerPingProvider";
+    }
+
+    @Override
     public void offline() {
         for (ServerPingProvider spp : objects) {
             spp.offline();

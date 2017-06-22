@@ -52,6 +52,11 @@ public class TcpServerPingProvider implements ServerPingProvider {
     }
 
     @Override
+    public String getClassName() {
+        return "TcpServerPingProvider";
+    }
+
+    @Override
     public void clearQueue() {
         queue.clear();
     }
@@ -70,7 +75,7 @@ public class TcpServerPingProvider implements ServerPingProvider {
     private class PingThread extends Thread implements Runnable {
         @Override
         public void run() {
-            final String TAG= ProcessorUtils.getLogTag(ServerPingProvider.this);
+            final String TAG= ProcessorUtils.getLogTag(TcpServerPingProvider.this);
 
             Map.Entry<Server, PingHandler> now = null;
             while (!(queue.isEmpty() | isInterrupted())) {

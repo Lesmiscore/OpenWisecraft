@@ -56,6 +56,11 @@ public class ExperimentalServerPingProvider implements ServerPingProvider {
     }
 
     @Override
+    public String getClassName() {
+        return "ExperimentalServerPingProvider";
+    }
+
+    @Override
     public void offline() {
         for (ServerPingProvider spp : objects) {
             spp.offline();
