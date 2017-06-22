@@ -7,7 +7,7 @@ import com.nao20010128nao.Wisecraft.misc.ping.methods.pe.*;
 import java.io.*;
 import java.util.*;
 
-public class UnconnectedServerPingProvider extends ServerPingProvider {
+public class UnconnectedServerPingProvider implements ServerPingProvider {
     Queue<Map.Entry<Server, PingHandler>> queue = Factories.newDefaultQueue();
     Thread pingThread = new PingThread();
     boolean offline = false;

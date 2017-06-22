@@ -4,7 +4,7 @@ import com.nao20010128nao.Wisecraft.misc.*;
 
 import java.util.*;
 
-public class MultiServerPingProvider extends ServerPingProvider {
+public class MultiServerPingProvider implements ServerPingProvider {
     List<NormalServerPingProvider> objects = new ArrayList<>();
     int count = 0;
 

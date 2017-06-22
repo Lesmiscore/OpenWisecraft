@@ -10,7 +10,7 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
-public class TcpServerPingProvider extends ServerPingProvider {
+public class TcpServerPingProvider implements ServerPingProvider {
     String host;
     int port;
     boolean offline;
