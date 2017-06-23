@@ -88,13 +88,15 @@ android {
 
             oslParts << partial
         }
-        def oslCombinedOld = "StringBuilder sb=new StringBuilder();"
+        def oslCombinedOld = "static{"
+        oslCombinedOld += "StringBuilder sb=new StringBuilder();"
         oslCombinedOld += "sb.append(${oslParts.join(");sb.append(")});"
         oslCombinedOld += "OPEN_SOURCE_LICENSE=sb.toString();"
+        oslCombinedOld += "}"
 
-        def oslCombined = "OPEN_SOURCE_LICENSE=com.annimon.stream.Stream.of(${oslParts.join(",")}).reduce(\"\",(a,b)->a+b);"
+        def oslCombined = "com.annimon.stream.Stream.of(${oslParts.join(",")}).reduce(\"\",(a,b)->a+b)"
 
-        buildConfigField "String", "OPEN_SOURCE_LICENSE;//", "\nstatic{$oslCombined }"
+        buildConfigField "String", "OPEN_SOURCE_LICENSE", oslCombined
 
         println "Shortened ${oslCombinedOld.length()-oslCombined.length()} bytes. (oslCombined: ${oslCombined.length()}, oslCombinedOld: ${oslCombinedOld.length()})"
     }
