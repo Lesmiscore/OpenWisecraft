@@ -2,7 +2,7 @@ package com.nao20010128nao.Wisecraft.activity;
 
 import android.content.*;
 import android.os.*;
-import com.nao20010128nao.TESTAPP.*;
+import com.nao20010128nao.Wisecraft.scrolling.scrolling.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 

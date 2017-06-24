@@ -5,7 +5,6 @@ import android.support.v7.app.*;
 import android.view.*;
 import android.webkit.*;
 import com.nao20010128nao.Wisecraft.misc.*;
-import com.nao20010128nao.Wisecraft.misc.compat.*;
 
 import java.io.*;
 import java.net.*;

@@ -1,4 +1,4 @@
-package com.nao20010128nao.TESTAPP;
+package com.nao20010128nao.Wisecraft.scrolling;
 
 import android.os.*;
 import android.support.v7.app.*;
@@ -36,7 +36,8 @@ public abstract class ScrollingActivity extends AppCompatActivity implements Scr
     }
 
     protected ScrollingActivityDelegate getSDelegate() {
-        if (sad == null) sad = new ScrollingActivityDelegate(this, getDelegate(), this);
+        if (sad == null)
+            sad = new ScrollingActivityDelegate(this, getDelegate(), this);
         return sad;
     }
 

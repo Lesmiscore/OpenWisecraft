@@ -7,7 +7,7 @@ import android.os.*;
 import android.support.v7.widget.*;
 import android.view.*;
 import android.widget.*;
-import com.nao20010128nao.TESTAPP.*;
+import com.nao20010128nao.Wisecraft.scrolling.*;
 import com.nao20010128nao.Wisecraft.misc.compat.R;
 
 public abstract class AboutAppActivityBase extends ScrollingActivity {

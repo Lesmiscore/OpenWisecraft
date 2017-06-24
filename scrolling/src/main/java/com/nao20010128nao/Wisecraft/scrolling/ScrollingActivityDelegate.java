@@ -1,4 +1,4 @@
-package com.nao20010128nao.TESTAPP;
+package com.nao20010128nao.Wisecraft.scrolling;
 
 import android.app.*;
 import android.content.res.*;
