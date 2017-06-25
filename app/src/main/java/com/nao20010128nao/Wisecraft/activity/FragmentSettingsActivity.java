@@ -45,10 +45,10 @@ abstract class FragmentSettingsActivityImpl extends AppCompatActivity implements
         put("versionInfo", VersionInfoFragmentLocal.class);
     }};
     public static final String DIALOG_FRAGMENT_TAG_PREFIX = "settings@com.nao20010128nao.Wisecraft#";
-    public static final List<Quartet<Integer, String, Treatment<SettingsScreen>, Boolean>> MAIN;
+    public static final List<Quartet<Integer, String, Consumer<SettingsScreen>, Boolean>> MAIN;
 
     static {
-        List<Quartet<Integer, String, Treatment<SettingsScreen>, Boolean>> main = new ArrayList<>();
+        List<Quartet<Integer, String, Consumer<SettingsScreen>, Boolean>> main = new ArrayList<>();
         main.add(new Quartet<>(R.string.basics, "basics", ss -> ((AppCompatActivity) ss)
                 .getSupportFragmentManager()
                 .beginTransaction()
@@ -169,12 +169,12 @@ abstract class FragmentSettingsActivityImpl extends AppCompatActivity implements
         @Override
         public void onCreatePreferences(Bundle p1, String p2) {
             addPreferencesFromResource(R.xml.settings_parent_compat);
-            for (Trio<Integer, String, Treatment<SettingsScreen>> t : MAIN) {
+            for (Trio<Integer, String, Consumer<SettingsScreen>> t : MAIN) {
                 Context c = Utils.wrapContextForPreference(getActivity());
                 StartPrefCompat pref = new StartPrefCompat(c);
                 pref.setKey(t.getB());
                 pref.setTitle(t.getA());
-                final Treatment<SettingsScreen> proc = t.getC();
+                final Consumer<SettingsScreen> proc = t.getC();
                 pref.setOnClickListener((HandledPreference.OnClickListener) (a, b, c1) -> proc.process((SettingsScreen) getActivity()));
                 getPreferenceScreen().addPreference(pref);
             }

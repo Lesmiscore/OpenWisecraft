@@ -1,6 +1,5 @@
 package com.nao20010128nao.Wisecraft.activity;
 
-import android.net.*;
 import android.os.*;
 import android.support.design.widget.*;
 import android.support.v4.widget.*;
@@ -8,14 +7,11 @@ import android.support.v7.view.ActionMode;
 import android.support.v7.widget.*;
 import android.support.v7.widget.helper.*;
 import android.support.v7.widget.helper.ItemTouchHelper.*;
-import android.view.*;
 import com.google.gson.*;
 import com.mikepenz.materialdrawer.*;
 import com.mikepenz.materialdrawer.model.interfaces.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.ping.processors.*;
-import com.nao20010128nao.Wisecraft.misc.skin_face.*;
-import com.nao20010128nao.Wisecraft.misc.view.*;
 
 import java.io.*;
 import java.security.*;
@@ -32,7 +28,7 @@ abstract class ServerListActivityBaseFields extends ServerListActivityBaseGrand 
     //impl
     protected static final File mcpeServerList = new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt");
 
-    protected final SextetWalker<Integer, Integer, Treatment<ServerListActivity>, Treatment<ServerListActivity>, IDrawerItem, UUID> appMenu = new SextetWalker<>();
+    protected final SextetWalker<Integer, Integer, Consumer<ServerListActivity>, Consumer<ServerListActivity>, IDrawerItem, UUID> appMenu = new SextetWalker<>();
     protected ServerPingProvider spp, updater;
     protected Gson gson = Utils.newGson();
     protected int clicked = -1;

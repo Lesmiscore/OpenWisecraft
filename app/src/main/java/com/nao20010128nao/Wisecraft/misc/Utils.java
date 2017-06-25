@@ -838,11 +838,25 @@ public class Utils extends PingerUtils {
         return obj != null;
     }
 
-    public static String formatDate(long millis) {
-        DateFormat sdf = SimpleDateFormat.getDateTimeInstance();
+    public static Calendar toDateTime(long millis) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(millis);
-        return sdf.format(calendar.getTime());
+        return calendar;
+    }
+
+    public static String formatDate(long millis) {
+        DateFormat sdf = SimpleDateFormat.getDateTimeInstance();
+        return sdf.format(toDateTime(millis).getTime());
+    }
+
+    public static String formatDatePart(long millis) {
+        DateFormat sdf = SimpleDateFormat.getDateInstance();
+        return sdf.format(toDateTime(millis).getTime());
+    }
+
+    public static String formatTimePart(long millis) {
+        DateFormat sdf = SimpleDateFormat.getTimeInstance();
+        return sdf.format(toDateTime(millis).getTime());
     }
 
     public static String formatTimeSpan(long millis) {
@@ -858,6 +872,13 @@ public class Utils extends PingerUtils {
         hours = hours % 24;
 
         return String.format(Locale.getDefault(), "%01d:%02d:%02d:%02d %03d", days, hours, minutes, seconds, millisec);
+    }
+
+    public static long cutSecondAndMillis(long millis){
+        Calendar calendar=toDateTime(millis);
+        calendar.set(Calendar.SECOND,0);
+        calendar.set(Calendar.MILLISECOND,0);
+        return calendar.getTimeInMillis();
     }
 
     public static Gson newGson(){

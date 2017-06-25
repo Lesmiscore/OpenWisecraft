@@ -189,7 +189,7 @@ public class CompatUtils {
         }
     }
 
-    public static void travelViewTree(View v, Treatment<View> a) {
+    public static void travelViewTree(View v, Consumer<View> a) {
         if (v != null) {
             a.process(v);
             if (v instanceof ViewGroup) {

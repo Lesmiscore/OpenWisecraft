@@ -41,7 +41,7 @@ public class PreferenceUtils {
     }
 
     //This is a relief measure of EditTextPreferenceDialogFragmentCompat. Will be deleted.
-    public static void showEditTextDialog(Activity activity, final Preference preference, String defaultValue, Treatment<View> editor) {
+    public static void showEditTextDialog(Activity activity, final Preference preference, String defaultValue, Consumer<View> editor) {
         final SharedPreferences pref = Utils.getPreferences(activity);
         final View v = LayoutInflater.from(activity).inflate(R.layout.preference_dialog_edittext, null);
         v.findViewById(android.R.id.message).setVisibility(View.GONE);

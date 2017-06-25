@@ -62,7 +62,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
         loadMenu();
 
         {
-            for (Quintet<Integer, Integer, Treatment<ServerListActivity>, Treatment<ServerListActivity>, IDrawerItem> s : appMenu) {
+            for (Quintet<Integer, Integer, Consumer<ServerListActivity>, Consumer<ServerListActivity>, IDrawerItem> s : appMenu) {
                 LineWrappingPrimaryDrawerItem pdi = new LineWrappingPrimaryDrawerItem();
                 pdi.withName(s.getA()).withIcon(s.getB());
                 pdi.withSetSelected(false);
@@ -83,7 +83,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                 return false;
             });
             drawer.setOnDrawerItemLongClickListener((p1, p2, p3) -> {
-                Treatment<ServerListActivity> process = appMenu.findByE(p3).getD();
+                Consumer<ServerListActivity> process = appMenu.findByE(p3).getD();
                 if (process != null) process.process(ServerListActivity.instance.get());
                 return false;
             });

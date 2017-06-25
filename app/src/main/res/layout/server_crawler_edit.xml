@@ -11,22 +11,20 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:id="@+id/stable">
-        <TextView
+        <EditText
                 android:text=""
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/name"
-                tools:text="NAME"
+                android:hint="@string/name"
                 style="?android:attr/textAppearanceLarge"
                 android:gravity="center"
                 android:paddingBottom="2dp"/>
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:id="@+id/intervalLayout"
                 android:gravity="center_vertical">
             <TextView
@@ -36,17 +34,17 @@
                     style="?android:attr/textAppearanceMedium"
                     android:paddingEnd="5dp"
                     android:textColor="@color/black"/>
-            <TextView
-                    android:layout_width="wrap_content"
+            <EditText
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:text="1:23:45:67 789"
-                    android:id="@+id/intervalText"/>
+                    tools:text="120000"
+                    android:hint="@string/inMilliseconds"
+                    android:id="@+id/intervalText" android:inputType="number"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:id="@+id/startTimeLayout"
                 android:gravity="center_vertical">
             <TextView
@@ -56,17 +54,28 @@
                     style="?android:attr/textAppearanceMedium"
                     android:paddingEnd="5dp"
                     android:textColor="@color/black"/>
-            <TextView
-                    android:layout_width="wrap_content"
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:text="2017/10/20 12:34:56 000"
-                    android:id="@+id/startTimeText"/>
+                    android:id="@+id/startTimeAreaLayout"
+                    android:layout_weight="1">
+                <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:text="2017/10/20"
+                        android:id="@+id/startDate"/>
+                <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:text="12:34:56 000"
+                        android:id="@+id/startTime"/>
             </LinearLayout>
+        </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:id="@+id/enabledLayout"
                 android:gravity="center_vertical">
             <TextView
@@ -76,11 +85,10 @@
                     style="?android:attr/textAppearanceMedium"
                     android:paddingEnd="5dp"
                     android:textColor="@color/black"/>
-            <TextView
+            <Switch
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="@string/yesWord"
-                    android:id="@+id/enabledText"/>
+                    android:id="@+id/enabledSwitch"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
@@ -96,10 +104,9 @@
                     style="?android:attr/textAppearanceMedium"
                     android:paddingEnd="5dp"
                     android:textColor="@color/black"/>
-            <TextView
+            <Switch
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="Yes"
                     android:id="@+id/online"/>
         </LinearLayout>
         <LinearLayout
@@ -116,18 +123,10 @@
                     style="?android:attr/textAppearanceMedium"
                     android:paddingEnd="5dp"
                     android:textColor="@color/black"/>
-            <TextView
+            <Switch
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="No"
                     android:id="@+id/offline"/>
         </LinearLayout>
-        <ImageButton
-                style="?android:attr/buttonBarButtonStyle"
-                android:id="@+id/edit"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:src="@drawable/ic_mode_edit_white_24dp"
-                android:tint="@color/black"/>
     </LinearLayout>
 </LinearLayout>

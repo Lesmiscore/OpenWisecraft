@@ -5,7 +5,7 @@ import android.content.*;
 import android.support.v7.app.AlertDialog;
 import android.view.*;
 
-public class DialogLauncherListener<T> implements DialogInterface.OnClickListener, View.OnClickListener, Treatment<T> {
+public class DialogLauncherListener<T> implements DialogInterface.OnClickListener, View.OnClickListener, Consumer<T> {
     DialogBuilder builder;
 
     public DialogLauncherListener(Activity a) {

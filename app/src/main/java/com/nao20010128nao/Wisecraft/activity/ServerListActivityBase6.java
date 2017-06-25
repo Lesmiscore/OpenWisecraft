@@ -7,7 +7,7 @@ import java.util.*;
 
 //ContextMenu
 abstract class ServerListActivityBase6 extends ServerListActivityBase7 {
-    protected Map<View, Quartet<Treatment<Duo<View, ContextMenu>>, Predicate<Trio<View, ContextMenu, MenuItem>>, ViewGroup, Boolean>> contextMenuHandlers = new HashMap<>();
+    protected Map<View, Quartet<Consumer<Duo<View, ContextMenu>>, Predicate<Trio<View, ContextMenu, MenuItem>>, ViewGroup, Boolean>> contextMenuHandlers = new HashMap<>();
     protected Map<Menu, View> contextMenuObjects = new HashMap<>();
     protected Map<MenuItem, View> contextMenuItems = new HashMap<>();
 
@@ -16,7 +16,7 @@ abstract class ServerListActivityBase6 extends ServerListActivityBase7 {
         super.onCreateContextMenu(menu, v, menuInfo);
         contextMenuObjects.put(menu, v);
         if (contextMenuHandlers.containsKey(v)) {
-            Treatment<Duo<View, ContextMenu>> init = contextMenuHandlers.get(v).getA();
+            Consumer<Duo<View, ContextMenu>> init = contextMenuHandlers.get(v).getA();
             if (init != null) {
                 init.process(new Duo<>(v, menu));
                 for (int i = 0; i < menu.size(); i++) {
@@ -59,13 +59,13 @@ abstract class ServerListActivityBase6 extends ServerListActivityBase7 {
         }
     }
 
-    public void openContextMenu(View view, ViewGroup parent, Treatment<Duo<View, ContextMenu>> init, Predicate<Trio<View, ContextMenu, MenuItem>> selection) {
+    public void openContextMenu(View view, ViewGroup parent, Consumer<Duo<View, ContextMenu>> init, Predicate<Trio<View, ContextMenu, MenuItem>> selection) {
         contextMenuHandlers.put(view, new Quartet<>(init, selection, parent, false));
         if (!(parent != null ? parent.showContextMenuForChild(view) : view.showContextMenu()))
             contextMenuHandlers.remove(view);
     }
 
-    public void registerContextMenuHandler(View view, ViewGroup parent, Treatment<Duo<View, ContextMenu>> init, Predicate<Trio<View, ContextMenu, MenuItem>> selection) {
+    public void registerContextMenuHandler(View view, ViewGroup parent, Consumer<Duo<View, ContextMenu>> init, Predicate<Trio<View, ContextMenu, MenuItem>> selection) {
         contextMenuHandlers.put(view, new Quartet<>(init, selection, parent, true));
     }
 }
