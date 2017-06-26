@@ -139,6 +139,11 @@ public class ServerCrawlerManager {
         return null;
     }
 
+    public void setEntry(long id, Protobufs.ServerCrawlerEntry entry){
+        Protobufs.ServerCrawlerEntry entry_=entry.toBuilder().setId(id).build();
+        doTransform(ent-> ent.getId()==id?entry_:ent);
+    }
+
     private void doTransform(Function<Protobufs.ServerCrawlerEntry, Protobufs.ServerCrawlerEntry> func) {
         entries = new ArrayList<>(Lists.transform(entries, func));
     }

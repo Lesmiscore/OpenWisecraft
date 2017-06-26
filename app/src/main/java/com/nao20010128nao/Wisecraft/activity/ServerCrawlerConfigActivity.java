@@ -196,6 +196,8 @@ public class ServerCrawlerConfigActivity extends AppCompatActivity {
             holder.offline.setText(entry.getNotifyOffline() ? R.string.yesWord : R.string.noWord);
             holder.edit.setOnClickListener(v->{
                 editDialog(entry,ent->{
+                    scm.setEntry(ent.getId(),ent);
+                    scm.reschedule();
                 	return true;
                 });
             });
