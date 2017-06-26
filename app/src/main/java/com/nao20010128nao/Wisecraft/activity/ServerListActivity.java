@@ -54,11 +54,14 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
     ServerListStyleLoader slsl;
     Set<Server> selected = new HashSet<>();
     Map<Server, Map.Entry<Boolean, Integer>> retrying = new HashMap<>();
+    File wisecraftDir;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ThemePatcher.applyThemeForActivity(this);
         super.onCreate(savedInstanceState);
+        wisecraftDir=new File(Environment.getExternalStorageDirectory(), "/Wisecraft");
+
         loadMenu();
 
         {
@@ -335,56 +338,28 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
     private void loadMenu() {
         appMenu.add(new Sextet<>(R.string.add, R.drawable.ic_add_black_48dp, a -> {
-            View dialog = getLayoutInflater().inflate(R.layout.server_add_dialog_new, null);
-            final LinearLayout peFrame = (LinearLayout) dialog.findViewById(R.id.pe);
-            final LinearLayout pcFrame = (LinearLayout) dialog.findViewById(R.id.pc);
-            final EditText pe_ip = (EditText) dialog.findViewById(R.id.pe).findViewById(R.id.serverIp);
-            final EditText pe_port = (EditText) dialog.findViewById(R.id.pe).findViewById(R.id.serverPort);
-            final EditText pc_ip = (EditText) dialog.findViewById(R.id.pc).findViewById(R.id.serverIp);
-            final CheckBox split = (CheckBox) dialog.findViewById(R.id.switchFirm);
-            final EditText serverName = (EditText) dialog.findViewById(R.id.serverName);
+            final ReferencedObject<LinearLayout> peFrame=new ReferencedObject<>();
+            final ReferencedObject<LinearLayout> pcFrame=new ReferencedObject<>();
+            final ReferencedObject<EditText> pe_ip=new ReferencedObject<>();
+            final ReferencedObject<EditText> pe_port=new ReferencedObject<>();
+            final ReferencedObject<EditText> pc_ip=new ReferencedObject<>();
+            final ReferencedObject<CheckBox> split=new ReferencedObject<>();
+            final ReferencedObject<EditText> serverName=new ReferencedObject<>();
 
-            pe_ip.setText("localhost");
-            pe_port.setText("19132");
-            split.setChecked(false);
-
-            split.setOnClickListener(v -> {
-                if (split.isChecked()) {
-//PE->PC
-                    peFrame.setVisibility(View.GONE);
-                    pcFrame.setVisibility(View.VISIBLE);
-                    split.setText(R.string.pc);
-                    StringBuilder result = new StringBuilder();
-                    result.append(pe_ip.getText());
-                    int port = Integer.valueOf(pe_port.getText().toString());
-                    if (!(port == 25565 | port == 19132))
-                        result.append(':').append(pe_port.getText());
-                    pc_ip.setText(result);
-                } else {
-//PC->PE
-                    pcFrame.setVisibility(View.GONE);
-                    peFrame.setVisibility(View.VISIBLE);
-                    split.setText(R.string.pe);
-                    Server s = Utils.convertServerObject(Collections.singletonList(MslServer.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
-                    pe_ip.setText(s.ip);
-                    pe_port.setText(s.port + "");
-                }
-            });
-
-            new AlertDialog.Builder(a, ThemePatcher.getDefaultDialogStyle(a)).
-                    setView(dialog).
+            AlertDialog dialog=new AlertDialog.Builder(a, ThemePatcher.getDefaultDialogStyle(a)).
+                    setView(R.layout.server_add_dialog_new).
                     setPositiveButton(android.R.string.yes, (d, sel) -> {
                         Server s;
-                        if (split.isChecked()) {
-                            s = Utils.convertServerObject(Collections.singletonList(MslServer.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
+                        if (split.checked().isChecked()) {
+                            s = Utils.convertServerObject(Collections.singletonList(MslServer.makeServerFromString(pc_ip.checked().getText().toString(), false))).get(0);
                         } else {
                             s = new Server();
-                            s.ip = pe_ip.getText().toString();
-                            s.port = Integer.valueOf(pe_port.getText().toString());
-                            s.mode = split.isChecked() ? Protobufs.Server.Mode.PC : Protobufs.Server.Mode.PE;
+                            s.ip = pe_ip.checked().getText().toString();
+                            s.port = Integer.valueOf(pe_port.checked().getText().toString());
+                            s.mode = split.checked().isChecked() ? Protobufs.Server.Mode.PC : Protobufs.Server.Mode.PE;
                         }
-                        if (!TextUtils.isEmpty(serverName.getText()))
-                            s.name = serverName.getText().toString();
+                        if (!TextUtils.isEmpty(serverName.checked().getText()))
+                            s.name = serverName.checked().getText().toString();
 
                         if (list.contains(s)) {
                             Utils.makeNonClickableSB(ServerListActivityImpl.this, R.string.alreadyExists, Snackbar.LENGTH_LONG).show();
@@ -399,6 +374,42 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
                     }).
                     show();
+            peFrame.set((LinearLayout) dialog.findViewById(R.id.pe));
+            pcFrame.set((LinearLayout) dialog.findViewById(R.id.pc));
+            pe_ip.set((EditText) dialog.findViewById(R.id.pe).findViewById(R.id.serverIp));
+            pe_port.set((EditText) dialog.findViewById(R.id.pe).findViewById(R.id.serverPort));
+            pc_ip.set((EditText) dialog.findViewById(R.id.pc).findViewById(R.id.serverIp));
+            split.set((CheckBox) dialog.findViewById(R.id.switchFirm));
+            serverName.set((EditText) dialog.findViewById(R.id.serverName));
+
+            pe_ip.checked().setText("localhost");
+            pe_port.checked().setText("19132");
+            split.checked().setChecked(false);
+
+            split.checked().setOnClickListener(v -> {
+                if (split.checked().isChecked()) {
+//PE->PC
+                    peFrame.checked().setVisibility(View.GONE);
+                    pcFrame.checked().setVisibility(View.VISIBLE);
+                    split.checked().setText(R.string.pc);
+                    StringBuilder result = new StringBuilder();
+                    result.append(pe_ip.checked().getText());
+                    int port = Integer.valueOf(pe_port.checked().getText().toString());
+                    if (!(port == 25565 | port == 19132))
+                        result.append(':').append(pe_port.checked().getText());
+                    pc_ip.checked().setText(result);
+                } else {
+//PC->PE
+                    pcFrame.checked().setVisibility(View.GONE);
+                    peFrame.checked().setVisibility(View.VISIBLE);
+                    split.checked().setText(R.string.pe);
+                    Server s = Utils.convertServerObject(Collections.singletonList(MslServer.makeServerFromString(pc_ip.checked().getText().toString(), false))).get(0);
+                    pe_ip.checked().setText(s.ip);
+                    pe_port.checked().setText(String.valueOf(s.port));
+                }
+            });
+
+
         }, new DialogLauncherListener<ServerListActivity>(this)
                 .setItems(R.array.serverAddSubMenu, (di, w) -> {
                     switch (w) {
@@ -441,46 +452,48 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                         })
                 , null, UUID.fromString("7880ff52-b8c5-3c29-8b65-74fc30a57316")));//2
         appMenu.add(new Sextet<>(R.string.export, R.drawable.ic_file_upload_black_48dp, a -> {
-            View dialogView_ = getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
-            final EditText et_ = (EditText) dialogView_.findViewById(R.id.filePath);
-            et_.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/servers.json").toString());
-            dialogView_.findViewById(R.id.selectFile).setOnClickListener(v -> {
-                File f = new File(et_.getText().toString());
+            final ReferencedObject<EditText> et=new ReferencedObject<>();
+            AlertDialog dialog=new AlertDialog.Builder(a, ThemePatcher.getDefaultDialogStyle(a))
+                    .setTitle(R.string.export_typepath)
+                    .setView(R.layout.server_list_imp_exp)
+                    .setPositiveButton(android.R.string.ok, (di, w) -> ServerListActivityImplPermissionsDispatcher.exportWisecraftListWithCheck(a, et.get().getText().toString()))
+                    .create();
+            et.set((EditText) dialog.findViewById(R.id.filePath));
+            et.checked().setText(new File(wisecraftDir, "servers.json").toString());
+            dialog.findViewById(R.id.selectFile).setOnClickListener(v -> {
+                File f = new File(et.checked().getText().toString());
                 if ((!f.exists()) | f.isFile()) f = f.getParentFile();
                 ServerListActivityBase3PermissionsDispatcher.startChooseFileForOpenWithCheck(a, f, new FileChooserHandler() {
                     public void onSelected(File f) {
-                        et_.setText(f.toString());
+                        et.checked().setText(f.toString());
                     }
 
                     public void onSelectCancelled() {/*No-op*/}
                 });
             });
-            new AlertDialog.Builder(a, ThemePatcher.getDefaultDialogStyle(a))
-                    .setTitle(R.string.export_typepath)
-                    .setView(dialogView_)
-                    .setPositiveButton(android.R.string.ok, (di, w) -> ServerListActivityImplPermissionsDispatcher.exportWisecraftListWithCheck(a, et_.getText().toString()))
-                    .show();
+            dialog.show();
         }, null, null, UUID.fromString("614d2246-80d1-37de-9f2e-fed1fa15c83d")));//3
         appMenu.add(new Sextet<>(R.string.imporT, R.drawable.ic_file_download_black_48dp, a -> {
-            View dialogView = getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
-            final EditText et = (EditText) dialogView.findViewById(R.id.filePath);
-            et.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/servers.json").toString());
-            dialogView.findViewById(R.id.selectFile).setOnClickListener(v -> {
-                File f = new File(et.getText().toString());
+            final ReferencedObject<EditText> et=new ReferencedObject<>();
+            AlertDialog dialog=new AlertDialog.Builder(a, ThemePatcher.getDefaultDialogStyle(a))
+                    .setTitle(R.string.import_typepath)
+                    .setView(R.layout.server_list_imp_exp)
+                    .setPositiveButton(android.R.string.ok, (di, w) -> ServerListActivityImplPermissionsDispatcher.importWisecraftListWithCheck(a, et.get().getText().toString()))
+                    .create();
+            et.set((EditText) dialog.findViewById(R.id.filePath));
+            et.checked().setText(new File(wisecraftDir, "servers.json").toString());
+            dialog.findViewById(R.id.selectFile).setOnClickListener(v -> {
+                File f = new File(et.checked().getText().toString());
                 if ((!f.exists()) | f.isFile()) f = f.getParentFile();
                 ServerListActivityBase3PermissionsDispatcher.startChooseFileForOpenWithCheck(a, f, new FileChooserHandler() {
                     public void onSelected(File f) {
-                        et.setText(f.toString());
+                        et.checked().setText(f.toString());
                     }
 
                     public void onSelectCancelled() {/*No-op*/}
                 });
             });
-            new AlertDialog.Builder(a, ThemePatcher.getDefaultDialogStyle(a))
-                    .setTitle(R.string.import_typepath)
-                    .setView(dialogView)
-                    .setPositiveButton(android.R.string.ok, (di, w) -> ServerListActivityImplPermissionsDispatcher.importWisecraftListWithCheck(a, et.getText().toString()))
-                    .show();
+            dialog.show();
         }, null, null, UUID.fromString("1b4cd9b1-662a-3e72-9ae4-eecd46858077")));//4
         if (pref.getBoolean("feature_bott", true)) {
             appMenu.add(new Sextet<>(R.string.sort, R.drawable.ic_compare_arrows_black_48dp,
