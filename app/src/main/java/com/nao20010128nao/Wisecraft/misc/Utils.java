@@ -884,4 +884,8 @@ public class Utils extends PingerUtils {
     public static Gson newGson(){
         return new GsonBuilder().registerTypeAdapter(Protobufs.Server.Mode.class,new GsonModeConverter()).create();
     }
+
+    public static boolean alwaysTrue() {
+        return true;
+    }
 }

@@ -213,14 +213,12 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                     case 0:
                         new AlertDialog.Builder(ServerListActivityImpl.this)
                                 .setMessage(R.string.auSure)
-                                .setNegativeButton(android.R.string.ok, new QuickDialogClickListener() {
-                                    public void onClick(int which) {
-                                        for (Server s : selected) {
-                                            if (pinging.contains(s)) continue;
-                                            dryUpdate(s, true);
-                                        }
-                                        p1.finish();
+                                .setNegativeButton(android.R.string.ok, (di, which)-> {
+                                    for (Server s : selected) {
+                                        if (pinging.contains(s)) continue;
+                                        dryUpdate(s, true);
                                     }
+                                    p1.finish();
                                 })
                                 .setPositiveButton(android.R.string.cancel, null);
                         break;
@@ -511,6 +509,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
         }
         if (pref.getBoolean("feature_asfsls", false)) {
             appMenu.add(new Sextet<>(R.string.addServerFromServerListSite, R.drawable.ic_language_black_48dp, a -> startActivity(new Intent(a, ServerGetActivity.class)), null, null, UUID.fromString("9e63592a-3b0b-33f6-a8e2-937f2aa85ce2")));//7
+        }
+        if (pref.getBoolean("feature_serverCrawler", false)||Utils.alwaysTrue()) {//TODO: should it be moved in the settings?
+            appMenu.add(new Sextet<>(R.string.serverCrawler, R.drawable.ic_search_black_48dp, a -> startActivity(new Intent(a, ServerGetActivity.class)), null, null, UUID.fromString("9e63592a-3b0b-33f6-a8e2-937f2aa85ce2")));//7
         }
         appMenu.add(new Sextet<>(R.string.loadPing, R.drawable.ic_open_in_new_black_48dp, a -> {
             View dialogView = getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);

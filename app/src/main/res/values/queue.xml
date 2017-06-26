@@ -14,4 +14,5 @@
     <string name="cannotBeEmpty">This can\'t be empty</string>
     <string name="crawlerNotifyOnline">"Notify when online: "</string>
     <string name="crawlerNotifyOffline">"Notify when offline: "</string>
+    <string name="serverCrawler">Server Crawler</string>
 </resources>
