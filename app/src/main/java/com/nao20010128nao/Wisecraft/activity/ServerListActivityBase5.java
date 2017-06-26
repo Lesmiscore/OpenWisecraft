@@ -13,7 +13,7 @@ import java.util.*;
 @RuntimePermissions
 abstract class ServerListActivityBase5 extends ServerListActivityBase6 {
     protected Map<Integer, UriFileChooserResult> externalFileSelectResults = new HashMap<>();
-    protected Map<Integer, FileChooserResult> localFileSelectResults = new HashMap<>();
+    protected Map<Integer, FileChooserHandler> localFileSelectResults = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +64,7 @@ abstract class ServerListActivityBase5 extends ServerListActivityBase6 {
         ServerListActivityBase5PermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
 
-    public interface FileChooserResult extends ChooserResult<File> {
+    public interface FileChooserHandler extends ChooserResult<File> {
 
     }
 

@@ -35,7 +35,7 @@ abstract class ServerListActivityBase3 extends ServerListActivityBase4 {
     }
 
     @NeedsPermission({"android.permission.WRITE_EXTERNAL_STORAGE"})
-    public void startChooseFileForOpen(File startDir, FileChooserResult result) {
+    public void startChooseFileForOpen(File startDir, FileChooserHandler result) {
         int call = Math.abs(sr.nextInt()) & 0xf;
         while (localFileSelectResults.containsKey(call)) {
             call = Math.abs(sr.nextInt()) & 0xf;
@@ -49,7 +49,7 @@ abstract class ServerListActivityBase3 extends ServerListActivityBase4 {
     }
 
     @NeedsPermission({"android.permission.WRITE_EXTERNAL_STORAGE"})
-    public void startChooseFileForSelect(File startDir, FileChooserResult result) {
+    public void startChooseFileForSelect(File startDir, FileChooserHandler result) {
         int call = Math.abs(sr.nextInt()) & 0xf;
         while (localFileSelectResults.containsKey(call)) {
             call = Math.abs(sr.nextInt()) & 0xf;
@@ -63,7 +63,7 @@ abstract class ServerListActivityBase3 extends ServerListActivityBase4 {
     }
 
     @NeedsPermission({"android.permission.WRITE_EXTERNAL_STORAGE"})
-    public void startChooseDirectory(File startDir, FileChooserResult result) {
+    public void startChooseDirectory(File startDir, FileChooserHandler result) {
         int call = Math.abs(sr.nextInt()) & 0xf;
         while (localFileSelectResults.containsKey(call)) {
             call = Math.abs(sr.nextInt()) & 0xf;

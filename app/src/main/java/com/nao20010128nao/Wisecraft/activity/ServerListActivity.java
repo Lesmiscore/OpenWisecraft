@@ -447,7 +447,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             dialogView_.findViewById(R.id.selectFile).setOnClickListener(v -> {
                 File f = new File(et_.getText().toString());
                 if ((!f.exists()) | f.isFile()) f = f.getParentFile();
-                ServerListActivityBase3PermissionsDispatcher.startChooseFileForOpenWithCheck(a, f, new FileChooserResult() {
+                ServerListActivityBase3PermissionsDispatcher.startChooseFileForOpenWithCheck(a, f, new FileChooserHandler() {
                     public void onSelected(File f) {
                         et_.setText(f.toString());
                     }
@@ -468,7 +468,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             dialogView.findViewById(R.id.selectFile).setOnClickListener(v -> {
                 File f = new File(et.getText().toString());
                 if ((!f.exists()) | f.isFile()) f = f.getParentFile();
-                ServerListActivityBase3PermissionsDispatcher.startChooseFileForOpenWithCheck(a, f, new FileChooserResult() {
+                ServerListActivityBase3PermissionsDispatcher.startChooseFileForOpenWithCheck(a, f, new FileChooserHandler() {
                     public void onSelected(File f) {
                         et.setText(f.toString());
                     }
@@ -520,7 +520,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             dialogView.findViewById(R.id.selectFile).setOnClickListener(v -> {
                 File f = new File(et.getText().toString());
                 if ((!f.exists()) | f.isFile()) f = f.getParentFile();
-                ServerListActivityBase3PermissionsDispatcher.startChooseFileForOpenWithCheck(a, f, new FileChooserResult() {
+                ServerListActivityBase3PermissionsDispatcher.startChooseFileForOpenWithCheck(a, f, new FileChooserHandler() {
                     public void onSelected(File f) {
                         et.setText(f.toString());
                     }
@@ -1181,7 +1181,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                     dialogView_.findViewById(R.id.selectFile).setOnClickListener(v -> {
                         File f = new File(et_.getText().toString());
                         if ((!f.exists()) | f.isFile()) f = f.getParentFile();
-                        ServerListActivityBase3PermissionsDispatcher.startChooseFileForOpenWithCheck(sla, f, new FileChooserResult() {
+                        ServerListActivityBase3PermissionsDispatcher.startChooseFileForOpenWithCheck(sla, f, new FileChooserHandler() {
                             public void onSelected(File f) {
                                 et_.setText(f.toString());
                             }

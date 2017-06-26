@@ -695,7 +695,7 @@ abstract class ServerListStyleEditorImpl extends AppCompatActivity {
 
             File f = new File(path.getText().toString());
             if ((!f.exists()) | f.isFile()) f = f.getParentFile();
-            ServerListStyleEditorImplPermissionsDispatcher.startChooseFileForSelectWithCheck(ServerListStyleEditorImpl.this, f, new ServerListActivityBase5.FileChooserResult() {
+            ServerListStyleEditorImplPermissionsDispatcher.startChooseFileForSelectWithCheck(ServerListStyleEditorImpl.this, f, new ServerListActivityBase5.FileChooserHandler() {
                 public void onSelected(File f) {
                     path.setText(f.toString());
                     path.setEnabled(true);
@@ -776,8 +776,8 @@ abstract class ServerListStyleEditorImpl extends AppCompatActivity {
         if (results.containsKey(requestCode)) {
             switch (resultCode) {
                 case RESULT_OK:
-                    if (results.get(requestCode) instanceof ServerListActivity.FileChooserResult) {
-                        ((ServerListActivity.FileChooserResult) results.get(requestCode))
+                    if (results.get(requestCode) instanceof ServerListActivityBase5.FileChooserHandler) {
+                        ((ServerListActivityBase5.FileChooserHandler) results.get(requestCode))
                                 .onSelected((File) (lastResult = new File(data.getStringExtra("path"))));
                     } else if (results.get(requestCode) instanceof ServerListActivity.UriFileChooserResult) {
                         ((ServerListActivity.UriFileChooserResult) results.get(requestCode))
@@ -794,7 +794,7 @@ abstract class ServerListStyleEditorImpl extends AppCompatActivity {
     }
 
     @NeedsPermission({"android.permission.WRITE_EXTERNAL_STORAGE"})
-    public void startChooseFileForOpen(File startDir, ServerListActivity.FileChooserResult result) {
+    public void startChooseFileForOpen(File startDir, ServerListActivityBase5.FileChooserHandler result) {
         int call = nextCallId();
         Intent intent = new Intent(this, FileOpenChooserActivity.class);
         if (startDir != null) {
@@ -805,7 +805,7 @@ abstract class ServerListStyleEditorImpl extends AppCompatActivity {
     }
 
     @NeedsPermission({"android.permission.WRITE_EXTERNAL_STORAGE"})
-    public void startChooseFileForSelect(File startDir, ServerListActivity.FileChooserResult result) {
+    public void startChooseFileForSelect(File startDir, ServerListActivityBase5.FileChooserHandler result) {
         int call = nextCallId();
         Intent intent = new Intent(this, FileChooserActivity.class);
         if (startDir != null) {
@@ -816,7 +816,7 @@ abstract class ServerListStyleEditorImpl extends AppCompatActivity {
     }
 
     @NeedsPermission({"android.permission.WRITE_EXTERNAL_STORAGE"})
-    public void startChooseDirectory(File startDir, ServerListActivity.FileChooserResult result) {
+    public void startChooseDirectory(File startDir, ServerListActivityBase5.FileChooserHandler result) {
         int call = nextCallId();
         Intent intent = new Intent(this, DirectoryChooserActivity.class);
         if (startDir != null) {
