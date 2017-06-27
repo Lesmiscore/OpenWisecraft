@@ -52,7 +52,7 @@ public class FileSelectFragment extends BaseFragment<AppCompatActivity> {
 
             File f = new File(path.getText().toString());
             if ((!f.exists()) | f.isFile()) f = f.getParentFile();
-            startChooseFileForSelect(f, new ServerListActivity.FileChooserResult() {
+            startChooseFileForSelect(f, new ServerListActivity.FileChooserHandler() {
                 public void onSelected(File f) {
                     path.setText(f.toString());
                     path.setEnabled(true);
@@ -99,8 +99,8 @@ public class FileSelectFragment extends BaseFragment<AppCompatActivity> {
         if (results.containsKey(requestCode)) {
             switch (resultCode) {
                 case Activity.RESULT_OK:
-                    if (results.get(requestCode) instanceof ServerListActivity.FileChooserResult) {
-                        ((ServerListActivity.FileChooserResult) results.get(requestCode))
+                    if (results.get(requestCode) instanceof ServerListActivity.FileChooserHandler) {
+                        ((ServerListActivity.FileChooserHandler) results.get(requestCode))
                                 .onSelected((File) (lastResult = new File(data.getStringExtra("path"))));
                     } else if (results.get(requestCode) instanceof ServerListActivity.UriFileChooserResult) {
                         ((ServerListActivity.UriFileChooserResult) results.get(requestCode))
@@ -141,7 +141,7 @@ public class FileSelectFragment extends BaseFragment<AppCompatActivity> {
     }
 
 
-    public void startChooseFileForOpen(File startDir, ServerListActivity.FileChooserResult result) {
+    public void startChooseFileForOpen(File startDir, ServerListActivity.FileChooserHandler result) {
         int call = nextCallId();
         Intent intent = new Intent(getContext(), FileOpenChooserActivity.class);
         if (startDir != null) {
@@ -151,7 +151,7 @@ public class FileSelectFragment extends BaseFragment<AppCompatActivity> {
         startActivityForResult(intent, call);
     }
 
-    public void startChooseFileForSelect(File startDir, ServerListActivity.FileChooserResult result) {
+    public void startChooseFileForSelect(File startDir, ServerListActivity.FileChooserHandler result) {
         int call = nextCallId();
         Intent intent = new Intent(getContext(), FileChooserActivity.class);
         if (startDir != null) {
@@ -161,7 +161,7 @@ public class FileSelectFragment extends BaseFragment<AppCompatActivity> {
         startActivityForResult(intent, call);
     }
 
-    public void startChooseDirectory(File startDir, ServerListActivity.FileChooserResult result) {
+    public void startChooseDirectory(File startDir, ServerListActivity.FileChooserHandler result) {
         int call = nextCallId();
         Intent intent = new Intent(getContext(), DirectoryChooserActivity.class);
         if (startDir != null) {
