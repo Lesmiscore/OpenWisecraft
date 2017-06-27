@@ -34,6 +34,29 @@ android {
         buildConfigField "String", "APP_BUILT_ON", "\"${ext.builtOn()}\""
 
         def oslData = ({
+            def commandCheck={cmd,arg->
+                try{
+                    return [cmd,*arg].execute().with{/* java's normal Process object */
+                        waitFor()
+                        exitValue()||true
+                    }
+                }catch(Throwable e){
+                    false
+                }
+            }
+            def checkModule={module->
+                ['sh','-c',"npm la -g | head | cat"].execute().in.text
+                    .readLines()
+                    .findAll{it}
+                    .findAll{it.contains(module)}
+                    .collect{it.split(' ')}
+                    .flatten()
+                    .findAll{it.length()>=module.length()}
+                    .findAll{it.contains('@')}
+                    .findAll{it.contains(module)}
+                    .first()
+            }
+            
             def oslMarkdown = new URL("https://github.com/nao20010128nao/Wisecraft/raw/master/OPEN_SOURCE_LICENSES.md").text
             def oslCss = new URL('https://github.com/fiskurgit/MarkdownView/raw/master/library/src/main/assets/githubmarkdown.css').text
 
@@ -48,8 +71,7 @@ android {
 				}
 			''', 'marked.help.js', 1, null)
             def marked = { String str ->
-                def func = (Function) Context.jsToJava(scope.get("bridgeMarked", scope), Function)
-                func(ctx, scope, scope, [str])
+                (Context.jsToJava(scope.get("bridgeMarked", scope), Function))(ctx, scope, scope, [str])
             }
             def doc = Jsoup.parse('''
 				<!doctype html>
@@ -72,7 +94,17 @@ android {
                     )
             )
             doc.select('style')[0].text(oslCss)
-            return doc.html()
+            //return doc.html()
+            def html=doc.html()
+            if(commandCheck('html-minifier','--help')){// check the command exists
+                html=['html-minifier','--html5','--minify-css','true','--minify-js','true','--remove-comments','--collapse-whitespace'].execute().with{
+                    out.write "$html\n".bytes
+                    out.flush()
+                    out.close()
+                    in.readLines().join('')
+                }
+            }
+            return html
         })()
         new File(buildDir, '.').mkdirs()
         new File(buildDir, 'opensourcelicense.html').text = oslData
