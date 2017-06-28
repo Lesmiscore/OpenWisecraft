@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.protobuf'
-apply plugin: 'groovyx.android'
+//apply plugin: 'groovyx.android'
 
 import java.security.SecureRandom
 
@@ -235,8 +235,8 @@ dependencies {
 	if(1)annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:2.3.2'
 
 	//debug2
-	if(1)debug2Provided "org.codehaus.groovy:groovy:$groovyVersion:grooid"
-	if(1)debug2Apk "org.codehaus.groovy:groovy:$groovyVersion:grooid"
+	//if(1)debug2Provided "org.codehaus.groovy:groovy:$groovyVersion:grooid"
+	//if(1)debug2Apk "org.codehaus.groovy:groovy:$groovyVersion:grooid"
 }
 
 protobuf {
