@@ -91,6 +91,9 @@ subprojects{
                     abortOnError false
                 }
             }
+            project.tasks.each{task->
+                println "whenTaskAdded: $task.name is ${task.getClass()}"
+            }
         }
 		//configurations.compile.allDependencies.findAll{it.group=='com.android.support'}.collect{it.class}.each(System.out.&println)
 		//org.gradle.api.internal.artifacts.dependencies.DefaultExternalModuleDependency
@@ -255,5 +258,4 @@ tasks.whenTaskAdded { task ->
     if (task.name.contains("lint")) {
         task.enabled = false
     }
-    println "whenTaskAdded: $task.name is ${task.getClass()}"
 }
