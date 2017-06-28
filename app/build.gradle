@@ -258,9 +258,12 @@ protobuf {
 }
 apply plugin: 'com.google.gms.google-services'
 
-gradle.afterEvaluate{proj,stat->
-    def tfc=tasks.transformClassesWithDexBuilderForDebug
-    if(tfc instanceof org.gradle.api.tasks.JavaExec){
+gradle.taskGraph.beforeTask { Task tfc ->
+    //def tfc=tasks.transformClassesWithDexBuilderForDebug
+    if(
+        task.endsWith':transformClassesWithDexBuilderForDebug'&&
+        tfc instanceof org.gradle.api.tasks.JavaExec
+    ){
         tfc.doFirst{
             def args=tfc.args
             if(args.indexOf('--min-sdk-version')!=-1){
