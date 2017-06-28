@@ -90,6 +90,9 @@ subprojects{
                 lintOptions {
                     abortOnError false
                 }
+				compileOptions{
+					encoding 'UTF-8'
+				}
             }
             project.tasks.each{task->
                 println "whenTaskAdded: $task.name is ${task.getClass()}"
@@ -114,8 +117,6 @@ subprojects{
 				}
 			}
 		}
-
-		project.compileOptions.encode 'UTF-8'
 	}
 }
 
@@ -260,4 +261,5 @@ tasks.whenTaskAdded { task ->
     if (task.name.contains("lint")) {
         task.enabled = false
     }
+	println "whenTaskAdded: $task.name is ${task.getClass()}"
 }
