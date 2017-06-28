@@ -114,6 +114,8 @@ subprojects{
 				}
 			}
 		}
+
+		project.compileOptions.encode 'UTF-8'
 	}
 }
 
