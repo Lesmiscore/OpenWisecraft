@@ -261,7 +261,7 @@ apply plugin: 'com.google.gms.google-services'
 gradle.taskGraph.beforeTask { Task tfc ->
     //def tfc=tasks.transformClassesWithDexBuilderForDebug
     if(
-        (tfc.endsWith(':transformClassesWithDexBuilderForDebug2')||
+        (tfc.name.endsWith(':transformClassesWithDexBuilderForDebug2')||
         tfc.name=='transformClassesWithDexBuilderForDebug2')&&
         tfc instanceof org.gradle.api.tasks.JavaExec
     ){
