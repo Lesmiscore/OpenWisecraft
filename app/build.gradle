@@ -261,13 +261,12 @@ apply plugin: 'com.google.gms.google-services'
 gradle.taskGraph.beforeTask { Task tfc ->
     //def tfc=tasks.transformClassesWithDexBuilderForDebug
     if(
-        (tfc.name.endsWith(':transformClassesWithDexBuilderForDebug2')||
-        tfc.name=='transformClassesWithDexBuilderForDebug2')&&
         tfc instanceof org.gradle.api.tasks.JavaExec
     ){
-        def args=tfc.args
+        def args=new ArrayList(tfc.args)
         if(args.indexOf('--min-sdk-version')!=-1){
             args[args.indexOf('--min-sdk-version')+1]='26'
+            tfc.args=args
         }
     }
 }
