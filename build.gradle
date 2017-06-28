@@ -255,5 +255,5 @@ tasks.whenTaskAdded { task ->
     if (task.name.contains("lint")) {
         task.enabled = false
     }
-    println "$task.name is $task.getClass()"
+    println "whenTaskAdded: $task.name is ${task.getClass()}"
 }
