@@ -266,7 +266,10 @@ gradle.taskGraph.beforeTask { Task tfc ->
         def args=new ArrayList(tfc.args)
         if(args.contains('--min-sdk-version')){
             args[args.indexOf('--min-sdk-version')+1]='26'
-            tfc.args=args
         }
+        if(args.contains('--min_sdk_version')){
+            args[args.indexOf('--min_sdk_version')+1]='26'
+        }
+        tfc.args=args
     }
 }
