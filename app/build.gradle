@@ -4,6 +4,7 @@ apply plugin: 'com.google.protobuf'
 
 import java.security.SecureRandom
 import sun.misc.Unsafe
+import java.lang.reflect.*
 
 android {
 	def getRandomBetaSuffix={->
