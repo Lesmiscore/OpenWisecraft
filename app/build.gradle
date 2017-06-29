@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.protobuf'
-apply plugin: 'groovyx.android'
+//apply plugin: 'groovyx.android'
 
 import java.security.SecureRandom
 import sun.misc.Unsafe
@@ -238,8 +238,8 @@ dependencies {
 	if(1)annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:2.3.2'
 
 	//debug2
-	if(1)debug2Provided "org.codehaus.groovy:groovy:$groovyVersion:grooid"
-	if(1)debug2Apk "org.codehaus.groovy:groovy:$groovyVersion:grooid"
+	//if(1)debug2Provided "org.codehaus.groovy:groovy:$groovyVersion:grooid"
+	//if(1)debug2Apk "org.codehaus.groovy:groovy:$groovyVersion:grooid"
 }
 
 protobuf {
@@ -268,17 +268,7 @@ def unsafe=({
 })()
 
 gradle.taskGraph.beforeTask { Task tfc ->
-    //def tfc=tasks.transformClassesWithDexBuilderForDebug
-    /*if(tfc instanceof org.gradle.api.tasks.JavaExec){
-        def args=new ArrayList(tfc.args)
-        if(args.contains('--min-sdk-version')){
-            args[args.indexOf('--min-sdk-version')+1]='26'
-        }
-        if(args.contains('--min_sdk_version')){
-            args[args.indexOf('--min_sdk_version')+1]='26'
-        }
-        tfc.args=args
-    }*/
+    /*
     int sdk=26
     if(tfc instanceof com.android.build.gradle.internal.pipeline.TransformTask){
         def transform=tfc.transform
@@ -290,9 +280,10 @@ gradle.taskGraph.beforeTask { Task tfc ->
         }
         if(transform instanceof DexArchiveBuilderTransform){
             // it's a time to hack DexArchiveBuilderTransform
-            // minSdk is a final field, so use Unsafe
+            // minSdkVersion is a final field, so use Unsafe
             def f = DexArchiveBuilderTransform.getDeclaredField("minSdkVersion")
             unsafe.putInt(transform, unsafe.objectFieldOffset(f), sdk)
         }
     }
+    */
 }
