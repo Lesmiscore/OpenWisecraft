@@ -5,7 +5,7 @@ apply plugin: 'groovyx.android'
 import java.security.SecureRandom
 import sun.misc.Unsafe
 import java.lang.reflect.*
-import com.android.build.gradle.internal.transforms.DesugarTransform
+import com.android.build.gradle.internal.transforms.*
 
 android {
 	def getRandomBetaSuffix={->
@@ -261,6 +261,12 @@ protobuf {
 }
 apply plugin: 'com.google.gms.google-services'
 
+def unsafe=({
+    def unsafeField = Unsafe.class.getDeclaredField("theUnsafe")
+    unsafeField.accessible=true
+    unsafeField.get(null)
+})()
+
 gradle.taskGraph.beforeTask { Task tfc ->
     //def tfc=tasks.transformClassesWithDexBuilderForDebug
     /*if(tfc instanceof org.gradle.api.tasks.JavaExec){
@@ -273,17 +279,20 @@ gradle.taskGraph.beforeTask { Task tfc ->
         }
         tfc.args=args
     }*/
+    int sdk=26
     if(tfc instanceof com.android.build.gradle.internal.pipeline.TransformTask){
         def transform=tfc.transform
         if(transform instanceof DesugarTransform){
             // it's a time to hack DesugarTransform
             // minSdk is a final field, so use Unsafe
-            Field unsafeField = Unsafe.class.getDeclaredField("theUnsafe")
-            unsafeField.accessible=true
-            Unsafe unsafe = (Unsafe) unsafeField.get(null)
-            
-            Field f = DesugarTransform.getDeclaredField("minSdk")
-            unsafe.putInt(transform, unsafe.objectFieldOffset(f), 26)
+            def f = DesugarTransform.getDeclaredField("minSdk")
+            unsafe.putInt(transform, unsafe.objectFieldOffset(f), sdk)
+        }
+        if(transform instanceof DexArchiveBuilderTransform){
+            // it's a time to hack DexArchiveBuilderTransform
+            // minSdk is a final field, so use Unsafe
+            def f = DexArchiveBuilderTransform.getDeclaredField("minSdkVersion")
+            unsafe.putInt(transform, unsafe.objectFieldOffset(f), sdk)
         }
     }
 }
