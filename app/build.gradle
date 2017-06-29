@@ -278,12 +278,12 @@ gradle.taskGraph.beforeTask { Task tfc ->
         if(transform instanceof DesugarTransform){
             // it's a time to hack DesugarTransform
             // minSdk is a final field, so use Unsafe
-            Field unsafeField = Unsafe.class.getDeclaredField("theUnsafe");
-            unsafeField.setAccessible(true);
-            Unsafe unsafe = (Unsafe) unsafeField.get(null);
+            Field unsafeField = Unsafe.class.getDeclaredField("theUnsafe")
+            unsafeField.accessible=true
+            Unsafe unsafe = (Unsafe) unsafeField.get(null)
             
-            Field f = DesugarTransform.getDeclaredField("minSdk");
-            unsafe.putObject(tfc, unsafe.objectFieldOffset(f), 26);
+            Field f = DesugarTransform.getDeclaredField("minSdk")
+            unsafe.putObject(transform, unsafe.objectFieldOffset(f), 26)
         }
     }
 }
