@@ -5,6 +5,7 @@ apply plugin: 'com.google.protobuf'
 import java.security.SecureRandom
 import sun.misc.Unsafe
 import java.lang.reflect.*
+import com.android.build.gradle.internal.transforms.DesugarTransform
 
 android {
 	def getRandomBetaSuffix={->
@@ -274,15 +275,15 @@ gradle.taskGraph.beforeTask { Task tfc ->
     }*/
     if(tfc instanceof com.android.build.gradle.internal.pipeline.TransformTask){
         def transform=tfc.transform
-        if(transform instanceof com.android.build.gradle.internal.transforms.DesugarTransform){
+        if(transform instanceof DesugarTransform){
             // it's a time to hack DesugarTransform
             // minSdk is a final field, so use Unsafe
             Field unsafeField = Unsafe.class.getDeclaredField("theUnsafe");
             unsafeField.setAccessible(true);
             Unsafe unsafe = (Unsafe) unsafeField.get(null);
             
-            Field f = Demo.class.getDeclaredField("minSdk");
-            unsafe.putObject(demo, unsafe.objectFieldOffset(f), 26);
+            Field f = DesugarTransform.getDeclaredField("minSdk");
+            unsafe.putObject(tfc, unsafe.objectFieldOffset(f), 26);
         }
     }
 }
