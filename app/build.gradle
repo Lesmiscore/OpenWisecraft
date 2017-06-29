@@ -3,6 +3,7 @@ apply plugin: 'com.google.protobuf'
 //apply plugin: 'groovyx.android'
 
 import java.security.SecureRandom
+import sun.misc.Unsafe
 
 android {
 	def getRandomBetaSuffix={->
@@ -260,7 +261,7 @@ apply plugin: 'com.google.gms.google-services'
 
 gradle.taskGraph.beforeTask { Task tfc ->
     //def tfc=tasks.transformClassesWithDexBuilderForDebug
-    if(tfc instanceof org.gradle.api.tasks.JavaExec){
+    /*if(tfc instanceof org.gradle.api.tasks.JavaExec){
         def args=new ArrayList(tfc.args)
         if(args.contains('--min-sdk-version')){
             args[args.indexOf('--min-sdk-version')+1]='26'
@@ -269,5 +270,18 @@ gradle.taskGraph.beforeTask { Task tfc ->
             args[args.indexOf('--min_sdk_version')+1]='26'
         }
         tfc.args=args
+    }*/
+    if(tfc instanceof com.android.build.gradle.internal.pipeline.TransformTask){
+        def transform=tfc.transform
+        if(transform instanceof com.android.build.gradle.internal.transforms.DesugarTransform){
+            // it's a time to hack DesugarTransform
+            // minSdk is a final field, so use Unsafe
+            Field unsafeField = Unsafe.class.getDeclaredField("theUnsafe");
+            unsafeField.setAccessible(true);
+            Unsafe unsafe = (Unsafe) unsafeField.get(null);
+            
+            Field f = Demo.class.getDeclaredField("minSdk");
+            unsafe.putObject(demo, unsafe.objectFieldOffset(f), 26);
+        }
     }
 }
