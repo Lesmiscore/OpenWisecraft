@@ -283,7 +283,7 @@ gradle.taskGraph.beforeTask { Task tfc ->
             Unsafe unsafe = (Unsafe) unsafeField.get(null)
             
             Field f = DesugarTransform.getDeclaredField("minSdk")
-            unsafe.putObject(transform, unsafe.objectFieldOffset(f), 26)
+            unsafe.putInt(transform, unsafe.objectFieldOffset(f), 26)
         }
     }
 }
