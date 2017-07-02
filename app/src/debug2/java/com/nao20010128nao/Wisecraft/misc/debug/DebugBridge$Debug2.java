@@ -39,11 +39,21 @@ class DebugBridge$Debug2 extends DebugBridge {
                 Utils.readBytes(ctx.getAssets().open("groovy.zip"), fos::write);
             } catch (Throwable e) {
                 WisecraftError.report("DebugBridge", e);
+                return;
             } finally {
                 Utils.safeClose(fos);
             }
         }
         // now load it
+        // TODO: support for newer versions
+        ApplicationInfo applicationInfo = MultiDex.getApplicationInfo(context);
+        if (applicationInfo == null) {
+            Log.i("DebugBridge", "No ApplicationInfo available, i.e. running on a test Context:"
+                + " MultiDex support library is disabled.");
+            return;
+        }
+
+        MultiDex.doInstallation(ctx,groovyDex,ctx.getCacheDir(),"groovy-dexes","");
     }
 
     @Override
@@ -54,7 +64,8 @@ class DebugBridge$Debug2 extends DebugBridge {
 // MultiDex
 final class MultiDex {
 
-    static final String TAG = "MultiDex";
+    // we need to prevent confusion: now at DebugBridge
+    static final String TAG = "DebugBridge";
 
     private static final String OLD_SECONDARY_FOLDER_NAME = "secondary-dexes";
 
@@ -74,8 +85,8 @@ final class MultiDex {
 
     private static final Set<File> installedApk = new HashSet<File>();
 
-    private static final boolean IS_VM_MULTIDEX_CAPABLE =
-            isVMMultidexCapable(System.getProperty("java.vm.version"));
+    private static final boolean IS_VM_MULTIDEX_CAPABLE = false;
+            //isVMMultidexCapable(System.getProperty("java.vm.version"));
 
     private MultiDex() {}
 
@@ -163,7 +174,7 @@ final class MultiDex {
         Log.i(TAG, "Installation done");
     }
 
-    private static void doInstallation(Context mainContext, File sourceApk, File dataDir,
+    public static void doInstallation(Context mainContext, File sourceApk, File dataDir,
                                        String secondaryFolderName, String prefsKeyPrefix) throws IOException,
             IllegalArgumentException, IllegalAccessException, NoSuchFieldException,
             InvocationTargetException, NoSuchMethodException {
@@ -211,7 +222,7 @@ final class MultiDex {
         }
     }
 
-    private static ApplicationInfo getApplicationInfo(Context context) {
+    public static ApplicationInfo getApplicationInfo(Context context) {
         try {
             return context.getApplicationInfo();
         } catch (RuntimeException e) {
