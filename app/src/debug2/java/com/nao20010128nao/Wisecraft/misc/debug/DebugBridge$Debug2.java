@@ -51,7 +51,7 @@ class DebugBridge$Debug2 extends DebugBridge {
 
     }
 }
-
+// MultiDex
 final class MultiDex {
 
     static final String TAG = "MultiDex";
@@ -163,14 +163,6 @@ final class MultiDex {
         Log.i(TAG, "Installation done");
     }
 
-    /**
-     * @param mainContext context used to get filesDir, to save preference and to get the
-     * classloader to patch.
-     * @param sourceApk Apk file.
-     * @param dataDir data directory to use for code cache simulation.
-     * @param secondaryFolderName name of the folder for storing extractions.
-     * @param prefsKeyPrefix prefix of all stored preference keys.
-     */
     private static void doInstallation(Context mainContext, File sourceApk, File dataDir,
                                        String secondaryFolderName, String prefsKeyPrefix) throws IOException,
             IllegalArgumentException, IllegalAccessException, NoSuchFieldException,
@@ -190,25 +182,15 @@ final class MultiDex {
                         + System.getProperty("java.vm.version") + "\"");
             }
 
-            /* The patched class loader is expected to be a descendant of
-             * dalvik.system.BaseDexClassLoader. We modify its
-             * dalvik.system.DexPathList pathList field to append additional DEX
-             * file entries.
-             */
             ClassLoader loader;
             try {
                 loader = mainContext.getClassLoader();
             } catch (RuntimeException e) {
-                /* Ignore those exceptions so that we don't break tests relying on Context like
-                 * a android.test.mock.MockContext or a android.content.ContextWrapper with a
-                 * null base Context.
-                 */
                 Log.w(TAG, "Failure while trying to obtain Context class loader. " +
                         "Must be running in test mode. Skip patching.", e);
                 return;
             }
             if (loader == null) {
-                // Note, the context class loader is null when running Robolectric tests.
                 Log.e(TAG,
                         "Context class loader is null. Must be running in test mode. "
                                 + "Skip patching.");
@@ -231,32 +213,14 @@ final class MultiDex {
 
     private static ApplicationInfo getApplicationInfo(Context context) {
         try {
-            /* Due to package install races it is possible for a process to be started from an old
-             * apk even though that apk has been replaced. Querying for ApplicationInfo by package
-             * name may return information for the new apk, leading to a runtime with the old main
-             * dex file and new secondary dex files. This leads to various problems like
-             * ClassNotFoundExceptions. Using context.getApplicationInfo() should result in the
-             * process having a consistent view of the world (even if it is of the old world). The
-             * package install races are eventually resolved and old processes are killed.
-             */
             return context.getApplicationInfo();
         } catch (RuntimeException e) {
-            /* Ignore those exceptions so that we don't break tests relying on Context like
-             * a android.test.mock.MockContext or a android.content.ContextWrapper with a null
-             * base Context.
-             */
             Log.w(TAG, "Failure while trying to obtain ApplicationInfo from Context. " +
                     "Must be running in test mode. Skip patching.", e);
             return null;
         }
     }
 
-    /**
-     * Identifies if the current VM has a native support for multidex, meaning there is no need for
-     * additional installation by this library.
-     * @return true if the VM handles multidex
-     */
-    /* package visible for test */
     static boolean isVMMultidexCapable(String versionString) {
         boolean isMultidexCapable = false;
         if (versionString != null) {
@@ -269,7 +233,6 @@ final class MultiDex {
                             || ((major == VM_WITH_MULTIDEX_VERSION_MAJOR)
                             && (minor >= VM_WITH_MULTIDEX_VERSION_MINOR));
                 } catch (NumberFormatException e) {
-                    // let isMultidexCapable be false
                 }
             }
         }
@@ -295,14 +258,6 @@ final class MultiDex {
         }
     }
 
-    /**
-     * Locates a given field anywhere in the class inheritance hierarchy.
-     *
-     * @param instance an object to search the field into.
-     * @param name field name
-     * @return a field object
-     * @throws NoSuchFieldException if the field cannot be located
-     */
     private static Field findField(Object instance, String name) throws NoSuchFieldException {
         for (Class<?> clazz = instance.getClass(); clazz != null; clazz = clazz.getSuperclass()) {
             try {
@@ -315,22 +270,12 @@ final class MultiDex {
 
                 return field;
             } catch (NoSuchFieldException e) {
-                // ignore and search next
             }
         }
 
         throw new NoSuchFieldException("Field " + name + " not found in " + instance.getClass());
     }
 
-    /**
-     * Locates a given method anywhere in the class inheritance hierarchy.
-     *
-     * @param instance an object to search the method into.
-     * @param name method name
-     * @param parameterTypes method parameter types
-     * @return a method object
-     * @throws NoSuchMethodException if the method cannot be located
-     */
     private static Method findMethod(Object instance, String name, Class<?>... parameterTypes)
             throws NoSuchMethodException {
         for (Class<?> clazz = instance.getClass(); clazz != null; clazz = clazz.getSuperclass()) {
@@ -344,21 +289,13 @@ final class MultiDex {
 
                 return method;
             } catch (NoSuchMethodException e) {
-                // ignore and search next
             }
         }
 
         throw new NoSuchMethodException("Method " + name + " with parameters " +
                 Arrays.asList(parameterTypes) + " not found in " + instance.getClass());
     }
-
-    /**
-     * Replace the value of a field containing a non null array, by a new array containing the
-     * elements of the original array plus the elements of extraElements.
-     * @param instance the instance whose field is to be modified.
-     * @param fieldName the field to modify.
-     * @param extraElements elements to append at the end of the array.
-     */
+    
     private static void expandFieldArray(Object instance, String fieldName,
                                          Object[] extraElements) throws NoSuchFieldException, IllegalArgumentException,
             IllegalAccessException {
@@ -403,10 +340,6 @@ final class MultiDex {
         try {
             mkdirChecked(cache);
         } catch (IOException e) {
-            /* If we can't emulate code_cache, then store to filesDir. This means abandoning useless
-             * files on disk if the device ever updates to android 5+. But since this seems to
-             * happen only on some devices running android 2, this should cause no pollution.
-             */
             cache = new File(context.getFilesDir(), CODE_CACHE_NAME);
             mkdirChecked(cache);
         }
@@ -433,9 +366,6 @@ final class MultiDex {
         }
     }
 
-    /**
-     * Installer for platform versions 19.
-     */
     private static final class V19 {
 
         private static void install(ClassLoader loader,
@@ -443,11 +373,6 @@ final class MultiDex {
                                     File optimizedDirectory)
                 throws IllegalArgumentException, IllegalAccessException,
                 NoSuchFieldException, InvocationTargetException, NoSuchMethodException {
-            /* The patched class loader is expected to be a descendant of
-             * dalvik.system.BaseDexClassLoader. We modify its
-             * dalvik.system.DexPathList pathList field to append additional DEX
-             * file entries.
-             */
             Field pathListField = findField(loader, "pathList");
             Object dexPathList = pathListField.get(loader);
             ArrayList<IOException> suppressedExceptions = new ArrayList<IOException>();
@@ -481,10 +406,6 @@ final class MultiDex {
             }
         }
 
-        /**
-         * A wrapper around
-         * {@code private static final dalvik.system.DexPathList#makeDexElements}.
-         */
         private static Object[] makeDexElements(
                 Object dexPathList, ArrayList<File> files, File optimizedDirectory,
                 ArrayList<IOException> suppressedExceptions)
@@ -499,9 +420,6 @@ final class MultiDex {
         }
     }
 
-    /**
-     * Installer for platform versions 14, 15, 16, 17 and 18.
-     */
     private static final class V14 {
 
         private static void install(ClassLoader loader,
@@ -509,21 +427,13 @@ final class MultiDex {
                                     File optimizedDirectory)
                 throws IllegalArgumentException, IllegalAccessException,
                 NoSuchFieldException, InvocationTargetException, NoSuchMethodException {
-            /* The patched class loader is expected to be a descendant of
-             * dalvik.system.BaseDexClassLoader. We modify its
-             * dalvik.system.DexPathList pathList field to append additional DEX
-             * file entries.
-             */
+
             Field pathListField = findField(loader, "pathList");
             Object dexPathList = pathListField.get(loader);
             expandFieldArray(dexPathList, "dexElements", makeDexElements(dexPathList,
                     new ArrayList<File>(additionalClassPathEntries), optimizedDirectory));
         }
 
-        /**
-         * A wrapper around
-         * {@code private static final dalvik.system.DexPathList#makeDexElements}.
-         */
         private static Object[] makeDexElements(
                 Object dexPathList, ArrayList<File> files, File optimizedDirectory)
                 throws IllegalAccessException, InvocationTargetException,
@@ -535,19 +445,12 @@ final class MultiDex {
         }
     }
 
-    /**
-     * Installer for platform versions 4 to 13.
-     */
+    @Deprecated
     private static final class V4 {
         private static void install(ClassLoader loader,
                                     List<? extends File> additionalClassPathEntries)
                 throws IllegalArgumentException, IllegalAccessException,
                 NoSuchFieldException, IOException {
-            /* The patched class loader is expected to be a descendant of
-             * dalvik.system.DexClassLoader. We modify its
-             * fields mPaths, mFiles, mZips and mDexs to append additional DEX
-             * file entries.
-             */
             int extraSize = additionalClassPathEntries.size();
 
             Field pathField = findField(loader, "path");
@@ -579,9 +482,6 @@ final class MultiDex {
 }
 final class MultiDexExtractor {
 
-    /**
-     * Zip file containing one secondary dex file.
-     */
     private static class ExtractedDex extends File {
         public long crc = NO_VALUE;
 
@@ -592,10 +492,6 @@ final class MultiDexExtractor {
 
     private static final String TAG = MultiDex.TAG;
 
-    /**
-     * We look for additional dex files named {@code classes2.dex},
-     * {@code classes3.dex}, etc.
-     */
     private static final String DEX_PREFIX = "classes";
     private static final String DEX_SUFFIX = ".dex";
 
@@ -610,24 +506,11 @@ final class MultiDexExtractor {
     private static final String KEY_DEX_CRC = "dex.crc.";
     private static final String KEY_DEX_TIME = "dex.time.";
 
-    /**
-     * Size of reading buffers.
-     */
     private static final int BUFFER_SIZE = 0x4000;
-    /* Keep value away from 0 because it is a too probable time stamp value */
     private static final long NO_VALUE = -1L;
 
     private static final String LOCK_FILENAME = "MultiDex.lock";
 
-    /**
-     * Extracts application secondary dexes into files in the application data
-     * directory.
-     *
-     * @return a list of files that were created. The list may be empty if there
-     * are no secondary dex files. Never return null.
-     * @throws IOException if encounters a problem while reading or writing
-     *                     secondary dex files
-     */
     static List<? extends File> load(Context context, File sourceApk, File dexDir,
                                      String prefsKeyPrefix,
                                      boolean forceReload) throws IOException {
@@ -636,7 +519,6 @@ final class MultiDexExtractor {
 
         long currentCrc = getZipCrc(sourceApk);
 
-        // Validity check and extraction must be done only while the lock file has been taken.
         File lockFile = new File(dexDir, LOCK_FILENAME);
         RandomAccessFile lockRaf = new RandomAccessFile(lockFile, "rw");
         FileChannel lockChannel = null;
@@ -671,8 +553,6 @@ final class MultiDexExtractor {
                     cacheLock.release();
                 } catch (IOException e) {
                     Log.e(TAG, "Failed to release lock on " + lockFile.getPath());
-                    // Exception while releasing the lock is bad, we want to report it, but not at
-                    // the price of overriding any already pending exception.
                     releaseLockException = e;
                 }
             }
@@ -689,11 +569,7 @@ final class MultiDexExtractor {
         Log.i(TAG, "load found " + files.size() + " secondary dex files");
         return files;
     }
-
-    /**
-     * Load previously extracted secondary dex files. Should be called only while owning the lock on
-     * {@link #LOCK_FILENAME}.
-     */
+    
     private static List<ExtractedDex> loadExistingExtractions(
             Context context, File sourceApk, File dexDir,
             String prefsKeyPrefix)
@@ -732,12 +608,7 @@ final class MultiDexExtractor {
 
         return files;
     }
-
-
-    /**
-     * Compare current archive and crc with values stored in {@link SharedPreferences}. Should be
-     * called only while owning the lock on {@link #LOCK_FILENAME}.
-     */
+    
     private static boolean isModified(Context context, File archive, long currentCrc,
                                       String prefsKeyPrefix) {
         SharedPreferences prefs = getMultiDexPreferences(context);
@@ -758,7 +629,6 @@ final class MultiDexExtractor {
     private static long getZipCrc(File archive) throws IOException {
         long computedValue = ZipUtil.getZipCrc(archive);
         if (computedValue == NO_VALUE) {
-            // never return NO_VALUE
             computedValue--;
         }
         return computedValue;
@@ -769,10 +639,6 @@ final class MultiDexExtractor {
 
         final String extractedFilePrefix = sourceApk.getName() + EXTRACTED_NAME_EXT;
 
-        // Ensure that whatever deletions happen in prepareDexDir only happen if the zip that
-        // contains a secondary dex file in there is not consistent with the latest apk.  Otherwise,
-        // multi-process race conditions can cause a crash loop where one process deletes the zip
-        // while another had created it.
         prepareDexDir(dexDir, extractedFilePrefix);
 
         List<ExtractedDex> files = new ArrayList<ExtractedDex>();
@@ -794,11 +660,8 @@ final class MultiDexExtractor {
                 while (numAttempts < MAX_EXTRACT_ATTEMPTS && !isExtractionSuccessful) {
                     numAttempts++;
 
-                    // Create a zip file (extractedFile) containing only the secondary dex file
-                    // (dexFile) from the apk.
                     extract(apk, dexFile, extractedFile, extractedFilePrefix);
 
-                    // Read zip crc of extracted dex
                     try {
                         extractedFile.crc = getZipCrc(extractedFile);
                         isExtractionSuccessful = true;
@@ -807,12 +670,10 @@ final class MultiDexExtractor {
                         Log.w(TAG, "Failed to read crc from " + extractedFile.getAbsolutePath(), e);
                     }
 
-                    // Log size and crc of the extracted zip file
                     Log.i(TAG, "Extraction " + (isExtractionSuccessful ? "succeeded" : "failed") +
                             " - length " + extractedFile.getAbsolutePath() + ": " +
                             extractedFile.length() + " - crc: " + extractedFile.crc);
                     if (!isExtractionSuccessful) {
-                        // Delete the extracted file
                         extractedFile.delete();
                         if (extractedFile.exists()) {
                             Log.w(TAG, "Failed to delete corrupted secondary dex '" +
@@ -839,10 +700,6 @@ final class MultiDexExtractor {
         return files;
     }
 
-    /**
-     * Save {@link SharedPreferences}. Should be called only while owning the lock on
-     * {@link #LOCK_FILENAME}.
-     */
     private static void putStoredApkInfo(Context context, String keyPrefix, long timeStamp,
                                          long crc, List<ExtractedDex> extractedDexes) {
         SharedPreferences prefs = getMultiDexPreferences(context);
@@ -857,16 +714,9 @@ final class MultiDexExtractor {
             edit.putLong(keyPrefix + KEY_DEX_TIME + extractedDexId, dex.lastModified());
             extractedDexId++;
         }
-        /* Use commit() and not apply() as advised by the doc because we need synchronous writing of
-         * the editor content and apply is doing an "asynchronous commit to disk".
-         */
         edit.commit();
     }
 
-    /**
-     * Get the MuliDex {@link SharedPreferences} for the current application. Should be called only
-     * while owning the lock on {@link #LOCK_FILENAME}.
-     */
     private static SharedPreferences getMultiDexPreferences(Context context) {
         return context.getSharedPreferences(PREFS_FILE,
                 Build.VERSION.SDK_INT < 11 /* Build.VERSION_CODES.HONEYCOMB */
@@ -874,9 +724,6 @@ final class MultiDexExtractor {
                         : Context.MODE_PRIVATE | 0x0004 /* Context.MODE_MULTI_PROCESS */);
     }
 
-    /**
-     * This removes old files.
-     */
     private static void prepareDexDir(File dexDir, final String extractedFilePrefix) {
         FileFilter filter = new FileFilter() {
 
@@ -908,7 +755,6 @@ final class MultiDexExtractor {
 
         InputStream in = apk.getInputStream(dexFile);
         ZipOutputStream out = null;
-        // Temp files must not start with extractedFilePrefix to get cleaned up in prepareDexDir()
         File tmp = File.createTempFile("tmp-" + extractedFilePrefix, EXTRACTED_SUFFIX,
                 extractTo.getParentFile());
         Log.i(TAG, "Extracting " + tmp.getPath());
@@ -916,7 +762,6 @@ final class MultiDexExtractor {
             out = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(tmp)));
             try {
                 ZipEntry classesDex = new ZipEntry("classes.dex");
-                // keep zip entry time since it is the criteria used by Dalvik
                 classesDex.setTime(dexFile.getTime());
                 out.putNextEntry(classesDex);
 
@@ -945,9 +790,6 @@ final class MultiDexExtractor {
         }
     }
 
-    /**
-     * Closes the given {@code Closeable}. Suppresses any IO exceptions.
-     */
     private static void closeQuietly(Closeable closeable) {
         try {
             closeable.close();
@@ -962,22 +804,11 @@ final class ZipUtil {
         long size;
     }
 
-    /* redefine those constant here because of bug 13721174 preventing to compile using the
-     * constants defined in ZipFile */
     private static final int ENDHDR = 22;
     private static final int ENDSIG = 0x6054b50;
 
-    /**
-     * Size of reading buffers.
-     */
     private static final int BUFFER_SIZE = 0x4000;
 
-    /**
-     * Compute crc32 of the central directory of an apk. The central directory contains
-     * the crc32 of each entries in the zip so the computed result is considered valid for the whole
-     * zip file. Does not support zip64 nor multidisk but it should be OK for now since ZipFile does
-     * not either.
-     */
     static long getZipCrc(File apk) throws IOException {
         RandomAccessFile raf = new RandomAccessFile(apk, "r");
         try {
@@ -989,7 +820,6 @@ final class ZipUtil {
         }
     }
 
-    /* Package visible for testing */
     static CentralDirectory findCentralDirectory(RandomAccessFile raf) throws IOException,
             ZipException {
         long scanOffset = raf.length() - ENDHDR;
@@ -1014,22 +844,17 @@ final class ZipUtil {
                 throw new ZipException("End Of Central Directory signature not found");
             }
         }
-        // Read the End Of Central Directory. ENDHDR includes the signature
-        // bytes,
-        // which we've already read.
 
-        // Pull out the information we need.
-        raf.skipBytes(2); // diskNumber
-        raf.skipBytes(2); // diskWithCentralDir
-        raf.skipBytes(2); // numEntries
-        raf.skipBytes(2); // totalNumEntries
+        raf.skipBytes(2);
+        raf.skipBytes(2);
+        raf.skipBytes(2);
+        raf.skipBytes(2);
         CentralDirectory dir = new CentralDirectory();
         dir.size = Integer.reverseBytes(raf.readInt()) & 0xFFFFFFFFL;
         dir.offset = Integer.reverseBytes(raf.readInt()) & 0xFFFFFFFFL;
         return dir;
     }
 
-    /* Package visible for testing */
     static long computeCrcOfCentralDir(RandomAccessFile raf, CentralDirectory dir)
             throws IOException {
         CRC32 crc = new CRC32();
