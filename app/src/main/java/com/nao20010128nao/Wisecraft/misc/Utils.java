@@ -5,6 +5,7 @@ import android.app.*;
 import android.content.*;
 import android.content.pm.*;
 import android.content.res.*;
+import android.content.res.Resources;
 import android.graphics.*;
 import android.os.*;
 import android.support.design.widget.*;
@@ -14,6 +15,7 @@ import android.text.style.*;
 import android.view.*;
 import android.webkit.*;
 import android.widget.*;
+import com.google.common.io.*;
 import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.R;
 import com.nao20010128nao.Wisecraft.*;
@@ -887,5 +889,46 @@ public class Utils extends PingerUtils {
 
     public static boolean alwaysTrue() {
         return true;
+    }
+
+    public static boolean readBytes(File f,ByteHandler handler){
+        try {
+            Files.readBytes(f, new ByteProcessor<Void>() {
+                @Override
+                public boolean processBytes(byte[] buf, int off, int len) throws IOException {
+                    handler.processBytes(buf,off,len);
+                    return true;
+                }
+
+                @Override
+                public Void getResult() {
+                    return null;
+                }
+            });
+            return true;
+        } catch (IOException e) {
+            WisecraftError.report("Utils",e);
+            return false;
+        }
+    }
+    public static boolean readBytes(InputStream f,ByteHandler handler){
+        try {
+            ByteStreams.readBytes(f, new ByteProcessor<Void>() {
+                @Override
+                public boolean processBytes(byte[] buf, int off, int len) throws IOException {
+                    handler.processBytes(buf,off,len);
+                    return true;
+                }
+
+                @Override
+                public Void getResult() {
+                    return null;
+                }
+            });
+            return true;
+        } catch (IOException e) {
+            WisecraftError.report("Utils",e);
+            return false;
+        }
     }
 }

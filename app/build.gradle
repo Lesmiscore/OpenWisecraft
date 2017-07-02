@@ -7,6 +7,8 @@ import sun.misc.Unsafe
 import java.lang.reflect.*
 import com.android.build.gradle.internal.transforms.*
 
+import java.util.zip.CRC32
+
 android {
 	def getRandomBetaSuffix={->
 		def suffix=["BETA","Kabuki","Sakura","Soyokaze","Tokikaze","Matsu"]
@@ -107,6 +109,14 @@ android {
 			
 			buildConfigField "String[]", "NOTIFICATION_TAGS", "new String[]{\"main\",\"test\"}"
 			buildConfigField "boolean", "SHOW_BUILD_DATA_ON_VERSIONS", "true"
+
+			def groovyCrc32=({
+				def file=new File(project.projectDir,'src/debug2/assets/groovy.zip').bytes
+				def crc=new CRC32()
+				crc.update(file)
+				return crc.value
+			})()
+			buildConfigField "long","GROOVY_CRC32","$groovyCrc32"
 		}
 		debug2TestObs.initWith(buildTypes.debug2)
 		debug2TestObs{
