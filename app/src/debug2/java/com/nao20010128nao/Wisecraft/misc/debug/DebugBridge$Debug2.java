@@ -57,6 +57,14 @@ class DebugBridge$Debug2 extends DebugBridge {
             WisecraftError.report("DebugBridge", e);
             return;
         }
+        
+        // try loading GroovyObject
+        try{
+            Class.forName("groovy.lang.GroovyObject");
+        }catch(Throwable e){
+            WisecraftError.report("DebugBridge", e);
+            return;
+        }
         init=true;
     }
 
@@ -68,6 +76,21 @@ class DebugBridge$Debug2 extends DebugBridge {
     @Override
     public void addDebugMenus(List<Sextet<Integer, Integer, Consumer<ServerListActivity>, Consumer<ServerListActivity>, IDrawerItem, UUID>> list){
         list.add(new Quintet(R.string.dbgMenu,R.drawable.ic_add_black_48dp,this::openDebugActivity,null,UUID.fromString("2ee5ea67-99b2-4f75-b7a8-19deaee2e4ed")));
+    }
+    
+    @Override
+    public void addDebugInfos(Context ctx,PreferenceScreen preferences){
+        Context c = CompatUtils.wrapContextForPreference(ctx);
+        List<Preference> buildData = new ArrayList<>();
+        buildData.add(new SimplePref(c, "Build ID",    BuildConfig.CI_BUILD_ID));
+        buildData.add(new SimplePref(c, "Build Ref",   BuildConfig.CI_BUILD_REF_NAME));
+        buildData.add(new SimplePref(c, "Runner ID",   BuildConfig.CI_RUNNER_ID));
+        buildData.add(new SimplePref(c, "Build Stage", BuildConfig.CI_BUILD_STAGE));
+        buildData.add(new SimplePref(c, "Build Name",  BuildConfig.CI_BUILD_NAME));
+        for (Preference pref : buildData) {
+            preferences.addPreference(pref);
+            pref.setVisible(true);
+        }
     }
 }
 // MultiDex
