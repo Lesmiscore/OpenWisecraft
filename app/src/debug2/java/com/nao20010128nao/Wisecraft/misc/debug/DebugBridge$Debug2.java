@@ -55,7 +55,8 @@ class DebugBridge$Debug2 extends DebugBridge {
         
         try{
             MultiDex.doInstallation(ctx,groovyDex,ctx.getCacheDir(),"groovy-dexes","");
-        }catch(IOException e){
+        }catch(Throwable e){
+        	WisecraftError.report("DebugBridge", e);
         }
     }
 
