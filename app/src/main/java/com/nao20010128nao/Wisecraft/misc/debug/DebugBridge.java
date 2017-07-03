@@ -3,11 +3,15 @@ package com.nao20010128nao.Wisecraft.misc.debug;
 import android.content.*;
 import android.support.annotation.*;
 import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.misc.*;
+import com.mikepenz.materialdrawer.model.interfaces.*;
+import java.util.*;
 
 public abstract class DebugBridge{
     public abstract boolean isAvailable();
     public abstract void init(Context ctx);
     public abstract void openDebugActivity(Context ctx);
+    public abstract void addDebugMenus(List<Sextet<Integer, Integer, Consumer<ServerListActivity>, Consumer<ServerListActivity>, IDrawerItem, UUID>> list);
 
     @NonNull
     private static final DebugBridge instance;
@@ -32,5 +36,6 @@ public abstract class DebugBridge{
         @Override public boolean isAvailable() {return false;}
         @Override public void init(Context ctx) {}
         @Override public void openDebugActivity(Context ctx) {}
+        @Override public void addDebugMenus(List<Sextet<Integer, Integer, Consumer<ServerListActivity>, Consumer<ServerListActivity>, IDrawerItem, UUID>> list){}
     }
 }

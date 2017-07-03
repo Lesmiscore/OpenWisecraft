@@ -18,6 +18,7 @@ import com.google.firebase.analytics.*;
 import com.google.firebase.remoteconfig.*;
 import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.activity.*;
+import com.nao20010128nao.Wisecraft.misc.debug.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.collector.*;
 import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
@@ -77,6 +78,8 @@ class TheApplicationImpl extends Application implements com.nao20010128nao.Wisec
 
         CollectorMain.INFORMATIONS.add(new MinecraftPeInformationProvider());
         CollectorMain.INFORMATIONS.add(new WisecraftInformationProvider());
+        
+        DebugBridge.getInstance().init(this);
     }
 
     public TypefaceLoader getLocalizedFont() {

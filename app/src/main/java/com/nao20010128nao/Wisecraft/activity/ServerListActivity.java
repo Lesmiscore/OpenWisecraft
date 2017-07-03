@@ -29,6 +29,7 @@ import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.collector.*;
 import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
+import com.nao20010128nao.Wisecraft.misc.debug.*;
 import com.nao20010128nao.Wisecraft.misc.ping.methods.*;
 import com.nao20010128nao.Wisecraft.misc.ping.methods.pc.*;
 import com.nao20010128nao.Wisecraft.misc.ping.methods.pe.*;
@@ -556,6 +557,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                 if (ProxyActivity.cont != null)
                     ProxyActivity.cont.stopService();
         }, null, null, UUID.fromString("5c0baf72-9a92-312d-ab33-062bdc3aa445")));//10
+        
+        DebugBridge.getInstance().addDebugMenus(appMenu);
     }
 
     private void setupDrawer() {

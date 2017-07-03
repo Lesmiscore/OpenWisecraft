@@ -6,6 +6,8 @@ import android.os.*;
 import android.util.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+import com.nao20010128nao.Wisecraft.misc.*;
+import com.mikepenz.materialdrawer.model.interfaces.*;
 import dalvik.system.*;
 
 import java.io.*;
@@ -16,6 +18,7 @@ import java.util.regex.*;
 import java.util.zip.*;
 
 class DebugBridge$Debug2 extends DebugBridge {
+	boolean init=false;
     @Override
     public boolean isAvailable() {
         return true;
@@ -23,6 +26,8 @@ class DebugBridge$Debug2 extends DebugBridge {
 
     @Override
     public void init(Context ctx) {
+        if(init)return;
+        
         File groovyDex = new File(ctx.getCacheDir(), "groovy.zip");
         boolean shouldExpandGroovy = true;
         if (groovyDex.exists()) {
@@ -46,23 +51,23 @@ class DebugBridge$Debug2 extends DebugBridge {
         }
         // now load it
         // TODO: support for newer versions
-        ApplicationInfo applicationInfo = MultiDex.getApplicationInfo(ctx);
-        if (applicationInfo == null) {
-            Log.i("DebugBridge", "No ApplicationInfo available, i.e. running on a test Context:"
-                + " MultiDex support library is disabled.");
-            return;
-        }
-        
         try{
             MultiDex.doInstallation(ctx,groovyDex,ctx.getCacheDir(),"groovy-dexes","");
         }catch(Throwable e){
-        	WisecraftError.report("DebugBridge", e);
+            WisecraftError.report("DebugBridge", e);
+            return;
         }
+        init=true;
     }
 
     @Override
     public void openDebugActivity(Context ctx) {
 
+    }
+    
+    @Override
+    public void addDebugMenus(List<Sextet<Integer, Integer, Consumer<ServerListActivity>, Consumer<ServerListActivity>, IDrawerItem, UUID>> list){
+        list.add(new Quintet(R.string.dbgMenu,R.drawable.ic_add_black_48dp,this::openDebugActivity,null,UUID.fromString("2ee5ea67-99b2-4f75-b7a8-19deaee2e4ed")));
     }
 }
 // MultiDex
