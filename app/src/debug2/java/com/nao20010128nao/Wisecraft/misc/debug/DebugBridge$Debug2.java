@@ -52,8 +52,11 @@ class DebugBridge$Debug2 extends DebugBridge {
                 + " MultiDex support library is disabled.");
             return;
         }
-
-        MultiDex.doInstallation(ctx,groovyDex,ctx.getCacheDir(),"groovy-dexes","");
+        
+        try{
+            MultiDex.doInstallation(ctx,groovyDex,ctx.getCacheDir(),"groovy-dexes","");
+        }catch(IOException e){
+        }
     }
 
     @Override
