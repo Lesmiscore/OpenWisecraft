@@ -263,7 +263,9 @@ final class MultiDex {
             throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException,
             InvocationTargetException, NoSuchMethodException, IOException {
         if (!files.isEmpty()) {
-            if (Build.VERSION.SDK_INT >= 19) {
+            if (Type1.isApplicable(loader)) {
+                Type1.install(loader, files, dexDir);
+            } else if (Build.VERSION.SDK_INT >= /*19*/23) {
                 V19.install(loader, files, dexDir);
             } else if (Build.VERSION.SDK_INT >= 14) {
                 V14.install(loader, files, dexDir);
@@ -378,6 +380,32 @@ final class MultiDex {
                         ", writable " + parent.canWrite());
             }
             throw new IOException("Failed to create directory " + dir.getPath());
+        }
+    }
+
+    // https://android.googlesource.com/platform/libcore/+/51cba155feefe3e47f99fbae2e166a796f5a388c/dalvik/src/main/java/dalvik/system/DexPathList.java
+    private static final class Type1{
+        private static void install(ClassLoader loader,
+                                    List<? extends File> additionalClassPathEntries,
+                                    File optimizedDirectory)
+                throws IllegalArgumentException, IllegalAccessException,
+                NoSuchFieldException, InvocationTargetException, NoSuchMethodException {
+            Field pathListField = findField(loader, "pathList");
+            Object dexPathList = pathListField.get(loader);
+            Method addDexPath = findMethod(dexPathList, "addDexPath", String.class, File.class);
+
+            for(File f:additionalClassPathEntries)
+                addDexPath.invoke(dexPathList, f, optimizedDirectory);
+        }
+        
+        private static boolean isApplicable(ClassLoader loader)
+                throws IllegalArgumentException, IllegalAccessException,
+                NoSuchFieldException, InvocationTargetException, NoSuchMethodException {
+            Field pathListField = findField(loader, "pathList");
+            Object dexPathList = pathListField.get(loader);
+            Method addDexPath = findMethod(dexPathList, "addDexPath", String.class, File.class);
+
+            return addDexPath!=null;
         }
     }
 
