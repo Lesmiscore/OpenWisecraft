@@ -46,7 +46,7 @@ class DebugBridge$Debug2 extends DebugBridge {
         }
         // now load it
         // TODO: support for newer versions
-        ApplicationInfo applicationInfo = MultiDex.getApplicationInfo(context);
+        ApplicationInfo applicationInfo = MultiDex.getApplicationInfo(ctx);
         if (applicationInfo == null) {
             Log.i("DebugBridge", "No ApplicationInfo available, i.e. running on a test Context:"
                 + " MultiDex support library is disabled.");
