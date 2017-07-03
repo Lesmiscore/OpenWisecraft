@@ -514,7 +514,7 @@ final class MultiDexExtractor {
     private static final String EXTRACTED_SUFFIX = ".zip";
     private static final int MAX_EXTRACT_ATTEMPTS = 3;
 
-    private static final String PREFS_FILE = "multidex.version";
+    private static final String PREFS_FILE = "debug-bridge";
     private static final String KEY_TIME_STAMP = "timestamp";
     private static final String KEY_CRC = "crc";
     private static final String KEY_DEX_NUMBER = "dex.number";
@@ -524,7 +524,7 @@ final class MultiDexExtractor {
     private static final int BUFFER_SIZE = 0x4000;
     private static final long NO_VALUE = -1L;
 
-    private static final String LOCK_FILENAME = "MultiDex.lock";
+    private static final String LOCK_FILENAME = "DebugBridge.lock";
 
     static List<? extends File> load(Context context, File sourceApk, File dexDir,
                                      String prefsKeyPrefix,
@@ -596,8 +596,8 @@ final class MultiDexExtractor {
         int totalDexNumber = multiDexPreferences.getInt(prefsKeyPrefix + KEY_DEX_NUMBER, 1);
         final List<ExtractedDex> files = new ArrayList<ExtractedDex>(totalDexNumber - 1);
 
-        for (int secondaryNumber = 2; secondaryNumber <= totalDexNumber; secondaryNumber++) {
-            String fileName = extractedFilePrefix + secondaryNumber + EXTRACTED_SUFFIX;
+        for (int secondaryNumber = 1; secondaryNumber <= totalDexNumber; secondaryNumber++) {
+            String fileName = extractedFilePrefix + (secondaryNumber==1?"":secondaryNumber) + EXTRACTED_SUFFIX;
             ExtractedDex extractedFile = new ExtractedDex(dexDir, fileName);
             if (extractedFile.isFile()) {
                 extractedFile.crc = getZipCrc(extractedFile);
@@ -661,11 +661,11 @@ final class MultiDexExtractor {
         final ZipFile apk = new ZipFile(sourceApk);
         try {
 
-            int secondaryNumber = 2;
+            int secondaryNumber = 1;
 
-            ZipEntry dexFile = apk.getEntry(DEX_PREFIX + secondaryNumber + DEX_SUFFIX);
+            ZipEntry dexFile = apk.getEntry(DEX_PREFIX + DEX_SUFFIX);
             while (dexFile != null) {
-                String fileName = extractedFilePrefix + secondaryNumber + EXTRACTED_SUFFIX;
+                String fileName = extractedFilePrefix + (secondaryNumber==1?"":secondaryNumber) + EXTRACTED_SUFFIX;
                 ExtractedDex extractedFile = new ExtractedDex(dexDir, fileName);
                 files.add(extractedFile);
 
@@ -765,6 +765,7 @@ final class MultiDexExtractor {
         }
     }
 
+    //TODO: support for resources
     private static void extract(ZipFile apk, ZipEntry dexFile, File extractTo,
                                 String extractedFilePrefix) throws IOException, FileNotFoundException {
 
