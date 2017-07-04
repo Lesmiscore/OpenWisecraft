@@ -21,8 +21,8 @@ import java.util.*;
 import java.util.regex.*;
 import java.util.zip.*;
 
-import static import com.nao20010128nao.Wisecraft.BuildConfig.*;
-import static import com.nao20010128nao.Wisecraft.misc.compat.BuildConfig.*;
+import static com.nao20010128nao.Wisecraft.BuildConfig.*;
+import static com.nao20010128nao.Wisecraft.misc.compat.BuildConfig.*;
 
 class DebugBridge$Debug2 extends DebugBridge {
 	boolean init=false;
