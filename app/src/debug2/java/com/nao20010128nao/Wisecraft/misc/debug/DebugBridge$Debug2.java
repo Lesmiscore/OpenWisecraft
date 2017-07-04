@@ -8,6 +8,7 @@ import android.util.*;
 import android.support.v7.preference.*;
 import com.annimon.stream.*;
 import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.R;
 import com.nao20010128nao.Wisecraft.activity.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.pref.*;
