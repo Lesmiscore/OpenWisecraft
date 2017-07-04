@@ -13,7 +13,7 @@ public abstract class DebugBridge{
     public abstract boolean isAvailable();
     public abstract void init(Context ctx);
     public abstract void openDebugActivity(Context ctx);
-    public abstract void addDebugMenus(List<Sextet<Integer, Integer, Consumer<Activity>, Consumer<Activity>, IDrawerItem, UUID>> list);
+    public abstract void addDebugMenus(SextetWalker<Integer, Integer, Consumer<Activity>, Consumer<Activity>, IDrawerItem, UUID> list);
     public abstract void addDebugInfos(Context ctx,PreferenceScreen preferences);
 
     @NonNull
@@ -39,7 +39,7 @@ public abstract class DebugBridge{
         @Override public boolean isAvailable() {return false;}
         @Override public void init(Context ctx) {}
         @Override public void openDebugActivity(Context ctx) {}
-        @Override public void addDebugMenus(List<Sextet<Integer, Integer, Consumer<Activity>, Consumer<Activity>, IDrawerItem, UUID>> list){}
+        @Override public void addDebugMenus(SextetWalker<Integer, Integer, Consumer<Activity>, Consumer<Activity>, IDrawerItem, UUID> list){}
         @Override public void addDebugInfos(Context ctx,PreferenceScreen preferences){}
     }
 }

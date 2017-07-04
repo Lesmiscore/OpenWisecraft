@@ -77,8 +77,8 @@ class DebugBridge$Debug2 extends DebugBridge {
     }
     
     @Override
-    public void addDebugMenus(List<Sextet<Integer, Integer, Consumer<Activity>, Consumer<Activity>, IDrawerItem, UUID>> list){
-        list.add(new Quintet(R.string.dbgMenu,R.drawable.ic_add_black_48dp,this::openDebugActivity,null,UUID.fromString("2ee5ea67-99b2-4f75-b7a8-19deaee2e4ed")));
+    public void addDebugMenus(SextetWalker<Integer, Integer, Consumer<Activity>, Consumer<Activity>, IDrawerItem, UUID> list){
+        list.add(new Sextet(R.string.dbgMenu,R.drawable.ic_add_black_48dp,this::openDebugActivity,null,UUID.fromString("2ee5ea67-99b2-4f75-b7a8-19deaee2e4ed")));
     }
     
     @Override
