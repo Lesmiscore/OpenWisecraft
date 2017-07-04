@@ -6,6 +6,7 @@ import android.content.pm.*;
 import android.os.*;
 import android.util.*;
 import android.support.v7.preference.*;
+import com.annimon.stream.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.activity.*;
 import com.nao20010128nao.Wisecraft.misc.*;
@@ -19,6 +20,9 @@ import java.nio.channels.*;
 import java.util.*;
 import java.util.regex.*;
 import java.util.zip.*;
+
+import static import com.nao20010128nao.Wisecraft.BuildConfig.*;
+import static import com.nao20010128nao.Wisecraft.misc.compat.BuildConfig.*;
 
 class DebugBridge$Debug2 extends DebugBridge {
 	boolean init=false;
@@ -37,7 +41,7 @@ class DebugBridge$Debug2 extends DebugBridge {
             // now we check CRC32 checksum
             CRC32 crc = new CRC32();
             Utils.readBytes(groovyDex, crc::update);
-            shouldExpandGroovy = crc.getValue() != BuildConfig.GROOVY_CRC32;
+            shouldExpandGroovy = crc.getValue() != GROOVY_CRC32;
         }
         if (shouldExpandGroovy) {
             // copy groovy into local
@@ -85,15 +89,14 @@ class DebugBridge$Debug2 extends DebugBridge {
     public void addDebugInfos(Context ctx,PreferenceScreen preferences){
         Context c = CompatUtils.wrapContextForPreference(ctx);
         List<Preference> buildData = new ArrayList<>();
-        buildData.add(new SimplePref(c, "Build ID",    BuildConfig.CI_BUILD_ID));
-        buildData.add(new SimplePref(c, "Build Ref",   BuildConfig.CI_BUILD_REF_NAME));
-        buildData.add(new SimplePref(c, "Runner ID",   BuildConfig.CI_RUNNER_ID));
-        buildData.add(new SimplePref(c, "Build Stage", BuildConfig.CI_BUILD_STAGE));
-        buildData.add(new SimplePref(c, "Build Name",  BuildConfig.CI_BUILD_NAME));
-        for (Preference pref : buildData) {
-            preferences.addPreference(pref);
-            pref.setVisible(true);
-        }
+        buildData.add(new SimplePref(c, "Build ID",    CI_BUILD_ID));
+        buildData.add(new SimplePref(c, "Build Ref",   CI_BUILD_REF_NAME));
+        buildData.add(new SimplePref(c, "Runner ID",   CI_RUNNER_ID));
+        buildData.add(new SimplePref(c, "Build Stage", CI_BUILD_STAGE));
+        buildData.add(new SimplePref(c, "Build Name",  CI_BUILD_NAME));
+        Stream.of(buildData)
+            .peek(preferences::addPreference)
+            .forEach(a->a.setVisible(true));
     }
 }
 // MultiDex
