@@ -1,5 +1,6 @@
 package com.nao20010128nao.Wisecraft.activity;
 
+import android.app.*;
 import android.content.*;
 import android.content.res.*;
 import android.graphics.*;
