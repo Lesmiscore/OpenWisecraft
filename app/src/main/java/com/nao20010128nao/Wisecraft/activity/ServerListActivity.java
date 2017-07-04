@@ -7,6 +7,7 @@ import android.graphics.*;
 import android.os.*;
 import android.support.design.widget.*;
 import android.support.v4.app.*;
+import android.support.v7.app.AlertDialog;
 import android.support.v4.content.*;
 import android.support.v4.util.Pair;
 import android.support.v4.view.*;
