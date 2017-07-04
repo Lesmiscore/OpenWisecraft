@@ -558,7 +558,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                     ProxyActivity.cont.stopService();
         }, null, null, UUID.fromString("5c0baf72-9a92-312d-ab33-062bdc3aa445")));//10
         
-        DebugBridge.getInstance().addDebugMenus(appMenu);
+        DebugBridge.getInstance().addDebugMenus((SextetWalker<Integer, Integer, Consumer<Activity>, Consumer<Activity>, IDrawerItem, UUID>)((Object)appMenu));
     }
 
     private void setupDrawer() {
