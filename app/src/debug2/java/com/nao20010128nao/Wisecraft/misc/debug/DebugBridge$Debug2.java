@@ -9,7 +9,7 @@ import android.support.v7.preference.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.activity.*;
 import com.nao20010128nao.Wisecraft.misc.*;
-import com.nao20010128nao.Wisecraft.pref.*;
+import com.nao20010128nao.Wisecraft.misc.pref.*;
 import com.mikepenz.materialdrawer.model.interfaces.*;
 import dalvik.system.*;
 
