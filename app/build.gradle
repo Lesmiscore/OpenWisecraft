@@ -16,9 +16,7 @@ android {
 		def where=Math.abs(rand.nextInt())%suffix.size()
 		return suffix[where]
 	}
-	def isEmptyStr={CharSequence str->
-        str == null || str.length() == 0
-    }
+	def isEmptyStr={str->!!str}
 	def generateVersionCode={String n,int p->
 		def bitWidth=4//shouldn't be changed from 4
 	
