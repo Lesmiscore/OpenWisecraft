@@ -22,7 +22,7 @@ import android.widget.ScrollView
 import android.widget.TextView
 import groovy.transform.CompileStatic
 
-class LogCatActivity extends AppCompatActivity {
+class DebugList extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
