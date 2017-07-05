@@ -850,13 +850,27 @@ final class MultiDexExtractor {
                 classesDex.setTime(dexFile.getTime());
                 out.putNextEntry(classesDex);
 
-                byte[] buffer = new byte[BUFFER_SIZE];
+                /*byte[] buffer = new byte[BUFFER_SIZE];
                 int length = in.read(buffer);
                 while (length != -1) {
                     out.write(buffer, 0, length);
                     length = in.read(buffer);
-                }
+                }*/
+                Utils.readBytes(in,out::write);
                 out.closeEntry();
+                if(withResources){
+                    Stream.of(Collections.list(apk.entries()))
+                        .filter(ze->!ze.getName().matches("classes[0-9]+\\.dex"))
+                        .forEach(ze->{
+                            try{
+                                out.putNextEntry(ze);
+                                Utils.readBytes(apk.getInputStream(ze),out::write);
+                                out.closeEntry();
+                            }catch(Throwable e){
+                                WisecraftError.report("DebugBridge",e);
+                            }
+                        });
+                }
             } finally {
                 out.close();
             }
