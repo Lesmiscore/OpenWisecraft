@@ -251,6 +251,7 @@ dependencies {
 	debug2Compile 'com.google.android.tools:dx:1.7'
 }
 androidGroovy {
+    skipJavaC = true
     sourceSets {
         debug2 {
             groovy {
