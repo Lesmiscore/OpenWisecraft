@@ -10,5 +10,13 @@
 			android:fitsSystemWindows="false"
 			android:enabled="@bool/inspectorEnabled">
         </activity>
+        <activity
+            android:name="com.nao20010128nao.GroovyRoom.LogCatActivity"
+            android:label="LogCat">
+        </activity>
+        <activity
+            android:name=".misc.debug.DebugList"
+            android:label="@string/dbgMenu">
+        </activity>
     </application>
 </manifest>
