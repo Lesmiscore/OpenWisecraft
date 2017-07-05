@@ -249,7 +249,15 @@ dependencies {
 	if(1)debug2Provided "org.codehaus.groovy:groovy:$groovyVersion:grooid"
 	//if(1)debug2Apk "org.codehaus.groovy:groovy:$groovyVersion:grooid"
 }
-
+androidGroovy {
+    sourceSets {
+        debug2 {
+            groovy {
+                srcDirs += 'src/main/java'
+            }
+        }
+    }
+}
 protobuf {
 	protoc {
 		artifact = 'com.google.protobuf:protoc:3.0.0'
