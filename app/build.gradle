@@ -139,7 +139,7 @@ android {
 	applicationVariants.all { variant ->
 		if (variant.buildType.name.equals("release")) {
         	variant.outputs.each { output ->
-            	System.println(output.outputFile.name)
+            	println(output.outputFile.name)
         	}
     	}
 	}
