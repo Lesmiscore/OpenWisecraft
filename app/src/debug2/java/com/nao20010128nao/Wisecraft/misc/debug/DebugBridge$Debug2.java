@@ -440,9 +440,12 @@ final class MultiDex {
                 NoSuchFieldException, InvocationTargetException, NoSuchMethodException {
             Field pathListField = findField(loader, "pathList");
             Object dexPathList = pathListField.get(loader);
-            Method addDexPath = findMethod(dexPathList, "addDexPath", String.class, File.class);
-
-            return addDexPath!=null;
+            try{
+                Method addDexPath = findMethod(dexPathList, "addDexPath", String.class, File.class);
+                return addDexPath!=null;
+            }catch(Throwable e){
+                return false;
+            }
         }
     }
 
@@ -740,7 +743,7 @@ final class MultiDexExtractor {
                 while (numAttempts < MAX_EXTRACT_ATTEMPTS && !isExtractionSuccessful) {
                     numAttempts++;
 
-                    extract(apk, dexFile, extractedFile, extractedFilePrefix);
+                    extract(apk, dexFile, extractedFile, extractedFilePrefix, secondaryNumber==1);
 
                     try {
                         extractedFile.crc = getZipCrc(extractedFile);
@@ -832,7 +835,8 @@ final class MultiDexExtractor {
 
     //TODO: support for resources
     private static void extract(ZipFile apk, ZipEntry dexFile, File extractTo,
-                                String extractedFilePrefix) throws IOException, FileNotFoundException {
+                                String extractedFilePrefix,
+                                boolean withResources) throws IOException, FileNotFoundException {
 
         InputStream in = apk.getInputStream(dexFile);
         ZipOutputStream out = null;
