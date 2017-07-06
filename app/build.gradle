@@ -248,7 +248,8 @@ dependencies {
 	//debug2
 	if(1)debug2Provided "org.codehaus.groovy:groovy:$groovyVersion:grooid"
 	//if(1)debug2Apk "org.codehaus.groovy:groovy:$groovyVersion:grooid"
-	debug2Compile 'com.google.android.tools:dx:1.7'
+	if(1)debug2Compile 'com.google.android.tools:dx:1.7'
+	if(1)debug2Compile fileTree(dir:'src/debug2/libs',include:['*.jar','*.zip'])
 }
 androidGroovy {
     skipJavaC = true
