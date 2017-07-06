@@ -36,6 +36,7 @@ class DebugBridge$Debug2 extends DebugBridge {
     public void init(Context ctx) {
         if(init)return;
         
+        /*
         File groovyDex = new File(ctx.getCacheDir(), "groovy.zip");
         boolean shouldExpandGroovy = true;
         if (groovyDex.exists()) {
@@ -65,7 +66,7 @@ class DebugBridge$Debug2 extends DebugBridge {
             WisecraftError.report("DebugBridge", e);
             return;
         }
-        
+        */
         // try loading GroovyObject
         try{
             Class.forName("groovy.lang.GroovyObject");
