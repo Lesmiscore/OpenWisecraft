@@ -255,8 +255,14 @@ androidGroovy {
     sourceSets {
         debug2 {
             groovy {
-                srcDirs = ['src/debug2/java','src/debug2/groovy']
+                srcDirs += 'src/debug2/groovy'
             }
+        }
+    }
+    options {
+        configure(groovyOptions) {
+            javaAnnotationProcessing = true
+            encoding = 'UTF-8'
         }
     }
 }
@@ -304,4 +310,9 @@ gradle.taskGraph.beforeTask { Task tfc ->
         }
     }
     */
+}
+tasks.whenTaskAdded { task ->
+  if (task.name == 'compileDebug2JavaWithJavac') {
+    task.enabled = false
+  }
 }
