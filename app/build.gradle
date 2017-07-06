@@ -311,8 +311,10 @@ gradle.taskGraph.beforeTask { Task tfc ->
     }
     */
 }
+/*
 tasks.whenTaskAdded { task ->
   if (task.name == 'compileDebug2JavaWithJavac') {
     task.enabled = false
   }
 }
+*/
