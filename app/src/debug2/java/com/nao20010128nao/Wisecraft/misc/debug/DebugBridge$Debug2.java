@@ -103,6 +103,7 @@ class DebugBridge$Debug2 extends DebugBridge {
             .forEach(a->a.setVisible(true));
     }
 }
+/*
 // MultiDex
 final class MultiDex {
 
@@ -803,9 +804,9 @@ final class MultiDexExtractor {
 
     private static SharedPreferences getMultiDexPreferences(Context context) {
         return context.getSharedPreferences(PREFS_FILE,
-                Build.VERSION.SDK_INT < 11 /* Build.VERSION_CODES.HONEYCOMB */
+                Build.VERSION.SDK_INT < 11 /* Build.VERSION_CODES.HONEYCOMB //
                         ? Context.MODE_PRIVATE
-                        : Context.MODE_PRIVATE | 0x0004 /* Context.MODE_MULTI_PROCESS */);
+                        : Context.MODE_PRIVATE | 0x0004 /* Context.MODE_MULTI_PROCESS //);
     }
 
     private static void prepareDexDir(File dexDir, final String extractedFilePrefix) {
@@ -851,12 +852,12 @@ final class MultiDexExtractor {
                 classesDex.setTime(dexFile.getTime());
                 out.putNextEntry(classesDex);
 
-                /*byte[] buffer = new byte[BUFFER_SIZE];
+                //byte[] buffer = new byte[BUFFER_SIZE];
                 int length = in.read(buffer);
                 while (length != -1) {
                     out.write(buffer, 0, length);
                     length = in.read(buffer);
-                }*/
+                }//
                 Utils.readBytes(in,out::write);
                 out.closeEntry();
                 if(withResources){
@@ -927,7 +928,7 @@ final class ZipUtil {
             throw new ZipException("File too short to be a zip file: " + raf.length());
         }
 
-        long stopOffset = scanOffset - 0x10000 /* ".ZIP file comment"'s max length */;
+        long stopOffset = scanOffset - 0x10000 // ".ZIP file comment"'s max length //;
         if (stopOffset < 0) {
             stopOffset = 0;
         }
@@ -975,3 +976,4 @@ final class ZipUtil {
         return crc.getValue();
     }
 }
+*/
