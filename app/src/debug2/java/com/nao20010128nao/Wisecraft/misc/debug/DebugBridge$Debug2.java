@@ -304,7 +304,7 @@ final class MultiDex {
         if (!files.isEmpty()) {
             if (Type1.isApplicable(loader)) {
                 Type1.install(loader, files, dexDir);
-            } else if (Build.VERSION.SDK_INT >= /*19*/23) {
+            } else if (Build.VERSION.SDK_INT >= /*19//23) {
                 V19.install(loader, files, dexDir);
             } else if (Build.VERSION.SDK_INT >= 14) {
                 V14.install(loader, files, dexDir);
@@ -804,7 +804,7 @@ final class MultiDexExtractor {
 
     private static SharedPreferences getMultiDexPreferences(Context context) {
         return context.getSharedPreferences(PREFS_FILE,
-                Build.VERSION.SDK_INT < 11 /* Build.VERSION_CODES.HONEYCOMB //
+                Build.VERSION.SDK_INT < 11 // Build.VERSION_CODES.HONEYCOMB //
                         ? Context.MODE_PRIVATE
                         : Context.MODE_PRIVATE | 0x0004 /* Context.MODE_MULTI_PROCESS //);
     }
