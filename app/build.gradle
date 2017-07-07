@@ -258,7 +258,7 @@ androidGroovy {
     sourceSets {
         debug2 {
             groovy {
-                srcDirs += 'src/debug2/groovy'
+                srcDirs += 'src/debug2/java'
             }
         }
     }
