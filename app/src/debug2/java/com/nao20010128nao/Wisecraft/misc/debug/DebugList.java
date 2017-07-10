@@ -16,10 +16,16 @@ public class DebugList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        getSupportFragmentManager().beginTransaction().
-            replace();
+        getSupportFragmentManager().beginTransaction()
+            .replace(android.R.id.content,new InternalFragment())
+            .commit();
         
         
+    }
+    
+    @Override
+    public void onBackPressed(){
+        finish();
     }
     
     public static class InternalFragment extends ViewHolderCatchablePreferenceFragment {
