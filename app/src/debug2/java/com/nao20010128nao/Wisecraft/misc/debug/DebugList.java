@@ -1,10 +1,10 @@
 package com.nao20010128nao.Wisecraft.misc.debug;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.*;
+import android.support.v7.app.*;
 import android.support.v7.preference.*;
-import android.os.Bundle;
-import android.widget.ScrollView;
-import android.widget.TextView;
+import android.os.*;
+import android.widget.*;
 import com.annimon.stream.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
@@ -22,8 +22,6 @@ public class DebugList extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
             .replace(android.R.id.content,new InternalFragment())
             .commit();
-        
-        
     }
     
     @Override
