@@ -5,8 +5,11 @@ import android.support.v7.preference.*;
 import android.os.Bundle;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import com.annimon.stream.*;
 import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.pref.*;
+import java.util.*;
 
 import static com.nao20010128nao.Wisecraft.misc.compat.BuildConfig.*;
 
@@ -31,9 +34,10 @@ public class DebugList extends AppCompatActivity {
     public static class InternalFragment extends ViewHolderCatchablePreferenceFragment {
          @Override
          public void onCreatePreferences(Bundle p1, String p2) {
-             DebugBridge.getInstance().addDebugInfos(getContext(),getPreferenceScreen());
+             PreferenceScreen preferences=getPreferenceScreen();
+             DebugBridge.getInstance().addDebugInfos(getContext(),preferences);
              
-             Context c = CompatUtils.wrapContextForPreference(getContext());
+             Context c = Utils.wrapContextForPreference(getContext());
              List<Preference> components = new ArrayList<>();
              components.add(new SimplePref(c, "Build ID",    CI_BUILD_ID));
              components.add(new SimplePref(c, "Build Ref",   CI_BUILD_REF_NAME));
