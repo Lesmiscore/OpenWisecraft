@@ -79,7 +79,7 @@ class DebugBridge$Debug2 extends DebugBridge {
 
     @Override
     public void openDebugActivity(Context ctx) {
-        Intent intent=new Intent().setClassName(ctx.getPackageName(),"com.nao20010128nao.Wisecraft.misc.debug.DebugList");
+        Intent intent=new Intent(ctx,DebugList.class);
         if(!(ctx instanceof Activity))intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         ctx.startActivity(intent);
     }
