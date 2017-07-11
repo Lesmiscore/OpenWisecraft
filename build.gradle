@@ -252,7 +252,7 @@ task("convertConfigSlurperToBuildscript")<<{
     new File(rootDir,"test.gitlab-ci.yml").text=json.toPrettyString()
 }
 
-task("convertConfigSlurperToBuildscript")<<{
+task("convertConfigSlurperToBuildscript2")<<{
     def gitlabCi=new File(rootDir,"ci/scripts/gitlab-ci2.groovy").toURI().toURL()
     def gitlabCiConfig=new ConfigSlurper().parse(gitlabCi)
     def json=new JsonBuilder()
