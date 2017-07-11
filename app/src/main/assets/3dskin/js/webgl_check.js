@@ -7,7 +7,7 @@
         } catch (e) {
             return false;
         }
-    })()&(function () {
+    })()&&(function () {
         try {
             new THREE.WebGLRenderer();
             return true;
