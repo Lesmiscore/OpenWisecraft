@@ -16,7 +16,7 @@ mkdir binaries
 cd binaries
 wget -q -O compiler.zip http://dl.google.com/closure-compiler/compiler-latest.zip
 unzip compiler.zip
-TMP=`ls -1 *.jar`
+TMP=`ls -1 *.jar | head -n 1`
 export CLOSURE_COMPILER_JAR=`realpath $TMP`
 cd $CURRENT_DIR
 
