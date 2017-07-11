@@ -252,8 +252,16 @@ task("convertConfigSlurperToBuildscript")<<{
     new File(rootDir,"test.gitlab-ci.yml").text=json.toPrettyString()
 }
 
+task("convertConfigSlurperToBuildscript")<<{
+    def gitlabCi=new File(rootDir,"ci/scripts/gitlab-ci2.groovy").toURI().toURL()
+    def gitlabCiConfig=new ConfigSlurper().parse(gitlabCi)
+    def json=new JsonBuilder()
+    json gitlabCiConfig
+    new File(rootDir,"test2.gitlab-ci.yml").text=json.toPrettyString()
+}
+
 task("beforeBuild"){
-	dependsOn "convertConfigSlurperToBuildscript","safeDeleteDevXml"
+	dependsOn "convertConfigSlurperToBuildscript","convertConfigSlurperToBuildscript2","safeDeleteDevXml"
 }
 
 ProductFlavor.metaClass.jackOptions={Action<JackOptions> action->/*no-op*/}
