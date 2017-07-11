@@ -1,5 +1,5 @@
-(function(){
-   var supported = (function () {
+(function(xhr,supported){
+   supported = (function () {
         try {
             var canvas = document.createElement('canvas');
             var webGLContext = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
@@ -14,10 +14,9 @@
         } catch ( e ) {
             return false;
         }
-    })()
+    })();
     
-    var xhr = new XMLHttpRequest();
     xhr.onsuccess=xhr.onerror=function(){};
     xhr.open("GET","/xhr/webgl_"+(supported?"available":"bad"),true);
     xhr.send();
-})()
+})(new XMLHttpRequest());
