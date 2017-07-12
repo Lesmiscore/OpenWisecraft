@@ -61,7 +61,8 @@ app.each{
     this["app$it".toString()].artifacts.paths=artf
     this["app$it".toString()].artifacts.when='always'
     this["app$it".toString()].stage='app'
-    this["app$it".toString()].variables.TASK=":app:assemble$it".toString()
+    this["app$it".toString()].variables.TASKS=":app:assemble$it".toString()
+    this["app$it".toString()].variables.BRANCH=branch
     this["app$it".toString()].dependencies=[]
 }
 def pre=["","Shrink"]
@@ -71,7 +72,8 @@ pre.each{
     this["app${it}Pre".toString()].artifacts.paths=artf
     this["app${it}Pre".toString()].artifacts.when='always'
     this["app${it}Pre".toString()].stage='app'
-    this["app${it}Pre".toString()].variables.TASK=":app:assemble${it}Pre".toString()
+    this["app${it}Pre".toString()].variables.TASKS=":app:assemble${it}Pre".toString()
+    this["app${it}Pre".toString()].variables.BRANCH=branch
     this["app${it}Pre".toString()].dependencies=[]
 }
         
@@ -85,7 +87,8 @@ rcon.each{kv->
        this["rcon$module$build".toString()].artifacts.paths=artf
        this["rcon$module$build".toString()].artifacts.when='always'
        this["rcon$module$build".toString()].stage='rcon'
-       this["rcon$module$build".toString()].variables.TASK=":rcon${module}:assemble$build".toString()
+       this["rcon$module$build".toString()].variables.TASKS=":rcon${module}:assemble$build".toString()
+       this["rcon$module$build".toString()].variables.BRANCH=branch
        this["rcon$module$build".toString()].dependencies=[]
     }
 }
