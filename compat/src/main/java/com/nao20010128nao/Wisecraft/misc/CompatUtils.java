@@ -10,6 +10,7 @@ import android.text.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
+import com.annimon.stream.Stream;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 
 import java.io.*;
@@ -210,12 +211,9 @@ public class CompatUtils {
     }
 
     public static String randomText(int len) {
-        StringBuilder sb = new StringBuilder(len * 2);
         byte[] buf = new byte[len];
         new SecureRandom().nextBytes(buf);
-        for (byte b : buf)
-            sb.append(Character.forDigit(b >> 4 & 0xF, 16)).append(Character.forDigit(b & 0xF, 16));
-        return sb.toString();
+        return toHex(buf);
     }
 
     public static int getVersionCode(Context context) {
@@ -299,10 +297,10 @@ public class CompatUtils {
     }
 
     public static String toHex(byte[] buf) {
-        StringBuilder sb = new StringBuilder();
-        for (byte b : buf)
-            sb.append(Character.forDigit(b >> 4 & 0xF, 16)).append(Character.forDigit(b & 0xF, 16));
-        return sb.toString();
+        return toStream(buf)
+                .map(b->Arrays.asList(Character.forDigit(b >> 4 & 0xF, 16),Character.forDigit(b & 0xF, 16)))
+                .flatMap(Stream::of)
+                .reduce("",(a,b)->a+b);
     }
 
     public static <T> T requireNonNull(T obj) {
@@ -407,5 +405,16 @@ public class CompatUtils {
 
         }
         return null;
+    }
+
+    public static Stream<Byte> toStream(byte[] bytes){
+        List<Byte> list=new ArrayList<>(bytes.length);
+        for(byte b:bytes)list.add(b);
+        return Stream.of(list);
+    }
+    public static Stream<Character> toStream(char[] bytes){
+        List<Character> list=new ArrayList<>(bytes.length);
+        for(char b:bytes)list.add(b);
+        return Stream.of(list);
     }
 }

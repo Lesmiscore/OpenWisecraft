@@ -41,12 +41,7 @@ public class HandledPreferenceCompat
     }
 
     private String getKeySafety() {
-        try {
-            return getKey();
-        } catch (Throwable var1_2) {
-            //var1_2.printStackTrace();
-            return null;
-        }
+        return getKey();
     }
 
     private String getSummarySafety() {
@@ -77,16 +72,18 @@ public class HandledPreferenceCompat
     /*
      * Enabled aggressive block sorting
      */
-    public void setOnClickListener(OnClickListener onClickListener) {
+    public HandledPreferenceCompat setOnClickListener(OnClickListener onClickListener) {
         clickListener = onClickListener == null ? defHandler : onClickListener;
+        return this;
     }
 
-    public void setOnClickListener(HandledPreference.OnClickListener onClickListener) {
+    public HandledPreferenceCompat setOnClickListener(HandledPreference.OnClickListener onClickListener) {
         clickListener = onClickListener == null ? defHandler : onClickListener;
+        return this;
     }
 
-    public static interface OnClickListener extends HandledPreference.OnClickListener {
-        public void onClick(String var1, String var2, String var3);
+    public interface OnClickListener extends HandledPreference.OnClickListener {
+        void onClick(String key, String title, String summary);
     }
 
     private static class NullClickListener implements OnClickListener {

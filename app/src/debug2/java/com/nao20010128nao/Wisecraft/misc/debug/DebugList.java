@@ -6,6 +6,7 @@ import android.support.v7.preference.*;
 import android.os.*;
 import android.widget.*;
 import com.annimon.stream.*;
+import com.nao20010128nao.ToolBox.HandledPreferenceCompat;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.pref.*;
@@ -33,7 +34,7 @@ public class DebugList extends AppCompatActivity {
          @Override
          public void onCreatePreferences(Bundle p1, String p2) {
              PreferenceScreen preferences=getPreferenceScreen();
-             DebugBridge.getInstance().addDebugInfos(getContext(),preferences);
+             //DebugBridge.getInstance().addDebugInfos(getContext(),preferences);
              
              Context c = Utils.wrapContextForPreference(getContext());
              List<Preference> components = new ArrayList<>();
