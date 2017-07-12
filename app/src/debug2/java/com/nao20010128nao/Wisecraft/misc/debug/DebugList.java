@@ -35,7 +35,7 @@ public class DebugList extends AppCompatActivity {
          public void onCreatePreferences(Bundle p1, String p2) {
              Context c = Utils.wrapContextForPreference(getContext());
              PreferenceScreen preferences=getPreferenceManager().createPreferenceScreen(c);
-             getPreferenceManager().setPreferences(preferences);
+             //getPreferenceManager().setPreferences(preferences);
              DebugBridge.getInstance().addDebugInfos(getContext(),preferences);
              
              List<Preference> components = new ArrayList<>();
