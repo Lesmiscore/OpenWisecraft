@@ -33,10 +33,11 @@ public class DebugList extends AppCompatActivity {
     public static class InternalFragment extends ViewHolderCatchablePreferenceFragment {
          @Override
          public void onCreatePreferences(Bundle p1, String p2) {
-             PreferenceScreen preferences=getPreferenceScreen();
-             //DebugBridge.getInstance().addDebugInfos(getContext(),preferences);
-             
              Context c = Utils.wrapContextForPreference(getContext());
+             PreferenceScreen preferences=getPreferenceManager().createPreferenceScreen(c);
+             getPreferenceManager().setPreferences(preferences);
+             DebugBridge.getInstance().addDebugInfos(getContext(),preferences);
+             
              List<Preference> components = new ArrayList<>();
              components.add(new SimplePref(c, "Build ID",    CI_BUILD_ID));
              components.add(new SimplePref(c, "Build Ref",   CI_BUILD_REF_NAME));
@@ -44,6 +45,7 @@ public class DebugList extends AppCompatActivity {
              components.add(new SimplePref(c, "Build Stage", CI_BUILD_STAGE));
              components.add(new SimplePref(c, "Build Name",  CI_BUILD_NAME));
              Stream.of(components)
+                 .peek(p-> p.setSummary(p.getSummary()+" - 2"))
                  .peek(preferences::addPreference)
                  .forEach(a->a.setVisible(true));
          }

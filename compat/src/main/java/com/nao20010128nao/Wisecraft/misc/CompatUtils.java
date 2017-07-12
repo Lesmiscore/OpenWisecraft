@@ -298,14 +298,14 @@ public class CompatUtils {
 
     public static String toHex(byte[] buf) {
         return toStream(buf)
-                .map(b->
-                        Arrays.asList(
-                                Character.forDigit(b >> 4 & 0xF, 16),
-                                Character.forDigit(b & 0xF, 16)
-                        )
+            .map(
+                b->Arrays.asList(
+                    Character.forDigit(b >> 4 & 0xF, 16),
+                    Character.forDigit(b & 0xF, 16)
                 )
-                .flatMap(Stream::of)
-                .reduce("",(a,b)->a+b);
+            )
+            .flatMap(Stream::of)
+            .reduce("",(a,b)->a+b);
     }
 
     public static <T> T requireNonNull(T obj) {
