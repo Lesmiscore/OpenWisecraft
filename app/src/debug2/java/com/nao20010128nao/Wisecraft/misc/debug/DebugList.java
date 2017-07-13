@@ -36,18 +36,25 @@ public class DebugList extends AppCompatActivity {
              Context c = Utils.wrapContextForPreference(getContext());
              PreferenceScreen preferences=getPreferenceManager().createPreferenceScreen(c);
              setPreferenceScreen(preferences);
+             
              DebugBridge.getInstance().addDebugInfos(getContext(),preferences);
              
              List<Preference> components = new ArrayList<>();
-             components.add(new SimplePref(c, "Build ID",    CI_BUILD_ID));
-             components.add(new SimplePref(c, "Build Ref",   CI_BUILD_REF_NAME));
-             components.add(new SimplePref(c, "Runner ID",   CI_RUNNER_ID));
-             components.add(new SimplePref(c, "Build Stage", CI_BUILD_STAGE));
-             components.add(new SimplePref(c, "Build Name",  CI_BUILD_NAME));
+             // components to add
+             buildData.add(new SimplePref(c, "Groovy Availability (classes3.dex)", testGroovy()?"Yes":"No"));
+             buildData.add(new HandledPreferenceCompat(c).title("LogCat").onClick(a->{}));
              Stream.of(components)
-                 .peek(p-> p.setSummary(p.getSummary()+" - 2"))
                  .peek(preferences::addPreference)
                  .forEach(a->a.setVisible(true));
+         }
+         
+         boolean testGroovy(){
+             try{
+                 Class.forName("groovy.lang.GroovyObject");
+                 return true;
+             }catch(Throwable e){
+                 return false;
+             }
          }
     }
 }

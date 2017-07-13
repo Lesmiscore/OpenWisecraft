@@ -14,6 +14,7 @@
 package com.nao20010128nao.ToolBox;
 
 import android.view.*;
+import com.annimon.stream.*;
 
 public class HandledPreferenceCompat
         extends NormalButtonPreferenceCompat {
@@ -69,9 +70,6 @@ public class HandledPreferenceCompat
         clickListener.onClick(getKeySafety(), getTitleSafety(), getSummarySafety());
     }
 
-    /*
-     * Enabled aggressive block sorting
-     */
     public HandledPreferenceCompat setOnClickListener(OnClickListener onClickListener) {
         clickListener = onClickListener == null ? defHandler : onClickListener;
         return this;
@@ -79,6 +77,30 @@ public class HandledPreferenceCompat
 
     public HandledPreferenceCompat setOnClickListener(HandledPreference.OnClickListener onClickListener) {
         clickListener = onClickListener == null ? defHandler : onClickListener;
+        return this;
+    }
+
+    public HandledPreferenceCompat onClick(OnClickListener onClickListener) {
+        clickListener = onClickListener == null ? defHandler : onClickListener;
+        return this;
+    }
+    
+    public HandledPreferenceCompat onClick(Consumer<Void> onClickListener) {
+        return onClick((a,b,c) -> onClickListener.accept(null));
+    }
+
+    public HandledPreferenceCompat title(CharSequence text) {
+        setTitle(text);
+        return this;
+    }
+    
+    public HandledPreferenceCompat summary(CharSequence text) {
+        setSummary(text);
+        return this;
+    }
+    
+    public HandledPreferenceCompat key(String text) {
+        setKey(text);
         return this;
     }
 
