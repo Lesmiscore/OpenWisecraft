@@ -14,7 +14,7 @@
 package com.nao20010128nao.ToolBox;
 
 import android.view.*;
-import com.annimon.stream.*;
+import com.annimon.stream.function.*;
 
 public class HandledPreferenceCompat
         extends NormalButtonPreferenceCompat {
