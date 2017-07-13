@@ -931,4 +931,35 @@ public class Utils extends PingerUtils {
             return false;
         }
     }
+    public static boolean readLines(Readable f,Consumer<String> handler){
+        try {
+            CharStreams.readLines(f, new LineProcessor<Void>() {
+                @Override
+                public boolean processLine(String line) throws IOException {
+                    handler.process(line);
+                    return true;
+                }
+
+                @Override
+                public Void getResult() {
+                    return null;
+                }
+            });
+            return true;
+        } catch (IOException e) {
+            WisecraftError.report("Utils",e);
+            return false;
+        }
+    }
+    public static boolean readLines(InputStream f,Consumer<String> handler){
+        return readLines(new InputStreamReader(f),handler);
+    }
+    public static <R> R barrier(ThrowableFunction<R> func){
+        try {
+            return func.call();
+        } catch (Throwable e) {
+            WisecraftError.report("Utils",e);
+            return null;
+        }
+    }
 }

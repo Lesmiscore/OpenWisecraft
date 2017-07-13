@@ -20,9 +20,11 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ScrollView
 import android.widget.TextView
+import com.nao20010128nao.Wisecraft.R
 import groovy.transform.CompileStatic
 
-class LogCatActivity extends AppCompatActivity {
+@Deprecated
+class LogCatActivity_ extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

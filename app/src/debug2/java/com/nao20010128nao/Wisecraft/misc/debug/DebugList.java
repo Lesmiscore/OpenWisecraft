@@ -6,6 +6,7 @@ import android.support.v7.preference.*;
 import android.os.*;
 import android.widget.*;
 import com.annimon.stream.*;
+import com.nao20010128nao.GroovyRoom.LogCatActivity;
 import com.nao20010128nao.ToolBox.HandledPreferenceCompat;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
@@ -42,7 +43,9 @@ public class DebugList extends AppCompatActivity {
              List<Preference> components = new ArrayList<>();
              // components to add
              components.add(new SimplePref(c, "Groovy Availability (classes3.dex)", testGroovy()?"Yes":"No"));
-             components.add(new HandledPreferenceCompat(c).title("LogCat").onClick(a->{}));
+             components.add(new HandledPreferenceCompat(c)
+                 .title("LogCat")
+                 .onClick(a->startActivity(new Intent(getContext(), LogCatActivity.class))));
              Stream.of(components)
                  .peek(preferences::addPreference)
                  .forEach(a->a.setVisible(true));
