@@ -41,8 +41,8 @@ public class DebugList extends AppCompatActivity {
              
              List<Preference> components = new ArrayList<>();
              // components to add
-             buildData.add(new SimplePref(c, "Groovy Availability (classes3.dex)", testGroovy()?"Yes":"No"));
-             buildData.add(new HandledPreferenceCompat(c).title("LogCat").onClick(a->{}));
+             components.add(new SimplePref(c, "Groovy Availability (classes3.dex)", testGroovy()?"Yes":"No"));
+             components.add(new HandledPreferenceCompat(c).title("LogCat").onClick(a->{}));
              Stream.of(components)
                  .peek(preferences::addPreference)
                  .forEach(a->a.setVisible(true));
