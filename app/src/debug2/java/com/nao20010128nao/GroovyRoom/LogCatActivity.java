@@ -23,7 +23,8 @@ public class LogCatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_log_cat);
         TextView log= (TextView) findViewById(R.id.logcat);
         ScrollView scroll= (ScrollView) log.getParent();
-
+        
+        log.setText("");
         new Thread(()->{
             Process process=Utils.barrier(new ProcessBuilder()
                 .command("logcat")
