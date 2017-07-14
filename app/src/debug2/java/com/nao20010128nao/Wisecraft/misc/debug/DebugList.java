@@ -6,11 +6,12 @@ import android.support.v7.preference.*;
 import android.os.*;
 import android.widget.*;
 import com.annimon.stream.*;
-import com.nao20010128nao.GroovyRoom.LogCatActivity;
-import com.nao20010128nao.ToolBox.HandledPreferenceCompat;
+import com.nao20010128nao.GroovyRoom.*;
+import com.nao20010128nao.ToolBox.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.pref.*;
+import com.nao20010128nao.Wisecraft.widget.*;
 import java.util.*;
 
 import static com.nao20010128nao.Wisecraft.misc.compat.BuildConfig.*;
@@ -46,6 +47,9 @@ public class DebugList extends AppCompatActivity {
              components.add(new HandledPreferenceCompat(c)
                  .title("LogCat")
                  .onClick(a->startActivity(new Intent(getContext(), LogCatActivity.class))));
+             components.add(new HandledPreferenceCompat(c)
+                 .title("Widget State Inspector")
+                 .onClick(a->startActivity(new Intent(getContext(), WidgetStateInspector.class))));
              Stream.of(components)
                  .peek(preferences::addPreference)
                  .forEach(a->a.setVisible(true));
