@@ -25,6 +25,4 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        app:layoutManager="LinearLayoutManager"
-        tools:context="com.nao20010128nao.GroovyRoom.settings.SettingListActivity"
-        tools:listitem="@layout/setting_list_content"/>
+        app:layoutManager="LinearLayoutManager"/>

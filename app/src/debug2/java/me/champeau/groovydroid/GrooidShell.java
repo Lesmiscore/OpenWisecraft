@@ -16,11 +16,9 @@
 
 package me.champeau.groovydroid;
 
-import android.os.Build;
 import android.util.Log;
 
 import com.android.dx.Version;
-import com.android.dx.cf.direct.DirectClassFile;
 import com.android.dx.dex.DexOptions;
 import com.android.dx.dex.cf.CfOptions;
 import com.android.dx.dex.cf.CfTranslator;
@@ -28,7 +26,7 @@ import com.android.dx.dex.code.PositionList;
 import com.android.dx.dex.file.ClassDefItem;
 import com.android.dx.dex.file.DexFile;
 
-import org.codehaus.groovy.control.BytecodeProcessor;
+import com.nao20010128nao.Wisecraft.misc.*;
 import org.codehaus.groovy.control.CompilerConfiguration;
 
 import java.io.ByteArrayOutputStream;
@@ -77,22 +75,25 @@ public class GrooidShell {
         cfOptions.statistics = false;
     }
 
+    public EvalResult evaluate(String scriptText, EvalProgress progress) throws Throwable{
+        return evaluateWithConfig(scriptText, progress,null);
+    }
 
-    public EvalResult evaluate(String scriptText,EvalProgress progress) throws Throwable{
-        progress.onProgress(EvalProgressCategory.COMPILING);
+    public EvalResult evaluateWithConfig(String scriptText, EvalProgress progress, Consumer<CompilerConfiguration> cfgMod) throws Throwable{
+        if(progress!=null)
+            progress.onProgress(EvalProgressCategory.COMPILING);
         long sd = System.nanoTime();
         final Set<String> classNames = new LinkedHashSet<String>();
         final DexFile dexFile = new DexFile(dexOptions);
         CompilerConfiguration config = new CompilerConfiguration();
-        config.setBytecodePostprocessor(new BytecodeProcessor() {
-            @Override
-            public byte[] processBytecode(String s, byte[] bytes) {
-                //ClassDefItem classDefItem = CfTranslator.translate(new DirectClassFile(bytes, s+".class", false), bytes, cfOptions, dexOptions, dexFile);
-                ClassDefItem classDefItem = CfTranslator.translate(s+".class", bytes, cfOptions, dexOptions);
-                dexFile.add(classDefItem);
-                classNames.add(s);
-                return bytes;
-            }
+        if(cfgMod!=null)
+            cfgMod.process(config);
+        config.setBytecodePostprocessor((s, bytes) -> {
+            //ClassDefItem classDefItem = CfTranslator.translate(new DirectClassFile(bytes, s+".class", false), bytes, cfOptions, dexOptions, dexFile);
+            ClassDefItem classDefItem = CfTranslator.translate(s+".class", bytes, cfOptions, dexOptions);
+            dexFile.add(classDefItem);
+            classNames.add(s);
+            return bytes;
         });
 
         GrooidClassLoader gcl = new GrooidClassLoader(this.classLoader, config);
@@ -110,7 +111,8 @@ public class GrooidShell {
             throw e;
         }
 
-        progress.onProgress(EvalProgressCategory.DEXING);
+        if(progress!=null)
+            progress.onProgress(EvalProgressCategory.DEXING);
         Map<String, Class> classes = defineDynamic(classNames, dalvikBytecode);
         long compilationTime = System.nanoTime()-sd;
         long execTime = 0;
