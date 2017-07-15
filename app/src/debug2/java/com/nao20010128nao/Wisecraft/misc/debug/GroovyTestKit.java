@@ -101,7 +101,7 @@ public class GroovyTestKit extends AppCompatActivity{
     }
 
     class GTKBinding extends Binding{
-        private Map<String,Object> pinned= Maps.newHashMap();
+        private final Map<String,Object> pinned= Maps.newHashMap();
 
         @Override
         public void setProperty(String property, Object newValue) {

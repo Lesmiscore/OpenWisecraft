@@ -1,0 +1,407 @@
+{
+    "image": "nao20010128nao/android-build:latest",
+    "before_script": [
+        "chmod a+x ./ci/*",
+        "source ./ci/prepare.sh"
+    ],
+    "stages": [
+        "app",
+        "rcon",
+        "postBuild"
+    ],
+    "appDebugShksknvwr": {
+        "script": [
+            "gradle safeDeleteDevXml $TASK --info --stacktrace | tee -a build-$CI_BUILD_NAME.log > /dev/null",
+            "mv */build/outputs/apk/*.apk .",
+            "./ci/packageInformations.sh"
+        ],
+        "artifacts": {
+            "paths": [
+                "*.apk",
+                "build-*.log",
+                "powof2.txt",
+                "*/build/outputs/aar/*",
+                "tree-*.log",
+                "*/build/outputs/mapping/*/*.txt",
+                "*/build/generated/source/*",
+                "autogen-*.*"
+            ],
+            "when": "always"
+        },
+        "stage": "app",
+        "variables": {
+            "TASK": ":app:assembleDebug"
+        },
+        "dependencies": [
+            
+        ]
+    },
+    "appDebug2Shksknvwr": {
+        "script": [
+            "gradle safeDeleteDevXml $TASK --info --stacktrace | tee -a build-$CI_BUILD_NAME.log > /dev/null",
+            "mv */build/outputs/apk/*.apk .",
+            "./ci/packageInformations.sh"
+        ],
+        "artifacts": {
+            "paths": [
+                "*.apk",
+                "build-*.log",
+                "powof2.txt",
+                "*/build/outputs/aar/*",
+                "tree-*.log",
+                "*/build/outputs/mapping/*/*.txt",
+                "*/build/generated/source/*",
+                "autogen-*.*"
+            ],
+            "when": "always"
+        },
+        "stage": "app",
+        "variables": {
+            "TASK": ":app:assembleDebug2"
+        },
+        "dependencies": [
+            
+        ]
+    },
+    "appDebug2TestObsShksknvwr": {
+        "script": [
+            "gradle safeDeleteDevXml $TASK --info --stacktrace | tee -a build-$CI_BUILD_NAME.log > /dev/null",
+            "mv */build/outputs/apk/*.apk .",
+            "./ci/packageInformations.sh"
+        ],
+        "artifacts": {
+            "paths": [
+                "*.apk",
+                "build-*.log",
+                "powof2.txt",
+                "*/build/outputs/aar/*",
+                "tree-*.log",
+                "*/build/outputs/mapping/*/*.txt",
+                "*/build/generated/source/*",
+                "autogen-*.*"
+            ],
+            "when": "always"
+        },
+        "stage": "app",
+        "variables": {
+            "TASK": ":app:assembleDebug2TestObs"
+        },
+        "dependencies": [
+            
+        ]
+    },
+    "appPgShksknvwr": {
+        "script": [
+            "gradle safeDeleteDevXml $TASK --info --stacktrace | tee -a build-$CI_BUILD_NAME.log > /dev/null",
+            "mv */build/outputs/apk/*.apk .",
+            "./ci/packageInformations.sh"
+        ],
+        "artifacts": {
+            "paths": [
+                "*.apk",
+                "build-*.log",
+                "powof2.txt",
+                "*/build/outputs/aar/*",
+                "tree-*.log",
+                "*/build/outputs/mapping/*/*.txt",
+                "*/build/generated/source/*",
+                "autogen-*.*"
+            ],
+            "when": "always"
+        },
+        "stage": "app",
+        "variables": {
+            "TASK": ":app:assemblePg"
+        },
+        "dependencies": [
+            
+        ]
+    },
+    "appPgUltShksknvwr": {
+        "script": [
+            "gradle safeDeleteDevXml $TASK --info --stacktrace | tee -a build-$CI_BUILD_NAME.log > /dev/null",
+            "mv */build/outputs/apk/*.apk .",
+            "./ci/packageInformations.sh"
+        ],
+        "artifacts": {
+            "paths": [
+                "*.apk",
+                "build-*.log",
+                "powof2.txt",
+                "*/build/outputs/aar/*",
+                "tree-*.log",
+                "*/build/outputs/mapping/*/*.txt",
+                "*/build/generated/source/*",
+                "autogen-*.*"
+            ],
+            "when": "always"
+        },
+        "stage": "app",
+        "variables": {
+            "TASK": ":app:assemblePgUlt"
+        },
+        "dependencies": [
+            
+        ]
+    },
+    "appPgExperimentalShksknvwr": {
+        "script": [
+            "gradle safeDeleteDevXml $TASK --info --stacktrace | tee -a build-$CI_BUILD_NAME.log > /dev/null",
+            "mv */build/outputs/apk/*.apk .",
+            "./ci/packageInformations.sh"
+        ],
+        "artifacts": {
+            "paths": [
+                "*.apk",
+                "build-*.log",
+                "powof2.txt",
+                "*/build/outputs/aar/*",
+                "tree-*.log",
+                "*/build/outputs/mapping/*/*.txt",
+                "*/build/generated/source/*",
+                "autogen-*.*"
+            ],
+            "when": "always"
+        },
+        "stage": "app",
+        "variables": {
+            "TASK": ":app:assemblePgExperimental"
+        },
+        "dependencies": [
+            
+        ]
+    },
+    "appReleaseShksknvwr": {
+        "script": [
+            "gradle safeDeleteDevXml $TASK --info --stacktrace | tee -a build-$CI_BUILD_NAME.log > /dev/null",
+            "mv */build/outputs/apk/*.apk .",
+            "./ci/packageInformations.sh"
+        ],
+        "artifacts": {
+            "paths": [
+                "*.apk",
+                "build-*.log",
+                "powof2.txt",
+                "*/build/outputs/aar/*",
+                "tree-*.log",
+                "*/build/outputs/mapping/*/*.txt",
+                "*/build/generated/source/*",
+                "autogen-*.*"
+            ],
+            "when": "always"
+        },
+        "stage": "app",
+        "variables": {
+            "TASK": ":app:assembleRelease"
+        },
+        "dependencies": [
+            
+        ]
+    },
+    "appShrinkReleaseShksknvwr": {
+        "script": [
+            "gradle safeDeleteDevXml $TASK --info --stacktrace | tee -a build-$CI_BUILD_NAME.log > /dev/null",
+            "mv */build/outputs/apk/*.apk .",
+            "./ci/packageInformations.sh"
+        ],
+        "artifacts": {
+            "paths": [
+                "*.apk",
+                "build-*.log",
+                "powof2.txt",
+                "*/build/outputs/aar/*",
+                "tree-*.log",
+                "*/build/outputs/mapping/*/*.txt",
+                "*/build/generated/source/*",
+                "autogen-*.*"
+            ],
+            "when": "always"
+        },
+        "stage": "app",
+        "variables": {
+            "TASK": ":app:assembleShrinkRelease"
+        },
+        "dependencies": [
+            
+        ]
+    },
+    "appPreShksknvwr": {
+        "script": [
+            "DIR=`cat ./app/build.gradle | grep \"def preNum=\"`",
+            "DIR=${DIR% //*}",
+            "DIR=${DIR#*=}",
+            "if [ $DIR != \"0\" ]; then gradle safeDeleteDevXml $TASK --info --stacktrace | tee -a build-$CI_BUILD_NAME.log > /dev/null; mv */build/outputs/apk/*.apk . ;./ci/packageInformations.sh ; fi"
+        ],
+        "artifacts": {
+            "paths": [
+                "*.apk",
+                "build-*.log",
+                "powof2.txt",
+                "*/build/outputs/aar/*",
+                "tree-*.log",
+                "*/build/outputs/mapping/*/*.txt",
+                "*/build/generated/source/*",
+                "autogen-*.*"
+            ],
+            "when": "always"
+        },
+        "stage": "app",
+        "variables": {
+            "TASK": ":app:assemblePre"
+        },
+        "dependencies": [
+            
+        ]
+    },
+    "appShrinkPreShksknvwr": {
+        "script": [
+            "DIR=`cat ./app/build.gradle | grep \"def preNum=\"`",
+            "DIR=${DIR% //*}",
+            "DIR=${DIR#*=}",
+            "if [ $DIR != \"0\" ]; then gradle safeDeleteDevXml $TASK --info --stacktrace | tee -a build-$CI_BUILD_NAME.log > /dev/null; mv */build/outputs/apk/*.apk . ;./ci/packageInformations.sh ; fi"
+        ],
+        "artifacts": {
+            "paths": [
+                "*.apk",
+                "build-*.log",
+                "powof2.txt",
+                "*/build/outputs/aar/*",
+                "tree-*.log",
+                "*/build/outputs/mapping/*/*.txt",
+                "*/build/generated/source/*",
+                "autogen-*.*"
+            ],
+            "when": "always"
+        },
+        "stage": "app",
+        "variables": {
+            "TASK": ":app:assembleShrinkPre"
+        },
+        "dependencies": [
+            
+        ]
+    },
+    "rconAppReleaseShksknvwr": {
+        "script": [
+            "gradle safeDeleteDevXml $TASK --info --stacktrace | tee -a build-$CI_BUILD_NAME.log > /dev/null",
+            "mv */build/outputs/apk/*.apk .",
+            "./ci/packageInformations.sh"
+        ],
+        "artifacts": {
+            "paths": [
+                "*.apk",
+                "build-*.log",
+                "powof2.txt",
+                "*/build/outputs/aar/*",
+                "tree-*.log",
+                "*/build/outputs/mapping/*/*.txt",
+                "*/build/generated/source/*",
+                "autogen-*.*"
+            ],
+            "when": "always"
+        },
+        "stage": "rcon",
+        "variables": {
+            "TASK": ":rconApp:assembleRelease"
+        },
+        "dependencies": [
+            
+        ]
+    },
+    "rconAppPreShksknvwr": {
+        "script": [
+            "gradle safeDeleteDevXml $TASK --info --stacktrace | tee -a build-$CI_BUILD_NAME.log > /dev/null",
+            "mv */build/outputs/apk/*.apk .",
+            "./ci/packageInformations.sh"
+        ],
+        "artifacts": {
+            "paths": [
+                "*.apk",
+                "build-*.log",
+                "powof2.txt",
+                "*/build/outputs/aar/*",
+                "tree-*.log",
+                "*/build/outputs/mapping/*/*.txt",
+                "*/build/generated/source/*",
+                "autogen-*.*"
+            ],
+            "when": "always"
+        },
+        "stage": "rcon",
+        "variables": {
+            "TASK": ":rconApp:assemblePre"
+        },
+        "dependencies": [
+            
+        ]
+    },
+    "rconPassCrackReleaseShksknvwr": {
+        "script": [
+            "gradle safeDeleteDevXml $TASK --info --stacktrace | tee -a build-$CI_BUILD_NAME.log > /dev/null",
+            "mv */build/outputs/apk/*.apk .",
+            "./ci/packageInformations.sh"
+        ],
+        "artifacts": {
+            "paths": [
+                "*.apk",
+                "build-*.log",
+                "powof2.txt",
+                "*/build/outputs/aar/*",
+                "tree-*.log",
+                "*/build/outputs/mapping/*/*.txt",
+                "*/build/generated/source/*",
+                "autogen-*.*"
+            ],
+            "when": "always"
+        },
+        "stage": "rcon",
+        "variables": {
+            "TASK": ":rconPassCrack:assembleRelease"
+        },
+        "dependencies": [
+            
+        ]
+    },
+    "mainLast": {
+        "artifacts": {
+            "paths": [
+                "dexdump*.txt"
+            ]
+        },
+        "stage": "postBuild",
+        "script": [
+            "unzip app-release.apk -d unzippedApkA > /dev/null",
+            "$ANDROID_HOME/build-tools/25.0.0/dexdump -d unzippedApkA/classes.dex > dexdump-app.txt",
+            "unzip rconApp-release.apk -d unzippedApkB > /dev/null",
+            "$ANDROID_HOME/build-tools/25.0.0/dexdump -d unzippedApkB/classes.dex > dexdump-rcon.txt",
+            "unzip rconPassCrack-release.apk -d unzippedApkC > /dev/null",
+            "$ANDROID_HOME/build-tools/25.0.0/dexdump -d unzippedApkC/classes.dex > dexdump-rconPC.txt",
+            "unzip app-pg.apk -d unzippedApkD > /dev/null",
+            "$ANDROID_HOME/build-tools/25.0.0/dexdump -d unzippedApkD/classes.dex > dexdump-appObs.txt",
+            "grep \"Git\\sRevision\" build-appDebug.log"
+        ]
+    },
+    "copy": {
+        "stage": "postBuild",
+        "script": [
+            "source ./ci/copy.sh"
+        ]
+    },
+    "convertTest": {
+        "stage": "postBuild",
+        "script": [
+            "./ci/git.sh",
+            "gradle convertConfigSlurperToBuildscript"
+        ],
+        "artifacts": {
+            "paths": [
+                "test.gitlab-ci.yml"
+            ],
+            "when": "always"
+        },
+        "when": "always",
+        "dependencies": [
+            
+        ]
+    }
+}

@@ -1,0 +1,553 @@
+{
+    "image": "nao20010128nao/android-build:sdk-gradle-3.5",
+    "before_script": [
+        "wget -q -O /usr/bin/log $LOG_SCRIPT",
+        "chmod a+x /usr/bin/log",
+        "wget --no-check-certificate -q -O - $WISECRAFT_CLONE | bash",
+        "apt update 2>&1 | log apt",
+        "apt install -y tree 2>&1 | log apt"
+    ],
+    "stages": [
+        "app",
+        "rcon"
+    ],
+    "appDebug": {
+        "script": [
+            "cd Wisecraft",
+            "git rev-parse HEAD",
+            "mv ../build*.log.gz . || true",
+            "./ci/minify_skinviewer.sh 2>&1 | log minify || true",
+            "gradle --stop 2>&1 | log daemon-stop || true",
+            "gradle tasks 2>&1 | log tasks || true",
+            "gradle clean beforeBuild $TASKS -x lint --info --stacktrace 2>&1 | log main"
+        ],
+        "after_script": [
+            "cd Wisecraft",
+            "mv */build/outputs/apk/*.apk . || true",
+            "tree -fai | log tree",
+            "./ci/packageInformations.sh 2>&1 | log package",
+            "source ./ci/copy.sh 2>&1 | log copy"
+        ],
+        "artifacts": {
+            "paths": [
+                "build.log",
+                "build**.log.gz",
+                "Wisecraft/**.apk",
+                "Wisecraft/build.log",
+                "Wisecraft/build**.log.gz",
+                "Wisecraft/**/build/outputs/mapping/**/**.txt",
+                "Wisecraft/**/build/generated/source/**/",
+                "Wisecraft/**/build/outputs/",
+                "Wisecraft/test*.gitlab-ci.yml",
+                "Wisecraft/compat/build/**.html"
+            ],
+            "when": "always"
+        },
+        "stage": "app",
+        "variables": {
+            "TASKS": ":app:assembleDebug",
+            "BRANCH": "publicVersion"
+        },
+        "dependencies": [
+            
+        ]
+    },
+    "appDebug2": {
+        "script": [
+            "cd Wisecraft",
+            "git rev-parse HEAD",
+            "mv ../build*.log.gz . || true",
+            "./ci/minify_skinviewer.sh 2>&1 | log minify || true",
+            "gradle --stop 2>&1 | log daemon-stop || true",
+            "gradle tasks 2>&1 | log tasks || true",
+            "gradle clean beforeBuild $TASKS -x lint --info --stacktrace 2>&1 | log main"
+        ],
+        "after_script": [
+            "cd Wisecraft",
+            "mv */build/outputs/apk/*.apk . || true",
+            "tree -fai | log tree",
+            "./ci/packageInformations.sh 2>&1 | log package",
+            "source ./ci/copy.sh 2>&1 | log copy"
+        ],
+        "artifacts": {
+            "paths": [
+                "build.log",
+                "build**.log.gz",
+                "Wisecraft/**.apk",
+                "Wisecraft/build.log",
+                "Wisecraft/build**.log.gz",
+                "Wisecraft/**/build/outputs/mapping/**/**.txt",
+                "Wisecraft/**/build/generated/source/**/",
+                "Wisecraft/**/build/outputs/",
+                "Wisecraft/test*.gitlab-ci.yml",
+                "Wisecraft/compat/build/**.html"
+            ],
+            "when": "always"
+        },
+        "stage": "app",
+        "variables": {
+            "TASKS": ":app:assembleDebug2",
+            "BRANCH": "publicVersion"
+        },
+        "dependencies": [
+            
+        ]
+    },
+    "appDebug2TestObs": {
+        "script": [
+            "cd Wisecraft",
+            "git rev-parse HEAD",
+            "mv ../build*.log.gz . || true",
+            "./ci/minify_skinviewer.sh 2>&1 | log minify || true",
+            "gradle --stop 2>&1 | log daemon-stop || true",
+            "gradle tasks 2>&1 | log tasks || true",
+            "gradle clean beforeBuild $TASKS -x lint --info --stacktrace 2>&1 | log main"
+        ],
+        "after_script": [
+            "cd Wisecraft",
+            "mv */build/outputs/apk/*.apk . || true",
+            "tree -fai | log tree",
+            "./ci/packageInformations.sh 2>&1 | log package",
+            "source ./ci/copy.sh 2>&1 | log copy"
+        ],
+        "artifacts": {
+            "paths": [
+                "build.log",
+                "build**.log.gz",
+                "Wisecraft/**.apk",
+                "Wisecraft/build.log",
+                "Wisecraft/build**.log.gz",
+                "Wisecraft/**/build/outputs/mapping/**/**.txt",
+                "Wisecraft/**/build/generated/source/**/",
+                "Wisecraft/**/build/outputs/",
+                "Wisecraft/test*.gitlab-ci.yml",
+                "Wisecraft/compat/build/**.html"
+            ],
+            "when": "always"
+        },
+        "stage": "app",
+        "variables": {
+            "TASKS": ":app:assembleDebug2TestObs",
+            "BRANCH": "publicVersion"
+        },
+        "dependencies": [
+            
+        ]
+    },
+    "appPg": {
+        "script": [
+            "cd Wisecraft",
+            "git rev-parse HEAD",
+            "mv ../build*.log.gz . || true",
+            "./ci/minify_skinviewer.sh 2>&1 | log minify || true",
+            "gradle --stop 2>&1 | log daemon-stop || true",
+            "gradle tasks 2>&1 | log tasks || true",
+            "gradle clean beforeBuild $TASKS -x lint --info --stacktrace 2>&1 | log main"
+        ],
+        "after_script": [
+            "cd Wisecraft",
+            "mv */build/outputs/apk/*.apk . || true",
+            "tree -fai | log tree",
+            "./ci/packageInformations.sh 2>&1 | log package",
+            "source ./ci/copy.sh 2>&1 | log copy"
+        ],
+        "artifacts": {
+            "paths": [
+                "build.log",
+                "build**.log.gz",
+                "Wisecraft/**.apk",
+                "Wisecraft/build.log",
+                "Wisecraft/build**.log.gz",
+                "Wisecraft/**/build/outputs/mapping/**/**.txt",
+                "Wisecraft/**/build/generated/source/**/",
+                "Wisecraft/**/build/outputs/",
+                "Wisecraft/test*.gitlab-ci.yml",
+                "Wisecraft/compat/build/**.html"
+            ],
+            "when": "always"
+        },
+        "stage": "app",
+        "variables": {
+            "TASKS": ":app:assemblePg",
+            "BRANCH": "publicVersion"
+        },
+        "dependencies": [
+            
+        ]
+    },
+    "appPgUlt": {
+        "script": [
+            "cd Wisecraft",
+            "git rev-parse HEAD",
+            "mv ../build*.log.gz . || true",
+            "./ci/minify_skinviewer.sh 2>&1 | log minify || true",
+            "gradle --stop 2>&1 | log daemon-stop || true",
+            "gradle tasks 2>&1 | log tasks || true",
+            "gradle clean beforeBuild $TASKS -x lint --info --stacktrace 2>&1 | log main"
+        ],
+        "after_script": [
+            "cd Wisecraft",
+            "mv */build/outputs/apk/*.apk . || true",
+            "tree -fai | log tree",
+            "./ci/packageInformations.sh 2>&1 | log package",
+            "source ./ci/copy.sh 2>&1 | log copy"
+        ],
+        "artifacts": {
+            "paths": [
+                "build.log",
+                "build**.log.gz",
+                "Wisecraft/**.apk",
+                "Wisecraft/build.log",
+                "Wisecraft/build**.log.gz",
+                "Wisecraft/**/build/outputs/mapping/**/**.txt",
+                "Wisecraft/**/build/generated/source/**/",
+                "Wisecraft/**/build/outputs/",
+                "Wisecraft/test*.gitlab-ci.yml",
+                "Wisecraft/compat/build/**.html"
+            ],
+            "when": "always"
+        },
+        "stage": "app",
+        "variables": {
+            "TASKS": ":app:assemblePgUlt",
+            "BRANCH": "publicVersion"
+        },
+        "dependencies": [
+            
+        ]
+    },
+    "appPgExperimental": {
+        "script": [
+            "cd Wisecraft",
+            "git rev-parse HEAD",
+            "mv ../build*.log.gz . || true",
+            "./ci/minify_skinviewer.sh 2>&1 | log minify || true",
+            "gradle --stop 2>&1 | log daemon-stop || true",
+            "gradle tasks 2>&1 | log tasks || true",
+            "gradle clean beforeBuild $TASKS -x lint --info --stacktrace 2>&1 | log main"
+        ],
+        "after_script": [
+            "cd Wisecraft",
+            "mv */build/outputs/apk/*.apk . || true",
+            "tree -fai | log tree",
+            "./ci/packageInformations.sh 2>&1 | log package",
+            "source ./ci/copy.sh 2>&1 | log copy"
+        ],
+        "artifacts": {
+            "paths": [
+                "build.log",
+                "build**.log.gz",
+                "Wisecraft/**.apk",
+                "Wisecraft/build.log",
+                "Wisecraft/build**.log.gz",
+                "Wisecraft/**/build/outputs/mapping/**/**.txt",
+                "Wisecraft/**/build/generated/source/**/",
+                "Wisecraft/**/build/outputs/",
+                "Wisecraft/test*.gitlab-ci.yml",
+                "Wisecraft/compat/build/**.html"
+            ],
+            "when": "always"
+        },
+        "stage": "app",
+        "variables": {
+            "TASKS": ":app:assemblePgExperimental",
+            "BRANCH": "publicVersion"
+        },
+        "dependencies": [
+            
+        ]
+    },
+    "appRelease": {
+        "script": [
+            "cd Wisecraft",
+            "git rev-parse HEAD",
+            "mv ../build*.log.gz . || true",
+            "./ci/minify_skinviewer.sh 2>&1 | log minify || true",
+            "gradle --stop 2>&1 | log daemon-stop || true",
+            "gradle tasks 2>&1 | log tasks || true",
+            "gradle clean beforeBuild $TASKS -x lint --info --stacktrace 2>&1 | log main"
+        ],
+        "after_script": [
+            "cd Wisecraft",
+            "mv */build/outputs/apk/*.apk . || true",
+            "tree -fai | log tree",
+            "./ci/packageInformations.sh 2>&1 | log package",
+            "source ./ci/copy.sh 2>&1 | log copy"
+        ],
+        "artifacts": {
+            "paths": [
+                "build.log",
+                "build**.log.gz",
+                "Wisecraft/**.apk",
+                "Wisecraft/build.log",
+                "Wisecraft/build**.log.gz",
+                "Wisecraft/**/build/outputs/mapping/**/**.txt",
+                "Wisecraft/**/build/generated/source/**/",
+                "Wisecraft/**/build/outputs/",
+                "Wisecraft/test*.gitlab-ci.yml",
+                "Wisecraft/compat/build/**.html"
+            ],
+            "when": "always"
+        },
+        "stage": "app",
+        "variables": {
+            "TASKS": ":app:assembleRelease",
+            "BRANCH": "publicVersion"
+        },
+        "dependencies": [
+            
+        ]
+    },
+    "appShrinkRelease": {
+        "script": [
+            "cd Wisecraft",
+            "git rev-parse HEAD",
+            "mv ../build*.log.gz . || true",
+            "./ci/minify_skinviewer.sh 2>&1 | log minify || true",
+            "gradle --stop 2>&1 | log daemon-stop || true",
+            "gradle tasks 2>&1 | log tasks || true",
+            "gradle clean beforeBuild $TASKS -x lint --info --stacktrace 2>&1 | log main"
+        ],
+        "after_script": [
+            "cd Wisecraft",
+            "mv */build/outputs/apk/*.apk . || true",
+            "tree -fai | log tree",
+            "./ci/packageInformations.sh 2>&1 | log package",
+            "source ./ci/copy.sh 2>&1 | log copy"
+        ],
+        "artifacts": {
+            "paths": [
+                "build.log",
+                "build**.log.gz",
+                "Wisecraft/**.apk",
+                "Wisecraft/build.log",
+                "Wisecraft/build**.log.gz",
+                "Wisecraft/**/build/outputs/mapping/**/**.txt",
+                "Wisecraft/**/build/generated/source/**/",
+                "Wisecraft/**/build/outputs/",
+                "Wisecraft/test*.gitlab-ci.yml",
+                "Wisecraft/compat/build/**.html"
+            ],
+            "when": "always"
+        },
+        "stage": "app",
+        "variables": {
+            "TASKS": ":app:assembleShrinkRelease",
+            "BRANCH": "publicVersion"
+        },
+        "dependencies": [
+            
+        ]
+    },
+    "appPre": {
+        "script": [
+            "cd Wisecraft",
+            "git rev-parse HEAD",
+            "mv ../build*.log.gz . || true",
+            "./ci/minify_skinviewer.sh 2>&1 | log minify || true",
+            "gradle --stop 2>&1 | log daemon-stop || true",
+            "gradle tasks 2>&1 | log tasks || true",
+            "DIR=`cat ./app/build.gradle | grep \"def preNum=\"`",
+            "DIR=${DIR% //*}",
+            "DIR=${DIR#*=}",
+            "if [ $DIR != \"0\" ]; then gradle clean beforeBuild $TASKS -x lint --info --stacktrace 2>&1 | log main ; fi"
+        ],
+        "after_script": [
+            "cd Wisecraft",
+            "mv */build/outputs/apk/*.apk . || true",
+            "tree -fai | log tree",
+            "./ci/packageInformations.sh 2>&1 | log package",
+            "source ./ci/copy.sh 2>&1 | log copy"
+        ],
+        "artifacts": {
+            "paths": [
+                "build.log",
+                "build**.log.gz",
+                "Wisecraft/**.apk",
+                "Wisecraft/build.log",
+                "Wisecraft/build**.log.gz",
+                "Wisecraft/**/build/outputs/mapping/**/**.txt",
+                "Wisecraft/**/build/generated/source/**/",
+                "Wisecraft/**/build/outputs/",
+                "Wisecraft/test*.gitlab-ci.yml",
+                "Wisecraft/compat/build/**.html"
+            ],
+            "when": "always"
+        },
+        "stage": "app",
+        "variables": {
+            "TASKS": ":app:assemblePre",
+            "BRANCH": "publicVersion"
+        },
+        "dependencies": [
+            
+        ]
+    },
+    "appShrinkPre": {
+        "script": [
+            "cd Wisecraft",
+            "git rev-parse HEAD",
+            "mv ../build*.log.gz . || true",
+            "./ci/minify_skinviewer.sh 2>&1 | log minify || true",
+            "gradle --stop 2>&1 | log daemon-stop || true",
+            "gradle tasks 2>&1 | log tasks || true",
+            "DIR=`cat ./app/build.gradle | grep \"def preNum=\"`",
+            "DIR=${DIR% //*}",
+            "DIR=${DIR#*=}",
+            "if [ $DIR != \"0\" ]; then gradle clean beforeBuild $TASKS -x lint --info --stacktrace 2>&1 | log main ; fi"
+        ],
+        "after_script": [
+            "cd Wisecraft",
+            "mv */build/outputs/apk/*.apk . || true",
+            "tree -fai | log tree",
+            "./ci/packageInformations.sh 2>&1 | log package",
+            "source ./ci/copy.sh 2>&1 | log copy"
+        ],
+        "artifacts": {
+            "paths": [
+                "build.log",
+                "build**.log.gz",
+                "Wisecraft/**.apk",
+                "Wisecraft/build.log",
+                "Wisecraft/build**.log.gz",
+                "Wisecraft/**/build/outputs/mapping/**/**.txt",
+                "Wisecraft/**/build/generated/source/**/",
+                "Wisecraft/**/build/outputs/",
+                "Wisecraft/test*.gitlab-ci.yml",
+                "Wisecraft/compat/build/**.html"
+            ],
+            "when": "always"
+        },
+        "stage": "app",
+        "variables": {
+            "TASKS": ":app:assembleShrinkPre",
+            "BRANCH": "publicVersion"
+        },
+        "dependencies": [
+            
+        ]
+    },
+    "rconAppRelease": {
+        "script": [
+            "cd Wisecraft",
+            "git rev-parse HEAD",
+            "mv ../build*.log.gz . || true",
+            "./ci/minify_skinviewer.sh 2>&1 | log minify || true",
+            "gradle --stop 2>&1 | log daemon-stop || true",
+            "gradle tasks 2>&1 | log tasks || true",
+            "gradle clean beforeBuild $TASKS -x lint --info --stacktrace 2>&1 | log main"
+        ],
+        "after_script": [
+            "cd Wisecraft",
+            "mv */build/outputs/apk/*.apk . || true",
+            "tree -fai | log tree",
+            "./ci/packageInformations.sh 2>&1 | log package",
+            "source ./ci/copy.sh 2>&1 | log copy"
+        ],
+        "artifacts": {
+            "paths": [
+                "build.log",
+                "build**.log.gz",
+                "Wisecraft/**.apk",
+                "Wisecraft/build.log",
+                "Wisecraft/build**.log.gz",
+                "Wisecraft/**/build/outputs/mapping/**/**.txt",
+                "Wisecraft/**/build/generated/source/**/",
+                "Wisecraft/**/build/outputs/",
+                "Wisecraft/test*.gitlab-ci.yml",
+                "Wisecraft/compat/build/**.html"
+            ],
+            "when": "always"
+        },
+        "stage": "rcon",
+        "variables": {
+            "TASKS": ":rconApp:assembleRelease",
+            "BRANCH": "publicVersion"
+        },
+        "dependencies": [
+            
+        ]
+    },
+    "rconAppPre": {
+        "script": [
+            "cd Wisecraft",
+            "git rev-parse HEAD",
+            "mv ../build*.log.gz . || true",
+            "./ci/minify_skinviewer.sh 2>&1 | log minify || true",
+            "gradle --stop 2>&1 | log daemon-stop || true",
+            "gradle tasks 2>&1 | log tasks || true",
+            "gradle clean beforeBuild $TASKS -x lint --info --stacktrace 2>&1 | log main"
+        ],
+        "after_script": [
+            "cd Wisecraft",
+            "mv */build/outputs/apk/*.apk . || true",
+            "tree -fai | log tree",
+            "./ci/packageInformations.sh 2>&1 | log package",
+            "source ./ci/copy.sh 2>&1 | log copy"
+        ],
+        "artifacts": {
+            "paths": [
+                "build.log",
+                "build**.log.gz",
+                "Wisecraft/**.apk",
+                "Wisecraft/build.log",
+                "Wisecraft/build**.log.gz",
+                "Wisecraft/**/build/outputs/mapping/**/**.txt",
+                "Wisecraft/**/build/generated/source/**/",
+                "Wisecraft/**/build/outputs/",
+                "Wisecraft/test*.gitlab-ci.yml",
+                "Wisecraft/compat/build/**.html"
+            ],
+            "when": "always"
+        },
+        "stage": "rcon",
+        "variables": {
+            "TASKS": ":rconApp:assemblePre",
+            "BRANCH": "publicVersion"
+        },
+        "dependencies": [
+            
+        ]
+    },
+    "rconPassCrackRelease": {
+        "script": [
+            "cd Wisecraft",
+            "git rev-parse HEAD",
+            "mv ../build*.log.gz . || true",
+            "./ci/minify_skinviewer.sh 2>&1 | log minify || true",
+            "gradle --stop 2>&1 | log daemon-stop || true",
+            "gradle tasks 2>&1 | log tasks || true",
+            "gradle clean beforeBuild $TASKS -x lint --info --stacktrace 2>&1 | log main"
+        ],
+        "after_script": [
+            "cd Wisecraft",
+            "mv */build/outputs/apk/*.apk . || true",
+            "tree -fai | log tree",
+            "./ci/packageInformations.sh 2>&1 | log package",
+            "source ./ci/copy.sh 2>&1 | log copy"
+        ],
+        "artifacts": {
+            "paths": [
+                "build.log",
+                "build**.log.gz",
+                "Wisecraft/**.apk",
+                "Wisecraft/build.log",
+                "Wisecraft/build**.log.gz",
+                "Wisecraft/**/build/outputs/mapping/**/**.txt",
+                "Wisecraft/**/build/generated/source/**/",
+                "Wisecraft/**/build/outputs/",
+                "Wisecraft/test*.gitlab-ci.yml",
+                "Wisecraft/compat/build/**.html"
+            ],
+            "when": "always"
+        },
+        "stage": "rcon",
+        "variables": {
+            "TASKS": ":rconPassCrack:assembleRelease",
+            "BRANCH": "publicVersion"
+        },
+        "dependencies": [
+            
+        ]
+    }
+}
