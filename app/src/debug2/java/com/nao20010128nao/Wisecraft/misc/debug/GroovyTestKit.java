@@ -120,7 +120,7 @@ public class GroovyTestKit extends AppCompatActivity{
                     .setTitle("Predefined variables")
                     .setMessage(
                         Stream.of(descriptions)
-                            .map(a-> "§0§l"+a.getKey()+" §o")
+                            .map(a-> "§0§l"+a.getKey()+" §o"+a.getValue())
                             .map(Utils::parseMinecraftFormattingCode)
                             .reduce(
                                 new SpannableStringBuilder(),
