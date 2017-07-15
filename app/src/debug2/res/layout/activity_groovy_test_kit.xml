@@ -8,14 +8,17 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:orientation="vertical">
-    <LinearLayout
-            android:id="@+id/console"
-            android:name="com.nao20010128nao.GroovyRoom.SettingListFragment"
+    <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="vertical"
+            android:layout_height="match_parent"
             android:layout_weight="1">
-    </LinearLayout>
+        <LinearLayout
+                android:id="@+id/console"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical">
+        </LinearLayout>
+    </ScrollView>
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -26,7 +29,8 @@
                 android:inputType="text"
                 android:ems="10"
                 android:id="@+id/script"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:typeface="monospace"/>
         <Button
                 android:text="Enter"
                 android:layout_width="0dp"

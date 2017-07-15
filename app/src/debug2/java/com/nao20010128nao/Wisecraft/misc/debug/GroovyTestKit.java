@@ -78,24 +78,27 @@ public class GroovyTestKit extends AppCompatActivity{
                 } catch (Exception e) {
                     thrown.set(e);
                 }
+                receiver.flush();
                 runOnUiThread(()->{
                     // execution finished
                     TextView first=createUserTypedTextView();
                     first.setText("> "+scpt);
-                    TextView second;
+                    TextView second=createUserTypedTextView();
+                    second.setText(dish.toString());
+                    TextView third;
                     if(thrown.get()==null){
-                        second=createResultTextView();
-                        second.setText("--> "+InvokerHelper.toString(returned.get()));
+                        third=createResultTextView();
+                        third.setText("--> "+InvokerHelper.toString(returned.get()));
                     }else{
-                        second=createErrorTextView();
+                        third=createErrorTextView();
                         ByteArrayOutputStream errDish=new ByteArrayOutputStream();
                         PrintStream errReceiver=new PrintStream(errDish);
                         thrown.checked().printStackTrace(errReceiver);
                         errReceiver.flush();
-                        second.setText(errDish.toString());
+                        third.setText(errDish.toString());
                     }
 
-                    Stream.of(first,second).forEach(console::addView);
+                    Stream.of(first,second,third).forEach(console::addView);
                 });
             }).start();
         });
@@ -137,24 +140,26 @@ public class GroovyTestKit extends AppCompatActivity{
         private final Map<String,Object> pinned= Maps.newHashMap();
 
         @Override
-        public void setProperty(String property, Object newValue) {
+        public void setVariable(String property, Object newValue) {
             if(pinned.containsKey(property)){
                 throw new RuntimeException("Cannot set "+property+" into a Script.");
             }
-            super.setProperty(property, newValue);
+            super.setVariable(property, newValue);
         }
 
         @Override
-        public Object getProperty(String property) {
+        public Object getVariable(String property) {
             if(pinned.containsKey(property)){
                 return pinned.get(property);
             }
-            return super.getProperty(property);
+            return super.getVariable(property);
         }
     }
 
     @NonNull TextView createBaseTextView(){
-        return new AppCompatTextView(this);
+        TextView tv=new AppCompatTextView(this);
+        tv.setTypeface(Typeface.MONOSPACE);
+        return tv;
     }
 
     @NonNull TextView createUserTypedTextView(){
