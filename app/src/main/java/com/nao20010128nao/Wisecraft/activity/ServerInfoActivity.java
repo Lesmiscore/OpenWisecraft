@@ -54,6 +54,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
     String ip;
     int port;
     boolean nonUpd, hidePlayer, hideData, hidePlugins, hideMods, noExport;
+    String token;// null if this activity is called from non-SLA activity
 
     MenuItem updateBtn, seeTitleButton, exportButton;
 
@@ -233,6 +234,8 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
             TextView tv = Utils.getActionBarTextView(Utils.getToolbar(ServerInfoActivityImpl.this));
             if (tv != null) tv.setTextColor(slsl.getTextColor());
         });
+
+        token=getIntent().getStringExtra("token");
     }
 
     public void onBackPressed() {
@@ -473,7 +476,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
     }
 
     public void setResultInstead(int resultCode, Intent data) {
-        setResult(resultCode, data.putExtra("object", keeping));
+        setResult(resultCode, data.putExtra("object", keeping).putExtra("token", token));
     }
 
     @Override

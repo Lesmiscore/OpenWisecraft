@@ -12,7 +12,6 @@ import android.support.v4.content.*;
 import android.support.v4.util.Pair;
 import android.support.v4.view.*;
 import android.support.v4.widget.*;
-import android.support.v7.app.*;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.*;
 import android.support.v7.widget.RecyclerView.*;
@@ -58,6 +57,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
     Set<Server> selected = new HashSet<>();
     Map<Server, Map.Entry<Boolean, Integer>> retrying = new HashMap<>();
     File wisecraftDir;
+    Map<String,Server> siaTokens =new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +75,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                 ((IdContainer) pdi).setIntId(appMenu.indexOf(s));
                 pdi.withIconColor(ThemePatcher.getMainColor(this)).withIconTinted(true);
                 pdi.withIdentifier(appMenu.indexOf(s)).withOnDrawerItemClickListener((view, position, drawerItem) -> {
-                    appMenu.findByE(drawerItem).getC().process(ServerListActivity.instance.get());
+                    appMenu.findByE(drawerItem).getC().process((ServerListActivity) this);
                     return false;
                 });
                 drawer.addItem(pdi.withIconTintingEnabled(true));
@@ -90,7 +90,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             });
             drawer.setOnDrawerItemLongClickListener((p1, p2, p3) -> {
                 Consumer<ServerListActivity> process = appMenu.findByE(p3).getD();
-                if (process != null) process.process(ServerListActivity.instance.get());
+                if (process != null) process.process((ServerListActivity) this);
                 return false;
             });
             setupDrawer();
@@ -99,7 +99,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
         srl = (SwipeRefreshLayout) findViewById(R.id.swipelayout);
         //srl.setColorSchemeResources(R.color.upd_1, R.color.upd_2, R.color.upd_3, R.color.upd_4);
         srl.setColorSchemeColors(Utils.getHueRotatedColors());
-        srl.setOnRefreshListener(() -> appMenu.findByA(R.string.update_all).getC().process(ServerListActivity.instance.get()));
+        srl.setOnRefreshListener(() -> appMenu.findByA(R.string.update_all).getC().process((ServerListActivity) this));
         boolean usesOldInstance = false;
         if (instance.get() != null) {
             list = instance.get().list;
@@ -311,11 +311,19 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                     switch (resultCode) {
                         case Constant.ACTIVITY_RESULT_UPDATE:
                             Bundle obj = data.getBundleExtra("object");
-                            if(clicked<0)return false;
-                            Server serv = list.get(clicked);
+                            int actuallyClicked;
+                            if(data.hasExtra("token")){// look for token
+                                actuallyClicked=list.indexOf(siaTokens.get(data.getStringExtra("token")));
+                            }else if(clicked>=0){// rely on clicked variable
+                                actuallyClicked=clicked;
+                            }else{// no more way to find last click
+                                actuallyClicked=-1;
+                            }
+                            if(actuallyClicked<0)return false;
+                            Server serv = list.get(actuallyClicked);
                             updater.putInQueue(serv, new PingHandlerImpl(true, data, true));
                             pinging.add(serv);
-                            sl.notifyItemChanged(clicked);
+                            sl.notifyItemChanged(actuallyClicked);
                             wd.showWorkingDialog(serv);
                             break;
                     }
@@ -440,7 +448,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                         .setItems(R.array.serverUpdateAllSubMenu, (di, w) -> {
                             switch (w) {
                                 case 0://update all
-                                    appMenu.findByA(R.string.update_all).getC().process(ServerListActivity.instance.get());
+                                    appMenu.findByA(R.string.update_all).getC().process((ServerListActivity) this);
                                     break;
                                 case 1://update onlines
                                     updateAllWithConditions(a -> a instanceof ServerStatus);
@@ -637,26 +645,24 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             if (!srl.isRefreshing())
                 srl.setRefreshing(true);
         }
-        new Thread() {
-            public void run() {
-                for (Server aList : list) {
-                    if (pinging.contains(aList) || !pred.process(aList))
-                        continue;
-                    spp.putInQueue(aList, new PingHandlerImpl(false, new Intent().putExtra("offset", -1), false) {
-                        public void onPingFailed(final Server s) {
-                            super.onPingFailed(s);
-                            runOnUiThread(() -> wd.hideWorkingDialog(s));
-                        }
+        new Thread(()->{
+            for (Server aList : list) {
+                if (pinging.contains(aList) || !pred.process(aList))
+                    continue;
+                spp.putInQueue(aList, new PingHandlerImpl(false, new Intent().putExtra("offset", -1), false) {
+                    public void onPingFailed(final Server s) {
+                        super.onPingFailed(s);
+                        runOnUiThread(() -> wd.hideWorkingDialog(s));
+                    }
 
-                        public void onPingArrives(final ServerStatus s) {
-                            super.onPingArrives(s);
-                            runOnUiThread(() -> wd.hideWorkingDialog(s));
-                        }
-                    });
-                    pinging.add(aList);
-                }
+                    public void onPingArrives(final ServerStatus s) {
+                        super.onPingArrives(s);
+                        runOnUiThread(() -> wd.hideWorkingDialog(s));
+                    }
+                });
+                pinging.add(aList);
             }
-        }.start();
+        }).start();
     }
 
     @NeedsPermission("android.permission.WRITE_EXTERNAL_STORAGE")
@@ -702,7 +708,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
         new AsyncTask<String, Void, File>() {
             public File doInBackground(String... texts) {
                 Server[] servs = Stream.of(list).map(Server::cloneAsServer).toArray(Server[]::new);
-                File f = new File(Environment.getExternalStorageDirectory(), "/Wisecraft");
+                File f = wisecraftDir;
                 f.mkdirs();
                 if (writeToFile(f = new File(texts[0]), gson.toJson(servs, Server[].class)))
                     return f;
@@ -1051,7 +1057,14 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             if (sla.pinging.contains(s)) return;
             if (s instanceof ServerStatus) {
                 Bundle bnd = new Bundle();
-                sla.startServerInfoActivity(new Intent().putExtra("stat", Utils.encodeForServerInfo((ServerStatus) s)).putExtra("object", bnd), p3);
+                String token=Utils.randomText();
+                sla.siaTokens.put(token,s);
+                sla.startServerInfoActivity(
+                    new Intent()
+                        .putExtra("stat", Utils.encodeForServerInfo((ServerStatus) s))
+                        .putExtra("object", bnd)
+                        .putExtra("token", token)
+                    , p3);
             } else {
                 sla.updater.putInQueue(s, new PingHandlerImpl(true, new Intent().putExtra("offset", 0), true));
                 sla.pinging.add(s);
