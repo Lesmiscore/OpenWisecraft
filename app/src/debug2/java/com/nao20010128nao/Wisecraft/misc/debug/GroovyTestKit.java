@@ -7,6 +7,7 @@ import android.support.v4.view.*;
 import android.support.v7.app.*;
 import android.support.v7.widget.*;
 import android.text.*;
+import android.view.*;
 import android.widget.*;
 import com.annimon.stream.*;
 import com.google.common.base.*;
@@ -98,6 +99,38 @@ public class GroovyTestKit extends AppCompatActivity{
                 });
             }).start();
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add(0,0,0,"Predefined variables");
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case 0:
+                Map<String,String> descriptions=Maps.newLinkedHashMap();
+                descriptions.put("context","GroovyTestKit activity");
+                descriptions.put("application","TheApplication object");
+                descriptions.put("serverListActivity","ServerListActivity activity");
+
+                new AlertDialog.Builder(this)
+                    .setTitle("Predefined variables")
+                    .setMessage(
+                        Stream.of(descriptions)
+                            .map(a-> "§0§l"+a.getKey()+" §o")
+                            .map(Utils::parseMinecraftFormattingCode)
+                            .reduce(
+                                new SpannableStringBuilder(),
+                                (a,b)->a.append(b).append("\n")
+                            )
+                    )
+                    .show();
+                return true;
+        }
+        return false;
     }
 
     class GTKBinding extends Binding{
