@@ -15,8 +15,12 @@
             android:label="LogCat">
         </activity>
         <activity
-            android:name=".misc.debug.DebugList"
-            android:label="@string/dbgMenu">
+                android:name=".misc.debug.DebugList"
+                android:label="@string/dbgMenu">
+        </activity>
+        <activity
+                android:name=".misc.debug.GroovyTestKit"
+                android:label="Groovy Test Kit">
         </activity>
     </application>
 </manifest>
