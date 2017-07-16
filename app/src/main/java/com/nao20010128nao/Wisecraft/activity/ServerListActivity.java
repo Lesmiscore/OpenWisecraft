@@ -328,7 +328,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             pdi.withName(s.getA()).withIcon(s.getB());
             pdi.withSetSelected(false);
             ((IdContainer) pdi).setIntId(appMenu.indexOf(s));
-            pdi.withIconColor(ThemePatcher.getMainColor(this)).withIconTinted(true);
+            pdi.withIconColor(ThemePatcher.getMainColor(this));
             pdi.withIdentifier(appMenu.indexOf(s)).withOnDrawerItemClickListener((view, position, drawerItem) -> {
                 appMenu.findByE(drawerItem).getC().process((ServerListActivity) this);
                 return false;
