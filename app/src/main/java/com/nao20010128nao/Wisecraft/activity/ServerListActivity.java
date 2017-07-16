@@ -1245,65 +1245,45 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                 }
             }
 
-            if (false) {
-                new AlertDialog.Builder(sla, ThemePatcher.getDefaultDialogStyle(sla))
-                        .setTitle(getItem(p3).resolveVisibleTitle())
-                        .setItems(generateSubMenu(executes), (di, which) -> executes.get(which).getA().run())
-                        .setCancelable(true)
-                        .show();
-            } else if (true) {
-                // TODO: do the following
-                // TODO: Wisecraft/title: transparent background, white text
-                // TODO: Wisecraft/list: white background
-                // TODO: android/content: transparent background
-                final BottomSheetListDialog bsld = new BottomSheetListDialog(sla);
-                bsld.setTitle(getItem(p3).resolveVisibleTitle());
-                bsld.setLayoutManager(new LinearLayoutManager(sla));
-                ViewCompat.setBackground(bsld.findViewById(R.id.title)            ,new ColorDrawable(Color.TRANSPARENT));
-                ViewCompat.setBackground(bsld.findViewById(R.id.list)             ,new ColorDrawable(Color.WHITE));
-                ViewCompat.setBackground(bsld.findViewById(android.R.id.content)  ,new ColorDrawable(Color.TRANSPARENT));
-                ((TextView)bsld.findViewById(R.id.title)).setTextColor(Color.WHITE);
-                
-                class ServerExtSelect extends RecyclerView.Adapter<FindableViewHolder> {
-                    String[] strings = generateSubMenu(executes);
+            // TODO: do the following
+            // TODO: Wisecraft/title: transparent background, white text
+            // TODO: Wisecraft/list: white background
+            // TODO: android/content: transparent background
+            final BottomSheetListDialog bsld = new BottomSheetListDialog(sla);
+            bsld.setTitle(getItem(p3).resolveVisibleTitle());
+            bsld.setLayoutManager(new LinearLayoutManager(sla));
+            ViewCompat.setBackground(bsld.findViewById(R.id.title)            ,new ColorDrawable(Color.TRANSPARENT));
+            ViewCompat.setBackground(bsld.findViewById(R.id.list)             ,new ColorDrawable(Color.WHITE));
+            ViewCompat.setBackground(bsld.findViewById(android.R.id.content)  ,new ColorDrawable(Color.TRANSPARENT));
+            ((TextView)bsld.findViewById(R.id.title)).setTextColor(Color.WHITE);
 
-                    @Override
-                    public void onBindViewHolder(FindableViewHolder holder, final int position) {
-                        ((TextView) holder.findViewById(android.R.id.text1)).setText(strings[position]);
-                        TypedArray ta = sla.obtainStyledAttributes(new int[]{R.attr.selectableItemBackground});
-                        holder.itemView.setBackground(ta.getDrawable(0));
-                        ta.recycle();
-                        Utils.applyHandlersForViewTree(holder.itemView, v -> {
-                            executes.get(position).getA().run();
-                            bsld.cancel();
-                        });
-                    }
+            class ServerExtSelect extends RecyclerView.Adapter<FindableViewHolder> {
+                String[] strings = generateSubMenu(executes);
 
-                    @Override
-                    public FindableViewHolder onCreateViewHolder(ViewGroup p1, int p2) {
-                        return new FindableViewHolder(LayoutInflater.from(bsld.getContext()).inflate(R.layout.simple_list_item_1, p1, false));
-                    }
-
-                    @Override
-                    public int getItemCount() {
-                        return strings.length;
-                    }
+                @Override
+                public void onBindViewHolder(FindableViewHolder holder, final int position) {
+                    ((TextView) holder.findViewById(android.R.id.text1)).setText(strings[position]);
+                    TypedArray ta = sla.obtainStyledAttributes(new int[]{R.attr.selectableItemBackground});
+                    holder.itemView.setBackground(ta.getDrawable(0));
+                    ta.recycle();
+                    Utils.applyHandlersForViewTree(holder.itemView, v -> {
+                        executes.get(position).getA().run();
+                        bsld.cancel();
+                    });
                 }
-                bsld.setAdapter(new ServerExtSelect());
-                bsld.show();
-            } else {
-                sla.openContextMenu(p2, sla.rv, a -> {
-                    ContextMenu menu = a.getB();
-                    menu.setHeaderTitle(getItem(p3).toString());
-                    for (String s : generateSubMenu(executes)) {
-                        menu.add(Menu.NONE, menu.size(), menu.size(), s);
-                    }
-                }, a -> {
-                    executes.get(a.getC().getItemId()).getA().run();
-                    return true;
-                });
-            }
 
+                @Override
+                public FindableViewHolder onCreateViewHolder(ViewGroup p1, int p2) {
+                    return new FindableViewHolder(LayoutInflater.from(bsld.getContext()).inflate(R.layout.simple_list_item_1, p1, false));
+                }
+
+                @Override
+                public int getItemCount() {
+                    return strings.length;
+                }
+            }
+            bsld.setAdapter(new ServerExtSelect());
+            bsld.show();
 
             return true;
         }
