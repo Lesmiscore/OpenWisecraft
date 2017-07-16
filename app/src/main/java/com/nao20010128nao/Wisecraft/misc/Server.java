@@ -83,7 +83,7 @@ public class Server {
         Server s = new Server();
         s.ip = a.ip;
         s.port = a.port;
-        s.mode = a.mode==1 ? Protobufs.Server.Mode.PC : Protobufs.Server.Mode.PE;
+        s.mode = a.mode == 1 ? Protobufs.Server.Mode.PC : Protobufs.Server.Mode.PE;
         return s;
     }
 
@@ -92,7 +92,7 @@ public class Server {
         s.ip = a.getIp();
         s.port = a.getPort();
         s.mode = a.getMode();
-        s.name=a.getName();
+        s.name = a.getName();
         return s;
     }
 }

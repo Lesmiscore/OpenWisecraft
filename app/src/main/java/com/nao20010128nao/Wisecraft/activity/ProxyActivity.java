@@ -51,11 +51,11 @@ abstract class ProxyActivityImpl extends AppCompatActivity {
         if (act.equals("start")) {
             if (isProxyRunning()) {
                 new AlertDialog.Builder(this, ThemePatcher.getDefaultDialogStyle(this))
-                        .setMessage(R.string.mtlIsAlreadyRunning)
-                        .setCancelable(false)
-                        .setTitle(R.string.error)
-                        .setPositiveButton(android.R.string.ok, (di, w) -> finish())
-                        .show();
+                    .setMessage(R.string.mtlIsAlreadyRunning)
+                    .setCancelable(false)
+                    .setTitle(R.string.error)
+                    .setPositiveButton(android.R.string.ok, (di, w) -> finish())
+                    .show();
                 return;
             }
             ip = getIntent().getStringExtra("ip");
@@ -77,22 +77,22 @@ abstract class ProxyActivityImpl extends AppCompatActivity {
 
     public void dialog1() {
         new AlertDialog.Builder(this, ThemePatcher.getDefaultDialogStyle(this))
-                .setMessage(R.string.mtl_attention_1)
-                .setCancelable(false)
-                .setPositiveButton(R.string.next, (di, w) -> dialog2())
-                .setNegativeButton(R.string.close, (di, w) -> finish())
-                .setTitle("1/2")
-                .show();
+            .setMessage(R.string.mtl_attention_1)
+            .setCancelable(false)
+            .setPositiveButton(R.string.next, (di, w) -> dialog2())
+            .setNegativeButton(R.string.close, (di, w) -> finish())
+            .setTitle("1/2")
+            .show();
     }
 
     public void dialog2() {
         new AlertDialog.Builder(this, ThemePatcher.getDefaultDialogStyle(this))
-                .setMessage(R.string.mtl_attention_2)
-                .setCancelable(false)
-                .setPositiveButton(R.string.next, (di, w) -> start())
-                .setNegativeButton(R.string.close, (di, w) -> finish())
-                .setTitle("2/2")
-                .show();
+            .setMessage(R.string.mtl_attention_2)
+            .setCancelable(false)
+            .setPositiveButton(R.string.next, (di, w) -> start())
+            .setNegativeButton(R.string.close, (di, w) -> finish())
+            .setTitle("2/2")
+            .show();
     }
 
     public void start() {

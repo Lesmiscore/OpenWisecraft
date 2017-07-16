@@ -66,7 +66,7 @@ public class SinglePoolMultiServerPingProvider implements ServerPingProvider {
     private class PingThread extends Thread implements Runnable {
         @Override
         public void run() {
-            final String TAG= ProcessorUtils.getLogTag(SinglePoolMultiServerPingProvider.this);
+            final String TAG = ProcessorUtils.getLogTag(SinglePoolMultiServerPingProvider.this);
 
             pingThread.add(this);
             try {
@@ -75,7 +75,7 @@ public class SinglePoolMultiServerPingProvider implements ServerPingProvider {
                     Log.d(TAG, "Starting ping");
                     try {
                         now = queue.poll();
-                        ProcessorUtils.doPingFull(SinglePoolMultiServerPingProvider.this,now.getKey(),now.getValue(),offline,true,true,false);
+                        ProcessorUtils.doPingFull(SinglePoolMultiServerPingProvider.this, now.getKey(), now.getValue(), offline, true, true, false);
                     } catch (Throwable e) {
                         e.printStackTrace();
                     }

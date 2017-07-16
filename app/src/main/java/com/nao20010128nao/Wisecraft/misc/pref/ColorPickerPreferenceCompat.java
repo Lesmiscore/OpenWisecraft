@@ -32,8 +32,8 @@ public class ColorPickerPreferenceCompat extends Preference {
 
     private void init(android.content.Context context, android.util.AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         final TypedArray a = context.obtainStyledAttributes(
-                attrs, R.styleable.ColorPickerPreferenceCompat,
-                defStyleAttr, defStyleRes);
+            attrs, R.styleable.ColorPickerPreferenceCompat,
+            defStyleAttr, defStyleRes);
         defaultColor = a.getColor(R.styleable.ColorPickerPreferenceCompat_color, Color.BLACK);
     }
 

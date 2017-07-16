@@ -84,26 +84,8 @@ abstract class ServerGetActivityImpl extends CompatWebViewActivity {
 
         if (!Utils.isOnline(this)) {
             new AlertDialog.Builder(this, ThemePatcher.getDefaultDialogStyle(this))
-                    .setMessage(R.string.offline)
-                    .setTitle(R.string.error)
-                    .setOnCancelListener(di -> {
-                        finish();
-                        Log.d("SGA", "cancel");
-                    })
-                    .setOnDismissListener(di -> {
-                        //finish();
-                        Log.d("SGA", "dismiss");
-                    })
-                    .show();
-            return;
-        }
-        serverList = createServerListDomains();
-        new AlertDialog.Builder(this, ThemePatcher.getDefaultDialogStyle(this))
-                .setItems(serverList, (di, w) -> {
-                    di.dismiss();
-                    loadUrl("http://" + (domain = serverList[w]) + "/");
-                })
-                .setTitle(R.string.selectWebSite)
+                .setMessage(R.string.offline)
+                .setTitle(R.string.error)
                 .setOnCancelListener(di -> {
                     finish();
                     Log.d("SGA", "cancel");
@@ -113,6 +95,24 @@ abstract class ServerGetActivityImpl extends CompatWebViewActivity {
                     Log.d("SGA", "dismiss");
                 })
                 .show();
+            return;
+        }
+        serverList = createServerListDomains();
+        new AlertDialog.Builder(this, ThemePatcher.getDefaultDialogStyle(this))
+            .setItems(serverList, (di, w) -> {
+                di.dismiss();
+                loadUrl("http://" + (domain = serverList[w]) + "/");
+            })
+            .setTitle(R.string.selectWebSite)
+            .setOnCancelListener(di -> {
+                finish();
+                Log.d("SGA", "cancel");
+            })
+            .setOnDismissListener(di -> {
+                //finish();
+                Log.d("SGA", "dismiss");
+            })
+            .show();
         getWebView().setWebViewClient(new WebViewClient() {
             public void onPageFinished(WebView wv, String url) {
                 setTitle(wv.getTitle());
@@ -154,7 +154,7 @@ abstract class ServerGetActivityImpl extends CompatWebViewActivity {
                             //Server list
                             final List<MslServer> serv = (List<MslServer>) o;
                             /*
-							adapter.deleteAll();
+                            adapter.deleteAll();
 							adapter.addAll(serv);
 							bottomSheet.setState(BottomSheetBehavior.STATE_COLLAPSED);
 							findViewById(R.id.bottomSheet).setVisibility(View.VISIBLE);
@@ -185,10 +185,10 @@ abstract class ServerGetActivityImpl extends CompatWebViewActivity {
                             }
 
                             new AlertDialog.Builder(ServerGetActivityImpl.this, ThemePatcher.getDefaultDialogStyle(ServerGetActivityImpl.this))
-                                    .setTitle(R.string.error)
-                                    .setMessage(dialogMsg)
-                                    .setPositiveButton(android.R.string.ok, Constant.BLANK_DIALOG_CLICK_LISTENER)
-                                    .show();
+                                .setTitle(R.string.error)
+                                .setMessage(dialogMsg)
+                                .setPositiveButton(android.R.string.ok, Constant.BLANK_DIALOG_CLICK_LISTENER)
+                                .show();
                         }
                     }
 

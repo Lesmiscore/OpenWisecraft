@@ -42,7 +42,7 @@ public class ServerCrawlerConfigActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case 0:/*Add function*/
-                editDialog(null,entry->{
+                editDialog(null, entry -> {
                     scm.schedule(entry);
                     return true;
                 });
@@ -55,41 +55,42 @@ public class ServerCrawlerConfigActivity extends AppCompatActivity {
     }
 
     @TargetApi(Build.VERSION_CODES.N)
-    private void editDialog(final Protobufs.ServerCrawlerEntry entry, Predicate<Protobufs.ServerCrawlerEntry> handler){
-        final AlertDialog dialog=new AlertDialog.Builder(this)
-                .setView(R.layout.server_crawler_edit)
-                .setPositiveButton(android.R.string.ok,(di,w)->{
-                })
-                .setNegativeButton(android.R.string.cancel,(di,w)->{})
-                .setCancelable(false)
-                .create();
+    private void editDialog(final Protobufs.ServerCrawlerEntry entry, Predicate<Protobufs.ServerCrawlerEntry> handler) {
+        final AlertDialog dialog = new AlertDialog.Builder(this)
+            .setView(R.layout.server_crawler_edit)
+            .setPositiveButton(android.R.string.ok, (di, w) -> {
+            })
+            .setNegativeButton(android.R.string.cancel, (di, w) -> {
+            })
+            .setCancelable(false)
+            .create();
 
-        final ReferencedObject<Protobufs.ServerCrawlerEntry> editableEntry=new ReferencedObject<>();
+        final ReferencedObject<Protobufs.ServerCrawlerEntry> editableEntry = new ReferencedObject<>();
 
-        final EditText name= (EditText) dialog.findViewById(R.id.name);
-        final Button date= (Button) dialog.findViewById(R.id.startDate);
-        final Button time= (Button) dialog.findViewById(R.id.startTime);
-        final EditText interval= (EditText) dialog.findViewById(R.id.intervalText);
-        final Switch enabledState= (Switch) dialog.findViewById(R.id.enabledSwitch);
-        final Switch online= (Switch) dialog.findViewById(R.id.online);
-        final Switch offline= (Switch) dialog.findViewById(R.id.offline);
+        final EditText name = (EditText) dialog.findViewById(R.id.name);
+        final Button date = (Button) dialog.findViewById(R.id.startDate);
+        final Button time = (Button) dialog.findViewById(R.id.startTime);
+        final EditText interval = (EditText) dialog.findViewById(R.id.intervalText);
+        final Switch enabledState = (Switch) dialog.findViewById(R.id.enabledSwitch);
+        final Switch online = (Switch) dialog.findViewById(R.id.online);
+        final Switch offline = (Switch) dialog.findViewById(R.id.offline);
 
-        dialog.setOnShowListener(d->{
-            Button btn=dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-            btn.setOnClickListener(v->{
-                if(TextUtils.isEmpty(interval.getText())){
+        dialog.setOnShowListener(d -> {
+            Button btn = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+            btn.setOnClickListener(v -> {
+                if (TextUtils.isEmpty(interval.getText())) {
                     interval.setError(getResources().getString(R.string.cannotBeEmpty));
-                }else{
+                } else {
                     editableEntry.set(/* set values except for date & time */
-                            editableEntry.get().toBuilder()
-                                    .setName(name.getText().toString())
-                                    .setInterval(Long.valueOf(interval.getText().toString()))
-                                    .setEnabled(enabledState.isChecked())
-                                    .setNotifyOnline(online.isChecked())
-                                    .setNotifyOffline(offline.isChecked())
-                                    .build()
+                        editableEntry.get().toBuilder()
+                            .setName(name.getText().toString())
+                            .setInterval(Long.valueOf(interval.getText().toString()))
+                            .setEnabled(enabledState.isChecked())
+                            .setNotifyOnline(online.isChecked())
+                            .setNotifyOffline(offline.isChecked())
+                            .build()
                     );
-                    if(handler.process(editableEntry.get()))
+                    if (handler.process(editableEntry.get()))
                         d.dismiss();
                 }
             });
@@ -99,55 +100,55 @@ public class ServerCrawlerConfigActivity extends AppCompatActivity {
          * special case: set date and time separately,
          * because they have special way to set values
          * */
-        date.setOnClickListener(v->{
+        date.setOnClickListener(v -> {
             /* why is this requires 24 on my IDE!? actual: API 1  */
-            DatePickerDialog dpg=new DatePickerDialog(this);
-            final Calendar calendar=Utils.toDateTime(entry.getStart());
+            DatePickerDialog dpg = new DatePickerDialog(this);
+            final Calendar calendar = Utils.toDateTime(entry.getStart());
             dpg.getDatePicker().updateDate(
-                    calendar.get(Calendar.YEAR),
-                    calendar.get(Calendar.MONTH),
-                    calendar.get(Calendar.DAY_OF_MONTH)
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
             );
             dpg.setCancelable(false);
-            dpg.setOnDateSetListener((vv,y,m,d)->{
-                calendar.set(y,m,d);
+            dpg.setOnDateSetListener((vv, y, m, d) -> {
+                calendar.set(y, m, d);
                 editableEntry.set(/* set values */
-                        editableEntry.get().toBuilder()
-                                .setStart(calendar.getTimeInMillis())
-                                .build()
+                    editableEntry.get().toBuilder()
+                        .setStart(calendar.getTimeInMillis())
+                        .build()
                 );
                 date.setText(Utils.formatDatePart(editableEntry.get().getStart()));
             });
             dpg.show();
         });
-        time.setOnClickListener(v->{
-            final Calendar calendar=Utils.toDateTime(entry.getStart());
-            TimePickerDialog tpd=new TimePickerDialog(
-                    this,
-                    (vv,hod,m)->{
-                        calendar.set(
-                                calendar.get(Calendar.YEAR),
-                                calendar.get(Calendar.MONTH),
-                                calendar.get(Calendar.DAY_OF_MONTH),
-                                hod,
-                                m,
+        time.setOnClickListener(v -> {
+            final Calendar calendar = Utils.toDateTime(entry.getStart());
+            TimePickerDialog tpd = new TimePickerDialog(
+                this,
+                (vv, hod, m) -> {
+                    calendar.set(
+                        calendar.get(Calendar.YEAR),
+                        calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH),
+                        hod,
+                        m,
                                 /*calendar.get(Calendar.SECOND)*/0
-                        );
-                        editableEntry.set(/* set values */
-                                editableEntry.get().toBuilder()
-                                        .setStart(calendar.getTimeInMillis())
-                                        .build()
-                        );
-                        time.setText(Utils.formatTimePart(editableEntry.get().getStart()));
-                    },
-                    calendar.get(Calendar.HOUR_OF_DAY),
-                    calendar.get(Calendar.MINUTE),
-                    true
+                    );
+                    editableEntry.set(/* set values */
+                        editableEntry.get().toBuilder()
+                            .setStart(calendar.getTimeInMillis())
+                            .build()
+                    );
+                    time.setText(Utils.formatTimePart(editableEntry.get().getStart()));
+                },
+                calendar.get(Calendar.HOUR_OF_DAY),
+                calendar.get(Calendar.MINUTE),
+                true
             );
             tpd.show();
         });
 
-        if(entry!=null){
+        if (entry != null) {
             editableEntry.set(entry);
 
             name.setText(editableEntry.get().getName());
@@ -157,15 +158,15 @@ public class ServerCrawlerConfigActivity extends AppCompatActivity {
             offline.setChecked(editableEntry.get().getNotifyOffline());
             date.setText(Utils.formatDatePart(editableEntry.get().getStart()));
             time.setText(Utils.formatTimePart(editableEntry.get().getStart()));
-        }else{
-            long start=Utils.cutSecondAndMillis(System.currentTimeMillis());
+        } else {
+            long start = Utils.cutSecondAndMillis(System.currentTimeMillis());
             editableEntry.set(/* initial values */
-                    Protobufs.ServerCrawlerEntry.newBuilder()
-                            .setEnabled(true)
-                            .setNotifyOnline(true)
-                            .setNotifyOffline(true)
-                            .setStart(start)
-                            .build()
+                Protobufs.ServerCrawlerEntry.newBuilder()
+                    .setEnabled(true)
+                    .setNotifyOnline(true)
+                    .setNotifyOffline(true)
+                    .setStart(start)
+                    .build()
             );
             enabledState.setChecked(true);
             online.setChecked(true);
@@ -194,8 +195,8 @@ public class ServerCrawlerConfigActivity extends AppCompatActivity {
             holder.enabled.setText(entry.getEnabled() ? R.string.yesWord : R.string.noWord);
             holder.online.setText(entry.getNotifyOnline() ? R.string.yesWord : R.string.noWord);
             holder.offline.setText(entry.getNotifyOffline() ? R.string.yesWord : R.string.noWord);
-            holder.edit.setOnClickListener(v-> editDialog(entry, ent->{
-                scm.setEntry(ent.getId(),ent);
+            holder.edit.setOnClickListener(v -> editDialog(entry, ent -> {
+                scm.setEntry(ent.getId(), ent);
                 scm.reschedule();
                 return true;
             }));

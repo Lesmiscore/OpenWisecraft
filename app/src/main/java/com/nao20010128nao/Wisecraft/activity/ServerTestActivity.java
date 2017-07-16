@@ -89,51 +89,51 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
         mode = (Protobufs.Server.Mode) getIntent().getSerializableExtra("mode");
         if (!(usesOldInstance & sl.getItemCount() != 0)) {
             new AlertDialog.Builder(this, ThemePatcher.getDefaultDialogStyle(this))
-                    .setTitle(R.string.testServer)
-                    .setView(dialog = getLayoutInflater().inflate(R.layout.test_server_dialog, null, false))
-                    .setPositiveButton(android.R.string.ok, (di, w) -> {
-                        di.dismiss();
-                        String nu = ((EditText) dialog.findViewById(R.id.pingTimes)).getText().toString();
-                        try {
-                            times = Integer.valueOf(nu);
-                        } catch (NumberFormatException e) {
-                            finish();
-                            return;
-                        }
-                        setTitle(ip + ":" + port + " x " + times);
-                        for (int i = 0; i < times; i++) {
-                            Server s = new Server();
-                            s.ip = ip;
-                            s.port = port;
-                            s.mode = mode;
-                            sl.add(s);
-                            final int position = i;
-                            pinging.put(position, true);
-                            spp.putInQueue(s, new ServerPingProvider.PingHandler() {
-                                public void onPingFailed(final Server s) {
-                                    runOnUiThread(() -> {
-                                        list.set(position, s);
-                                        sl.notifyItemChanged(position);
-                                        pinging.put(position, false);
-                                    });
-                                }
-
-                                public void onPingArrives(final ServerStatus sv) {
-                                    runOnUiThread(() -> {
-                                        list.set(position, sv);
-                                        sl.notifyItemChanged(position);
-                                        pinging.put(position, false);
-                                    });
-                                }
-                            });
-                        }
-                    })
-                    .setNegativeButton(android.R.string.cancel, (di, w) -> {
-                        di.dismiss();
+                .setTitle(R.string.testServer)
+                .setView(dialog = getLayoutInflater().inflate(R.layout.test_server_dialog, null, false))
+                .setPositiveButton(android.R.string.ok, (di, w) -> {
+                    di.dismiss();
+                    String nu = ((EditText) dialog.findViewById(R.id.pingTimes)).getText().toString();
+                    try {
+                        times = Integer.valueOf(nu);
+                    } catch (NumberFormatException e) {
                         finish();
-                    })
-                    .setOnCancelListener(di -> finish())
-                    .show();
+                        return;
+                    }
+                    setTitle(ip + ":" + port + " x " + times);
+                    for (int i = 0; i < times; i++) {
+                        Server s = new Server();
+                        s.ip = ip;
+                        s.port = port;
+                        s.mode = mode;
+                        sl.add(s);
+                        final int position = i;
+                        pinging.put(position, true);
+                        spp.putInQueue(s, new ServerPingProvider.PingHandler() {
+                            public void onPingFailed(final Server s) {
+                                runOnUiThread(() -> {
+                                    list.set(position, s);
+                                    sl.notifyItemChanged(position);
+                                    pinging.put(position, false);
+                                });
+                            }
+
+                            public void onPingArrives(final ServerStatus sv) {
+                                runOnUiThread(() -> {
+                                    list.set(position, sv);
+                                    sl.notifyItemChanged(position);
+                                    pinging.put(position, false);
+                                });
+                            }
+                        });
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, (di, w) -> {
+                    di.dismiss();
+                    finish();
+                })
+                .setOnCancelListener(di -> finish())
+                .show();
         }
 
         ViewCompat.setBackground(findViewById(android.R.id.content), slsl.load());
@@ -279,7 +279,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
                         }
                     }
                     viewHolder
-                            .setPingMillis(sv.ping);
+                        .setPingMillis(sv.ping);
                 } else {
                     viewHolder.offline(s, sta);
                 }

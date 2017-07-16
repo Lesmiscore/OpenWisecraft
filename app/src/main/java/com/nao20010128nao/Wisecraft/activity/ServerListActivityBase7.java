@@ -49,7 +49,7 @@ public abstract class ServerListActivityBase7 extends ServerListActivityBaseFiel
             public boolean onPrepareActionMode(ActionMode p1, Menu p2) {
                 editMode = EDIT_MODE_REMOVE_UNUSED_DOMAINS;
                 MenuItem delete = p2.add(0, 0, 0, R.string.delete)
-                        .setIcon(TheApplication.instance.getTintedDrawable(R.drawable.ic_delete_forever_black_48dp, ThemePatcher.getMenuTintColor(ServerListActivityBase7.this)));
+                    .setIcon(TheApplication.instance.getTintedDrawable(R.drawable.ic_delete_forever_black_48dp, ThemePatcher.getMenuTintColor(ServerListActivityBase7.this)));
                 MenuItemCompat.setShowAsAction(delete, MenuItem.SHOW_AS_ACTION_ALWAYS);
                 return true;
             }

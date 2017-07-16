@@ -31,22 +31,22 @@ public class MinecraftFormattingCodeParser {
 
     public static final Map<String, Integer> NAME_TO_COLOR;
     private static final int[] TEXT_COLORS = new int[]{
-            0xff000000,
-            0xff0000AA,
-            0xff00AA00,
-            0xff00AAAA,
-            0xffAA0000,
-            0xffAA00AA,
-            0xffFFAA00,
-            0xffAAAAAA,
-            0xff555555,
-            0xff5555FF,
-            0xff55FF55,
-            0xff55FFFF,
-            0xffFF5555,
-            0xffFF55FF,
-            0xffFFFF55,
-            0xffFFFFFF
+        0xff000000,
+        0xff0000AA,
+        0xff00AA00,
+        0xff00AAAA,
+        0xffAA0000,
+        0xffAA00AA,
+        0xffFFAA00,
+        0xffAAAAAA,
+        0xff555555,
+        0xff5555FF,
+        0xff55FF55,
+        0xff55FFFF,
+        0xffFF5555,
+        0xffFF55FF,
+        0xffFFFF55,
+        0xffFFFFFF
     };
 
     public byte[] flags = null;
@@ -139,7 +139,7 @@ public class MinecraftFormattingCodeParser {
                         flag = 15;
                         noColor = false;
                         break;
-						
+
 					/*Styles*/
                     case 'l':
                     case 'L':

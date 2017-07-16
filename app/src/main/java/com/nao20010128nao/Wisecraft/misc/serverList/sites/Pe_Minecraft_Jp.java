@@ -14,7 +14,7 @@ import java.util.*;
  */
 public class Pe_Minecraft_Jp implements ServerListSite {
     private static final List<String> PATH_BLACK_LIST = Arrays.asList("score", "vote", "player", "uptime", "ping",
-            "recent", "random", "comment");
+        "recent", "random", "comment");
 
     public Pe_Minecraft_Jp() {
         // TODO 自動生成されたコンストラクター・スタブ
@@ -32,7 +32,7 @@ public class Pe_Minecraft_Jp implements ServerListSite {
         if (isPathStartsFromServers(url) & isSingleServer(url.getPath()))
             return false;
         if (isPathStartsFromServers(url) | url.getPath().replace("/", "").equals("")
-                | !isSingleServer(url.getPath()))
+            | !isSingleServer(url.getPath()))
             return true;
         return false;
     }

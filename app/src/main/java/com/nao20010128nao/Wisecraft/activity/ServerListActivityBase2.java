@@ -1,5 +1,6 @@
 package com.nao20010128nao.Wisecraft.activity;
 
+import com.annimon.stream.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 
 import java.util.*;
@@ -13,42 +14,33 @@ abstract class ServerListActivityBase2 extends ServerListActivityBase3 {
         }).start();
     }
 
-    public static enum SortKind {
+    public enum SortKind {
         BRING_ONLINE_SERVERS_TO_TOP {
             public List<Server> doSort(List<Server> list) {
-                List<Server> backup, online, offline;
-                backup = new ArrayList<>(list);
-                online = new ArrayList<>();
-                offline = new ArrayList<>(backup);
-                for (Server s : list) if (s instanceof ServerStatus) online.add(s);
-                offline.removeAll(online);
-                backup.clear();
-                backup.addAll(online);
-                backup.addAll(offline);
-                return backup;
+                Stream<Server> online, offline;
+                online = Stream.of(list).filter(s->s instanceof ServerStatus);
+                offline = Stream.of(list).filterNot(s->s instanceof ServerStatus);
+                return Stream.of(online,offline)
+                    .reduce(Stream.<Server>of(),Stream::concat)
+                    .toList();
             }
         },
         IP_AND_PORT {
             public List<Server> doSort(List<Server> list) {
-                List<Server> l = new ArrayList<>(list);
-                Collections.sort(l, ServerSorter.INSTANCE);
-                return l;
+                return Stream.of(list)
+                    .sorted(ServerSorter.INSTANCE)
+                    .toList();
             }
         },
         ONLINE_AND_OFFLINE {
             public List<Server> doSort(List<Server> list) {
-                List<Server> backup, online, offline;
-                backup = new ArrayList<>(list);
-                online = new ArrayList<>();
-                offline = new ArrayList<>(backup);
-                for (Server s : list) if (s instanceof ServerStatus) online.add(s);
-                offline.removeAll(online);
-                online = IP_AND_PORT.doSort(online);
-                offline = IP_AND_PORT.doSort(offline);
-                backup.clear();
-                backup.addAll(online);
-                backup.addAll(offline);
-                return backup;
+                Stream<Server> online, offline;
+                online = Stream.of(list).filter(s->s instanceof ServerStatus);
+                offline = Stream.of(list).filterNot(s->s instanceof ServerStatus);
+                return Stream.of(online,offline)
+                    .map(s->s.sorted(ServerSorter.INSTANCE))
+                    .reduce(Stream.<Server>of(),Stream::concat)
+                    .toList();
             }
         };
 

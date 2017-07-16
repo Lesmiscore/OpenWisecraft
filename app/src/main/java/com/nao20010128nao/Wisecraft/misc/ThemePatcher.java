@@ -28,114 +28,114 @@ public class ThemePatcher {
     static {
         Map<Class<? extends Activity>, Themes> themes = new HashMap<>();
         themes.put(
-                Activity.class,
-                new Themes(
-                        R.style.AppTheme,
-                        R.style.AppTheme_Dark,
-                        R.style.AppTheme_DayNight,
-                        R.style.AppTheme_Violet,
-                        R.style.AppTheme_Black
-                )
+            Activity.class,
+            new Themes(
+                R.style.AppTheme,
+                R.style.AppTheme_Dark,
+                R.style.AppTheme_DayNight,
+                R.style.AppTheme_Violet,
+                R.style.AppTheme_Black
+            )
         );
         themes.put(
-                ServerListActivity.class,
-                new Themes(
-                        R.style.AppTheme_NoActionBar,
-                        R.style.AppTheme_NoActionBar_Dark,
-                        R.style.AppTheme_NoActionBar_DayNight,
-                        R.style.AppTheme_NoActionBar_Violet,
-                        R.style.AppTheme_NoActionBar_Black
-                )
+            ServerListActivity.class,
+            new Themes(
+                R.style.AppTheme_NoActionBar,
+                R.style.AppTheme_NoActionBar_Dark,
+                R.style.AppTheme_NoActionBar_DayNight,
+                R.style.AppTheme_NoActionBar_Violet,
+                R.style.AppTheme_NoActionBar_Black
+            )
         );
         themes.put(
-                ServerInfoActivity.class,
-                new Themes(
-                        R.style.AppTheme_ServerInfo,
-                        R.style.AppTheme_ServerInfo_Dark,
-                        R.style.AppTheme_ServerInfo_DayNight,
-                        R.style.AppTheme_ServerInfo_Violet,
-                        R.style.AppTheme_ServerInfo_Black
-                )
+            ServerInfoActivity.class,
+            new Themes(
+                R.style.AppTheme_ServerInfo,
+                R.style.AppTheme_ServerInfo_Dark,
+                R.style.AppTheme_ServerInfo_DayNight,
+                R.style.AppTheme_ServerInfo_Violet,
+                R.style.AppTheme_ServerInfo_Black
+            )
         );
         themes.put(
-                RCONActivity.class,
-                new Themes(
-                        R.style.AppTheme_NoActionBar,
-                        R.style.AppTheme_NoActionBar_Dark,
-                        R.style.AppTheme_NoActionBar_DayNight,
-                        R.style.AppTheme_NoActionBar_Violet,
-                        R.style.AppTheme_NoActionBar_Black
-                )
+            RCONActivity.class,
+            new Themes(
+                R.style.AppTheme_NoActionBar,
+                R.style.AppTheme_NoActionBar_Dark,
+                R.style.AppTheme_NoActionBar_DayNight,
+                R.style.AppTheme_NoActionBar_Violet,
+                R.style.AppTheme_NoActionBar_Black
+            )
         );
         themes.put(
-                ServerGetActivity.class,
-                new Themes(
-                        R.style.AppTheme_ServerGet,
-                        R.style.AppTheme_ServerGet_Dark,
-                        R.style.AppTheme_ServerGet_DayNight,
-                        R.style.AppTheme_ServerGet_Violet,
-                        R.style.AppTheme_ServerGet_Black
-                )
+            ServerGetActivity.class,
+            new Themes(
+                R.style.AppTheme_ServerGet,
+                R.style.AppTheme_ServerGet_Dark,
+                R.style.AppTheme_ServerGet_DayNight,
+                R.style.AppTheme_ServerGet_Violet,
+                R.style.AppTheme_ServerGet_Black
+            )
         );
         themes.put(
-                RequestedServerInfoActivity.class,
-                new Themes(
-                        R.style.AppTheme_Translucent,
-                        R.style.AppTheme_Translucent,
-                        R.style.AppTheme_Translucent,
-                        R.style.AppTheme_Translucent,
-                        R.style.AppTheme_Translucent
-                )
+            RequestedServerInfoActivity.class,
+            new Themes(
+                R.style.AppTheme_Translucent,
+                R.style.AppTheme_Translucent,
+                R.style.AppTheme_Translucent,
+                R.style.AppTheme_Translucent,
+                R.style.AppTheme_Translucent
+            )
         );
         themes.put(
-                AddServerActivity.class,
-                new Themes(
-                        R.style.AppDialog,
-                        R.style.AppDialog_Dark,
-                        R.style.AppDialog_DayNight,
-                        R.style.AppDialog_Violet,
-                        R.style.AppDialog_Black
-                )
+            AddServerActivity.class,
+            new Themes(
+                R.style.AppDialog,
+                R.style.AppDialog_Dark,
+                R.style.AppDialog_DayNight,
+                R.style.AppDialog_Violet,
+                R.style.AppDialog_Black
+            )
         );
         themes.put(
-                OpenSourceActivity.class,
-                new Themes(
-                        R.style.AppTheme_OpenSource,
-                        R.style.AppTheme_OpenSource,
-                        R.style.AppTheme_OpenSource,
-                        R.style.AppTheme_OpenSource,
-                        R.style.AppTheme_OpenSource
-                )
+            OpenSourceActivity.class,
+            new Themes(
+                R.style.AppTheme_OpenSource,
+                R.style.AppTheme_OpenSource,
+                R.style.AppTheme_OpenSource,
+                R.style.AppTheme_OpenSource,
+                R.style.AppTheme_OpenSource
+            )
         );
         themes.put(
-                OpenSourceActivity2.class,
-                new Themes(
-                        R.style.AppTheme_OpenSource,
-                        R.style.AppTheme_OpenSource,
-                        R.style.AppTheme_OpenSource,
-                        R.style.AppTheme_OpenSource,
-                        R.style.AppTheme_OpenSource
-                )
+            OpenSourceActivity2.class,
+            new Themes(
+                R.style.AppTheme_OpenSource,
+                R.style.AppTheme_OpenSource,
+                R.style.AppTheme_OpenSource,
+                R.style.AppTheme_OpenSource,
+                R.style.AppTheme_OpenSource
+            )
         );
         themes.put(
-                AboutAppActivity.class,
-                new Themes(
-                        R.style.AppTheme_OpenSource,
-                        R.style.AppTheme_OpenSource,
-                        R.style.AppTheme_OpenSource,
-                        R.style.AppTheme_OpenSource,
-                        R.style.AppTheme_OpenSource
-                )
+            AboutAppActivity.class,
+            new Themes(
+                R.style.AppTheme_OpenSource,
+                R.style.AppTheme_OpenSource,
+                R.style.AppTheme_OpenSource,
+                R.style.AppTheme_OpenSource,
+                R.style.AppTheme_OpenSource
+            )
         );
         themes.put(
-                FragmentSettingsActivity.MasterDetailSettings.class,
-                new Themes(
-                        R.style.AppTheme_NoActionBar,
-                        R.style.AppTheme_NoActionBar_Dark,
-                        R.style.AppTheme_NoActionBar_DayNight,
-                        R.style.AppTheme_NoActionBar_Violet,
-                        R.style.AppTheme_NoActionBar_Black
-                )
+            FragmentSettingsActivity.MasterDetailSettings.class,
+            new Themes(
+                R.style.AppTheme_NoActionBar,
+                R.style.AppTheme_NoActionBar_Dark,
+                R.style.AppTheme_NoActionBar_DayNight,
+                R.style.AppTheme_NoActionBar_Violet,
+                R.style.AppTheme_NoActionBar_Black
+            )
         );
         THEMES = Collections.unmodifiableMap(themes);
     }

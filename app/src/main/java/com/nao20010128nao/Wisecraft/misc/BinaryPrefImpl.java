@@ -98,13 +98,13 @@ public class BinaryPrefImpl implements SharedPreferences {
 
     @Override
     public void registerOnSharedPreferenceChangeListener(
-            OnSharedPreferenceChangeListener listener) {
+        OnSharedPreferenceChangeListener listener) {
         // Do nothing here
     }
 
     @Override
     public void unregisterOnSharedPreferenceChangeListener(
-            OnSharedPreferenceChangeListener listener) {
+        OnSharedPreferenceChangeListener listener) {
         // Do nothing here
     }
 

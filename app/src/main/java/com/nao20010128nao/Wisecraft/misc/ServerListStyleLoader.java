@@ -41,10 +41,10 @@ public class ServerListStyleLoader {
                 willColorText = false;
             }
             pref.edit()
-                    .putBoolean("serverListColorFormattedText", willColorText)
-                    .remove("colorFormattedText")
-                    .remove("darkBackgroundForServerName")
-                    .commit();
+                .putBoolean("serverListColorFormattedText", willColorText)
+                .remove("colorFormattedText")
+                .remove("darkBackgroundForServerName")
+                .commit();
         }
     }
 
@@ -97,30 +97,30 @@ public class ServerListStyleLoader {
 
     public void setWhiteBg() {
         pref.edit()
-                .putInt("serverListBgId", BACKGROUND_WHITE)
-                .remove("serverListBgColor").remove("serverListBgImg")
-                .commit();
+            .putInt("serverListBgId", BACKGROUND_WHITE)
+            .remove("serverListBgColor").remove("serverListBgImg")
+            .commit();
     }
 
     public void setBlackBg() {
         pref.edit()
-                .putInt("serverListBgId", BACKGROUND_BLACK)
-                .remove("serverListBgColor").remove("serverListBgImg")
-                .commit();
+            .putInt("serverListBgId", BACKGROUND_BLACK)
+            .remove("serverListBgColor").remove("serverListBgImg")
+            .commit();
     }
 
     public void setDirtBg() {
         pref.edit()
-                .putInt("serverListBgId", BACKGROUND_DIRT)
-                .remove("serverListBgColor").remove("serverListBgImg")
-                .commit();
+            .putInt("serverListBgId", BACKGROUND_DIRT)
+            .remove("serverListBgColor").remove("serverListBgImg")
+            .commit();
     }
 
     public void setSingleColorBg(int color) {
         pref.edit()
-                .putInt("serverListBgId", BACKGROUND_SINGLE_COLOR)
-                .putInt("serverListBgColor", color).remove("serverListBgImg")
-                .commit();
+            .putInt("serverListBgId", BACKGROUND_SINGLE_COLOR)
+            .putInt("serverListBgColor", color).remove("serverListBgImg")
+            .commit();
     }
 
     public void setImageBg(Bitmap bmp) {
@@ -128,10 +128,10 @@ public class ServerListStyleLoader {
         bmp.compress(Bitmap.CompressFormat.PNG, 100, baos);
         String encoded = WisecraftBase64.encodeToString(baos.toByteArray(), ServerInfoActivity.BASE64_FLAGS);
         pref.edit()
-                .putInt("serverListBgId", BACKGROUND_IMAGE)
-                .putString("serverListBgImg", encoded)
-                .remove("serverListBgColor")
-                .commit();
+            .putInt("serverListBgId", BACKGROUND_IMAGE)
+            .putString("serverListBgImg", encoded)
+            .remove("serverListBgColor")
+            .commit();
     }
 
     public int getBgId() {

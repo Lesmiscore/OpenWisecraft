@@ -66,18 +66,18 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
             ip = getIntent().getStringExtra("ip");
             mode = (Protobufs.Server.Mode) getIntent().getSerializableExtra("mode");
             new AlertDialog.Builder(this, ThemePatcher.getDefaultDialogStyle(this))
-                    .setTitle(R.string.serverFinder)
-                    .setView(dialog = getLayoutInflater().inflate(R.layout.server_finder_start, null, false))
-                    .setPositiveButton(android.R.string.ok, (di, w) -> {
-                        String ip = ((EditText) dialog.findViewById(R.id.ip)).getText().toString();
-                        int startPort = Integer.valueOf(((EditText) dialog.findViewById(R.id.startPort)).getText().toString());
-                        int endPort = Integer.valueOf(((EditText) dialog.findViewById(R.id.endPort)).getText().toString());
-                        Protobufs.Server.Mode mode = ((CheckBox) dialog.findViewById(R.id.pc)).isChecked() ? Protobufs.Server.Mode.PC : Protobufs.Server.Mode.PE;
-                        launchService(ip, Math.min(startPort, endPort), Math.max(startPort, endPort), mode);
-                    })
-                    .setNegativeButton(android.R.string.cancel, (di, w) -> finish())
-                    .setOnCancelListener(di -> finish())
-                    .show();
+                .setTitle(R.string.serverFinder)
+                .setView(dialog = getLayoutInflater().inflate(R.layout.server_finder_start, null, false))
+                .setPositiveButton(android.R.string.ok, (di, w) -> {
+                    String ip = ((EditText) dialog.findViewById(R.id.ip)).getText().toString();
+                    int startPort = Integer.valueOf(((EditText) dialog.findViewById(R.id.startPort)).getText().toString());
+                    int endPort = Integer.valueOf(((EditText) dialog.findViewById(R.id.endPort)).getText().toString());
+                    Protobufs.Server.Mode mode = ((CheckBox) dialog.findViewById(R.id.pc)).isChecked() ? Protobufs.Server.Mode.PC : Protobufs.Server.Mode.PE;
+                    launchService(ip, Math.min(startPort, endPort), Math.max(startPort, endPort), mode);
+                })
+                .setNegativeButton(android.R.string.cancel, (di, w) -> finish())
+                .setOnCancelListener(di -> finish())
+                .show();
             if (ip != null) ((EditText) dialog.findViewById(R.id.ip)).setText(ip);
             ((CheckBox) dialog.findViewById(R.id.pc)).setChecked(mode != Protobufs.Server.Mode.PE);
         }
@@ -209,17 +209,17 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
                 }
             }
             viewHolder
-                    .setStatColor(ContextCompat.getColor(sta, R.color.stat_ok))
-                    .hideServerPlayers()
-                    .setTag(s)
-                    .setPingMillis(s.ping)
-                    .setServer(s)
-                    .setServerAddress(s.port + "")
-                    .hideServerTitle();
+                .setStatColor(ContextCompat.getColor(sta, R.color.stat_ok))
+                .hideServerPlayers()
+                .setTag(s)
+                .setPingMillis(s.ping)
+                .setServer(s)
+                .setServerAddress(s.port + "")
+                .hideServerTitle();
             applyHandlersForViewTree(viewHolder.itemView,
-                    v -> {
-                        onItemClick(null, v, offset, Long.MIN_VALUE);
-                    }
+                v -> {
+                    onItemClick(null, v, offset, Long.MIN_VALUE);
+                }
             );
         }
 
@@ -240,18 +240,18 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
             final Server s = getItem(position);
             if (s != null) {
                 new AlertDialog.Builder(ServerFinderActivityImpl.this, ThemePatcher.getDefaultDialogStyle(ServerFinderActivityImpl.this))
-                        .setTitle(s.toString())
-                        .setItems(R.array.serverFinderMenu, (di, w) -> {
-                            switch (w) {
-                                case 0:
-                                    if (!ServerListActivityImpl.instance.get().list.contains(s)) {
-                                        ServerListActivityImpl.instance.get().sl.add(s.cloneAsServer());
-                                        ServerListActivityImpl.instance.get().dryUpdate(s, true);
-                                    }
-                                    break;
-                            }
-                        })
-                        .show();
+                    .setTitle(s.toString())
+                    .setItems(R.array.serverFinderMenu, (di, w) -> {
+                        switch (w) {
+                            case 0:
+                                if (!ServerListActivityImpl.instance.get().list.contains(s)) {
+                                    ServerListActivityImpl.instance.get().sl.add(s.cloneAsServer());
+                                    ServerListActivityImpl.instance.get().dryUpdate(s, true);
+                                }
+                                break;
+                        }
+                    })
+                    .show();
             }
         }
     }

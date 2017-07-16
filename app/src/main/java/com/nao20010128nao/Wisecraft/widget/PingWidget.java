@@ -137,12 +137,12 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
         SharedPreferences widgetPref = getWidgetPref(context);
         Server s = Utils.newGson().fromJson(widgetPref.getString("" + wid, "{}"), Server.class);
         String addr = new StringBuilder("wisecraft://info/")
-                .append(s.ip)
-                .append('/')
-                .append(s.port)
-                .append('/')
-                .append(s.mode == Protobufs.Server.Mode.PE ? "PE" : "PC")
-                .toString();
+            .append(s.ip)
+            .append('/')
+            .append(s.port)
+            .append('/')
+            .append(s.mode == Protobufs.Server.Mode.PE ? "PE" : "PC")
+            .toString();
 
         rvs.setOnClickPendingIntent(R.id.update, PendingIntent.getBroadcast(context, wid, new Intent(context, PingWidget.PingHandler.class).setAction("update").putExtra("wid", wid), 0));
         rvs.setOnClickPendingIntent(R.id.openServerStatus, PendingIntent.getActivity(context, wid * 100, new Intent(context, RequestedServerInfoActivity.class).setData(Uri.parse(addr)), 0));
@@ -171,7 +171,7 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
         for (int i = 0; i < oldWidgetIds.length; i++) {
             Log.d("WisecraftWidgets", "onRestored(2): " + oldWidgetIds[i] + "=>" + newWidgetIds[i]);
             edt.putString(newWidgetIds[i] + "", datas.get(oldWidgetIds[i] + "") + "")
-                    .putString(newWidgetIds[i] + ".data", datas.get(oldWidgetIds[i] + ".data") + "");
+                .putString(newWidgetIds[i] + ".data", datas.get(oldWidgetIds[i] + ".data") + "");
         }
         edt.commit();
     }
@@ -353,9 +353,9 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
             Log.d("WisecraftWidgets", "size of players: " + players.size());
 
             ssrvw
-                    .setPingMillis(s.ping)
-                    .setServer(s)
-                    .setServerPlayers(players);
+                .setPingMillis(s.ping)
+                .setServer(s)
+                .setServerPlayers(players);
 
             setupHandlers(rvs, c, id);
             setWidgetStatus(c, id, STATUS_ONLINE, true);

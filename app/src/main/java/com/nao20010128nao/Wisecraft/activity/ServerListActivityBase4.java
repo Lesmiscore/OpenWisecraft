@@ -40,10 +40,10 @@ abstract class ServerListActivityBase4 extends ServerListActivityBase5 {
             });
 
             DrawerBuilder bld = new DrawerBuilder()
-                    .withActivity(this)
-                    .withToolbar(Utils.getToolbar(this))
-                    .withDrawerWidthRes(R.dimen.drawer_width)
-                    .withDrawerLayout(R.layout.drawer_single_for_builder);
+                .withActivity(this)
+                .withToolbar(Utils.getToolbar(this))
+                .withDrawerWidthRes(R.dimen.drawer_width)
+                .withDrawerLayout(R.layout.drawer_single_for_builder);
 
             drawer = bld.build();
         }
@@ -118,11 +118,11 @@ abstract class ServerListActivityBase4 extends ServerListActivityBase5 {
         if (newVersionAnnounce != 0) {
             pref.edit().putInt("announcedFor", 30).commit();
             new AlertDialog.Builder(this, ThemePatcher.getDefaultDialogStyle(this))
-                    .setTitle(R.string.newVersionAnnounceTitle_30)
-                    .setMessage(R.string.newVersionAnnounceContent_30)
-                    .setCancelable(false)
-                    .setPositiveButton(android.R.string.ok, null)
-                    .show();
+                .setTitle(R.string.newVersionAnnounceTitle_30)
+                .setMessage(R.string.newVersionAnnounceContent_30)
+                .setCancelable(false)
+                .setPositiveButton(android.R.string.ok, null)
+                .show();
         }
     }
 

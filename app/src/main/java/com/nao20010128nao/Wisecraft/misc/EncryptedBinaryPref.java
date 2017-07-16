@@ -47,8 +47,8 @@ public class EncryptedBinaryPref extends BinaryPrefImpl {
             sr.nextBytes(PREF_IV);
             Cipher cip = Cipher.getInstance("AES/CBC/PKCS5Padding");
             cip.init(Cipher.ENCRYPT_MODE,
-                    new SecretKeySpec(PREF_KEY, "aes".toUpperCase()),
-                    new IvParameterSpec(PREF_IV));
+                new SecretKeySpec(PREF_KEY, "aes".toUpperCase()),
+                new IvParameterSpec(PREF_IV));
             fos.write(PREF_KEY);
             fos.write(PREF_IV);
             byte[] buf = cip.doFinal(base);
@@ -76,8 +76,8 @@ public class EncryptedBinaryPref extends BinaryPrefImpl {
             dis.readFully(PREF_KEY);
             dis.readFully(PREF_IV);
             cip.init(Cipher.DECRYPT_MODE,
-                    new SecretKeySpec(PREF_KEY, "aes".toUpperCase()),
-                    new IvParameterSpec(PREF_IV));
+                new SecretKeySpec(PREF_KEY, "aes".toUpperCase()),
+                new IvParameterSpec(PREF_IV));
             return readAllFromStreamRaw(new CipherInputStream(dis, cip), close);
         } catch (Throwable e) {
             throw new RuntimeException(e);

@@ -166,8 +166,8 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
         psts.setIndicatorColor(slsl.getTextColor());
         psts.setTextColor(slsl.getTextColor());
         psts.setOnPageChangeListener(new ViewPagerChangeListenerObserver(
-                new ColorUpdater(slsl.getTextColor(), translucent(slsl.getTextColor()), tabs, psts),
-                new PstsTextStyleChanger(Typeface.BOLD, Typeface.NORMAL, tabs, psts)
+            new ColorUpdater(slsl.getTextColor(), translucent(slsl.getTextColor()), tabs, psts),
+            new PstsTextStyleChanger(Typeface.BOLD, Typeface.NORMAL, tabs, psts)
         ));
 
         ViewCompat.setBackground(findViewById(R.id.appbar), slsl.load());
@@ -235,7 +235,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
             if (tv != null) tv.setTextColor(slsl.getTextColor());
         });
 
-        token=getIntent().getStringExtra("token");
+        token = getIntent().getStringExtra("token");
     }
 
     public void onBackPressed() {
@@ -353,25 +353,19 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
             CompatTaskDescription td;
             switch (localStat.mode) {
                 case PC:
-                    if (serverIconBmp != null) {
-                        td = new CompatTaskDescription(
-                                getTitle().toString(),
-                                serverIconBmp,
-                                color
-                        );
-                    } else {
-                        td = new CompatTaskDescription(
-                                getTitle().toString(),
-                                BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher),
-                                color
-                        );
-                    }
+                    td = new CompatTaskDescription(
+                        getTitle().toString(),
+                        serverIconBmp != null ?
+                            serverIconBmp :
+                            BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher),
+                        color
+                    );
                     break;
                 default:
                     td = new CompatTaskDescription(
-                            getTitle().toString(),
-                            BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher),
-                            color
+                        getTitle().toString(),
+                        BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher),
+                        color
                     );
                     break;
             }
@@ -416,10 +410,10 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
                     });
                 });
                 new AlertDialog.Builder(this, ThemePatcher.getDefaultDialogStyle(this))
-                        .setTitle(R.string.export_typepath_simple)
-                        .setView(dialogView_)
-                        .setPositiveButton(android.R.string.ok, (di, w) -> ServerInfoActivityImplPermissionsDispatcher.exportCurrentServerStatusWithCheck(ServerInfoActivityImpl.this, et_.getText().toString()))
-                        .show();
+                    .setTitle(R.string.export_typepath_simple)
+                    .setView(dialogView_)
+                    .setPositiveButton(android.R.string.ok, (di, w) -> ServerInfoActivityImplPermissionsDispatcher.exportCurrentServerStatusWithCheck(ServerInfoActivityImpl.this, et_.getText().toString()))
+                    .show();
                 break;
             case 2://Update
                 if (useBottomSheet) {
@@ -435,11 +429,9 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
                 boolean dark;
                 dark = pref.getBoolean("colorFormattedText", false) && pref.getBoolean("darkBackgroundForServerName", false);
             {
-                if (dark) {
-                    ll = (LinearLayout) TheApplication.instance.getLayoutInflater().inflate(R.layout.server_info_show_title_dark, null);
-                } else {
-                    ll = (LinearLayout) TheApplication.instance.getLayoutInflater().inflate(R.layout.server_info_show_title, null);
-                }
+                ll = (LinearLayout) TheApplication.instance.getLayoutInflater().inflate(
+                    dark ? R.layout.server_info_show_title_dark : R.layout.server_info_show_title, null
+                );
                 ViewCompat.setBackground(ll, slsl.load());
             }
             TextView serverNameView = (TextView) ll.findViewById(R.id.serverName);
@@ -678,7 +670,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
             ((TextView) parent.findViewById(android.R.id.text1)).setText(name);
             if (pcMode) {
                 TypedArray ta = obtainStyledAttributes(new int[]{R.attr.selectableItemBackground});
-                parent.itemView.setBackground(ta.getDrawable(0));
+                ViewCompat.setBackground(parent.itemView, ta.getDrawable(0));
                 ta.recycle();
                 Utils.applyHandlersForViewTree(parent.itemView, v -> {
                     MCPlayerInfoDialog dialog = new MCPlayerInfoDialog(ServerInfoActivityImpl.this);
@@ -686,7 +678,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
                     dialog.show();
                 }, null);
             } else {
-                parent.itemView.setBackground(null);
+                ViewCompat.setBackground(parent.itemView, null);
                 Utils.applyHandlersForViewTree(parent.itemView, null, null);
             }
         }

@@ -1,5 +1,7 @@
 package com.nao20010128nao.Wisecraft.misc;
 
+import com.annimon.stream.*;
+
 import java.util.*;
 import java.util.concurrent.*;
 
@@ -17,11 +19,7 @@ public class ServerListArrayList extends CopyOnWriteArrayList<Server> implements
 
     @Override
     public boolean contains(Object object) {
-        if (object == null) return false;
-        for (Server s : this)
-            if (s.equals(object))
-                return true;
-        return false;
+        return object != null && Stream.of(this).anyMatch(object::equals);
     }
 
     @Override

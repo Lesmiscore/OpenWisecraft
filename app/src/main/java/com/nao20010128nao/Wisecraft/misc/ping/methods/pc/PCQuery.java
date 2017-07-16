@@ -23,7 +23,7 @@ public class PCQuery implements PingHost {
 
     /* handshake->Request->statJson->ping */
     private void writeHandshake(DataOutputStream out, String host, int port)
-            throws IOException {
+        throws IOException {
         ByteArrayOutputStream handshake_bytes = new ByteArrayOutputStream();
         DataOutputStream handshake = new DataOutputStream(handshake_bytes);
 
@@ -51,7 +51,7 @@ public class PCQuery implements PingHost {
 
         PingerUtils.io(id == -1, "Server prematurely ended stream.");
         PingerUtils.io(id != PingerUtils.PACKET_STATUSREQUEST,
-                "Server returned invalid packet.");
+            "Server returned invalid packet.");
 
         int length = PingerUtils.readVarInt(in);
         PingerUtils.io(length == -1, "Server prematurely ended stream.");
@@ -64,7 +64,7 @@ public class PCQuery implements PingHost {
     }
 
     private void doPing(DataOutputStream out, DataInputStream in)
-            throws IOException {
+        throws IOException {
 
         out.writeByte(0x09);
         out.writeByte(PingerUtils.PACKET_PING);

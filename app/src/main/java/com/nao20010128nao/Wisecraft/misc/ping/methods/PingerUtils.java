@@ -10,7 +10,7 @@ import java.util.*;
 public class PingerUtils extends CompatUtils {
 
     public static byte PACKET_HANDSHAKE = 0x00, PACKET_STATUSREQUEST = 0x00,
-            PACKET_PING = 0x01;
+        PACKET_PING = 0x01;
     public static int PROTOCOL_VERSION = 4;
     public static int STATUS_HANDSHAKE = 1;
 
@@ -43,7 +43,7 @@ public class PingerUtils extends CompatUtils {
     }
 
     public static void writeVarInt(DataOutputStream out, int paramInt)
-            throws IOException {
+        throws IOException {
         while (true) {
             if ((paramInt & 0xFFFFFF80) == 0) {
                 out.writeByte(paramInt);
@@ -130,7 +130,7 @@ public class PingerUtils extends CompatUtils {
     public static byte[] intToBytes(int in) {
         byte[] b;
         b = new byte[]{(byte) (in >>> 24 & 0xFF), (byte) (in >>> 16 & 0xFF),
-                (byte) (in >>> 8 & 0xFF), (byte) (in & 0xFF)};
+            (byte) (in >>> 8 & 0xFF), (byte) (in & 0xFF)};
         return b;
     }
 
@@ -146,66 +146,66 @@ public class PingerUtils extends CompatUtils {
     public static <T, U> T[] copyOf(U[] original, int newLength, Class<? extends T[]> newType) {
         @SuppressWarnings("unchecked")
         T[] copy = ((Object) newType == (Object) Object[].class)
-                ? (T[]) new Object[newLength]
-                : (T[]) Array.newInstance(newType.getComponentType(), newLength);
+            ? (T[]) new Object[newLength]
+            : (T[]) Array.newInstance(newType.getComponentType(), newLength);
         System.arraycopy(original, 0, copy, 0,
-                Math.min(original.length, newLength));
+            Math.min(original.length, newLength));
         return copy;
     }
 
     public static byte[] copyOf(byte[] original, int newLength) {
         byte[] copy = new byte[newLength];
         System.arraycopy(original, 0, copy, 0,
-                Math.min(original.length, newLength));
+            Math.min(original.length, newLength));
         return copy;
     }
 
     public static short[] copyOf(short[] original, int newLength) {
         short[] copy = new short[newLength];
         System.arraycopy(original, 0, copy, 0,
-                Math.min(original.length, newLength));
+            Math.min(original.length, newLength));
         return copy;
     }
 
     public static int[] copyOf(int[] original, int newLength) {
         int[] copy = new int[newLength];
         System.arraycopy(original, 0, copy, 0,
-                Math.min(original.length, newLength));
+            Math.min(original.length, newLength));
         return copy;
     }
 
     public static long[] copyOf(long[] original, int newLength) {
         long[] copy = new long[newLength];
         System.arraycopy(original, 0, copy, 0,
-                Math.min(original.length, newLength));
+            Math.min(original.length, newLength));
         return copy;
     }
 
     public static char[] copyOf(char[] original, int newLength) {
         char[] copy = new char[newLength];
         System.arraycopy(original, 0, copy, 0,
-                Math.min(original.length, newLength));
+            Math.min(original.length, newLength));
         return copy;
     }
 
     public static float[] copyOf(float[] original, int newLength) {
         float[] copy = new float[newLength];
         System.arraycopy(original, 0, copy, 0,
-                Math.min(original.length, newLength));
+            Math.min(original.length, newLength));
         return copy;
     }
 
     public static double[] copyOf(double[] original, int newLength) {
         double[] copy = new double[newLength];
         System.arraycopy(original, 0, copy, 0,
-                Math.min(original.length, newLength));
+            Math.min(original.length, newLength));
         return copy;
     }
 
     public static boolean[] copyOf(boolean[] original, int newLength) {
         boolean[] copy = new boolean[newLength];
         System.arraycopy(original, 0, copy, 0,
-                Math.min(original.length, newLength));
+            Math.min(original.length, newLength));
         return copy;
     }
 }

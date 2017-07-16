@@ -118,10 +118,10 @@ public class RequestedServerInfoActivity extends ApiBaseActivity {
             runOnUiThread(() -> {
                 wd.hideWorkingDialog(s);
                 new AlertDialog.Builder(RequestedServerInfoActivity.this, ThemePatcher.getDefaultDialogStyle(RequestedServerInfoActivity.this))
-                        .setMessage(R.string.serverOffline)
-                        .setPositiveButton(android.R.string.ok, (di, t) -> finish())
-                        .setOnDismissListener(di -> finish())
-                        .show();
+                    .setMessage(R.string.serverOffline)
+                    .setPositiveButton(android.R.string.ok, (di, t) -> finish())
+                    .setOnDismissListener(di -> finish())
+                    .show();
             });
         }
     }

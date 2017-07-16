@@ -130,9 +130,9 @@ public class MCSkinViewerDialog extends AppCompatDialog {
             if (session.getUri().endsWith("/background.css")) {
                 StringBuilder css = new StringBuilder();
                 css
-                        .append("body{")
-                        .append("background-color:").append(getBackgroundColor()).append(";")
-                        .append("}");
+                    .append("body{")
+                    .append("background-color:").append(getBackgroundColor()).append(";")
+                    .append("}");
                 return newFixedLengthResponse(css.toString());
             }
             try {

@@ -28,7 +28,7 @@ public class GhostPingServer extends Thread {
 
     public void runImpl() throws IOException {
         /*if(Build.VERSION.SDK_INT<9){
-			Log.d("ghost_query", "the system is too old to start GhostPingServer");
+            Log.d("ghost_query", "the system is too old to start GhostPingServer");
 			return;
 		}*/
         while (serv == null) {

@@ -146,16 +146,16 @@ public class ServerStatusWrapperViewHolder extends FindableViewHolder implements
 
     public ServerStatusWrapperViewHolder pending(Server sv, Context sla) {
         return setServerName(sla.getResources().getString(R.string.working))
-                .setPingMillis(sla.getResources().getString(R.string.working))
-                .setServer(sv).setServerPlayers()
-                .setStatColor(ContextCompat.getColor(sla, R.color.stat_pending));
+            .setPingMillis(sla.getResources().getString(R.string.working))
+            .setServer(sv).setServerPlayers()
+            .setStatColor(ContextCompat.getColor(sla, R.color.stat_pending));
     }
 
     public ServerStatusWrapperViewHolder offline(Server sv, Context sla) {
         return setStatColor(ContextCompat.getColor(sla, R.color.stat_error))
-                .setServerName(sv.ip + ":" + sv.port)
-                .setPingMillis(sla.getResources().getString(R.string.notResponding))
-                .setServerPlayers().setServer(sv);
+            .setServerName(sv.ip + ":" + sv.port)
+            .setPingMillis(sla.getResources().getString(R.string.notResponding))
+            .setServerPlayers().setServer(sv);
     }
 
     public ServerStatusWrapperViewHolder online(Context context) {
@@ -164,9 +164,9 @@ public class ServerStatusWrapperViewHolder extends FindableViewHolder implements
 
     public ServerStatusWrapperViewHolder unknown(Context context, Server sv) {
         return setStatColor(ContextCompat.getColor(context, R.color.stat_ok))
-                .setServerName(sv.ip + ":" + sv.port)
-                .setPingMillis(context.getResources().getString(R.string.notResponding))
-                .setServerPlayers().setServer(sv);
+            .setServerName(sv.ip + ":" + sv.port)
+            .setPingMillis(context.getResources().getString(R.string.notResponding))
+            .setServerPlayers().setServer(sv);
     }
 
     public ServerStatusWrapperViewHolder setSelected(boolean selected) {

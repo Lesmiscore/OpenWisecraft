@@ -136,16 +136,16 @@ public class ServerStatusRemoteViewsWrapper implements ServerStatusViewControlle
 
     public ServerStatusRemoteViewsWrapper pending(Server sv, Context sla) {
         return setServerName(sla.getResources().getString(R.string.working))
-                .setPingMillis(sla.getResources().getString(R.string.working))
-                .setServer(sv).setServerPlayers()
-                .setStatColor(ContextCompat.getColor(sla, R.color.stat_pending));
+            .setPingMillis(sla.getResources().getString(R.string.working))
+            .setServer(sv).setServerPlayers()
+            .setStatColor(ContextCompat.getColor(sla, R.color.stat_pending));
     }
 
     public ServerStatusRemoteViewsWrapper offline(Server sv, Context sla) {
         return setStatColor(ContextCompat.getColor(sla, R.color.stat_error))
-                .setServerName(sv.ip + ":" + sv.port)
-                .setPingMillis(sla.getResources().getString(R.string.notResponding))
-                .setServerPlayers().setServer(sv);
+            .setServerName(sv.ip + ":" + sv.port)
+            .setPingMillis(sla.getResources().getString(R.string.notResponding))
+            .setServerPlayers().setServer(sv);
     }
 
     public ServerStatusRemoteViewsWrapper online(Context context) {
@@ -154,8 +154,8 @@ public class ServerStatusRemoteViewsWrapper implements ServerStatusViewControlle
 
     public ServerStatusRemoteViewsWrapper unknown(Context context, Server sv) {
         return setStatColor(ContextCompat.getColor(context, R.color.stat_ok))
-                .setServerName(sv.ip + ":" + sv.port)
-                .setPingMillis(context.getResources().getString(R.string.notResponding))
-                .setServerPlayers().setServer(sv);
+            .setServerName(sv.ip + ":" + sv.port)
+            .setPingMillis(context.getResources().getString(R.string.notResponding))
+            .setServerPlayers().setServer(sv);
     }
 }

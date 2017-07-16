@@ -72,12 +72,12 @@ public class ServerCrawlerManager {
         // schedule next
         AlarmManager alarm = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarm.setRepeating(AlarmManager.ELAPSED_REALTIME,
-                work.getStart(), work.getInterval(),
-                PendingIntent.getBroadcast(
-                        context, (int) work.getId(),
-                        new Intent(context, ServerCrawlerReceiver.class).putExtra("id", work.getId()),
-                        PendingIntent.FLAG_UPDATE_CURRENT
-                )
+            work.getStart(), work.getInterval(),
+            PendingIntent.getBroadcast(
+                context, (int) work.getId(),
+                new Intent(context, ServerCrawlerReceiver.class).putExtra("id", work.getId()),
+                PendingIntent.FLAG_UPDATE_CURRENT
+            )
         );
         // commit now
         commit();
@@ -86,18 +86,18 @@ public class ServerCrawlerManager {
     public void reschedule() {
         AlarmManager alarm = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Stream.of(entries)
-                .map(Protobufs.ServerCrawlerEntry::getId)
-                .map(Long::intValue)
-                .map(a -> PendingIntent.getBroadcast(context, a, new Intent(), PendingIntent.FLAG_NO_CREATE))
-                .forEach(alarm::cancel);
+            .map(Protobufs.ServerCrawlerEntry::getId)
+            .map(Long::intValue)
+            .map(a -> PendingIntent.getBroadcast(context, a, new Intent(), PendingIntent.FLAG_NO_CREATE))
+            .forEach(alarm::cancel);
         for (Protobufs.ServerCrawlerEntry entry : entries) {
             alarm.setRepeating(AlarmManager.ELAPSED_REALTIME,
-                    entry.getStart(), entry.getInterval(),
-                    PendingIntent.getBroadcast(
-                            context, (int) entry.getId(),
-                            new Intent(context, ServerCrawlerReceiver.class).putExtra("id", entry.getId()),
-                            PendingIntent.FLAG_UPDATE_CURRENT
-                    )
+                entry.getStart(), entry.getInterval(),
+                PendingIntent.getBroadcast(
+                    context, (int) entry.getId(),
+                    new Intent(context, ServerCrawlerReceiver.class).putExtra("id", entry.getId()),
+                    PendingIntent.FLAG_UPDATE_CURRENT
+                )
             );
         }
     }
@@ -139,9 +139,9 @@ public class ServerCrawlerManager {
         return null;
     }
 
-    public void setEntry(long id, Protobufs.ServerCrawlerEntry entry){
-        Protobufs.ServerCrawlerEntry entry_=entry.toBuilder().setId(id).build();
-        doTransform(ent-> ent.getId()==id?entry_:ent);
+    public void setEntry(long id, Protobufs.ServerCrawlerEntry entry) {
+        Protobufs.ServerCrawlerEntry entry_ = entry.toBuilder().setId(id).build();
+        doTransform(ent -> ent.getId() == id ? entry_ : ent);
     }
 
     private void doTransform(Function<Protobufs.ServerCrawlerEntry, Protobufs.ServerCrawlerEntry> func) {

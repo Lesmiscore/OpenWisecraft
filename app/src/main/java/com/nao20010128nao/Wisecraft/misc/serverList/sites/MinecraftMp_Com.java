@@ -30,7 +30,7 @@ public class MinecraftMp_Com implements ServerListSite {
         if (isPathStartsFromServers(url) & isSingleServer(url.getPath()))
             return false;
         if (isPathStartsFromServers(url) | url.getPath().replace("/", "").equals("")
-                | !isSingleServer(url.getPath()))
+            | !isSingleServer(url.getPath()))
             return true;
         return false;
     }

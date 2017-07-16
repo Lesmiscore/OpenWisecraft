@@ -101,10 +101,10 @@ public class FileSelectFragment extends BaseFragment<AppCompatActivity> {
                 case Activity.RESULT_OK:
                     if (results.get(requestCode) instanceof ServerListActivity.FileChooserHandler) {
                         ((ServerListActivity.FileChooserHandler) results.get(requestCode))
-                                .onSelected((File) (lastResult = new File(data.getStringExtra("path"))));
+                            .onSelected((File) (lastResult = new File(data.getStringExtra("path"))));
                     } else if (results.get(requestCode) instanceof ServerListActivity.UriFileChooserResult) {
                         ((ServerListActivity.UriFileChooserResult) results.get(requestCode))
-                                .onSelected((Uri) (lastResult = data.getData()));
+                            .onSelected((Uri) (lastResult = data.getData()));
                     }
                     break;
                 case Activity.RESULT_CANCELED:

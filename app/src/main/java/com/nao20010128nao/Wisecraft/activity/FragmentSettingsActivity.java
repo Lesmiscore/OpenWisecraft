@@ -50,26 +50,26 @@ abstract class FragmentSettingsActivityImpl extends AppCompatActivity implements
     static {
         List<Quartet<Integer, String, Consumer<SettingsScreen>, Boolean>> main = new ArrayList<>();
         main.add(new Quartet<>(R.string.basics, "basics", ss -> ((AppCompatActivity) ss)
-                .getSupportFragmentManager()
-                .beginTransaction()
-                .replace(ss.getIdForFragment(), new Basics())
-                .addToBackStack("basics")
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .commit(), true));
+            .getSupportFragmentManager()
+            .beginTransaction()
+            .replace(ss.getIdForFragment(), new Basics())
+            .addToBackStack("basics")
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            .commit(), true));
         main.add(new Quartet<>(R.string.features, "features", ss -> ((AppCompatActivity) ss)
-                .getSupportFragmentManager()
-                .beginTransaction()
-                .replace(ss.getIdForFragment(), new Features())
-                .addToBackStack("features")
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .commit(), true));
+            .getSupportFragmentManager()
+            .beginTransaction()
+            .replace(ss.getIdForFragment(), new Features())
+            .addToBackStack("features")
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            .commit(), true));
         main.add(new Quartet<>(R.string.colorChange, "changeColor", ss -> ((AppCompatActivity) ss)
-                .getSupportFragmentManager()
-                .beginTransaction()
-                .replace(ss.getIdForFragment(), new ColorChanger())
-                .addToBackStack("changeColor")
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .commit(), true));
+            .getSupportFragmentManager()
+            .beginTransaction()
+            .replace(ss.getIdForFragment(), new ColorChanger())
+            .addToBackStack("changeColor")
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            .commit(), true));
         main.add(new Quartet<>(R.string.osl, "osl", ss -> {
             AppCompatActivity act = (AppCompatActivity) ss;
             act.startActivity(new Intent(act, OpenSourceActivity2.class));
@@ -82,12 +82,12 @@ abstract class FragmentSettingsActivityImpl extends AppCompatActivity implements
             VersionInfoFragmentLocal fragment = new VersionInfoFragmentLocal();
             fragment.setShowBuildData(BuildConfig.SHOW_BUILD_DATA_ON_VERSIONS);
             ((AppCompatActivity) ss)
-                    .getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(ss.getIdForFragment(), fragment)
-                    .addToBackStack("versionInfo")
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .commit();
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .replace(ss.getIdForFragment(), fragment)
+                .addToBackStack("versionInfo")
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .commit();
         }, true));
         MAIN = Collections.unmodifiableList(main);
     }
@@ -108,10 +108,10 @@ abstract class FragmentSettingsActivityImpl extends AppCompatActivity implements
         setContentView(R.layout.fragment_settings_with_preview);
         if (savedInstanceState == null) {
             getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.preference, new HubPrefFragment())
-                    .addToBackStack("root")
-                    .commit();
+                .beginTransaction()
+                .replace(R.id.preference, new HubPrefFragment())
+                .addToBackStack("root")
+                .commit();
         }
     }
 
@@ -204,31 +204,31 @@ abstract class FragmentSettingsActivityImpl extends AppCompatActivity implements
             sH("parallels", (a, b, c) -> PreferenceUtils.showEditTextDialog(getActivity(), findPreference("parallels"), "6", v -> {
                 EditText text = (EditText) v.findViewById(android.R.id.edit);
                 text.setInputType(InputType.TYPE_CLASS_NUMBER |
-                        InputType.TYPE_TEXT_VARIATION_NORMAL |
-                        InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                    InputType.TYPE_TEXT_VARIATION_NORMAL |
+                    InputType.TYPE_NUMBER_FLAG_DECIMAL);
                 text.setFilters(new InputFilter[]{new InputFilter.LengthFilter(3)});
             }));
             sH("serverListStyle", (a, b, c) -> new AlertDialog.Builder(getActivity(), ThemePatcher.getDefaultDialogStyle(getContext()))
-                    .setTitle(R.string.serverListStyle)
-                    .setSingleChoiceItems(getResources().getStringArray(R.array.serverListStyles), which = pref.getInt("serverListStyle2", 0), (di, w) -> which = w)
-                    .setPositiveButton(android.R.string.ok, (di, w) -> pref.edit().putInt("serverListStyle2", which).commit())
-                    .setNegativeButton(android.R.string.cancel, (di, w) -> {
+                .setTitle(R.string.serverListStyle)
+                .setSingleChoiceItems(getResources().getStringArray(R.array.serverListStyles), which = pref.getInt("serverListStyle2", 0), (di, w) -> which = w)
+                .setPositiveButton(android.R.string.ok, (di, w) -> pref.edit().putInt("serverListStyle2", which).commit())
+                .setNegativeButton(android.R.string.cancel, (di, w) -> {
 
-                    })
-                    .show());
+                })
+                .show());
             sH("selectFont", new HandledPreference.OnClickListener() {
                 public void onClick(String a, String b, String c) {
                     String[] choice = getFontChoices();
                     String[] display = TheApplication.instance.getDisplayFontNames(choice);
                     final List<String> choiceList = Arrays.asList(choice);
                     new AlertDialog.Builder(getActivity(), ThemePatcher.getDefaultDialogStyle(getContext()))
-                            .setSingleChoiceItems(display, choiceList.indexOf(TheApplication.instance.getFontFieldName())
-                                    , (di, w) -> {
-                                        di.cancel();
-                                        TheApplication.instance.setFontFieldName(choiceList.get(w));
-                                        //Toast.makeText(getContext(),R.string.saved_fonts,Toast.LENGTH_LONG).show();
-                                    })
-                            .show();
+                        .setSingleChoiceItems(display, choiceList.indexOf(TheApplication.instance.getFontFieldName())
+                            , (di, w) -> {
+                                di.cancel();
+                                TheApplication.instance.setFontFieldName(choiceList.get(w));
+                                //Toast.makeText(getContext(),R.string.saved_fonts,Toast.LENGTH_LONG).show();
+                            })
+                        .show();
                 }
 
                 String[] getFontChoices() {
@@ -236,8 +236,8 @@ abstract class FragmentSettingsActivityImpl extends AppCompatActivity implements
                 }
             });
             sH("changeDpi", (a, b, c) -> PreferenceUtils.showEditTextDialog(getActivity(), findPreference("changeDpi"), "1.0", v -> ((EditText) v.findViewById(android.R.id.edit)).setInputType(InputType.TYPE_CLASS_NUMBER |
-                    InputType.TYPE_TEXT_VARIATION_NORMAL |
-                    InputType.TYPE_NUMBER_FLAG_DECIMAL)));
+                InputType.TYPE_TEXT_VARIATION_NORMAL |
+                InputType.TYPE_NUMBER_FLAG_DECIMAL)));
             sH("addLessRows", (a, b, c) -> {
                 View v = getLayoutInflater(null).inflate(R.layout.quick_seekbar, null);
                 final SeekBar seekBar = (SeekBar) v.findViewById(R.id.seekbar);
@@ -264,43 +264,43 @@ abstract class FragmentSettingsActivityImpl extends AppCompatActivity implements
                     }
                 });
                 new AlertDialog.Builder(getActivity(), ThemePatcher.getDefaultDialogStyle(getContext()))
-                        .setTitle(R.string.addLessRows)
-                        .setView(v)
-                        .setPositiveButton(android.R.string.ok, (di, w) -> pref.edit().putInt("addLessRows", seekBar.getProgress() - 5).commit())
-                        .setNegativeButton(android.R.string.cancel, (di, w) -> {
+                    .setTitle(R.string.addLessRows)
+                    .setView(v)
+                    .setPositiveButton(android.R.string.ok, (di, w) -> pref.edit().putInt("addLessRows", seekBar.getProgress() - 5).commit())
+                    .setNegativeButton(android.R.string.cancel, (di, w) -> {
 
-                        })
-                        .show();
+                    })
+                    .show();
             });
             sH("serverListLooks", (a, b, c) -> startActivity(new Intent(getActivity(), FragmentSettingsActivity.ServerListStyleEditor.class)));
             sH("widgetEditor", (a, b, c) -> startActivity(new Intent(getActivity(), WidgetsEditorActivity.class)));
             sH("4.0themeMode", (a, b, c) -> {
                 final boolean[] gpsRequired = Utils.getBooleanArray(getContext(), R.array.themeMode_GpsRequired);
                 new AlertDialog.Builder(getActivity(), ThemePatcher.getDefaultDialogStyle(getContext()))
-                        .setTitle(R.string.themeMode)
-                        .setSingleChoiceItems(getResources().getStringArray(R.array.themeMode), which = pref.getInt("4.0themeMode", ThemePatcher.THEME_MODE_LIGHT), (di, w) -> which = w)
-                        .setPositiveButton(android.R.string.ok, (di, w) -> {
-                            if (gpsRequired[which]) {
-                                new AlertDialog.Builder(getActivity(), ThemePatcher.getDefaultDialogStyle(getContext()))
-                                        .setMessage(getResources().getString(R.string.gpsRequiredForDayNight).replace("{NO}", getResources().getString(android.R.string.no)))
-                                        .setPositiveButton(android.R.string.yes, (di1, w1) -> {
+                    .setTitle(R.string.themeMode)
+                    .setSingleChoiceItems(getResources().getStringArray(R.array.themeMode), which = pref.getInt("4.0themeMode", ThemePatcher.THEME_MODE_LIGHT), (di, w) -> which = w)
+                    .setPositiveButton(android.R.string.ok, (di, w) -> {
+                        if (gpsRequired[which]) {
+                            new AlertDialog.Builder(getActivity(), ThemePatcher.getDefaultDialogStyle(getContext()))
+                                .setMessage(getResources().getString(R.string.gpsRequiredForDayNight).replace("{NO}", getResources().getString(android.R.string.no)))
+                                .setPositiveButton(android.R.string.yes, (di1, w1) -> {
 //pref.edit().putInt("4.0themeMode",which).commit();
-                                            getSettingsScreen().excecuteWithGpsPermission(() -> pref.edit().putInt("4.0themeMode", which).commit());
-                                        })
-                                        .setNegativeButton(android.R.string.no, null)
-                                        .show();
-                            } else {
-                                pref.edit().putInt("4.0themeMode", which).commit();
-                            }
-                        })
-                        .setNegativeButton(android.R.string.cancel, null)
-                        .show();
+                                    getSettingsScreen().excecuteWithGpsPermission(() -> pref.edit().putInt("4.0themeMode", which).commit());
+                                })
+                                .setNegativeButton(android.R.string.no, null)
+                                .show();
+                        } else {
+                            pref.edit().putInt("4.0themeMode", which).commit();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .show();
             });
             sH("retryIteration", (a, b, c) -> PreferenceUtils.showEditTextDialog(getActivity(), findPreference("retryIteration"), "10", v -> {
                 EditText text = (EditText) v.findViewById(android.R.id.edit);
                 text.setInputType(InputType.TYPE_CLASS_NUMBER |
-                        InputType.TYPE_TEXT_VARIATION_NORMAL |
-                        InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                    InputType.TYPE_TEXT_VARIATION_NORMAL |
+                    InputType.TYPE_NUMBER_FLAG_DECIMAL);
                 text.setFilters(new InputFilter[]{new InputFilter.LengthFilter(3)});
             }));
         }
@@ -353,8 +353,8 @@ abstract class FragmentSettingsActivityImpl extends AppCompatActivity implements
         @Override
         public RecyclerView onCreateRecyclerView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
             return super.onCreateRecyclerView(Utils.fixLayoutInflaterIfNeeded(CalligraphyContextWrapper.wrap(inflater.getContext()), getActivity()),
-                    parent,
-                    savedInstanceState);
+                parent,
+                savedInstanceState);
         }
 
         @Override
@@ -396,8 +396,8 @@ abstract class FragmentSettingsActivityImpl extends AppCompatActivity implements
         @Override
         public RecyclerView onCreateRecyclerView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
             return super.onCreateRecyclerView(Utils.fixLayoutInflaterIfNeeded(CalligraphyContextWrapper.wrap(inflater.getContext()), getActivity()),
-                    parent,
-                    savedInstanceState);
+                parent,
+                savedInstanceState);
         }
 
         @Override
@@ -778,10 +778,10 @@ abstract class ServerListStyleEditorImpl extends AppCompatActivity {
                 case RESULT_OK:
                     if (results.get(requestCode) instanceof ServerListActivityBase5.FileChooserHandler) {
                         ((ServerListActivityBase5.FileChooserHandler) results.get(requestCode))
-                                .onSelected((File) (lastResult = new File(data.getStringExtra("path"))));
+                            .onSelected((File) (lastResult = new File(data.getStringExtra("path"))));
                     } else if (results.get(requestCode) instanceof ServerListActivity.UriFileChooserResult) {
                         ((ServerListActivity.UriFileChooserResult) results.get(requestCode))
-                                .onSelected((Uri) (lastResult = data.getData()));
+                            .onSelected((Uri) (lastResult = data.getData()));
                     }
                     Log.d("slse", "select:" + lastResult);
                     break;

@@ -48,11 +48,11 @@ public class PreferenceUtils {
         ((EditText) v.findViewById(android.R.id.edit)).setText(pref.getString(preference.getKey(), defaultValue));
         if (editor != null) editor.process(v);
         new AlertDialog.Builder(activity, ThemePatcher.getDefaultDialogStyle(activity))
-                .setTitle(preference.getTitle())
-                .setView(v)
-                .setCancelable(true)
-                .setNegativeButton(android.R.string.cancel, null)
-                .setPositiveButton(android.R.string.ok, (di, w) -> pref.edit().putString(preference.getKey(), ((EditText) v.findViewById(android.R.id.edit)).getText().toString()).commit())
-                .show();
+            .setTitle(preference.getTitle())
+            .setView(v)
+            .setCancelable(true)
+            .setNegativeButton(android.R.string.cancel, null)
+            .setPositiveButton(android.R.string.ok, (di, w) -> pref.edit().putString(preference.getKey(), ((EditText) v.findViewById(android.R.id.edit)).getText().toString()).commit())
+            .show();
     }
 }

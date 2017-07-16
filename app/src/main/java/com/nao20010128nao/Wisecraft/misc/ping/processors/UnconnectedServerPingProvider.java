@@ -60,14 +60,14 @@ public class UnconnectedServerPingProvider implements ServerPingProvider {
     private class PingThread extends Thread implements Runnable {
         @Override
         public void run() {
-            final String TAG= ProcessorUtils.getLogTag(UnconnectedServerPingProvider.this);
+            final String TAG = ProcessorUtils.getLogTag(UnconnectedServerPingProvider.this);
 
             Map.Entry<Server, PingHandler> now = null;
             while (!(queue.isEmpty() | isInterrupted())) {
                 try {
                     Log.d(TAG, "Starting ping");
                     now = queue.poll();
-                    ProcessorUtils.doPingFull(UnconnectedServerPingProvider.this,now.getKey(),now.getValue(),offline,true,false,true);
+                    ProcessorUtils.doPingFull(UnconnectedServerPingProvider.this, now.getKey(), now.getValue(), offline, true, false, true);
                 } catch (Throwable e) {
                     e.printStackTrace();
                 }

@@ -176,7 +176,7 @@ public class ServerListRecyclerAdapter extends ListRecyclerViewAdapter<ServerSta
                     viewHolder.setServerName(deleteDecorations(title));
                 }
                 viewHolder
-                        .setPingMillis(sv.ping);
+                    .setPingMillis(sv.ping);
             } else {
                 viewHolder.offline(s, context);
             }

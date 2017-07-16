@@ -63,14 +63,8 @@ public class Utils extends PingerUtils {
     }
 
     public static void copyAndClose(InputStream is, OutputStream os) throws IOException {
-        byte[] buf = new byte[100];
         try {
-            while (true) {
-                int r = is.read(buf);
-                if (r <= 0)
-                    break;
-                os.write(buf, 0, r);
-            }
+            readBytes(is, os::write);
         } finally {
             CompatUtils.safeClose(is, os);
         }
@@ -90,14 +84,8 @@ public class Utils extends PingerUtils {
 
     public static byte[] readAll(InputStream is) throws IOException {
         ByteArrayOutputStream os = new ByteArrayOutputStream(1000);
-        byte[] buf = new byte[1000];
         try {
-            while (true) {
-                int r = is.read(buf);
-                if (r <= 0)
-                    break;
-                os.write(buf, 0, r);
-            }
+            readBytes(is, os::write);
         } finally {
             is.close();
         }
@@ -396,6 +384,10 @@ public class Utils extends PingerUtils {
         }
     }
 
+    public static Iterator<View> viewGroupToIterator(ViewGroup in) {
+        return (Iterator<View>) Stream.range(0, in.getChildCount()).map(in::getChildAt).iterator();
+    }
+
     public static <T> Object getField(Class<T> clz, T instance, String name) {
         try {
             return clz.getField(name).get(instance);
@@ -406,12 +398,12 @@ public class Utils extends PingerUtils {
 
     public static Protobufs.Server.Mode getModeFromIntent(Intent values) {
         if (values.hasExtra(ApiActions.SERVER_INFO_MODE)) {
-            Object mode=values.getExtras().get(ApiActions.SERVER_INFO_MODE);
-            if(mode instanceof Protobufs.Server.Mode){
+            Object mode = values.getExtras().get(ApiActions.SERVER_INFO_MODE);
+            if (mode instanceof Protobufs.Server.Mode) {
                 return (Protobufs.Server.Mode) mode;
-            }else if(mode instanceof Integer){
-                return Protobufs.Server.Mode.forNumber((int)mode);
-            }else{
+            } else if (mode instanceof Integer) {
+                return Protobufs.Server.Mode.forNumber((int) mode);
+            } else {
                 return Protobufs.Server.Mode.PE;
             }
         } else if (values.hasExtra(ApiActions.SERVER_INFO_ISPC)) {
@@ -692,12 +684,12 @@ public class Utils extends PingerUtils {
             ssb.append('\n');
         }
         new AlertDialog.Builder(a)
-                .setTitle(R.string.permissionsRequired)
-                .setMessage(ssb)
-                .setPositiveButton(R.string.continue_, (di,w)->req.proceed())
-                .setNegativeButton(android.R.string.cancel, (di,w)->req.cancel())
-                .setOnDismissListener(a1 -> req.cancel())
-                .show();
+            .setTitle(R.string.permissionsRequired)
+            .setMessage(ssb)
+            .setPositiveButton(R.string.continue_, (di, w) -> req.proceed())
+            .setNegativeButton(android.R.string.cancel, (di, w) -> req.cancel())
+            .setOnDismissListener(a1 -> req.cancel())
+            .show();
     }
 
     public static void showPermissionError(Activity a, String[] permissions, int reasonId) {
@@ -739,48 +731,45 @@ public class Utils extends PingerUtils {
         return null;
     }
 
-    public static Protobufs.Server.Mode jsonElementToMode(WisecraftJsonObject json){
-        if(!json.isPrimitive())throw new JsonParseException("Error: Not a primitive: "+json);
-        if(json.isNumber()){
+    public static Protobufs.Server.Mode jsonElementToMode(WisecraftJsonObject json) {
+        if (!json.isPrimitive()) throw new JsonParseException("Error: Not a primitive: " + json);
+        if (json.isNumber()) {
             return Protobufs.Server.Mode.forNumber(json.getAsInt());
-        }else if(json.isString()){
+        } else if (json.isString()) {
             return Protobufs.Server.Mode.valueOf(json.getAsString().toUpperCase());
-        }else{
-            throw new JsonParseException("Error: Denied value: "+json);
+        } else {
+            throw new JsonParseException("Error: Denied value: " + json);
         }
     }
 
     public static List<Server> jsonToServers(String json) {
-        WisecraftJsonObject ja = WJOUtils.parse(json);
-        List<Server> servers = new ArrayList<>();
-        for (WisecraftJsonObject entry : ja) {
-            if (!(entry.has("ip") & entry.has("port"))) {
-                continue;
-            }
-            Server s = new Server();
-            if (entry.has("isPC")) {
-                // mode 19
-                s.ip = entry.get("ip").getAsString();
-                s.port = entry.get("port").getAsInt();
-                s.mode = entry.get("isPC").getAsBoolean() ? Protobufs.Server.Mode.PC : Protobufs.Server.Mode.PE;
-            } else if (entry.has("mode")) {
-                // mode 35
-                s.ip = entry.get("ip").getAsString();
-                s.port = entry.get("port").getAsInt();
-                s.mode = jsonElementToMode(entry.get("mode"));
-                if (entry.has("name")) {
-                    // current structure
-                    s.name = entry.get("name").getAsString();
+        return Stream.of(WJOUtils.parse(json))
+            .filterNot(entry -> entry.has("ip") && entry.has("port"))
+            .map(entry -> {
+                Server s = new Server();
+                if (entry.has("isPC")) {
+                    // mode 19
+                    s.ip = entry.get("ip").getAsString();
+                    s.port = entry.get("port").getAsInt();
+                    s.mode = entry.get("isPC").getAsBoolean() ? Protobufs.Server.Mode.PC : Protobufs.Server.Mode.PE;
+                } else if (entry.has("mode")) {
+                    // mode 35
+                    s.ip = entry.get("ip").getAsString();
+                    s.port = entry.get("port").getAsInt();
+                    s.mode = jsonElementToMode(entry.get("mode"));
+                    if (entry.has("name")) {
+                        // current structure
+                        s.name = entry.get("name").getAsString();
+                    }
+                } else {
+                    // so old!
+                    s.ip = entry.get("ip").getAsString();
+                    s.port = entry.get("port").getAsInt();
+                    s.mode = Protobufs.Server.Mode.PE;// forces PE to use
                 }
-            } else {
-                // so old!
-                s.ip = entry.get("ip").getAsString();
-                s.port = entry.get("port").getAsInt();
-                s.mode = Protobufs.Server.Mode.PE;// forces PE to use
-            }
-            servers.add(s);
-        }
-        return servers;
+                return s;
+            })
+            .toList();
     }
 
     public static CharSequence parseMinecraftDescriptionJson(WisecraftJsonObject description) {
@@ -865,27 +854,27 @@ public class Utils extends PingerUtils {
         return String.format(Locale.getDefault(), "%01d:%02d:%02d:%02d %03d", days, hours, minutes, seconds, millisec);
     }
 
-    public static long cutSecondAndMillis(long millis){
-        Calendar calendar=toDateTime(millis);
-        calendar.set(Calendar.SECOND,0);
-        calendar.set(Calendar.MILLISECOND,0);
+    public static long cutSecondAndMillis(long millis) {
+        Calendar calendar = toDateTime(millis);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
         return calendar.getTimeInMillis();
     }
 
-    public static Gson newGson(){
-        return new GsonBuilder().registerTypeAdapter(Protobufs.Server.Mode.class,new GsonModeConverter()).create();
+    public static Gson newGson() {
+        return new GsonBuilder().registerTypeAdapter(Protobufs.Server.Mode.class, new GsonModeConverter()).create();
     }
 
     public static boolean alwaysTrue() {
         return true;
     }
 
-    public static boolean readBytes(File f,ByteHandler handler){
+    public static boolean readBytes(File f, ByteHandler handler) {
         try {
             Files.readBytes(f, new ByteProcessor<Void>() {
                 @Override
                 public boolean processBytes(byte[] buf, int off, int len) throws IOException {
-                    handler.processBytes(buf,off,len);
+                    handler.processBytes(buf, off, len);
                     return true;
                 }
 
@@ -896,16 +885,17 @@ public class Utils extends PingerUtils {
             });
             return true;
         } catch (IOException e) {
-            WisecraftError.report("Utils",e);
+            WisecraftError.report("Utils", e);
             return false;
         }
     }
-    public static boolean readBytes(InputStream f,ByteHandler handler){
+
+    public static boolean readBytes(InputStream f, ByteHandler handler) {
         try {
             ByteStreams.readBytes(f, new ByteProcessor<Void>() {
                 @Override
                 public boolean processBytes(byte[] buf, int off, int len) throws IOException {
-                    handler.processBytes(buf,off,len);
+                    handler.processBytes(buf, off, len);
                     return true;
                 }
 
@@ -916,11 +906,12 @@ public class Utils extends PingerUtils {
             });
             return true;
         } catch (IOException e) {
-            WisecraftError.report("Utils",e);
+            WisecraftError.report("Utils", e);
             return false;
         }
     }
-    public static boolean readLines(Readable f,Consumer<String> handler){
+
+    public static boolean readLines(Readable f, Consumer<String> handler) {
         try {
             CharStreams.readLines(f, new LineProcessor<Void>() {
                 @Override
@@ -936,18 +927,20 @@ public class Utils extends PingerUtils {
             });
             return true;
         } catch (IOException e) {
-            WisecraftError.report("Utils",e);
+            WisecraftError.report("Utils", e);
             return false;
         }
     }
-    public static boolean readLines(InputStream f,Consumer<String> handler){
-        return readLines(new InputStreamReader(f),handler);
+
+    public static boolean readLines(InputStream f, Consumer<String> handler) {
+        return readLines(new InputStreamReader(f), handler);
     }
-    public static <R> R barrier(ThrowableFunction<R> func){
+
+    public static <R> R barrier(ThrowableFunction<R> func) {
         try {
             return func.call();
         } catch (Throwable e) {
-            WisecraftError.report("Utils",e);
+            WisecraftError.report("Utils", e);
             return null;
         }
     }

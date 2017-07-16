@@ -6,9 +6,14 @@ import android.support.annotation.*;
  * Created by nao on 2017/06/25.
  */
 public class ReferencedObject<T> {
-     private T value;
-    public ReferencedObject(){}
-    public ReferencedObject(T v){value=v;}
+    private T value;
+
+    public ReferencedObject() {
+    }
+
+    public ReferencedObject(T v) {
+        value = v;
+    }
 
     @Nullable
     public T get() {
@@ -17,7 +22,7 @@ public class ReferencedObject<T> {
 
     @NonNull
     public T checked() {
-        if(value==null)throw new NullPointerException();
+        if (value == null) throw new NullPointerException();
         return value;
     }
 

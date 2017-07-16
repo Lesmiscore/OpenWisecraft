@@ -26,8 +26,8 @@ public class Pmmp_Jp_Net implements ServerListSite {
     public boolean matches(URL url) {
         // TODO 自動生成されたメソッド・スタブ
         return url.getHost().equalsIgnoreCase("pmmp.jp.net")
-                | url.getHost().equalsIgnoreCase("mc-pe.online")
-                | url.getHost().equalsIgnoreCase("minecraftpe.jp");
+            | url.getHost().equalsIgnoreCase("mc-pe.online")
+            | url.getHost().equalsIgnoreCase("minecraftpe.jp");
     }
 
     @Override

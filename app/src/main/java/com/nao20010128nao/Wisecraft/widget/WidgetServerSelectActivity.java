@@ -5,6 +5,7 @@ import android.content.*;
 import android.content.res.*;
 import android.os.*;
 import android.preference.*;
+import android.support.v4.view.*;
 import android.support.v7.app.*;
 import android.support.v7.widget.*;
 import android.text.*;
@@ -96,27 +97,27 @@ abstract class WidgetServerSelectActivityImpl extends AppCompatActivity {
                 });
 
                 new AlertDialog.Builder(this, ThemePatcher.getDefaultDialogStyle(this)).
-                        setView(dialog).
-                        setPositiveButton(android.R.string.yes, (d, sel) -> {
-                            Server s;
-                            if (split.isChecked()) {
-                                s = Utils.convertServerObject(Arrays.asList(MslServer.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
-                            } else {
-                                s = new Server();
-                                s.ip = pe_ip.getText().toString();
-                                s.port = Integer.valueOf(pe_port.getText().toString());
-                                s.mode = Protobufs.Server.Mode.PE;
-                            }
+                    setView(dialog).
+                    setPositiveButton(android.R.string.yes, (d, sel) -> {
+                        Server s;
+                        if (split.isChecked()) {
+                            s = Utils.convertServerObject(Arrays.asList(MslServer.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
+                        } else {
+                            s = new Server();
+                            s.ip = pe_ip.getText().toString();
+                            s.port = Integer.valueOf(pe_port.getText().toString());
+                            s.mode = Protobufs.Server.Mode.PE;
+                        }
 
-                            widgetPref.edit().putString(wid + "", gson.toJson(s)).commit();
-                            sendBroadcast(new Intent(WidgetServerSelectActivityImpl.this, PingWidget.PingHandler.class).putExtra("wid", wid));
-                            setResult(RESULT_OK, new Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, wid));
-                            finish();
-                        }).
-                        setNegativeButton(android.R.string.no, (d, sel) -> {
+                        widgetPref.edit().putString(wid + "", gson.toJson(s)).commit();
+                        sendBroadcast(new Intent(WidgetServerSelectActivityImpl.this, PingWidget.PingHandler.class).putExtra("wid", wid));
+                        setResult(RESULT_OK, new Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, wid));
+                        finish();
+                    }).
+                    setNegativeButton(android.R.string.no, (d, sel) -> {
 
-                        }).
-                        show();
+                    }).
+                    show();
                 return true;
         }
         return false;
@@ -134,7 +135,7 @@ abstract class WidgetServerSelectActivityImpl extends AppCompatActivity {
         public void onBindViewHolder(FindableViewHolder parent, int offset) {
             ((TextView) parent.findViewById(android.R.id.text1)).setText(makeServerTitle(getItem(offset)));
             TypedArray ta = obtainStyledAttributes(new int[]{R.attr.selectableItemBackground});
-            parent.itemView.setBackground(ta.getDrawable(0));
+            ViewCompat.setBackground(parent.itemView, ta.getDrawable(0));
             ta.recycle();
             parent.itemView.setTag(getItem(offset));
             Utils.applyHandlersForViewTree(parent.itemView, new OnClickListener(offset));

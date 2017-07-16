@@ -76,11 +76,11 @@ public class WidgetsEditorActivity extends AppCompatActivity {
     List<String> listWidgets() {
         ArrayList<String> list = new ArrayList<>();
         Stream.of(widgetPref.getAll().keySet())
-                .filter(s->s.endsWith(".data"))
-                .filter(s->s.endsWith(".status"))
-                .filter(s->s.endsWith("_version"))
-                .sortBy(a->a)
-                .forEach(list::add);
+            .filter(s -> s.endsWith(".data"))
+            .filter(s -> s.endsWith(".status"))
+            .filter(s -> s.endsWith("_version"))
+            .sortBy(a -> a)
+            .forEach(list::add);
         Collections.sort(list);
         return list;
     }
@@ -163,26 +163,26 @@ public class WidgetsEditorActivity extends AppCompatActivity {
         });
 
         new AlertDialog.Builder(this, ThemePatcher.getDefaultDialogStyle(this)).
-                setTitle(sv + " (" + wid + ")").
-                setView(dialog).
-                setPositiveButton(android.R.string.yes, (d, sel) -> {
-                    Server s;
-                    if (split.isChecked()) {
-                        s = Utils.convertServerObject(Arrays.asList(MslServer.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
-                    } else {
-                        s = new Server();
-                        s.ip = pe_ip.getText().toString();
-                        s.port = Integer.valueOf(pe_port.getText().toString());
-                        s.mode = Protobufs.Server.Mode.PE;
-                    }
+            setTitle(sv + " (" + wid + ")").
+            setView(dialog).
+            setPositiveButton(android.R.string.yes, (d, sel) -> {
+                Server s;
+                if (split.isChecked()) {
+                    s = Utils.convertServerObject(Arrays.asList(MslServer.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
+                } else {
+                    s = new Server();
+                    s.ip = pe_ip.getText().toString();
+                    s.port = Integer.valueOf(pe_port.getText().toString());
+                    s.mode = Protobufs.Server.Mode.PE;
+                }
 
-                    PingWidget.setServer(WidgetsEditorActivity.this, wid, s);
-                    doUpdate(wid);
-                    reload();
-                }).
-                setNegativeButton(android.R.string.no, (d, sel) -> {
-                }).
-                show();
+                PingWidget.setServer(WidgetsEditorActivity.this, wid, s);
+                doUpdate(wid);
+                reload();
+            }).
+            setNegativeButton(android.R.string.no, (d, sel) -> {
+            }).
+            show();
 
     }
 

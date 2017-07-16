@@ -12,7 +12,9 @@ import android.support.design.widget.*;
 import android.support.multidex.*;
 import android.support.v4.graphics.drawable.*;
 import android.support.v7.app.*;
+import android.text.*;
 import android.view.*;
+import com.annimon.stream.*;
 import com.google.android.gms.tasks.*;
 import com.google.firebase.analytics.*;
 import com.google.firebase.remoteconfig.*;
@@ -31,9 +33,9 @@ import java.lang.reflect.*;
 import java.util.*;
 
 class TheApplicationImpl extends Application implements com.nao20010128nao.Wisecraft.rcon.Presenter,
-        com.ipaulpro.afilechooser.Presenter,
-        InformationCommunicatorReceiver.DisclosureResult,
-        Application.ActivityLifecycleCallbacks {
+    com.ipaulpro.afilechooser.Presenter,
+    InformationCommunicatorReceiver.DisclosureResult,
+    Application.ActivityLifecycleCallbacks {
     public static TheApplicationImpl implInstance;
     public static TypefaceLoader latoLight, icomoon1, sysDefault, droidSans, robotoSlabLight, ubuntuFont, mplus1p;
     public static Field[] fonts = getFontFields();
@@ -66,19 +68,19 @@ class TheApplicationImpl extends Application implements com.nao20010128nao.Wisec
         genPassword();
 
         pref.edit()
-                .remove("showDetailsIfNoDetails")
-                .remove("useOldActivity")
-                .remove("serverListStyle")
-                .remove("main_style")
-                .remove("specialDrawer1")
-                .remove("useBright")
-                .commit();
+            .remove("showDetailsIfNoDetails")
+            .remove("useOldActivity")
+            .remove("serverListStyle")
+            .remove("main_style")
+            .remove("specialDrawer1")
+            .remove("useBright")
+            .commit();
 
         registerActivityLifecycleCallbacks(this);
 
         CollectorMain.INFORMATIONS.add(new MinecraftPeInformationProvider());
         CollectorMain.INFORMATIONS.add(new WisecraftInformationProvider());
-        
+
         DebugBridge.getInstance().init(this);
     }
 
@@ -99,23 +101,22 @@ class TheApplicationImpl extends Application implements com.nao20010128nao.Wisec
     }
 
     public String getDisplayFontName(String field) {
+        String res;
         try {
-            return getResources().getString(fontDisplayNames.get(field));
+            res = getResources().getString(fontDisplayNames.get(field));
+            if (TextUtils.isEmpty(res)) {
+                res = field;
+            }
         } catch (Throwable e) {
-            return null;
+            res = field;
         }
+        return res;
     }
 
     public String[] getDisplayFontNames(String[] field) {
-        String[] result = new String[field.length];
-        for (int i = 0; i < result.length; i++) {
-            String disp = getDisplayFontName(field[i]);
-            if (disp == null)
-                result[i] = field[i];
-            else
-                result[i] = disp;
-        }
-        return result;
+        return Stream.of(field)
+            .map(this::getDisplayFontName)
+            .toArray(String[]::new);
     }
 
     public void initForActivities() {
@@ -175,11 +176,10 @@ class TheApplicationImpl extends Application implements com.nao20010128nao.Wisec
     }
 
     private static Field[] getFontFields() {
-        List<Field> l = new ArrayList<>(6);
-        for (Field f : TheApplication.class.getFields())
-            if (((f.getModifiers() & Modifier.STATIC) == Modifier.STATIC) & f.getType() == Typeface.class)
-                l.add(f);
-        return l.toArray(new Field[l.size()]);
+        return Stream.of(TheApplication.class.getFields())
+            .filter(f -> (f.getModifiers() & Modifier.STATIC) != 0)
+            .filter(f -> f.getType() == Typeface.class)
+            .toArray(Field[]::new);
     }
 
     public void collect() {
@@ -303,8 +303,9 @@ class TheApplicationImpl extends Application implements com.nao20010128nao.Wisec
     }
 
     public void restartForMainProcess() {
-        for (Activity a : activities.keySet())
-            a.finish();
+        Stream.of(activities)
+            .map(Map.Entry::getKey)
+            .forEach(Activity::finish);
         startActivity(new Intent(this, ServerListActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
     }
 

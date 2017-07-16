@@ -28,7 +28,7 @@ public class Minecraftservers_Org implements ServerListSite {
     public boolean hasMultipleServers(URL url) {
         // TODO 自動生成されたメソッド・スタブ
         if (url.getPath().replace("/", "").equals("")
-                | url.getPath().replace("/", "").toLowerCase().startsWith("index"))
+            | url.getPath().replace("/", "").toLowerCase().startsWith("index"))
             return true;
         if (url.getPath().replace("/", "").toLowerCase().startsWith("server"))
             return false;
@@ -42,11 +42,11 @@ public class Minecraftservers_Org implements ServerListSite {
             // Single server page
             Document page = Jsoup.connect(url.toString()).userAgent("Mozilla").get();
             String ip = page.select("html > body > #single > div > #left > table > tbody > tr > td > span").get(2)
-                    .html();
+                .html();
             return Arrays.asList(MslServer.makeServerFromString(ip, false));
         }
         if (url.getPath().replace("/", "").equals("")
-                | url.getPath().replace("/", "").toLowerCase().startsWith("index")) {
+            | url.getPath().replace("/", "").toLowerCase().startsWith("index")) {
             List<MslServer> list = new ArrayList<>();
             Document page = Jsoup.connect(url.toString()).userAgent("Mozilla").get();
             Elements elems = page.select("html > body > #main > div > table > tbody > tr > td > div > p");

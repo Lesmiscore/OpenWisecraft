@@ -150,8 +150,8 @@ public class ProcessorUtils {
                 return cn.charAt(now++);
             }
         })
-                .filter(Character::isUpperCase)
-                .map(String::valueOf)
-                .reduce("",(a,b)->a+b);
+            .filter(Character::isUpperCase)
+            .map(String::valueOf)
+            .reduce("", (a, b) -> a + b);
     }
 }
