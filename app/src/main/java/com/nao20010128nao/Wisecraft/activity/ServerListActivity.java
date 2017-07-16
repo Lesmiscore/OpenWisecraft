@@ -1251,10 +1251,18 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                         .setCancelable(true)
                         .show();
             } else if (true) {
+                // TODO: do the following
+                // TODO: Wisecraft/title: transparent background, white text
+                // TODO: Wisecraft/list: white background
+                // TODO: android/content: transparent background
                 final BottomSheetListDialog bsld = new BottomSheetListDialog(sla);
                 bsld.setTitle(getItem(p3).resolveVisibleTitle());
                 bsld.setLayoutManager(new LinearLayoutManager(sla));
-
+                ViewCompat.setBackground(bsld.findViewById(R.id.title)            ,new ColorDrawable(Color.TRANSPARENT));
+                ViewCompat.setBackground(bsld.findViewById(R.id.list)             ,new ColorDrawable(Color.WHITE));
+                ViewCompat.setBackground(bsld.findViewById(android.R.id.content)  ,new ColorDrawable(Color.TRANSPARENT));
+                ((TextView)bsld.findViewById(R.id.title)).setTextColor(Color.WHITE);
+                
                 class ServerExtSelect extends RecyclerView.Adapter<FindableViewHolder> {
                     String[] strings = generateSubMenu(executes);
 
