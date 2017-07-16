@@ -18,3 +18,4 @@ BuildConfig.java
 *.iml
 .idea/
 */*.iml
+test*.gitlab-ci.yml
