@@ -1239,16 +1239,16 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                 }
             }
 
-            // TODO: do the following
-            // TODO: Wisecraft/title: transparent background, white text
-            // TODO: Wisecraft/list: white background
-            // TODO: android/content: transparent background
+            // do the following
+            // Wisecraft/title: transparent background, white text
+            // Wisecraft/list: white background
+            // android/content: transparent background
             final BottomSheetListDialog bsld = new BottomSheetListDialog(sla);
             bsld.setTitle(getItem(p3).resolveVisibleTitle());
             bsld.setLayoutManager(new LinearLayoutManager(sla));
             View bsldDecor=bsld.getWindow().getDecorView();
             ViewCompat.setBackground(bsldDecor.findViewById(R.id.title)            ,new ColorDrawable(Color.TRANSPARENT));
-            ViewCompat.setBackground(bsldDecor.findViewById(R.id.list)             ,new ColorDrawable(Color.WHITE));
+            ViewCompat.setBackground(bsld.getRecyclerView()                        ,new ColorDrawable(Color.WHITE));
             ViewCompat.setBackground(bsldDecor.findViewById(android.R.id.content)  ,new ColorDrawable(Color.TRANSPARENT));
             ((TextView)bsldDecor.findViewById(R.id.title)).setTextColor(Color.WHITE);
 
