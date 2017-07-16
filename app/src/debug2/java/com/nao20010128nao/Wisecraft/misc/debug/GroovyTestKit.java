@@ -165,7 +165,7 @@ public class GroovyTestKit extends AppCompatActivity{
     @NonNull TextView createUserTypedTextView(){
         TextView tv=createBaseTextView();
         tv.setTextColor(Color.BLACK);
-        ViewCompat.setAlpha(tv,.8f);
+        ViewCompat.setAlpha(tv,.4f);
         return tv;
     }
     @NonNull TextView createResultTextView(){
