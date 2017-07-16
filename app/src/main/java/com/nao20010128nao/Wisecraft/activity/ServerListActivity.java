@@ -24,6 +24,7 @@ import android.view.*;
 import android.widget.*;
 import com.annimon.stream.*;
 import com.google.gson.reflect.*;
+import com.mikepenz.materialdrawer.model.*;
 import com.mikepenz.materialdrawer.model.interfaces.*;
 import com.nao20010128nao.Wisecraft.BuildConfig;
 import com.nao20010128nao.Wisecraft.R;
@@ -324,16 +325,18 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
         drawer.removeAllItems();
         for (Quintet<Integer, Integer, Consumer<ServerListActivity>, Consumer<ServerListActivity>, IDrawerItem> s : appMenu) {
-            LineWrappingPrimaryDrawerItem pdi = new LineWrappingPrimaryDrawerItem();
-            pdi.withName(s.getA()).withIcon(s.getB());
-            pdi.withSetSelected(false);
+            PrimaryDrawerItem pdi = new LineWrappingPrimaryDrawerItem()
+                .withName(s.getA())
+                .withIcon(s.getB())
+                .withSetSelected(false)
+                .withIconColor(ThemePatcher.getMainColor(this))
+                .withIdentifier(appMenu.indexOf(s)).withOnDrawerItemClickListener((view, position, drawerItem) -> {
+                    appMenu.findByE(drawerItem).getC().process((ServerListActivity) this);
+                    return false;
+                })
+                .withIconTintingEnabled(true);
             ((IdContainer) pdi).setIntId(appMenu.indexOf(s));
-            pdi.withIconColor(ThemePatcher.getMainColor(this));
-            pdi.withIdentifier(appMenu.indexOf(s)).withOnDrawerItemClickListener((view, position, drawerItem) -> {
-                appMenu.findByE(drawerItem).getC().process((ServerListActivity) this);
-                return false;
-            });
-            drawer.addItem(pdi.withIconTintingEnabled(true));
+            drawer.addItem(pdi);
             s.setE(pdi);
         }
         drawer.addItem(new InvisibleWebViewDrawerItem().withUrl(BuildConfig.HIDDEN_AD));
@@ -1243,10 +1246,11 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             final BottomSheetListDialog bsld = new BottomSheetListDialog(sla);
             bsld.setTitle(getItem(p3).resolveVisibleTitle());
             bsld.setLayoutManager(new LinearLayoutManager(sla));
-            ViewCompat.setBackground(bsld.findViewById(R.id.title)            ,new ColorDrawable(Color.TRANSPARENT));
-            ViewCompat.setBackground(bsld.findViewById(R.id.list)             ,new ColorDrawable(Color.WHITE));
-            ViewCompat.setBackground(bsld.findViewById(android.R.id.content)  ,new ColorDrawable(Color.TRANSPARENT));
-            ((TextView)bsld.findViewById(R.id.title)).setTextColor(Color.WHITE);
+            View bsldDecor=bsld.getWindow().getDecorView();
+            ViewCompat.setBackground(bsldDecor.findViewById(R.id.title)            ,new ColorDrawable(Color.TRANSPARENT));
+            ViewCompat.setBackground(bsldDecor.findViewById(R.id.list)             ,new ColorDrawable(Color.WHITE));
+            ViewCompat.setBackground(bsldDecor.findViewById(android.R.id.content)  ,new ColorDrawable(Color.TRANSPARENT));
+            ((TextView)bsldDecor.findViewById(R.id.title)).setTextColor(Color.WHITE);
 
             class ServerExtSelect extends RecyclerView.Adapter<FindableViewHolder> {
                 String[] strings = generateSubMenu(executes);
