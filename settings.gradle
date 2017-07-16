@@ -3,26 +3,28 @@ import java.time.LocalDate
 
 ({
 // most crazy way to modify env
-    def privEnv=null
-    try{
+    def privEnv = null
+    try {
         /* for windows: only windows has theCaseInsensitiveEnvironment */
-        privEnv=('java.lang.ProcessEnvironment'as Class).getDeclaredField('theCaseInsensitiveEnvironment').with {
-            accessible=true
+        privEnv = ('java.lang.ProcessEnvironment' as Class).getDeclaredField('theCaseInsensitiveEnvironment').with {
+            accessible = true
             get(null)
         }
-    }catch(Throwable e){
+    } catch (Throwable e) {
         e.printStackTrace()
-        try{
+        try {
             /* for *nix: use theEnvironment instead of theCaseInsensitiveEnvironment */
-            def envTmp=('java.lang.ProcessEnvironment'as Class).getDeclaredField('theEnvironment').with {
-                accessible=true
+            def envTmp = ('java.lang.ProcessEnvironment' as Class).getDeclaredField('theEnvironment').with {
+                accessible = true
                 get(null)
             }
-            privEnv=('java.lang.ProcessEnvironment$StringEnvironment'as Class).declaredConstructors.find{it.parameterTypes[0].name==Map.name}.with{
-                accessible=true
+            privEnv = ('java.lang.ProcessEnvironment$StringEnvironment' as Class).declaredConstructors.find {
+                it.parameterTypes[0].name == Map.name
+            }.with {
+                accessible = true
                 newInstance(envTmp)
             }
-        }catch(Throwable e_){
+        } catch (Throwable e_) {
             e_.printStackTrace()
             println 'Failed to modify env. Build will fail.'
             return
@@ -31,22 +33,22 @@ import java.time.LocalDate
     assert privEnv instanceof Map
     //com.android.build.gradle.internal.NonFinalPluginExpiry
     //java.lang.ProcessEnvironment
-    def value=privEnv.ANDROID_DAILY_OVERRIDE=({
-        def now=LocalDate.now()
+    def value = privEnv.ANDROID_DAILY_OVERRIDE = ({
+        def now = LocalDate.now()
         def crypt = MessageDigest.getInstance("SHA-1")
         crypt.reset()
         crypt.update(
                 String.format(
                         '%1$s:%2$s:%3$s',
                         now.year,
-                        now.monthValue -1,
+                        now.monthValue - 1,
                         now.dayOfMonth
                 ).getBytes("utf8")
         )
         new BigInteger(1, crypt.digest()).toString(16)
     })()
     //check the env has intended value
-    assert value==System.getenv("ANDROID_DAILY_OVERRIDE")
+    assert value == System.getenv("ANDROID_DAILY_OVERRIDE")
 })()
 
 include ':app', ':wisecraft-i18n', ':compat'

@@ -34,29 +34,29 @@ android {
         buildConfigField "String", "APP_BUILT_ON", "\"${ext.builtOn()}\""
 
         def oslData = ({
-            def commandCheck={cmd,arg->
-                try{
-                    return [cmd,*arg].execute().with{/* java's normal Process object */
+            def commandCheck = { cmd, arg ->
+                try {
+                    return [cmd, *arg].execute().with {/* java's normal Process object */
                         waitFor()
-                        exitValue()||true
+                        exitValue() || true
                     }
-                }catch(Throwable e){
+                } catch (Throwable e) {
                     false
                 }
             }
-            def checkModule={module->
-                ['sh','-c',"npm la -g | head | cat"].execute().in.text
-                    .readLines()
-                    .findAll{it}
-                    .findAll{it.contains(module)}
-                    .collect{it.split(' ')}
-                    .flatten()
-                    .findAll{it.length()>=module.length()}
-                    .findAll{it.contains('@')}
-                    .findAll{it.contains(module)}
-                    .first()
+            def checkModule = { module ->
+                ['sh', '-c', "npm la -g | head | cat"].execute().in.text
+                        .readLines()
+                        .findAll { it }
+                        .findAll { it.contains(module) }
+                        .collect { it.split(' ') }
+                        .flatten()
+                        .findAll { it.length() >= module.length() }
+                        .findAll { it.contains('@') }
+                        .findAll { it.contains(module) }
+                        .first()
             }
-            
+
             def oslMarkdown = new URL("https://github.com/nao20010128nao/Wisecraft/raw/master/OPEN_SOURCE_LICENSES.md").text
             def oslCss = new URL('https://github.com/fiskurgit/MarkdownView/raw/master/library/src/main/assets/githubmarkdown.css').text
 
@@ -95,9 +95,9 @@ android {
             )
             doc.select('style')[0].text(oslCss)
             //return doc.html()
-            def html=doc.html()
-            if(commandCheck('html-minifier','--help')){// check the command exists
-                html=['html-minifier','--html5','--minify-css','true','--minify-js','true','--remove-comments','--collapse-whitespace'].execute().with{
+            def html = doc.html()
+            if (commandCheck('html-minifier', '--help')) {// check the command exists
+                html = ['html-minifier', '--html5', '--minify-css', 'true', '--minify-js', 'true', '--remove-comments', '--collapse-whitespace'].execute().with {
                     out.write "$html\n".bytes
                     out.flush()
                     out.close()
@@ -130,7 +130,7 @@ android {
 
         buildConfigField "String", "OPEN_SOURCE_LICENSE", oslCombined
 
-        println "Shortened ${oslCombinedOld.length()-oslCombined.length()} bytes. (oslCombined: ${oslCombined.length()}, oslCombinedOld: ${oslCombinedOld.length()})"
+        println "Shortened ${oslCombinedOld.length() - oslCombined.length()} bytes. (oslCombined: ${oslCombined.length()}, oslCombinedOld: ${oslCombinedOld.length()})"
     }
     buildTypes {
         release {

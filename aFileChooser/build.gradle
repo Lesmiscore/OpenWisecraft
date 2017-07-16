@@ -16,20 +16,20 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-	lintOptions {
-		abortOnError false
-	}
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
-	if(1)compile "com.android.support:appcompat-v7:$supportLibVersion"
-    if(1)compile "com.android.support:support-compat:$supportLibVersion"
-    if(1)compile "com.android.support:support-fragment:$supportLibVersion"
+    if (1) compile "com.android.support:appcompat-v7:$supportLibVersion"
+    if (1) compile "com.android.support:support-compat:$supportLibVersion"
+    if (1) compile "com.android.support:support-fragment:$supportLibVersion"
 
-	compile project(':MaterialIcons')
-	compile project(':wisecraft-i18n')
+    compile project(':MaterialIcons')
+    compile project(':wisecraft-i18n')
 
-    if(0){
+    if (0) {
         compile 'com.android.support:appcompat-v7:25.0.0'
         compile 'com.android.support:support-compat:25.0.0'
         compile 'com.android.support:support-fragment:25.0.0'

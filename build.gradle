@@ -7,267 +7,268 @@ import groovy.json.*
 import org.gradle.*
 import org.gradle.api.invocation.*
 
-def printBoth(a){
-	println(a)
-	System.err.println(a)
+def printBoth(a) {
+    println(a)
+    System.err.println(a)
 }
 
-def wisecraftBuild=
-"REM                                                                                                           \n" + 
-"REM I8,        8        ,8I  88                                                                ad88           \n" + 
-"REM `8b       d8b       d8'  \"\"                                                               d8\"      ,d     \n" + 
-"REM  \"8,     ,8\"8,     ,8\"                                                                    88       88     \n" + 
-"REM   Y8     8P Y8     8P    88  ,adPPYba,   ,adPPYba,   ,adPPYba,  8b,dPPYba,  ,adPPYYba,  MM88MMM  MM88MMM  \n" + 
-"REM   `8b   d8' `8b   d8'    88  I8[    \"\"  a8P_____88  a8\"     \"\"  88P'   \"Y8  \"\"     `Y8    88       88     \n" + 
-"REM    `8a a8'   `8a a8'     88   `\"Y8ba,   8PP\"\"\"\"\"\"\"  8b          88          ,adPPPPP88    88       88     \n" + 
-"REM     `8a8'     `8a8'      88  aa    ]8I  \"8b,   ,aa  \"8a,   ,aa  88          88,    ,88    88       88,    \n" + 
-"REM      `8'       `8'       88  `\"YbbdP\"'   `\"Ybbd8\"'   `\"Ybbd8\"'  88          `\"8bbdP\"Y8    88       \"Y888  \n" + 
-"REM                                                                                                           \n" + 
-"REM                                                                                                           \n" + 
-"REM                                                                                                           \n" + 
-"REM                                                           88888888ba                88  88           88   \n" + 
-"REM                                                           88      \"8b               \"\"  88           88   \n" + 
-"REM                                                           88      ,8P                   88           88   \n" + 
-"REM                                                           88aaaaaa8P'  88       88  88  88   ,adPPYb,88   \n" + 
-"REM                                                           88\"\"\"\"\"\"8b,  88       88  88  88  a8\"    `Y88   \n" + 
-"REM                                                           88      `8b  88       88  88  88  8b       88   \n" + 
-"REM                                                           88      a8P  \"8a,   ,a88  88  88  \"8a,   ,d88   \n" + 
-"REM                                                           88888888P\"    `\"YbbdP'Y8  88  88   `\"8bbdP\"Y8   \n" + 
-"REM                                                                                                           \n" + 
-"REM                                                                                                           "
+def wisecraftBuild =
+        "REM                                                                                                           \n" +
+                "REM I8,        8        ,8I  88                                                                ad88           \n" +
+                "REM `8b       d8b       d8'  \"\"                                                               d8\"      ,d     \n" +
+                "REM  \"8,     ,8\"8,     ,8\"                                                                    88       88     \n" +
+                "REM   Y8     8P Y8     8P    88  ,adPPYba,   ,adPPYba,   ,adPPYba,  8b,dPPYba,  ,adPPYYba,  MM88MMM  MM88MMM  \n" +
+                "REM   `8b   d8' `8b   d8'    88  I8[    \"\"  a8P_____88  a8\"     \"\"  88P'   \"Y8  \"\"     `Y8    88       88     \n" +
+                "REM    `8a a8'   `8a a8'     88   `\"Y8ba,   8PP\"\"\"\"\"\"\"  8b          88          ,adPPPPP88    88       88     \n" +
+                "REM     `8a8'     `8a8'      88  aa    ]8I  \"8b,   ,aa  \"8a,   ,aa  88          88,    ,88    88       88,    \n" +
+                "REM      `8'       `8'       88  `\"YbbdP\"'   `\"Ybbd8\"'   `\"Ybbd8\"'  88          `\"8bbdP\"Y8    88       \"Y888  \n" +
+                "REM                                                                                                           \n" +
+                "REM                                                                                                           \n" +
+                "REM                                                                                                           \n" +
+                "REM                                                           88888888ba                88  88           88   \n" +
+                "REM                                                           88      \"8b               \"\"  88           88   \n" +
+                "REM                                                           88      ,8P                   88           88   \n" +
+                "REM                                                           88aaaaaa8P'  88       88  88  88   ,adPPYb,88   \n" +
+                "REM                                                           88\"\"\"\"\"\"8b,  88       88  88  88  a8\"    `Y88   \n" +
+                "REM                                                           88      `8b  88       88  88  88  8b       88   \n" +
+                "REM                                                           88      a8P  \"8a,   ,a88  88  88  \"8a,   ,d88   \n" +
+                "REM                                                           88888888P\"    `\"YbbdP'Y8  88  88   `\"8bbdP\"Y8   \n" +
+                "REM                                                                                                           \n" +
+                "REM                                                                                                           "
 
 printBoth(wisecraftBuild)
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-	repositories {
-    	jcenter()
-    	mavenCentral()
-    	maven { url "https://repo.eclipse.org/content/repositories/egit-releases/" }
-    	maven { url "https://raw.githubusercontent.com/nao20010128nao/MavenRepo/master/releases/" }
-	}
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven { url "https://repo.eclipse.org/content/repositories/egit-releases/" }
+        maven { url "https://raw.githubusercontent.com/nao20010128nao/MavenRepo/master/releases/" }
+    }
     dependencies {
         classpath('com.android.tools.build:gradle:2.4.0-alpha7')/*{
             exclude group: 'net.sf.proguard', module: 'proguard'
         }*/
         classpath 'com.google.gms:google-services:3.0.0'
-		//classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-		//classpath "com.nao20010128nao:proguard-japanese:5.3.2"
-		//classpath "net.sf.proguard:proguard-gradle:5.3.2"
-		classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.1'
-		classpath 'org.mozilla:rhino:1.7.7.1'
-		classpath 'org.jsoup:jsoup:1.9.1'
-		classpath 'org.codehaus.groovy:groovy-android-gradle-plugin:1.2.0'
-	}
+        //classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        //classpath "com.nao20010128nao:proguard-japanese:5.3.2"
+        //classpath "net.sf.proguard:proguard-gradle:5.3.2"
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.1'
+        classpath 'org.mozilla:rhino:1.7.7.1'
+        classpath 'org.jsoup:jsoup:1.9.1'
+        classpath 'org.codehaus.groovy:groovy-android-gradle-plugin:1.2.0'
+    }
 }
 
 allprojects {
-	repositories {
+    repositories {
         jcenter()
-		mavenCentral()
+        mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-		maven { url 'https://dl.bintray.com/azeesoft/maven' }
-		maven { url "https://raw.github.com/laenger/maven-releases/master/releases" }
-		maven { url "https://raw.github.com/nao20010128nao/AndroidSupportRepo/master/m2repository" }
-		maven { url "https://raw.githubusercontent.com/nao20010128nao/MavenRepo/master/releases/" }
-		maven { url "https://jitpack.io" }
-		maven { url "https://maven.google.com" }
-	}
+        maven { url 'https://dl.bintray.com/azeesoft/maven' }
+        maven { url "https://raw.github.com/laenger/maven-releases/master/releases" }
+        maven { url "https://raw.github.com/nao20010128nao/AndroidSupportRepo/master/m2repository" }
+        maven { url "https://raw.githubusercontent.com/nao20010128nao/MavenRepo/master/releases/" }
+        maven { url "https://jitpack.io" }
+        maven { url "https://maven.google.com" }
+    }
 }
 
-subprojects{
-	def slv='25.3.0'
-	def fbv='10.2.6'
-	ext{
-		supportLibVersion=slv
-		firebaseVersion=fbv
-		groovyVersion='2.4.10'
-	}
-	afterEvaluate {project ->
+subprojects {
+    def slv = '25.3.0'
+    def fbv = '10.2.6'
+    ext {
+        supportLibVersion = slv
+        firebaseVersion = fbv
+        groovyVersion = '2.4.10'
+    }
+    afterEvaluate { project ->
         if (project.hasProperty("android")) {
             android {
                 buildToolsVersion "25.0.3"
                 lintOptions {
                     abortOnError false
                 }
-				compileOptions{
-					encoding 'UTF-8'
-				}
+                compileOptions {
+                    encoding 'UTF-8'
+                }
             }
-            project.tasks.each{task->
+            project.tasks.each { task ->
                 println "whenTaskAdded: $task.name is ${task.getClass()}"
             }
         }
-		//configurations.compile.allDependencies.findAll{it.group=='com.android.support'}.collect{it.class}.each(System.out.&println)
-		//org.gradle.api.internal.artifacts.dependencies.DefaultExternalModuleDependency
+        //configurations.compile.allDependencies.findAll{it.group=='com.android.support'}.collect{it.class}.each(System.out.&println)
+        //org.gradle.api.internal.artifacts.dependencies.DefaultExternalModuleDependency
 
-		// force change the version
-		configurations.all {
-			resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-				def requested = details.requested
-				if (requested.group == 'com.android.support' &&
-						!requested.name.startsWith("multidex")) {
-					details.useVersion slv
-				}
-			}
-			resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-				def requested = details.requested
-				if (requested.group == 'com.google.firebase') {
-					details.useVersion fbv
-				}
-			}
-		}
-	}
+        // force change the version
+        configurations.all {
+            resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+                def requested = details.requested
+                if (requested.group == 'com.android.support' &&
+                        !requested.name.startsWith("multidex")) {
+                    details.useVersion slv
+                }
+            }
+            resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+                def requested = details.requested
+                if (requested.group == 'com.google.firebase') {
+                    details.useVersion fbv
+                }
+            }
+        }
+    }
 }
 
 
-task("safeDeleteDevXml")<<{
-	def dir="./app/src/main/res/values/dev.xml"
-	def file=new File(dir)
-	if(file.exists())file.delete()
+task("safeDeleteDevXml") << {
+    def dir = "./app/src/main/res/values/dev.xml"
+    def file = new File(dir)
+    if (file.exists()) file.delete()
 }
 
-task("rollbackFiles")<<{
-	printBoth("Rolling back ")
-	["git", "checkout", "--", "."].execute(null,dir).in.text.trim()
+task("rollbackFiles") << {
+    printBoth("Rolling back ")
+    ["git", "checkout", "--", "."].execute(null, dir).in.text.trim()
 }
 
-def finder(list,fille,suffix){
-	if(fille.file){
-    	if(fille.toString().endsWith(suffix)){
-    		list.add(fille)
-		}
-	}else if(fille.directory){
-		fille.listFiles().each {File fiile->
-			finder(list,fiile,suffix)
-		}
-	}
+def finder(list, fille, suffix) {
+    if (fille.file) {
+        if (fille.toString().endsWith(suffix)) {
+            list.add(fille)
+        }
+    } else if (fille.directory) {
+        fille.listFiles().each { File fiile ->
+            finder(list, fiile, suffix)
+        }
+    }
 }
 
 task("eliminateImplementTodo") << {
-	def autoGeneratedJpn=new StringBuilder()
-	[(char)33258,(char)21205,(char)29983,(char)25104].each {moji->
-		autoGeneratedJpn.append(moji)
-	}
-	autoGeneratedJpn=autoGeneratedJpn.toString()
-	def list=new ArrayList<File>()
-	println "Finding .java files..."
-	finder(list,new File("."),".java")
-	list=list.sort()
-	println "Found "+list.size()+" files."
-	list.each{File listingF->
-		println listingF
-	}
-	println "Eliminating TODO lines... (only implement todo)"
-	def eliminated=0
-	list.each{File ddir->
-		printBoth("Editing "+ddir)
-		def fr=null
-		def sbld=new StringBuilder()
-		try{
-			fr=new BufferedReader(new FileReader(ddir))
-			def line=null
-			while((line=fr.readLine())!=null){
-				if(line.trim().contains("// TODO: Implement this method")|line.trim().contains("// TODO")|(line.trim().contains(autoGeneratedJpn)&line.trim().contains("TODO"))){
-					eliminated++
-					continue
-				}
-				sbld.append(line).append('\n')
-			}
-		}finally{
-			if(fr!=null)fr.close()
-			fr=null
-		}
-		ddir.delete()
-		try{
-			fr=new FileWriter(ddir)
-			fr.write(sbld.toString())
-		}finally{
-			fr?.close()
-		}
-	}
-	println "Done. "+eliminated+" lines are eliminated in "+list.size()+" files."
+    def autoGeneratedJpn = new StringBuilder()
+    [(char) 33258, (char) 21205, (char) 29983, (char) 25104].each { moji ->
+        autoGeneratedJpn.append(moji)
+    }
+    autoGeneratedJpn = autoGeneratedJpn.toString()
+    def list = new ArrayList<File>()
+    println "Finding .java files..."
+    finder(list, new File("."), ".java")
+    list = list.sort()
+    println "Found " + list.size() + " files."
+    list.each { File listingF ->
+        println listingF
+    }
+    println "Eliminating TODO lines... (only implement todo)"
+    def eliminated = 0
+    list.each { File ddir ->
+        printBoth("Editing " + ddir)
+        def fr = null
+        def sbld = new StringBuilder()
+        try {
+            fr = new BufferedReader(new FileReader(ddir))
+            def line = null
+            while ((line = fr.readLine()) != null) {
+                if (line.trim().contains("// TODO: Implement this method") | line.trim().contains("// TODO") | (line.trim().contains(autoGeneratedJpn) & line.trim().contains("TODO"))) {
+                    eliminated++
+                    continue
+                }
+                sbld.append(line).append('\n')
+            }
+        } finally {
+            if (fr != null) fr.close()
+            fr = null
+        }
+        ddir.delete()
+        try {
+            fr = new FileWriter(ddir)
+            fr.write(sbld.toString())
+        } finally {
+            fr?.close()
+        }
+    }
+    println "Done. " + eliminated + " lines are eliminated in " + list.size() + " files."
 }
-task("connectTor")<<{
-	connectTor()
-}
-
-def connectTor(){
-	def checkProcessExist={String proc->
-		def isEmptyStr={CharSequence str->
-			return (str == null || str.length() == 0)
-		}
-		if(System.getProperty("os.name").toLowerCase().contains("windows")){
-			return new File("${proc}.exe").exists()
-		}else{
-			return !isEmptyStr(["sh","-c","which $proc"].execute().in.text.trim())
-		}
-	}
-	def downloadOneLine={addr->
-		URLConnection conn=null
-		Reader br=null
-		try{
-			conn=new URL(addr).openConnection()
-			br=new InputStreamReader(conn.inputStream)
-			return br.readLine()
-		}catch(Throwable e){
-			return null
-		}finally{
-			try {
-				conn.inputStream.close()
-				conn.outputStream.close()
-				br.close()
-			} catch (IOException e) {}
-		}
-	}
-	if(checkProcessExist("tor")){
-		printBoth("Unsetting provy setting...")
-		["http.proxyHost","http.proxyPort","https.proxyHost","https.proxyPort","ftp.proxyHost","ftp.proxyPort","socksProxyHost","socksProxyPort"].each{
-			System.clearProperty(it)
-		}
-		def oldIp=downloadOneLine("http://checkip.amazonaws.com")
-		printBoth("Old IP address: ${oldIp}")
-		
-		System.setProperty("socksProxyHost","localhost")
-		System.setProperty("socksProxyPort","9050")
-		
-		def newIp=downloadOneLine("http://checkip.amazonaws.com")
-		printBoth("New IP address: ${newIp}")
-		
-		printBoth(newIp!=oldIp?"Proxy is running well":"Proxy is not working")
-	}else{
-		printBoth("tor process does not exist")
-	}
+task("connectTor") << {
+    connectTor()
 }
 
-if(System.getenv("USE_TOR")=="true"){
-	connectTor()
+def connectTor() {
+    def checkProcessExist = { String proc ->
+        def isEmptyStr = { CharSequence str ->
+            return (str == null || str.length() == 0)
+        }
+        if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+            return new File("${proc}.exe").exists()
+        } else {
+            return !isEmptyStr(["sh", "-c", "which $proc"].execute().in.text.trim())
+        }
+    }
+    def downloadOneLine = { addr ->
+        URLConnection conn = null
+        Reader br = null
+        try {
+            conn = new URL(addr).openConnection()
+            br = new InputStreamReader(conn.inputStream)
+            return br.readLine()
+        } catch (Throwable e) {
+            return null
+        } finally {
+            try {
+                conn.inputStream.close()
+                conn.outputStream.close()
+                br.close()
+            } catch (IOException e) {
+            }
+        }
+    }
+    if (checkProcessExist("tor")) {
+        printBoth("Unsetting provy setting...")
+        ["http.proxyHost", "http.proxyPort", "https.proxyHost", "https.proxyPort", "ftp.proxyHost", "ftp.proxyPort", "socksProxyHost", "socksProxyPort"].each {
+            System.clearProperty(it)
+        }
+        def oldIp = downloadOneLine("http://checkip.amazonaws.com")
+        printBoth("Old IP address: ${oldIp}")
+
+        System.setProperty("socksProxyHost", "localhost")
+        System.setProperty("socksProxyPort", "9050")
+
+        def newIp = downloadOneLine("http://checkip.amazonaws.com")
+        printBoth("New IP address: ${newIp}")
+
+        printBoth(newIp != oldIp ? "Proxy is running well" : "Proxy is not working")
+    } else {
+        printBoth("tor process does not exist")
+    }
 }
 
-task("convertConfigSlurperToBuildscript")<<{
-    def gitlabCi=new File(rootDir,"ci/scripts/gitlab-ci.groovy").toURI().toURL()
-    def gitlabCiConfig=new ConfigSlurper().parse(gitlabCi)
-    def json=new JsonBuilder()
+if (System.getenv("USE_TOR") == "true") {
+    connectTor()
+}
+
+task("convertConfigSlurperToBuildscript") << {
+    def gitlabCi = new File(rootDir, "ci/scripts/gitlab-ci.groovy").toURI().toURL()
+    def gitlabCiConfig = new ConfigSlurper().parse(gitlabCi)
+    def json = new JsonBuilder()
     json gitlabCiConfig
-    new File(rootDir,"test.gitlab-ci.yml").text=json.toPrettyString()
+    new File(rootDir, "test.gitlab-ci.yml").text = json.toPrettyString()
 }
 
-task("convertConfigSlurperToBuildscript2")<<{
-    def gitlabCi=new File(rootDir,"ci/scripts/gitlab-ci2.groovy").toURI().toURL()
-    def gitlabCiConfig=new ConfigSlurper().parse(gitlabCi)
-    def json=new JsonBuilder()
+task("convertConfigSlurperToBuildscript2") << {
+    def gitlabCi = new File(rootDir, "ci/scripts/gitlab-ci2.groovy").toURI().toURL()
+    def gitlabCiConfig = new ConfigSlurper().parse(gitlabCi)
+    def json = new JsonBuilder()
     json gitlabCiConfig
-    new File(rootDir,"test2.gitlab-ci.yml").text=json.toPrettyString()
+    new File(rootDir, "test2.gitlab-ci.yml").text = json.toPrettyString()
 }
 
-task("beforeBuild"){
-	dependsOn "convertConfigSlurperToBuildscript","convertConfigSlurperToBuildscript2","safeDeleteDevXml"
+task("beforeBuild") {
+    dependsOn "convertConfigSlurperToBuildscript", "convertConfigSlurperToBuildscript2", "safeDeleteDevXml"
 }
 
-ProductFlavor.metaClass.jackOptions={Action<JackOptions> action->/*no-op*/}
+ProductFlavor.metaClass.jackOptions = { Action<JackOptions> action ->/*no-op*/ }
 tasks.whenTaskAdded { task ->
     if (task.name.contains("lint")) {
         task.enabled = false
     }
-	println "whenTaskAdded: $task.name is ${task.getClass()}"
+    println "whenTaskAdded: $task.name is ${task.getClass()}"
 }

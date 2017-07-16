@@ -10,248 +10,248 @@ import com.android.build.gradle.internal.transforms.*
 import java.util.zip.CRC32
 
 android {
-	def getRandomBetaSuffix={->
-		def suffix=["BETA","Kabuki","Sakura","Soyokaze","Tokikaze","Matsu"]
-		def rand=new SecureRandom()
-		def where=Math.abs(rand.nextInt())%suffix.size()
-		return suffix[where]
-	}
-	def isEmptyStr={str->!!str}
-	def generateVersionCode={String n,int p->
-		def bitWidth=4//shouldn't be changed from 4
-	
-		def splitted=n.split("\\.")
-		def major=new Integer(splitted[0])
-		def minor=new Integer(splitted[1])
-		def reserved1=0//splitted[2]
-		def reserved2=0//splitted[3]
-		return major<<(bitWidth*4)|minor<<(bitWidth*3)|reserved1<<(bitWidth*2)|reserved2<<(bitWidth*1)|p
-	}
-	
-	def wsi="Widget Status Inspector"
-	def preNum=1 //0 is stable release
-	def version="5.0"
+    def getRandomBetaSuffix = { ->
+        def suffix = ["BETA", "Kabuki", "Sakura", "Soyokaze", "Tokikaze", "Matsu"]
+        def rand = new SecureRandom()
+        def where = Math.abs(rand.nextInt()) % suffix.size()
+        return suffix[where]
+    }
+    def isEmptyStr = { str -> !!str }
+    def generateVersionCode = { String n, int p ->
+        def bitWidth = 4//shouldn't be changed from 4
+
+        def splitted = n.split("\\.")
+        def major = new Integer(splitted[0])
+        def minor = new Integer(splitted[1])
+        def reserved1 = 0//splitted[2]
+        def reserved2 = 0//splitted[3]
+        return major << (bitWidth * 4) | minor << (bitWidth * 3) | reserved1 << (bitWidth * 2) | reserved2 << (bitWidth * 1) | p
+    }
+
+    def wsi = "Widget Status Inspector"
+    def preNum = 1 //0 is stable release
+    def version = "5.0"
 
     compileSdkVersion 25
     buildToolsVersion "25.0.0"
 
-	/*
-	versionCode:
-	40 is 4.0 pre 5
-	41 is 4.0
-	*/
+    /*
+    versionCode:
+    40 is 4.0 pre 5
+    41 is 4.0
+    */
     defaultConfig {
         applicationId 'com.nao20010128nao.Wisecraft'
         minSdkVersion 17
         targetSdkVersion 24
-        versionCode generateVersionCode(version,preNum==0?0xf:preNum)
+        versionCode generateVersionCode(version, preNum == 0 ? 0xf : preNum)
         versionName version
-		multiDexEnabled true
-		
-		buildConfigField "String", "HIDDEN_AD", "\"http://cur.lv/11juip\""
-		buildConfigField "boolean", "SHOW_BUILD_DATA_ON_VERSIONS", "false"
-		buildConfigField "boolean", "OBFUSCATED", "false"
-		buildConfigField "String[]", "NOTIFICATION_TAGS", "new String[]{\"main\"}"
-	}
-	
-	signingConfigs {
-		release {
-		}
-	}
-	
+        multiDexEnabled true
+
+        buildConfigField "String", "HIDDEN_AD", "\"http://cur.lv/11juip\""
+        buildConfigField "boolean", "SHOW_BUILD_DATA_ON_VERSIONS", "false"
+        buildConfigField "boolean", "OBFUSCATED", "false"
+        buildConfigField "String[]", "NOTIFICATION_TAGS", "new String[]{\"main\"}"
+    }
+
+    signingConfigs {
+        release {
+        }
+    }
+
     buildTypes {
-		release {
+        release {
             minifyEnabled false
             proguardFiles '../proguard-rules.pro'
-			signingConfig signingConfigs.release
-			resValue "string", "wsi", ""
-			resValue "bool", "inspectorEnabled", "false"
+            signingConfig signingConfigs.release
+            resValue "string", "wsi", ""
+            resValue "bool", "inspectorEnabled", "false"
         }
         shrinkRelease.initWith(buildTypes.release)
-        shrinkRelease{
-			minifyEnabled true
+        shrinkRelease {
+            minifyEnabled true
             proguardFiles '../proguard-rules.pro'
-			buildConfigField "boolean", "OBFUSCATED", "true"
-		}
+            buildConfigField "boolean", "OBFUSCATED", "true"
+        }
         debug {
-        	applicationIdSuffix = '.alpha'  
+            applicationIdSuffix = '.alpha'
             versionNameSuffix = 'd'
             debuggable true
-			resValue "string", "wsi", ""
-			resValue "bool", "inspectorEnabled", "false"
-			buildConfigField "String[]", "NOTIFICATION_TAGS", "new String[]{\"main\",\"test\"}"
-		}
-		if(preNum!=0){
-			pre {
-				versionNameSuffix = (' Pre '+preNum)
-				signingConfig signingConfigs.release
-				resValue "string", "app_name", "Wisecraft "+getRandomBetaSuffix()
-				resValue "string", "wsi", ""
-				resValue "bool", "inspectorEnabled", "false"
-			}
-			shrinkPre.initWith(buildTypes.pre)
-			shrinkPre{
-		        minifyEnabled true
+            resValue "string", "wsi", ""
+            resValue "bool", "inspectorEnabled", "false"
+            buildConfigField "String[]", "NOTIFICATION_TAGS", "new String[]{\"main\",\"test\"}"
+        }
+        if (preNum != 0) {
+            pre {
+                versionNameSuffix = (' Pre ' + preNum)
+                signingConfig signingConfigs.release
+                resValue "string", "app_name", "Wisecraft " + getRandomBetaSuffix()
+                resValue "string", "wsi", ""
+                resValue "bool", "inspectorEnabled", "false"
+            }
+            shrinkPre.initWith(buildTypes.pre)
+            shrinkPre {
+                minifyEnabled true
                 proguardFiles '../proguard-rules.pro'
-				buildConfigField "boolean", "OBFUSCATED", "true"
-		    }
-		}
-		debug2 {
-        	applicationIdSuffix = '.alpha'  
+                buildConfigField "boolean", "OBFUSCATED", "true"
+            }
+        }
+        debug2 {
+            applicationIdSuffix = '.alpha'
             versionNameSuffix = ' Pre'
-			signingConfig signingConfigs.release
-			debuggable true
-			resValue "string", "app_name", "[DEBUG2] Wisecraft "+getRandomBetaSuffix()
-			resValue "string", "wsi", "[DEBUG2] "+wsi
-			resValue "bool", "inspectorEnabled", "true"
-			
-			buildConfigField "String[]", "NOTIFICATION_TAGS", "new String[]{\"main\",\"test\"}"
-			buildConfigField "boolean", "SHOW_BUILD_DATA_ON_VERSIONS", "true"
+            signingConfig signingConfigs.release
+            debuggable true
+            resValue "string", "app_name", "[DEBUG2] Wisecraft " + getRandomBetaSuffix()
+            resValue "string", "wsi", "[DEBUG2] " + wsi
+            resValue "bool", "inspectorEnabled", "true"
 
-			/*
-			def groovyCrc32=({
-				def file=new File(project.projectDir,'src/debug2/assets/groovy.zip').bytes
-				def crc=new CRC32()
-				crc.update(file)
-				return crc.value
-			})()
-			buildConfigField "long","GROOVY_CRC32","$groovyCrc32"
-			*/
-		}
-		debug2TestObs.initWith(buildTypes.debug2)
-		debug2TestObs{
-			buildConfigField "boolean", "OBFUSCATED", "true"
-		}
-		pg.initWith(buildTypes.debug2)
-		pg{
-			minifyEnabled true
+            buildConfigField "String[]", "NOTIFICATION_TAGS", "new String[]{\"main\",\"test\"}"
+            buildConfigField "boolean", "SHOW_BUILD_DATA_ON_VERSIONS", "true"
+
+            /*
+            def groovyCrc32=({
+                def file=new File(project.projectDir,'src/debug2/assets/groovy.zip').bytes
+                def crc=new CRC32()
+                crc.update(file)
+                return crc.value
+            })()
+            buildConfigField "long","GROOVY_CRC32","$groovyCrc32"
+            */
+        }
+        debug2TestObs.initWith(buildTypes.debug2)
+        debug2TestObs {
+            buildConfigField "boolean", "OBFUSCATED", "true"
+        }
+        pg.initWith(buildTypes.debug2)
+        pg {
+            minifyEnabled true
             proguardFiles '../proguard-rules.pro'
-			buildConfigField "boolean", "OBFUSCATED", "true"
-		}
-		pgUlt.initWith(buildTypes.pg)
-		pgUlt{
-			proguardFiles '../proguard-rules.pro','../exotic.pro'
-		}
-		pgExperimental.initWith(buildTypes.pgUlt)
-		pgExperimental{
-			proguardFiles '../proguard-rules.pro','../exotic.pro','../exp.pro'
-		}
+            buildConfigField "boolean", "OBFUSCATED", "true"
+        }
+        pgUlt.initWith(buildTypes.pg)
+        pgUlt {
+            proguardFiles '../proguard-rules.pro', '../exotic.pro'
+        }
+        pgExperimental.initWith(buildTypes.pgUlt)
+        pgExperimental {
+            proguardFiles '../proguard-rules.pro', '../exotic.pro', '../exp.pro'
+        }
     }
-	
-	applicationVariants.all { variant ->
-		if (variant.buildType.name.equals("release")) {
-        	variant.outputs.each { output ->
-            	println(output.outputFile.name)
-        	}
-    	}
-	}
-	
-	lintOptions {
+
+    applicationVariants.all { variant ->
+        if (variant.buildType.name.equals("release")) {
+            variant.outputs.each { output ->
+                println(output.outputFile.name)
+            }
+        }
+    }
+
+    lintOptions {
         abortOnError false
     }
-    
-    dexOptions {
-    	if(System.getenv('CI_BUILD_ID')){//Check the environment
-    		threadCount 8
-		}
-	}
-	
-	splits{
-		if(System.getenv("SPLIT_APK")=="true"){
-			density{
-				enable true
-			}
-			language{
-				enable true
-				include "ja","en"
-			}
-		}
-	}
 
-	compileOptions {
-		sourceCompatibility JavaVersion.VERSION_1_8
-		targetCompatibility JavaVersion.VERSION_1_8
-	}
+    dexOptions {
+        if (System.getenv('CI_BUILD_ID')) {//Check the environment
+            threadCount 8
+        }
+    }
+
+    splits {
+        if (System.getenv("SPLIT_APK") == "true") {
+            density {
+                enable true
+            }
+            language {
+                enable true
+                include "ja", "en"
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
-	//compile project(':statusesLayout') // https://github.com/nao20010128nao/StatusesLayout
-	compile project(':wisecraft-i18n')   // https://github.com/nao20010128nao/Wisecraft-Multilanguage
-	compile project(':MaterialIcons')    // https://github.com/nao20010128nao/MaterialIconsLight
-	compile project(':psts')             // https://github.com/nao20010128nao/Wisecraft-PagerSlidingTabStrip
-	compile project(':scrolling')
-	compile project(':rcon')
-	compile project(':compat')
-	compile project(':aFileChooser')
-	compile project(':calligraphy')
-	compile project(':colorPicker')
-	compile project(':collector')
-	compile project(':masterdetail')
-	
-	if(1)compile "com.android.support:recyclerview-v7:$supportLibVersion"
-	if(1)compile "com.android.support:design:$supportLibVersion"
-	if(1)compile "com.android.support:support-v4:$supportLibVersion"
-	if(1)compile "com.android.support:appcompat-v7:$supportLibVersion"
-	if(1)compile "com.android.support:cardview-v7:$supportLibVersion"
-	if(1)compile "com.android.support:palette-v7:$supportLibVersion"
-	if(1)compile "com.android.support:preference-v7:$supportLibVersion"
-	compile 'com.android.support:multidex:1.0.1'
+    //compile project(':statusesLayout') // https://github.com/nao20010128nao/StatusesLayout
+    compile project(':wisecraft-i18n')   // https://github.com/nao20010128nao/Wisecraft-Multilanguage
+    compile project(':MaterialIcons')    // https://github.com/nao20010128nao/MaterialIconsLight
+    compile project(':psts')             // https://github.com/nao20010128nao/Wisecraft-PagerSlidingTabStrip
+    compile project(':scrolling')
+    compile project(':rcon')
+    compile project(':compat')
+    compile project(':aFileChooser')
+    compile project(':calligraphy')
+    compile project(':colorPicker')
+    compile project(':collector')
+    compile project(':masterdetail')
 
-	if(1)compile "com.google.firebase:firebase-core:$firebaseVersion"
-	if(1)compile "com.google.firebase:firebase-storage:$firebaseVersion"
-	if(1)compile "com.google.firebase:firebase-config:$firebaseVersion"
-	if(1)compile "com.google.firebase:firebase-crash:$firebaseVersion"
-	if(1)compile "com.google.firebase:firebase-messaging:$firebaseVersion"
-	
-	compile 'com.google.code.gson:gson:2.8.0'
-	compile 'org.nanohttpd:nanohttpd:2.3.0'
-	compile 'org.jsoup:jsoup:1.9.1'
-	compile 'org.eclipse.mylyn.github:org.eclipse.egit.github.core:3.4.0.201406110918-r'
-	compile 'com.mikhaellopez:circularimageview:3.0.2'
-	compile "biz.laenger.android:vpbs:0.0.2"
-	compile 'com.github.hotchemi:permissionsdispatcher:2.3.2'
-	compile 'com.google.guava:guava:19.0'
-	compile 'jp.wasabeef:recyclerview-animators:2.2.6'
-	compile 'com.annimon:stream:1.1.7'
-	compile 'com.google.protobuf:protobuf-lite:3.0.0'
-	
-	compile files('libs/fsb.jar')
-	compile files('libs/mcprox.jar')
-	compile files('libs/commons-codec-1.10.jar')
-	compile files('libs/jsocks.jar')
-	
-	compile('com.mikepenz:materialdrawer:5.9.0') {
-		transitive = true
-	}
+    if (1) compile "com.android.support:recyclerview-v7:$supportLibVersion"
+    if (1) compile "com.android.support:design:$supportLibVersion"
+    if (1) compile "com.android.support:support-v4:$supportLibVersion"
+    if (1) compile "com.android.support:appcompat-v7:$supportLibVersion"
+    if (1) compile "com.android.support:cardview-v7:$supportLibVersion"
+    if (1) compile "com.android.support:palette-v7:$supportLibVersion"
+    if (1) compile "com.android.support:preference-v7:$supportLibVersion"
+    compile 'com.android.support:multidex:1.0.1'
 
-	protobuf fileTree('../protos')
+    if (1) compile "com.google.firebase:firebase-core:$firebaseVersion"
+    if (1) compile "com.google.firebase:firebase-storage:$firebaseVersion"
+    if (1) compile "com.google.firebase:firebase-config:$firebaseVersion"
+    if (1) compile "com.google.firebase:firebase-crash:$firebaseVersion"
+    if (1) compile "com.google.firebase:firebase-messaging:$firebaseVersion"
 
-	//These lines are required to write code using AIDE. Please don't remove them.
-	if(0){
-		compile 'com.mikepenz:materialize:+'
-    	compile 'com.mikepenz:iconics-core:+'
-    	compile 'com.mikepenz:fastadapter:+'
-		compile "com.android.support:recyclerview-v7:25.3.1"
-		compile "com.android.support:design:25.3.1"
-		compile "com.android.support:support-v4:25.3.1"
-		compile "com.android.support:appcompat-v7:25.3.1"
-		compile "com.android.support:cardview-v7:25.3.1"
-		compile "com.android.support:palette-v7:25.3.1"
-		compile "com.android.support:preference-v7:25.3.1"
-		compile "com.google.firebase:firebase-core:10.0.1"
-		compile "com.google.firebase:firebase-storage:10.0.1"
-		compile "com.google.firebase:firebase-config:10.0.1"
-		compile "com.google.firebase:firebase-crash:10.0.1"
-		compile "com.google.firebase:firebase-messaging:10.0.1"
-	}
-	
-	if(1)annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:2.3.2'
+    compile 'com.google.code.gson:gson:2.8.0'
+    compile 'org.nanohttpd:nanohttpd:2.3.0'
+    compile 'org.jsoup:jsoup:1.9.1'
+    compile 'org.eclipse.mylyn.github:org.eclipse.egit.github.core:3.4.0.201406110918-r'
+    compile 'com.mikhaellopez:circularimageview:3.0.2'
+    compile "biz.laenger.android:vpbs:0.0.2"
+    compile 'com.github.hotchemi:permissionsdispatcher:2.3.2'
+    compile 'com.google.guava:guava:19.0'
+    compile 'jp.wasabeef:recyclerview-animators:2.2.6'
+    compile 'com.annimon:stream:1.1.7'
+    compile 'com.google.protobuf:protobuf-lite:3.0.0'
 
-	//debug2
-	if(1)debug2Provided "org.codehaus.groovy:groovy:$groovyVersion:grooid"
-	//if(1)debug2Apk "org.codehaus.groovy:groovy:$groovyVersion:grooid"
-	if(1)debug2Compile 'com.google.android.tools:dx:1.7'
-	if(1)debug2Compile fileTree(dir:'src/debug2/libs',include:['*.jar','*.zip'])
+    compile files('libs/fsb.jar')
+    compile files('libs/mcprox.jar')
+    compile files('libs/commons-codec-1.10.jar')
+    compile files('libs/jsocks.jar')
+
+    compile('com.mikepenz:materialdrawer:5.9.0') {
+        transitive = true
+    }
+
+    protobuf fileTree('../protos')
+
+    //These lines are required to write code using AIDE. Please don't remove them.
+    if (0) {
+        compile 'com.mikepenz:materialize:+'
+        compile 'com.mikepenz:iconics-core:+'
+        compile 'com.mikepenz:fastadapter:+'
+        compile "com.android.support:recyclerview-v7:25.3.1"
+        compile "com.android.support:design:25.3.1"
+        compile "com.android.support:support-v4:25.3.1"
+        compile "com.android.support:appcompat-v7:25.3.1"
+        compile "com.android.support:cardview-v7:25.3.1"
+        compile "com.android.support:palette-v7:25.3.1"
+        compile "com.android.support:preference-v7:25.3.1"
+        compile "com.google.firebase:firebase-core:10.0.1"
+        compile "com.google.firebase:firebase-storage:10.0.1"
+        compile "com.google.firebase:firebase-config:10.0.1"
+        compile "com.google.firebase:firebase-crash:10.0.1"
+        compile "com.google.firebase:firebase-messaging:10.0.1"
+    }
+
+    if (1) annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:2.3.2'
+
+    //debug2
+    if (1) debug2Provided "org.codehaus.groovy:groovy:$groovyVersion:grooid"
+    //if(1)debug2Apk "org.codehaus.groovy:groovy:$groovyVersion:grooid"
+    if (1) debug2Compile 'com.google.android.tools:dx:1.7'
+    if (1) debug2Compile fileTree(dir: 'src/debug2/libs', include: ['*.jar', '*.zip'])
 }
 androidGroovy {
     skipJavaC = true
@@ -270,27 +270,27 @@ androidGroovy {
     }
 }
 protobuf {
-	protoc {
-		artifact = 'com.google.protobuf:protoc:3.0.0'
-	}
-	plugins {
-		javalite {
-			artifact = 'com.google.protobuf:protoc-gen-javalite:3.0.0'
-		}
-	}
-	generateProtoTasks {
-		all().each { task ->
-			task.plugins {
-				javalite { }
-			}
-		}
-	}
+    protoc {
+        artifact = 'com.google.protobuf:protoc:3.0.0'
+    }
+    plugins {
+        javalite {
+            artifact = 'com.google.protobuf:protoc-gen-javalite:3.0.0'
+        }
+    }
+    generateProtoTasks {
+        all().each { task ->
+            task.plugins {
+                javalite {}
+            }
+        }
+    }
 }
 apply plugin: 'com.google.gms.google-services'
 
-def unsafe=({
+def unsafe = ({
     def unsafeField = Unsafe.class.getDeclaredField("theUnsafe")
-    unsafeField.accessible=true
+    unsafeField.accessible = true
     unsafeField.get(null)
 })()
 
