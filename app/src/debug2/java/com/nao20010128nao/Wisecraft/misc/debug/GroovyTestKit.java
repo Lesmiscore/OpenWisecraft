@@ -21,6 +21,7 @@ import org.codehaus.groovy.runtime.*;
 
 import java.io.*;
 import java.util.*;
+import java.util.Objects;
 
 /**
  * Created by lesmi on 17/07/14.
@@ -83,8 +84,13 @@ public class GroovyTestKit extends AppCompatActivity{
                     // execution finished
                     TextView first=createUserTypedTextView();
                     first.setText("> "+scpt);
-                    TextView second=createUserTypedTextView();
-                    second.setText(dish.toString());
+                    TextView second;
+                    if(dish.size()!=0) {
+                        second = createUserTypedTextView();
+                        second.setText(dish.toString());
+                    }else{
+                        second=null;
+                    }
                     TextView third;
                     if(thrown.get()==null){
                         third=createResultTextView();
@@ -98,7 +104,7 @@ public class GroovyTestKit extends AppCompatActivity{
                         third.setText(errDish.toString());
                     }
 
-                    Stream.of(first,second,third).forEach(console::addView);
+                    Stream.of(first,second,third).filter(Utils::nonNull).forEach(console::addView);
                 });
             }).start();
         });
