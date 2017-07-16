@@ -639,17 +639,16 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
     }
 
     private void updateAllWithConditions(final Predicate<Server> pred) {
-        for (int i = 0; i < list.size(); i++) {
-            if (pinging.contains(list.get(i)) || !pred.process(list.get(i)))
-                continue;
+        List<Server> toUpdate=Stream.of(list)
+            .filter(sv->pinging.contains(sv) || !pred.process(sv))
+            .toList();
+        for (int i = 0; i < toUpdate.size(); i++) {
             sl.notifyItemChanged(i);
             if (!srl.isRefreshing())
                 srl.setRefreshing(true);
         }
         new Thread(()->{
-            for (Server aList : list) {
-                if (pinging.contains(aList) || !pred.process(aList))
-                    continue;
+            for (Server aList : toUpdate) {
                 spp.putInQueue(aList, new PingHandlerImpl(false, new Intent().putExtra("offset", -1), false) {
                     public void onPingFailed(final Server s) {
                         super.onPingFailed(s);
@@ -670,30 +669,20 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
     public void addFromMCPE() {
         Utils.makeNonClickableSB(ServerListActivityImpl.this, R.string.importing, Snackbar.LENGTH_LONG).show();
         new Thread(() -> {
-            ArrayList<String[]> al = new ArrayList<>();
-            try {
-                String[] lines = Utils.lines(Utils.readWholeFile(new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt")));
-                for (String s : lines) {
-                    Log.d("readLine", s);
-                    al.add(s.split("\\:"));
-                }
-            } catch (Throwable ex) {
-                DebugWriter.writeToE("ServerListActivity", ex);
-            }
-            final ArrayList<Server> sv = new ArrayList<>();
-            for (String[] s : al) {
-                if (s.length != 4) continue;
-                try {
+            List<Server> sv=Stream.of(lines(readWholeFile(new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt"))))
+                .map(s->s.split("\\:"))/* cut the string */
+                .filter(s->s.length==4)/* pick valid-size ones */
+                .map(s->{/* String[] -> Server */
                     Server svr = new Server();
                     svr.ip = s[2];
                     svr.port = Integer.valueOf(s[3]);
                     svr.mode = Protobufs.Server.Mode.PE;
                     svr.name = s[1];
-                    sv.add(svr);
-                } catch (NumberFormatException e) {
-                }
-            }
-            sv.removeAll(list);
+                    return svr;
+                })
+                .filterNot(list::contains)/* filter non-listed servers */
+                .toList();
+
             runOnUiThread(() -> {
                 if (sv.size() != 0) {
                     Stream.of(sv).forEach(this::addIntoList);
