@@ -623,8 +623,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
     public void saveServers() {
         new Thread(() -> {
-            List<Server> toSave = new ArrayList<>();
-            Stream.of(list).map(Server::cloneAsServer).forEach(toSave::add);
+            List<Server> toSave = Stream.of(list).map(Server::cloneAsServer).toList();
             String json;
             pref.edit().putString("servers", json = gson.toJson(toSave)).commit();
             Log.d("json", json);
