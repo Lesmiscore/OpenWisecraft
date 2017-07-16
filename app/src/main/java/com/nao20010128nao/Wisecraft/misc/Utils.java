@@ -15,6 +15,7 @@ import android.text.style.*;
 import android.view.*;
 import android.webkit.*;
 import android.widget.*;
+import com.annimon.stream.*;
 import com.google.common.io.*;
 import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.R;
@@ -693,16 +694,8 @@ public class Utils extends PingerUtils {
         new AlertDialog.Builder(a)
                 .setTitle(R.string.permissionsRequired)
                 .setMessage(ssb)
-                .setPositiveButton(R.string.continue_, new QuickDialogClickListener() {
-                    public void onClick(int w) {
-                        req.proceed();
-                    }
-                })
-                .setNegativeButton(android.R.string.cancel, new QuickDialogClickListener() {
-                    public void onClick(int w) {
-                        req.cancel();
-                    }
-                })
+                .setPositiveButton(R.string.continue_, (di,w)->req.proceed())
+                .setNegativeButton(android.R.string.cancel, (di,w)->req.cancel())
                 .setOnDismissListener(a1 -> req.cancel())
                 .show();
     }
@@ -727,11 +720,7 @@ public class Utils extends PingerUtils {
     }
 
     public static <T> Collection<T> iterableToCollection(Iterable<T> input) {
-        List<T> result = emptyList();
-        for (T t : input) {
-            result.add(t);
-        }
-        return result;
+        return Stream.of(input).toList();
     }
 
     public static void prepareLooper() {
