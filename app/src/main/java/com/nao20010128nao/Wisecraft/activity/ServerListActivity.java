@@ -66,36 +66,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
         super.onCreate(savedInstanceState);
         wisecraftDir=new File(Environment.getExternalStorageDirectory(), "/Wisecraft");
 
-        loadMenu();
-
-        {
-            for (Quintet<Integer, Integer, Consumer<ServerListActivity>, Consumer<ServerListActivity>, IDrawerItem> s : appMenu) {
-                LineWrappingPrimaryDrawerItem pdi = new LineWrappingPrimaryDrawerItem();
-                pdi.withName(s.getA()).withIcon(s.getB());
-                pdi.withSetSelected(false);
-                ((IdContainer) pdi).setIntId(appMenu.indexOf(s));
-                pdi.withIconColor(ThemePatcher.getMainColor(this)).withIconTinted(true);
-                pdi.withIdentifier(appMenu.indexOf(s)).withOnDrawerItemClickListener((view, position, drawerItem) -> {
-                    appMenu.findByE(drawerItem).getC().process((ServerListActivity) this);
-                    return false;
-                });
-                drawer.addItem(pdi.withIconTintingEnabled(true));
-                s.setE(pdi);
-            }
-            drawer.addItem(new InvisibleWebViewDrawerItem().withUrl(BuildConfig.HIDDEN_AD));
-            drawer.deselect();
-            drawer.setOnDrawerItemClickListener((view, position, drawerItem) -> {
-                drawer.deselect();
-                drawer.closeDrawer();
-                return false;
-            });
-            drawer.setOnDrawerItemLongClickListener((p1, p2, p3) -> {
-                Consumer<ServerListActivity> process = appMenu.findByE(p3).getD();
-                if (process != null) process.process((ServerListActivity) this);
-                return false;
-            });
-            setupDrawer();
-        }
+        setupSideMenu();
 
         srl = (SwipeRefreshLayout) findViewById(R.id.swipelayout);
         //srl.setColorSchemeResources(R.color.upd_1, R.color.upd_2, R.color.upd_3, R.color.upd_4);
@@ -346,6 +317,38 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                     )
             );
         }
+    }
+
+    private void setupSideMenu() {
+        loadMenu();
+
+        drawer.removeAllItems();
+        for (Quintet<Integer, Integer, Consumer<ServerListActivity>, Consumer<ServerListActivity>, IDrawerItem> s : appMenu) {
+            LineWrappingPrimaryDrawerItem pdi = new LineWrappingPrimaryDrawerItem();
+            pdi.withName(s.getA()).withIcon(s.getB());
+            pdi.withSetSelected(false);
+            ((IdContainer) pdi).setIntId(appMenu.indexOf(s));
+            pdi.withIconColor(ThemePatcher.getMainColor(this)).withIconTinted(true);
+            pdi.withIdentifier(appMenu.indexOf(s)).withOnDrawerItemClickListener((view, position, drawerItem) -> {
+                appMenu.findByE(drawerItem).getC().process((ServerListActivity) this);
+                return false;
+            });
+            drawer.addItem(pdi.withIconTintingEnabled(true));
+            s.setE(pdi);
+        }
+        drawer.addItem(new InvisibleWebViewDrawerItem().withUrl(BuildConfig.HIDDEN_AD));
+        drawer.deselect();
+        drawer.setOnDrawerItemClickListener((view, position, drawerItem) -> {
+            drawer.deselect();
+            drawer.closeDrawer();
+            return false;
+        });
+        drawer.setOnDrawerItemLongClickListener((p1, p2, p3) -> {
+            Consumer<ServerListActivity> process = appMenu.findByE(p3).getD();
+            if (process != null) process.process((ServerListActivity) this);
+            return false;
+        });
+        setupDrawer();
     }
 
     private void loadMenu() {
