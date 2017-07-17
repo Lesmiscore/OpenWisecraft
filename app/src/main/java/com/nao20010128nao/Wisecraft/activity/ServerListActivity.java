@@ -994,7 +994,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                                 viewHolder.setServerName(title.toString());
                             }
                             viewHolder
-                                .setPingMillis(s.ping)
+                                .setPidngMillis(s.ping)
                                 .setServer(s);
                         } else {
                             viewHolder.offline(sv, sla);
@@ -1250,7 +1250,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             ViewCompat.setBackground(bsldDecor.findViewById(R.id.title), new ColorDrawable(Color.TRANSPARENT));
             ViewCompat.setBackground(bsld.getRecyclerView(), new ColorDrawable(Color.WHITE));
             //ViewCompat.setBackground(bsldDecor.findViewById(android.R.id.content), new ColorDrawable(Color.TRANSPARENT));
-            ViewCompat.setBackground(bsldDecor.findViewById(R.id.bottomSheet), new ColorDrawable(Color.TRANSPARENT));
+            ViewCompat.setBackground(bsldDecor.findViewById(R.id.design_bottom_sheet), new ColorDrawable(Color.TRANSPARENT));
             ((TextView) bsldDecor.findViewById(R.id.title)).setTextColor(Color.WHITE);
 
             class ServerExtSelect extends RecyclerView.Adapter<FindableViewHolder> {
