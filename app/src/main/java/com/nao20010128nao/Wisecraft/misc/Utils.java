@@ -744,7 +744,7 @@ public class Utils extends PingerUtils {
 
     public static List<Server> jsonToServers(String json) {
         return Stream.of(WJOUtils.parse(json))
-            .filterNot(entry -> entry.has("ip") && entry.has("port"))
+            .filter(entry -> entry.has("ip") && entry.has("port"))
             .map(entry -> {
                 Server s = new Server();
                 if (entry.has("isPC")) {
