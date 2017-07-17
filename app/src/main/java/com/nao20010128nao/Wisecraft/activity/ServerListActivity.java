@@ -1092,7 +1092,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                     sla.pinging.add(svr);
                     sla.sl.notifyItemChanged(p3);
                     sla.wd.showWorkingDialog(svr);
-                }, R.string.update));
+                }, R.string.update));            dialog.setV;
+
                 executes.add(2, new Duo<>(() -> {
                     final Server data = getItem(p3);
                     View dialog = sla.getLayoutInflater().inflate(R.layout.server_add_dialog_new, null);
@@ -1249,7 +1250,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             View bsldDecor = bsld.getWindow().getDecorView();
             ViewCompat.setBackground(bsldDecor.findViewById(R.id.title), new ColorDrawable(Color.TRANSPARENT));
             ViewCompat.setBackground(bsld.getRecyclerView(), new ColorDrawable(Color.WHITE));
-            ViewCompat.setBackground(bsldDecor.findViewById(android.R.id.content), new ColorDrawable(Color.TRANSPARENT));
+            //ViewCompat.setBackground(bsldDecor.findViewById(android.R.id.content), new ColorDrawable(Color.TRANSPARENT));
             ViewCompat.setBackground(bsldDecor.findViewById(R.id.bottomSheet), new ColorDrawable(Color.TRANSPARENT));
             ((TextView) bsldDecor.findViewById(R.id.title)).setTextColor(Color.WHITE);
 
