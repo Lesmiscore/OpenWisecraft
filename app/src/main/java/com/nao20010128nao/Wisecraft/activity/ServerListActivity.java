@@ -994,7 +994,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                                 viewHolder.setServerName(title.toString());
                             }
                             viewHolder
-                                .setPidngMillis(s.ping)
+                                .setPingMillis(s.ping)
                                 .setServer(s);
                         } else {
                             viewHolder.offline(sv, sla);
