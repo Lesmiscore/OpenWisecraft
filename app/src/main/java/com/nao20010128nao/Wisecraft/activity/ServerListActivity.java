@@ -1092,8 +1092,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                     sla.pinging.add(svr);
                     sla.sl.notifyItemChanged(p3);
                     sla.wd.showWorkingDialog(svr);
-                }, R.string.update));            dialog.setV;
-
+                }, R.string.update));
                 executes.add(2, new Duo<>(() -> {
                     final Server data = getItem(p3);
                     View dialog = sla.getLayoutInflater().inflate(R.layout.server_add_dialog_new, null);
