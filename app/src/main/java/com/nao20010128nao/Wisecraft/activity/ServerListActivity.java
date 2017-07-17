@@ -475,7 +475,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                 .setTitle(R.string.export_typepath)
                 .setView(R.layout.server_list_imp_exp)
                 .setPositiveButton(android.R.string.ok, (di, w) -> ServerListActivityImplPermissionsDispatcher.exportWisecraftListWithCheck(a, et.get().getText().toString()))
-                .create();
+                .show();
             et.set((EditText) dialog.findViewById(R.id.filePath));
             et.checked().setText(new File(wisecraftDir, "servers.json").toString());
             dialog.findViewById(R.id.selectFile).setOnClickListener(v -> {
@@ -489,7 +489,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                     public void onSelectCancelled() {/*No-op*/}
                 });
             });
-            dialog.show();
+            //dialog.show();
         }, null, null, UUID.fromString("614d2246-80d1-37de-9f2e-fed1fa15c83d")));//3
         appMenu.add(new Sextet<>(R.string.imporT, R.drawable.ic_file_download_black_48dp, a -> {
             final ReferencedObject<EditText> et = new ReferencedObject<>();
@@ -497,7 +497,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                 .setTitle(R.string.import_typepath)
                 .setView(R.layout.server_list_imp_exp)
                 .setPositiveButton(android.R.string.ok, (di, w) -> ServerListActivityImplPermissionsDispatcher.importWisecraftListWithCheck(a, et.get().getText().toString()))
-                .create();
+                .show();
             et.set((EditText) dialog.findViewById(R.id.filePath));
             et.checked().setText(new File(wisecraftDir, "servers.json").toString());
             dialog.findViewById(R.id.selectFile).setOnClickListener(v -> {
@@ -511,7 +511,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                     public void onSelectCancelled() {/*No-op*/}
                 });
             });
-            dialog.show();
+            //dialog.show();
         }, null, null, UUID.fromString("1b4cd9b1-662a-3e72-9ae4-eecd46858077")));//4
         if (pref.getBoolean("feature_bott", true)) {
             appMenu.add(new Sextet<>(R.string.sort, R.drawable.ic_compare_arrows_black_48dp,
@@ -1250,6 +1250,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             ViewCompat.setBackground(bsldDecor.findViewById(R.id.title), new ColorDrawable(Color.TRANSPARENT));
             ViewCompat.setBackground(bsld.getRecyclerView(), new ColorDrawable(Color.WHITE));
             ViewCompat.setBackground(bsldDecor.findViewById(android.R.id.content), new ColorDrawable(Color.TRANSPARENT));
+            ViewCompat.setBackground(bsldDecor.findViewById(R.id.bottomSheet), new ColorDrawable(Color.TRANSPARENT));
             ((TextView) bsldDecor.findViewById(R.id.title)).setTextColor(Color.WHITE);
 
             class ServerExtSelect extends RecyclerView.Adapter<FindableViewHolder> {
