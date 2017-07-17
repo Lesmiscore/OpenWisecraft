@@ -364,9 +364,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             final ReferencedObject<CheckBox> split = new ReferencedObject<>();
             final ReferencedObject<EditText> serverName = new ReferencedObject<>();
 
-            AlertDialog dialog = new AlertDialog.Builder(a, ThemePatcher.getDefaultDialogStyle(a)).
-                setView(R.layout.server_add_dialog_new).
-                setPositiveButton(android.R.string.yes, (d, sel) -> {
+            AlertDialog dialog = new AlertDialog.Builder(a, ThemePatcher.getDefaultDialogStyle(a))
+                .setView(R.layout.server_add_dialog_new)
+                .setPositiveButton(android.R.string.yes, (d, sel) -> {
                     Server s;
                     if (split.checked().isChecked()) {
                         s = Utils.convertServerObject(Collections.singletonList(MslServer.makeServerFromString(pc_ip.checked().getText().toString(), false))).get(0);
@@ -387,11 +387,11 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                         pinging.add(s);
                     }
                     saveServers();
-                }).
-                setNegativeButton(android.R.string.no, (d, sel) -> {
+                })
+                .setNegativeButton(android.R.string.no, (d, sel) -> {
 
-                }).
-                show();
+                })
+                .show();
             peFrame.set((LinearLayout) dialog.findViewById(R.id.pe));
             pcFrame.set((LinearLayout) dialog.findViewById(R.id.pc));
             pe_ip.set((EditText) dialog.findViewById(R.id.pe).findViewById(R.id.serverIp));
@@ -474,7 +474,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             AlertDialog dialog = new AlertDialog.Builder(a, ThemePatcher.getDefaultDialogStyle(a))
                 .setTitle(R.string.export_typepath)
                 .setView(R.layout.server_list_imp_exp)
-                .setPositiveButton(android.R.string.ok, (di, w) -> ServerListActivityImplPermissionsDispatcher.exportWisecraftListWithCheck(a, et.get().getText().toString()))
+                .setPositiveButton(android.R.string.ok, (di, w) -> ServerListActivityImplPermissionsDispatcher.exportWisecraftListWithCheck(a, et.checked().getText().toString()))
                 .show();
             et.set((EditText) dialog.findViewById(R.id.filePath));
             et.checked().setText(new File(wisecraftDir, "servers.json").toString());
@@ -547,7 +547,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
         appMenu.add(new Sextet<>(R.string.loadPing, R.drawable.ic_open_in_new_black_48dp, a -> {
             View dialogView = getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
             final EditText et = (EditText) dialogView.findViewById(R.id.filePath);
-            et.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/pingresult.wisecraft-ping").toString());
+            et.setText(new File(wisecraftDir, "/pingresult.wisecraft-ping").toString());
             dialogView.findViewById(R.id.selectFile).setOnClickListener(v -> {
                 File f = new File(et.getText().toString());
                 if ((!f.exists()) | f.isFile()) f = f.getParentFile();
