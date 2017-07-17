@@ -645,10 +645,14 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
     private void updateAllWithConditions(final Predicate<Server> pred) {
         List<Server> toUpdate = Stream.of(list)
-            .filter(sv -> pinging.contains(sv) || !pred.process(sv))
+            .filterNot(pinging::contains)
+            .filter(pred::process)
             .toList();
-        for (int i = 0; i < toUpdate.size(); i++) {
-            sl.notifyItemChanged(i);
+        if(Stream.of(toUpdate)
+            .mapToInt(list::indexOf)
+            .filter(a->a>=0)
+            .peek(sl::notifyItemChanged)
+            .count()>0)
             if (!srl.isRefreshing())
                 srl.setRefreshing(true);
         }
