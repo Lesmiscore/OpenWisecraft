@@ -39,7 +39,7 @@ gradle clean beforeBuild $TASKS -x lint --info --stacktrace 2>&1 | log main
 '''.trim().readLines()
 
 def preScript=baseScript+'''
-DIR=`cat ./app/build.gradle | grep "def preNum="`
+DIR=`cat ./app/build.gradle | grep "def preNum = "`
 DIR=${DIR% //*}
 DIR=${DIR#*=}
 if [ $DIR != "0" ]; then gradle clean beforeBuild $TASKS -x lint --info --stacktrace 2>&1 | log main ; fi

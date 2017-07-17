@@ -17,7 +17,7 @@ def mainScript=[
       './ci/packageInformations.sh'
 ]
 def preScript=[
-      'DIR=`cat ./app/build.gradle | grep \"def preNum=\"`',
+      'DIR=`cat ./app/build.gradle | grep \"def preNum = \"`',
       'DIR=\${DIR% //*}',
       'DIR=\${DIR#*=}',
       'if [ \$DIR != \"0\" ]; then gradle safeDeleteDevXml \$TASK --info --stacktrace | tee -a build-\$CI_BUILD_NAME.log > /dev/null; mv */build/outputs/apk/*.apk . ;./ci/packageInformations.sh ; fi'
