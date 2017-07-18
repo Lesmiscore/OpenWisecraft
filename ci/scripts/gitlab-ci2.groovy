@@ -19,10 +19,11 @@ Wisecraft/**.apk
 Wisecraft/build.log
 Wisecraft/build**.log.gz
 Wisecraft/**/build/outputs/mapping/**/**.txt
-Wisecraft/**/build/generated/source/**/
+Wisecraft/**/build/generated/source/
 Wisecraft/**/build/outputs/
 Wisecraft/test*.gitlab-ci.yml
 Wisecraft/compat/build/**.html
+Wisecraft/autogen-*.zip
 '''.trim().readLines()
 
 def baseScript='''
