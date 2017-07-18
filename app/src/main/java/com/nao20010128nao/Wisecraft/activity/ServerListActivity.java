@@ -652,7 +652,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             .mapToInt(list::indexOf)
             .filter(a->a>=0)
             .peek(sl::notifyItemChanged)
-            .count()>0)
+            .count()>0){
             if (!srl.isRefreshing())
                 srl.setRefreshing(true);
         }
