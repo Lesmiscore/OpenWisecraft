@@ -23,7 +23,7 @@ Wisecraft/**/build/generated/source/
 Wisecraft/**/build/outputs/
 Wisecraft/test*.gitlab-ci.yml
 Wisecraft/compat/build/**.html
-Wisecraft/autogen-*.zip
+Wisecraft/autogen-*.*
 '''.trim().readLines()
 
 def baseScript='''
@@ -42,7 +42,7 @@ gradle clean beforeBuild $TASKS -x lint --info --stacktrace 2>&1 | log main
 def preScript=baseScript+'''
 DIR=`cat ./app/build.gradle | grep "def preNum = "`
 DIR=${DIR% //*}
-DIR=${DIR#*=}
+DIR=${DIR#*= }
 if [ $DIR != "0" ]; then gradle clean beforeBuild $TASKS -x lint --info --stacktrace 2>&1 | log main ; fi
 '''.trim().readLines()
 
