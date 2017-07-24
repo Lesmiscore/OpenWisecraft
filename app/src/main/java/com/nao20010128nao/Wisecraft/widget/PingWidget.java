@@ -9,6 +9,7 @@ import android.preference.*;
 import android.support.v4.content.*;
 import android.util.*;
 import android.widget.*;
+import com.annimon.stream.*;
 import com.google.gson.*;
 import com.google.gson.annotations.*;
 import com.google.gson.reflect.*;
@@ -180,10 +181,10 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
     public void onDisabled(Context context) {
         SharedPreferences widgetPref = getWidgetPref(context);
         SharedPreferences.Editor edt = widgetPref.edit();
-        for (String key : new HashSet<>(widgetPref.getAll().keySet())) {
-            if ("_version".startsWith(key)) continue;
-            edt.remove(key);
-        }
+        Stream.of(widgetPref.getAll())
+            .map(Map.Entry::getKey)
+            .filterNot("_version"::startsWith)
+            .forEach(edt::remove);
         edt.commit();
     }
 
