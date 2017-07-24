@@ -277,20 +277,6 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
                 title = ip + ":" + port;
             }
             setTitle(title);
-        } else if (resp instanceof Reply) {
-            Reply rep = (Reply) resp;
-            if (rep.description == null) {
-                setTitle(localStat.toString());
-            } else {
-                setTitle(rep.description);
-            }
-        } else if (resp instanceof Reply19) {
-            Reply19 rep = (Reply19) resp;
-            if (rep.description == null) {
-                setTitle(localStat.toString());
-            } else {
-                setTitle(rep.description.text);
-            }
         } else if (resp instanceof RawJsonReply) {
             RawJsonReply rep = (RawJsonReply) resp;
             CharSequence title;
@@ -320,27 +306,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
     public void updateTaskDesc(ServerPingResult resp) {
         if (Build.VERSION.SDK_INT >= 21) {
             int color = ThemePatcher.getMainColor(this);
-            if (resp instanceof Reply) {
-                Reply rep = (Reply) resp;
-                if (rep.favicon != null) {
-                    byte[] image = WisecraftBase64.decode(rep.favicon.split("\\,")[1], WisecraftBase64.NO_WRAP);
-                    serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
-                    serverIconObj = new BitmapDrawable(getResources(), serverIconBmp);
-                    color = new Palette.Builder(serverIconBmp).generate().getLightVibrantColor(color);
-                } else {
-                    serverIconObj = new ColorDrawable(Color.TRANSPARENT);
-                }
-            } else if (resp instanceof Reply19) {
-                Reply19 rep = (Reply19) resp;
-                if (rep.favicon != null) {
-                    byte[] image = WisecraftBase64.decode(rep.favicon.split("\\,")[1], WisecraftBase64.NO_WRAP);
-                    serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
-                    serverIconObj = new BitmapDrawable(getResources(), serverIconBmp);
-                    color = new Palette.Builder(serverIconBmp).generate().getLightVibrantColor(color);
-                } else {
-                    serverIconObj = new ColorDrawable(Color.TRANSPARENT);
-                }
-            } else if (resp instanceof RawJsonReply) {
+            if (resp instanceof RawJsonReply) {
                 WisecraftJsonObject rep = ((RawJsonReply) resp).json;
                 if (rep.has("favicon")) {
                     byte[] image = WisecraftBase64.decode(rep.get("favicon").getAsString().split("\\,")[1], WisecraftBase64.NO_WRAP);
@@ -616,15 +582,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
             int position = offset - 1;
             View v = parent.itemView;
             Object o = getItem(position);
-            if (o instanceof Reply.ModListContent) {
-                Reply.ModListContent mlc = (Reply.ModListContent) o;
-                ((TextView) v.findViewById(R.id.modName)).setText(mlc.modid);
-                ((TextView) v.findViewById(R.id.modVersion)).setText(mlc.version);
-            } else if (o instanceof Reply19.ModListContent) {
-                Reply19.ModListContent mlc = (Reply19.ModListContent) o;
-                ((TextView) v.findViewById(R.id.modName)).setText(mlc.modid);
-                ((TextView) v.findViewById(R.id.modVersion)).setText(mlc.version);
-            } else if (o instanceof WisecraftJsonObject) {
+            if (o instanceof WisecraftJsonObject) {
                 WisecraftJsonObject mlc = (WisecraftJsonObject) o;
                 ((TextView) v.findViewById(R.id.modName)).setText(mlc.get("modid").getAsString());
                 ((TextView) v.findViewById(R.id.modVersion)).setText(mlc.get("version").getAsString());
@@ -747,46 +705,6 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
                     player.clear();
                     player.addAll(sort);
                     player.setPcMode(false);
-                } else if (resp instanceof Reply) {
-                    Reply rep = (Reply) resp;
-                    if (rep.players != null) {
-                        if (rep.players.sample != null) {
-                            final ArrayList<String> sort = new ArrayList<>();
-                            for (Reply.Player o : rep.players.sample) {
-                                sort.add(o.name);
-                                TheApplication.pcUserUUIDs.put(o.name, o.id);
-                            }
-                            if (pref.getBoolean("sortPlayerNames", true))
-                                Collections.sort(sort);
-                            player.clear();
-                            player.addAll(sort);
-                        } else {
-                            player.clear();
-                        }
-                    } else {
-                        player.clear();
-                    }
-                    player.setPcMode(true);
-                } else if (resp instanceof Reply19) {
-                    Reply19 rep = (Reply19) resp;
-                    if (rep.players != null) {
-                        if (rep.players.sample != null) {
-                            final ArrayList<String> sort = new ArrayList<>();
-                            for (Reply19.Player o : rep.players.sample) {
-                                sort.add(o.name);
-                                TheApplication.pcUserUUIDs.put(o.name, o.id);
-                            }
-                            if (pref.getBoolean("sortPlayerNames", true))
-                                Collections.sort(sort);
-                            player.clear();
-                            player.addAll(sort);
-                        } else {
-                            player.clear();
-                        }
-                    } else {
-                        player.clear();
-                    }
-                    player.setPcMode(true);
                 } else if (resp instanceof RawJsonReply) {
                     WisecraftJsonObject rep = ((RawJsonReply) resp).json;
                     if (rep.has("players")) {
@@ -898,53 +816,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
                 data.setAdapter(infos);
                 ServerStatus localStat = getParentActivity().localStat;
                 ServerPingResult resp = localStat.response;
-                if (resp instanceof Reply) {
-                    Reply rep = (Reply) resp;
-                    if (pref.getBoolean("serverListColorFormattedText", false)) {
-                        serverNameStr = Utils.parseMinecraftFormattingCode(rep.description);
-                    } else {
-                        serverNameStr = Utils.deleteDecorations(rep.description);
-                    }
-
-                    infos.clear();
-                    List<Map.Entry<String, String>> data = new ArrayList<>();
-                    data.add(new KVP<>(getString(R.string.pc_maxPlayers), rep.players.max + ""));
-                    data.add(new KVP<>(getString(R.string.pc_nowPlayers), rep.players.online + ""));
-                    data.add(new KVP<>(getString(R.string.pc_softwareVersion), rep.version.name));
-                    data.add(new KVP<>(getString(R.string.pc_protocolVersion), rep.version.protocol + ""));
-                    infos.addAll(data);
-
-                    if (rep.favicon != null) {
-                        byte[] image = WisecraftBase64.decode(rep.favicon.split("\\,")[1], WisecraftBase64.NO_WRAP);
-                        serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
-                        serverIconObj = new BitmapDrawable(getResources(), serverIconBmp);
-                    } else {
-                        serverIconObj = null;
-                    }
-                } else if (resp instanceof Reply19) {
-                    Reply19 rep = (Reply19) resp;
-                    if (pref.getBoolean("serverListColorFormattedText", false)) {
-                        serverNameStr = Utils.parseMinecraftFormattingCode(rep.description.text);
-                    } else {
-                        serverNameStr = Utils.deleteDecorations(rep.description.text);
-                    }
-
-                    infos.clear();
-                    List<Map.Entry<String, String>> data = new ArrayList<>();
-                    data.add(new KVP<>(getString(R.string.pc_maxPlayers), rep.players.max + ""));
-                    data.add(new KVP<>(getString(R.string.pc_nowPlayers), rep.players.online + ""));
-                    data.add(new KVP<>(getString(R.string.pc_softwareVersion), rep.version.name));
-                    data.add(new KVP<>(getString(R.string.pc_protocolVersion), rep.version.protocol + ""));
-                    infos.addAll(data);
-
-                    if (rep.favicon != null) {
-                        byte[] image = WisecraftBase64.decode(rep.favicon.split("\\,")[1], WisecraftBase64.NO_WRAP);
-                        serverIconBmp = BitmapFactory.decodeByteArray(image, 0, image.length);
-                        serverIconObj = new BitmapDrawable(getResources(), serverIconBmp);
-                    } else {
-                        serverIconObj = null;
-                    }
-                } else if (resp instanceof RawJsonReply) {
+                if (resp instanceof RawJsonReply) {
                     WisecraftJsonObject rep = ((RawJsonReply) resp).json;
                     CharSequence text;
                     text = Utils.parseMinecraftDescriptionJson(rep.get("description"));
@@ -1060,19 +932,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
                 mods.setAdapter(modInfos);
                 ServerStatus localStat = getParentActivity().localStat;
                 ServerPingResult resp = localStat.response;
-                if (resp instanceof Reply) {
-                    Reply rep = (Reply) resp;
-                    if (rep.modinfo != null) {
-                        modInfos.addAll(rep.modinfo.modList);
-                        modLoaderTypeName = rep.modinfo.type;
-                    }
-                } else if (resp instanceof Reply19) {
-                    Reply19 rep = (Reply19) resp;
-                    if (rep.modinfo != null) {
-                        modInfos.addAll(rep.modinfo.modList);
-                        modLoaderTypeName = rep.modinfo.type;
-                    }
-                } else if (resp instanceof RawJsonReply) {
+                if (resp instanceof RawJsonReply) {
                     WisecraftJsonObject rep = ((RawJsonReply) resp).json;
                     if (rep.has("modinfo")) {
                         WisecraftJsonObject modInfo = rep.get("modinfo");

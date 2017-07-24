@@ -169,21 +169,7 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
             ServerStatus s = getItem(offset);
 
             final CharSequence title;
-            if (s.response instanceof Reply19) {//PC 1.9~
-                Reply19 rep = (Reply19) s.response;
-                if (rep.description == null) {
-                    title = s.toString();
-                } else {
-                    title = rep.description.text;
-                }
-            } else if (s.response instanceof Reply) {//PC
-                Reply rep = (Reply) s.response;
-                if (rep.description == null) {
-                    title = s.toString();
-                } else {
-                    title = rep.description;
-                }
-            } else if (s.response instanceof RawJsonReply) {//PC (Obfuscated)
+            if (s.response instanceof RawJsonReply) {//PC (Obfuscated)
                 RawJsonReply rep = (RawJsonReply) s.response;
                 if (!rep.json.has("description")) {
                     title = s.toString();

@@ -253,40 +253,6 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
                 }
                 ssrvw.setServerPlayers(m.get("numplayers"), m.get("maxplayers"));
                 players = fs.getPlayerList();
-            } else if (s.response instanceof Reply19) {//PC 1.9~
-                Reply19 rep = (Reply19) s.response;
-                if (rep.description == null) {
-                    title = s.toString();
-                } else {
-                    title = rep.description.text;
-                }
-                ssrvw.setServerPlayers(rep.players.online, rep.players.max);
-                if (rep.players != null) {
-                    if (rep.players.sample != null) {
-                        final ArrayList<String> sort = new ArrayList<>();
-                        for (Reply19.Player o : rep.players.sample) {
-                            sort.add(o.name);
-                        }
-                        players = sort;
-                    }
-                }
-            } else if (s.response instanceof Reply) {//PC
-                Reply rep = (Reply) s.response;
-                if (rep.description == null) {
-                    title = s.toString();
-                } else {
-                    title = rep.description;
-                }
-                ssrvw.setServerPlayers(rep.players.online, rep.players.max);
-                if (rep.players != null) {
-                    if (rep.players.sample != null) {
-                        final ArrayList<String> sort = new ArrayList<>();
-                        for (Reply.Player o : rep.players.sample) {
-                            sort.add(o.name);
-                        }
-                        players = sort;
-                    }
-                }
             } else if (s.response instanceof RawJsonReply) {//PC (Obfuscated)
                 WisecraftJsonObject rep = ((RawJsonReply) s.response).json;
                 if (!rep.has("description")) {

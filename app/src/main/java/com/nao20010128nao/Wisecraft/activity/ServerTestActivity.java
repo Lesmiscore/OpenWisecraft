@@ -212,22 +212,6 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
                             title = sv.toString();
                         }
                         viewHolder.setServerPlayers(m.get("numplayers"), m.get("maxplayers"));
-                    } else if (sv.response instanceof Reply19) {//PC 1.9~
-                        Reply19 rep = (Reply19) sv.response;
-                        if (rep.description == null) {
-                            title = sv.toString();
-                        } else {
-                            title = rep.description.text;
-                        }
-                        viewHolder.setServerPlayers(rep.players.online, rep.players.max);
-                    } else if (sv.response instanceof Reply) {//PC
-                        Reply rep = (Reply) sv.response;
-                        if (rep.description == null) {
-                            title = sv.toString();
-                        } else {
-                            title = rep.description;
-                        }
-                        viewHolder.setServerPlayers(rep.players.online, rep.players.max);
                     } else if (sv.response instanceof RawJsonReply) {//PC (Obfuscated)
                         RawJsonReply rep = (RawJsonReply) sv.response;
                         if (!rep.json.has("description")) {

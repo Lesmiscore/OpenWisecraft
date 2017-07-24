@@ -939,22 +939,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                                     title = s.toString();
                                 }
                                 viewHolder.setServerPlayers(m.get("numplayers"), m.get("maxplayers"));
-                            } else if (s.response instanceof Reply19) {//PC 1.9~
-                                Reply19 rep = (Reply19) s.response;
-                                if (rep.description == null) {
-                                    title = s.toString();
-                                } else {
-                                    title = parseMinecraftFormattingCode(rep.description.text);
-                                }
-                                viewHolder.setServerPlayers(rep.players.online, rep.players.max);
-                            } else if (s.response instanceof Reply) {//PC
-                                Reply rep = (Reply) s.response;
-                                if (rep.description == null) {
-                                    title = s.toString();
-                                } else {
-                                    title = parseMinecraftFormattingCode(rep.description);
-                                }
-                                viewHolder.setServerPlayers(rep.players.online, rep.players.max);
                             } else if (s.response instanceof RawJsonReply) {//PC (Obfuscated)
                                 RawJsonReply rep = (RawJsonReply) s.response;
                                 if (!rep.json.has("description")) {

@@ -93,6 +93,7 @@ public class ServerListRecyclerAdapter extends ListRecyclerViewAdapter<ServerSta
     }
 
     @Override
+    @ShowsServerList
     public void onBindViewHolder(ServerStatusWrapperViewHolder viewHolder, int offset) {
         Server s = getItem(offset);
         viewHolder.setServer(s).setServerPlayers("-/-");
@@ -125,22 +126,6 @@ public class ServerListRecyclerAdapter extends ListRecyclerViewAdapter<ServerSta
                         title = sv.toString();
                     }
                     viewHolder.setServerPlayers(m.get("numplayers"), m.get("maxplayers"));
-                } else if (sv.response instanceof Reply19) {//PC 1.9~
-                    Reply19 rep = (Reply19) sv.response;
-                    if (rep.description == null) {
-                        title = sv.toString();
-                    } else {
-                        title = rep.description.text;
-                    }
-                    viewHolder.setServerPlayers(rep.players.online, rep.players.max);
-                } else if (sv.response instanceof Reply) {//PC
-                    Reply rep = (Reply) sv.response;
-                    if (rep.description == null) {
-                        title = sv.toString();
-                    } else {
-                        title = rep.description;
-                    }
-                    viewHolder.setServerPlayers(rep.players.online, rep.players.max);
                 } else if (sv.response instanceof SprPair) {//PE?
                     SprPair sp = ((SprPair) sv.response);
                     if (sp.getB() instanceof UnconnectedPing.UnconnectedPingResult) {
