@@ -88,11 +88,12 @@
             android:title="@string/themeMode"
             android:key="4.0themeMode"
     />
+    <!--
     <com.nao20010128nao.Wisecraft.misc.pref.CheckBoxPreferenceCompat
             android:title="@string/useAltServer"
             android:key="useAltServer"
     />
-    <!--
+    
         <com.nao20010128nao.Wisecraft.misc.pref.CheckBoxPreferenceCompat
             android:title="@string/letRetryPing"
             android:key="letRetryPing"
