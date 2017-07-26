@@ -186,17 +186,8 @@ public class PingSerializeProvider {
         pingDeserializer.put(0x0000, (resultBytes, resultClassNumber, resultClass) -> new FullStat(resultBytes));
         pingDeserializer.put(0x0001, (resultBytes, resultClassNumber, resultClass) -> new UnconnectedPing.UnconnectedPingResult(new String(resultBytes, 32, resultBytes.length - 32, CompatCharsets.UTF_8), 0, resultBytes));
         pingDeserializer.put(0x1002, (resultBytes, resultClassNumber, resultClass) -> {
-            PCQueryResult result;
             String json = new String(resultBytes, CompatCharsets.UTF_8);
-            if (BuildConfig.OBFUSCATED) {
-                result = new RawJsonReply(json);
-            } else {
-                if (resultClassNumber == 0x1005) {
-                    result = new RawJsonReply(json);
-                } else {
-                    result = (PCQueryResult) Utils.newGson().fromJson(json, resultClass);
-                }
-            }
+            PCQueryResult result = new RawJsonReply(json);
             result.setRaw(json);
             return result;
         });

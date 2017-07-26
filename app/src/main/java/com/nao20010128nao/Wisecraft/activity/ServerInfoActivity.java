@@ -707,20 +707,16 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
                     player.setPcMode(false);
                 } else if (resp instanceof RawJsonReply) {
                     WisecraftJsonObject rep = ((RawJsonReply) resp).json;
-                    if (rep.has("players")) {
-                        if (rep.get("players").has("sample")) {
-                            final ArrayList<String> sort = new ArrayList<>();
-                            for (WisecraftJsonObject o : rep.get("players").get("sample")) {
-                                sort.add(o.get("name").getAsString());
-                                TheApplication.pcUserUUIDs.put(o.get("name").getAsString(), o.get("id").getAsString());
-                            }
-                            if (pref.getBoolean("sortPlayerNames", true))
-                                Collections.sort(sort);
-                            player.clear();
-                            player.addAll(sort);
-                        } else {
-                            player.clear();
+                    if (rep.has("players") && rep.get("players").has("sample")) {
+                        final ArrayList<String> sort = new ArrayList<>();
+                        for (WisecraftJsonObject o : rep.get("players").get("sample")) {
+                            sort.add(o.get("name").getAsString());
+                            TheApplication.pcUserUUIDs.put(o.get("name").getAsString(), o.get("id").getAsString());
                         }
+                        if (pref.getBoolean("sortPlayerNames", true))
+                            Collections.sort(sort);
+                        player.clear();
+                        player.addAll(sort);
                     } else {
                         player.clear();
                     }
