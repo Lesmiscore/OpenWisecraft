@@ -96,15 +96,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
         if (usesOldInstance) {
             rv.setAdapter(sl);
         } else {
-            if (true|(!pref.getBoolean("useAltServer", false))) {
-                spp = updater = new SinglePoolMultiServerPingProvider(Integer.valueOf(pref.getString("parallels", "6")));
-                if (pref.getBoolean("updAnotherThread", false))
-                    updater = new NormalServerPingProvider();
-            } else {
-                spp = updater = new TcpMultiServerPingProvider("160.16.103.57", 15687, Integer.valueOf(pref.getString("parallels", "6")));
-                if (pref.getBoolean("updAnotherThread", false))
-                    updater = new TcpServerPingProvider("160.16.103.57", 15687);
-            }
+            spp = updater = new SinglePoolMultiServerPingProvider(Integer.valueOf(pref.getString("parallels", "6")));
+            if (pref.getBoolean("updAnotherThread", false))
+               updater = new NormalServerPingProvider();
             rv.setAdapter(sl = new ServerList(this));
         }
         rv.setLongClickable(true);
@@ -306,8 +300,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
         });
         if (savedInstanceState != null)
             if (savedInstanceState.containsKey("selected"))
-                selected = gson.fromJson(savedInstanceState.getString("selected"), new TypeToken<HashSet<Server>>() {
-                }.getType());
+                selected = gson.fromJson(savedInstanceState.getString("selected"), new TypeToken<HashSet<Server>>() {}.getType());
 
         if (Build.VERSION.SDK_INT >= 22) {
             setTaskDescription(
@@ -421,7 +414,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                     pcFrame.checked().setVisibility(View.GONE);
                     peFrame.checked().setVisibility(View.VISIBLE);
                     split.checked().setText(R.string.pe);
-                    Server s = Utils.convertServerObject(Collections.singletonList(MslServer.makeServerFromString(pc_ip.checked().getText().toString(), false))).get(0);
+                    Server s = Utils.convertServerObject(Arrays.asList(MslServer.makeServerFromString(pc_ip.checked().getText().toString(), false))).get(0);
                     pe_ip.checked().setText(s.ip);
                     pe_port.checked().setText(String.valueOf(s.port));
                 }
@@ -458,10 +451,10 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                             appMenu.findByA(R.string.update_all).getC().process((ServerListActivity) this);
                             break;
                         case 1://update onlines
-                            updateAllWithConditions(a -> a instanceof ServerStatus);
+                            updateAllWithConditions(Server::isOnline);
                             break;
                         case 2://update offlines
-                            updateAllWithConditions(a -> !(a instanceof ServerStatus));
+                            updateAllWithConditions(Utils::isNotOnline);
                             break;
                         case 3://select
                             startSelectUpdateMode();
@@ -849,7 +842,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
         new AlertDialog.Builder(this, ThemePatcher.getDefaultDialogStyle(this))
             //.setTitle(R.string.load_typepath_simple)
             .setMessage(R.string.auSure)
-            .setPositiveButton(android.R.string.yes, (di, w) -> Stream.of(list).filter(s -> !(s instanceof ServerStatus)).forEach(sl::remove))
+            .setPositiveButton(android.R.string.yes, (di, w) -> Stream.of(list).filter(Utils::isNotOnline).forEach(sl::remove))
             .show();
     }
 
@@ -923,7 +916,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                     if (sla.pinging.contains(sv)) {
                         viewHolder.pending(sv, sla);
                     } else {
-                        if (sv instanceof ServerStatus) {
+                        if (sv.isOnline()) {//TODO: change to else if
                             ServerStatus s = (ServerStatus) sv;
                             viewHolder.setStatColor(ContextCompat.getColor(sla, R.color.stat_ok));
                             final CharSequence title;
@@ -1016,7 +1009,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
         public int getItemViewType(int position) {
             if (sla.pinging.contains(getItem(position))) {
                 return 2;
-            } else if (getItem(position) instanceof ServerStatus) {
+            } else if (getItem(position).isOnline()) {
                 return 1;
             } else {
                 return 0;
@@ -1037,7 +1030,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             Server s = getItem(p3);
             sla.clicked = p3;
             if (sla.pinging.contains(s)) return;
-            if (s instanceof ServerStatus) {
+            if (s.isOnline()) {
                 Bundle bnd = new Bundle();
                 String token = Utils.randomText();
                 sla.siaTokens.put(token, s);
@@ -1187,7 +1180,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                 executes.add(7, new Duo<>(() -> sla.startActivity(new Intent(sla, ServerFinderActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port).putExtra("mode", getItem(p3).mode)), R.string.serverFinder));
                 executes.add(8, new Duo<>(() -> sla.startActivity(new Intent(sla, GenerateWisecraftOpenLinkActivity.class).putExtra("ip", getItem(p3).ip).putExtra("port", getItem(p3).port).putExtra("mode", getItem(p3).mode)), R.string.genLink));
                 executes.add(9, new Duo<>(() -> {
-                    if (!(getItem(p3) instanceof ServerStatus)) return;
+                    if (!getItem(p3).isOnline()) return;
                     View dialogView_ = sla.getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
                     final EditText et_ = (EditText) dialogView_.findViewById(R.id.filePath);
                     et_.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/pingresult.wisecraft-ping").toString());
@@ -1221,7 +1214,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                 if (!sla.pref.getBoolean("feature_serverFinder", false)) {
                     executes.remove(all.get(7));
                 }
-                if (!(getItem(p3) instanceof ServerStatus)) {
+                if (!getItem(p3).isOnline()) {
                     executes.remove(all.get(9));
                 }
             }

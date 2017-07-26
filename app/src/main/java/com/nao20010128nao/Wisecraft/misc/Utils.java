@@ -944,4 +944,6 @@ public class Utils extends PingerUtils {
             return null;
         }
     }
+    
+    public static boolean isNotOnline(Server a){return !a.isOnline();}
 }

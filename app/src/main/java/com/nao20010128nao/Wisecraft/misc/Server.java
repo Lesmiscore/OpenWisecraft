@@ -55,6 +55,10 @@ public class Server {
     public Protobufs.Server toProtobufServer() {
         return Protobufs.Server.newBuilder().setIp(ip).setPort(port).setMode(mode).setName(name).build();
     }
+    
+    public boolean isOnline(){
+        return false;
+    }
 
     public final void cloneInto(Server dest) {
         dest.ip = ip;
