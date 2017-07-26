@@ -570,9 +570,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             finish();
             saveServers();
             instance = new WeakReference<>(null);
-            if (pref.getBoolean("exitCompletely", false))
-                if (ProxyActivity.cont != null)
-                    ProxyActivity.cont.stopService();
+            if (pref.getBoolean("exitCompletely", false)&&ProxyActivity.cont != null)
+                ProxyActivity.cont.stopService();
         }, null, null, UUID.fromString("5c0baf72-9a92-312d-ab33-062bdc3aa445")));//10
 
         DebugBridge.getInstance().addDebugMenus((SextetWalker<Integer, Integer, Consumer<Activity>, Consumer<Activity>, IDrawerItem, UUID>) ((Object) appMenu));
@@ -652,9 +651,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             .mapToInt(list::indexOf)
             .filter(a->a>=0)
             .peek(sl::notifyItemChanged)
-            .count()>0){
-            if (!srl.isRefreshing())
-                srl.setRefreshing(true);
+            .count()>0 &&!srl.isRefreshing())
+            srl.setRefreshing(true);
         }
         new Thread(() -> {
             for (Server aList : toUpdate) {
@@ -679,6 +677,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
         Utils.makeNonClickableSB(ServerListActivityImpl.this, R.string.importing, Snackbar.LENGTH_LONG).show();
         new Thread(() -> {
             List<Server> sv = Stream.of(lines(readWholeFile(new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt"))))
+                .map(String::trim)/* trim the string */
                 .map(s -> s.split("\\:"))/* cut the string */
                 .filter(s -> s.length == 4)/* pick valid-size ones */
                 .map(s -> {/* String[] -> Server */
