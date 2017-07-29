@@ -398,16 +398,21 @@ public class Utils extends PingerUtils {
 
     public static Protobufs.Server.Mode getModeFromIntent(Intent values) {
         if (values.hasExtra(ApiActions.SERVER_INFO_MODE)) {
-            Object mode = values.getExtras().get(ApiActions.SERVER_INFO_MODE);
-            if (mode instanceof Protobufs.Server.Mode) {
-                return (Protobufs.Server.Mode) mode;
-            } else if (mode instanceof Integer) {
-                return Protobufs.Server.Mode.forNumber((int) mode);
-            } else {
-                return Protobufs.Server.Mode.PE;
-            }
+            return getModeFromObject(values.getExtras().get(ApiActions.SERVER_INFO_MODE));
         } else if (values.hasExtra(ApiActions.SERVER_INFO_ISPC)) {
             return values.getBooleanExtra(ApiActions.SERVER_INFO_ISPC, false) ? Protobufs.Server.Mode.PC : Protobufs.Server.Mode.PE;
+        } else {
+            return Protobufs.Server.Mode.PE;
+        }
+    }
+
+    public static Protobufs.Server.Mode getModeFromObject(Object mode){
+        if (mode instanceof Protobufs.Server.Mode) {
+            return (Protobufs.Server.Mode) mode;
+        } else if (mode instanceof Integer) {
+            return Protobufs.Server.Mode.forNumber((int) mode);
+        } else if (mode instanceof CharSequence) {
+            return Protobufs.Server.Mode.valueOf(String.valueOf(mode));
         } else {
             return Protobufs.Server.Mode.PE;
         }

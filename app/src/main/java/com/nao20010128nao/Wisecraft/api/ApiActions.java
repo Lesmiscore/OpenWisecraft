@@ -24,6 +24,9 @@ public class ApiActions {
     public final static String ADD_SERVER_ISPC = SERVER_INFO_ISPC;
     public final static String ADD_SERVER_MODE = SERVER_INFO_MODE;
 
+    public final static String ADD_MULTIPLE_SERVERS = ACTION_BASE + "ADD_MULTIPLE_SERVERS";
+    public final static String SERVERS_COUNT = ACTION_BASE + "SERVERS_COUNT";
+    public final static String SERVER_ = ACTION_BASE + "SERVERS_";
 
     private final static String RCON = ACTION_BASE + "RCON";
 
