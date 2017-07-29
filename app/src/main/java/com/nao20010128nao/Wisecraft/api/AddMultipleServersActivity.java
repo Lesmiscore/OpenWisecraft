@@ -57,6 +57,10 @@ public class AddMultipleServersActivity extends ApiBaseActivity {
             .filterNot((ServerListActivity.instance.get() != null ? ServerListActivity.instance.get().getServers() :
                 Utils.newGson().fromJson(Utils.getPreferences(AddMultipleServersActivity.this).getString("servers", "[]"), ServerListArrayList.class))::contains)
             .toList();
+        if(servers.isEmpty()){
+            finish();
+            return;
+        }
         List<Boolean> selections = Stream.of(servers).map(a -> true).toList();
 
 
