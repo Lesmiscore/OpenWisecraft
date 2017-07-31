@@ -640,11 +640,11 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             .filterNot(pinging::contains)
             .filter(pred::process)
             .toList();
-        if(Stream.of(toUpdate)
+        if((Stream.of(toUpdate)
             .mapToInt(list::indexOf)
             .filter(a->a>=0)
             .peek(sl::notifyItemChanged)
-            .count()>0 &&!srl.isRefreshing())
+            .count()>0) &&(!srl.isRefreshing()))
             srl.setRefreshing(true);
         }
         new Thread(() -> {
