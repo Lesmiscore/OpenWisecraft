@@ -8,6 +8,7 @@ import android.support.v7.view.ActionMode;
 import android.support.v7.widget.*;
 import android.view.*;
 import android.widget.*;
+import com.annimon.stream.*;
 import com.google.common.collect.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
@@ -122,7 +123,7 @@ public abstract class ServerListActivityBase7 extends ServerListActivityBaseFiel
         public DomainListAdapter(Multimap<String, Server> domains) {
             this.domains = domains;
             listedDomains = Collections.synchronizedList(new ArrayList<>(domains.keySet()));
-            List<Boolean> nCopied = Collections.nCopies(listedDomains.size(), false);
+            List<Boolean> nCopied = Stream.of(listedDomains).map(a->false).toList();
             expandStates = Collections.synchronizedList(new ArrayList<>(nCopied));
             domainChecked = Collections.synchronizedList(new ArrayList<>(nCopied));
             domainUsed = Collections.synchronizedList(new ArrayList<>(nCopied));

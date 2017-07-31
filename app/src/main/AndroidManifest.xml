@@ -141,6 +141,15 @@
             </intent-filter>
         </activity>
         <activity
+                android:name=".api.AddMultipleServersActivity"
+                android:label="@string/addMultipleServers"
+                android:theme="@style/AppDialog">
+            <intent-filter>
+                <action android:name="com.nao20010128nao.Wisecraft.ADD_MULTIPLE_SERVERS"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
                 android:name=".activity.FragmentSettingsActivity"
                 android:exported="false"
                 android:fitsSystemWindows="false"

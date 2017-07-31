@@ -94,7 +94,7 @@ public class ServerStatusWrapperViewHolder extends FindableViewHolder implements
     }
 
     public ServerStatusWrapperViewHolder setTarget(Protobufs.Server.Mode mode) {
-        return setTarget(mode == Protobufs.Server.Mode.PE ? "PE" : "PC");
+        return setTarget(mode.name());
     }
 
     public ServerStatusWrapperViewHolder setTarget(String target) {
