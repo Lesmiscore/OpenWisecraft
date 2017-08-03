@@ -669,7 +669,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
     public void addFromMCPE() {
         Utils.makeNonClickableSB(ServerListActivityImpl.this, R.string.importing, Snackbar.LENGTH_LONG).show();
         new Thread(() -> {
-            List<Server> sv = Stream.of(lines(readWholeFile(new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt"))))
+            File f=new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt");
+            if(!f.exists())return;
+            List<Server> sv = Stream.of(lines(readWholeFile(serverList)))
                 .map(String::trim)/* trim the string */
                 .map(s -> s.split("\\:"))/* cut the string */
                 .filter(s -> s.length == 4)/* pick valid-size ones */
