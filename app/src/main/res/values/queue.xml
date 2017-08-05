@@ -1,23 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="crawlerStartDateTime">"Started at: "</string>
-    <string name="crawlerInterval">"Interval: "</string>
-    <string name="crawlerEnabled">"Enabled: "</string>
-    <string name="reschedule">Re-schedule</string>
-    <string name="yesWord">Yes</string>
-    <string name="noWord">No</string>
-    <string name="serverFinderFound">Server Finder - [COUNT] servers found</string>
-    <string name="serverFinderChecked">Checked [PORTS] port(s)</string>
-    <string name="serverFinderFinished">Finished</string>
-    <string name="name">Name</string>
-    <string name="inMilliseconds">In milliseconds</string>
-    <string name="cannotBeEmpty">This can\'t be empty</string>
-    <string name="crawlerNotifyOnline">"Notify when online: "</string>
-    <string name="crawlerNotifyOffline">"Notify when offline: "</string>
-    <string name="serverCrawler">Server Crawler</string>
-    <string name="addMultipleServers">Add multiple servers</string>
-    <string name="addTheseServers">Are you sure to add these servers?\nTap servers to change to add or not.</string>
-    <string name="noDot">No. %d</string>
-    <string name="thisWontBeAddedApi">This server won\'t be added.</string>
-    <string name="thisWillBeAddedApi">This server will be added.</string>
+
 </resources>
