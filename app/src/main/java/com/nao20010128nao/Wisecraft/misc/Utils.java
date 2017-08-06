@@ -15,6 +15,7 @@ import android.text.style.*;
 import android.view.*;
 import android.webkit.*;
 import android.widget.*;
+
 import com.annimon.stream.*;
 import com.google.common.io.*;
 import com.google.gson.*;
@@ -26,6 +27,7 @@ import com.nao20010128nao.Wisecraft.misc.collector.*;
 import com.nao20010128nao.Wisecraft.misc.json.*;
 import com.nao20010128nao.Wisecraft.misc.ping.methods.*;
 import com.nao20010128nao.Wisecraft.misc.serverList.*;
+
 import permissions.dispatcher.PermissionRequest;
 
 import java.io.*;
@@ -93,19 +95,15 @@ public class Utils extends PingerUtils {
     }
 
     public static <T> List<T> trueValues(List<T> all, boolean[] balues) {
-        List<T> lst = new ArrayList<>();
-        for (int i = 0; i < balues.length; i++)
-            if (balues[i])
-                lst.add(all.get(i));
-        return lst;
+        return Stream.of(all)
+            .filter(IteratorUtils.booleanArrayToPredicate(balues))
+            .toList();
     }
 
     public static <T> T[] trueValues(T[] all, boolean[] balues) {
-        List<T> lst = new ArrayList<>();
-        for (int i = 0; i < balues.length; i++)
-            if (balues[i])
-                lst.add(all[i]);
-        return lst.toArray((T[]) Array.newInstance(all.getClass().getComponentType(), lst.size()));
+        return Stream.of(all)
+            .filter(IteratorUtils.booleanArrayToPredicate(balues))
+            .toArray(s->(T[])Array.newInstance(all.getClass().getComponentType(), s));
     }
 
     public static Point getDisplaySize(Context activity) {
@@ -307,10 +305,10 @@ public class Utils extends PingerUtils {
     }
 
     public static Server[] makeServersFromBundle(Bundle bnd) {
-        Parcelable[] data = bnd.getParcelableArray("com.nao20010128nao.Wisecraft.misc.Server#servers");
-        Server[] servers = new Server[data.length];
-        for (int i = 0; i < data.length; i++) servers[i] = makeServerFromBundle((Bundle) data[i]);
-        return servers;
+        return Stream.of(bnd.getParcelableArray("com.nao20010128nao.Wisecraft.misc.Server#servers"))
+            .map(a -> (Bundle) a)
+            .map(Utils::makeServersFromBundle)
+            .toArray(Server[]::new);
     }
 
     public static void putServerIntoBundle(Bundle bnd, Server s) {
@@ -326,9 +324,10 @@ public class Utils extends PingerUtils {
     }
 
     public static void putServersIntoBundle(Bundle bnd, Server[] s) {
-        Bundle[] data = new Bundle[s.length];
-        for (int i = 0; i < s.length; i++) data[i] = putServerIntoBundle(s[i]);
-        bnd.putParcelableArray("com.nao20010128nao.Wisecraft.misc.Server#servers", data);
+        bnd.putParcelableArray(
+            "com.nao20010128nao.Wisecraft.misc.Server#servers",
+            Stream.of(s).map(Utils::putServerIntoBundle).toArray(Bundle[]::new)
+        );
     }
 
     public static Bundle putServersIntoBundle(Server[] s) {
@@ -406,7 +405,7 @@ public class Utils extends PingerUtils {
         }
     }
 
-    public static Protobufs.Server.Mode getModeFromObject(Object mode){
+    public static Protobufs.Server.Mode getModeFromObject(Object mode) {
         if (mode instanceof Protobufs.Server.Mode) {
             return (Protobufs.Server.Mode) mode;
         } else if (mode instanceof Integer) {
@@ -950,14 +949,16 @@ public class Utils extends PingerUtils {
         }
     }
 
-    public static <R,A> R barrier(OneArgThrowableFunction<R,A> func, A a){
+    public static <R, A> R barrier(OneArgThrowableFunction<R, A> func, A a) {
         try {
             return func.call(a);
         } catch (Throwable e) {
-            WisecraftError.report("Utils",e);
+            WisecraftError.report("Utils", e);
             return null;
         }
     }
 
-    public static boolean isNotOnline(Server a){return !a.isOnline();}
+    public static boolean isNotOnline(Server a) {
+        return !a.isOnline();
+    }
 }
