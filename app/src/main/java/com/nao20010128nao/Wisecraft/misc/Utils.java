@@ -940,15 +940,6 @@ public class Utils extends PingerUtils {
         return readLines(new InputStreamReader(f), handler);
     }
 
-    public static <R> R barrier(ThrowableFunction<R> func) {
-        try {
-            return func.call();
-        } catch (Throwable e) {
-            WisecraftError.report("Utils", e);
-            return null;
-        }
-    }
-
     public static <R, A> R barrier(OneArgThrowableFunction<R, A> func, A a) {
         try {
             return func.call(a);

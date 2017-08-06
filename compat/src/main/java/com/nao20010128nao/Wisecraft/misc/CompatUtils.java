@@ -11,6 +11,7 @@ import android.util.*;
 import android.view.*;
 import android.widget.*;
 import com.annimon.stream.Stream;
+import com.nao20010128nao.Wisecraft.WisecraftError;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
 
 import java.io.*;
@@ -435,5 +436,14 @@ public class CompatUtils {
                 return scn.nextLine();
             }
         };
+    }
+
+    public static <R> R barrier(ThrowableFunction<R> func) {
+        try {
+            return func.call();
+        } catch (Throwable e) {
+            WisecraftError.report("Utils", e);
+            return null;
+        }
     }
 }

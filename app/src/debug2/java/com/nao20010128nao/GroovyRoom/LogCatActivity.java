@@ -5,13 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import com.google.common.io.CharStreams;
-import com.nao20010128nao.Wisecraft.R;
-import com.nao20010128nao.Wisecraft.WisecraftError;
-import com.nao20010128nao.Wisecraft.misc.Utils;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
+import com.nao20010128nao.Wisecraft.R;
+import com.nao20010128nao.Wisecraft.misc.CompatUtils;
+import com.nao20010128nao.Wisecraft.misc.Utils;
 
 /**
  * Created by lesmi on 17/07/13.
@@ -26,7 +23,7 @@ public class LogCatActivity extends AppCompatActivity {
         
         log.setText("");
         new Thread(()->{
-            Process process=Utils.barrier(new ProcessBuilder()
+            Process process= CompatUtils.barrier(new ProcessBuilder()
                 .command("logcat")
                 .redirectErrorStream(true)
                 ::start);
