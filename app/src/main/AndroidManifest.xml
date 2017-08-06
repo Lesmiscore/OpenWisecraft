@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.nao20010128nao.Wisecraft">
 
@@ -306,8 +305,7 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/ping_widget_3" />
         </receiver>
-        <receiver
-            android:name=".widget.PingWidget$PingHandler">
+        <receiver android:name=".widget.PingWidget$PingHandler">
             <intent-filter>
                 <action android:name="update" />
             </intent-filter>
@@ -317,7 +315,9 @@
             android:name=".widget.PingWidget$ListViewUpdater"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
-        <activity android:name=".activity.ServerCrawlerConfigActivity" />
+        <activity
+            android:name=".activity.ServerCrawlerConfigActivity"
+            android:label="@string/serverCrawler" />
 
         <receiver
             android:name=".receivers.ServerCrawlerReceiver"
