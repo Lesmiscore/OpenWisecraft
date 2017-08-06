@@ -22,6 +22,7 @@ import android.text.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
+
 import com.annimon.stream.*;
 import com.annimon.stream.Objects;
 import com.google.gson.reflect.*;
@@ -40,6 +41,7 @@ import com.nao20010128nao.Wisecraft.misc.ping.methods.pe.*;
 import com.nao20010128nao.Wisecraft.misc.ping.processors.*;
 import com.nao20010128nao.Wisecraft.misc.serverList.*;
 import com.nao20010128nao.Wisecraft.settings.*;
+
 import permissions.dispatcher.*;
 
 import java.io.*;
@@ -99,7 +101,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
         } else {
             spp = updater = new SinglePoolMultiServerPingProvider(Integer.valueOf(pref.getString("parallels", "6")));
             if (pref.getBoolean("updAnotherThread", false))
-               updater = new NormalServerPingProvider();
+                updater = new NormalServerPingProvider();
             rv.setAdapter(sl = new ServerList(this));
         }
         rv.setLongClickable(true);
@@ -300,7 +302,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             return false;
         });
         if (savedInstanceState != null && savedInstanceState.containsKey("selected"))
-            selected = gson.fromJson(savedInstanceState.getString("selected"), new TypeToken<HashSet<Server>>() {}.getType());
+            selected = gson.fromJson(savedInstanceState.getString("selected"), new TypeToken<HashSet<Server>>() {
+            }.getType());
 
         if (Build.VERSION.SDK_INT >= 22) {
             setTaskDescription(
@@ -563,7 +566,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             finish();
             saveServers();
             instance = new WeakReference<>(null);
-            if (pref.getBoolean("exitCompletely", false)&&ProxyActivity.cont != null)
+            if (pref.getBoolean("exitCompletely", false) && ProxyActivity.cont != null)
                 ProxyActivity.cont.stopService();
         }, null, null, UUID.fromString("5c0baf72-9a92-312d-ab33-062bdc3aa445")));//10
 
@@ -640,11 +643,11 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             .filterNot(pinging::contains)
             .filter(pred::process)
             .toList();
-        if(Stream.of(toUpdate)
+        if (Stream.of(toUpdate)
             .mapToInt(list::indexOf)
-            .filter(a->a>=0)
+            .filter(a -> a >= 0)
             .peek(sl::notifyItemChanged)
-            .count()>0 &&!srl.isRefreshing()){
+            .count() > 0 && !srl.isRefreshing()) {
             srl.setRefreshing(true);
         }
         new Thread(() -> {
@@ -669,9 +672,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
     public void addFromMCPE() {
         Utils.makeNonClickableSB(ServerListActivityImpl.this, R.string.importing, Snackbar.LENGTH_LONG).show();
         new Thread(() -> {
-            File f=mcpeServerList;
-            if(!f.exists())return;
-            List<Server> sv = Stream.of(barrier(Utils::linesIterator,f))
+            File f = mcpeServerList;
+            if (!f.exists()) return;
+            List<Server> sv = Stream.of(barrier(Utils::linesIterator, f))
                 .map(String::trim)/* trim the string */
                 .map(s -> s.split("\\:"))/* cut the string */
                 .filter(s -> s.length == 4)/* pick valid-size ones */
@@ -917,13 +920,37 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                     sla.slsl.applyTextColorTo(viewHolder);
                     if (sla.pinging.contains(sv)) {
                         viewHolder.pending(sv, sla);
-                    } else {
-                        if (sv.isOnline()) {//TODO: change to else if
-                            ServerStatus s = (ServerStatus) sv;
-                            viewHolder.setStatColor(ContextCompat.getColor(sla, R.color.stat_ok));
-                            final CharSequence title;
-                            if (s.response instanceof FullStat) {//PE
-                                FullStat fs = (FullStat) s.response;
+                    } else if (sv.isOnline()) {//TODO: change to else if
+                        ServerStatus s = (ServerStatus) sv;
+                        viewHolder.setStatColor(ContextCompat.getColor(sla, R.color.stat_ok));
+                        final CharSequence title;
+                        if (s.response instanceof FullStat) {//PE
+                            FullStat fs = (FullStat) s.response;
+                            Map<String, String> m = fs.getDataAsMap();
+                            if (m.containsKey("hostname")) {
+                                title = parseMinecraftFormattingCode(m.get("hostname"));
+                            } else if (m.containsKey("motd")) {
+                                title = parseMinecraftFormattingCode(m.get("motd"));
+                            } else {
+                                title = s.toString();
+                            }
+                            viewHolder.setServerPlayers(m.get("numplayers"), m.get("maxplayers"));
+                        } else if (s.response instanceof RawJsonReply) {//PC (Obfuscated)
+                            RawJsonReply rep = (RawJsonReply) s.response;
+                            if (!rep.json.has("description")) {
+                                title = s.toString();
+                            } else {
+                                title = Utils.parseMinecraftDescriptionJson(rep.json.get("description"));
+                            }
+                            viewHolder.setServerPlayers(rep.json.get("players").get("online").getAsInt(), rep.json.get("players").get("max").getAsInt());
+                        } else if (s.response instanceof SprPair) {//PE?
+                            SprPair sp = ((SprPair) s.response);
+                            if (sp.getB() instanceof UnconnectedPing.UnconnectedPingResult) {
+                                UnconnectedPing.UnconnectedPingResult res = (UnconnectedPing.UnconnectedPingResult) sp.getB();
+                                title = parseMinecraftFormattingCode(res.getServerName());
+                                viewHolder.setServerPlayers(res.getPlayersCount(), res.getMaxPlayers());
+                            } else if (sp.getA() instanceof FullStat) {
+                                FullStat fs = (FullStat) sp.getA();
                                 Map<String, String> m = fs.getDataAsMap();
                                 if (m.containsKey("hostname")) {
                                     title = parseMinecraftFormattingCode(m.get("hostname"));
@@ -933,54 +960,28 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                                     title = s.toString();
                                 }
                                 viewHolder.setServerPlayers(m.get("numplayers"), m.get("maxplayers"));
-                            } else if (s.response instanceof RawJsonReply) {//PC (Obfuscated)
-                                RawJsonReply rep = (RawJsonReply) s.response;
-                                if (!rep.json.has("description")) {
-                                    title = s.toString();
-                                } else {
-                                    title = Utils.parseMinecraftDescriptionJson(rep.json.get("description"));
-                                }
-                                viewHolder.setServerPlayers(rep.json.get("players").get("online").getAsInt(), rep.json.get("players").get("max").getAsInt());
-                            } else if (s.response instanceof SprPair) {//PE?
-                                SprPair sp = ((SprPair) s.response);
-                                if (sp.getB() instanceof UnconnectedPing.UnconnectedPingResult) {
-                                    UnconnectedPing.UnconnectedPingResult res = (UnconnectedPing.UnconnectedPingResult) sp.getB();
-                                    title = parseMinecraftFormattingCode(res.getServerName());
-                                    viewHolder.setServerPlayers(res.getPlayersCount(), res.getMaxPlayers());
-                                } else if (sp.getA() instanceof FullStat) {
-                                    FullStat fs = (FullStat) sp.getA();
-                                    Map<String, String> m = fs.getDataAsMap();
-                                    if (m.containsKey("hostname")) {
-                                        title = parseMinecraftFormattingCode(m.get("hostname"));
-                                    } else if (m.containsKey("motd")) {
-                                        title = parseMinecraftFormattingCode(m.get("motd"));
-                                    } else {
-                                        title = s.toString();
-                                    }
-                                    viewHolder.setServerPlayers(m.get("numplayers"), m.get("maxplayers"));
-                                } else {
-                                    title = s.toString();
-                                    viewHolder.setServerPlayers();
-                                }
-                            } else if (s.response instanceof UnconnectedPing.UnconnectedPingResult) {//PE
-                                UnconnectedPing.UnconnectedPingResult res = (UnconnectedPing.UnconnectedPingResult) s.response;
-                                title = parseMinecraftFormattingCode(res.getServerName());
-                                viewHolder.setServerPlayers(res.getPlayersCount(), res.getMaxPlayers());
-                            } else {//Unreachable
+                            } else {
                                 title = s.toString();
                                 viewHolder.setServerPlayers();
                             }
-                            if (sla.pref.getBoolean("serverListColorFormattedText", false)) {
-                                viewHolder.setServerName(title);
-                            } else {
-                                viewHolder.setServerName(title.toString());
-                            }
-                            viewHolder
-                                .setPingMillis(s.ping)
-                                .setServer(s);
-                        } else {
-                            viewHolder.offline(sv, sla);
+                        } else if (s.response instanceof UnconnectedPing.UnconnectedPingResult) {//PE
+                            UnconnectedPing.UnconnectedPingResult res = (UnconnectedPing.UnconnectedPingResult) s.response;
+                            title = parseMinecraftFormattingCode(res.getServerName());
+                            viewHolder.setServerPlayers(res.getPlayersCount(), res.getMaxPlayers());
+                        } else {//Unreachable
+                            title = s.toString();
+                            viewHolder.setServerPlayers();
                         }
+                        if (sla.pref.getBoolean("serverListColorFormattedText", false)) {
+                            viewHolder.setServerName(title);
+                        } else {
+                            viewHolder.setServerName(title.toString());
+                        }
+                        viewHolder
+                            .setPingMillis(s.ping)
+                            .setServer(s);
+                    } else {
+                        viewHolder.offline(sv, sla);
                     }
                 } catch (Throwable e) {
                     RuntimeException rex = new RuntimeException("error: sv: " + sv + " Maybe the server sent incorrect data?", e);
@@ -1094,7 +1095,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                         }
                     } else {
                         pe_ip.setText(data.ip);
-                        pe_port.setText(data.port + "");
+                        pe_port.setText(String.valueOf(data.port));
                     }
                     split.setChecked(data.mode == Protobufs.Server.Mode.PC);
                     if (data.mode == Protobufs.Server.Mode.PC) {
@@ -1129,7 +1130,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                             split.setText(R.string.pe);
                             Server s = Utils.convertServerObject(Collections.singletonList(MslServer.makeServerFromString(pc_ip.getText().toString(), false))).get(0);
                             pe_ip.setText(s.ip);
-                            pe_port.setText(s.port + "");
+                            pe_port.setText(String.valueOf(s.port));
                         }
                     });
 
@@ -1290,11 +1291,11 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
         }
 
         public void addAll(Server[] items) {
-            for (Server s : items) add(s);
+            Stream.of(items).forEach(this::add);
         }
 
         public void addAll(Collection<? extends Server> collection) {
-            for (Server s : collection) add(s);
+            Stream.of(collection).forEach(this::add);
         }
 
         public void remove(Server object) {
