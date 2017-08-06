@@ -65,7 +65,7 @@ public class ServerCrawlerConfigActivity extends AppCompatActivity {
             .setCancelable(false)
             .create();
 
-        final ReferencedObject<Protobufs.ServerCrawlerEntry> editableEntry = new ReferencedObject<>();
+        final ReferencedObject<Protobufs.ServerCrawlerEntry.Builder> editableEntry = new ReferencedObject<>();
 
         final EditText name = (EditText) dialog.findViewById(R.id.name);
         final Button date = (Button) dialog.findViewById(R.id.startDate);
@@ -82,15 +82,14 @@ public class ServerCrawlerConfigActivity extends AppCompatActivity {
                     interval.setError(getResources().getString(R.string.cannotBeEmpty));
                 } else {
                     editableEntry.set(/* set values except for date & time */
-                        editableEntry.get().toBuilder()
+                        editableEntry.checked()
                             .setName(name.getText().toString())
                             .setInterval(Long.valueOf(interval.getText().toString()))
                             .setEnabled(enabledState.isChecked())
                             .setNotifyOnline(online.isChecked())
                             .setNotifyOffline(offline.isChecked())
-                            .build()
                     );
-                    if (handler.process(editableEntry.get()))
+                    if (handler.process(editableEntry.checked().build()))
                         d.dismiss();
                 }
             });
@@ -113,11 +112,10 @@ public class ServerCrawlerConfigActivity extends AppCompatActivity {
             dpg.setOnDateSetListener((vv, y, m, d) -> {
                 calendar.set(y, m, d);
                 editableEntry.set(/* set values */
-                    editableEntry.get().toBuilder()
+                    editableEntry.checked()
                         .setStart(calendar.getTimeInMillis())
-                        .build()
                 );
-                date.setText(Utils.formatDatePart(editableEntry.get().getStart()));
+                date.setText(Utils.formatDatePart(editableEntry.checked().getStart()));
             });
             dpg.show();
         });
@@ -135,11 +133,10 @@ public class ServerCrawlerConfigActivity extends AppCompatActivity {
                                 /*calendar.get(Calendar.SECOND)*/0
                     );
                     editableEntry.set(/* set values */
-                        editableEntry.get().toBuilder()
+                        editableEntry.checked()
                             .setStart(calendar.getTimeInMillis())
-                            .build()
                     );
-                    time.setText(Utils.formatTimePart(editableEntry.get().getStart()));
+                    time.setText(Utils.formatTimePart(editableEntry.checked().getStart()));
                 },
                 calendar.get(Calendar.HOUR_OF_DAY),
                 calendar.get(Calendar.MINUTE),
@@ -149,15 +146,15 @@ public class ServerCrawlerConfigActivity extends AppCompatActivity {
         });
 
         if (entry != null) {
-            editableEntry.set(entry);
+            editableEntry.set(entry.toBuilder());
 
-            name.setText(editableEntry.get().getName());
-            interval.setText(String.valueOf(editableEntry.get().getInterval()));
-            enabledState.setChecked(editableEntry.get().getEnabled());
-            online.setChecked(editableEntry.get().getNotifyOnline());
-            offline.setChecked(editableEntry.get().getNotifyOffline());
-            date.setText(Utils.formatDatePart(editableEntry.get().getStart()));
-            time.setText(Utils.formatTimePart(editableEntry.get().getStart()));
+            name.setText(editableEntry.checked().getName());
+            interval.setText(String.valueOf(editableEntry.checked().getInterval()));
+            enabledState.setChecked(editableEntry.checked().getEnabled());
+            online.setChecked(editableEntry.checked().getNotifyOnline());
+            offline.setChecked(editableEntry.checked().getNotifyOffline());
+            date.setText(Utils.formatDatePart(editableEntry.checked().getStart()));
+            time.setText(Utils.formatTimePart(editableEntry.checked().getStart()));
         } else {
             long start = Utils.cutSecondAndMillis(System.currentTimeMillis());
             editableEntry.set(/* initial values */
@@ -166,7 +163,6 @@ public class ServerCrawlerConfigActivity extends AppCompatActivity {
                     .setNotifyOnline(true)
                     .setNotifyOffline(true)
                     .setStart(start)
-                    .build()
             );
             enabledState.setChecked(true);
             online.setChecked(true);
