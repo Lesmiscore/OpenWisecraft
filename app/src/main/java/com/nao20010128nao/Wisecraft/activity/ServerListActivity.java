@@ -23,6 +23,7 @@ import android.util.*;
 import android.view.*;
 import android.widget.*;
 import com.annimon.stream.*;
+import com.annimon.stream.Objects;
 import com.google.gson.reflect.*;
 import com.mikepenz.materialdrawer.model.*;
 import com.mikepenz.materialdrawer.model.interfaces.*;
@@ -298,9 +299,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             }
             return false;
         });
-        if (savedInstanceState != null)
-            if (savedInstanceState.containsKey("selected"))
-                selected = gson.fromJson(savedInstanceState.getString("selected"), new TypeToken<HashSet<Server>>() {}.getType());
+        if (savedInstanceState != null && savedInstanceState.containsKey("selected"))
+            selected = gson.fromJson(savedInstanceState.getString("selected"), new TypeToken<HashSet<Server>>() {}.getType());
 
         if (Build.VERSION.SDK_INT >= 22) {
             setTaskDescription(
@@ -671,7 +671,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
         new Thread(() -> {
             File f=mcpeServerList;
             if(!f.exists())return;
-            List<Server> sv = Stream.of(lines(readWholeFile(f)))
+            List<Server> sv = Stream.of(barrier(Utils::linesIterator,f))
                 .map(String::trim)/* trim the string */
                 .map(s -> s.split("\\:"))/* cut the string */
                 .filter(s -> s.length == 4)/* pick valid-size ones */

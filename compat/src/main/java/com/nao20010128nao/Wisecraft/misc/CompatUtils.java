@@ -422,4 +422,18 @@ public class CompatUtils {
         for(char b:bytes)list.add(b);
         return Stream.of(list);
     }
+    public static Iterator<String> linesIterator(File f)throws IOException{
+        Scanner scn=new Scanner(f);
+        return new Iterator<String>() {
+            @Override
+            public boolean hasNext() {
+                return scn.hasNextLine();
+            }
+
+            @Override
+            public String next() {
+                return scn.nextLine();
+            }
+        };
+    }
 }

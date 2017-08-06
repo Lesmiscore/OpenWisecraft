@@ -15,14 +15,6 @@ public class Debug2Utils extends Utils {
             return false;
         }
     }
-    public static <R,A> R barrier(OneArgThrowableFunction<R,A> func,A a){
-        try {
-            return func.call(a);
-        } catch (Throwable e) {
-            WisecraftError.report("Utils",e);
-            return null;
-        }
-    }
 
     public static <R,A,B> R barrier(TwoArgThrowableFunction<R,A,B> func,A a,B b){
         try {
@@ -42,9 +34,6 @@ public class Debug2Utils extends Utils {
         }
     }
 
-    public interface OneArgThrowableFunction<R,A>{
-        R call(A a) throws Throwable;
-    }
     public interface TwoArgThrowableFunction<R,A,B>{
         R call(A a,B b) throws Throwable;
     }
