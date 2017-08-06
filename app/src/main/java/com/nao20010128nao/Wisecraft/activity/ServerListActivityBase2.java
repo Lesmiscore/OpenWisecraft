@@ -18,8 +18,8 @@ abstract class ServerListActivityBase2 extends ServerListActivityBase3 {
         BRING_ONLINE_SERVERS_TO_TOP {
             public List<Server> doSort(List<Server> list) {
                 Stream<Server> online, offline;
-                online = Stream.of(list).filter(s->s instanceof ServerStatus);
-                offline = Stream.of(list).filterNot(s->s instanceof ServerStatus);
+                online = Stream.of(list).filter(Server::isOnline);
+                offline = Stream.of(list).filterNot(Server::isOnline);
                 return Stream.of(online,offline)
                     .reduce(Stream.<Server>of(),Stream::concat)
                     .toList();
@@ -35,8 +35,8 @@ abstract class ServerListActivityBase2 extends ServerListActivityBase3 {
         ONLINE_AND_OFFLINE {
             public List<Server> doSort(List<Server> list) {
                 Stream<Server> online, offline;
-                online = Stream.of(list).filter(s->s instanceof ServerStatus);
-                offline = Stream.of(list).filterNot(s->s instanceof ServerStatus);
+                online = Stream.of(list).filter(Server::isOnline);
+                offline = Stream.of(list).filterNot(Server::isOnline);
                 return Stream.of(online,offline)
                     .map(s->s.sorted(ServerSorter.INSTANCE))
                     .reduce(Stream.<Server>of(),Stream::concat)

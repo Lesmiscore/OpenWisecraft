@@ -182,7 +182,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
         public void onItemClick(AdapterView<?> p1, View p2, int p3, long p4) {
             Server s = getItem(p3);
             sta.clicked = p3;
-            if (s instanceof ServerStatus) {
+            if (s.isOnline()) {
                 sta.startActivityForResult(new Intent(sta, ServerInfoActivity.class).putExtra("nonUpd", true).putExtra("sta", Utils.encodeForServerInfo((ServerStatus) s)), 0);
             }
         }
@@ -197,7 +197,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
             if (sta.pinging.get(offset)) {
                 viewHolder.pending(s, sta);
             } else {
-                if (s instanceof ServerStatus) {
+                if (s.isOnline()) {
                     ServerStatus sv = (ServerStatus) s;
                     viewHolder.setStatColor(ContextCompat.getColor(sta, R.color.stat_ok));
                     final CharSequence title;

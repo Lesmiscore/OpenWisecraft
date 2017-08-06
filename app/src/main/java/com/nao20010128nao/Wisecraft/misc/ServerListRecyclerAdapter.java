@@ -111,7 +111,7 @@ public class ServerListRecyclerAdapter extends ListRecyclerViewAdapter<ServerSta
         if (pinging.get(s)) {
             viewHolder.pending(s, context);
         } else {
-            if (s instanceof ServerStatus) {
+            if (s.isOnline()) {
                 ServerStatus sv = (ServerStatus) s;
                 viewHolder.online(context);
                 final String title;
