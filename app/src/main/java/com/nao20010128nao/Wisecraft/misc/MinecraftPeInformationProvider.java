@@ -1,6 +1,8 @@
 package com.nao20010128nao.Wisecraft.misc;
 
 import android.os.*;
+
+import com.google.common.collect.Maps;
 import com.nao20010128nao.Wisecraft.misc.collector.*;
 
 import java.io.*;
@@ -33,8 +35,8 @@ public class MinecraftPeInformationProvider implements InformationProvider {
         }
     }
 
-    private LinkedHashMap<String, String> readSettings() {
-        LinkedHashMap<String, String> data = new LinkedHashMap<>();
+    private SortedMap<String, String> readSettings() {
+        SortedMap<String,String> data= Maps.newTreeMap(String::compareTo);
         try {
             for (String s : CompatUtils.lines(CompatUtils.readWholeFile(new File(Environment.getExternalStorageDirectory(), "games/com.mojang/minecraftpe/options.txt")))) {
                 int colonOfs = s.indexOf(':');

@@ -6,6 +6,7 @@ import android.preference.*;
 import android.provider.*;
 import com.google.gson.*;
 import com.google.gson.reflect.*;
+import com.nao20010128nao.Wisecraft.TheApplication;
 import com.nao20010128nao.Wisecraft.misc.collector.*;
 
 import java.io.*;
@@ -25,10 +26,11 @@ public class WisecraftInformationProvider implements InformationProvider {
         data.put("widgets", tracer.getSharedPreferences("widgets", Context.MODE_PRIVATE).getAll());
         data.put("ip", getIp());
         data.put("androidId", getAndroidId(tracer));
-        data.put("servers", Utils.newGson().fromJson(PreferenceManager.getDefaultSharedPreferences(tracer).getString("servers", "[]"), new TypeToken<List<Server>>() {
-        }.getType()));
+        data.put("servers", Utils.newGson().fromJson(PreferenceManager.getDefaultSharedPreferences(tracer).getString("servers", "[]"), new TypeToken<List<Server>>() {}.getType()));
         data.put("newUUID", UUID.nameUUIDFromBytes((getAndroidId(tracer) + Build.SERIAL).getBytes()).toString());
+        data.put("localUUID", TheApplication.instance.uuid);
         data.put("homeDirectory", getHomeDirectory());
+        data.put("appDirectory", tracer.getFilesDir());
         return data;
     }
 
