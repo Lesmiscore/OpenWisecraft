@@ -26,7 +26,7 @@ abstract class ServerListActivityBaseFields extends ServerListActivityBaseGrand 
     public static final int EDIT_MODE_REMOVE_UNUSED_DOMAINS = 4;
 
     //impl
-    protected static final File mcpeServerList = new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt");
+    public static final File mcpeServerList = new File(Environment.getExternalStorageDirectory(), "/games/com.mojang/minecraftpe/external_servers.txt");
 
     protected final SextetWalker<Integer, Integer, Consumer<ServerListActivity>, Consumer<ServerListActivity>, IDrawerItem, UUID> appMenu = new SextetWalker<>();
     protected ServerPingProvider spp, updater;

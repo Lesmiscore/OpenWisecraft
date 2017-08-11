@@ -16,10 +16,13 @@ import android.text.*;
 import android.view.*;
 import com.annimon.stream.*;
 import com.google.android.gms.tasks.*;
+import com.google.common.io.ByteStreams;
+import com.google.common.io.Files;
 import com.google.firebase.analytics.*;
 import com.google.firebase.remoteconfig.*;
 import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.activity.*;
+import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
 import com.nao20010128nao.Wisecraft.misc.debug.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.collector.*;
@@ -29,6 +32,8 @@ import com.nao20010128nao.Wisecraft.rcon.*;
 import com.nao20010128nao.Wisecraft.services.*;
 import uk.co.chrisjenx.calligraphy.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.*;
 import java.util.*;
 
@@ -165,13 +170,41 @@ class TheApplicationImpl extends Application implements com.nao20010128nao.Wisec
     }
 
     private String genPassword() {
-        String seed = Settings.Secure.getString(getContentResolver(), Settings.System.ANDROID_ID) + Build.SERIAL;
+        File uuidFile=new File(ServerListActivity.mcpeServerList,"../wisecraft/uuid").getAbsoluteFile();
         uuid = pref.getString("uuid", null);
-        if (uuid == null) uuid = UUID.nameUUIDFromBytes(seed.getBytes()).toString();
-        pref.edit().putString("uuid", uuid).commit();
-        if (pref.contains("uuidShouldBe")) {
-            pref.edit().putString("uuidShouldBe", UUID.nameUUIDFromBytes(seed.getBytes()).toString()).commit();
+        if(uuidFile.exists()){
+            if (uuid == null) {
+                try {
+                    uuid = UUID.fromString(Files.readFirstLine(uuidFile, CompatCharsets.UTF_8)).toString();
+                } catch (IOException e) {
+                    if (uuidFile.exists()) uuidFile.delete();
+                    return genPassword();
+                }
+            }
+            pref.edit().putString("uuid", uuid).commit();
+            if (!pref.contains("uuidShouldBe")) {
+                pref.edit().putString("uuidShouldBe", uuid).commit();
+            }
+        }else{
+            if (!TextUtils.isEmpty(Settings.Secure.getString(getContentResolver(), Settings.System.ANDROID_ID)) || !TextUtils.isEmpty(Build.SERIAL)) {
+                String seed = Settings.Secure.getString(getContentResolver(), Settings.System.ANDROID_ID) + Build.SERIAL;
+                if (uuid == null) uuid = UUID.nameUUIDFromBytes(seed.getBytes()).toString();
+                pref.edit().putString("uuid", uuid).commit();
+                if (!pref.contains("uuidShouldBe")) {
+                    pref.edit().putString("uuidShouldBe", UUID.nameUUIDFromBytes(seed.getBytes()).toString()).commit();
+                }
+            }else{
+                if (uuid == null)uuid=UUID.randomUUID().toString();
+                pref.edit().putString("uuid", uuid).commit();
+                if (!pref.contains("uuidShouldBe")) {
+                    pref.edit().putString("uuidShouldBe", uuid).commit();
+                }
+            }
         }
+        uuidFile.getParentFile().mkdirs();
+        try {
+            Files.write(uuid,uuidFile,CompatCharsets.UTF_8);
+        } catch (IOException e) {}
         return uuid + uuid;
     }
 
