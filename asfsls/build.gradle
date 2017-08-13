@@ -14,10 +14,32 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
+
+    signingConfigs {
+        release {
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles '../proguard-rules.pro'
+        }
+        shrinkRelease.initWith(buildTypes.release)
+        shrinkRelease {
+            minifyEnabled true
+            proguardFiles '../proguard-rules.pro'
+        }
+        debug {
+            applicationIdSuffix = '.test'
+            versionNameSuffix = ' Debug'
+            debuggable true
+        }
+        debug2 {
+            applicationIdSuffix = '.test'
+            versionNameSuffix = ' Test'
+            signingConfig signingConfigs.release
+            debuggable true
         }
     }
 }

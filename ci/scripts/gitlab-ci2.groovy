@@ -8,7 +8,7 @@ apt update 2>&1 | log apt
 apt install -y tree 2>&1 | log apt
 '''.trim().readLines()
 
-stages=['app','rcon']//,'postBuild']
+stages=['app','rcon','asfsls']//,'postBuild']
 
 def branch='publicVersion'
 
@@ -92,6 +92,19 @@ rcon.each{kv->
        this["rcon$module$build".toString()].variables.BRANCH=branch
        this["rcon$module$build".toString()].dependencies=[]
     }
+}
+
+// asfsls
+def asfsls=["Debug","Debug2","Release","ShrinkRelease"]
+asfsls.each{
+    this["asfsls$it".toString()].script=mainScript
+    this["asfsls$it".toString()].after_script=afterScript
+    this["asfsls$it".toString()].artifacts.paths=artf
+    this["asfsls$it".toString()].artifacts.when='always'
+    this["asfsls$it".toString()].stage='asfsls'
+    this["asfsls$it".toString()].variables.TASKS=":asfsls:assemble$it".toString()
+    this["asfsls$it".toString()].variables.BRANCH=branch
+    this["asfsls$it".toString()].dependencies=[]
 }
 
 // postBuild
