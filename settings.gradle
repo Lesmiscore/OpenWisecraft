@@ -51,9 +51,9 @@ import java.time.LocalDate
     assert value == System.getenv("ANDROID_DAILY_OVERRIDE")
 })()
 
-include ':app', ':wisecraft-i18n', ':compat'
-include ':scrolling', ':statusesLayout', ':rcon'
-include ':rconApp', ':rconPassCrack', ':MaterialIcons'
+include ':app',  ':rconApp', ':asfsls'
+include ':compat',':scrolling', ':statusesLayout', ':rcon'
+include ':rconPassCrack', ':MaterialIcons'
 include ':aFileChooser', ':calligraphy'
 include ':psts', ':colorPicker', ':collector'
-include ':masterdetail'
+include ':masterdetail', ':wisecraft-i18n'
