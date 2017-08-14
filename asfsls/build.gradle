@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "com.nao20010128nao.Wisecraft.asfsls"
         minSdkVersion 17
-        targetSdkVersion 26
+        targetSdkVersion 24
         versionCode 1
         versionName "1.0"
 
@@ -42,6 +42,11 @@ android {
             debuggable true
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -52,7 +57,13 @@ dependencies {
     compile "com.android.support:appcompat-v7:$supportLibVersion"
     testCompile 'junit:junit:4.12'
 
-
     compile project(':wisecraft-i18n')
     compile project(':compat')
+    compile project(':collector')
+    compile project(':appicons')
+
+    compile 'com.google.code.gson:gson:2.8.0'
+    compile 'org.jsoup:jsoup:1.9.1'
+    compile 'com.google.guava:guava:19.0'
+    compile 'com.annimon:stream:1.1.7'
 }

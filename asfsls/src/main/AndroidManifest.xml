@@ -4,9 +4,8 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/feature_asfsls"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@drawable/wisecraft_icon"
+        android:label="@string/addServerFromServerListSite"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 

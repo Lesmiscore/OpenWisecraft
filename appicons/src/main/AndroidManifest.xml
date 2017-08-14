@@ -1,0 +1,11 @@
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.nao20010128nao.Wisecraft.Icons.App">
+
+    <application
+        android:allowBackup="false"
+        android:supportsRtl="false">
+
+    </application>
+
+</manifest>
