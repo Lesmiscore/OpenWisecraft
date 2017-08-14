@@ -29,11 +29,11 @@
     <application
         android:name=".TheApplication"
         android:allowBackup="false"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/wisecraft_icon"
         android:label="@string/app_name"
         android:resizeableActivity="true"
         android:theme="@style/AppTheme"
-        tools:replace="android:allowBackup"
+        tools:replace="android:allowBackup,android:supportsRtl"
         tools:targetApi="n">
         <activity
             android:name=".activity.ServerListActivity"
