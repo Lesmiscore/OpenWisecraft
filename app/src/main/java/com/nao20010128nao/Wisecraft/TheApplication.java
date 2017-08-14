@@ -170,7 +170,7 @@ class TheApplicationImpl extends Application implements com.nao20010128nao.Wisec
     }
 
     private String genPassword() {
-        File uuidFile=new File(ServerListActivity.mcpeServerList,"../wisecraft/uuid").getAbsoluteFile();
+        File uuidFile=new File(CompatConstants.mcpeServerList,"../wisecraft/uuid").getAbsoluteFile();
         uuid = pref.getString("uuid", null);
         if(uuidFile.exists()){
             if (uuid == null) {

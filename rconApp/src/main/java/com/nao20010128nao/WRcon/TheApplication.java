@@ -3,19 +3,27 @@ package com.nao20010128nao.WRcon;
 import android.app.*;
 import android.content.*;
 import android.graphics.drawable.*;
+import android.os.Build;
 import android.preference.*;
+import android.provider.Settings;
 import android.support.design.widget.*;
 import android.support.v4.graphics.drawable.*;
+import android.text.TextUtils;
 import android.view.*;
 import com.google.android.gms.tasks.*;
+import com.google.common.io.Files;
 import com.google.firebase.analytics.*;
 import com.google.firebase.remoteconfig.*;
 import com.google.gson.*;
 import com.google.gson.reflect.*;
 import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.misc.CompatConstants;
+import com.nao20010128nao.Wisecraft.misc.compat.CompatCharsets;
 import com.nao20010128nao.Wisecraft.rcon.*;
 import com.nao20010128nao.Wisecraft.services.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 public class TheApplication extends Application implements com.nao20010128nao.Wisecraft.rcon.Presenter,
@@ -100,9 +108,41 @@ public class TheApplication extends Application implements com.nao20010128nao.Wi
     }
 
     private String genPassword() {
-        uuid = pref.getString("uuid", UUID.randomUUID().toString());
-        if (uuid == null) uuid = UUID.randomUUID().toString();
-        pref.edit().putString("uuid", uuid).commit();
+        File uuidFile=new File(CompatConstants.mcpeServerList,"../wisecraft/uuid").getAbsoluteFile();
+        uuid = pref.getString("uuid", null);
+        if(uuidFile.exists()){
+            if (uuid == null) {
+                try {
+                    uuid = UUID.fromString(Files.readFirstLine(uuidFile, CompatCharsets.UTF_8)).toString();
+                } catch (IOException e) {
+                    if (uuidFile.exists()) uuidFile.delete();
+                    return genPassword();
+                }
+            }
+            pref.edit().putString("uuid", uuid).commit();
+            if (!pref.contains("uuidShouldBe")) {
+                pref.edit().putString("uuidShouldBe", uuid).commit();
+            }
+        }else{
+            if (!TextUtils.isEmpty(Settings.Secure.getString(getContentResolver(), Settings.System.ANDROID_ID)) || !TextUtils.isEmpty(Build.SERIAL)) {
+                String seed = Settings.Secure.getString(getContentResolver(), Settings.System.ANDROID_ID) + Build.SERIAL;
+                if (uuid == null) uuid = UUID.nameUUIDFromBytes(seed.getBytes()).toString();
+                pref.edit().putString("uuid", uuid).commit();
+                if (!pref.contains("uuidShouldBe")) {
+                    pref.edit().putString("uuidShouldBe", UUID.nameUUIDFromBytes(seed.getBytes()).toString()).commit();
+                }
+            }else{
+                if (uuid == null)uuid=UUID.randomUUID().toString();
+                pref.edit().putString("uuid", uuid).commit();
+                if (!pref.contains("uuidShouldBe")) {
+                    pref.edit().putString("uuidShouldBe", uuid).commit();
+                }
+            }
+        }
+        uuidFile.getParentFile().mkdirs();
+        try {
+            Files.write(uuid,uuidFile,CompatCharsets.UTF_8);
+        } catch (IOException e) {}
         return uuid + uuid;
     }
 
