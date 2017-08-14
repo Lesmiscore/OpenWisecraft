@@ -1,11 +1,25 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
+        <!--Default-->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorAccent">@color/mainColor</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="wcToolbarTheme">@style/AppTheme.Toolbar</item>
+        <item name="wcDefaultPreferenceTextColor">#000000</item>
+        <item name="wcMenuTintColor">#000000</item>
+        <item name="wcUnselectedTextColor">#000</item>
+        <item name="wcSelectedTextColor">#000</item>
+        <item name="popupTheme">@style/Theme.AppCompat.Light</item>
     </style>
 
+
+    <declare-styleable name="ServerGetActivity">
+        <attr name="wcMenuTintColor"/>
+        <attr name="wcSgaCheckColor"/>
+    </declare-styleable>
+    <attr name="wcSgaCheckColor" format="color"/>
+    <attr name="wcMenuTintColor" format="color"/>
 </resources>

@@ -166,11 +166,11 @@
             android:name=".activity.ServerFinderActivity"
             android:exported="false"
             android:label="@string/serverFinder" />
-        <activity
+        <!--activity <FINALLY MOVED!>
             android:name=".activity.ServerGetActivity"
             android:exported="false"
             android:label="@string/addServerFromServerListSite"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" /-->
         <activity
             android:name=".activity.OpenSourceActivity"
             android:exported="false"

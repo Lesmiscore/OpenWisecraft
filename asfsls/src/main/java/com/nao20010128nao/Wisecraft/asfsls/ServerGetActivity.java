@@ -1,13 +1,17 @@
 package com.nao20010128nao.Wisecraft.asfsls;
 
-import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
@@ -20,9 +24,21 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.annimon.stream.Stream;
+import com.nao20010128nao.Wisecraft.asfsls.misc.AsfslsUtils;
+import com.nao20010128nao.Wisecraft.asfsls.misc.FindableViewHolder;
+import com.nao20010128nao.Wisecraft.asfsls.misc.ListRecyclerViewAdapter;
+import com.nao20010128nao.Wisecraft.asfsls.misc.NonNullableMap;
+import com.nao20010128nao.Wisecraft.asfsls.misc.Server;
+import com.nao20010128nao.Wisecraft.asfsls.misc.serverList.MslServer;
+import com.nao20010128nao.Wisecraft.asfsls.misc.serverList.ServerAddressFetcher;
+import com.nao20010128nao.Wisecraft.misc.CompatUtils;
+import com.nao20010128nao.Wisecraft.misc.DebugWriter;
+import com.nao20010128nao.Wisecraft.misc.ModifiedBottomSheetDialog;
+import com.nao20010128nao.Wisecraft.misc.compat.CompatWebViewActivity;
+
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -37,35 +53,40 @@ abstract class ServerGetActivityImpl extends CompatWebViewActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ThemePatcher.applyThemeForActivity(this);
         super.onCreate(savedInstanceState);
-        setContentView(com.nao20010128nao.Wisecraft.Icons.App.R.layout.bottomsheet_base);
-        getLayoutInflater().inflate(com.nao20010128nao.Wisecraft.Icons.App.R.layout.only_toolbar_cood, (ViewGroup) findViewById(com.nao20010128nao.Wisecraft.Icons.App.R.id.main));
-        getLayoutInflater().inflate(com.nao20010128nao.Wisecraft.Icons.App.R.layout.webview_activity_compat, (ViewGroup) findViewById(com.nao20010128nao.Wisecraft.Icons.App.R.id.toolbarCoordinator).findViewById(com.nao20010128nao.Wisecraft.Icons.App.R.id.frame));
+        // require Wisecraft or WRcon(it doesn't!!) to be called from
+        if(getPackageManager().checkSignatures(getCallingPackage(),getPackageName())!= PackageManager.SIGNATURE_MATCH){
+            finish();
+            return;
+        }
 
-        getLayoutInflater().inflate(com.nao20010128nao.Wisecraft.Icons.App.R.layout.yes_no, (ViewGroup) findViewById(com.nao20010128nao.Wisecraft.Icons.App.R.id.bottomSheet));
-        getLayoutInflater().inflate(com.nao20010128nao.Wisecraft.Icons.App.R.layout.recycler_view_content, (ViewGroup) findViewById(com.nao20010128nao.Wisecraft.Icons.App.R.id.ynDecor).findViewById(com.nao20010128nao.Wisecraft.Icons.App.R.id.frame));
+        setContentView(R.layout.bottomsheet_base);
+        getLayoutInflater().inflate(R.layout.only_toolbar_cood, (ViewGroup) findViewById(R.id.main));
+        getLayoutInflater().inflate(R.layout.webview_activity_compat, findViewById(R.id.toolbarCoordinator).findViewById(R.id.frame));
+
+        getLayoutInflater().inflate(R.layout.yes_no, (ViewGroup) findViewById(R.id.bottomSheet));
+        getLayoutInflater().inflate(R.layout.recycler_view_content, findViewById(R.id.ynDecor).findViewById(R.id.frame));
         scanWebView();
-        setSupportActionBar((Toolbar) findViewById(com.nao20010128nao.Wisecraft.Icons.App.R.id.toolbar));
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        findViewById(com.nao20010128nao.Wisecraft.Icons.App.R.id.bottomSheet).setVisibility(View.GONE);
+        findViewById(R.id.bottomSheet).setVisibility(View.GONE);
         new Handler().post(() -> {
-            Toolbar tb = Utils.getToolbar(ServerGetActivityImpl.this);
-            TextView tv = Utils.getActionBarTextView(tb);
+            Toolbar tb = CompatUtils.getToolbar(ServerGetActivityImpl.this);
+            TextView tv = CompatUtils.getActionBarTextView(tb);
             if (tv != null) {
                 tv.setGravity(Gravity.CENTER);
             }
         });
 
-        bottomSheet = BottomSheetBehavior.from(findViewById(com.nao20010128nao.Wisecraft.Icons.App.R.id.bottomSheet));
+        bottomSheet = BottomSheetBehavior.from(findViewById(R.id.bottomSheet));
         bottomSheet.setHideable(true);
         bottomSheet.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             public void onStateChanged(View p1, int p2) {
                 switch (p2) {
                     case BottomSheetBehavior.STATE_HIDDEN:
                         adapter.deleteAll();
-                        findViewById(com.nao20010128nao.Wisecraft.Icons.App.R.id.bottomSheet).setVisibility(View.GONE);
+                        findViewById(R.id.bottomSheet).setVisibility(View.GONE);
                         break;
                 }
             }
@@ -79,16 +100,16 @@ abstract class ServerGetActivityImpl extends CompatWebViewActivity {
         loadedServerListRv.setLayoutManager(new LinearLayoutManager(this));
         loadedServerListRv.setAdapter(adapter = new Adapter());
 
-        findViewById(com.nao20010128nao.Wisecraft.Icons.App.R.id.yes).setOnClickListener(v -> {
-            Stream.of(adapter.getSelection()).forEach(ServerListActivity.instance.get()::addIntoList);
+        findViewById(R.id.yes).setOnClickListener(v -> {
+            startActivity(AsfslsUtils.makeMagicSpell(adapter.getSelection()));
             bottomSheet.setState(BottomSheetBehavior.STATE_HIDDEN);
         });
-        findViewById(com.nao20010128nao.Wisecraft.Icons.App.R.id.no).setOnClickListener(v -> bottomSheet.setState(BottomSheetBehavior.STATE_HIDDEN));
+        findViewById(R.id.no).setOnClickListener(v -> bottomSheet.setState(BottomSheetBehavior.STATE_HIDDEN));
 
-        if (!Utils.isOnline(this)) {
-            new AlertDialog.Builder(this, ThemePatcher.getDefaultDialogStyle(this))
-                .setMessage(com.nao20010128nao.Wisecraft.Icons.App.R.string.offline)
-                .setTitle(com.nao20010128nao.Wisecraft.Icons.App.R.string.error)
+        if (!AsfslsUtils.isOnline(this)) {
+            new AlertDialog.Builder(this)
+                .setMessage(R.string.offline)
+                .setTitle(R.string.error)
                 .setOnCancelListener(di -> {
                     finish();
                     Log.d("SGA", "cancel");
@@ -101,12 +122,12 @@ abstract class ServerGetActivityImpl extends CompatWebViewActivity {
             return;
         }
         serverList = createServerListDomains();
-        new AlertDialog.Builder(this, ThemePatcher.getDefaultDialogStyle(this))
+        new AlertDialog.Builder(this)
             .setItems(serverList, (di, w) -> {
                 di.dismiss();
                 loadUrl("http://" + (domain = serverList[w]) + "/");
             })
-            .setTitle(com.nao20010128nao.Wisecraft.Icons.App.R.string.selectWebSite)
+            .setTitle(R.string.selectWebSite)
             .setOnCancelListener(di -> {
                 finish();
                 Log.d("SGA", "cancel");
@@ -122,12 +143,12 @@ abstract class ServerGetActivityImpl extends CompatWebViewActivity {
                 getSupportActionBar().setSubtitle(wv.getUrl());
             }
         });
-        downloading = Snackbar.make(findViewById(android.R.id.content), com.nao20010128nao.Wisecraft.Icons.App.R.string.serverGetFetch, Snackbar.LENGTH_INDEFINITE);
+        downloading = Snackbar.make(findViewById(android.R.id.content), R.string.serverGetFetch, Snackbar.LENGTH_INDEFINITE);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuItem find = menu.add(Menu.NONE, 0, 0, com.nao20010128nao.Wisecraft.Icons.App.R.string.findServers).setIcon(TheApplication.getTintedDrawable(com.nao20010128nao.Wisecraft.Icons.App.R.drawable.ic_search_black_48dp, Utils.getMenuTintColor(this), this));
+        MenuItem find = menu.add(Menu.NONE, 0, 0, R.string.findServers).setIcon(TheApplication.getTintedDrawable(R.drawable.ic_search_black_48dp, AsfslsUtils.getMenuTintColor(this), this));
         MenuItemCompat.setShowAsAction(find, MenuItem.SHOW_AS_ACTION_ALWAYS);
         return true;
     }
@@ -164,33 +185,32 @@ abstract class ServerGetActivityImpl extends CompatWebViewActivity {
 							*/
                             final ModifiedBottomSheetDialog mbsd = new ModifiedBottomSheetDialog(ServerGetActivityImpl.this);
                             final Adapter adapter = new Adapter();
-                            mbsd.setContentView(com.nao20010128nao.Wisecraft.Icons.App.R.layout.server_get_recycler);
-                            final RecyclerView loadedServerListRv = (RecyclerView) mbsd.findViewById(com.nao20010128nao.Wisecraft.Icons.App.R.id.servers);
+                            mbsd.setContentView(R.layout.server_get_recycler);
+                            final RecyclerView loadedServerListRv = (RecyclerView) mbsd.findViewById(R.id.servers);
                             loadedServerListRv.setLayoutManager(new LinearLayoutManager(ServerGetActivityImpl.this));
                             loadedServerListRv.setAdapter(adapter);
                             adapter.addAll(serv);
-                            mbsd.findViewById(com.nao20010128nao.Wisecraft.Icons.App.R.id.yes).setOnClickListener(v -> {
-                                for (Server s : adapter.getSelection())
-                                    ServerListActivity.instance.get().addIntoList(s);
+                            mbsd.findViewById(R.id.yes).setOnClickListener(v -> {
+                                startActivity(AsfslsUtils.makeMagicSpell(adapter.getSelection()));
                                 mbsd.dismiss();
                             });
-                            mbsd.findViewById(com.nao20010128nao.Wisecraft.Icons.App.R.id.no).setOnClickListener(v -> mbsd.dismiss());
+                            mbsd.findViewById(R.id.no).setOnClickListener(v -> mbsd.dismiss());
                             mbsd.show();
                         } else {
                             //Throwable
                             String msg = ((Throwable) o).getMessage();
                             String dialogMsg = msg;
                             if (msg.startsWith("This website is not supported")) {
-                                dialogMsg = getResources().getString(com.nao20010128nao.Wisecraft.Icons.App.R.string.msl_websiteNotSupported) + url;
+                                dialogMsg = getResources().getString(R.string.msl_websiteNotSupported) + url;
                             }
                             if (msg.startsWith("Unsupported webpage")) {
-                                dialogMsg = getResources().getString(com.nao20010128nao.Wisecraft.Icons.App.R.string.msl_unsupportedWebpage) + url;
+                                dialogMsg = getResources().getString(R.string.msl_unsupportedWebpage) + url;
                             }
 
-                            new AlertDialog.Builder(ServerGetActivityImpl.this, ThemePatcher.getDefaultDialogStyle(ServerGetActivityImpl.this))
-                                .setTitle(com.nao20010128nao.Wisecraft.Icons.App.R.string.error)
+                            new AlertDialog.Builder(ServerGetActivityImpl.this)
+                                .setTitle(R.string.error)
                                 .setMessage(dialogMsg)
-                                .setPositiveButton(android.R.string.ok, Constant.BLANK_DIALOG_CLICK_LISTENER)
+                                .setPositiveButton(android.R.string.ok, (i,w)->{})
                                 .show();
                         }
                     }
@@ -232,25 +252,20 @@ abstract class ServerGetActivityImpl extends CompatWebViewActivity {
     }
 
     public String[] createServerListDomains() {
-        List<String> result = new ArrayList<>();
-        result.addAll(Arrays.asList(getResources().getStringArray(com.nao20010128nao.Wisecraft.Icons.App.R.array.serverListSites)));
-        if (addForServerList != null) result.addAll(addForServerList);
-        return Factories.strArray(result);
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
+        return Stream.concat(
+            Stream.of(getResources().getStringArray(R.array.serverListSites)),
+            Stream.of(addForServerList)
+        ).toArray(String[]::new);
     }
 
     public int getCheckColor() {
-        TypedArray ta = obtainStyledAttributes(com.nao20010128nao.Wisecraft.Icons.App.R.styleable.ServerGetActivity);
+        TypedArray ta = obtainStyledAttributes(R.styleable.ServerGetActivity);
         int color = Color.BLACK;
-        if (ta.hasValue(com.nao20010128nao.Wisecraft.Icons.App.R.styleable.ServerGetActivity_wcMenuTintColor)) {
-            color = ta.getColor(com.nao20010128nao.Wisecraft.Icons.App.R.styleable.ServerGetActivity_wcMenuTintColor, 0);
+        if (ta.hasValue(R.styleable.ServerGetActivity_wcMenuTintColor)) {
+            color = ta.getColor(R.styleable.ServerGetActivity_wcMenuTintColor, 0);
         }
-        if (ta.hasValue(com.nao20010128nao.Wisecraft.Icons.App.R.styleable.ServerGetActivity_wcSgaCheckColor)) {
-            color = ta.getColor(com.nao20010128nao.Wisecraft.Icons.App.R.styleable.ServerGetActivity_wcSgaCheckColor, 0);
+        if (ta.hasValue(R.styleable.ServerGetActivity_wcSgaCheckColor)) {
+            color = ta.getColor(R.styleable.ServerGetActivity_wcSgaCheckColor, 0);
         }
         ta.recycle();
         return color;
@@ -263,18 +278,18 @@ abstract class ServerGetActivityImpl extends CompatWebViewActivity {
         public void onBindViewHolder(FindableViewHolder parent, int offset) {
             ((TextView) parent.findViewById(android.R.id.text1)).setText(makeServerTitle(getItem(offset)));
             parent.itemView.setTag(getItem(offset));
-            Utils.applyHandlersForViewTree(parent.itemView, new OnClickListener(offset));
+            CompatUtils.applyHandlersForViewTree(parent.itemView, new OnClickListener(offset));
             if (selected.get(getItem(offset))) {
-                parent.findViewById(com.nao20010128nao.Wisecraft.Icons.App.R.id.check).setVisibility(View.VISIBLE);
+                parent.findViewById(R.id.check).setVisibility(View.VISIBLE);
             } else {
-                parent.findViewById(com.nao20010128nao.Wisecraft.Icons.App.R.id.check).setVisibility(View.GONE);
+                parent.findViewById(R.id.check).setVisibility(View.GONE);
             }
-            ((ImageView) parent.findViewById(com.nao20010128nao.Wisecraft.Icons.App.R.id.check)).setImageDrawable(TheApplication.instance.getTintedDrawable(com.nao20010128nao.Wisecraft.Icons.App.R.drawable.ic_check_black_48dp, getCheckColor()));
+            ((ImageView) parent.findViewById(R.id.check)).setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_check_black_48dp, getCheckColor()));
         }
 
         @Override
         public FindableViewHolder onCreateViewHolder(ViewGroup parent, int type) {
-            return new FindableViewHolder(getLayoutInflater().inflate(com.nao20010128nao.Wisecraft.Icons.App.R.layout.checkable_list_item, parent, false));
+            return new FindableViewHolder(getLayoutInflater().inflate(R.layout.checkable_list_item, parent, false));
         }
 
         public void clearSelectedState() {
@@ -292,7 +307,8 @@ abstract class ServerGetActivityImpl extends CompatWebViewActivity {
             for (MslServer srv : new ArrayList<>(this))
                 if (selected.get(srv))
                     result.add(srv);
-            return Utils.convertServerObject(result);
+            Stream.of(this).filter(selected::get).toList();
+            return AsfslsUtils.convertServerObject(result);
         }
 
         String makeServerTitle(MslServer sv) {

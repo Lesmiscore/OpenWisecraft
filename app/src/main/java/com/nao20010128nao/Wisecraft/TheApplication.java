@@ -79,6 +79,7 @@ class TheApplicationImpl extends Application implements com.nao20010128nao.Wisec
             .remove("main_style")
             .remove("specialDrawer1")
             .remove("useBright")
+            .remove("feature_asfsls")
             .commit();
 
         registerActivityLifecycleCallbacks(this);

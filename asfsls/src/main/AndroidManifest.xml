@@ -8,7 +8,13 @@
         android:label="@string/addServerFromServerListSite"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity
+            android:name=".ServerGetActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.nao20010128nao.Wisecraft.ASFSLS"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

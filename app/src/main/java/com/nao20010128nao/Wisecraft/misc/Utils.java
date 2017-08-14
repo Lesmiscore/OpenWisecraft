@@ -35,6 +35,8 @@ import java.lang.reflect.*;
 import java.math.*;
 import java.text.*;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Utils extends PingerUtils {
     private static int[] HUE_COLORS;
@@ -314,7 +316,7 @@ public class Utils extends PingerUtils {
     public static void putServerIntoBundle(Bundle bnd, Server s) {
         bnd.putString("com.nao20010128nao.Wisecraft.misc.Server.ip", s.ip);
         bnd.putInt("com.nao20010128nao.Wisecraft.misc.Server.port", s.port);
-        bnd.putInt("com.nao20010128nao.Wisecraft.misc.Server.mode", s.mode.ordinal());
+        bnd.putInt("com.nao20010128nao.Wisecraft.misc.Server.mode", s.mode.getNumber());
     }
 
     public static Bundle putServerIntoBundle(Server s) {
@@ -951,5 +953,28 @@ public class Utils extends PingerUtils {
 
     public static boolean isNotOnline(Server a) {
         return !a.isOnline();
+    }
+
+    public static boolean checkMatchingPackageExist(Context ctx,Pattern regex){
+        return Stream.of(ctx.getPackageManager().getInstalledPackages(PackageManager.GET_META_DATA))
+            .map(a->a.packageName)
+            .map(regex::matcher)
+            .filter(Matcher::matches)
+            .count()!=0;
+    }
+    public static String findFirstMatchingPackage(Context ctx,Pattern regex){
+        return Stream.of(ctx.getPackageManager().getInstalledPackages(PackageManager.GET_META_DATA))
+            .map(a->a.packageName)
+            .map(regex::matcher)
+            .filter(Matcher::matches)
+            .map(Utils::getInput)
+            .findFirst().orElse(null);
+    }
+    public static String getInput(Matcher matcher){
+        try {
+            return Matcher.class.getDeclaredField("input").get(matcher).toString();
+        } catch (Throwable e) {
+            return null;
+        }
     }
 }
