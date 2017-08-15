@@ -972,7 +972,9 @@ public class Utils extends PingerUtils {
     }
     public static String getInput(Matcher matcher){
         try {
-            return Matcher.class.getDeclaredField("input").get(matcher).toString();
+            Field f=Matcher.class.getDeclaredField("input");
+            f.setAccessible(true);
+            return f.get(matcher).toString();
         } catch (Throwable e) {
             return null;
         }
