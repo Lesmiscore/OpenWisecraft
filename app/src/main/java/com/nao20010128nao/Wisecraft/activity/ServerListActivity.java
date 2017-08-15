@@ -537,7 +537,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
         }
         Pattern asfslsPattern=Pattern.compile("com\\.nao20010128nao\\.Wisecraft\\.asfsls(|\\.(debug|test))");
         if (Utils.checkMatchingPackageExist(this, asfslsPattern)) {
-            appMenu.add(new Sextet<>(R.string.addServerFromServerListSite, R.drawable.ic_language_black_48dp, a -> startActivity(new Intent().setClassName(Utils.findFirstMatchingPackage(this,asfslsPattern),".ServerGetActivity")), null, null, UUID.fromString("9e63592a-3b0b-33f6-a8e2-937f2aa85ce2")));//7
+            appMenu.add(new Sextet<>(R.string.addServerFromServerListSite, R.drawable.ic_language_black_48dp, a -> startActivity(new Intent().setClassName(Utils.findFirstMatchingPackage(this,asfslsPattern),"com.nao20010128nao.Wisecraft.asfsls.ServerGetActivity")), null, null, UUID.fromString("9e63592a-3b0b-33f6-a8e2-937f2aa85ce2")));//7
         }
         if (pref.getBoolean("feature_serverCrawler", false) || Utils.alwaysTrue()) {//TODO: should it be moved in the settings?
             appMenu.add(new Sextet<>(R.string.serverCrawler, R.drawable.ic_search_black_48dp, a -> startActivity(new Intent(a, ServerCrawlerConfigActivity.class)), null, null, UUID.fromString("9e63592a-3b0b-33f6-a8e2-937f2aa85ce2")));//7
