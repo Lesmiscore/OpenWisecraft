@@ -3,6 +3,10 @@ package com.nao20010128nao.Wisecraft.asfsls.misc.serverList.sites;
 import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
+import com.nao20010128nao.Wisecraft.asfsls.misc.json.WJOUtils;
+import com.nao20010128nao.Wisecraft.asfsls.misc.json.WisecraftJsonObject;
+import com.nao20010128nao.Wisecraft.asfsls.misc.serverList.MslServer;
+import com.nao20010128nao.Wisecraft.misc.CompatUtils;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -30,9 +34,9 @@ public class Pmmp_Jp_Net implements ServerListSite {
     @Override
     public boolean matches(URL url) {
         // TODO 自動生成されたメソッド・スタブ
-        return url.getHost().equalsIgnoreCase("pmmp.jp.net")
-            | url.getHost().equalsIgnoreCase("mc-pe.online")
-            | url.getHost().equalsIgnoreCase("minecraftpe.jp");
+        return "pmmp.jp.net".equalsIgnoreCase(url.getHost())
+            | "mc-pe.online".equalsIgnoreCase(url.getHost())
+            | "minecraftpe.jp".equalsIgnoreCase(url.getHost());
     }
 
     @Override
@@ -50,11 +54,17 @@ public class Pmmp_Jp_Net implements ServerListSite {
         con.setRequestMethod("POST");
         con.addRequestProperty("Content-Type", "application/x-www-form-urlencoded");
         con.setRequestProperty("User-Agent", "Apache-HttpClient/UNAVAILABLE (java 1.4)");
-        try (Writer w = new OutputStreamWriter(con.getOutputStream())) {
+        Writer w=null;
+        try{
+            w = new OutputStreamWriter(con.getOutputStream());
             w.write("id=" + generateId() + "&notify=" + generateNotify() + "&app=2");
             w.flush();
+        }finally {
+            CompatUtils.safeClose(w);
         }
-        try (Reader r = new InputStreamReader(con.getInputStream(), "UTF-8")) {
+        Reader r=null;
+        try{
+            r = new InputStreamReader(con.getInputStream(), "UTF-8");
             WisecraftJsonObject sl = WJOUtils.parse(r);
             List<MslServer> result = new ArrayList<>();
             for (WisecraftJsonObject jo : sl.get("servers")) {
@@ -82,6 +92,8 @@ public class Pmmp_Jp_Net implements ServerListSite {
                 result.add(s);
             }
             return result;
+        }finally {
+            CompatUtils.safeClose(r);
         }
     }
 
@@ -99,80 +111,5 @@ public class Pmmp_Jp_Net implements ServerListSite {
         for (int i = 0; i < 140; i++)
             sb.append(BASE64CHARS.charAt(Math.abs(sr.nextInt()) % 64));
         return sb.toString();
-    }
-
-    public static class PMMP_Servers_List {
-        @SerializedName("status")
-        public int status;
-        @SerializedName("userID")
-        public String userID;
-        @SerializedName("servers")
-        public ServerEntry[] servers;
-    }
-
-    public static class ServerEntry {
-        @SerializedName("ver")
-        public int ver;
-        @SerializedName("notify")
-        public int notify;
-        @SerializedName("no")
-        public int no;
-        @SerializedName("status")
-        public int status;
-        @SerializedName("playerMax")
-        public int playerMax;
-        @SerializedName("playerNow")
-        public int playerNow;
-        @SerializedName("_order")
-        public long _order;
-        @SerializedName("name")
-        public String name;
-        @SerializedName("description")
-        public String description;
-        @SerializedName("ip")
-        public String ip;
-        @SerializedName("port")
-        public String port;
-        @SerializedName("icon")
-        public String icon;
-        @SerializedName("topImg")
-        public String topImg;
-        @SerializedName("owner")
-        public String owner;
-        @SerializedName("sites")
-        public SitesEntry[] sites;
-        @SerializedName("categories")
-        public CategoriesEntry[] categories;
-    }
-
-    public static class SitesEntry {
-        @SerializedName("title")
-        public String title;
-        @SerializedName("url")
-        public String url;
-        @SerializedName("icon")
-        public int icon;
-        @SerializedName("schemes")
-        public SchememesEntry[] schemes;
-    }
-
-    public static class SchememesEntry {
-        @SerializedName("title")
-        public String title;
-        @SerializedName("icon")
-        public String icon;
-        @SerializedName("scheme")
-        public String scheme;
-        @SerializedName("allowAndroid")
-        public boolean allowAndroid;
-    }
-
-    public static class CategoriesEntry {
-        @SerializedName("color")
-        public int color;
-        @SerializedName("mark")
-        public int mark;
-        @SerializedName("text")
-        public String text;
     }
 }

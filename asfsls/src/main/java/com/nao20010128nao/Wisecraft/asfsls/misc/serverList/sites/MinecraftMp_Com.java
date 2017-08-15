@@ -25,7 +25,7 @@ public class MinecraftMp_Com implements ServerListSite {
     @Override
     public boolean matches(URL url) {
         // TODO 自動生成されたメソッド・スタブ
-        return url.getHost().equalsIgnoreCase("minecraft-mp.com");
+        return "minecraft-mp.com".equalsIgnoreCase(url.getHost());
     }
 
     @Override
@@ -48,7 +48,7 @@ public class MinecraftMp_Com implements ServerListSite {
             Elements elems = page.select("html > body > div > div > div > div > table > tbody > tr > td > strong");
             return Arrays.asList(MslServer.makeServerFromString(elems.get(1).html(), false));
         }
-        if (isPathStartsFromServers(url) | url.getPath().replace("/", "").equals("") | !isSingleServer(url.getPath())) {
+        if (isPathStartsFromServers(url) | "".equals(url.getPath().replace("/", "")) | !isSingleServer(url.getPath())) {
             List<MslServer> list = new ArrayList<>();
             Document page = Jsoup.connect(url.toString()).userAgent("Mozilla").get();
             Elements elems = page.select("html > body > div > div > table > tbody > tr > td > strong");
@@ -73,8 +73,6 @@ public class MinecraftMp_Com implements ServerListSite {
             return false;
         // System.err.println(s[1]);
         String act = s[1];
-        if (act.startsWith("server-s"))
-            return true;
-        return false;
+        return act.startsWith("server-s");
     }
 }

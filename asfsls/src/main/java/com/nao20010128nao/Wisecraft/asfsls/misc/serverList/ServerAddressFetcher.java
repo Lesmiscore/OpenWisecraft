@@ -1,5 +1,7 @@
 package com.nao20010128nao.Wisecraft.asfsls.misc.serverList;
 
+import com.annimon.stream.Collectors;
+import com.annimon.stream.Stream;
 import com.nao20010128nao.Wisecraft.asfsls.misc.serverList.sites.MinecraftMp_Com;
 import com.nao20010128nao.Wisecraft.asfsls.misc.serverList.sites.Minecraft_Jp;
 import com.nao20010128nao.Wisecraft.asfsls.misc.serverList.sites.Minecraftpeservers_Org;
@@ -46,10 +48,9 @@ public class ServerAddressFetcher {
      * @return A list that was found servers contains. Immutable.
      */
     public static List<MslServer> findServersInWebpage(URL url) throws IOException {
-        Set<ServerListSite> service = new HashSet<>();
-        for (ServerListSite serv : services)
-            if (serv.matches(url))
-                service.add(serv);
+        Set<ServerListSite> service = Stream.of(services)
+            .filter(a->a.matches(url))
+            .collect(Collectors.toSet());
         if (service.size() == 0)
             throw new IllegalArgumentException("This website is not supported: " + url);
         List<Throwable> errors = new ArrayList<>();

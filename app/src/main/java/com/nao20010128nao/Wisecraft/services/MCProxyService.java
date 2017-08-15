@@ -44,7 +44,7 @@ public class MCProxyService extends Service {
         nb.setContentIntent(PendingIntent.getActivity(this, hashCode(), new Intent(this, ProxyActivity.class).setAction("status"), 0));
         nb.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
         nb.setColor(ThemePatcher.getMainColor(this));
-        nb.setSmallIcon(R.drawable.ic_launcher);
+        nb.setSmallIcon(R.drawable.wisecraft_icon);
         startForeground(ntfId, nb.build());
 
         proxyThread = new Thread(prox = new MultipleUdpConnectionProxy(ip, port, 64321));

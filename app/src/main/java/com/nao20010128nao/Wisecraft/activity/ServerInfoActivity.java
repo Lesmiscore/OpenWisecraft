@@ -323,14 +323,14 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
                         getTitle().toString(),
                         serverIconBmp != null ?
                             serverIconBmp :
-                            BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher),
+                            BitmapFactory.decodeResource(getResources(), R.drawable.wisecraft_icon),
                         color
                     );
                     break;
                 default:
                     td = new CompatTaskDescription(
                         getTitle().toString(),
-                        BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher),
+                        BitmapFactory.decodeResource(getResources(), R.drawable.wisecraft_icon),
                         color
                     );
                     break;

@@ -1,5 +1,7 @@
 package com.nao20010128nao.Wisecraft.asfsls.misc.serverList.sites;
 
+import com.nao20010128nao.Wisecraft.asfsls.misc.serverList.MslServer;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -20,8 +22,8 @@ public class MinecraftServersList_Org implements ServerListSite {
     @Override
     public boolean matches(URL url) {
         // TODO 自動生成されたメソッド・スタブ
-        return url.getHost().equalsIgnoreCase("www.minecraft-servers-list.org")
-            | url.getHost().equalsIgnoreCase("minecraft-servers-list.org");
+        return "www.minecraft-servers-list.org".equalsIgnoreCase(url.getHost())
+            | "minecraft-servers-list.org".equalsIgnoreCase(url.getHost());
     }
 
     @Override

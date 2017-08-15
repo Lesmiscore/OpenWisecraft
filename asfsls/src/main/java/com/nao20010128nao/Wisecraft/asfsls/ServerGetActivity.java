@@ -279,11 +279,7 @@ abstract class ServerGetActivityImpl extends CompatWebViewActivity {
             ((TextView) parent.findViewById(android.R.id.text1)).setText(makeServerTitle(getItem(offset)));
             parent.itemView.setTag(getItem(offset));
             CompatUtils.applyHandlersForViewTree(parent.itemView, new OnClickListener(offset));
-            if (selected.get(getItem(offset))) {
-                parent.findViewById(R.id.check).setVisibility(View.VISIBLE);
-            } else {
-                parent.findViewById(R.id.check).setVisibility(View.GONE);
-            }
+            parent.findViewById(R.id.check).setVisibility(selected.get(getItem(offset)) ? View.VISIBLE : View.GONE);
             ((ImageView) parent.findViewById(R.id.check)).setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_check_black_48dp, getCheckColor()));
         }
 
@@ -303,19 +299,12 @@ abstract class ServerGetActivityImpl extends CompatWebViewActivity {
         }
 
         public List<Server> getSelection() {
-            List<MslServer> result = new ArrayList<>();
-            for (MslServer srv : new ArrayList<>(this))
-                if (selected.get(srv))
-                    result.add(srv);
-            Stream.of(this).filter(selected::get).toList();
-            return AsfslsUtils.convertServerObject(result);
+            return AsfslsUtils.convertServerObject(Stream.of(this).filter(selected::get).toList());
         }
 
         String makeServerTitle(MslServer sv) {
-            StringBuilder sb = new StringBuilder();
-            sb.append(sv.ip).append(':').append(sv.port).append(" ");
-            sb.append(sv.isPE ? "PE" : "PC");
-            return sb.toString();
+            return sv.ip + ':' + sv.port + " " +
+                (sv.isPE ? "PE" : "PC");
         }
 
         class OnClickListener implements View.OnClickListener {

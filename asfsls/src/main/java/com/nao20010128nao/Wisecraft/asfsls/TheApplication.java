@@ -11,6 +11,7 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.multidex.MultiDex;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.TextUtils;
 
@@ -103,7 +104,7 @@ class TheApplicationImpl extends Application{
     }
 
     public static Drawable getTintedDrawable(int res, int color, Context ctx) {
-        Drawable d = ctx.getResources().getDrawable(res);
+        Drawable d = ContextCompat.getDrawable(ctx,res);
         d = DrawableCompat.wrap(d);
         DrawableCompat.setTint(d, color);
         return d;

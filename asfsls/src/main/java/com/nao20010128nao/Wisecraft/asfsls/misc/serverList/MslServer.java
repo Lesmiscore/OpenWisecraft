@@ -30,13 +30,9 @@ public final class MslServer {
         String[] spl = ip.split("\\:");
         MslServer s = new MslServer();
         s.ip = spl[0];
-        if (spl.length == 2) {
-            // IP & port
-            s.port = Integer.valueOf(spl[1]);
-        } else {
-            // IP only
-            s.port = isPE ? 19132 : 25565;
-        }
+        // IP & port
+        // IP only
+        s.port = spl.length == 2 ? Integer.valueOf(spl[1]) : isPE ? 19132 : 25565;
         s.isPE = isPE;
         return s;
     }

@@ -31,14 +31,7 @@ public class Server {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        if (/*ip.matches(Constant.IPV6_PATTERN)*/false) {
-            sb.append('[').append(ip).append(']');//IPv6
-        } else {
-            sb.append(ip);//IPv4
-        }
-        sb.append(':').append(port);
-        return sb.toString();
+        return ip + ':' + port;
     }
 
     public enum Mode {

@@ -1,5 +1,8 @@
 package com.nao20010128nao.Wisecraft.asfsls.misc.serverList.sites;
 
+import com.annimon.stream.Stream;
+import com.nao20010128nao.Wisecraft.asfsls.misc.serverList.MslServer;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -25,7 +28,7 @@ public class Minecraft_Jp implements ServerListSite {
     @Override
     public boolean matches(URL url) {
         // TODO 自動生成されたメソッド・スタブ
-        return url.getHost().equalsIgnoreCase("minecraft.jp");
+        return "minecraft.jp".equalsIgnoreCase(url.getHost());
     }
 
     @Override
@@ -33,7 +36,7 @@ public class Minecraft_Jp implements ServerListSite {
         // TODO 自動生成されたメソッド・スタブ
         if (isPathStartsFromServers(url) & isSingleServer(url.getPath()))
             return false;
-        if (isPathStartsFromServers(url) | url.getPath().replace("/", "").equals("")
+        if (isPathStartsFromServers(url) | "".equals(url.getPath().replace("/", ""))
             | !isSingleServer(url.getPath()))
             return true;
         return false;
@@ -50,18 +53,14 @@ public class Minecraft_Jp implements ServerListSite {
                 return null;
             return Arrays.asList(MslServer.makeServerFromString(ip, false));
         }
-        if (isPathStartsFromServers(url) | url.getPath().replace("/", "").equals("") | !isSingleServer(url.getPath())) {
-            List<MslServer> list = new ArrayList<>();
+        if (isPathStartsFromServers(url) | "".equals(url.getPath().replace("/", "")) | !isSingleServer(url.getPath())) {
             Document page = Jsoup.connect(url.toString()).userAgent("Mozilla").get();
             Elements elems = page.select("html > body > #wrap > #content > table > tbody > tr > td.address");
-            for (Element e : elems) {
-                String ip = e.html();
-                if (ip.equals("(非公開)"))
-                    // Server is private
-                    continue;
-                list.add(MslServer.makeServerFromString(ip, false));
-            }
-            return list;
+            return Stream.of(elems)
+                .map(Element::html)
+                .filterNot("(非公開)"::equals)
+                .map(ip->MslServer.makeServerFromString(ip, false))
+                .toList();
         }
         return null;
     }
@@ -76,10 +75,6 @@ public class Minecraft_Jp implements ServerListSite {
             return false;
         // System.err.println(s[2]);
         String act = s[2].split("\\:")[0];
-        if (PATH_BLACK_LIST.contains(act))
-            return false;
-        if (act.contains("."))
-            return true;
-        return false;
+        return !PATH_BLACK_LIST.contains(act) && act.contains(".");
     }
 }

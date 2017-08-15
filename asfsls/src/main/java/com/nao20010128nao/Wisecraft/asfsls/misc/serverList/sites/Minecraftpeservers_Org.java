@@ -1,5 +1,8 @@
 package com.nao20010128nao.Wisecraft.asfsls.misc.serverList.sites;
 
+import com.annimon.stream.Stream;
+import com.nao20010128nao.Wisecraft.asfsls.misc.serverList.MslServer;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -23,13 +26,13 @@ public class Minecraftpeservers_Org implements ServerListSite {
     @Override
     public boolean matches(URL url) {
         // TODO 自動生成されたメソッド・スタブ
-        return url.getHost().equalsIgnoreCase("minecraftpeservers.org");
+        return "minecraftpeservers.org".equalsIgnoreCase(url.getHost());
     }
 
     @Override
     public boolean hasMultipleServers(URL url) {
         // TODO 自動生成されたメソッド・スタブ
-        if (url.getPath().replace("/", "").equals("")
+        if ("".equals(url.getPath().replace("/", ""))
             | url.getPath().replace("/", "").toLowerCase().startsWith("index"))
             return true;
         if (url.getPath().replace("/", "").toLowerCase().startsWith("server"))
@@ -47,16 +50,15 @@ public class Minecraftpeservers_Org implements ServerListSite {
                 .html();
             return Arrays.asList(MslServer.makeServerFromString(ip, true));
         }
-        if (url.getPath().replace("/", "").equals("")
+        if ("".equals(url.getPath().replace("/", ""))
             | url.getPath().replace("/", "").toLowerCase().startsWith("index")) {
-            List<MslServer> list = new ArrayList<>();
             Document page = Jsoup.connect(url.toString()).userAgent("Mozilla").get();
             Elements elems = page.select("html > body > #main > div > table > tbody > tr > td > div > p");
-            for (Element e : elems) {
-                String ip = e.html().substring(29);
-                list.add(MslServer.makeServerFromString(ip, true));
-            }
-            return list;
+            return Stream.of(elems)
+                .map(Element::html)
+                .map(a->a.substring(29))
+                .map(ip->MslServer.makeServerFromString(ip, true))
+                .toList();
         }
         return null;
     }

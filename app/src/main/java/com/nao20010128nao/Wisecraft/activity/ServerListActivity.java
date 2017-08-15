@@ -310,7 +310,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             setTaskDescription(
                 new CompatTaskDescription(
                     getResources().getString(R.string.app_name),
-                    BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher),
+                    BitmapFactory.decodeResource(getResources(), R.drawable.wisecraft_icon),
                     ThemePatcher.getMainColor(this)
                 )
             );

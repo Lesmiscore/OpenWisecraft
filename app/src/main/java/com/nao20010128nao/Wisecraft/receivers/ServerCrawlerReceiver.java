@@ -34,7 +34,7 @@ public class ServerCrawlerReceiver extends BroadcastReceiver {
             public void onPingArrives(ServerStatus stat) {
                 if (entry.getNotifyOnline()) {
                     NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-                    builder.setSmallIcon(R.drawable.ic_launcher);
+                    builder.setSmallIcon(R.drawable.wisecraft_icon);
                     builder.setColor(ContextCompat.getColor(context, R.color.mainColor));
                     builder.setContentTitle(server.toString());
                     builder.setContentText(context.getResources().getString(R.string.crawlerServerOnline));
@@ -46,7 +46,7 @@ public class ServerCrawlerReceiver extends BroadcastReceiver {
             public void onPingFailed(Server server) {
                 if (entry.getNotifyOffline()) {
                     NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-                    builder.setSmallIcon(R.drawable.ic_launcher);
+                    builder.setSmallIcon(R.drawable.wisecraft_icon);
                     builder.setColor(ContextCompat.getColor(context, R.color.mainColor));
                     builder.setContentTitle(server.toString());
                     builder.setContentText(context.getResources().getString(R.string.crawlerServerOffline));

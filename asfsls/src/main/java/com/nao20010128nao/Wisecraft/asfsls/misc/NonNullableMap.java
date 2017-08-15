@@ -23,8 +23,6 @@ public class NonNullableMap<K> extends HashMap<K, Boolean> {
     @Override
     public Boolean get(Object key) {
         Boolean b = super.get(key);
-        if (b == null)
-            return false;
-        return b;
+        return b == null ? Boolean.valueOf(false) : b;
     }
 }

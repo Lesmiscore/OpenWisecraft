@@ -39,7 +39,7 @@
         <com.nao20010128nao.Wisecraft.misc.view.ExtendedImageView
                 android:layout_height="100dp"
                 android:layout_width="100dp"
-                android:src="@drawable/ic_launcher"
+                android:src="@drawable/wisecraft_icon"
                 android:visibility="gone"/>
 
     </LinearLayout>

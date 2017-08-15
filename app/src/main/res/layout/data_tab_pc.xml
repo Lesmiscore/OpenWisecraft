@@ -15,7 +15,7 @@
         <com.nao20010128nao.Wisecraft.misc.view.ExtendedImageView
                 android:layout_height="64dp"
                 android:layout_width="64dp"
-                android:src="@drawable/ic_launcher"
+                android:src="@drawable/wisecraft_icon"
                 android:id="@+id/serverIcon"/>
 
         <TextView

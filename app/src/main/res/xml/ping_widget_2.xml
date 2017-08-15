@@ -4,7 +4,7 @@
         android:initialLayout="@layout/ping_widget_init"
         android:minHeight="@dimen/widget_1cell"
         android:minWidth="@dimen/widget_4cell"
-        android:previewImage="@drawable/ic_launcher"
+        android:previewImage="@drawable/wisecraft_icon"
         android:updatePeriodMillis="100000"
         android:configure="com.nao20010128nao.Wisecraft.widget.WidgetServerSelectActivity$Type2">
 </appwidget-provider>

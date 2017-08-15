@@ -15,7 +15,7 @@
         <ImageView
                 android:layout_height="50dp"
                 android:layout_width="80dp"
-                android:src="@drawable/ic_launcher"
+                android:src="@drawable/wisecraft_icon"
                 android:scaleType="center"
                 android:id="@+id/configure"/>
 

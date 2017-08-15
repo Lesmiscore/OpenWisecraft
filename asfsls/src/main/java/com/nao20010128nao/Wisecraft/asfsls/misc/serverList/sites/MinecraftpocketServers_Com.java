@@ -1,5 +1,8 @@
 package com.nao20010128nao.Wisecraft.asfsls.misc.serverList.sites;
 
+import com.annimon.stream.Stream;
+import com.nao20010128nao.Wisecraft.asfsls.misc.serverList.MslServer;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -23,7 +26,7 @@ public class MinecraftpocketServers_Com implements ServerListSite {
     @Override
     public boolean matches(URL url) {
         // TODO 自動生成されたメソッド・スタブ
-        return url.getHost().equalsIgnoreCase("minecraftpocket-servers.com");
+        return "minecraftpocket-servers.com".equalsIgnoreCase(url.getHost());
     }
 
     @Override
@@ -47,16 +50,13 @@ public class MinecraftpocketServers_Com implements ServerListSite {
             return Arrays.asList(MslServer.makeServerFromString(elems.get(1).html(), true));
         }
         if (isPathStartsFromServers(url) | url.getPath().replace("/", "").equals("") | !isSingleServer(url.getPath())) {
-            List<MslServer> list = new ArrayList<>();
             Document page = Jsoup.connect(url.toString()).userAgent("Mozilla").get();
             Elements elems = page.select("html > body > div > div > table > tbody > tr > td > strong");
-            for (Element e : elems) {
-                String ip = e.html();
-                if (ip.startsWith("#"))
-                    continue;
-                list.add(MslServer.makeServerFromString(ip, true));
-            }
-            return list;
+            return Stream.of(elems)
+                .map(Element::html)
+                .filterNot(a->a.startsWith("#"))
+                .map(ip->MslServer.makeServerFromString(ip, true))
+                .toList();
         }
         return null;
     }
@@ -71,8 +71,6 @@ public class MinecraftpocketServers_Com implements ServerListSite {
             return false;
         // System.err.println(s[2]);
         String act = s[2];
-        if (act.startsWith("server-s"))
-            return true;
-        return false;
+        return act.startsWith("server-s");
     }
 }
