@@ -55,10 +55,11 @@ abstract class ServerGetActivityImpl extends CompatWebViewActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // require Wisecraft or WRcon(it doesn't!!) to be called from
-        if(getPackageManager().checkSignatures(getCallingPackage(),getPackageName())!= PackageManager.SIGNATURE_MATCH){
+        Log.d("SGA-isolated","Caller: "+getCallingPackage());
+        /*if(getPackageManager().checkSignatures(getCallingPackage(),getPackageName())!= PackageManager.SIGNATURE_MATCH){
             finish();
             return;
-        }
+        }*/
 
         setContentView(R.layout.bottomsheet_base);
         getLayoutInflater().inflate(R.layout.only_toolbar_cood, (ViewGroup) findViewById(R.id.main));
