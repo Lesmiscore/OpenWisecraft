@@ -32,6 +32,7 @@ import java.io.*;
 import java.net.*;
 import java.security.*;
 import java.util.*;
+import java.util.regex.Pattern;
 
 import static com.nao20010128nao.Wisecraft.activity.FragmentSettingsActivityImpl.*;
 
@@ -314,8 +315,6 @@ abstract class FragmentSettingsActivityImpl extends AppCompatActivity implements
 
 
     public static class Features extends SettingsBaseFragment {
-        int which;
-
         @Override
         public void onCreatePreferences(Bundle p1, String p2) {
             addPreferencesFromResource(R.xml.settings_features_compat);
@@ -325,6 +324,14 @@ abstract class FragmentSettingsActivityImpl extends AppCompatActivity implements
         public void onResume() {
             super.onResume();
             getActivity().setTitle(R.string.features);
+            Pattern asfslsPattern=Pattern.compile("com\\.nao20010128nao\\.Wisecraft\\.asfsls(|\\.(debug|test))");
+            findPreference("feature_asfsls").setEnabled(!Utils.checkMatchingPackageExist(getContext(),asfslsPattern));
+            sH("feature_asfsls",(a,b,c)-> startActivity(
+                Intent.createChooser(
+                    new Intent(Intent.ACTION_VIEW).setData(Uri.parse("https://play.google.com/store/apps/details?id=com.nao20010128nao.Wisecraft.asfsls"))
+                    ,"")
+                )
+            );
         }
     }
 
