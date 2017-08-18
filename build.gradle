@@ -76,7 +76,7 @@ allprojects {
 }
 
 subprojects {
-    def slv = '25.3.0'
+    def slv = '26.0.1'
     def fbv = '10.2.6'
     ext {
         supportLibVersion = slv
@@ -86,7 +86,9 @@ subprojects {
     afterEvaluate { project ->
         if (project.hasProperty("android")) {
             android {
-                buildToolsVersion "25.0.3"
+                compileSdkVersion 26
+                buildToolsVersion "26.0.1"
+
                 lintOptions {
                     abortOnError false
                 }
