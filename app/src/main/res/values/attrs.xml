@@ -25,4 +25,10 @@
     <attr name="wcUnselectedTextColor" format="color"/>
     <attr name="wcSelectedTextColor" format="color"/>
     <attr name="wcSgaCheckColor" format="color"/>
+
+    <attr name="wcAdRank" format="enum">
+        <enum name="LEADER" value="0"/>
+        <enum name="SIDE" value="1"/>
+        <enum name="MOB" value="2"/>
+    </attr>
 </resources>
