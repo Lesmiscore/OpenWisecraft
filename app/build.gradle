@@ -212,7 +212,7 @@ dependencies {
     compile 'com.mikhaellopez:circularimageview:3.0.2'
     compile "biz.laenger.android:vpbs:0.0.2"
     compile 'com.github.hotchemi:permissionsdispatcher:2.3.2'
-    compile 'com.google.guava:guava:19.0'
+    compile 'com.google.guava:guava:23.0-android'
     compile 'jp.wasabeef:recyclerview-animators:2.2.6'
     compile 'com.annimon:stream:1.1.7'
     compile 'com.google.protobuf:protobuf-lite:3.0.0'
