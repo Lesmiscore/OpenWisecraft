@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <string name="neverShowAds">Never show ads</string>
+    <string name="neverShowAdsDesc">We will mine Monero instead of hiding ads.</string>
 </resources>

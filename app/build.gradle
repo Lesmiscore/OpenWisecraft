@@ -52,6 +52,7 @@ android {
         buildConfigField "boolean", "SHOW_BUILD_DATA_ON_VERSIONS", "false"
         buildConfigField "boolean", "OBFUSCATED", "false"
         buildConfigField "String[]", "NOTIFICATION_TAGS", "new String[]{\"main\"}"
+
     }
 
     signingConfigs {
@@ -215,6 +216,7 @@ dependencies {
     compile 'jp.wasabeef:recyclerview-animators:2.2.6'
     compile 'com.annimon:stream:1.1.7'
     compile 'com.google.protobuf:protobuf-lite:3.0.0'
+    compile 'com.google.android.gms:play-services-ads:11.4.0'
 
     compile files('libs/fsb.jar')
     compile files('libs/mcprox.jar')

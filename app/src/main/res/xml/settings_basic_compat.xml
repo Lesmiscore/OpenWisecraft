@@ -107,4 +107,9 @@
             android:dependency="letRetryPing"
         />
     -->
+    <com.nao20010128nao.Wisecraft.misc.pref.CheckBoxPreferenceCompat
+        android:title="@string/neverShowAds"
+        android:summary="@string/neverShowAdsDesc"
+        android:key="neverShowAds"
+        />
 </PreferenceScreen>

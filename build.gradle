@@ -76,8 +76,8 @@ allprojects {
 }
 
 subprojects {
-    def slv = '26.0.1'
-    def fbv = '10.2.6'
+    def slv = '26.1.0'
+    def fbv = '11.4.0'
     ext {
         supportLibVersion = slv
         firebaseVersion = fbv
