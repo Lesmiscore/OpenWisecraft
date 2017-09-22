@@ -14,7 +14,8 @@ public abstract class MasterDetailSupportActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_item_list);
+        ViewGroup root=getViewToInflate();
+        getLayoutInflater().inflate(R.layout.activity_item_list,root);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -34,4 +35,8 @@ public abstract class MasterDetailSupportActivity extends AppCompatActivity {
     }
 
     public abstract void setupRecyclerView(@NonNull RecyclerView recyclerView);
+
+    public ViewGroup getViewToInflate(){
+        return findViewById(android.R.id.content);
+    }
 }

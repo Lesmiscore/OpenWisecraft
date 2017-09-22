@@ -452,6 +452,11 @@ abstract class MasterDetailSettingsImpl extends MasterDetailSupportActivity impl
     }
 
     @Override
+    public ViewGroup getViewToInflate() {
+        return getLayoutInflater().inflate(R.layout.fragment_settings_ad_foot,findViewById(android.R.id.content)).findViewById(R.id.masterDetailContent);
+    }
+
+    @Override
     public void excecuteWithGpsPermission(Runnable e) {
         MasterDetailSettingsImplPermissionsDispatcher.excecuteWithGpsPermissionImplWithCheck(this, e);
     }
