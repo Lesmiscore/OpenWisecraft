@@ -51,9 +51,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
+
     compile "com.android.support:multidex:1.0.1"
     compile "com.android.support:appcompat-v7:$supportLibVersion"
     compile "com.android.support:support-v4:$supportLibVersion"
@@ -64,7 +62,6 @@ dependencies {
     compile "com.google.firebase:firebase-config:$firebaseVersion"
     compile "com.google.firebase:firebase-crash:$firebaseVersion"
     compile "com.google.firebase:firebase-messaging:$firebaseVersion"
-    testCompile 'junit:junit:4.12'
 
     compile project(':wisecraft-i18n')
     compile project(':compat')
@@ -74,6 +71,6 @@ dependencies {
 
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'org.jsoup:jsoup:1.9.1'
-    compile 'com.google.guava:guava:19.0'
+    compile 'com.google.guava:guava:23.0-android'
     compile 'com.annimon:stream:1.1.7'
 }

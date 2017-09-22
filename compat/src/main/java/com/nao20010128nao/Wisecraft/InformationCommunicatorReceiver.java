@@ -50,8 +50,7 @@ public class InformationCommunicatorReceiver extends BroadcastReceiver {
 
     public static boolean startDisclosureRequestIfNeeded(Context ctx, DisclosureResult dr) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(ctx);
-        BroadcastReceiver discloreMan = new InformationCommunicatorReceiver(dr) {
-        };
+        BroadcastReceiver discloreMan = new InformationCommunicatorReceiver(dr);
         IntentFilter infi = new IntentFilter();
         infi.addAction(ICR_RESULT_ACTION);
         ctx.registerReceiver(discloreMan, infi);
