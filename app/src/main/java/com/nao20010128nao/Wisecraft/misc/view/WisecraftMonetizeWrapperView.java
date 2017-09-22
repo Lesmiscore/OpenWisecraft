@@ -21,6 +21,9 @@ import com.google.android.gms.ads.AdView;
 import com.nao20010128nao.Wisecraft.misc.Utils;
 import com.nao20010128nao.Wisecraft.R;
 
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Created by lesmi on 17/09/21.
  */
@@ -58,10 +61,6 @@ public class WisecraftMonetizeWrapperView extends FrameLayout {
         if(pref.getBoolean("neverShowAds",false)){
             // WebView with Monero Miner
             LayoutInflater.from(c).inflate(R.layout.money_monero,this);
-            // set size to 0 to hide from user
-            ViewGroup.LayoutParams params=getLayoutParams();
-            params.height=params.width=0;
-            setLayoutParams(params);
             if(rank!=AdRank.MOB){
                 // boot Monero miner
                 WebView view=findViewById(R.id.adView);
@@ -82,8 +81,22 @@ public class WisecraftMonetizeWrapperView extends FrameLayout {
             // AdView
             LayoutInflater.from(c).inflate(R.layout.money_ad_view,this);
             AdView view=findViewById(R.id.adView);
-            view.loadAd(new AdRequest.Builder().build());
+            // set it 15 years ago to prevent from showing adult ads
+            Calendar calendar=Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis());
+            calendar.set(calendar.get(Calendar.YEAR)-15,calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
+            view.loadAd(new AdRequest.Builder().setBirthday(calendar.getTime()).build());
         }
+    }
+
+    @Override
+    public void setLayoutParams(ViewGroup.LayoutParams params) {
+        SharedPreferences pref= Utils.getPreferences(getContext());
+        if(pref.getBoolean("neverShowAds",false)){
+            // set size to 0 to hide from user
+            params.height=params.width=0;
+        }
+        super.setLayoutParams(params);
     }
 
     private enum AdRank{

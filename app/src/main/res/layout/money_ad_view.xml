@@ -7,6 +7,6 @@
     android:layout_height="wrap_content"
     android:layout_centerHorizontal="true"
     android:layout_alignParentBottom="true"
+    android:layout_gravity="center"
     ads:adSize="BANNER"
-    ads:adUnitId="@string/admobUnitId">
-</com.google.android.gms.ads.AdView>
+    ads:adUnitId="@string/admobUnitId"/>
