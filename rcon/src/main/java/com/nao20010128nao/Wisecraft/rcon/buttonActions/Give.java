@@ -62,15 +62,15 @@ public class Give extends NameSelectAction {
 
     public View inflateDialogView() {
         View v = ((LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.give_screen, null, false);
-        changeAmount = (Button) v.findViewById(R.id.changeAmount);
-        changePlayer = (Button) v.findViewById(R.id.changePlayer);
-        changeItem = (Button) v.findViewById(R.id.changeItem);
+        changeAmount = v.findViewById(R.id.changeAmount);
+        changePlayer = v.findViewById(R.id.changePlayer);
+        changeItem = v.findViewById(R.id.changeItem);
 
-        executeButton = (Button) v.findViewById(R.id.execute);
+        executeButton = v.findViewById(R.id.execute);
 
-        amountView = (TextView) v.findViewById(R.id.amountView);
-        playerView = (TextView) v.findViewById(R.id.playerName);
-        itemView = (TextView) v.findViewById(R.id.itemId);
+        amountView = v.findViewById(R.id.amountView);
+        playerView = v.findViewById(R.id.playerName);
+        itemView = v.findViewById(R.id.itemId);
 
         changeAmount.setOnClickListener(v14 -> {
             hint = getResString(R.string.giveAmountHint);

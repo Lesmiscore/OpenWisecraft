@@ -47,7 +47,7 @@ abstract class ServerListActivityBase4 extends ServerListActivityBase5 {
 
             drawer = bld.build();
         }
-        rv = (RecyclerView) findViewById(android.R.id.list);
+        rv = findViewById(android.R.id.list);
         switch (pref.getInt("serverListStyle2", 0)) {
             case 0:
             default:
@@ -63,7 +63,7 @@ abstract class ServerListActivityBase4 extends ServerListActivityBase5 {
                 break;
         }
 
-        coordinator = (CoordinatorLayout) findViewById(R.id.coordinator);
+        coordinator = findViewById(R.id.coordinator);
     }
 
     @Override

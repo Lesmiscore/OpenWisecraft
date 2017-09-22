@@ -22,8 +22,8 @@ public class BottomSheetListDialog extends ModifiedBottomSheetDialog {
 
     private void init(Context context) {
         setContentView(R.layout.bottom_sheet_list_dialog);
-        rv = (RecyclerView) findViewById(R.id.list);
-        title = (TextView) findViewById(R.id.title);
+        rv = findViewById(R.id.list);
+        title = findViewById(R.id.title);
     }
 
     @Override

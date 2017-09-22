@@ -62,13 +62,13 @@ abstract class ServerGetActivityImpl extends CompatWebViewActivity {
         }*/
 
         setContentView(R.layout.bottomsheet_base);
-        getLayoutInflater().inflate(R.layout.only_toolbar_cood, (ViewGroup) findViewById(R.id.main));
+        getLayoutInflater().inflate(R.layout.only_toolbar_cood, findViewById(R.id.main));
         getLayoutInflater().inflate(R.layout.webview_activity_compat, findViewById(R.id.toolbarCoordinator).findViewById(R.id.frame));
 
-        getLayoutInflater().inflate(R.layout.yes_no, (ViewGroup) findViewById(R.id.bottomSheet));
+        getLayoutInflater().inflate(R.layout.yes_no, findViewById(R.id.bottomSheet));
         getLayoutInflater().inflate(R.layout.recycler_view_content, findViewById(R.id.ynDecor).findViewById(R.id.frame));
         scanWebView();
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        setSupportActionBar(findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         findViewById(R.id.bottomSheet).setVisibility(View.GONE);
@@ -97,7 +97,7 @@ abstract class ServerGetActivityImpl extends CompatWebViewActivity {
             }
         });
 
-        loadedServerListRv = (RecyclerView) findViewById(android.R.id.list);
+        loadedServerListRv = findViewById(android.R.id.list);
         loadedServerListRv.setLayoutManager(new LinearLayoutManager(this));
         loadedServerListRv.setAdapter(adapter = new Adapter());
 
@@ -187,7 +187,7 @@ abstract class ServerGetActivityImpl extends CompatWebViewActivity {
                             final ModifiedBottomSheetDialog mbsd = new ModifiedBottomSheetDialog(ServerGetActivityImpl.this);
                             final Adapter adapter = new Adapter();
                             mbsd.setContentView(R.layout.server_get_recycler);
-                            final RecyclerView loadedServerListRv = (RecyclerView) mbsd.findViewById(R.id.servers);
+                            final RecyclerView loadedServerListRv = mbsd.findViewById(R.id.servers);
                             loadedServerListRv.setLayoutManager(new LinearLayoutManager(ServerGetActivityImpl.this));
                             loadedServerListRv.setAdapter(adapter);
                             adapter.addAll(serv);

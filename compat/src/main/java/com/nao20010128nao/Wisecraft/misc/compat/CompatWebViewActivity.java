@@ -15,7 +15,7 @@ public abstract class CompatWebViewActivity extends AppCompatActivity {
     }
 
     protected void scanWebView() {
-        webView = (WebView) findViewById(R.id.webview);
+        webView = findViewById(R.id.webview);
         webView.setWebViewClient(new WebViewClient() {
         });
         webView.getSettings().setJavaScriptEnabled(true);

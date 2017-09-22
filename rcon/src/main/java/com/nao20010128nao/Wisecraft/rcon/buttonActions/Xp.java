@@ -58,13 +58,13 @@ public class Xp extends NameSelectAction {
 
     public View inflateDialogView() {
         View v = ((LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.xp_screen, null, false);
-        changeAmount = (Button) v.findViewById(R.id.changeAmount);
-        changePlayer = (Button) v.findViewById(R.id.changePlayer);
+        changeAmount = v.findViewById(R.id.changeAmount);
+        changePlayer = v.findViewById(R.id.changePlayer);
 
-        executeButton = (Button) v.findViewById(R.id.execute);
+        executeButton = v.findViewById(R.id.execute);
 
-        amountView = (TextView) v.findViewById(R.id.amountView);
-        playerView = (TextView) v.findViewById(R.id.playerName);
+        amountView = v.findViewById(R.id.amountView);
+        playerView = v.findViewById(R.id.playerName);
 
         changeAmount.setOnClickListener(v13 -> {
             hint = getResString(R.string.giveAmountHint);

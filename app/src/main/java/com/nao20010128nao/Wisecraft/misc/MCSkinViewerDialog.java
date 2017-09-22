@@ -44,9 +44,9 @@ public class MCSkinViewerDialog extends AppCompatDialog {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.skin_viewer_dialog);
-        progress = (FrameLayout) findViewById(R.id.loading);
-        skinViewer = (WebView) findViewById(R.id.skinViewingWebView);
-        webglError = (LinearLayout) findViewById(R.id.webglError);
+        progress = findViewById(R.id.loading);
+        skinViewer = findViewById(R.id.skinViewingWebView);
+        webglError = findViewById(R.id.webglError);
 
         try {
             (server = new SkinViewerHttpServer()).start(5000, true);
@@ -155,6 +155,6 @@ public class MCSkinViewerDialog extends AppCompatDialog {
     }
 
     Response.IStatus cast(Response.Status stat) {
-        return (Response.IStatus) ((Object) stat);
+        return (Response.IStatus) stat;
     }
 }

@@ -35,12 +35,12 @@ public class FileSelectFragment extends BaseFragment<AppCompatActivity> {
     @Override
     public void onResume() {
         super.onResume();
-        select = (Button) getView().findViewById(R.id.selectFile);
-        fileLocal = (ImageButton) getView().findViewById(R.id.openLocalChooser);
-        fileProvided = (ImageButton) getView().findViewById(R.id.openProvidedChooser);
-        path = (EditText) getView().findViewById(R.id.filePath);
-        pathForm = (LinearLayout) getView().findViewById(R.id.pathForm);
-        modeForm = (LinearLayout) getView().findViewById(R.id.modeForm);
+        select = getView().findViewById(R.id.selectFile);
+        fileLocal = getView().findViewById(R.id.openLocalChooser);
+        fileProvided = getView().findViewById(R.id.openProvidedChooser);
+        path = getView().findViewById(R.id.filePath);
+        pathForm = getView().findViewById(R.id.pathForm);
+        modeForm = getView().findViewById(R.id.modeForm);
 
         select.setOnClickListener(v -> {
             pathForm.setVisibility(View.GONE);
@@ -100,10 +100,10 @@ public class FileSelectFragment extends BaseFragment<AppCompatActivity> {
             switch (resultCode) {
                 case Activity.RESULT_OK:
                     if (results.get(requestCode) instanceof ServerListActivity.FileChooserHandler) {
-                        ((ServerListActivity.FileChooserHandler) results.get(requestCode))
+                        results.get(requestCode)
                             .onSelected((File) (lastResult = new File(data.getStringExtra("path"))));
                     } else if (results.get(requestCode) instanceof ServerListActivity.UriFileChooserResult) {
-                        ((ServerListActivity.UriFileChooserResult) results.get(requestCode))
+                        results.get(requestCode)
                             .onSelected((Uri) (lastResult = data.getData()));
                     }
                     break;

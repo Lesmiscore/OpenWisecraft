@@ -32,10 +32,10 @@ abstract class MCPlayerInfoDialogImpl extends AppCompatDialog {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.minecraft_pc_user_info);
-        face = (ImageView) findViewById(R.id.face);
-        username = (TextView) findViewById(R.id.username);
-        uuid = (TextView) findViewById(R.id.uuid);
-        reputation = (TextView) findViewById(R.id.mcbansReputation);
+        face = findViewById(R.id.face);
+        username = findViewById(R.id.username);
+        uuid = findViewById(R.id.uuid);
+        reputation = findViewById(R.id.mcbansReputation);
         username.setText(player);
         new Thread() {
             String uuidText = null;

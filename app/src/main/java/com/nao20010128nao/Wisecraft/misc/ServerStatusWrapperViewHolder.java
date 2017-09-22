@@ -115,12 +115,12 @@ public class ServerStatusWrapperViewHolder extends FindableViewHolder implements
     }
 
     public ServerStatusWrapperViewHolder hideServerTitle() {
-        ((TextView) preload.getView(R.id.serverTitle)).setVisibility(View.GONE);
+        preload.getView(R.id.serverTitle).setVisibility(View.GONE);
         return this;
     }
 
     public ServerStatusWrapperViewHolder showServerTitle() {
-        ((TextView) preload.getView(R.id.serverTitle)).setVisibility(View.VISIBLE);
+        preload.getView(R.id.serverTitle).setVisibility(View.VISIBLE);
         return this;
     }
 

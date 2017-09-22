@@ -29,7 +29,7 @@ public class Tp extends BaseAction {
     public View inflateDialogView() {
         View v = ((LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.command_continue, null, false);
         ((TextView) v.findViewById(R.id.commandStarts)).setText("/tp ");
-        cmd = (EditText) v.findViewById(R.id.command);
+        cmd = v.findViewById(R.id.command);
         return v;
     }
 

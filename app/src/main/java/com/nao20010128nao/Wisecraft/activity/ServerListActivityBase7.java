@@ -141,7 +141,7 @@ public abstract class ServerListActivityBase7 extends ServerListActivityBaseFiel
                 p1.servers.setVisibility(View.VISIBLE);
                 for (Server serv : domains.get(listedDomains.get(p2))) {
                     View entryView = getLayoutInflater().inflate(R.layout.simple_list_item_1, p1.servers, false);
-                    TextView tv = (TextView) entryView.findViewById(android.R.id.text1);
+                    TextView tv = entryView.findViewById(android.R.id.text1);
                     tv.setText(serv.resolveVisibleTitle());
                     p1.servers.addView(entryView);
                 }

@@ -28,9 +28,9 @@ public class ScrollingActivityDelegate {
 
     protected void onCreate(Bundle savedInstanceState) {
         delegate.setContentView(cb.getLayoutResId());
-        Toolbar toolbar = (Toolbar) delegate.findViewById(R.id.toolbar);
+        Toolbar toolbar = delegate.findViewById(R.id.toolbar);
         delegate.setSupportActionBar(toolbar);
-        content = (FrameLayout) delegate.findViewById(R.id.content);
+        content = delegate.findViewById(R.id.content);
         View nativeContent = delegate.findViewById(android.R.id.content);
         content.setId(android.R.id.content);
         nativeContent.setId(View.NO_ID);

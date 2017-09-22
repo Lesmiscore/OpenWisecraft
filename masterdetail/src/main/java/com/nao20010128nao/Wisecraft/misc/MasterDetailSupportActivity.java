@@ -17,13 +17,13 @@ public abstract class MasterDetailSupportActivity extends AppCompatActivity {
         ViewGroup root=getViewToInflate();
         getLayoutInflater().inflate(R.layout.activity_item_list,root);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
-        View recyclerView = findViewById(R.id.item_list);
+        RecyclerView recyclerView = findViewById(R.id.item_list);
         assert recyclerView != null;
-        setupRecyclerView((RecyclerView) recyclerView);
+        setupRecyclerView(recyclerView);
 
         if (findViewById(R.id.item_detail_container) != null) {
             mTwoPane = true;

@@ -58,13 +58,13 @@ public class Tell extends NameSelectAction {
 
     public View inflateDialogView() {
         View v = ((LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.tell_screen, null, false);
-        changePlayer = (Button) v.findViewById(R.id.changePlayer);
-        changeItem = (Button) v.findViewById(R.id.changeItem);
+        changePlayer = v.findViewById(R.id.changePlayer);
+        changeItem = v.findViewById(R.id.changeItem);
 
-        executeButton = (Button) v.findViewById(R.id.execute);
+        executeButton = v.findViewById(R.id.execute);
 
-        playerView = (TextView) v.findViewById(R.id.playerName);
-        itemView = (TextView) v.findViewById(R.id.itemId);
+        playerView = v.findViewById(R.id.playerName);
+        itemView = v.findViewById(R.id.itemId);
 
         changePlayer.setOnClickListener(v13 -> {
             hint = getResString(R.string.givePlayerHint);

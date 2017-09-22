@@ -126,7 +126,7 @@ public class ModifiedBottomSheetDialog extends AppCompatDialog {
         if (layoutResId != 0 && view == null) {
             view = getLayoutInflater().inflate(layoutResId, coordinator, false);
         }
-        FrameLayout bottomSheet = (FrameLayout) coordinator.findViewById(R.id.design_bottom_sheet);
+        FrameLayout bottomSheet = coordinator.findViewById(R.id.design_bottom_sheet);
         mBehavior = BottomSheetBehavior.from(bottomSheet);
         mBehavior.setBottomSheetCallback(mBottomSheetCallback);
         mBehavior.setHideable(mCancelable);

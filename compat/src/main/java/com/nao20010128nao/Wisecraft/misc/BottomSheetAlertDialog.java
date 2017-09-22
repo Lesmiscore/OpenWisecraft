@@ -1319,7 +1319,7 @@ public class BottomSheetAlertDialog extends ModifiedBottomSheetDialog implements
 
             // Install custom content before setting up the title or buttons so
             // that we can handle panel overrides.
-            final ViewGroup customPanel = (ViewGroup) parentPanel.findViewById(R.id.customPanel);
+            final ViewGroup customPanel = parentPanel.findViewById(R.id.customPanel);
             setupCustomContent(customPanel);
 
             final View customTopPanel = customPanel.findViewById(R.id.topPanel);
@@ -1464,7 +1464,7 @@ public class BottomSheetAlertDialog extends ModifiedBottomSheetDialog implements
             }
 
             if (hasCustomView) {
-                final FrameLayout custom = (FrameLayout) mWindow.findViewById(R.id.custom);
+                final FrameLayout custom = mWindow.findViewById(R.id.custom);
                 custom.addView(customView, new LayoutParams(MATCH_PARENT, MATCH_PARENT));
 
                 if (mViewSpacingSpecified) {
@@ -1492,12 +1492,12 @@ public class BottomSheetAlertDialog extends ModifiedBottomSheetDialog implements
                 View titleTemplate = mWindow.findViewById(R.id.title_template);
                 titleTemplate.setVisibility(View.GONE);
             } else {
-                mIconView = (ImageView) mWindow.findViewById(android.R.id.icon);
+                mIconView = mWindow.findViewById(android.R.id.icon);
 
                 final boolean hasTextTitle = !TextUtils.isEmpty(mTitle);
                 if (hasTextTitle) {
                     // Display the title if a title is supplied, else hide it.
-                    mTitleView = (TextView) mWindow.findViewById(R.id.alertTitle);
+                    mTitleView = mWindow.findViewById(R.id.alertTitle);
                     mTitleView.setText(mTitle);
 
                     // Do this last so that if the user has supplied any icons we
@@ -1527,12 +1527,12 @@ public class BottomSheetAlertDialog extends ModifiedBottomSheetDialog implements
         }
 
         private void setupContent(ViewGroup contentPanel) {
-            mScrollView = (NestedScrollView) mWindow.findViewById(R.id.scrollView);
+            mScrollView = mWindow.findViewById(R.id.scrollView);
             mScrollView.setFocusable(false);
             mScrollView.setNestedScrollingEnabled(false);
 
             // Special case for users that only want to display a String
-            mMessageView = (TextView) contentPanel.findViewById(android.R.id.message);
+            mMessageView = contentPanel.findViewById(android.R.id.message);
             if (mMessageView == null) {
                 return;
             }
@@ -1571,7 +1571,7 @@ public class BottomSheetAlertDialog extends ModifiedBottomSheetDialog implements
             int BIT_BUTTON_NEGATIVE = 2;
             int BIT_BUTTON_NEUTRAL = 4;
             int whichButtons = 0;
-            mButtonPositive = (Button) buttonPanel.findViewById(android.R.id.button1);
+            mButtonPositive = buttonPanel.findViewById(android.R.id.button1);
             mButtonPositive.setOnClickListener(mButtonHandler);
 
             if (TextUtils.isEmpty(mButtonPositiveText)) {
@@ -1582,7 +1582,7 @@ public class BottomSheetAlertDialog extends ModifiedBottomSheetDialog implements
                 whichButtons = whichButtons | BIT_BUTTON_POSITIVE;
             }
 
-            mButtonNegative = (Button) buttonPanel.findViewById(android.R.id.button2);
+            mButtonNegative = buttonPanel.findViewById(android.R.id.button2);
             mButtonNegative.setOnClickListener(mButtonHandler);
 
             if (TextUtils.isEmpty(mButtonNegativeText)) {
@@ -1594,7 +1594,7 @@ public class BottomSheetAlertDialog extends ModifiedBottomSheetDialog implements
                 whichButtons = whichButtons | BIT_BUTTON_NEGATIVE;
             }
 
-            mButtonNeutral = (Button) buttonPanel.findViewById(android.R.id.button3);
+            mButtonNeutral = buttonPanel.findViewById(android.R.id.button3);
             mButtonNeutral.setOnClickListener(mButtonHandler);
 
             if (TextUtils.isEmpty(mButtonNeutralText)) {
@@ -1765,7 +1765,7 @@ public class BottomSheetAlertDialog extends ModifiedBottomSheetDialog implements
 
                             @Override
                             public void bindView(View view, Context context, Cursor cursor) {
-                                CheckedTextView text = (CheckedTextView) view.findViewById(
+                                CheckedTextView text = view.findViewById(
                                         android.R.id.text1);
                                 text.setText(cursor.getString(mLabelIndex));
                                 listView.setItemChecked(cursor.getPosition(),

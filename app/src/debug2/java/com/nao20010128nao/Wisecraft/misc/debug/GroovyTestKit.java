@@ -40,9 +40,9 @@ public class GroovyTestKit extends AppCompatActivity{
         binding.pinned.put("application",TheApplication.instance);
         binding.pinned.put("serverListActivity", ServerListActivity.instance.get());
 
-        console= (LinearLayout) findViewById(R.id.console);
-        script= (EditText) findViewById(R.id.script);
-        enter= (Button) findViewById(R.id.enter);
+        console= findViewById(R.id.console);
+        script= findViewById(R.id.script);
+        enter= findViewById(R.id.enter);
 
         enter.setOnClickListener(v->{
             String scpt;

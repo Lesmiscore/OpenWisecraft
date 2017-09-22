@@ -26,7 +26,7 @@ public class ServerCrawlerConfigActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_server_crawler_config);
         scm = new ServerCrawlerManager(this);
-        rv = (RecyclerView) findViewById(R.id.list);
+        rv = findViewById(R.id.list);
         rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rv.setAdapter(new LocalAdapter());
     }
@@ -67,13 +67,13 @@ public class ServerCrawlerConfigActivity extends AppCompatActivity {
 
         final ReferencedObject<Protobufs.ServerCrawlerEntry.Builder> editableEntry = new ReferencedObject<>();
 
-        final EditText name = (EditText) dialog.findViewById(R.id.name);
-        final Button date = (Button) dialog.findViewById(R.id.startDate);
-        final Button time = (Button) dialog.findViewById(R.id.startTime);
-        final EditText interval = (EditText) dialog.findViewById(R.id.intervalText);
-        final Switch enabledState = (Switch) dialog.findViewById(R.id.enabledSwitch);
-        final Switch online = (Switch) dialog.findViewById(R.id.online);
-        final Switch offline = (Switch) dialog.findViewById(R.id.offline);
+        final EditText name = dialog.findViewById(R.id.name);
+        final Button date = dialog.findViewById(R.id.startDate);
+        final Button time = dialog.findViewById(R.id.startTime);
+        final EditText interval = dialog.findViewById(R.id.intervalText);
+        final Switch enabledState = dialog.findViewById(R.id.enabledSwitch);
+        final Switch online = dialog.findViewById(R.id.online);
+        final Switch offline = dialog.findViewById(R.id.offline);
 
         dialog.setOnShowListener(d -> {
             Button btn = dialog.getButton(AlertDialog.BUTTON_POSITIVE);

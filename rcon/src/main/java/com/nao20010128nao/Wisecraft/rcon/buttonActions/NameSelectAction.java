@@ -31,9 +31,9 @@ public abstract class NameSelectAction extends BaseAction {
 
     private View inflatePlayersView() {
         View v = ((LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.rcon_players_base, null, false);
-        online = (ListView) v.findViewById(R.id.players);
-        name = (EditText) v.findViewById(R.id.playerName);
-        submit = (Button) v.findViewById(R.id.ok);
+        online = v.findViewById(R.id.players);
+        name = v.findViewById(R.id.playerName);
+        submit = v.findViewById(R.id.ok);
         final ArrayAdapter<String> aa = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         online.setAdapter(aa);
         online.setOnItemClickListener((a, v1, o, i) -> name.setText(aa.getItem(o).toString()));

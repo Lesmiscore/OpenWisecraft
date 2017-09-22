@@ -36,9 +36,9 @@ abstract class ProxyActivityImpl extends AppCompatActivity {
         }
 
         setContentView(R.layout.proxy_screen);
-        serverIp = (TextView) findViewById(R.id.serverIp);
-        serverCon = (TextView) findViewById(R.id.serverCon);
-        stop = (Button) findViewById(R.id.stop);
+        serverIp = findViewById(R.id.serverIp);
+        serverCon = findViewById(R.id.serverCon);
+        stop = findViewById(R.id.stop);
 
         stop.setOnClickListener(a -> {
             if (cont != null) cont.stopService();

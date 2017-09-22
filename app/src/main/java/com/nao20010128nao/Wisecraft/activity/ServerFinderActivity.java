@@ -42,7 +42,7 @@ abstract class ServerFinderActivityImpl extends AppCompatActivity implements Ser
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recycler_view_content);
         sl = new ServerList(this);
-        rv = (RecyclerView) findViewById(android.R.id.list);
+        rv = findViewById(android.R.id.list);
         switch (pref.getInt("serverListStyle2", 0)) {
             case 0:
             default:

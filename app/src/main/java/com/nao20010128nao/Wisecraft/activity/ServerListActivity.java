@@ -73,7 +73,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
         setupSideMenu();
 
-        srl = (SwipeRefreshLayout) findViewById(R.id.swipelayout);
+        srl = findViewById(R.id.swipelayout);
         //srl.setColorSchemeResources(R.color.upd_1, R.color.upd_2, R.color.upd_3, R.color.upd_4);
         srl.setColorSchemeColors(Utils.getHueRotatedColors());
         srl.setOnRefreshListener(() -> appMenu.findByA(R.string.update_all).getC().process((ServerListActivity) this));
@@ -389,13 +389,13 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
                 })
                 .show();
-            peFrame.set((LinearLayout) dialog.findViewById(R.id.pe));
-            pcFrame.set((LinearLayout) dialog.findViewById(R.id.pc));
-            pe_ip.set((EditText) dialog.findViewById(R.id.pe).findViewById(R.id.serverIp));
-            pe_port.set((EditText) dialog.findViewById(R.id.pe).findViewById(R.id.serverPort));
-            pc_ip.set((EditText) dialog.findViewById(R.id.pc).findViewById(R.id.serverIp));
-            split.set((CheckBox) dialog.findViewById(R.id.switchFirm));
-            serverName.set((EditText) dialog.findViewById(R.id.serverName));
+            peFrame.set(dialog.findViewById(R.id.pe));
+            pcFrame.set(dialog.findViewById(R.id.pc));
+            pe_ip.set(dialog.findViewById(R.id.pe).findViewById(R.id.serverIp));
+            pe_port.set(dialog.findViewById(R.id.pe).findViewById(R.id.serverPort));
+            pc_ip.set(dialog.findViewById(R.id.pc).findViewById(R.id.serverIp));
+            split.set(dialog.findViewById(R.id.switchFirm));
+            serverName.set(dialog.findViewById(R.id.serverName));
 
             pe_ip.checked().setText("localhost");
             pe_port.checked().setText("19132");
@@ -473,7 +473,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                 .setView(R.layout.server_list_imp_exp)
                 .setPositiveButton(android.R.string.ok, (di, w) -> ServerListActivityImplPermissionsDispatcher.exportWisecraftListWithCheck(a, et.checked().getText().toString()))
                 .show();
-            et.set((EditText) dialog.findViewById(R.id.filePath));
+            et.set(dialog.findViewById(R.id.filePath));
             et.checked().setText(new File(wisecraftDir, "servers.json").toString());
             dialog.findViewById(R.id.selectFile).setOnClickListener(v -> {
                 File f = new File(et.checked().getText().toString());
@@ -495,7 +495,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                 .setView(R.layout.server_list_imp_exp)
                 .setPositiveButton(android.R.string.ok, (di, w) -> ServerListActivityImplPermissionsDispatcher.importWisecraftListWithCheck(a, et.get().getText().toString()))
                 .show();
-            et.set((EditText) dialog.findViewById(R.id.filePath));
+            et.set(dialog.findViewById(R.id.filePath));
             et.checked().setText(new File(wisecraftDir, "servers.json").toString());
             dialog.findViewById(R.id.selectFile).setOnClickListener(v -> {
                 File f = new File(et.checked().getText().toString());
@@ -544,7 +544,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
         }
         appMenu.add(new Sextet<>(R.string.loadPing, R.drawable.ic_open_in_new_black_48dp, a -> {
             View dialogView = getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
-            final EditText et = (EditText) dialogView.findViewById(R.id.filePath);
+            final EditText et = dialogView.findViewById(R.id.filePath);
             et.setText(new File(wisecraftDir, "/pingresult.wisecraft-ping").toString());
             dialogView.findViewById(R.id.selectFile).setOnClickListener(v -> {
                 File f = new File(et.getText().toString());
@@ -1081,13 +1081,13 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                 executes.add(2, new Duo<>(() -> {
                     final Server data = getItem(p3);
                     View dialog = sla.getLayoutInflater().inflate(R.layout.server_add_dialog_new, null);
-                    final LinearLayout peFrame = (LinearLayout) dialog.findViewById(R.id.pe);
-                    final LinearLayout pcFrame = (LinearLayout) dialog.findViewById(R.id.pc);
-                    final EditText pe_ip = (EditText) dialog.findViewById(R.id.pe).findViewById(R.id.serverIp);
-                    final EditText pe_port = (EditText) dialog.findViewById(R.id.pe).findViewById(R.id.serverPort);
-                    final EditText pc_ip = (EditText) dialog.findViewById(R.id.pc).findViewById(R.id.serverIp);
-                    final CheckBox split = (CheckBox) dialog.findViewById(R.id.switchFirm);
-                    final EditText serverName = (EditText) dialog.findViewById(R.id.serverName);
+                    final LinearLayout peFrame = dialog.findViewById(R.id.pe);
+                    final LinearLayout pcFrame = dialog.findViewById(R.id.pc);
+                    final EditText pe_ip = dialog.findViewById(R.id.pe).findViewById(R.id.serverIp);
+                    final EditText pe_port = dialog.findViewById(R.id.pe).findViewById(R.id.serverPort);
+                    final EditText pc_ip = dialog.findViewById(R.id.pc).findViewById(R.id.serverIp);
+                    final CheckBox split = dialog.findViewById(R.id.switchFirm);
+                    final EditText serverName = dialog.findViewById(R.id.serverName);
 
                     if (data.mode == Protobufs.Server.Mode.PC) {
                         if (data.port == 25565) {
@@ -1187,7 +1187,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                 executes.add(9, new Duo<>(() -> {
                     if (!getItem(p3).isOnline()) return;
                     View dialogView_ = sla.getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
-                    final EditText et_ = (EditText) dialogView_.findViewById(R.id.filePath);
+                    final EditText et_ = dialogView_.findViewById(R.id.filePath);
                     et_.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/pingresult.wisecraft-ping").toString());
                     dialogView_.findViewById(R.id.selectFile).setOnClickListener(v -> {
                         File f = new File(et_.getText().toString());

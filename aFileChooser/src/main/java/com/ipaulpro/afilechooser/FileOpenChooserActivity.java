@@ -38,7 +38,7 @@ public class FileOpenChooserActivity extends FileChooserActivity
 		switch(item.getItemId()){
 			case 5:
 				View v=getLayoutInflater().inflate(R.layout.add_file,null);
-				final EditText et=(EditText)v.findViewById(R.id.filename);
+				final EditText et= v.findViewById(R.id.filename);
 				new AlertDialog.Builder(this,getPresenter().getDialogStyleId())
 					.setView(v)
 					.setTitle(R.string.add_file)
@@ -76,7 +76,7 @@ public class FileOpenChooserActivity extends FileChooserActivity
 				break;
 			case 6:
 				View v_=getLayoutInflater().inflate(R.layout.add_file,null);
-				final EditText et_=(EditText)v_.findViewById(R.id.filename);
+				final EditText et_= v_.findViewById(R.id.filename);
 				new AlertDialog.Builder(this,getPresenter().getDialogStyleId())
 					.setView(v_)
 					.setTitle(R.string.add_dir)

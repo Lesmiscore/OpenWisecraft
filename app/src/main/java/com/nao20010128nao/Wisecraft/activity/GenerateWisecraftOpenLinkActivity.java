@@ -29,15 +29,15 @@ public class GenerateWisecraftOpenLinkActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_wisecraft_open_link);
 
-        ip = (EditText) findViewById(R.id.ip);
-        port = (EditText) findViewById(R.id.port);
+        ip = findViewById(R.id.ip);
+        port = findViewById(R.id.port);
 
-        action = (RadioGroup) findViewById(R.id.action);
-        mode = (RadioGroup) findViewById(R.id.mode);
+        action = findViewById(R.id.action);
+        mode = findViewById(R.id.mode);
 
-        generate = (Button) findViewById(R.id.generate);
-        copy = (Button) findViewById(R.id.copy);
-        result = (TextView) findViewById(R.id.result);
+        generate = findViewById(R.id.generate);
+        copy = findViewById(R.id.copy);
+        result = findViewById(R.id.result);
 
         Intent data = getIntent();
         if (data.hasExtra("ip") & data.hasExtra("port") & data.hasExtra("mode")) {

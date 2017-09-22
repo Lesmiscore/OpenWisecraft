@@ -203,7 +203,7 @@ abstract class FragmentSettingsActivityImpl extends AppCompatActivity implements
         public void onCreatePreferences(Bundle p1, String p2) {
             addPreferencesFromResource(R.xml.settings_basic_compat);
             sH("parallels", (a, b, c) -> PreferenceUtils.showEditTextDialog(getActivity(), findPreference("parallels"), "6", v -> {
-                EditText text = (EditText) v.findViewById(android.R.id.edit);
+                EditText text = v.findViewById(android.R.id.edit);
                 text.setInputType(InputType.TYPE_CLASS_NUMBER |
                     InputType.TYPE_TEXT_VARIATION_NORMAL |
                     InputType.TYPE_NUMBER_FLAG_DECIMAL);
@@ -241,10 +241,10 @@ abstract class FragmentSettingsActivityImpl extends AppCompatActivity implements
                 InputType.TYPE_NUMBER_FLAG_DECIMAL)));
             sH("addLessRows", (a, b, c) -> {
                 View v = getLayoutInflater(null).inflate(R.layout.quick_seekbar, null);
-                final SeekBar seekBar = (SeekBar) v.findViewById(R.id.seekbar);
+                final SeekBar seekBar = v.findViewById(R.id.seekbar);
                 ((TextView) v.findViewById(R.id.max)).setText("5");
                 ((TextView) v.findViewById(R.id.min)).setText("-5");
-                final TextView value = (TextView) v.findViewById(R.id.value);
+                final TextView value = v.findViewById(R.id.value);
                 seekBar.setMax(10);
                 seekBar.setProgress(pref.getInt("addLessRows", 0) + 5);
                 seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -298,7 +298,7 @@ abstract class FragmentSettingsActivityImpl extends AppCompatActivity implements
                     .show();
             });
             sH("retryIteration", (a, b, c) -> PreferenceUtils.showEditTextDialog(getActivity(), findPreference("retryIteration"), "10", v -> {
-                EditText text = (EditText) v.findViewById(android.R.id.edit);
+                EditText text = v.findViewById(android.R.id.edit);
                 text.setInputType(InputType.TYPE_CLASS_NUMBER |
                     InputType.TYPE_TEXT_VARIATION_NORMAL |
                     InputType.TYPE_NUMBER_FLAG_DECIMAL);
@@ -395,7 +395,7 @@ abstract class FragmentSettingsActivityImpl extends AppCompatActivity implements
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View v = super.onCreateView(getActivity().getLayoutInflater(), container, savedInstanceState);
-            miscContent = (LinearLayout) v.findViewById(R.id.misc);
+            miscContent = v.findViewById(R.id.misc);
             if (miscContent != null) onMiscPartAvailable(miscContent);
             return v;
         }
@@ -567,14 +567,14 @@ abstract class ServerListStyleEditorImpl extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_server_list_style_editor);
         slsl = new ServerListStyleLoader(this);
-        rdGrp = (RadioGroup) findViewById(R.id.checkGroup);
-        color = (ImageView) findViewById(R.id.singleColorIndicate);
-        image = (ImageView) findViewById(R.id.imagePreview);
-        textColor = (ImageView) findViewById(R.id.textColorIndicate);
-        selectColor = (Button) findViewById(R.id.selectColor);
-        selectImage = (Button) findViewById(R.id.selectImage);
-        selectTextColor = (Button) findViewById(R.id.selectTextColor);
-        apply = (Button) findViewById(R.id.apply);
+        rdGrp = findViewById(R.id.checkGroup);
+        color = findViewById(R.id.singleColorIndicate);
+        image = findViewById(R.id.imagePreview);
+        textColor = findViewById(R.id.textColorIndicate);
+        selectColor = findViewById(R.id.selectColor);
+        selectImage = findViewById(R.id.selectImage);
+        selectTextColor = findViewById(R.id.selectTextColor);
+        apply = findViewById(R.id.apply);
 
         switch (slsl.getBgId()) {
             case ServerListStyleLoader.BACKGROUND_WHITE:
@@ -689,13 +689,13 @@ abstract class ServerListStyleEditorImpl extends AppCompatActivity {
         });
 
         //FSF
-        getLayoutInflater().inflate(R.layout.server_list_imp_exp, (ViewGroup) findViewById(R.id.fileSelectFrg));
-        select = (Button) findViewById(R.id.selectFile);
-        fileLocal = (ImageButton) findViewById(R.id.openLocalChooser);
-        fileProvided = (ImageButton) findViewById(R.id.openProvidedChooser);
-        path = (EditText) findViewById(R.id.filePath);
-        pathForm = (LinearLayout) findViewById(R.id.pathForm);
-        modeForm = (LinearLayout) findViewById(R.id.modeForm);
+        getLayoutInflater().inflate(R.layout.server_list_imp_exp, findViewById(R.id.fileSelectFrg));
+        select = findViewById(R.id.selectFile);
+        fileLocal = findViewById(R.id.openLocalChooser);
+        fileProvided = findViewById(R.id.openProvidedChooser);
+        path = findViewById(R.id.filePath);
+        pathForm = findViewById(R.id.pathForm);
+        modeForm = findViewById(R.id.modeForm);
 
         select.setOnClickListener(v -> {
             pathForm.setVisibility(View.GONE);
@@ -773,11 +773,11 @@ abstract class ServerListStyleEditorImpl extends AppCompatActivity {
         if (o instanceof File)
             return toUri(((File) o).toURL());
         else if (o instanceof Uri)
-            return ((Uri) o).toString();
+            return o.toString();
         else if (o instanceof URL)
             return toUri(((URL) o).toURI());
         else if (o instanceof URI)
-            return ((URI) o).toString();
+            return o.toString();
         else
             return null;
     }
@@ -789,10 +789,10 @@ abstract class ServerListStyleEditorImpl extends AppCompatActivity {
             switch (resultCode) {
                 case RESULT_OK:
                     if (results.get(requestCode) instanceof ServerListActivityBase5.FileChooserHandler) {
-                        ((ServerListActivityBase5.FileChooserHandler) results.get(requestCode))
+                        results.get(requestCode)
                             .onSelected((File) (lastResult = new File(data.getStringExtra("path"))));
                     } else if (results.get(requestCode) instanceof ServerListActivity.UriFileChooserResult) {
-                        ((ServerListActivity.UriFileChooserResult) results.get(requestCode))
+                        results.get(requestCode)
                             .onSelected((Uri) (lastResult = data.getData()));
                     }
                     Log.d("slse", "select:" + lastResult);

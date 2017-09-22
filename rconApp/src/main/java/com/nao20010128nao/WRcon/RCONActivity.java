@@ -84,7 +84,7 @@ public class RCONActivity extends RCONActivityBase implements TabHost.OnTabChang
         Drawable tabUnderlineSelected = DrawableCompat.wrap(getResources().getDrawable(R.drawable.abc_tab_indicator_mtrl_alpha));
         DrawableCompat.setTint(tabUnderlineSelected, 0xff_ffffff);
         for (int i = 0; i < fth.getTabWidget().getChildCount(); i++) {
-            TextView tv = (TextView) fth.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
+            TextView tv = fth.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
             tv.setTextColor(colors[i]);
             fth.getTabWidget().getChildAt(i).setBackgroundColor(getResources().getColor(R.color.mainColor));
         }

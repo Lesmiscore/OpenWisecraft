@@ -68,7 +68,7 @@ class ServerTestActivityImpl extends AppCompatActivity implements ServerListActi
         instance = new WeakReference(this);
         slsl = (ServerListStyleLoader) getSystemService(ContextWrappingExtender.SERVER_LIST_STYLE_LOADER);
         setContentView(R.layout.recycler_view_content);
-        rv = (RecyclerView) findViewById(android.R.id.list);
+        rv = findViewById(android.R.id.list);
         switch (pref.getInt("serverListStyle2", 0)) {
             case 0:
             default:

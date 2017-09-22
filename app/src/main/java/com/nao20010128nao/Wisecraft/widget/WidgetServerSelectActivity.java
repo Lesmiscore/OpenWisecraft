@@ -31,7 +31,7 @@ abstract class WidgetServerSelectActivityImpl extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recycler_view_content);
         pref = PreferenceManager.getDefaultSharedPreferences(this);
-        rv = (RecyclerView) findViewById(android.R.id.list);
+        rv = findViewById(android.R.id.list);
         Intent values = getIntent();
         if (values.hasExtra(AppWidgetManager.EXTRA_APPWIDGET_ID)) {
             wid = values.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
@@ -60,13 +60,13 @@ abstract class WidgetServerSelectActivityImpl extends AppCompatActivity {
         switch (item.getItemId()) {
             case 0:
                 View dialog = getLayoutInflater().inflate(R.layout.server_add_dialog_new, null);
-                final LinearLayout peFrame = (LinearLayout) dialog.findViewById(R.id.pe);
-                final LinearLayout pcFrame = (LinearLayout) dialog.findViewById(R.id.pc);
-                final EditText pe_ip = (EditText) dialog.findViewById(R.id.pe).findViewById(R.id.serverIp);
-                final EditText pe_port = (EditText) dialog.findViewById(R.id.pe).findViewById(R.id.serverPort);
-                final EditText pc_ip = (EditText) dialog.findViewById(R.id.pc).findViewById(R.id.serverIp);
-                final CheckBox split = (CheckBox) dialog.findViewById(R.id.switchFirm);
-                final EditText serverName = (EditText) dialog.findViewById(R.id.serverName);
+                final LinearLayout peFrame = dialog.findViewById(R.id.pe);
+                final LinearLayout pcFrame = dialog.findViewById(R.id.pc);
+                final EditText pe_ip = dialog.findViewById(R.id.pe).findViewById(R.id.serverIp);
+                final EditText pe_port = dialog.findViewById(R.id.pe).findViewById(R.id.serverPort);
+                final EditText pc_ip = dialog.findViewById(R.id.pc).findViewById(R.id.serverIp);
+                final CheckBox split = dialog.findViewById(R.id.switchFirm);
+                final EditText serverName = dialog.findViewById(R.id.serverName);
                 serverName.setVisibility(View.GONE);
 
                 pe_ip.setText("localhost");

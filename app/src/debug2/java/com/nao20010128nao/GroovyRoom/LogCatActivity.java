@@ -18,7 +18,7 @@ public class LogCatActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_cat);
-        TextView log= (TextView) findViewById(R.id.logcat);
+        TextView log= findViewById(R.id.logcat);
         ScrollView scroll= (ScrollView) log.getParent();
         
         log.setText("");

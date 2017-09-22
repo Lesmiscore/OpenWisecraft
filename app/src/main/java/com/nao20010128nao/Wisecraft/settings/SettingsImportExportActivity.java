@@ -20,9 +20,9 @@ public class SettingsImportExportActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         slsl = (ServerListStyleLoader) getSystemService(ContextWrappingExtender.SERVER_LIST_STYLE_LOADER);
 
-        tabs = (ViewPager) findViewById(R.id.pager);
+        tabs = findViewById(R.id.pager);
         tabs.setAdapter(adapter = new UsefulPagerAdapter(this));
-        PagerSlidingTabStrip psts = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        PagerSlidingTabStrip psts = findViewById(R.id.tabs);
         psts.setViewPager(tabs);
 
         psts.setIndicatorColor(slsl.getTextColor());

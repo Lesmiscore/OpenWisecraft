@@ -65,7 +65,7 @@ public class AddMultipleServersActivity extends ApiBaseActivity {
 
 
         setContentView(R.layout.api_server_add_multiple_activity);
-        RecyclerView lv = (RecyclerView) findViewById(R.id.list);
+        RecyclerView lv = findViewById(R.id.list);
 
         lv.setAdapter(new RecyclerView.Adapter<ServerStatusWrapperViewHolder>() {
             @Override

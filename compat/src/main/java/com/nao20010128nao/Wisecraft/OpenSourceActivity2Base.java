@@ -17,9 +17,9 @@ public abstract class OpenSourceActivity2Base extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.only_toolbar);
-        getLayoutInflater().inflate(R.layout.open_source_markdown, (ViewGroup) findViewById(R.id.frame));
+        getLayoutInflater().inflate(R.layout.open_source_markdown, findViewById(R.id.frame));
         setSupportActionBar(CompatUtils.getToolbar(this));
-        markdownView = (WebView) findViewById(R.id.markdownView);
+        markdownView = findViewById(R.id.markdownView);
         markdownView.loadData(loadHtml().replace("+", "%20"), "text/html", "utf-8");
     }
 

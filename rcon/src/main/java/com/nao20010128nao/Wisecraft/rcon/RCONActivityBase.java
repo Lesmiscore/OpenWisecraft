@@ -63,7 +63,7 @@ public abstract class RCONActivityBase extends AppCompatActivity {
             setContentView(R.layout.rconmain);
         } else {
             setContentView(R.layout.rconmain_noactionbar);
-            setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+            setSupportActionBar(findViewById(R.id.toolbar));
         }
         if (!hasPasswordCoded()) {
             String password = getIntent().getStringExtra("password");
@@ -75,8 +75,8 @@ public abstract class RCONActivityBase extends AppCompatActivity {
                 applyHandlers();
             }
         }
-        pager = (ViewPager) findViewById(R.id.pager);
-        psts = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        pager = findViewById(R.id.pager);
+        psts = findViewById(R.id.tabs);
         UsefulPagerAdapter upa = new UsefulPagerAdapter(this);
 
         playersList = new AppBaseArrayAdapter<>(this, android.R.layout.simple_list_item_1, playersListInternal = new ArrayList<>(10));
@@ -425,7 +425,7 @@ public abstract class RCONActivityBase extends AppCompatActivity {
 
         View inflateDialogView() {
             View v = getLayoutInflater().inflate(R.layout.askpassword, null, false);
-            password = (EditText) v.findViewById(R.id.password);
+            password = v.findViewById(R.id.password);
             return v;
         }
     }
@@ -434,10 +434,10 @@ public abstract class RCONActivityBase extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View v = inflater.inflate(R.layout.console, container, false);
-            getParentActivity().setConsoleLayout((LinearLayout) v.findViewById(R.id.consoleText));
-            getParentActivity().setCommandOk((Button) v.findViewById(R.id.send));
-            getParentActivity().setCommandTextBox((EditText) v.findViewById(R.id.command));
-            getParentActivity().scrollingConsole = (ScrollView) v.findViewById(R.id.consoleScroll);
+            getParentActivity().setConsoleLayout(v.findViewById(R.id.consoleText));
+            getParentActivity().setCommandOk(v.findViewById(R.id.send));
+            getParentActivity().setCommandTextBox(v.findViewById(R.id.command));
+            getParentActivity().scrollingConsole = v.findViewById(R.id.consoleScroll);
             return v;
         }
     }
@@ -446,9 +446,9 @@ public abstract class RCONActivityBase extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View v = inflater.inflate(R.layout.rcon_players_tab, container, false);
-            getParentActivity().setPlayersListView((ListView) v.findViewById(R.id.players));
-            getParentActivity().setPlayersCountTextView((TextView) v.findViewById(R.id.playersCount));
-            getParentActivity().setUpdatePlayersButton((ImageButton) v.findViewById(R.id.updatePlayers));
+            getParentActivity().setPlayersListView(v.findViewById(R.id.players));
+            getParentActivity().setPlayersCountTextView(v.findViewById(R.id.playersCount));
+            getParentActivity().setUpdatePlayersButton(v.findViewById(R.id.updatePlayers));
             return v;
         }
     }

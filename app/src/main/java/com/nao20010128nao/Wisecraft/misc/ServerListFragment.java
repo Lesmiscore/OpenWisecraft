@@ -38,7 +38,7 @@ public class ServerListFragment<T extends FragmentActivity> extends BaseFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.recycler_view_content, container, false);
-        rv = (RecyclerView) v.findViewById(android.R.id.list);
+        rv = v.findViewById(android.R.id.list);
         return v;
     }
 

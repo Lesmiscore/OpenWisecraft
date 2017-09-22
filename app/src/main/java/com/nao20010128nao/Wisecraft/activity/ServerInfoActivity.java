@@ -106,17 +106,17 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
 
         if (useBottomSheet) {
             setContentView(R.layout.server_info_pager);
-            snackbarParent = (ViewGroup) findViewById(R.id.coordinator);
-            pin = (FloatingActionButton) findViewById(R.id.pin);
+            snackbarParent = findViewById(R.id.coordinator);
+            pin = findViewById(R.id.pin);
         } else {
             setContentView(R.layout.server_info_pager_nobs);
-            snackbarParent = (ViewGroup) findViewById(android.R.id.content);
+            snackbarParent = findViewById(android.R.id.content);
         }
-        setSupportActionBar((android.support.v7.widget.Toolbar) findViewById(R.id.toolbar));
-        tabs = (ViewPager) findViewById(R.id.pager);
+        setSupportActionBar(findViewById(R.id.toolbar));
+        tabs = findViewById(R.id.pager);
         tabs.setAdapter(adapter = new InternalPagerAdapter());
         tabs.setPageTransformer(true, new ZoomOutPageTransformer());
-        PagerSlidingTabStrip psts = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        PagerSlidingTabStrip psts = findViewById(R.id.tabs);
         psts.setViewPager(tabs);
 
         hideData = getIntent().getBooleanExtra("nonDetails", false);
@@ -362,7 +362,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
         switch (item.getItemId()) {
             case 0://Export this ping result
                 View dialogView_ = getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
-                final EditText et_ = (EditText) dialogView_.findViewById(R.id.filePath);
+                final EditText et_ = dialogView_.findViewById(R.id.filePath);
                 et_.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/pingresult.wisecraft-ping").toString());
                 dialogView_.findViewById(R.id.selectFile).setOnClickListener(v -> {
                     File f = new File(et_.getText().toString());
@@ -400,7 +400,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
                 );
                 ViewCompat.setBackground(ll, slsl.load());
             }
-            TextView serverNameView = (TextView) ll.findViewById(R.id.serverName);
+            TextView serverNameView = ll.findViewById(R.id.serverName);
             serverNameView.setText(getTitle());
             serverNameView.setTextColor(slsl.getTextColor());
             ll.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -509,7 +509,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
             View convertView = holder.itemView;
             String playerName = getItem(position);
             ((TextView) convertView.findViewById(android.R.id.text1)).setText(playerName);
-            ImageView iv = (ImageView) convertView.findViewById(R.id.image);
+            ImageView iv = convertView.findViewById(R.id.image);
             if (faces.containsKey(playerName)) {
                 iv.setVisibility(View.VISIBLE);
                 iv.setImageBitmap(faces.get(playerName));
@@ -674,7 +674,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
         public void onResume() {
             super.onResume();
             try {
-                lv = (RecyclerView) getChildClassReturnedView().findViewById(R.id.players);
+                lv = getChildClassReturnedView().findViewById(R.id.players);
                 lv.setLayoutManager(new HPLinearLayoutManager(getActivity()));
                 lv.setHasFixedSize(false);
 
@@ -754,7 +754,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
         public void onResume() {
             super.onResume();
             try {
-                data = (RecyclerView) getChildClassReturnedView().findViewById(R.id.data);
+                data = getChildClassReturnedView().findViewById(R.id.data);
                 data.setLayoutManager(new HPLinearLayoutManager(getActivity()));
                 data.setHasFixedSize(false);
 
@@ -800,9 +800,9 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
         public void onResume() {
             super.onResume();
             try {
-                serverIcon = (ImageView) getChildClassReturnedView().findViewById(R.id.serverIcon);
-                serverName = (TextView) getChildClassReturnedView().findViewById(R.id.serverTitle);
-                data = (RecyclerView) getChildClassReturnedView().findViewById(R.id.data);
+                serverIcon = getChildClassReturnedView().findViewById(R.id.serverIcon);
+                serverName = getChildClassReturnedView().findViewById(R.id.serverTitle);
+                data = getChildClassReturnedView().findViewById(R.id.data);
                 data.setLayoutManager(new HPLinearLayoutManager(getActivity()));
                 data.setHasFixedSize(false);
 
@@ -867,7 +867,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
         public void onResume() {
             super.onResume();
             try {
-                lv = (RecyclerView) getChildClassReturnedView().findViewById(R.id.players);
+                lv = getChildClassReturnedView().findViewById(R.id.players);
                 lv.setLayoutManager(new HPLinearLayoutManager(getActivity()));
                 lv.setHasFixedSize(false);
 
@@ -917,8 +917,8 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
         public void onResume() {
             super.onResume();
             try {
-                mods = (RecyclerView) getChildClassReturnedView().findViewById(R.id.players);
-                modLoader = (TextView) getChildClassReturnedView().findViewById(R.id.modLoaderType);
+                mods = getChildClassReturnedView().findViewById(R.id.players);
+                modLoader = getChildClassReturnedView().findViewById(R.id.modLoaderType);
                 mods.setLayoutManager(new HPLinearLayoutManager(getActivity()));
                 mods.setHasFixedSize(false);
 
@@ -967,7 +967,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
                 } else {
                     result = (UnconnectedPing.UnconnectedPingResult) ((SprPair) getParentActivity().localStat.response).getB();
                 }
-                RecyclerView lv = (RecyclerView) getChildClassReturnedView().findViewById(R.id.data);
+                RecyclerView lv = getChildClassReturnedView().findViewById(R.id.data);
                 lv.setLayoutManager(new HPLinearLayoutManager(getActivity()));
                 lv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
                 lv.setHasFixedSize(false);
@@ -1002,7 +1002,7 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
         @Override
         public final View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             base = inflater.inflate(R.layout.server_info_fragments_base, container, false);
-            ViewGroup childBase = (ViewGroup) base.findViewById(R.id.childBase);
+            ViewGroup childBase = base.findViewById(R.id.childBase);
             childClassReturnedView = onCreateView(inflater, childBase);
             if (childBase.getChildCount() == 0) {
                 childBase.addView(childClassReturnedView);

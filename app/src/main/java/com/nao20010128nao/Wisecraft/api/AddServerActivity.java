@@ -67,7 +67,7 @@ public class AddServerActivity extends ApiBaseActivity {
         }
 
         setContentView(R.layout.api_server_add_activity);
-        ListView lv = (ListView) findViewById(R.id.list);
+        ListView lv = findViewById(R.id.list);
         KVListAdapter<String, String> adapter = new KVListAdapter<>(this);
         lv.setAdapter(adapter);
         adapter.add(getResources().getString(R.string.ipAddress), result.ip);

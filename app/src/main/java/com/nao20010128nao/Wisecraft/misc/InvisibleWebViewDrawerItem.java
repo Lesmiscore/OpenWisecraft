@@ -51,8 +51,8 @@ public class InvisibleWebViewDrawerItem extends AbstractDrawerItem<InvisibleWebV
 
         public ViewHolder(View v) {
             super(v);
-            container = (FrameLayout) v.findViewById(R.id.container);
-            webView = (WebView) container.findViewById(R.id.webView);
+            container = v.findViewById(R.id.container);
+            webView = container.findViewById(R.id.webView);
         }
     }
 }

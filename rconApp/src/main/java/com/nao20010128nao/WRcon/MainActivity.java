@@ -98,7 +98,7 @@ public class MainActivity extends MainActivityBase1 {
             }
             case 2: {
                 View dialogView_ = getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
-                final EditText et_ = (EditText) dialogView_.findViewById(R.id.filePath);
+                final EditText et_ = dialogView_.findViewById(R.id.filePath);
                 et_.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/rcon_servers.json").toString());
                 dialogView_.findViewById(R.id.selectFile).setOnClickListener(v -> startChooseFileForOpen(new File(et_.getText().toString()), new FileChooserResult() {
                     public void onSelected(File f) {
@@ -138,7 +138,7 @@ public class MainActivity extends MainActivityBase1 {
             }
             case 3: {
                 View dialogView = getLayoutInflater().inflate(R.layout.server_list_imp_exp, null);
-                final EditText et = (EditText) dialogView.findViewById(R.id.filePath);
+                final EditText et = dialogView.findViewById(R.id.filePath);
                 et.setText(new File(Environment.getExternalStorageDirectory(), "/Wisecraft/rcon_servers.json").toString());
                 dialogView.findViewById(R.id.selectFile).setOnClickListener(v -> {
                     File f = new File(et.getText().toString());

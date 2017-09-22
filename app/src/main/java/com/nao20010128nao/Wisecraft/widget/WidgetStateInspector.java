@@ -20,7 +20,7 @@ public class WidgetStateInspector extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recycler_view_content);
         pref = PreferenceManager.getDefaultSharedPreferences(this);
-        rv = (RecyclerView) findViewById(android.R.id.list);
+        rv = findViewById(android.R.id.list);
         widgetPref = getSharedPreferences("widgets", Context.MODE_PRIVATE);
 
         rv.setLayoutManager(new LinearLayoutManager(this));
