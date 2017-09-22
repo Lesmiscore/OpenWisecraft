@@ -40,6 +40,7 @@
 -dontwarn org.apache.**
 -dontwarn org.w3c.dom.**
 -dontwarn android.**
+-dontwarn javax.lang.model.element.Modifier
 
 -keepattributes InnerClasses,EnclosingMethod
 
