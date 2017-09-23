@@ -80,12 +80,14 @@ public class WisecraftMonetizeWrapperView extends FrameLayout {
         }else{
             // AdView
             LayoutInflater.from(c).inflate(R.layout.money_ad_view,this);
-            AdView view=findViewById(R.id.adView);
-            // set it 15 years ago to prevent from showing adult ads
-            Calendar calendar=Calendar.getInstance();
-            calendar.setTimeInMillis(System.currentTimeMillis());
-            calendar.set(calendar.get(Calendar.YEAR)-15,calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
-            view.loadAd(new AdRequest.Builder().setBirthday(calendar.getTime()).build());
+            if(!isInEditMode()){
+                AdView view=findViewById(R.id.adView);
+                // set it 15 years ago to prevent from showing adult ads
+                Calendar calendar=Calendar.getInstance();
+                calendar.setTimeInMillis(System.currentTimeMillis());
+                calendar.set(calendar.get(Calendar.YEAR)-15,calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
+                view.loadAd(new AdRequest.Builder().setBirthday(calendar.getTime()).build());
+            }
         }
     }
 
