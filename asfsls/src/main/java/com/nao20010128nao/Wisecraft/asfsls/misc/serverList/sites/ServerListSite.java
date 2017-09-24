@@ -10,7 +10,7 @@ import java.util.List;
  * A server list site.<br>
  * Shouldn't be used directly.
  *
- * @see com.nao20010128nao.Wisecraft.misc.serverList.ServerAddressFetcher
+ * @see com.nao20010128nao.Wisecraft.asfsls.misc.serverList.ServerAddressFetcher
  */
 public interface ServerListSite {
     /**

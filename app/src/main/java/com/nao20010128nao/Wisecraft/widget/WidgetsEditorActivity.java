@@ -9,7 +9,7 @@ import android.widget.*;
 import com.annimon.stream.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
-import com.nao20010128nao.Wisecraft.misc.serverList.*;
+import com.nao20010128nao.Wisecraft.misc.remoteServerList.*;
 
 import java.util.*;
 

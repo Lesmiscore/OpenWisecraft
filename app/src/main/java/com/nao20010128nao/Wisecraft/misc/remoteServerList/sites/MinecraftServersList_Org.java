@@ -1,6 +1,6 @@
-package com.nao20010128nao.Wisecraft.misc.serverList.sites;
+package com.nao20010128nao.Wisecraft.misc.remoteServerList.sites;
 
-import com.nao20010128nao.Wisecraft.misc.serverList.*;
+import com.nao20010128nao.Wisecraft.misc.remoteServerList.*;
 import org.jsoup.*;
 import org.jsoup.nodes.*;
 

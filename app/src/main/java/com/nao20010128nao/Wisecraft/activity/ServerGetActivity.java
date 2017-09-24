@@ -18,7 +18,7 @@ import com.nao20010128nao.Wisecraft.R;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.compat.*;
-import com.nao20010128nao.Wisecraft.misc.serverList.*;
+import com.nao20010128nao.Wisecraft.misc.remoteServerList.*;
 
 import java.net.*;
 import java.util.*;

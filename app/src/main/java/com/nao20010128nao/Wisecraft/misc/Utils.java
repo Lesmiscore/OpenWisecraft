@@ -26,7 +26,7 @@ import com.nao20010128nao.Wisecraft.api.*;
 import com.nao20010128nao.Wisecraft.misc.collector.*;
 import com.nao20010128nao.Wisecraft.misc.json.*;
 import com.nao20010128nao.Wisecraft.misc.ping.methods.*;
-import com.nao20010128nao.Wisecraft.misc.serverList.*;
+import com.nao20010128nao.Wisecraft.misc.remoteServerList.*;
 
 import permissions.dispatcher.PermissionRequest;
 

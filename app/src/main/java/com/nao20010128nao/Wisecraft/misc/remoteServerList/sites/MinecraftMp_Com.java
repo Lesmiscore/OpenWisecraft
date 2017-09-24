@@ -1,6 +1,6 @@
-package com.nao20010128nao.Wisecraft.misc.serverList.sites;
+package com.nao20010128nao.Wisecraft.misc.remoteServerList.sites;
 
-import com.nao20010128nao.Wisecraft.misc.serverList.*;
+import com.nao20010128nao.Wisecraft.misc.remoteServerList.*;
 import org.jsoup.*;
 import org.jsoup.nodes.*;
 import org.jsoup.select.*;
@@ -10,24 +10,22 @@ import java.net.*;
 import java.util.*;
 
 /**
- * Parser class for "minecraft.jp"
+ * Parser class for "minecraft-mp.com"
  */
-public class Minecraft_Jp implements ServerListSite {
-    private static final List<String> PATH_BLACK_LIST = Arrays.asList("score", "vote", "player", "uptime", "ping",
-        "recent", "random", "comment");
+public class MinecraftMp_Com implements ServerListSite {
 
-    public Minecraft_Jp() {
+    public MinecraftMp_Com() {
         // TODO 自動生成されたコンストラクター・スタブ
     }
 
     @Override
     public boolean matches(URL url) {
         // TODO 自動生成されたメソッド・スタブ
-        return url.getHost().equalsIgnoreCase("minecraft.jp");
+        return url.getHost().equalsIgnoreCase("minecraft-mp.com");
     }
 
     @Override
-    public boolean hasMultipleServers(URL url) {
+    public boolean hasMultipleServers(URL url) throws IOException {
         // TODO 自動生成されたメソッド・スタブ
         if (isPathStartsFromServers(url) & isSingleServer(url.getPath()))
             return false;
@@ -40,22 +38,19 @@ public class Minecraft_Jp implements ServerListSite {
     @Override
     public List<MslServer> getServers(URL url) throws IOException {
         // TODO 自動生成されたメソッド・スタブ
-        if (isPathStartsFromServers(url) & isSingleServer(url.getPath())) {
+        if (isSingleServer(url.getPath())) {
             // Single server page
-            String ip = url.getPath().substring(9);
-            if (!ip.contains("."))
-                // Server is private
-                return null;
-            return Arrays.asList(MslServer.makeServerFromString(ip, false));
+            Document page = Jsoup.connect(url.toString()).userAgent("Mozilla").get();
+            Elements elems = page.select("html > body > div > div > div > div > table > tbody > tr > td > strong");
+            return Arrays.asList(MslServer.makeServerFromString(elems.get(1).html(), false));
         }
         if (isPathStartsFromServers(url) | url.getPath().replace("/", "").equals("") | !isSingleServer(url.getPath())) {
             List<MslServer> list = new ArrayList<>();
             Document page = Jsoup.connect(url.toString()).userAgent("Mozilla").get();
-            Elements elems = page.select("html > body > #wrap > #content > table > tbody > tr > td.address");
+            Elements elems = page.select("html > body > div > div > table > tbody > tr > td > strong");
             for (Element e : elems) {
                 String ip = e.html();
-                if (ip.equals("(非公開)"))
-                    // Server is private
+                if (ip.startsWith("#"))
                     continue;
                 list.add(MslServer.makeServerFromString(ip, false));
             }
@@ -72,11 +67,9 @@ public class Minecraft_Jp implements ServerListSite {
         String[] s = path.toLowerCase().split("\\/");
         if (s.length <= 1)
             return false;
-        // System.err.println(s[2]);
-        String act = s[2].split("\\:")[0];
-        if (PATH_BLACK_LIST.contains(act))
-            return false;
-        if (act.contains("."))
+        // System.err.println(s[1]);
+        String act = s[1];
+        if (act.startsWith("server-s"))
             return true;
         return false;
     }

@@ -24,7 +24,6 @@ import android.view.*;
 import android.widget.*;
 
 import com.annimon.stream.*;
-import com.annimon.stream.Objects;
 import com.google.gson.reflect.*;
 import com.mikepenz.materialdrawer.model.*;
 import com.mikepenz.materialdrawer.model.interfaces.*;
@@ -39,7 +38,7 @@ import com.nao20010128nao.Wisecraft.misc.ping.methods.*;
 import com.nao20010128nao.Wisecraft.misc.ping.methods.pc.*;
 import com.nao20010128nao.Wisecraft.misc.ping.methods.pe.*;
 import com.nao20010128nao.Wisecraft.misc.ping.processors.*;
-import com.nao20010128nao.Wisecraft.misc.serverList.*;
+import com.nao20010128nao.Wisecraft.misc.remoteServerList.*;
 import com.nao20010128nao.Wisecraft.settings.*;
 
 import permissions.dispatcher.*;

@@ -1,9 +1,9 @@
-package com.nao20010128nao.Wisecraft.misc.serverList.sites;
+package com.nao20010128nao.Wisecraft.misc.remoteServerList.sites;
 
 import android.text.*;
 import com.google.gson.annotations.*;
 import com.nao20010128nao.Wisecraft.misc.json.*;
-import com.nao20010128nao.Wisecraft.misc.serverList.*;
+import com.nao20010128nao.Wisecraft.misc.remoteServerList.*;
 
 import java.io.*;
 import java.net.*;

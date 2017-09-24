@@ -1,6 +1,6 @@
-package com.nao20010128nao.Wisecraft.misc.serverList.sites;
+package com.nao20010128nao.Wisecraft.misc.remoteServerList.sites;
 
-import com.nao20010128nao.Wisecraft.misc.serverList.*;
+import com.nao20010128nao.Wisecraft.misc.remoteServerList.*;
 
 import java.io.*;
 import java.net.*;
@@ -10,7 +10,7 @@ import java.util.*;
  * A server list site.<br>
  * Shouldn't be used directly.
  *
- * @see com.nao20010128nao.Wisecraft.misc.serverList.ServerAddressFetcher
+ * @see com.nao20010128nao.Wisecraft.misc.remoteServerList.ServerAddressFetcher
  */
 public interface ServerListSite {
     /**

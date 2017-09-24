@@ -1,4 +1,4 @@
-package com.nao20010128nao.Wisecraft.misc.serverList;
+package com.nao20010128nao.Wisecraft.misc.remoteServerList;
 
 /**
  * A server.

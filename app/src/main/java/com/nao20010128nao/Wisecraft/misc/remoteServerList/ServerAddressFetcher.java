@@ -1,7 +1,7 @@
-package com.nao20010128nao.Wisecraft.misc.serverList;
+package com.nao20010128nao.Wisecraft.misc.remoteServerList;
 
 import com.nao20010128nao.Wisecraft.misc.collector.*;
-import com.nao20010128nao.Wisecraft.misc.serverList.sites.*;
+import com.nao20010128nao.Wisecraft.misc.remoteServerList.sites.*;
 
 import java.io.*;
 import java.net.*;
