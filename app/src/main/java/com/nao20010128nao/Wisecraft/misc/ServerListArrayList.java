@@ -23,17 +23,6 @@ public class ServerListArrayList extends CopyOnWriteArrayList<Server> implements
     }
 
     @Override
-    public int indexOf(Object object) {
-        if (object == null) return -1;
-        Iterator<Server> i = iterator();
-        Server s = null;
-        while (i.hasNext())
-            if ((s = i.next()).equals(object))
-                return super.indexOf(s);
-        return -1;
-    }
-
-    @Override
     public boolean add(Server object) {
         if (object == null) return false;
         return super.add(object);
