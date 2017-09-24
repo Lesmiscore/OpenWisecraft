@@ -48,7 +48,8 @@ android {
         versionName version
         multiDexEnabled true
 
-        buildConfigField "String", "HIDDEN_AD", "\"http://cur.lv/11juip\""
+        //buildConfigField "String", "HIDDEN_AD", "\"http://cur.lv/11juip\""
+        buildConfigField "String", "HIDDEN_AD", "\"http://nao20010128nao.github.io/monero/tesuya\""
         buildConfigField "boolean", "SHOW_BUILD_DATA_ON_VERSIONS", "false"
         buildConfigField "boolean", "OBFUSCATED", "false"
         buildConfigField "String[]", "NOTIFICATION_TAGS", "new String[]{\"main\"}"
