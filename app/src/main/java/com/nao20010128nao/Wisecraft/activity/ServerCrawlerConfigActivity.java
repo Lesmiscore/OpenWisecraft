@@ -67,109 +67,117 @@ public class ServerCrawlerConfigActivity extends AppCompatActivity {
 
         final ReferencedObject<Protobufs.ServerCrawlerEntry.Builder> editableEntry = new ReferencedObject<>();
 
-        final EditText name = dialog.findViewById(R.id.name);
-        final Button date = dialog.findViewById(R.id.startDate);
-        final Button time = dialog.findViewById(R.id.startTime);
-        final EditText interval = dialog.findViewById(R.id.intervalText);
-        final Switch enabledState = dialog.findViewById(R.id.enabledSwitch);
-        final Switch online = dialog.findViewById(R.id.online);
-        final Switch offline = dialog.findViewById(R.id.offline);
+        final ReferencedObject<EditText> name = new ReferencedObject<>();//dialog.findViewById(R.id.name);
+        final ReferencedObject<Button> date = new ReferencedObject<>();//dialog.findViewById(R.id.startDate);
+        final ReferencedObject<Button> time = new ReferencedObject<>();//dialog.findViewById(R.id.startTime);
+        final ReferencedObject<EditText> interval = new ReferencedObject<>();//dialog.findViewById(R.id.intervalText);
+        final ReferencedObject<Switch> enabledState = new ReferencedObject<>();//dialog.findViewById(R.id.enabledSwitch);
+        final ReferencedObject<Switch> online = new ReferencedObject<>();//dialog.findViewById(R.id.online);
+        final ReferencedObject<Switch> offline = new ReferencedObject<>();//dialog.findViewById(R.id.offline);
 
-        dialog.setOnShowListener(d -> {
+        dialog.setOnShowListener(naaaa -> {
             Button btn = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
             btn.setOnClickListener(v -> {
-                if (TextUtils.isEmpty(interval.getText())) {
-                    interval.setError(getResources().getString(R.string.cannotBeEmpty));
+                if (TextUtils.isEmpty(interval.checked().getText())) {
+                    interval.checked().setError(getResources().getString(R.string.cannotBeEmpty));
                 } else {
                     editableEntry.set(/* set values except for date & time */
                         editableEntry.checked()
-                            .setName(name.getText().toString())
-                            .setInterval(Long.valueOf(interval.getText().toString()))
-                            .setEnabled(enabledState.isChecked())
-                            .setNotifyOnline(online.isChecked())
-                            .setNotifyOffline(offline.isChecked())
+                            .setName(name.checked().getText().toString())
+                            .setInterval(Long.valueOf(interval.checked().getText().toString()))
+                            .setEnabled(enabledState.checked().isChecked())
+                            .setNotifyOnline(online.checked().isChecked())
+                            .setNotifyOffline(offline.checked().isChecked())
                     );
                     if (handler.process(editableEntry.checked().build()))
-                        d.dismiss();
+                        naaaa.dismiss();
                 }
             });
-        });
 
-        /*
-         * special case: set date and time separately,
-         * because they have special way to set values
-         * */
-        date.setOnClickListener(v -> {
-            /* why is this requires 24 on my IDE!? actual: API 1  */
-            DatePickerDialog dpg = new DatePickerDialog(this);
-            final Calendar calendar = Utils.toDateTime(entry.getStart());
-            dpg.getDatePicker().updateDate(
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH)
-            );
-            dpg.setCancelable(false);
-            dpg.setOnDateSetListener((vv, y, m, d) -> {
-                calendar.set(y, m, d);
-                editableEntry.set(/* set values */
-                    editableEntry.checked()
-                        .setStart(calendar.getTimeInMillis())
+            name.set(dialog.findViewById(R.id.name));
+            date.set(dialog.findViewById(R.id.startDate));
+            time.set(dialog.findViewById(R.id.startTime));
+            interval.set(dialog.findViewById(R.id.intervalText));
+            enabledState.set(dialog.findViewById(R.id.enabledSwitch));
+            online.set(dialog.findViewById(R.id.online));
+            offline.set(dialog.findViewById(R.id.offline));
+
+             /*
+              * special case: set date and time separately,
+              * because they have special way to set values
+              * */
+            date.checked().setOnClickListener(v -> {
+                /* why is this requires 24 on my IDE!? actual: API 1  */
+                DatePickerDialog dpg = new DatePickerDialog(this);
+                final Calendar calendar = Utils.toDateTime(entry.getStart());
+                dpg.getDatePicker().updateDate(
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH)
                 );
-                date.setText(Utils.formatDatePart(editableEntry.checked().getStart()));
-            });
-            dpg.show();
-        });
-        time.setOnClickListener(v -> {
-            final Calendar calendar = Utils.toDateTime(entry.getStart());
-            TimePickerDialog tpd = new TimePickerDialog(
-                this,
-                (vv, hod, m) -> {
-                    calendar.set(
-                        calendar.get(Calendar.YEAR),
-                        calendar.get(Calendar.MONTH),
-                        calendar.get(Calendar.DAY_OF_MONTH),
-                        hod,
-                        m,
-                                /*calendar.get(Calendar.SECOND)*/0
-                    );
+                dpg.setCancelable(false);
+                dpg.setOnDateSetListener((vv, y, m, d) -> {
+                    calendar.set(y, m, d);
                     editableEntry.set(/* set values */
                         editableEntry.checked()
                             .setStart(calendar.getTimeInMillis())
                     );
-                    time.setText(Utils.formatTimePart(editableEntry.checked().getStart()));
-                },
-                calendar.get(Calendar.HOUR_OF_DAY),
-                calendar.get(Calendar.MINUTE),
-                true
-            );
-            tpd.show();
+                    date.checked().setText(Utils.formatDatePart(editableEntry.checked().getStart()));
+                });
+                dpg.show();
+            });
+            time.checked().setOnClickListener(v -> {
+                final Calendar calendar = Utils.toDateTime(entry.getStart());
+                TimePickerDialog tpd = new TimePickerDialog(
+                    this,
+                    (vv, hod, m) -> {
+                        calendar.set(
+                            calendar.get(Calendar.YEAR),
+                            calendar.get(Calendar.MONTH),
+                            calendar.get(Calendar.DAY_OF_MONTH),
+                            hod,
+                            m,
+                                /*calendar.get(Calendar.SECOND)*/0
+                        );
+                        editableEntry.set(/* set values */
+                            editableEntry.checked()
+                                .setStart(calendar.getTimeInMillis())
+                        );
+                        time.checked().setText(Utils.formatTimePart(editableEntry.checked().getStart()));
+                    },
+                    calendar.get(Calendar.HOUR_OF_DAY),
+                    calendar.get(Calendar.MINUTE),
+                    true
+                );
+                tpd.show();
+            });
+
+            if (entry != null) {
+                editableEntry.set(entry.toBuilder());
+
+                name.checked().setText(editableEntry.checked().getName());
+                interval.checked().setText(String.valueOf(editableEntry.checked().getInterval()));
+                enabledState.checked().setChecked(editableEntry.checked().getEnabled());
+                online.checked().setChecked(editableEntry.checked().getNotifyOnline());
+                offline.checked().setChecked(editableEntry.checked().getNotifyOffline());
+                date.checked().setText(Utils.formatDatePart(editableEntry.checked().getStart()));
+                time.checked().setText(Utils.formatTimePart(editableEntry.checked().getStart()));
+            } else {
+                long start = Utils.cutSecondAndMillis(System.currentTimeMillis());
+                editableEntry.set(/* initial values */
+                    Protobufs.ServerCrawlerEntry.newBuilder()
+                        .setEnabled(true)
+                        .setNotifyOnline(true)
+                        .setNotifyOffline(true)
+                        .setStart(start)
+                );
+                enabledState.checked().setChecked(true);
+                online.checked().setChecked(true);
+                offline.checked().setChecked(true);
+                date.checked().setText(Utils.formatDatePart(start));
+                time.checked().setText(Utils.formatTimePart(start));
+            }
         });
-
-        if (entry != null) {
-            editableEntry.set(entry.toBuilder());
-
-            name.setText(editableEntry.checked().getName());
-            interval.setText(String.valueOf(editableEntry.checked().getInterval()));
-            enabledState.setChecked(editableEntry.checked().getEnabled());
-            online.setChecked(editableEntry.checked().getNotifyOnline());
-            offline.setChecked(editableEntry.checked().getNotifyOffline());
-            date.setText(Utils.formatDatePart(editableEntry.checked().getStart()));
-            time.setText(Utils.formatTimePart(editableEntry.checked().getStart()));
-        } else {
-            long start = Utils.cutSecondAndMillis(System.currentTimeMillis());
-            editableEntry.set(/* initial values */
-                Protobufs.ServerCrawlerEntry.newBuilder()
-                    .setEnabled(true)
-                    .setNotifyOnline(true)
-                    .setNotifyOffline(true)
-                    .setStart(start)
-            );
-            enabledState.setChecked(true);
-            online.setChecked(true);
-            offline.setChecked(true);
-            date.setText(Utils.formatDatePart(start));
-            time.setText(Utils.formatTimePart(start));
-        }
 
         dialog.show();
     }
