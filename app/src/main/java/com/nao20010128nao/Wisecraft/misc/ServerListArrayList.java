@@ -24,8 +24,7 @@ public class ServerListArrayList extends CopyOnWriteArrayList<Server> implements
 
     @Override
     public boolean add(Server object) {
-        if (object == null) return false;
-        return super.add(object);
+        return object != null && super.add(object);
     }
 
     @Override
