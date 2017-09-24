@@ -59,7 +59,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
     public static WeakReference<ServerListActivityImpl> instance = new WeakReference(null);
 
     ServerList sl;
-    List<Server> list;
+    final List<Server> list = new ServerListArrayList();
     ServerListStyleLoader slsl;
     Set<Server> selected = new HashSet<>();
     Map<Server, Map.Entry<Boolean, Integer>> retrying = new HashMap<>();
@@ -72,7 +72,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
         ThemePatcher.applyThemeForActivity(this);
         super.onCreate(savedInstanceState);
         localServerList=new PreferenceLocalServerList(this);
-        list = new ServerListArrayList();
         wisecraftDir = new File(Environment.getExternalStorageDirectory(), "/Wisecraft");
 
         setupSideMenu();
