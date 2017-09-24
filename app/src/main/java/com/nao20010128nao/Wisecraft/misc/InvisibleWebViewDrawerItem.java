@@ -24,10 +24,11 @@ public class InvisibleWebViewDrawerItem extends AbstractDrawerItem<InvisibleWebV
 
     @Override
     public int getType() {
-        return getLayoutRes();
+        return R.id.webView;
     }
 
     public void bindView(InvisibleWebViewDrawerItem.ViewHolder p1, List payload) {
+        super.bindView(p1,payload);
         p1.webView.loadUrl(url);
         p1.itemView.setId(hashCode());
         p1.itemView.setClickable(false);
