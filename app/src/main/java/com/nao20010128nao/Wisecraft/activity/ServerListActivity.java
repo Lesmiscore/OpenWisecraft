@@ -59,7 +59,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
     public static WeakReference<ServerListActivityImpl> instance = new WeakReference(null);
 
     ServerList sl;
-    final List<Server> list = new ServerListArrayList();
+    List<Server> list = new ServerListArrayList();
     ServerListStyleLoader slsl;
     Set<Server> selected = new HashSet<>();
     Map<Server, Map.Entry<Boolean, Integer>> retrying = new HashMap<>();
