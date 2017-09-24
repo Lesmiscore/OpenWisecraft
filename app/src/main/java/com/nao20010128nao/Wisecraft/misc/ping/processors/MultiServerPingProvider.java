@@ -1,5 +1,6 @@
 package com.nao20010128nao.Wisecraft.misc.ping.processors;
 
+import com.annimon.stream.Stream;
 import com.nao20010128nao.Wisecraft.misc.*;
 
 import java.util.*;
@@ -32,21 +33,17 @@ public class MultiServerPingProvider implements ServerPingProvider {
 
     @Override
     public void stop() {
-        for (ServerPingProvider spp : objects) {
-            spp.stop();
-        }
+        Stream.of(objects).forEach(ServerPingProvider::stop);
     }
 
     @Override
     public void clearQueue() {
-        for (ServerPingProvider spp : objects) {
-            spp.clearQueue();
-        }
+        Stream.of(objects).forEach(ServerPingProvider::clearQueue);
     }
 
     @Override
     public void clearAndStop() {
-        clearAndStop();
+        clearQueue();
         stop();
     }
 
@@ -57,15 +54,11 @@ public class MultiServerPingProvider implements ServerPingProvider {
 
     @Override
     public void offline() {
-        for (ServerPingProvider spp : objects) {
-            spp.offline();
-        }
+        Stream.of(objects).forEach(ServerPingProvider::offline);
     }
 
     @Override
     public void online() {
-        for (ServerPingProvider spp : objects) {
-            spp.online();
-        }
+        Stream.of(objects).forEach(ServerPingProvider::online);
     }
 }
