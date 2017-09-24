@@ -39,11 +39,12 @@ import com.nao20010128nao.Wisecraft.misc.compat.CompatWebViewActivity;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 abstract class ServerGetActivityImpl extends CompatWebViewActivity {
-    public static List<String> addForServerList;
+    public static List<String> addForServerList= Collections.emptyList();
     String domain;
     String[] serverList;
     Snackbar downloading;
