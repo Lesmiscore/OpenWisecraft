@@ -34,6 +34,8 @@ import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.collector.*;
 import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
 import com.nao20010128nao.Wisecraft.misc.debug.*;
+import com.nao20010128nao.Wisecraft.misc.localServerList.LocalServerList;
+import com.nao20010128nao.Wisecraft.misc.localServerList.PreferenceLocalServerList;
 import com.nao20010128nao.Wisecraft.misc.ping.methods.*;
 import com.nao20010128nao.Wisecraft.misc.ping.methods.pc.*;
 import com.nao20010128nao.Wisecraft.misc.ping.methods.pe.*;
@@ -63,11 +65,14 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
     Map<Server, Map.Entry<Boolean, Integer>> retrying = new HashMap<>();
     File wisecraftDir;
     Map<String, Server> siaTokens = new HashMap<>();
+    LocalServerList localServerList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ThemePatcher.applyThemeForActivity(this);
         super.onCreate(savedInstanceState);
+        localServerList=new PreferenceLocalServerList(this);
+        list = new ServerListArrayList();
         wisecraftDir = new File(Environment.getExternalStorageDirectory(), "/Wisecraft");
 
         setupSideMenu();
@@ -614,7 +619,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
     }
 
     public void loadServers() {
-        List<Server> sa = Utils.jsonToServers(pref.getString("servers", "[]"));
+        List<Server> sa = localServerList.load();
         int prevLen = list.size();
         list.clear();
         sl.notifyItemRangeRemoved(0, prevLen);
@@ -626,9 +631,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
     public void saveServers() {
         new Thread(() -> {
             List<Server> toSave = Stream.of(list).map(Server::cloneAsServer).toList();
-            String json;
-            pref.edit().putString("servers", json = gson.toJson(toSave)).commit();
-            Log.d("json", json);
+            localServerList.save(toSave);
         }).start();
     }
 
@@ -883,7 +886,6 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
         ServerListActivityImpl sla;
 
         public ServerList(ServerListActivityImpl sla) {
-            sla.list = new ServerListArrayList();
             this.sla = sla;
         }
 
