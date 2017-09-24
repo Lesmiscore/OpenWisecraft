@@ -967,7 +967,7 @@ public class Utils extends PingerUtils {
             .map(a->a.packageName)
             .map(regex::matcher)
             .filter(Matcher::matches)
-            .map(Utils::getInput)
+            .map(Matcher::group)
             .findFirst().orElse(null);
     }
     public static String getInput(Matcher matcher){
