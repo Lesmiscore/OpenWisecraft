@@ -276,25 +276,7 @@ public class Utils extends PingerUtils {
         }
         return width;
     }
-
-    public static Object tryExecuteMethod(Object object, String methodName, Class[] signature, Object[] parameter) {
-        Class objClass;
-        if (object instanceof Class) {
-            objClass = (Class) object;
-        } else {
-            objClass = object.getClass();
-        }
-        try {
-            return objClass.getMethod(methodName, signature).invoke(object instanceof Class ? null : object, parameter);
-        } catch (Throwable e) {
-            return null;
-        }
-    }
-
-    public static Object tryExecuteMethod(Object object, String methodName) {
-        return tryExecuteMethod(object, methodName);
-    }
-
+    
     public static Server makeServerFromBundle(Bundle bnd) {
         String ip = bnd.getString("com.nao20010128nao.Wisecraft.misc.Server.ip");
         int port = bnd.getInt("com.nao20010128nao.Wisecraft.misc.Server.port");
