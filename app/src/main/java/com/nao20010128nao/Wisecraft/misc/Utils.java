@@ -424,7 +424,7 @@ public class Utils extends PingerUtils {
             return Protobufs.Server.Mode.forNumber(Integer.valueOf(name));
         } catch (Throwable e) {
             name = name.toLowerCase();
-            if (name.matches("^(pe|phone|android|ios|pocket)$")) {
+            if (name.matches("^(pe|phone|android|ios|pocket|bedrock)$")) {
                 return Protobufs.Server.Mode.PE;
             }
             if (name.matches("^(pc|desktop|windows|mac|linux|java)$")) {
