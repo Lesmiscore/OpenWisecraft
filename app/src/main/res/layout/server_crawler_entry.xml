@@ -1,133 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="5dp">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="5dp">
 
     <LinearLayout
-            android:orientation="vertical"
+        android:id="@+id/stable"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/name"
+            style="?android:attr/textAppearanceLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="2dp"
+            android:text=""
+            tools:text="NAME"/>
+
+        <LinearLayout
+            android:id="@+id/intervalLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:id="@+id/stable">
-        <TextView
-                android:text=""
-                android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                style="?android:attr/textAppearanceMedium"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/name"
-                tools:text="NAME"
-                style="?android:attr/textAppearanceLarge"
-                android:gravity="center"
-                android:paddingBottom="2dp"/>
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:id="@+id/intervalLayout"
-                android:gravity="center_vertical">
+                android:paddingEnd="5dp"
+                android:text="@string/crawlerInterval"/>
+
             <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/crawlerInterval"
-                    style="?android:attr/textAppearanceMedium"
-                    android:paddingEnd="5dp"
-                    android:textColor="@color/black"/>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="1:23:45:67 789"
-                    android:id="@+id/intervalText"/>
+                android:id="@+id/intervalText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="1:23:45:67 789"/>
         </LinearLayout>
+
         <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:id="@+id/startTimeLayout"
-                android:gravity="center_vertical">
+            android:id="@+id/startTimeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
             <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/crawlerStartDateTime"
-                    style="?android:attr/textAppearanceMedium"
-                    android:paddingEnd="5dp"
-                    android:textColor="@color/black"/>
+                style="?android:attr/textAppearanceMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="5dp"
+                android:text="@string/crawlerStartDateTime"/>
+
             <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="2017/10/20 12:34:56 000"
-                    android:id="@+id/startTimeText"/>
-            </LinearLayout>
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:id="@+id/enabledLayout"
-                android:gravity="center_vertical">
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/crawlerEnabled"
-                    style="?android:attr/textAppearanceMedium"
-                    android:paddingEnd="5dp"
-                    android:textColor="@color/black"/>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="@string/yesWord"
-                    android:id="@+id/enabledText"/>
+                android:id="@+id/startTimeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="2017/10/20 12:34:56 000"/>
         </LinearLayout>
+
         <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:id="@+id/onlineLayout"
-                android:gravity="center_vertical">
+            android:id="@+id/enabledLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
             <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/crawlerNotifyOnline"
-                    style="?android:attr/textAppearanceMedium"
-                    android:paddingEnd="5dp"
-                    android:textColor="@color/black"/>
+                style="?android:attr/textAppearanceMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="5dp"
+                android:text="@string/crawlerEnabled"/>
+
             <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="Yes"
-                    android:id="@+id/online"/>
+                android:id="@+id/enabledText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="@string/yesWord"/>
         </LinearLayout>
+
         <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:id="@+id/offlineLayout"
-                android:gravity="center_vertical">
+            android:id="@+id/onlineLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
             <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/crawlerNotifyOffline"
-                    style="?android:attr/textAppearanceMedium"
-                    android:paddingEnd="5dp"
-                    android:textColor="@color/black"/>
+                style="?android:attr/textAppearanceMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="5dp"
+                android:text="@string/crawlerNotifyOnline"/>
+
             <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="No"
-                    android:id="@+id/offline"/>
+                android:id="@+id/online"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Yes"/>
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/offlineLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                style="?android:attr/textAppearanceMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="5dp"
+                android:text="@string/crawlerNotifyOffline"/>
+
+            <TextView
+                android:id="@+id/offline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="No"/>
+        </LinearLayout>
+
         <ImageButton
-                style="?android:attr/buttonBarButtonStyle"
-                android:id="@+id/edit"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:src="@drawable/ic_mode_edit_white_24dp"
-                android:tint="@color/black"/>
+            android:id="@+id/edit"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_mode_edit_white_24dp"
+            android:tint="?android:attr/textColor"/>
     </LinearLayout>
 </LinearLayout>
