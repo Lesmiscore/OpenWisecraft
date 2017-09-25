@@ -276,7 +276,7 @@ public class Utils extends PingerUtils {
         }
         return width;
     }
-    
+
     public static Server makeServerFromBundle(Bundle bnd) {
         String ip = bnd.getString("com.nao20010128nao.Wisecraft.misc.Server.ip");
         int port = bnd.getInt("com.nao20010128nao.Wisecraft.misc.Server.port");
