@@ -2,6 +2,7 @@ package com.nao20010128nao.Wisecraft.activity;
 
 import android.annotation.*;
 import android.app.*;
+import android.content.Context;
 import android.os.*;
 import android.support.v7.app.*;
 import android.support.v7.app.AlertDialog;
@@ -9,8 +10,10 @@ import android.support.v7.widget.*;
 import android.text.*;
 import android.view.*;
 import android.widget.*;
+
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
+import com.nao20010128nao.Wisecraft.misc.remoteServerList.MslServer;
 
 import java.lang.ref.*;
 import java.text.*;
@@ -56,16 +59,17 @@ public class ServerCrawlerConfigActivity extends AppCompatActivity {
 
     @TargetApi(Build.VERSION_CODES.N)
     private void editDialog(final Protobufs.ServerCrawlerEntry entry, Predicate<Protobufs.ServerCrawlerEntry> handler) {
-        final AlertDialog dialog = new AlertDialog.Builder(this)
+        final AlertDialog dialog = new AlertDialog.Builder(this, ThemePatcher.getDefaultDialogStyle(this))
             .setView(R.layout.server_crawler_edit)
             .setPositiveButton(android.R.string.ok, (di, w) -> {
             })
             .setNegativeButton(android.R.string.cancel, (di, w) -> {
             })
             .setCancelable(false)
-            .create();
+            .show();
 
         final ReferencedObject<Protobufs.ServerCrawlerEntry.Builder> editableEntry = new ReferencedObject<>();
+        //editableEntry.set(Protobufs.ServerCrawlerEntry.newBuilder());
 
         final ReferencedObject<EditText> name = new ReferencedObject<>();//dialog.findViewById(R.id.name);
         final ReferencedObject<Button> date = new ReferencedObject<>();//dialog.findViewById(R.id.startDate);
@@ -75,111 +79,172 @@ public class ServerCrawlerConfigActivity extends AppCompatActivity {
         final ReferencedObject<Switch> online = new ReferencedObject<>();//dialog.findViewById(R.id.online);
         final ReferencedObject<Switch> offline = new ReferencedObject<>();//dialog.findViewById(R.id.offline);
 
-        dialog.setOnShowListener(naaaa -> {
-            Button btn = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-            btn.setOnClickListener(v -> {
-                if (TextUtils.isEmpty(interval.checked().getText())) {
-                    interval.checked().setError(getResources().getString(R.string.cannotBeEmpty));
-                } else {
-                    editableEntry.set(/* set values except for date & time */
-                        editableEntry.checked()
-                            .setName(name.checked().getText().toString())
-                            .setInterval(Long.valueOf(interval.checked().getText().toString()))
-                            .setEnabled(enabledState.checked().isChecked())
-                            .setNotifyOnline(online.checked().isChecked())
-                            .setNotifyOffline(offline.checked().isChecked())
-                    );
-                    if (handler.process(editableEntry.checked().build()))
-                        naaaa.dismiss();
-                }
-            });
+        final ReferencedObject<LinearLayout> peFrame = new ReferencedObject<>();
+        final ReferencedObject<LinearLayout> pcFrame = new ReferencedObject<>();
+        final ReferencedObject<EditText> pe_ip = new ReferencedObject<>();
+        final ReferencedObject<EditText> pe_port = new ReferencedObject<>();
+        final ReferencedObject<EditText> pc_ip = new ReferencedObject<>();
+        final ReferencedObject<CheckBox> split = new ReferencedObject<>();
 
-            name.set(dialog.findViewById(R.id.name));
-            date.set(dialog.findViewById(R.id.startDate));
-            time.set(dialog.findViewById(R.id.startTime));
-            interval.set(dialog.findViewById(R.id.intervalText));
-            enabledState.set(dialog.findViewById(R.id.enabledSwitch));
-            online.set(dialog.findViewById(R.id.online));
-            offline.set(dialog.findViewById(R.id.offline));
+        Button btn = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        btn.setOnClickListener(v -> {
+            if (TextUtils.isEmpty(interval.checked().getText())) {
+                interval.checked().setError(getResources().getString(R.string.cannotBeEmpty));
+            } else {
+                editableEntry.set(/* set values except for date & time */
+                    editableEntry.checked()
+                        .setName(name.checked().getText().toString())
+                        .setInterval(Long.valueOf(interval.checked().getText().toString()))
+                        .setEnabled(enabledState.checked().isChecked())
+                        .setNotifyOnline(online.checked().isChecked())
+                        .setNotifyOffline(offline.checked().isChecked())
+                        .setId(0)
+                );
+                Server s;
+                if (split.checked().isChecked()) {
+                    s = Utils.convertServerObject(Collections.singletonList(MslServer.makeServerFromString(pc_ip.checked().getText().toString(), false))).get(0);
+                } else {
+                    s = new Server();
+                    s.ip = pe_ip.checked().getText().toString();
+                    s.port = Integer.valueOf(pe_port.checked().getText().toString());
+                    s.mode = split.checked().isChecked() ? Protobufs.Server.Mode.PC : Protobufs.Server.Mode.PE;
+                }
+                s.name = TextUtils.isEmpty(name.checked().getText()) ? "" : name.checked().getText().toString();
+
+                editableEntry.set(
+                    editableEntry.checked().setServer(s.toProtobufServer())
+                );
+
+                if (handler.process(editableEntry.checked().build()))
+                    dialog.dismiss();
+            }
+        });
+
+        dialog.findViewById(R.id.serverName).setVisibility(View.GONE);
+
+        name.set(dialog.findViewById(R.id.name));
+        date.set(dialog.findViewById(R.id.startDate));
+        time.set(dialog.findViewById(R.id.startTime));
+        interval.set(dialog.findViewById(R.id.intervalText));
+        enabledState.set(dialog.findViewById(R.id.enabledSwitch));
+        online.set(dialog.findViewById(R.id.online));
+        offline.set(dialog.findViewById(R.id.offline));
+
+        peFrame.set(dialog.findViewById(R.id.pe));
+        pcFrame.set(dialog.findViewById(R.id.pc));
+        pe_ip.set(dialog.findViewById(R.id.pe).findViewById(R.id.serverIp));
+        pe_port.set(dialog.findViewById(R.id.pe).findViewById(R.id.serverPort));
+        pc_ip.set(dialog.findViewById(R.id.pc).findViewById(R.id.serverIp));
+        split.set(dialog.findViewById(R.id.switchFirm));
 
              /*
               * special case: set date and time separately,
               * because they have special way to set values
               * */
-            date.checked().setOnClickListener(v -> {
+        date.checked().setOnClickListener(v -> {
                 /* why is this requires 24 on my IDE!? actual: API 1  */
-                DatePickerDialog dpg = new DatePickerDialog(this);
-                final Calendar calendar = Utils.toDateTime(entry.getStart());
-                dpg.getDatePicker().updateDate(
-                    calendar.get(Calendar.YEAR),
-                    calendar.get(Calendar.MONTH),
-                    calendar.get(Calendar.DAY_OF_MONTH)
+            DatePickerDialog dpg = new DatePickerDialog(this);
+            final Calendar calendar = Utils.toDateTime(editableEntry.checked().getStart());
+            dpg.getDatePicker().updateDate(
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+            );
+            dpg.setCancelable(false);
+            dpg.setOnDateSetListener((vv, y, m, d) -> {
+                calendar.set(y, m, d);
+                editableEntry.set(/* set values */
+                    editableEntry.checked()
+                        .setStart(calendar.getTimeInMillis())
                 );
-                dpg.setCancelable(false);
-                dpg.setOnDateSetListener((vv, y, m, d) -> {
-                    calendar.set(y, m, d);
+                date.checked().setText(Utils.formatDatePart(editableEntry.checked().getStart()));
+            });
+            dpg.show();
+        });
+        time.checked().setOnClickListener(v -> {
+            final Calendar calendar = Utils.toDateTime(editableEntry.checked().getStart());
+            TimePickerDialog tpd = new TimePickerDialog(
+                this,
+                (vv, hod, m) -> {
+                    calendar.set(
+                        calendar.get(Calendar.YEAR),
+                        calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH),
+                        hod,
+                        m,
+                                /*calendar.get(Calendar.SECOND)*/0
+                    );
                     editableEntry.set(/* set values */
                         editableEntry.checked()
                             .setStart(calendar.getTimeInMillis())
                     );
-                    date.checked().setText(Utils.formatDatePart(editableEntry.checked().getStart()));
-                });
-                dpg.show();
-            });
-            time.checked().setOnClickListener(v -> {
-                final Calendar calendar = Utils.toDateTime(entry.getStart());
-                TimePickerDialog tpd = new TimePickerDialog(
-                    this,
-                    (vv, hod, m) -> {
-                        calendar.set(
-                            calendar.get(Calendar.YEAR),
-                            calendar.get(Calendar.MONTH),
-                            calendar.get(Calendar.DAY_OF_MONTH),
-                            hod,
-                            m,
-                                /*calendar.get(Calendar.SECOND)*/0
-                        );
-                        editableEntry.set(/* set values */
-                            editableEntry.checked()
-                                .setStart(calendar.getTimeInMillis())
-                        );
-                        time.checked().setText(Utils.formatTimePart(editableEntry.checked().getStart()));
-                    },
-                    calendar.get(Calendar.HOUR_OF_DAY),
-                    calendar.get(Calendar.MINUTE),
-                    true
-                );
-                tpd.show();
-            });
-
-            if (entry != null) {
-                editableEntry.set(entry.toBuilder());
-
-                name.checked().setText(editableEntry.checked().getName());
-                interval.checked().setText(String.valueOf(editableEntry.checked().getInterval()));
-                enabledState.checked().setChecked(editableEntry.checked().getEnabled());
-                online.checked().setChecked(editableEntry.checked().getNotifyOnline());
-                offline.checked().setChecked(editableEntry.checked().getNotifyOffline());
-                date.checked().setText(Utils.formatDatePart(editableEntry.checked().getStart()));
-                time.checked().setText(Utils.formatTimePart(editableEntry.checked().getStart()));
-            } else {
-                long start = Utils.cutSecondAndMillis(System.currentTimeMillis());
-                editableEntry.set(/* initial values */
-                    Protobufs.ServerCrawlerEntry.newBuilder()
-                        .setEnabled(true)
-                        .setNotifyOnline(true)
-                        .setNotifyOffline(true)
-                        .setStart(start)
-                );
-                enabledState.checked().setChecked(true);
-                online.checked().setChecked(true);
-                offline.checked().setChecked(true);
-                date.checked().setText(Utils.formatDatePart(start));
-                time.checked().setText(Utils.formatTimePart(start));
-            }
+                    time.checked().setText(Utils.formatTimePart(editableEntry.checked().getStart()));
+                },
+                calendar.get(Calendar.HOUR_OF_DAY),
+                calendar.get(Calendar.MINUTE),
+                true
+            );
+            tpd.show();
         });
 
-        dialog.show();
+        if (entry != null) {
+            editableEntry.set(entry.toBuilder());
+
+            name.checked().setText(editableEntry.checked().getName());
+            interval.checked().setText(String.valueOf(editableEntry.checked().getInterval()));
+            enabledState.checked().setChecked(editableEntry.checked().getEnabled());
+            online.checked().setChecked(editableEntry.checked().getNotifyOnline());
+            offline.checked().setChecked(editableEntry.checked().getNotifyOffline());
+            date.checked().setText(Utils.formatDatePart(editableEntry.checked().getStart()));
+            time.checked().setText(Utils.formatTimePart(editableEntry.checked().getStart()));
+        } else {
+            long start = Utils.cutSecondAndMillis(System.currentTimeMillis());
+            editableEntry.set(/* initial values */
+                Protobufs.ServerCrawlerEntry.newBuilder()
+                    .setEnabled(true)
+                    .setNotifyOnline(true)
+                    .setNotifyOffline(true)
+                    .setStart(start)
+            );
+            enabledState.checked().setChecked(true);
+            online.checked().setChecked(true);
+            offline.checked().setChecked(true);
+            date.checked().setText(Utils.formatDatePart(start));
+            time.checked().setText(Utils.formatTimePart(start));
+        }
+
+
+        pe_ip.checked().setText("localhost");
+        pe_port.checked().setText("19132");
+        split.checked().setChecked(false);
+
+        split.checked().setOnClickListener(v -> {
+            if (split.checked().isChecked()) {
+                //PE->PC
+                peFrame.checked().setVisibility(View.GONE);
+                pcFrame.checked().setVisibility(View.VISIBLE);
+                split.checked().setText(R.string.pc);
+                StringBuilder result = new StringBuilder();
+                result.append(pe_ip.checked().getText());
+                int port = Integer.valueOf(pe_port.checked().getText().toString());
+                if (!(port == 25565 | port == 19132))
+                    result.append(':').append(pe_port.checked().getText());
+                pc_ip.checked().setText(result);
+            } else {
+                //PC->PE
+                pcFrame.checked().setVisibility(View.GONE);
+                peFrame.checked().setVisibility(View.VISIBLE);
+                split.checked().setText(R.string.pe);
+                Server s = Utils.convertServerObject(Arrays.asList(MslServer.makeServerFromString(pc_ip.checked().getText().toString(), false))).get(0);
+                pe_ip.checked().setText(s.ip);
+                pe_port.checked().setText(String.valueOf(s.port));
+            }
+        });
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(TheApplication.injectContextSpecial(newBase));
     }
 
     class LocalAdapter extends RecyclerView.Adapter<LocalAdapter.VH> {
