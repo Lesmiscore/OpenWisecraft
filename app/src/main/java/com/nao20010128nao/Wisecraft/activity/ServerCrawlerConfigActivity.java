@@ -214,9 +214,24 @@ public class ServerCrawlerConfigActivity extends AppCompatActivity {
         }
 
 
-        pe_ip.checked().setText("localhost");
-        pe_port.checked().setText("19132");
-        split.checked().setChecked(false);
+        if(editableEntry.checked().hasServer()){
+            if(editableEntry.checked().getServer().getMode()== Protobufs.Server.Mode.PE){
+                pe_ip.checked().setText(editableEntry.checked().getServer().getIp());
+                pe_port.checked().setText(String.valueOf(editableEntry.checked().getServer().getPort()));
+                split.checked().setChecked(false);
+            }else{
+                if(editableEntry.checked().getServer().getPort()==25565){
+                    pc_ip.checked().setText(editableEntry.checked().getServer().getIp());
+                }else{
+                    pc_ip.checked().setText(editableEntry.checked().getServer().getIp()+":"+editableEntry.checked().getServer().getPort());
+                }
+                split.checked().setChecked(true);
+            }
+        }else{
+            pe_ip.checked().setText("localhost");
+            pe_port.checked().setText("19132");
+            split.checked().setChecked(false);
+        }
 
         split.checked().setOnClickListener(v -> {
             if (split.checked().isChecked()) {
