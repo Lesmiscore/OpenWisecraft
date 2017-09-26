@@ -36,7 +36,7 @@ gradle tasks 2>&1 | log tasks || true
 '''.trim().readLines()
 
 def mainScript=baseScript+'''
-gradle clean beforeBuild $TASKS -x lint --info --stacktrace 2>&1 | log main
+gradle clean beforeBuild $TASKS -x lint --info --stacktrace --parallel 2>&1 | log main
 '''.trim().readLines()
 
 def preScript=baseScript+'''
