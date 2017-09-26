@@ -263,6 +263,18 @@ public class ServerCrawlerConfigActivity extends AppCompatActivity {
     }
 
     class LocalAdapter extends RecyclerView.Adapter<LocalAdapter.VH> {
+        List<Protobufs.ServerCrawlerEntry> listBasedOn;
+
+        LocalAdapter(){
+            updateList();
+        }
+
+        void updateList(){
+            boolean wasListNonNull=listBasedOn!=null;
+            listBasedOn=new ArrayList<>(scm.getEntries());
+            if(wasListNonNull)
+                notifyDataSetChanged();
+        }
 
         @Override
         public VH onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -271,7 +283,7 @@ public class ServerCrawlerConfigActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(VH holder, int position) {
-            final Protobufs.ServerCrawlerEntry entry = scm.getEntries().get(position);
+            final Protobufs.ServerCrawlerEntry entry = listBasedOn.get(position);
             holder.itemView.setTag(R.id.id, entry.getId());
             holder.name.setText(entry.getName());
             holder.start.setText(Utils.formatDate(entry.getStart()));
@@ -282,13 +294,14 @@ public class ServerCrawlerConfigActivity extends AppCompatActivity {
             holder.edit.setOnClickListener(v -> editDialog(entry, ent -> {
                 scm.setEntry(ent.getId(), ent);
                 scm.reschedule();
+                updateList();
                 return true;
             }));
         }
 
         @Override
         public int getItemCount() {
-            return scm.getEntries().size();
+            return listBasedOn.size();
         }
 
         class VH extends FindableViewHolder {
