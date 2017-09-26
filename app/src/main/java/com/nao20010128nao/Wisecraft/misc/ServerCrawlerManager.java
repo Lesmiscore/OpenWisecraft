@@ -88,7 +88,7 @@ public class ServerCrawlerManager {
         Stream.of(entries)
             .map(Protobufs.ServerCrawlerEntry::getId)
             .map(Long::intValue)
-            .map(a -> PendingIntent.getBroadcast(context, a, new Intent(), PendingIntent.FLAG_NO_CREATE))
+            .map(a -> PendingIntent.getBroadcast(context, a, new Intent(), PendingIntent.FLAG_UPDATE_CURRENT))
             .forEach(alarm::cancel);
         for (Protobufs.ServerCrawlerEntry entry : entries) {
             alarm.setRepeating(AlarmManager.ELAPSED_REALTIME,
