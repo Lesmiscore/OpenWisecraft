@@ -140,6 +140,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_mode_edit_white_24dp"
-            android:tint="?android:attr/textColor"/>
+            android:tint="?android:attr/textColorPrimary"/>
     </LinearLayout>
 </LinearLayout>
