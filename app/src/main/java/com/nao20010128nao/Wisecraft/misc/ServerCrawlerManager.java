@@ -134,8 +134,12 @@ public class ServerCrawlerManager {
         doTransform(ent -> ent.getId() == id ? entry_ : ent);
     }
 
+    public void remove(long id){
+        doTransform(a->a.getId()==id?null:a);
+    }
+
     private void doTransform(Function<Protobufs.ServerCrawlerEntry, Protobufs.ServerCrawlerEntry> func) {
-        entries = new ArrayList<>(Lists.transform(entries, func));
+        entries = Stream.of(Lists.transform(entries, func)).filter(Utils::nonNull).toList();
     }
 
     private Protobufs.ServerCrawlerEntry moveStartToNextExecution(Protobufs.ServerCrawlerEntry entry) {

@@ -299,6 +299,15 @@ public class ServerCrawlerConfigActivity extends AppCompatActivity {
                 updateList();
                 return true;
             }));
+            holder.delete.setOnClickListener(v->{
+                new AlertDialog.Builder(ServerCrawlerConfigActivity.this,ThemePatcher.getDefaultDialogStyle(ServerCrawlerConfigActivity.this))
+                    .setMessage(R.string.auSure)
+                    .setPositiveButton(R.string.noWord,null)
+                    .setNegativeButton(R.string.yesWord,(a,b)->{
+                        scm.delete(entry.getId());
+                    })
+                    .show();
+            });
         }
 
         @Override
@@ -308,7 +317,7 @@ public class ServerCrawlerConfigActivity extends AppCompatActivity {
 
         class VH extends FindableViewHolder {
             TextView name, interval, start, enabled, online, offline;
-            ImageButton edit;
+            ImageButton edit,delete;
 
             public VH(View v) {
                 super(v);
@@ -319,6 +328,7 @@ public class ServerCrawlerConfigActivity extends AppCompatActivity {
                 online = (TextView) findViewById(R.id.online);
                 offline = (TextView) findViewById(R.id.offline);
                 edit = (ImageButton) findViewById(R.id.edit);
+                delete = (ImageButton) findViewById(R.id.delete);
             }
         }
     }
