@@ -305,6 +305,7 @@ public class ServerCrawlerConfigActivity extends AppCompatActivity {
                     .setPositiveButton(R.string.noWord,null)
                     .setNegativeButton(R.string.yesWord,(a,b)->{
                         scm.delete(entry.getId());
+                        updateList();
                     })
                     .show();
             });
