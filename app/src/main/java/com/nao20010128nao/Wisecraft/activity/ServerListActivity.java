@@ -1337,7 +1337,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
         public PingHandlerImpl(boolean cd, Intent os, boolean updSrl, Bundle receive, boolean isUpdate) {
             closeDialog = cd;
             extras = os;
-            if (updSrl) act().srl.setRefreshing(true);
+            act().runOnUiThread(()->{
+                if (updSrl) act().srl.setRefreshing(true);
+            });
             obj = receive;
             isUpd = isUpdate;
         }
