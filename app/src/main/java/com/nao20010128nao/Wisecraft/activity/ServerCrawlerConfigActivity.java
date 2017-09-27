@@ -47,6 +47,7 @@ public class ServerCrawlerConfigActivity extends AppCompatActivity {
             case 0:/*Add function*/
                 editDialog(null, entry -> {
                     scm.schedule(entry);
+                    scm.commit();
                     return true;
                 });
                 break;
@@ -294,6 +295,7 @@ public class ServerCrawlerConfigActivity extends AppCompatActivity {
             holder.edit.setOnClickListener(v -> editDialog(entry, ent -> {
                 scm.setEntry(ent.getId(), ent);
                 scm.reschedule();
+                scm.commit();
                 updateList();
                 return true;
             }));

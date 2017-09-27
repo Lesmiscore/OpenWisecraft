@@ -88,7 +88,7 @@ public class ServerCrawlerManager {
         Stream.of(entries)
             .map(Protobufs.ServerCrawlerEntry::getId)
             .map(Long::intValue)
-            .map(a -> PendingIntent.getBroadcast(context, a, new Intent(), PendingIntent.FLAG_UPDATE_CURRENT))
+            .map(a -> PendingIntent.getBroadcast(context, a, new Intent(context, ServerCrawlerReceiver.class).putExtra("id", a), PendingIntent.FLAG_UPDATE_CURRENT))
             .forEach(alarm::cancel);
         for (Protobufs.ServerCrawlerEntry entry : entries) {
             alarm.setRepeating(AlarmManager.ELAPSED_REALTIME,
@@ -103,12 +103,7 @@ public class ServerCrawlerManager {
     }
 
     public boolean setEnabled(long id, boolean value) {
-        doTransform(a -> {
-            if (a.getId() == id) {
-                return a.toBuilder().setEnabled(value).build();
-            }
-            return a;
-        });
+        doTransform(a -> a.getId() == id ? a.toBuilder().setEnabled(value).build() : a);
         return commit();
     }
 
@@ -117,12 +112,7 @@ public class ServerCrawlerManager {
     }
 
     public boolean setServer(long id, Server server) {
-        doTransform(a -> {
-            if (a.getId() == id) {
-                return a.toBuilder().setServer(server.toProtobufServer()).build();
-            }
-            return a;
-        });
+        doTransform(a -> a.getId() == id ? a.toBuilder().setServer(server.toProtobufServer()).build() : a);
         return commit();
     }
 
