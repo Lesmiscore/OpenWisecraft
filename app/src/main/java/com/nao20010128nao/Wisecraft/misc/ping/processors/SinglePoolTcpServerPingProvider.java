@@ -1,25 +1,30 @@
 package com.nao20010128nao.Wisecraft.misc.ping.processors;
 
-import android.text.*;
-import android.util.*;
+import android.text.TextUtils;
+import android.util.Log;
 
+import com.annimon.stream.Stream;
 import com.google.common.io.ByteStreams;
-import com.nao20010128nao.Wisecraft.*;
+import com.nao20010128nao.Wisecraft.WisecraftError;
 import com.nao20010128nao.Wisecraft.misc.*;
-import com.nao20010128nao.Wisecraft.misc.ping.methods.*;
+import com.nao20010128nao.Wisecraft.misc.ping.methods.PingSerializeProvider;
 
-import java.io.*;
-import java.net.*;
+import java.io.BufferedInputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.net.Socket;
 import java.util.*;
 
-public class TcpServerPingProvider implements ServerPingProvider {
-    final String host;
-    final int port;
-    volatile boolean offline;
-    Queue<Map.Entry<Server, PingHandler>> queue = Factories.newDefaultQueue();
-    Thread pingThread = new PingThread();
+public class SinglePoolTcpServerPingProvider implements ServerPingProvider {
+    final Queue<Map.Entry<Server, PingHandler>> queue = Factories.newDefaultQueue();
+    final Set<PingThread> pingThread = Collections.synchronizedSet(new HashSet<PingThread>());
+    final int max;
+    String host;
+    int port;
+    volatile boolean offline = false;
 
-    public TcpServerPingProvider(String host, int port) {
+    public SinglePoolTcpServerPingProvider(int max,String host, int port) {
+        this.max = max;
         if (TextUtils.isEmpty(host)) throw new IllegalArgumentException("host");
         if (port < 1 | port > 65535) throw new IllegalArgumentException("port");
         this.host = host;
@@ -31,9 +36,8 @@ public class TcpServerPingProvider implements ServerPingProvider {
         Utils.requireNonNull(handler);
         Utils.prepareLooper();
         queue.add(new KVP<>(server, handler));
-        if (!pingThread.isAlive()) {
-            pingThread = new PingThread();
-            pingThread.start();
+        if (pingThread.size() < max) {
+            new PingThread().start();
         }
     }
 
@@ -44,23 +48,18 @@ public class TcpServerPingProvider implements ServerPingProvider {
 
     @Override
     public void stop() {
-        pingThread.interrupt();
+        Stream.of(pingThread).forEach(Thread::interrupt);
+    }
+
+    @Override
+    public void clearQueue() {
+        queue.clear();
     }
 
     @Override
     public void clearAndStop() {
         clearQueue();
         stop();
-    }
-
-    @Override
-    public String getClassName() {
-        return "TcpServerPingProvider";
-    }
-
-    @Override
-    public void clearQueue() {
-        queue.clear();
     }
 
     @Override
@@ -73,11 +72,15 @@ public class TcpServerPingProvider implements ServerPingProvider {
         offline = false;
     }
 
+    @Override
+    public String getClassName() {
+        return "SinglePoolMultiServerPingProvider";
+    }
 
     private class PingThread extends Thread implements Runnable {
         @Override
         public void run() {
-            final String TAG = ProcessorUtils.getLogTag(TcpServerPingProvider.this);
+            final String TAG = ProcessorUtils.getLogTag(SinglePoolTcpServerPingProvider.this);
 
             Map.Entry<Server, PingHandler> now = null;
             Socket sock;

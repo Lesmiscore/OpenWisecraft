@@ -1,6 +1,8 @@
 package com.nao20010128nao.Wisecraft.misc.ping.processors;
 
 import android.util.*;
+
+import com.annimon.stream.Stream;
 import com.nao20010128nao.Wisecraft.misc.*;
 
 import java.util.*;
@@ -32,9 +34,7 @@ public class SinglePoolMultiServerPingProvider implements ServerPingProvider {
 
     @Override
     public void stop() {
-        for (PingThread thread : pingThread) {
-            thread.interrupt();
-        }
+        Stream.of(pingThread).forEach(Thread::interrupt);
     }
 
     @Override

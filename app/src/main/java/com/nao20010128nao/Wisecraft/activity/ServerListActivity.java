@@ -98,14 +98,20 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
 
             instance.clear();
         }
-        instance = new WeakReference(this);
+        instance = new WeakReference<>(this);
         slsl = (ServerListStyleLoader) getSystemService(ContextWrappingExtender.SERVER_LIST_STYLE_LOADER);
         if (usesOldInstance) {
             rv.setAdapter(sl);
         } else {
-            spp = updater = new SinglePoolMultiServerPingProvider(Integer.valueOf(pref.getString("parallels", "6")));
-            if (pref.getBoolean("updAnotherThread", false))
-                updater = new NormalServerPingProvider();
+            if(!pref.getBoolean("useAltServer",false)){
+                spp = updater = new SinglePoolMultiServerPingProvider(Integer.valueOf(pref.getString("parallels", "6")));
+                if (pref.getBoolean("updAnotherThread", false))
+                    updater = new NormalServerPingProvider();
+            }else{
+                spp = updater = new SinglePoolTcpServerPingProvider(Integer.valueOf(pref.getString("parallels", "6")),"", 8083);
+                if (pref.getBoolean("updAnotherThread", false))
+                    updater = new TcpServerPingProvider("", 8084);
+            }
             rv.setAdapter(sl = new ServerList(this));
         }
         rv.setLongClickable(true);
