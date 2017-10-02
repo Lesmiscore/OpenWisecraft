@@ -2,6 +2,8 @@ package com.nao20010128nao.Wisecraft.misc.ping.processors;
 
 import android.text.*;
 import android.util.*;
+
+import com.google.common.io.ByteStreams;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.ping.methods.*;
@@ -78,6 +80,30 @@ public class TcpServerPingProvider implements ServerPingProvider {
             final String TAG = ProcessorUtils.getLogTag(TcpServerPingProvider.this);
 
             Map.Entry<Server, PingHandler> now = null;
+            Socket sock;
+            DataOutputStream dos;
+            DataInputStream is;
+            try {
+                sock = new Socket(host, port);
+                dos = new DataOutputStream(sock.getOutputStream());
+                is = new DataInputStream(new BufferedInputStream(sock.getInputStream()));
+            }catch (Throwable e){
+                while (!(queue.isEmpty() | isInterrupted())) {
+                    Log.d(TAG, "Starting ping");
+                    now = queue.poll();
+                    if (offline) {
+                        Log.d(TAG, "Offline");
+                        try {
+                            now.getValue().onPingFailed(now.getKey());
+                        } catch (Throwable ex_) {
+
+                        }
+                        continue;
+                    }
+                }
+                WisecraftError.report(TAG, e);
+                return;
+            }
             while (!(queue.isEmpty() | isInterrupted())) {
                 Log.d(TAG, "Starting ping");
                 try {
@@ -92,32 +118,33 @@ public class TcpServerPingProvider implements ServerPingProvider {
                         continue;
                     }
                     try {
-                        ServerStatus stat = null;
                         Server s = now.getKey();
-                        Socket sock = null;
-                        InputStream is = null;
-                        try {
-                            sock = new Socket(host, port);
-                            DataOutputStream dos = new DataOutputStream(sock.getOutputStream());
-                            dos.writeUTF(s.ip);
-                            dos.writeInt(s.port);
-                            dos.writeInt(s.mode.getNumber());
-                            dos.flush();
-                            is = new BufferedInputStream(sock.getInputStream());
-                            stat = PingSerializeProvider.loadFromServerDumpFile(is);
-                        } finally {
-                            try {
-                                if (sock != null) sock.close();
-                                if (is != null) is.close();
-                            } catch (Throwable e) {
-                                WisecraftError.report(TAG, e);
-                            }
-                        }
-                        try {
-                            now.getValue().onPingArrives(stat);
-                        } catch (Throwable f) {
+                        dos.write(1);
+                        dos.writeUTF(s.ip);
+                        dos.writeInt(s.port);
+                        dos.writeInt(s.mode.getNumber());
+                        dos.flush();
+                        switch (is.readInt()){
+                            case 1:
+                                int payloadSize=is.readInt();
+                                ServerStatus stat = PingSerializeProvider.loadFromServerDumpFile(ByteStreams.limit(is,payloadSize));
+                                try {
+                                    now.getValue().onPingArrives(stat);
+                                } catch (Throwable f) {
 
+                                }
+                                break;
+                            default:
+                                is.readInt();
+                                is.readFully(new byte[is.readInt()]);
+                                try {
+                                    now.getValue().onPingFailed(now.getKey());
+                                } catch (Throwable ex_) {
+
+                                }
+                                break;
                         }
+
                     } catch (Throwable e) {
                         WisecraftError.report(TAG, e);
                         try {
@@ -130,6 +157,14 @@ public class TcpServerPingProvider implements ServerPingProvider {
                     e.printStackTrace();
                 }
                 Log.d(TAG, "Next");
+            }
+            try {
+                dos.write(2);
+                dos.close();
+                is.close();
+                sock.close();
+            } catch (Throwable e) {
+                WisecraftError.report(TAG, e);
             }
         }
     }
