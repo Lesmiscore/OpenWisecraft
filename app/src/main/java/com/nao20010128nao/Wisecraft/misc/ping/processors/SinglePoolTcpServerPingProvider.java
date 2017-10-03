@@ -157,6 +157,7 @@ public class SinglePoolTcpServerPingProvider implements ServerPingProvider {
                 } catch (Throwable e) {
                     e.printStackTrace();
                 }
+                Thread.sleep(500);
                 Log.d(TAG, "Next");
             }
             try {
