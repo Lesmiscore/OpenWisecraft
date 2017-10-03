@@ -80,6 +80,8 @@ public class SinglePoolTcpServerPingProvider implements ServerPingProvider {
     private class PingThread extends Thread implements Runnable {
         @Override
         public void run() {
+            pingThread.add(this);
+            
             final String TAG = ProcessorUtils.getLogTag(SinglePoolTcpServerPingProvider.this);
 
             Map.Entry<Server, PingHandler> now = null;
@@ -135,7 +137,6 @@ public class SinglePoolTcpServerPingProvider implements ServerPingProvider {
                                 }
                                 break;
                             default:
-                                is.readInt();
                                 is.readFully(new byte[is.readInt()]);
                                 try {
                                     now.getValue().onPingFailed(now.getKey());

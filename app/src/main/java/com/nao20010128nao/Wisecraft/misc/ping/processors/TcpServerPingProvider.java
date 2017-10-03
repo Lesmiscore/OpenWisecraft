@@ -132,7 +132,6 @@ public class TcpServerPingProvider implements ServerPingProvider {
                                 }
                                 break;
                             default:
-                                is.readInt();
                                 is.readFully(new byte[is.readInt()]);
                                 try {
                                     now.getValue().onPingFailed(now.getKey());
