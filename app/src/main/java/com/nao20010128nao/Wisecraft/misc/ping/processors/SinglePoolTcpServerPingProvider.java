@@ -90,6 +90,7 @@ public class SinglePoolTcpServerPingProvider implements ServerPingProvider {
                 sock = new Socket(host, port);
                 dos = new DataOutputStream(sock.getOutputStream());
                 is = new DataInputStream(new BufferedInputStream(sock.getInputStream()));
+                dos.write(14);
             }catch (Throwable e){
                 while (!(queue.isEmpty() | isInterrupted())) {
                     Log.d(TAG, "Starting ping");
