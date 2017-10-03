@@ -95,7 +95,6 @@ public class SinglePoolTcpServerPingProvider implements ServerPingProvider {
                 dos.write(14);
             }catch (Throwable e){
                 while (!(queue.isEmpty() | isInterrupted())) {
-                    Log.d(TAG, "Starting ping");
                     now = queue.poll();
                     try {
                         now.getValue().onPingFailed(now.getKey());
@@ -137,7 +136,7 @@ public class SinglePoolTcpServerPingProvider implements ServerPingProvider {
                                 }
                                 break;
                             default:
-                                is.readFully(new byte[is.readInt()]);
+                                ByteStreams.skipFully(is,is.readInt());
                                 try {
                                     now.getValue().onPingFailed(now.getKey());
                                 } catch (Throwable ex_) {

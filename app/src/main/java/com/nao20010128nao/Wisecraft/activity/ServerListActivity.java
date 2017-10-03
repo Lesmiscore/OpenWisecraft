@@ -240,9 +240,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             public boolean onActionItemClicked(ActionMode p1, MenuItem p2) {
                 switch (p2.getItemId()) {
                     case 0:
-                        for (Server s : selected) {
-                            sl.remove(s);
-                        }
+                        Stream.of(selected).forEach(sl::remove);
                         p1.finish();
                         break;
                 }
@@ -660,8 +658,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
             srl.setRefreshing(true);
         }
         new Thread(() -> {
-            for (Server aList : toUpdate) {
-                spp.putInQueue(aList, new PingHandlerImpl(false, new Intent().putExtra("offset", -1), false) {
+            for (Server server : toUpdate) {
+                /*spp.putInQueue(server, new PingHandlerImpl(false, new Intent().putExtra("offset", -1), false) {
                     public void onPingFailed(final Server s) {
                         super.onPingFailed(s);
                         runOnUiThread(() -> wd.hideWorkingDialog(s));
@@ -672,7 +670,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                         runOnUiThread(() -> wd.hideWorkingDialog(s));
                     }
                 });
-                pinging.add(aList);
+                pinging.add(server);*/
+                dryUpdate(server,false);
             }
         }).start();
     }
