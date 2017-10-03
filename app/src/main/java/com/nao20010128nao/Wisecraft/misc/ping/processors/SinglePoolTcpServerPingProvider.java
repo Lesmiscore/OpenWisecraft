@@ -166,6 +166,8 @@ public class SinglePoolTcpServerPingProvider implements ServerPingProvider {
                 sock.close();
             } catch (Throwable e) {
                 WisecraftError.report(TAG, e);
+            }finally {
+                pingThread.remove(this);
             }
         }
     }
