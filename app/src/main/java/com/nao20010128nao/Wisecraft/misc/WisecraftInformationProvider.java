@@ -4,9 +4,9 @@ import android.content.*;
 import android.os.*;
 import android.preference.*;
 import android.provider.*;
-import com.google.gson.*;
+
 import com.google.gson.reflect.*;
-import com.nao20010128nao.Wisecraft.TheApplication;
+import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.collector.*;
 
 import java.io.*;
