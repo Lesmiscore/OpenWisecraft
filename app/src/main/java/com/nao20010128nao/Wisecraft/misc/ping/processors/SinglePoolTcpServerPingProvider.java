@@ -91,7 +91,7 @@ public class SinglePoolTcpServerPingProvider implements ServerPingProvider {
             try {
                 sock = new Socket(host, port);
                 dos = new DataOutputStream(sock.getOutputStream());
-                is = new DataInputStream(new BufferedInputStream(sock.getInputStream()));
+                is = new DataInputStream(sock.getInputStream());
                 dos.write(14);
             }catch (Throwable e){
                 while (!(queue.isEmpty() | isInterrupted())) {
