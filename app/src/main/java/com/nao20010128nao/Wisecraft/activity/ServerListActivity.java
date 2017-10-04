@@ -659,19 +659,8 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
         }
         new Thread(() -> {
             for (Server server : toUpdate) {
-                /*spp.putInQueue(server, new PingHandlerImpl(false, new Intent().putExtra("offset", -1), false) {
-                    public void onPingFailed(final Server s) {
-                        super.onPingFailed(s);
-                        runOnUiThread(() -> wd.hideWorkingDialog(s));
-                    }
-
-                    public void onPingArrives(final ServerStatus s) {
-                        super.onPingArrives(s);
-                        runOnUiThread(() -> wd.hideWorkingDialog(s));
-                    }
-                });
-                pinging.add(server);*/
-                dryUpdate(server,false);
+                spp.putInQueue(server, new PingHandlerImpl(true, new Intent().putExtra("offset", -1), false));
+                pinging.add(server);
             }
         }).start();
     }
