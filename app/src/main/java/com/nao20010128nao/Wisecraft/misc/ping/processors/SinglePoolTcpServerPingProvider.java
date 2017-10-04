@@ -74,7 +74,7 @@ public class SinglePoolTcpServerPingProvider implements ServerPingProvider {
 
     @Override
     public String getClassName() {
-        return "SinglePoolMultiServerPingProvider";
+        return "SinglePoolTcpServerPingProvider";
     }
 
     private class PingThread extends Thread implements Runnable {
