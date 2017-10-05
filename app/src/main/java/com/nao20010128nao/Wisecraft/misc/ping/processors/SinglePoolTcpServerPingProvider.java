@@ -161,6 +161,7 @@ public class SinglePoolTcpServerPingProvider implements ServerPingProvider {
             }
             try {
                 dos.write(2);
+                Thread.sleep(500);
                 dos.close();
                 is.close();
                 sock.close();
