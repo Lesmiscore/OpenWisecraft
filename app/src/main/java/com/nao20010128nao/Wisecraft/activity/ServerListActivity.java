@@ -916,7 +916,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                     sla.slsl.applyTextColorTo(viewHolder);
                     if (sla.pinging.contains(sv)) {
                         viewHolder.pending(sv, sla);
-                    } else if (sv.isOnline()) {//TODO: change to else if
+                    } else if (sv.isOnline()) {
                         ServerStatus s = (ServerStatus) sv;
                         viewHolder.setStatColor(ContextCompat.getColor(sla, R.color.stat_ok));
                         final CharSequence title;
@@ -1171,7 +1171,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                     sls += "\n900:" + randomText() + ":" + s + "\n";
                     StringBuilder sb = new StringBuilder(100);
                     for (String line : Utils.lines(sls))
-                        if (line.split("\\:").length == 4)
+                        if (line.split(":").length == 4)
                             sb.append(line).append('\n');
                     Utils.writeToFile(servLst, sb.toString());
                 }).start(), R.string.addToMcpe));
