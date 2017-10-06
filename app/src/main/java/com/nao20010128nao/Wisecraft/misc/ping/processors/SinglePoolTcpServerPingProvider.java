@@ -19,16 +19,10 @@ public class SinglePoolTcpServerPingProvider implements ServerPingProvider {
     final Queue<Map.Entry<Server, PingHandler>> queue = Factories.newDefaultQueue();
     final Set<PingThread> pingThread = Collections.synchronizedSet(new HashSet<PingThread>());
     final int max;
-    String host;
-    int port;
     volatile boolean offline = false;
 
-    public SinglePoolTcpServerPingProvider(int max,String host, int port) {
+    public SinglePoolTcpServerPingProvider(int max) {
         this.max = max;
-        if (TextUtils.isEmpty(host)) throw new IllegalArgumentException("host");
-        if (port < 1 | port > 65535) throw new IllegalArgumentException("port");
-        this.host = host;
-        this.port = port;
     }
 
     public void putInQueue(Server server, PingHandler handler) {
@@ -89,10 +83,9 @@ public class SinglePoolTcpServerPingProvider implements ServerPingProvider {
             DataOutputStream dos;
             DataInputStream is;
             try {
-                sock = new Socket(host, port);
+                sock = ProcessorUtils.tcpPingCache.get();
                 dos = new DataOutputStream(sock.getOutputStream());
                 is = new DataInputStream(sock.getInputStream());
-                dos.write(14);
             }catch (Throwable e){
                 while (!(queue.isEmpty() | isInterrupted())) {
                     now = queue.poll();
@@ -160,11 +153,12 @@ public class SinglePoolTcpServerPingProvider implements ServerPingProvider {
                 Log.d(TAG, "Next");
             }
             try {
-                dos.write(2);
+                /*dos.write(2);
                 Thread.sleep(500);
                 dos.close();
                 is.close();
-                sock.close();
+                sock.close();*/
+                ProcessorUtils.tcpPingCache.cache(sock);
             } catch (Throwable e) {
                 WisecraftError.report(TAG, e);
             }finally {

@@ -9,6 +9,7 @@ import com.nao20010128nao.Wisecraft.misc.ping.methods.pc.*;
 import com.nao20010128nao.Wisecraft.misc.ping.methods.pe.*;
 
 import java.io.*;
+import java.net.*;
 import java.util.*;
 
 /**
@@ -152,6 +153,13 @@ public class ProcessorUtils {
         })
             .filter(Character::isUpperCase)
             .map(String::valueOf)
-            .reduce("", (a, b) -> a + b);
+            .reduce("", String::concat);
     }
+
+    public static final SocketCacher tcpPingCache=new SocketCacher(()->{
+        Socket sock = new Socket("", 443);
+        sock.getOutputStream().write(14);
+        sock.getOutputStream().flush();
+        return sock;
+    });
 }
