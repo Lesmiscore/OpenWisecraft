@@ -1,23 +1,23 @@
 <resources>
-    <style name="AppTheme.Black" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorAccent">#304FFE</item>
+    <style name="AppTheme.Black" parent="Theme.AppCompat">
+        <item name="colorAccent">#fff</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="preferenceTheme">@style/AppTheme.Preference</item>
         <item name="alertDialogTheme">@style/AppAlertDialog.Black</item>
         <item name="windowActionModeOverlay">true</item>
         <item name="android:windowAnimationStyle">@style/AppTheme.Transition</item>
         <item name="wcToolbarTheme">@style/AppTheme.Toolbar.Black</item>
-        <item name="wcDefaultPreferenceTextColor">#000000</item>
+        <item name="wcDefaultPreferenceTextColor">#fff</item>
         <item name="wcMenuTintColor">#ffffff</item>
         <item name="dialogTheme">@style/AppAlertDialog.Black</item>
         <item name="toolbarStyle">?attr/wcToolbarTheme</item>
-        <item name="wcUnselectedTextColor">#000</item>
-        <item name="wcSelectedTextColor">#fff</item>
+        <item name="wcUnselectedTextColor">#fff</item>
+        <item name="wcSelectedTextColor">#000</item>
         <item name="popupTheme">@style/Theme.AppCompat.Light.DarkActionBar</item>
         <item name="android:windowContentTransitions">true</item>
         <!--MaterialDrawer-->
         <item name="material_drawer_background">?android:attr/windowBackground</item>
-        <item name="material_drawer_primary_text">@color/black</item>
+        <item name="material_drawer_primary_text">@color/white</item>
         <item name="material_drawer_selected_text">?attr/material_drawer_primary_text</item>
         <!--RCON-->
         <item name="rconConsoleSendButtonStyle">@style/AppButton</item>
@@ -27,24 +27,24 @@
         <item name="wcAppButtonBgColor">#000</item>
     </style>
 
-    <style name="AppDialog.Black" parent="Theme.AppCompat.Light.Dialog">
-        <item name="colorAccent">#304FFE</item>
+    <style name="AppDialog.Black" parent="Theme.AppCompat.Dialog">
+        <item name="colorAccent">#fff</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="preferenceTheme">@style/AppTheme.Preference</item>
         <item name="wcToolbarTheme">@style/AppTheme.Toolbar.Black</item>
-        <item name="wcDefaultPreferenceTextColor">#000000</item>
+        <item name="wcDefaultPreferenceTextColor">#fff</item>
         <item name="wcMenuTintColor">#ffffff</item>
         <item name="dialogTheme">@style/AppAlertDialog.Black</item>
         <item name="toolbarStyle">?attr/wcToolbarTheme</item>
     </style>
 
-    <style name="AppAlertDialog.Black" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="colorAccent">#304FFE</item>
+    <style name="AppAlertDialog.Black" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="colorAccent">#fff</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="preferenceTheme">@style/AppTheme.Preference</item>
         <item name="wcToolbarTheme">@style/AppTheme.Toolbar.Black</item>
-        <item name="wcDefaultPreferenceTextColor">#000000</item>
-        <item name="wcMenuTintColor">#000000</item>
+        <item name="wcDefaultPreferenceTextColor">#fff</item>
+        <item name="wcMenuTintColor">#fff</item>
         <item name="dialogTheme">@style/AppAlertDialog.Black</item>
         <item name="toolbarStyle">?attr/wcToolbarTheme</item>
     </style>
@@ -70,7 +70,7 @@
         <item name="android:textColor">#fff</item>
     </style>
 
-    <style name="AppTheme.BottomSheetDialog.Black" parent="Theme.LibCompat.Light.BottomSheetDialog">
+    <style name="AppTheme.BottomSheetDialog.Black" parent="Theme.LibCompat.BottomSheetDialog">
         <item name="wcBottomSheetDialogDecor">@layout/server_get_activity_select_servers_dialog_decor</item>
     </style>
 </resources>
