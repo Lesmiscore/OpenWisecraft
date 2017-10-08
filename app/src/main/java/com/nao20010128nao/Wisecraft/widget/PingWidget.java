@@ -75,7 +75,7 @@ abstract class PingWidgetImpl extends WisecraftWidgetBase {
         if (!pref.getBoolean("useAltServer", false)) {
             nspp = new NormalServerPingProvider();
         } else {
-            nspp = new TcpServerPingProvider("160.16.103.57", 15687);
+            nspp = new TcpServerPingProvider();
         }
         for (int wid : appWidgetIds) {
             Log.d("WisecraftWidgets", "onUpdate: " + wid);

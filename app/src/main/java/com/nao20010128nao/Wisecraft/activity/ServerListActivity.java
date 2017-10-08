@@ -108,9 +108,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                 if (pref.getBoolean("updAnotherThread", false))
                     updater = new NormalServerPingProvider();
             }else{
-                spp = updater = new SinglePoolTcpServerPingProvider(Integer.valueOf(pref.getString("parallels", "6")),"", 443);
+                spp = updater = new SinglePoolTcpServerPingProvider(Integer.valueOf(pref.getString("parallels", "6")));
                 if (pref.getBoolean("updAnotherThread", false))
-                    updater = new TcpServerPingProvider("", 443);
+                    updater = new TcpServerPingProvider();
             }
             rv.setAdapter(sl = new ServerList(this));
         }

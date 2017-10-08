@@ -1,9 +1,8 @@
 package com.nao20010128nao.Wisecraft.misc.ping.processors;
 
-import android.text.*;
 import android.util.*;
 
-import com.google.common.io.ByteStreams;
+import com.google.common.io.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.ping.methods.*;
@@ -13,17 +12,11 @@ import java.net.*;
 import java.util.*;
 
 public class TcpServerPingProvider implements ServerPingProvider {
-    final String host;
-    final int port;
     volatile boolean offline;
     Queue<Map.Entry<Server, PingHandler>> queue = Factories.newDefaultQueue();
     Thread pingThread = new PingThread();
 
-    public TcpServerPingProvider(String host, int port) {
-        if (TextUtils.isEmpty(host)) throw new IllegalArgumentException("host");
-        if (port < 1 | port > 65535) throw new IllegalArgumentException("port");
-        this.host = host;
-        this.port = port;
+    public TcpServerPingProvider() {
     }
 
     public void putInQueue(Server server, PingHandler handler) {
@@ -84,10 +77,9 @@ public class TcpServerPingProvider implements ServerPingProvider {
             DataOutputStream dos;
             DataInputStream is;
             try {
-                sock = new Socket(host, port);
+                sock = ProcessorUtils.tcpPingCache.get();
                 dos = new DataOutputStream(sock.getOutputStream());
                 is = new DataInputStream(sock.getInputStream());
-                dos.write(14);
             }catch (Throwable e){
                 while (!(queue.isEmpty() | isInterrupted())) {
                     Log.d(TAG, "Starting ping");
@@ -156,11 +148,12 @@ public class TcpServerPingProvider implements ServerPingProvider {
                 Log.d(TAG, "Next");
             }
             try {
-                dos.write(2);
+                /*dos.write(2);
                 Thread.sleep(500);
                 dos.close();
                 is.close();
-                sock.close();
+                sock.close();*/
+                ProcessorUtils.tcpPingCache.cache(sock);
             } catch (Throwable e) {
                 WisecraftError.report(TAG, e);
             }
