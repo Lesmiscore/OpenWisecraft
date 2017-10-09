@@ -1,5 +1,7 @@
 import com.android.build.gradle.internal.dsl.JackOptions
 import com.android.build.gradle.internal.dsl.ProductFlavor
+import com.android.build.gradle.internal.transforms.*
+import com.android.build.gradle.internal.pipeline.*
 
 import java.net.*
 import java.math.*
@@ -45,6 +47,7 @@ buildscript {
         mavenCentral()
         maven { url "https://repo.eclipse.org/content/repositories/egit-releases/" }
         maven { url "https://raw.githubusercontent.com/nao20010128nao/MavenRepo/master/releases/" }
+        maven { url 'https://jitpack.io' }
     }
     dependencies {
         classpath('com.android.tools.build:gradle:2.4.0-alpha7'){
@@ -54,6 +57,7 @@ buildscript {
         //classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         //classpath "com.nao20010128nao:proguard-japanese:5.3.2"
         //classpath "net.sf.proguard:proguard-gradle:5.3.2"
+        classpath 'com.github.nao20010128nao:ProguardTransformFix:f0fb66b'
         classpath 'net.sf.proguard:proguard-base:5.3.3'
         classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.1'
         classpath 'org.mozilla:rhino:1.7.7.1'
@@ -97,9 +101,6 @@ subprojects {
                     encoding 'UTF-8'
                 }
             }
-            project.tasks.each { task ->
-                println "whenTaskAdded: $task.name is ${task.getClass()}"
-            }
         }
         //configurations.compile.allDependencies.findAll{it.group=='com.android.support'}.collect{it.class}.each(System.out.&println)
         //org.gradle.api.internal.artifacts.dependencies.DefaultExternalModuleDependency
@@ -119,6 +120,13 @@ subprojects {
                     details.useVersion fbv
                 }
             }
+        }
+    }
+    gradle.taskGraph.beforeTask { task ->
+        //println "whenTaskAdded: $task.name is ${task.getClass()}"
+        if(task instanceof TransformTask){
+            //println "injection: $task.name"
+            FixedProGuardTransform.injectProGuardTransform(task)
         }
     }
 }

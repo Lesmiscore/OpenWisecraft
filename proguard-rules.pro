@@ -1,4 +1,4 @@
--dontoptimize
+#-dontoptimize
 
 -keepnames public !abstract class * extends android.app.Activity
 -keepnames public !abstract class * extends android.app.Service
@@ -24,7 +24,9 @@
 -keepattributes Signature
 -keepattributes *Annotation*
 -keep class sun.misc.Unsafe { *; }
--dontwarn sun.misc.Unsafe
+-dontwarn sun.**
+-dontwarn java.**
+-dontwarn javax.**
 -keep class com.google.gson.stream.** { *; }
 -keep class com.google.gson.examples.android.model.** { *; }
 -dontwarn org.apache.**
