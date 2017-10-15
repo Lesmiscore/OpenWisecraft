@@ -18,6 +18,7 @@
         <item name="wcSelectedTextColor">#000</item>
         <item name="popupTheme">@style/Theme.AppCompat.Light</item>
         <item name="android:windowContentTransitions">true</item>
+        <item name="wcFabTintColor">#fff</item>
         <!--MaterialDrawer-->
         <item name="material_drawer_background">?android:attr/windowBackground</item>
         <item name="material_drawer_primary_text">@color/black</item>

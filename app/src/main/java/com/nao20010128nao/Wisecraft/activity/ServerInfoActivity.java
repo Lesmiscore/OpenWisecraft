@@ -209,19 +209,21 @@ abstract class ServerInfoActivityImpl extends ServerInfoActivityBase1 {
         ta.recycle();
 
         if (useBottomSheet) {
+            int fabTint=ThemePatcher.getDefaultFabTintColor(this);
+
             pin.setVisibility(View.GONE);
             behavior.setAllowUserDragging(true);
-            pin.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_lock_open_black_48dp, Color.WHITE));//pinned
+            pin.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_lock_open_black_48dp, fabTint));//pinned
             pin.setOnClickListener(v -> {
                 behavior.setAllowUserDragging(!behavior.getAllowUserDragging());
                 if (behavior.getAllowUserDragging()) {
-                    pin.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_lock_open_black_48dp, Color.WHITE));//not pinned
+                    pin.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_lock_open_black_48dp, fabTint));//not pinned
                 } else {
-                    pin.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_lock_black_48dp, Color.WHITE));//pinned
+                    pin.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_lock_black_48dp, fabTint));//pinned
                 }
             });
             if (getIntent().getBooleanExtra("bottomSheetPinned", false)) {
-                pin.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_lock_black_48dp, Color.WHITE));//pinned
+                pin.setImageDrawable(TheApplication.instance.getTintedDrawable(R.drawable.ic_lock_black_48dp, fabTint));//pinned
                 behavior.setAllowUserDragging(false);
                 new Handler().post(() -> {
                     behavior.setState(ViewPagerBottomSheetBehavior.STATE_EXPANDED);

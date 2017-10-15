@@ -243,6 +243,15 @@ public class ThemePatcher {
         return drw;
     }
 
+    public static int getDefaultFabTintColor(Context c) {
+        TypedArray ta = ThemePatcher.getStyledContext(c).obtainStyledAttributes(R.styleable.WcFabTintColor);
+        try {
+            return ta.getColor(R.styleable.WcFabTintColor_wcFabTintColor,ta.getColor(R.styleable.WcFabTintColor_colorAccent,Color.WHITE));
+        }finally {
+            ta.recycle();
+        }
+    }
+
     private static void setTheme(Activity a, int theme) {
         a.setTheme(theme);
         a.getTheme().applyStyle(theme, true);
