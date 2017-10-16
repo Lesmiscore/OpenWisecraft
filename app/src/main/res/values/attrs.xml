@@ -17,7 +17,6 @@
     </declare-styleable>
     <declare-styleable name="WcFabTintColor">
         <attr name="wcFabTintColor"/>
-        <attr name="colorAccent"/>
     </declare-styleable>
 
     <attr name="colorPickerPreferenceStyle" format="reference"/>

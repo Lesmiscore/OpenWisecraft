@@ -246,7 +246,7 @@ public class ThemePatcher {
     public static int getDefaultFabTintColor(Context c) {
         TypedArray ta = ThemePatcher.getStyledContext(c).obtainStyledAttributes(R.styleable.WcFabTintColor);
         try {
-            return ta.getColor(R.styleable.WcFabTintColor_wcFabTintColor,ta.getColor(R.styleable.WcFabTintColor_colorAccent,Color.WHITE));
+            return ta.getColor(R.styleable.WcFabTintColor_wcFabTintColor,Color.WHITE);
         }finally {
             ta.recycle();
         }
