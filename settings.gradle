@@ -11,7 +11,6 @@ import java.time.LocalDate
             get(null)
         }
     } catch (Throwable e) {
-        e.printStackTrace()
         try {
             /* for *nix: use theEnvironment instead of theCaseInsensitiveEnvironment */
             def envTmp = ('java.lang.ProcessEnvironment' as Class).getDeclaredField('theEnvironment').with {
@@ -25,7 +24,7 @@ import java.time.LocalDate
                 newInstance(envTmp)
             }
         } catch (Throwable e_) {
-            e_.printStackTrace()
+            [e,e_]*.printStackTrace()
             println 'Failed to modify env. Build will fail.'
             return
         }
