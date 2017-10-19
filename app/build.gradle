@@ -53,6 +53,7 @@ android {
         buildConfigField "boolean", "SHOW_BUILD_DATA_ON_VERSIONS", "false"
         buildConfigField "boolean", "OBFUSCATED", "false"
         buildConfigField "String[]", "NOTIFICATION_TAGS", "new String[]{\"main\"}"
+        buildConfigField "boolean", "DISPLAY_MODE", "false"
 
     }
 
@@ -138,10 +139,18 @@ android {
         pgExperimental {
             proguardFiles '../proguard-rules.pro', '../exotic.pro', '../exp.pro'
         }
+
+        displayMode.initWith(buildTypes.pg)
+        displayMode{
+            debuggable true
+            buildConfigField "boolean", "DISPLAY_MODE", "true"
+            applicationIdSuffix = '.display'
+            versionNameSuffix = ' for displaying'
+        }
     }
 
     applicationVariants.all { variant ->
-        if (variant.buildType.name.equals("release")) {
+        if (variant.buildType.name == "release") {
             variant.outputs.each { output ->
                 println(output.outputFile.name)
             }

@@ -55,7 +55,7 @@ source ./ci/copy.sh 2>&1 | log copy
 '''.trim().readLines()
 
 // app
-def app=["Debug","Debug2","Debug2TestObs","Pg","PgUlt","PgExperimental","Release","ShrinkRelease"]
+def app=["Debug","Debug2","Debug2TestObs","Pg","PgUlt","PgExperimental","Release","ShrinkRelease",'displayMode']
 app.each{
     this["app$it".toString()].script=mainScript
     this["app$it".toString()].after_script=afterScript
