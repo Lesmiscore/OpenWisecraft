@@ -26,8 +26,8 @@ dependencies {
     if (1) compile "com.android.support:support-compat:$supportLibVersion"
     if (1) compile "com.android.support:support-fragment:$supportLibVersion"
 
-    compile project(':MaterialIcons')
-    compile project(':wisecraft-i18n')
+    compile 'com.github.nao20010128nao:MaterialIconsLight:20be5acb28'
+    compile 'com.github.nao20010128nao:Wisecraft-Multilanguage:34f79269b3'
 
     if (0) {
         compile 'com.android.support:appcompat-v7:25.0.0'

@@ -26,10 +26,10 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':wisecraft-i18n')
-    compile project(':MaterialIcons')
+    compile 'com.github.nao20010128nao:Wisecraft-Multilanguage:34f79269b3'
+    compile 'com.github.nao20010128nao:MaterialIconsLight:20be5acb28'
+    compile 'com.github.nao20010128nao:Wisecraft-PagerSlidingTabStrip:00efec5a37'
     compile project(':compat')
-    compile project(':psts')
     if (1) compile "com.android.support:design:$supportLibVersion"
     if (1) compile "com.android.support:support-compat:$supportLibVersion"
     if (1) compile "com.android.support:support-fragment:$supportLibVersion"

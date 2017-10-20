@@ -64,11 +64,12 @@ dependencies {
     compile "com.google.firebase:firebase-crash:$firebaseVersion"
     compile "com.google.firebase:firebase-messaging:$firebaseVersion"
 
-    compile project(':wisecraft-i18n')
+    compile 'com.github.nao20010128nao:Wisecraft-Multilanguage:34f79269b3'
+    compile 'com.github.nao20010128nao:MaterialIconsLight:20be5acb28'
+
     compile project(':compat')
     compile project(':collector')
     compile project(':appicons')
-    compile project(':MaterialIcons')
 
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'org.jsoup:jsoup:1.9.1'

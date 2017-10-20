@@ -65,12 +65,13 @@ android {
 dependencies {
     compile files('../app/libs/otc.jar')//refer to otc.jar in app
 
+    compile 'com.github.nao20010128nao:Wisecraft-Multilanguage:34f79269b3'
+    compile 'com.github.nao20010128nao:MaterialIconsLight:20be5acb28'
+
     compile project(':rcon')
     compile project(':compat')
     compile project(':scrolling')
-    compile project(':MaterialIcons')
     compile project(':aFileChooser')
-    compile project(':wisecraft-i18n')
     compile project(':collector')
 
     compile 'com.android.support:design:25.1.0'

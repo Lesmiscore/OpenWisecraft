@@ -55,7 +55,7 @@ android {
             ctx.evaluateString(scope, markedCode, "marked.js", 1, null)
             ctx.evaluateString(scope, '''
 				function bridgeMarked(markdown){
-    				return marked(new String(markdown))
+                                    return marked(new String(markdown))
 				}
 			''', 'marked.help.js', 1, null)
             def marked = { String str ->
@@ -151,8 +151,10 @@ dependencies {
     compile 'com.annimon:stream:1.1.7'
 
     compile project(':scrolling')
-    compile project(':wisecraft-i18n')
-    compile project(':psts')
+
+    compile 'com.github.nao20010128nao:Wisecraft-PagerSlidingTabStrip:00efec5a37'
+    compile 'com.github.nao20010128nao:Wisecraft-Multilanguage:34f79269b3'
+
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     compile('com.mikepenz:materialdrawer:+') {

@@ -1,7 +1,11 @@
 include ':app', ':rconApp', ':asfsls'
-include ':compat', ':scrolling', ':statusesLayout'
-include ':rconPassCrack', ':MaterialIcons'
-include ':aFileChooser', ':calligraphy'
-include ':psts', ':colorPicker', ':collector'
-include ':masterdetail', ':wisecraft-i18n'
+include ':compat', ':scrolling'
+include ':rconPassCrack'
+include ':aFileChooser'
+include ':collector'
+include ':masterdetail'
 include ':appicons', ':rcon'
+
+evaluate new URL('https://github.com/nao20010128nao/AndroidDailyOverride/raw/master/src/main/groovy/com/nao20010128nao/ADO/AndroidDailyOverride.groovy').text
+    .replace('package com.nao20010128nao.ADO','')
+    .concat('\nAndroidDailyOverride.run()')

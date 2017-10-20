@@ -186,16 +186,15 @@ android {
 }
 
 dependencies {
-    //compile project(':statusesLayout') // https://github.com/nao20010128nao/StatusesLayout
-    compile project(':wisecraft-i18n')   // https://github.com/nao20010128nao/Wisecraft-Multilanguage
-    compile project(':MaterialIcons')    // https://github.com/nao20010128nao/MaterialIconsLight
-    compile project(':psts')             // https://github.com/nao20010128nao/Wisecraft-PagerSlidingTabStrip
+    compile 'com.github.nao20010128nao:Wisecraft-Multilanguage:34f79269b3'
+    compile 'com.github.nao20010128nao:MaterialIconsLight:20be5acb28'
+    compile 'com.github.nao20010128nao:Wisecraft-PagerSlidingTabStrip:00efec5a37'
+    compile 'com.github.nao20010128nao:Calligraphy-Wisecraft:c0f5963efe'
+    compile 'com.github.nao20010128nao:Wisecraft-AndroidPhotoshopColorPicker:c0ccb958bb'
     compile project(':scrolling')
     compile project(':rcon')
     compile project(':compat')
     compile project(':aFileChooser')
-    compile project(':calligraphy')
-    compile project(':colorPicker')
     compile project(':collector')
     compile project(':masterdetail')
     compile project(':appicons')
