@@ -1,15 +1,7 @@
 import com.android.build.gradle.internal.dsl.JackOptions
 import com.android.build.gradle.internal.dsl.ProductFlavor
-import com.android.build.gradle.internal.transforms.*
-import com.android.build.gradle.internal.pipeline.*
-
-import java.net.*
-import java.math.*
-import groovy.json.*
-import org.gradle.*
-import org.gradle.api.invocation.*
-
-import com.nao20010128nao.ADO.*
+import com.nao20010128nao.ADO.AndroidDailyOverride
+import groovy.json.JsonBuilder
 
 def printBoth(a) {
     println(a)
@@ -134,13 +126,6 @@ subprojects {
             }
         }
     }
-    /*gradle.taskGraph.beforeTask { task ->
-        //println "whenTaskAdded: $task.name is ${task.getClass()}"
-        if(task instanceof TransformTask){
-            //println "injection: $task.name"
-            FixedProGuardTransform.injectProGuardTransform(task)
-        }
-    }*/
 }
 
 AndroidDailyOverride.run()
