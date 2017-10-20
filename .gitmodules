@@ -1,9 +1,6 @@
 [submodule "wisecraft-i18n"]
 	path = wisecraft-i18n
 	url = https://github.com/nao20010128nao/Wisecraft-Multilanguage
-[submodule "statusesLayout"]
-	path = statusesLayout
-	url = https://github.com/nao20010128nao/StatusesLayout
 [submodule "MaterialIcons"]
 	path = MaterialIcons
 	url = https://github.com/nao20010128nao/MaterialIconsLight

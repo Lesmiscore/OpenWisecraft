@@ -87,6 +87,12 @@ allprojects {
 subprojects {
     def slv = '26.1.0'
     def fbv = '11.4.0'
+    def nameToDirname=[:]
+    nameToDirname."Wisecraft-Multilanguage"="wisecraft-i18n"
+    nameToDirname."MaterialIconsLight"="MaterialIcons"
+    nameToDirname."Calligraphy-Wisecraft"="calligraphy"
+    nameToDirname."Wisecraft-PagerSlidingTabStrip"="psts"
+    nameToDirname."Wisecraft-AndroidPhotoshopColorPicker"="colorPicker"
     ext {
         supportLibVersion = slv
         firebaseVersion = fbv
@@ -122,6 +128,14 @@ subprojects {
                 def requested = details.requested
                 if (requested.group == 'com.google.firebase') {
                     details.useVersion fbv
+                }
+            }
+            resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+                def requested = details.requested
+                if (requested.group == 'com.github.nao20010128nao') {
+                    details.useVersion ['git','rev-parse','HEAD','--short']
+                            .execute(new File(rootDir,nameToDirname[details.name]))
+                            .in.text.trim()
                 }
             }
         }
