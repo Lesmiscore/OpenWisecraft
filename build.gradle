@@ -122,20 +122,12 @@ subprojects {
                 if (requested.group == 'com.android.support' &&
                         !requested.name.startsWith("multidex")) {
                     details.useVersion slv
-                }
-            }
-            resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-                def requested = details.requested
-                if (requested.group == 'com.google.firebase') {
+                } else if (requested.group == 'com.google.firebase') {
                     details.useVersion fbv
-                }
-            }
-            resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-                def requested = details.requested
-                if (requested.group == 'com.github.nao20010128nao') {
-                    details.useVersion ['git','rev-parse','HEAD','--short']
-                            .execute(new File(rootDir,nameToDirname[details.name]))
-                            .in.text.trim()
+                } else if (requested.group == 'com.github.nao20010128nao') {
+                    details.useVersion(['git','rev-parse','HEAD','--short']
+                            .execute([],new File(rootDir,nameToDirname[requested.name]))
+                            .in.text.trim())
                 }
             }
         }
