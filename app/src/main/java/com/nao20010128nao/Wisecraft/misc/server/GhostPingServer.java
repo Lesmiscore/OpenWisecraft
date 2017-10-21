@@ -4,6 +4,8 @@ import android.annotation.*;
 import android.os.*;
 import android.preference.*;
 import android.util.*;
+
+import com.google.common.base.*;
 import com.google.gson.*;
 import com.nao20010128nao.Wisecraft.*;
 import com.nao20010128nao.Wisecraft.misc.*;
@@ -110,12 +112,7 @@ public class GhostPingServer extends Thread {
             datas.add(Integer.MAX_VALUE + "");//Players count
             datas.add(Integer.MAX_VALUE + "");//Max players
 
-            StringBuilder sb = new StringBuilder();
-            for (String s : datas) {
-                sb.append(s).append(';');
-            }
-            sb.setLength(sb.length() - 1);
-            dos.writeUTF(sb.toString());
+            dos.writeUTF(Joiner.on(';').join(datas));
 
             DatagramPacket resP = new DatagramPacket(baos.toByteArray(), 0, baos.size());
             resP.setSocketAddress(p.getSocketAddress());
@@ -153,7 +150,7 @@ public class GhostPingServer extends Thread {
                 resW.write((byte) 0x80);
                 resW.write((byte) 0x00);
                 //KV
-                Map<String, String> kv = new HashMap();
+                Map<String, String> kv = new HashMap<>();
                 kv.put("gametype", "SMP");
                 kv.put("map", "wisecraft");
                 kv.put("server_engine", "Wisecraft Ghost Ping");
@@ -219,8 +216,7 @@ public class GhostPingServer extends Thread {
     }
 
     private Server[] getServers() {
-        Server[] sa = Utils.newGson().fromJson(PreferenceManager.getDefaultSharedPreferences(TheApplication.instance).getString("servers", "[]"), Server[].class);
-        return sa;
+        return Utils.newGson().fromJson(PreferenceManager.getDefaultSharedPreferences(TheApplication.instance).getString("servers", "[]"), Server[].class);
     }
 
     void dump(DatagramPacket dp) {

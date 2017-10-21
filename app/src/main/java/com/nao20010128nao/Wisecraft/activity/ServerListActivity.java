@@ -34,8 +34,7 @@ import com.nao20010128nao.Wisecraft.misc.*;
 import com.nao20010128nao.Wisecraft.misc.collector.*;
 import com.nao20010128nao.Wisecraft.misc.contextwrappers.extender.*;
 import com.nao20010128nao.Wisecraft.misc.debug.*;
-import com.nao20010128nao.Wisecraft.misc.localServerList.LocalServerList;
-import com.nao20010128nao.Wisecraft.misc.localServerList.PreferenceLocalServerList;
+import com.nao20010128nao.Wisecraft.misc.localServerList.*;
 import com.nao20010128nao.Wisecraft.misc.ping.methods.*;
 import com.nao20010128nao.Wisecraft.misc.ping.methods.pc.*;
 import com.nao20010128nao.Wisecraft.misc.ping.methods.pe.*;
@@ -56,7 +55,7 @@ import static com.nao20010128nao.Wisecraft.misc.Utils.*;
 @RuntimePermissions
 @ShowsServerList
 abstract class ServerListActivityImpl extends ServerListActivityBase1 implements ServerListActivityInterface, ServerListProvider {
-    public static WeakReference<ServerListActivityImpl> instance = new WeakReference(null);
+    public static WeakReference<ServerListActivityImpl> instance = new WeakReference<>(null);
 
     ServerList sl;
     List<Server> list = new ServerListArrayList();
@@ -71,8 +70,12 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
     protected void onCreate(Bundle savedInstanceState) {
         ThemePatcher.applyThemeForActivity(this);
         super.onCreate(savedInstanceState);
-        localServerList=new PreferenceLocalServerList(this);
-        wisecraftDir = new File(Environment.getExternalStorageDirectory(), "/Wisecraft");
+        if(BuildConfig.DISPLAY_MODE){
+            localServerList=new DisplayModeLocalServerList();
+        }else{
+            localServerList=new PreferenceLocalServerList(this);
+        }
+        wisecraftDir = new File(Environment.getExternalStorageDirectory(), "Wisecraft");
 
         setupSideMenu();
 
@@ -103,7 +106,9 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
         if (usesOldInstance) {
             rv.setAdapter(sl);
         } else {
-            if(!pref.getBoolean("useAltServer",false)){
+            if(BuildConfig.DISPLAY_MODE){
+                spp=updater=new DisplayModeServerPingProvider();
+            }else if(!pref.getBoolean("useAltServer",false)){
                 spp = updater = new SinglePoolMultiServerPingProvider(Integer.valueOf(pref.getString("parallels", "6")));
                 if (pref.getBoolean("updAnotherThread", false))
                     updater = new NormalServerPingProvider();
@@ -546,7 +551,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
         if (Utils.checkMatchingPackageExist(this, asfslsPattern)) {
             appMenu.add(new Sextet<>(R.string.addServerFromServerListSite, R.drawable.ic_language_black_48dp, a -> startActivity(new Intent().setClassName(Utils.findFirstMatchingPackage(this,asfslsPattern),"com.nao20010128nao.Wisecraft.asfsls.ServerGetActivity")), null, null, UUID.fromString("9e63592a-3b0b-33f6-a8e2-937f2aa85ce2")));//7
         }
-        if (pref.getBoolean("feature_serverCrawler", false) || Utils.alwaysTrue()) {//TODO: should it be moved in the settings?
+        if (pref.getBoolean("feature_serverCrawler", false) && !Utils.alwaysTrue()) {//TODO: should it be moved in the settings?
             appMenu.add(new Sextet<>(R.string.serverCrawler, R.drawable.ic_search_black_48dp, a -> startActivity(new Intent(a, ServerCrawlerConfigActivity.class)), null, null, UUID.fromString("9e63592a-3b0b-33f6-a8e2-937f2aa85ce2")));//7
         }
         appMenu.add(new Sextet<>(R.string.loadPing, R.drawable.ic_open_in_new_black_48dp, a -> {

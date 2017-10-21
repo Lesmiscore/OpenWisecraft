@@ -6,6 +6,10 @@ import com.nao20010128nao.Wisecraft.misc.ping.methods.*;
 import java.io.*;
 
 public class SprPair extends Duo<ServerPingResult, ServerPingResult> implements ServerPingResult {
+    public SprPair(){}
+    public SprPair(ServerPingResult a,ServerPingResult b){
+        super(a,b);
+    }
     @Override
     public byte[] getRawResult() {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

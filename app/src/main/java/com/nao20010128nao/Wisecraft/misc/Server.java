@@ -13,6 +13,16 @@ public class Server {
     @SerializedName("name")
     public String name;//,tag;
 
+    public Server(){
+
+    }
+    public Server(String ip,int port,Protobufs.Server.Mode mode,String name){
+        this.ip=ip;
+        this.port=port;
+        this.mode=mode;
+        this.name=name;
+    }
+
     @Override
     public int hashCode() {
         return ((((ip == null ? 0 : ip.hashCode()) << 6 ^ port) << 6) ^ mode.hashCode()) << 6 ^ (name == null ? 0 : name.hashCode());
@@ -24,7 +34,7 @@ public class Server {
             return false;
         }
         Server os = (Server) o;
-        return os.ip.equals(ip) & os.port == port & os.mode == mode;
+        return os.ip.equals(ip) && os.port == port && os.mode == mode;
     }
 
     @Override
