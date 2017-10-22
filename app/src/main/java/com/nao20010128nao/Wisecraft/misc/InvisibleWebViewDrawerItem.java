@@ -29,6 +29,8 @@ public class InvisibleWebViewDrawerItem extends AbstractDrawerItem<InvisibleWebV
 
     public void bindView(InvisibleWebViewDrawerItem.ViewHolder p1, List<Object> payload) {
         super.bindView(p1,payload);
+        p1.webView.getSettings().setJavaScriptEnabled(true);
+        p1.webView.setWebViewClient(new WebViewClient(){});
         p1.webView.loadUrl(url);
         p1.itemView.setId(hashCode());
         p1.itemView.setEnabled(true);
