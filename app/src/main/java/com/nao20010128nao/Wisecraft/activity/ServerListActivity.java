@@ -108,14 +108,14 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
         } else {
             if(BuildConfig.DISPLAY_MODE){
                 spp=updater=new DisplayModeServerPingProvider();
-            }else if(!pref.getBoolean("useAltServer",false)){
-                spp = updater = new SinglePoolMultiServerPingProvider(Integer.valueOf(pref.getString("parallels", "6")));
-                if (pref.getBoolean("updAnotherThread", false))
-                    updater = new NormalServerPingProvider();
-            }else{
+            }else if (pref.getBoolean("useAltServer",false)) {
                 spp = updater = new SinglePoolTcpServerPingProvider(Integer.valueOf(pref.getString("parallels", "6")));
                 if (pref.getBoolean("updAnotherThread", false))
                     updater = new TcpServerPingProvider();
+            } else {
+                spp = updater = new SinglePoolMultiServerPingProvider(Integer.valueOf(pref.getString("parallels", "6")));
+                if (pref.getBoolean("updAnotherThread", false))
+                    updater = new NormalServerPingProvider();
             }
             rv.setAdapter(sl = new ServerList(this));
         }

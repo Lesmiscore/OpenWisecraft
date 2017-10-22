@@ -20,7 +20,7 @@ import static com.nao20010128nao.Wisecraft.misc.ping.methods.pe.UnconnectedPing.
 public class DisplayModeServerPingProvider implements ServerPingProvider {
     @Override
     public void putInQueue(Server server, PingHandler handler) {
-        if(!server.ip.equals("localhost")){
+        if(!"localhost".equals(server.ip)){
             handler.onPingFailed(server);
             return;
         }
@@ -131,7 +131,8 @@ public class DisplayModeServerPingProvider implements ServerPingProvider {
             case 19134:// offline
                 handler.onPingFailed(server);
                 break;
-
+            case 25565:// PC
+                break;
         }
     }
 

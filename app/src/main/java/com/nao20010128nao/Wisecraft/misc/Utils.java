@@ -854,7 +854,7 @@ public class Utils extends PingerUtils {
     }
 
     public static boolean alwaysTrue() {
-        return true;
+        return System.currentTimeMillis()<Long.MAX_VALUE;
     }
 
     public static boolean readBytes(File f, ByteHandler handler) {
