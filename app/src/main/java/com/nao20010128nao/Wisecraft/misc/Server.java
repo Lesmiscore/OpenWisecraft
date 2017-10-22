@@ -25,7 +25,7 @@ public class Server {
 
     @Override
     public int hashCode() {
-        return ((((ip == null ? 0 : ip.hashCode()) << 6 ^ port) << 6) ^ mode.hashCode()) << 6 ^ (name == null ? 0 : name.hashCode());
+        return Utils.hash(ip,port,mode,name);
     }
 
     @Override
