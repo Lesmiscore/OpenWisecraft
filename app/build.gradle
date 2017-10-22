@@ -140,7 +140,7 @@ android {
             proguardFiles '../proguard-rules.pro', '../exotic.pro', '../exp.pro'
         }
 
-        displayMode.initWith(buildTypes.pg)
+        displayMode.initWith(buildTypes.shrinkRelease)
         displayMode{
             debuggable true
             buildConfigField "boolean", "DISPLAY_MODE", "true"

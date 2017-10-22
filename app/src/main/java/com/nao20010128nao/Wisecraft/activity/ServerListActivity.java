@@ -430,7 +430,7 @@ abstract class ServerListActivityImpl extends ServerListActivityBase1 implements
                     pcFrame.checked().setVisibility(View.GONE);
                     peFrame.checked().setVisibility(View.VISIBLE);
                     split.checked().setText(R.string.pe);
-                    Server s = Utils.convertServerObject(Arrays.asList(MslServer.makeServerFromString(pc_ip.checked().getText().toString(), false))).get(0);
+                    Server s = Utils.convertServerObject(Collections.singletonList(MslServer.makeServerFromString(pc_ip.checked().getText().toString(), false))).get(0);
                     pe_ip.checked().setText(s.ip);
                     pe_port.checked().setText(String.valueOf(s.port));
                 }
