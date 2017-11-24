@@ -46,7 +46,7 @@ buildscript {
         maven { url 'https://jitpack.io' }
     }
     dependencies {
-        classpath('com.android.tools.build:gradle:2.4.0-alpha7'){
+        classpath('com.android.tools.build:gradle:3.0.0'){
             exclude group: 'net.sf.proguard', module: 'proguard'
         }
         classpath 'com.google.gms:google-services:3.0.0'
@@ -102,7 +102,7 @@ subprojects {
         if (project.hasProperty("android")) {
             android {
                 compileSdkVersion 26
-                buildToolsVersion "26.0.1"
+                buildToolsVersion "26.0.2"
 
                 lintOptions {
                     abortOnError false
